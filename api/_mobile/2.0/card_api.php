@@ -238,7 +238,7 @@ if($ac=='rank')
 		if(!empty($pic_list)) {
 			$row['pic_list'] = $pic_list;
 		}else{
-			$row['pic_list'] = '';
+			$row['pic_list'] = null;
 		}
 		$photo_pic = reset($pic_list);
 		if($photo_pic)
@@ -940,7 +940,7 @@ if($ac=="fenzhan_detail")
 		if(!empty($pic_list)) {
 			$row['pic_list'] = $pic_list;
 		}else{
-			$row['pic_list'] = '';
+			$row['pic_list'] = null;
 		}
 		$photo_pic = reset($pic_list);
 		if($photo_pic)

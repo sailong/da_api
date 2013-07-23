@@ -82,7 +82,7 @@ if($ac=="club_index_nologin")
 			if(!empty($pic_list)) {
 				$row['pic_list'] = $pic_list;
 			}else{
-				$row['pic_list'] = '';
+				$row['pic_list'] = null;
 			}
 			$photo_pic = reset($pic_list);
 			if($photo_pic)
@@ -130,7 +130,7 @@ if($ac=="club_index_nologin")
 				if(!empty($pic_list)) {
 					$root_topic['pic_list'] = $pic_list;
 				}else{
-					$root_topic['pic_list'] = '';
+					$root_topic['pic_list'] = null;
 				}
 				
 				$photo_pic = reset($pic_list);
@@ -216,7 +216,7 @@ if($ac=="club_index_login")
 			if(!empty($pic_list)) {
 				$row['pic_list'] = $pic_list;
 			}else{
-				$row['pic_list'] = '';
+				$row['pic_list'] = null;
 			}
 			
 			$photo_pic = reset($pic_list);
@@ -268,7 +268,7 @@ if($ac=="club_index_login")
 				if(!empty($pic_list)) {
 					$root_topic['pic_list'] = $pic_list;
 				}else{
-					$root_topic['pic_list'] = '';
+					$root_topic['pic_list'] = null;
 				}
 				
 				$photo_pic = reset($pic_list);
@@ -345,7 +345,7 @@ if($ac=="topic_detail")
 		if(!empty($pic_list)) {
 			$detail_data['pic_list'] = $pic_list;
 		}else{
-			$detail_data['pic_list'] = '';
+			$detail_data['pic_list'] = null;
 		}
 		
 		$photo_pic = reset($pic_list);
@@ -405,7 +405,7 @@ if($ac=="topic_detail")
 			if(!empty($pic_list)) {
 				$row2['pic_list'] = $pic_list;
 			}else{
-				$row2['pic_list'] = '';
+				$row2['pic_list'] = null;
 			}
 			$photo_pic = reset($pic_list);
 			if($photo_pic)
@@ -452,7 +452,7 @@ if($ac=="topic_detail")
 			if(!empty($pic_list)) {
 				$root_topic['pic_list'] = $pic_list;
 			}else{
-				$root_topic['pic_list'] = '';
+				$root_topic['pic_list'] = null;
 			}
 			
 			$photo_pic = reset($pic_list);
@@ -633,7 +633,7 @@ if($ac=="my_detail")
 					if(!empty($pic_list)) {
 						$row['pic_list'] = $pic_list;
 					}else{
-						$row['pic_list'] = '';
+						$row['pic_list'] = null;
 					}
 					
 					$photo_pic = reset($pic_list);
@@ -684,7 +684,7 @@ if($ac=="my_detail")
 						if(!empty($pic_list)) {
 							$root_topic['pic_list'] = $pic_list;
 						}else{
-							$root_topic['pic_list'] = '';
+							$root_topic['pic_list'] = null;
 						}
 						
 						$photo_pic = reset($pic_list);
@@ -826,7 +826,7 @@ if($ac=="member_detail")
 				if(!empty($pic_list)) {
 					$row['pic_list'] = $pic_list;
 				}else{
-					$row['pic_list'] = '';
+					$row['pic_list'] = null;
 				}
 				$photo_pic = reset($pic_list);
 				if($photo_pic)
@@ -873,7 +873,7 @@ if($ac=="member_detail")
 					if(!empty($pic_list)) {
 						$root_topic['pic_list'] = $pic_list;
 					}else{
-						$root_topic['pic_list'] = '';
+						$root_topic['pic_list'] = null;
 					}
 					$photo_pic = reset($pic_list);
 					if($photo_pic)
@@ -1448,7 +1448,7 @@ if($ac=="at_me")
 					if(!empty($pic_list)) {
 						$row['pic_list'] = $pic_list;
 					}else{
-						$row['pic_list'] = '';
+						$row['pic_list'] = null;
 					}
 					$photo_pic = reset($pic_list);
 					if($photo_pic)
@@ -1498,7 +1498,7 @@ if($ac=="at_me")
 						if(!empty($pic_list)) {
 							$root_topic['pic_list'] = $pic_list;
 						}else{
-							$root_topic['pic_list'] = '';
+							$root_topic['pic_list'] = null;
 						}
 						$photo_pic = reset($pic_list);
 						if($photo_pic)
@@ -1596,7 +1596,7 @@ if($ac=="comment_me")
 						if(!empty($pic_list)) {
 							$row['pic_list'] = $pic_list;
 						}else{
-							$row['pic_list'] = '';
+							$row['pic_list'] = null;
 						}
 						$photo_pic = reset($pic_list);
 						if($photo_pic)
@@ -1646,7 +1646,7 @@ if($ac=="comment_me")
 							if(!empty($pic_list)) {
 								$root_topic['pic_list'] = $pic_list;
 							}else{
-								$root_topic['pic_list'] = '';
+								$root_topic['pic_list'] = null;
 							}
 							
 							$photo_pic = reset($pic_list);

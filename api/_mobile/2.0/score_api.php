@@ -482,7 +482,7 @@ if($ac=="score_detail")
 			if(!empty($pic_list)) {
 				$row2['pic_list'] = $pic_list;
 			}else{
-				$row2['pic_list'] = '';
+				$row2['pic_list'] = null;
 			}
 			$photo_pic = reset($pic_list);
 			if($photo_pic)

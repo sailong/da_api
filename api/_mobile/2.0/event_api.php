@@ -615,7 +615,7 @@ if($ac=="event_detail")
 					if(!empty($pic_list)) {
 						$row['pic_list'] = $pic_list;
 					}else{
-						$row['pic_list'] = '';
+						$row['pic_list'] = null;
 					}
 					$photo_pic = reset($pic_list);
 					if($photo_pic)
@@ -662,7 +662,7 @@ if($ac=="event_detail")
 						if(!empty($pic_list)) {
 							$root_topic['pic_list'] = $pic_list;
 						}else{
-							$root_topic['pic_list'] = '';
+							$root_topic['pic_list'] = null;
 						}
 						$photo_pic = reset($pic_list);
 						if($photo_pic)
@@ -759,7 +759,7 @@ if($ac=="rule")
 				if(!empty($pic_list)) {
 					$row['pic_list'] = $pic_list;
 				}else{
-					$row['pic_list'] = '';
+					$row['pic_list'] = null;
 				}
 				$photo_pic = reset($pic_list);
 				if($photo_pic)
@@ -804,7 +804,7 @@ if($ac=="rule")
 					if(!empty($pic_list)) {
 						$root_topic['pic_list'] = $pic_list;
 					}else{
-						$root_topic['pic_list'] = '';
+						$root_topic['pic_list'] = null;
 					}
 					$photo_pic = reset($pic_list);
 					if($photo_pic)
