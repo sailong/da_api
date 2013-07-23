@@ -1,0 +1,200 @@
+﻿<!--{subtemplate home/game_header}-->
+<div id="wtcontent">
+	
+    <!-- 左边  -->
+	<!--{subtemplate home/game_left}-->
+    
+	<div class="z z2">
+		<div class="cbg1"><a href="#"><img src="{STATICURL}space/game/images/cdl.jpg" width="144" height="34" border="0"></a>&nbsp;&nbsp;</div>
+		<div class="fenx">
+		  <span><a href="#"><img src="{STATICURL}space/game/images/ca1.jpg" width="246" height="27" border="0"></a></span>
+			<span><a href="#"><img src="{STATICURL}space/game/images/ca2.jpg" width="101" height="34" border="0"></a></span>
+			<span><a href="#"><img src="{STATICURL}space/game/images/ca3.jpg" width="101" height="33" border="0"></a></span>
+	    </div>
+	    <div><img src="{STATICURL}space/game/images/chx.jpg" width="482" height="8"></div>
+		<br />
+		<!--中间上部-->
+		<!--{subtemplate home/game_center}-->
+		
+        <div class="cintro">
+		 <div class="cincontent">
+		  <div class="cinbiaoti"><h2>好友</h2></div>
+		  <div>
+		
+         <!--{if $space[self]}-->
+    <h1 class="mt"><img alt="friend" src="{STATICURL}image/feed/friend.gif" class="vm" /> {lang friend_list}</h1>
+    <ul class="tb cl">
+      <li{$a_actives[me]}><a href="home.php?mod=space&do=friend">{lang all_friend_list}</a>
+      </li>
+      <li{$a_actives[onlinefriend]}><a href="home.php?mod=space&do=friend&view=online&type=friend">{lang online_friend}</a>
+      </li>
+      <li{$a_actives[onlinemember]}><a href="home.php?mod=space&do=friend&view=online&type=member">{lang online_member}</a>
+      </li>
+      <li{$a_actives[onlinenear]}><a href="home.php?mod=space&do=friend&view=online&type=near">{lang online_near}</a>
+      </li>
+      <li{$a_actives[visitor]}><a href="home.php?mod=space&do=friend&view=visitor">{lang my_visitor}</a>
+      </li>
+      <li{$a_actives[trace]}><a href="home.php?mod=space&do=friend&view=trace">{lang my_trace}</a>
+      </li>
+      <li{$a_actives[blacklist]}><a href="home.php?mod=space&do=friend&view=blacklist">{lang my_blacklist}</a>
+      </li>
+    </ul>
+    <div class="tbmu cl"> 
+      <!--{if $_GET['view']=='blacklist'}--> 
+      {lang blacklist_message} 
+      <!--{elseif $_GET['view']=='me'}-->
+      <p class="y"> {lang count_member} 
+        <!--{if $maxfriendnum}--> 
+        ({lang max_friend_num}) 
+        <!--{if $_G['setting']['magicstatus'] && $_G[setting][magics][friendnum]}--> 
+        <img src="{STATICURL}image/magic/friendnum.small.gif" alt="friendnum" class="vm" /> <a id="a_magic_friendnum" href="home.php?mod=magic&mid=friendnum" onmousemove="showTip(this)" tip="{lang expansion_friend_message}" onclick="showWindow('magics', this.href, 'get', 0);return false;">{lang expansion_friend}</a> 
+        <!--{/if}--> 
+        <!--{/if}--> 
+      </p>
+      <p class="z"> {lang friend_message} </p>
+      <!--{elseif $_GET['view']=='online'}--> 
+      <!--{if $_GET['type'] == 'friend'}--> 
+      {lang online_friend_visit} 
+      <!--{elseif $_GET['type']=='near'}--> 
+      {lang near_friend_visit} 
+      <!--{else}--> 
+      {lang view_online_friend} 
+      <!--{/if}--> 
+      <!--{elseif $_GET['view']=='visitor'}--> 
+      {lang visitor_list} 
+      <!--{elseif $_GET['view']=='trace'}--> 
+      {lang trace_list} 
+      <!--{/if}--> 
+    </div>
+    
+    <!--{if $_GET['view']=='blacklist'}-->
+    <h2 class="mtw xs2">{lang add_blacklist}</h2>
+    <div class="bm bmn mtm cl">
+      <form method="post" autocomplete="off" name="blackform" action="home.php?mod=spacecp&ac=friend&op=blacklist&start=$_GET[start]">
+        <table cellpadding="0" cellspacing="0" class="tfm">
+          <tr>
+            <th>{lang username}</th>
+            <td><input type="text" name="username" value="" size="15" class="px vm" />
+              <button type="submit" name="blacklistsubmit_btn" id="moodsubmit_btn" value="true" class="pn vm"><em>{lang add}</em></button></td>
+          </tr>
+        </table>
+        <input type="hidden" name="blacklistsubmit" value="true" />
+        <input type="hidden" name="formhash" value="{FORMHASH}" />
+      </form>
+    </div>
+    <!--{/if}--> 
+    <!--{/if}-->
+		  </div>
+		  </div>
+		</div>
+        
+        
+	</div>
+	<div class="y y3">
+		<div class="rightlmn"><span class="rlm1"><h1>赛事赞助商</h1></span>  <span class="rlm2"><a href="#">更多</a></span></div>
+		<div class="ylmcon">
+			<div class="zbms">
+				<p><img src="{STATICURL}space/game/images/qczb.jpg" width="78" height="55"></p>
+				<p>网罗姓名</p>
+			</div>
+			<div class="zbms">
+				<p><img src="{STATICURL}space/game/images/qczb.jpg" width="78" height="55"></p>
+				<p>网罗姓名</p>
+			</div>
+		    <div class="zbms">
+				<p><img src="{STATICURL}space/game/images/qczb.jpg" width="78" height="55"></p>
+			    <p>网罗姓名</p>
+			</div>
+			<div class="zbms">
+				<p><img src="{STATICURL}space/game/images/qczb.jpg" width="78" height="55"></p>
+			    <p>网罗姓名</p>
+			</div>
+			<div class="clear"></div>
+		</div>
+		<div class="rightlm"><span class="rlm1"><h1>参赛明星</h1></span>  <span class="rlm2"><a href="#">更多</a></span></div>
+		<div class="ylmcon">
+		   <div class="zbms">
+				<p><img src="{STATICURL}space/game/images/zbms.jpg" width="50" height="50"></p>
+				<p>网罗姓名</p>
+		  </div>
+			<div class="zbms">
+				<p><img src="{STATICURL}space/game/images/zbms.jpg" width="50" height="50"></p>
+				<p>网罗姓名</p>
+			</div>
+		    <div class="zbms">
+				<p><img src="{STATICURL}space/game/images/zbms.jpg" width="50" height="50"></p>
+			    <p>网罗姓名</p>
+			</div>
+			<div class="zbms">
+				<p><img src="{STATICURL}space/game/images/zbms.jpg" width="50" height="50"></p>
+			    <p>网罗姓名</p>
+			</div>
+			<div class="clear"></div>
+	    </div>
+		<div class="rightlm"><span class="rlm1"><h1>举办球场</h1></span>  <span class="rlm2"><a href="#">更多</a></span></div>
+		<div class="ylmcon">
+			<p class="center"><img src="{STATICURL}space/game/images/ssqc.jpg"></p>
+			<p class="center top10">上海佘山高尔夫球场</p>
+        </div>
+		<div class="rightlm"><span class="rlm1">
+		<h1>周边旅游线路推荐</h1>
+		</span>  <span class="rlm2"><a href="#">更多</a></span></div>
+		<div class="ylmcon">
+			<p class="center"><img src="{STATICURL}space/game/images/lvxl.jpg"></p>
+			<p class="center top10">广东观澜湖游</p>
+        </div>
+		<div class="rightlm"><span class="rlm1"><h1>专家</h1></span>  <span class="rlm2"><a href="#">更多</a></span></div>
+		<div class="ylmcon">
+			<div class="qcjl">
+			<p class="center"><img src="{STATICURL}space/game/images/jiaolian.jpg" width="50" height="50"></p>
+			<p class="center">耐克体育</p>
+			</div>
+			<div class="qcjl">
+			<p class="center"><img src="{STATICURL}space/game/images/jiaolian.jpg" width="50" height="50"></p>
+			<p class="center">耐克体育</p>
+			</div>
+			<div class="qcjl">
+			<p class="center"><img src="{STATICURL}space/game/images/jiaolian.jpg" width="50" height="50"></p>
+			<p class="center">耐克体育</p>
+			</div>
+			<div class="clear"></div>
+      </div>
+		<div class="rightlm"><span class="rlm1"><h1>活动推荐</h1></span>  <span class="rlm2"><a href="#">更多</a></span></div>
+		<div class="ylmcon">
+			<p class="center"><img src="{STATICURL}space/game/images/hdtj.jpg" width="147" height="70"></p>
+			<p class="center top10">最新活动推荐</p>
+			<p class="center"><img src="{STATICURL}space/game/images/hdtj.jpg" width="147" height="70"></p>
+			<p class="center top10">最新活动推荐</p>
+        </div>
+		<div class="rightlm"><span class="rlm1"><h1>热门话题</h1></span>  <span class="rlm2"><a href="#">更多</a></span></div>
+		<div class="ylmcon">
+			<div class="rmht">
+				<p>#<a href="#">大正高尔夫</a>#</p>
+				<p>#<a href="#">皇冠赛事直播</a>#</p>
+				<p>#<a href="#">九州岛冠军赛</a>#</p>
+		    </div>
+		</div>
+		
+		<div class="rightlm"><span class="rlm1"><h1>热门标签</h1></span>  <span class="rlm2"><a href="#">更多</a></span></div>
+		<div class="ylmcon">
+			<div class="rmbq">
+			<span>养身</span><span> | </span><span>汽车</span><span> | </span><span>养身</span><span> | </span>
+			<span>养身</span><span> | </span><span>汽车</span><span> | </span><span>养身</span><span> | </span><span>养身</span><span> | </span><span>汽车</span><span> | </span><span>养身</span><span> | </span>
+			<span>养身</span><span> | </span><span>汽车</span><span> | </span><span>养身</span>
+			</div>
+		</div>
+		
+	</div>
+	<div class="clear"></div>
+</div>
+
+<br>
+<div id="wt" class="footer top20">
+  <div class="footer2">
+  <span class="z"><a href="/home.php"><img src="{STATICURL}space/game/images/bottomlogo.jpg" width="175" height="65" border="0"></a></span>
+  <span>关于大正 | 商务合作 | 招贤纳士 | 合作伙伴 | 联系我们 | 投诉建议 | 免责声明    <br>
+  大正网版权归北京大正承平文化传播有限公司 <br>
+  京ICP证110339号 京公网安备110108008116号 </span></div>
+</div>
+</body>
+</html>

@@ -1,0 +1,37 @@
+<!--{template home/spacecp_25_head}-->
+<div id="wtcontent">
+	<!-- 左侧 -->
+	<!--{template home/spacecp_25_left}-->
+	<!-- 右侧 -->
+	<div class="rightw">
+		<div class="rightlm"><span class="title_1" style="color:#fff;font-size:14px;">添加所属俱乐部和球队</div>
+		<div class="rcontent" style="border:1px solid #DBDBDB; margin-top:10px;">
+                 <div class="sapce_view_content"> 
+                        <div class="sapce_view_content_div" style="padding:15px;"> 
+			<!--中间内容-->
+            <form action="home.php?mod=spacecp&ac=jlb&op=addsub" name="form1" method="post">
+            所属俱乐部：<input type="text" name="myjlb" id="myjlb" size="30" value="$list[jlbname]" /><br /><br />
+            所属球队：<input type="text" name="myqd" id="myqd" size="30" value="$list[qdname]" /><br /><br />
+            <input type="submit" value="提交" name="sub" />
+            </form>
+			<!--中间内容-->
+		           </div>
+              </div>
+		</div>
+	</div>
+	<div class="clear"></div>
+</div>
+<script src="static/js/jquery.js"></script>
+<script>
+function ffield(fvalue){
+    var ty=jQuery("#"+fvalue).val();
+    jQuery.post('home.php?mod=spacecp&ac=usefiled&op=aj',{pid:ty},function(msg){
+        //alert(msg);
+        jQuery("#"+fvalue+"a").html(msg);
+        
+    })
+}
+
+</script>
+
+<!--{template home/spacecp_foot_comm}-->

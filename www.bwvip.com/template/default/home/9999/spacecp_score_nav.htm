@@ -1,0 +1,22 @@
+<!--{if $ac == 'score'}-->
+<ul class="tb cl" style='margin-bottom:2px'>
+	<li $opactives[addscore]><a href="home.php?mod=spacecp&ac=score&op=addscore">{lang memcp_addscore}</a></li>
+	<li $opactives[listscore]><a href="home.php?mod=spacecp&ac=score&op=listscore">{lang memcp_listscore}</a></li>
+</ul>
+<!--{elseif $ac == 'video'}-->
+<ul class="tb cl" style='margin-bottom:2px'>
+	<li $opactives[bound]><a href="home.php?mod=spacecp&ac=video&op=bound">{lang memcp_bound}</a></li>
+	<li $opactives[video]><a href="home.php?mod=spacecp&ac=video&op=video">{lang memcp_video}</a></li>
+	<li $opactives[myvideo]><a href="home.php?mod=spacecp&ac=video&op=myvideo">{lang memcp_myvideo}</a></li>
+</ul>
+<!--{elseif $ac == 'spacelink'}-->
+<ul class="tb cl" style='margin-bottom:2px'>
+	<li $opactives[listlink]><a href="home.php?mod=spacecp&ac=spacelink&op=listlink">{lang memcp_listlink}</a></li>
+	<li $opactives[addlink]><a href="home.php?mod=spacecp&ac=spacelink&op=addlink">{lang memcp_addlink}</a></li>
+</ul>
+<!--{elseif $ac == 'vupload'}-->
+<ul class="tb cl" style='margin-bottom:2px'>
+	<li $opactives[list]><a href="home.php?mod=spacecp&ac=vupload&aa=list">{lang memcp_list}</a></li>
+	<li $opactives[vup]><a href="home.php?mod=spacecp&ac=vupload&aa=vup">{lang memcp_vup}</a></li>
+</ul>
+<!--{/if}-->

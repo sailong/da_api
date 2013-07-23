@@ -1,0 +1,71 @@
+<!--{template home/spacecp_25_head}-->
+<div id="wtcontent">
+	<!-- 左侧 -->
+	<!--{template home/spacecp_25_left}-->
+	<!-- 右侧 -->
+	<div class="rightw">
+		<div class="rightlm"><span class="title_1">员工推荐</span></div>
+		<div class="rcontent" style="border:1px solid #DBDBDB; margin-top:10px;">
+                 <div class="sapce_view_content"> 
+                        <div class="sapce_view_content_div" style="padding:15px;">
+			<!--中间内容-->
+                <div>
+                <div>请输入id或者真实姓名来查找个人用户(都为空搜索全部)</div>
+                <form action="/home.php?mod=spacecp&ac=yuangong&op=search" method="post" name="form1">
+                id:<input type="text" name="id" />&nbsp;&nbsp;
+                真实姓名：<input type="text" name="username" />&nbsp;&nbsp;
+                <input type="submit" name="sub" value="搜索" />
+                </form>
+                <br />
+                <!--{if $op=='search'}-->
+                    <!--{if $rear}-->
+                    <form action="/home.php?mod=spacecp&ac=yuangong&op=subadd" method="post" name="form2">
+                    <div>
+                    <!--{loop $rear $wb}-->
+                    <input type="checkbox" value="$wb[uid]" name="puid[]" />id: $wb["uid"]  真实姓名：$wb["realname"] <br />
+                    <!--{/loop}-->
+                    <div>$disppage</div>
+                    <input type="submit" value="添加员工" />
+                    </div>
+                    </form>
+                    <!--{else}-->
+                    没有找到用户，点击<a href="/home.php?mod=spacecp&ac=yuangong" style="color:#f00;">返回</a>
+                    <!--{/if}-->
+                <!--{/if}-->
+                <!--{if $op=='index'}-->
+                <table width="100%" border="1" style="text-align: center;line-height:200%">
+                <tr><td>用户id</td><td>真实姓名</td><td>操作</td></tr>
+                <!--{loop $listarr $vk}-->
+                <tr>
+                <td>$vk["yid"]</td><td>$vk["realname"]</td><td width="100"><a href="javascript:void(0);" onclick="delid($vk[yid])" >删除员工</a></td>
+                </tr>
+                <!--{/loop}-->
+                </table>
+                <!--{/if}-->
+                </div>
+                <input type="hidden" value="$_G[uid]" id="nowuser" />
+			<!--中间内容-->
+		           </div>
+              </div>
+		</div>
+	</div>
+	<div class="clear"></div>
+</div>
+<script src="static/js/jquery.js"></script>
+<script>
+function delid (id){
+    //alert(id);
+    var nowid=jQuery("#nowuser").val();
+    jQuery.post("/yuangong.php",{flag:'1',id:id,jid:nowid},function(msg){
+        //alert(msg);
+        if(msg=='ok'){
+            alert("删除成功");
+            location.reload();
+        }else{
+            alert("删除失败");
+            location.reload();
+        }
+    })
+}
+</script>
+<!--{template home/spacecp_foot_comm}-->

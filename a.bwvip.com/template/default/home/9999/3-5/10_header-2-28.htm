@@ -1,0 +1,92 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>大正网 会员社区</title>
+<link href="{STATICURL}space/person/style.css" rel="stylesheet" type="text/css">
+<link href="{STATICURL}space/person/person_left.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="{STATICURL}space/person/js/i.js"></script>
+<script type="text/javascript" src="{STATICURL}space/person/js/iepngfix_tilebg.js"></script>
+
+
+
+<link href="{STATICURL}space/person/spaces.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="{$_G[setting][jspath]}home.js?{VERHASH}"></script>
+
+
+
+
+
+<script type="text/javascript">var STYLEID = '{STYLEID}', STATICURL = '{STATICURL}', IMGDIR = '{IMGDIR}', VERHASH = '{VERHASH}', charset = '{CHARSET}', discuz_uid = '$_G[uid]', cookiepre = '{$_G[config][cookie][cookiepre]}', cookiedomain = '{$_G[config][cookie][cookiedomain]}', cookiepath = '{$_G[config][cookie][cookiepath]}', showusercard = '{$_G[setting][showusercard]}', attackevasive = '{$_G[config][security][attackevasive]}', disallowfloat = '{$_G[setting][disallowfloat]}', creditnotice = '<!--{if $_G['setting']['creditnotice']}-->$_G['setting']['creditnames']<!--{/if}-->', defaultstyle = '$_G[style][defaultextstyle]', REPORTURL = '$_G[currenturl_encode]', SITEURL = '$_G[siteurl]', JSPATH = '$_G[setting][jspath]';</script>
+<script type="text/javascript" src="{$_G[setting][jspath]}common.js?{VERHASH}"></script>
+</head>
+
+<body>
+<div id="append_parent"></div>
+<div class="wad">
+<div class="topsea">
+<div class="headsea"><div class="z"><span><img src="{STATICURL}space/person/images/membe.jpg" width="27" height="27"></span>　　<span><a href="/home.php">大正网</a></span></div><div class="y"><a href="/home.php?mod=spacecp">登录</a>　　<a href="/member.php?mod=register">注册</a></div>
+</div></div>
+<div class="headad"></div>
+<div class="headbgxx_duan"></div>
+<div class="middlexx_duan">
+<div class="biag_duan">
+	<div class="z touxiang_d">
+	  <div class="touxiang">
+			<div id="circular-tou" class="clearfix">
+				<a href="home.php?mod=space&uid=$uid"><img src="uc_server/avatar.php?uid=$uid&size=middle" width="115" height="106" /><span class="cir-bg"></span></a><p class="center top5"><!--{$userinfo[username]}--></p>
+			</div>
+		</div>
+		<div class="clear"></div>
+		<ul class="xinx2_1">
+				<li class="z">
+			<!--{if !$space['self'] && empty($_G['uid'])}-->
+			<a id="share_space" href="home.php?mod=spacecp&ac=share&type=space&id=<!--{$uid}-->" onclick="showWindow(this.id, this.href, 'get', 0);">+关注</a>
+			<!--{elseif $guanzhu[buddy] == '1'}-->
+			<a id="share_space" href="javascript:void(0)" onclick="guanzhu(<!--{$uid}-->);">已关注</a>
+			<!--{else}-->
+			<a id="share_space" href="javascript:void(0)" onclick="guanzhu(<!--{$uid}-->);">+关注</a>
+			<!--{/if}-->
+			</li>
+				<li class="z"><a href="home.php?mod=space&do=common&op=him&uid=<!--{$uid}-->">@他</a></li>
+		</ul>
+		<div class="cxzs_duan">诚信指数</div>
+	</div>
+	<div class="z biaoge_d">
+		<div class="bjse_d">
+			<li class="biaoti_z">老鹰球：<!--{$score[total_eagle]}--></li>     <li class="btxx_y">平均开球距离：<!--{$score[total_avglength]}--></li>
+		</div>
+			<div>
+			<li class="biaoti_z">小鸟球：<!--{$score[total_birdie]}--></li>     <li class="btxx_y">开球上球道率：<!--{$score[total_shangdaolv]}--></li>
+			</div>
+			<div class="bjse_d">
+			<li class="biaoti_z">平均每轮推杆数：<!--{$score[total_avepush]}-->  </li><li class="btxx_y">开球上球道：<!--{$score[total_shangdao]}--></li>
+			</div>
+			<div>
+			<li class="biaoti_z">最远击球距离：<!--{$score[total_furthest]}--></li><li class="btxx_y">标准杆上果岭率：<!--{$score[total_greenslv]}--></li>
+			</div>
+			<div class="bjse_d">
+			<li class="biaoti_z">柏忌数：<!--{$score[total_bogi]}--></li>     <li class="btxx_y">标准杆上果岭后平均推球数：<!--{$score[total_avepushs]}--></li>
+			</div>
+			<div>
+			<li class="biaoti_z">双柏忌数：<!--{$score[total_doubles]}--></li>   <li class="btxx_y">标准杆上果岭后总推杆数：<!--{$score[total_pushs]}--></li>
+			</div>
+			<div class="bjse_d">
+			<li class="biaoti_z">其它：<!--{$score[total_other]}--></li>       <li class="btxx_y">沙坑救球率：<!--{$score[total_bunkerlv]}--></li>
+			</div>
+			<div>
+			<li class="biaoti_z">被罚杆：<!--{$score[total_penalty]}--></li>     <li class="btxx_y">沙坑救球：<!--{$score[total_bunker]}--></li>
+			</div>
+			<div class="bjse_d">
+			<li class="biaoti_z">打平标准杆：<!--{$score[total_evenpar]}--></li>  <li class="btxx_y"></li>
+		</div>
+	</div>
+	<div class="y"><a href="#"><img src="{STATICURL}space/person/images/duan_cjk.jpg" width="272" height="151" border="0"></a></div>
+</div>
+<div class="clear"></div>
+</div>
+<div class="footxx_duan"></div>
+</div>
+<!-- 顶部结束 -->
+<div class="wad">

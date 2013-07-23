@@ -1,0 +1,100 @@
+<!--{template home/space_header_comm}-->
+<div id="wtcontent">
+	<!-- 左侧 -->
+	<!--{template home/spacecp_00_left}-->
+	<!-- 右侧 -->
+	<div class="rightw">
+		 <a name="#minpain"><div class="rightlm">
+		  <span style="color:#fff; font-family:'方正准圆简体'; font-size:14px;">编辑名片</span></h1></div></a>
+		<br>
+		<div class="rcontent">
+		  <div style="margin-left:60px;">
+          <!--{if $mingpian}-->
+          <!--{loop $mingpian $value}-->
+          <form id="form1" name="form1" method="post" action="home.php?mod=spacecp&ac=mingpian&caozuo=update">
+          <table width="450" border="0" align="center" cellpadding="2" cellspacing="1">
+  <tr>
+  	<td colspan="2"><strong>编辑我的名片</strong><font color="#FF0000">(带*号内容不能为空)</font></td>
+  </tr>
+  <tr>
+    <td width="80" height="30">姓　　名：</td>
+    <td height="30">
+      <input name="realname" type="text" id="realname" value="$value[realname]" readonly="readonly" />
+      <font color="#FF0000">*</font>
+    </td>
+  </tr>
+  <tr>
+    <td height="30">公司名称：</td>
+    <td height="30"><input type="text" name="company" id="company" value="$value[company]" />
+    <font color="#FF0000">*</font></td>
+  </tr>
+  <tr>
+    <td height="30">职　　务：</td>
+    <td height="30"><input type="text" name="position" id="position" value="$value[position]" />
+    </td>
+  </tr>
+  <tr>
+    <td height="30">电话号码：</td>
+    <td height="30"><input type="text" name="mobile" id="mobile" value="$value[mobile]"/>
+    <font color="#FF0000">*</font></td>
+  </tr>
+  <tr>
+    <td height="30">邮箱地址：</td>
+    <td height="30"><input type="text" name="email" id="email" value="$value[email]" readonly="readonly" />
+    <font color="#FF0000">*</font></td>
+  </tr>
+  <tr>
+    <td height="30">大正空间：</td>
+    <td height="30"><input name="dzspace" type="text" id="dzspace" value="http://www.bwvip.com/home.php?mod=space&uid=$uid" size="40" readonly="readonly" /></td>
+  </tr>
+  <tr>
+    <td height="30">QQ：</td>
+    <td height="30"><input type="text" name="qq" id="qq" value="$value[qq]" />
+    </td>
+  </tr>
+  <tr>
+    <td height="30">公司地址：</td>
+    <td height="30"><textarea name="address" cols="40" rows="1" id="address">$value[address]</textarea>
+    <font color="#FF0000">*</font></td>
+  </tr>
+  <tr>
+    <td height="30">&nbsp;</td>
+    <td height="30"><input type="submit" name="button" id="button" value="提交" /></td>
+  </tr>
+</table></form>
+<!--{/loop}-->
+          <!--{/if}--></div>
+		  <div>
+          <div style="margin-left:60px;"><strong>名片预览</strong></div>
+         <!--{if $mingpian}-->
+          <!--{loop $mingpian $value}-->
+          <br />
+          <div style="margin:0 auto; width:450px; border:1px solid #9A9A9A; padding-top:20px; padding-bottom:10px; background:url({STATICURL}space/person/images/mp_bg.jpg) right top no-repeat;">
+          
+             <div style="line-height:25px; width:400px; margin:0 auto;">
+             
+              <div style="float:left; margin-right:20px;" id="circular-tou" class="clearfix"><img src="uc_server/avatar.php?uid=$uid&size=middle" width="115" height="106" /><span class="cir-bg"></span></div>
+              <div style="float:left; line-height:25px; margin-left:30px;">
+                <li>$value[company]</li>
+                <li><span style="font-size:14px; font-weight:700;">$value[realname]</span> <span style="margin-left:20px;">$value[position]</span></li>
+              </div>
+            <div style="clear:both;"></div>
+            <div>
+                <li>电话：$value[mobile]</li>
+                <li>邮箱：$value[email]</li>
+                <li>QQ:$value[qq]</li>
+                <li>社区地址：http://www.bwvip.com/home.php?mod=space&uid=$uid</li>
+                <li>公司地址：$value[address]</li>
+            </div>
+          </div>
+          </div>
+          <div style="width:452px; margin:0 auto; background-color:#1A4895; height:18px;">&nbsp;</div>
+          <!--{/loop}-->
+          <!--{/if}-->
+          </div>
+          <div class="clear"></div>
+      </div>		
+	</div>
+	<div class="clear"></div>
+</div>
+<!--{template home/spacecp_foot_comm}-->

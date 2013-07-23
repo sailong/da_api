@@ -1,0 +1,155 @@
+﻿<!--{if $badge_id_related_to_page == 0}-->
+<!--{subtemplate home/10_header}-->
+<!--{/if}-->
+
+<!--{if $badge_id_related_to_page == 2}-->
+<!--{subtemplate home/cga_trainer}-->
+<!--{/if}-->
+
+<!--{if $badge_id_related_to_page == 1}-->
+<!--{subtemplate home/club_trainer}-->
+<!--{/if}-->
+
+<!--{if $badge_id_related_to_page == 4}-->
+<!--{subtemplate home/foreign_trainer}-->
+<!--{/if}-->
+
+<!--{if $badge_id_related_to_page == 3}-->
+<!--{subtemplate home/hmt_trainer}-->
+<!--{/if}-->
+
+<!--{if $badge_id_related_to_page == 18}-->
+<!--{subtemplate home/cga_referee}-->
+<!--{/if}-->
+
+<!--{if $badge_id_related_to_page == 20}-->
+<!--{subtemplate home/common_employee}-->
+<!--{/if}-->
+
+<!--{if $badge_id_related_to_page == 7}-->
+<!--{subtemplate home/course_manager}-->
+<!--{/if}-->
+
+<!--{if $badge_id_related_to_page == 19}-->
+<!--{subtemplate home/caddie}-->
+<!--{/if}-->
+
+<!--{if $badge_id_related_to_page == 8}-->
+<!--{subtemplate home/lawn_expert}-->
+<!--{/if}-->
+
+<!--{if $badge_id_related_to_page == 9}-->
+<!--{subtemplate home/expert}-->
+<!--{/if}-->
+
+<style type='text/css'>
+#spacescore {
+	width:100%
+}
+#spacescore tr td {
+	border-bottom:1px solid #A2A2A2; border-right:1px solid #A2A2A2; text-align:center
+}
+#spacescore tr .first {
+	border-top:1px solid #A2A2A2; border-left:1px solid #A2A2A2;
+}
+#navv li {padding-left:40px; width:225px; font-size:14px; font-weight:normal}
+.e{overflow:hidden;}
+.e .i,.el .i{padding:6px 10px;border-bottom:1px dashed #CDCDCD;background:#F7F7F7;}
+.el{}.et{margin:20px 0 10px;}
+.el li{padding:10px 20px;min-height:20px;border-bottom:1px dashed #CDCDCD;}
+.ie6 .el,.ie6 .el li{zoom:1;}
+.el .t{position:absolute;margin:1px 0 0 -20px;}
+.el .o{overflow:hidden;float:right;margin:4px -20px -4px 0;width:16px;height:16px;text-indent:20px;background:url(../../static/image/common/op.png) no-repeat -2px -62px;}
+.ie6 .el .o{position:absolute;margin:2px 0 0 525px;}
+.el .del{background-position:-2px -22px;}
+.el .d{padding-top:10px;color:#666;}
+.ec .tn{margin:10px 10px 0 0;cursor:pointer;}
+.ec a .tn{float:left;padding:2px;max-width:90px;max-height:90px;border:1px solid #CDCDCD;}
+.ie6 .ec a .tn{width:expression(this.width > 90 && this.width >= this.height ? 90:true);height:expression(this.height > 90 && this.width <= this.height ? 90:true);}
+.el .ec .hot{float:right;margin:10px 0 0 10px;width:55px;height:50px;background:url(../../static/image/common/hotspot.gif) no-repeat;}
+.el .ec .hot a{display:block;line-height:20px;text-align:center;color:#FFF;}
+.el .ec .hot a:hover{text-decoration:none;}
+.el .ec .hot em{display:block;line-height:30px;font-size:16px;color:#369;cursor:pointer;}
+.el a{color:#369;}
+.et {font-weight:bold;}
+.cdt_duan {width:461px; height:40px; background-image:url({STATICURL}space/style/images/cdt.jpg); margin:0 auto; line-height:40px;}
+.cdt_duan span {margin-left:30px; font-size:14px; font-weight:bold;}
+</style>
+<div class="wad">
+	<!--{subtemplate home/10_left}-->
+	<div class="righter y">
+		<div class="gglb">
+			<div class="font_2" style="padding-top:10px; padding-left:52px;">品味高球人生，分享高球乐趣，您有什么球坛乐事，与大家分享一下吧！</div>
+		</div>
+		<div class="righter">
+			<div class="right_left z">
+				<div class="ggbg">&nbsp;</div>
+
+				 
+				<!-- 滑动按钮 -->
+				<div class="hd" style="padding-top:5px;">
+					<div class="maininfoTab clearfix">
+						<ul>
+							<li id="xT5" onclick="TabMore('x',5);" class="cssxon"><!--{$visitname}-->的微博</li>
+							<li id="xT6" onclick="TabMore('x',6);" class="cssx">微博广场</li>
+							<li id="xT1" onclick="TabMore('x',1);" class="cssx"><!--{$visitname}-->的动态</li>
+							<li id="xT2" onclick="TabMore('x',2);" class="cssx">博客</li>
+							<li id="xT3" onclick="TabMore('x',3);" class="cssx">图片</li>
+							<li id="xT4" onclick="TabMore('x',4);" class="cssx">视频</li>
+						</ul>
+					</div>
+					<div class="hdgg clearfix" style="padding-top:5px; color:#fff; padding-left:10px; font-family:'微软雅黑';"><!--您有一条新的消息请注意查收 --></div>
+					<div id="xC1" class="maininfoTable" style="display:none;padding-left:15px;padding-right:15px;">
+						<!--{if $spacefeed}-->
+						<div>
+						<!--{$spacefeed}-->
+						<!--{else}-->
+						没有新动态
+						<!--{/if}-->
+					</div>
+					<div id="xC2" class="maininfoTable" style="display:none;padding-left:15px; padding-right:15px;">
+						<!--{if $spaceblog}-->
+						<div>
+						<!--{$spaceblog}-->
+						<!--{/if}-->
+					</div>
+					<div id="xC3" class="maininfoTable" style="display:none;padding-left:5px;padding-right:15px;">
+						<!--{if $spacealbum}-->
+						<div>
+						<!--{$spacealbum}-->
+						<!--{/if}-->
+					</div>
+                 <div id="xC5" class="maininfoTable" >
+					  
+                <!--{if $space[self]}-->
+                        <iframe id="kjian" name="kjian" src='weibo/index.php?fuid=<!--{$_GET[uid]}--><!--{if $_G['gp_zyzw']}-->&zyzw={$_G['gp_zyzw']}<!--{/if}-->  <!--{if $_G['gp_zyyh']}-->&zyyh={$_G['gp_zyyh']}<!--{/if}-->'    width='460' height='800' scrolling='no' frameborder='0' onload="Javascript:SetWinHeight(this)" ></iframe> 
+                <!--{else}-->  
+					  <iframe id="kjian" name="kjian" src='weibo/index.php?mod=<!--{$userinfo[username]}-->&fuid=<!--{$_GET[uid]}-->' width='460' height='800' scrolling='no' frameborder='0' onload="Javascript:SetWinHeight(this)" ></iframe> 
+                <!--{/if}-->
+                       
+					</div>
+					<div id="xC4" class="maininfoTable" style="display:none; padding-top:15px;">
+						<!--{if $spacevideo}-->
+						<!--{loop $spacevideo $k $v}-->
+						<div class="videoimg z">
+							<p><a href='home.php?mod=space&uid=<!--{$uid}-->&do=video&id=<!--{$v[vpid]}-->'><img src="<!--{$v[images]}-->" width="65" height="57"></a></p>
+							<p><a href='home.php?mod=space&uid=<!--{$uid}-->&do=video&id=<!--{$v[vpid]}-->'><!--{$v[title]}--></a></p>
+						</div>
+						<!--{/loop}-->
+						<!--{else}-->
+						<p style='text-align:center; height:50px; line-height:50px'>还没有可以播放的视频</p>
+						<!--{/if}-->
+						<div class="clear"></div>
+					</div>
+                    
+                    <div id="xC6" class="maininfoTable" style="display:none; padding-top:15px;">
+						  <iframe id="kjian" name="kjian" src='weibo/index.php?mod=topic&code=new' width='460' height='4600' scrolling='no' frameborder='0' onload="Javascript:SetWinHeight(this)" ></iframe> 
+					</div>
+				</div>
+				<!-- 滑动按钮 -->
+			</div>
+			<!--{subtemplate home/10_right}-->
+		</div>
+	</div>
+</div>
+<!--{subtemplate home/10_footer}-->

@@ -1,0 +1,105 @@
+﻿<!--{subtemplate home/22_header}-->
+<div id="wtcontent">
+	<div class="z z1">
+		<!--{subtemplate home/22_left}-->
+	</div>
+	<div class="z z2">
+		<!--{subtemplate home/common_center}-->
+
+		<a name="maoershou"><div class="cdt_lm">
+			<span><h1>二手信息</h1></span>
+		</div>
+        </a>
+		<div class="cbg2">
+			  <div class="cbg2_2_lm">
+				  <!-- start -->
+                  <!--{if $op=='add'}-->
+  <form action="home.php?mod=space&uid=$uid&do=ershou&op=addsub" method="post" onsubmit="return validate_form(this)" enctype="multipart/form-data" >
+    <table>
+    <tr>
+    <td>标题：</td><td style="padding:7px 0;"><input type="text" name="title" id="title" /></td>
+    </tr>
+    <tr>
+    <td>内容：</td><td style="padding:7px 0;"><textarea name="content" cols="50" rows="6"></textarea></td>
+    </tr>
+    <tr>
+    <td>价格：</td><td style="padding:7px 0;"><input type="text" name="price" id="price" maxlength="10" onkeyup="value=value.replace(/[^\d]/g,'') " onbeforepaste="clipboardData.setData('text',clipboardData.getData('text').replace(/[^\d]/g,''))" /></td>
+    </tr>
+    <tr>
+    <td>图片：</td><td style="padding:7px 0;"><input type="file" name="myfile" /></td>
+    </tr>
+    <tr style="padding:7px 0;">
+    <td colspan="2"><input type="submit" value="提交" name="sub" /></td>
+    </tr>
+    </table>
+    <input type="hidden" name="acid" value="$uid" />
+    </form>
+    <!--{/if}-->
+    <!--{if $op=='list'}-->
+    <div>
+             <ul>
+             <!--{loop $allarr $vk}-->
+                    <li class="ershou_li_1">
+                            <div class="ershou_span_1"><a href="home.php?mod=space&uid=$uid&do=ershou&op=view&id=$vk[id]" >$vk["title"]</a></div>
+                            <div class="ershou_span_2">(&yen;$vk["price"])</div>
+                            <div class="ershou_span_3">发布人:$vk["name"]</div>
+                            <div class="clear"></div>
+                    </li>
+                    <li class="ershou_li_2"><a href="home.php?mod=space&uid=$uid&do=ershou&op=view&id=$vk[id]">$vk["content"]</a></li>
+                    <!--{/loop}-->
+                    <li style="padding-top:30px;"> <p style="float:right; padding-right:20px;">$disppage</p></li>
+              </ul>
+             
+    </div>
+   
+    <!--{/if}-->
+    <!--{if $op=='view'}-->
+     <div>
+             <ul>
+                    <li class="ershou_li_1">
+                            <div class="ershou_span_1">$relist["title"]</div>
+                            <div class="ershou_span_2">(&yen;$relist["price"])</div>
+                            <div class="ershou_span_3">发布人:$relist["name"]</div>
+                            <div class="clear"></div>
+                    </li>
+                    <li class="ershou_li_3">
+                            $relist["content"]
+                    </li>
+
+              </ul>
+    </div>
+   
+    <!--{/if}-->
+    
+                  <!-- end -->
+			  </div>
+		</div>
+		<br />
+	</div>
+	<div class="y y3">
+		<!--{subtemplate home/22_right}-->
+	</div>
+	<div class="clear"></div>
+</div>
+<script>
+function validate_form(thisform)
+{
+
+if(''==thisform.title.value){
+    
+    alert("请输入标题");
+    return false;
+}
+if(''==thisform.content.value){
+    alert("请输入内容");
+    return false;
+}
+if(''==thisform.price.value){
+    alert("请输入价格");
+    return false;
+}
+
+}
+
+</script>
+<!--{subtemplate home/22_foot}-->

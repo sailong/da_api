@@ -1,0 +1,513 @@
+<!--{subtemplate home/24_header}-->
+<style type='text/css'>
+.score{
+	width:100%
+}
+.score td {
+	border-bottom:1px solid #abcdef; border-right:1px solid #abcdef; height:25px; width:33px; text-align:center; padding:0
+}
+.score tr .first {
+	border-top:1px solid #abcdef; border-left:1px solid #abcdef; width:80px; color:blue
+}
+.score tr .num {
+	font-weight:bold
+}
+.score tr td input {
+	width:27px; height:25px; line-height:25px; margin:0; border:none
+}
+.commoninfo {
+	text-align:left
+}
+</style>
+<div id="wtcontent">
+	<!--{subtemplate home/24_left}-->
+	<div class="z z2">
+		<!--{subtemplate home/common_center}-->
+        <a name="maoweibo">
+		<div class="cdt_lm">
+		    <span><h1><!--{if $option == 'him'}-->提到<!--{$visitname}-->的<!--{else}--><!--{$visitname}-->的<!--{if $option == 'score'}-->记分卡<!--{elseif $option == 'visiter'}-->访客<!--{elseif $option == 'qun'}-->群组<!--{elseif $option == 'medalmore'}-->勋章<!--{elseif $option == 'event'}-->活动<!--{elseif $option == 'follow'}-->关注<!--{elseif $option == 'fans'}-->粉丝<!--{elseif $option == 'tag'}-->标签<!--{elseif $option == 'topic'}-->话题<!--{elseif $option == 'weibo'}-->微博<!--{/if}--><!--{/if}--></h1></span>
+		</div>
+        </a>
+		<div class="cdt_2">
+			<!--<span>&nbsp;&nbsp;<img src="{STATICURL}space/24/images/new.gif"></span>
+			<span>您有一条新的微博消息，请注意查收</span> -->
+		</div>
+		<div class="cbg2">
+			<div style="background-color:#FFF">
+
+	<!-----------开始----------->
+			<!--{if $url}-->
+				<iframe src='<!--{$url}-->' width='460' height='800px' scrolling='no' frameborder='0' onload="Javascript:SetWinHeight(this)" ></iframe>
+			<!--{elseif  $option == 'score'}-->
+				<!--{if $list}-->
+				<table cellspacing='0' cellpadding='0' class='score'>
+					<tr>
+						<td class='first'>球场</td>
+						<td colspan='21' class='commoninfo' style='border-top:1px solid #abcdef'><!--{$list[fieldname]}--></td>
+					</tr>
+					<tr>
+						<td class='first'>时间</td>
+						<td colspan='21' class='commoninfo'><!--{$list[fieldtime]}--></td>
+					</tr>
+					<tr>
+						<td class='first'>参加人数</td>
+						<td colspan='4' class='commoninfo'>
+							<!--{if $list[member]}--><!--{$list[member]}--><!--{else}-->0<!--{/if}-->
+						</td>
+						<td class='first' colspan='3'>备注</td>
+						<td colspan='16' class='commoninfo'>
+							<!--{if $list[content]}--><!--{$list[content]}--><!--{else}-->未填写<!--{/if}-->
+						</td>
+					</tr>
+					<tr>
+						<td class='first'>球洞</td>
+						<!--{loop $data $k $v}-->
+						<td class='num'><!--{$v}--></td>
+						<!--{/loop}-->
+					</tr>
+					<tr id='par'>
+						<td class='first'>标准杆</td>
+						<!--{if $list[par]}-->
+						<!--{loop $list[par] $key $val}-->
+						<td><!--{$val}--></td>
+						<!--{/loop}-->
+						<!--{else}-->
+						<!--{loop $num $key $val}-->
+						<td>&nbsp;</td>
+						<!--{/loop}-->
+						<!--{/if}-->
+					</tr>
+					<tr id='score'>
+						<td class='first'>成绩</td>
+						<!--{if $list[score]}-->
+						<!--{loop $list[score] $key $val}-->
+						<td>
+							<!--{$val}-->
+						</td>
+						<!--{/loop}-->
+						<!--{else}-->
+						<!--{loop $num $key $val}-->
+						<td>&nbsp;</td>
+						<!--{/loop}-->
+						<!--{/if}-->
+					</tr>
+					<tr id='pars'>
+						<td class='first'>距离总标准杆</td>
+						<!--{if $list[pars]}-->
+						<!--{loop $list[pars] $key $val}-->
+						<td><!--{$val}--></td>
+						<!--{/loop}-->
+						<!--{else}-->
+						<!--{loop $num $key $val}-->
+						<td>&nbsp;</td>
+						<!--{/loop}-->
+						<!--{/if}-->
+					</tr>
+				</table>
+				<table cellspacing='0' cellpadding='0' id='more' class='score' style='display:none'>
+					<tr>
+						<td colspan='7' class='first'>详细资料</td>
+					</tr>
+					<tr>
+						<td style='width:195px' class='first'></td>
+						<td style='width:100px'>第一轮</td>
+						<td style='width:100px'>第二轮</td>
+						<td style='width:100px'>第三轮</td>
+						<td style='width:100px'>第四轮</td>
+						<td style='width:100px'>总数</td>
+						<td style='width:100px'>排名</td>
+					</tr>
+					<tr>
+						<td class='first'>平均开球距离</td>
+						<!--{if $list[avglength]}-->
+						<!--{loop $list[avglength] $k $v}-->
+						<td><!--{$v}--></td>
+						<!--{/loop}-->
+						<!--{else}-->
+						<!--{loop $coun $k $v}-->
+						<td></td>
+						<!--{/loop}-->
+						<!--{/if}-->
+						<td><!--{if $list[total_avglength]}--><!--{$list[total_avglength]}--><!--{/if}--></td>
+						<td><!--{if $list[avglength_rank]}--><!--{$list[avglength_rank]}--><!--{/if}--></td>
+					</tr>
+					<tr>
+						<td class='first'>开球上球道率</td>
+						<!--{if $list[shangdaolv]}-->
+						<!--{loop $list[shangdaolv] $k $v}-->
+						<td><!--{$v}--></td>
+						<!--{/loop}-->
+						<!--{else}-->
+						<!--{loop $coun $k $v}-->
+						<td></td>
+						<!--{/loop}-->
+						<!--{/if}-->
+						<td><!--{if $list[total_shangdaolv]}--><!--{$list[total_shangdaolv]}--><!--{/if}--></td>
+						<td><!--{if $list[shangdaolv_rank]}--><!--{$list[shangdaolv_rank]}--><!--{/if}--></td>
+					</tr>
+					<tr>
+						<td class='first'>开球上球道</td>
+						<!--{if $list[shangdao]}-->
+						<!--{loop $list[shangdao] $k $v}-->
+						<td><!--{$v}--></td>
+						<!--{/loop}-->
+						<!--{else}-->
+						<!--{loop $coun $k $v}-->
+						<td></td>
+						<!--{/loop}-->
+						<!--{/if}-->
+						<td><!--{if $list[total_shangdao]}--><!--{$list[total_shangdao]}--><!--{/if}--></td>
+						<td><!--{if $list[shangdao_rank]}--><!--{$list[shangdao_rank]}--><!--{/if}--></td>
+					</tr>
+					<tr>
+						<td class='first'>标准杆上果岭率</td>
+						<!--{if $list[greenslv]}-->
+						<!--{loop $list[greenslv] $k $v}-->
+						<td><!--{$v}--></td>
+						<!--{/loop}-->
+						<!--{else}-->
+						<!--{loop $coun $k $v}-->
+						<td></td>
+						<!--{/loop}-->
+						<!--{/if}-->
+						<td><!--{if $list[total_greenslv]}--><!--{$list[total_greenslv]}--><!--{/if}--></td>
+						<td><!--{if $list[greenslv_rank]}--><!--{$list[greenslv_rank]}--><!--{/if}--></td>
+					</tr>
+					<tr>
+						<td class='first'>标准杆上果岭</td>
+						<!--{if $list[greens]}-->
+						<!--{loop $list[greens] $k $v}-->
+						<td><!--{$v}--></td>
+						<!--{/loop}-->
+						<!--{else}-->
+						<!--{loop $coun $k $v}-->
+						<td></td>
+						<!--{/loop}-->
+						<!--{/if}-->
+						<td><!--{if $list[total_greens]}--><!--{$list[total_greens]}--><!--{/if}--></td>
+						<td><!--{if $list[greens_rank]}--><!--{$list[greens_rank]}--><!--{/if}--></td>
+					</tr>
+					<tr>
+						<td class='first'>标准杆上果岭后平均推求率</td>
+						<!--{if $list[avepushs]}-->
+						<!--{loop $list[avepushs] $k $v}-->
+						<td><!--{$v}--></td>
+						<!--{/loop}-->
+						<!--{else}-->
+						<!--{loop $coun $k $v}-->
+						<td></td>
+						<!--{/loop}-->
+						<!--{/if}-->
+						<td><!--{if $list[total_avepushs]}--><!--{$list[total_avepushs]}--><!--{/if}--></td>
+						<td><!--{if $list[avepushs_rank]}--><!--{$list[avepushs_rank]}--><!--{/if}--></td>
+					</tr>
+					<tr>
+						<td class='first'>标准杆上果岭总推杆数</td>
+						<!--{if $list[pushs]}-->
+						<!--{loop $list[pushs] $k $v}-->
+						<td><!--{$v}--></td>
+						<!--{/loop}-->
+						<!--{else}-->
+						<!--{loop $coun $k $v}-->
+						<td></td>
+						<!--{/loop}-->
+						<!--{/if}-->
+						<td><!--{if $list[total_pushs]}--><!--{$list[total_pushs]}--><!--{/if}--></td>
+						<td><!--{if $list[pushs_rank]}--><!--{$list[pushs_rank]}--><!--{/if}--></td>
+					</tr>
+					<tr>
+						<td class='first'>老鹰球</td>
+						<!--{if $list[eagle]}-->
+						<!--{loop $list[eagle] $k $v}-->
+						<td><!--{$v}--></td>
+						<!--{/loop}-->
+						<!--{else}-->
+						<!--{loop $coun $k $v}-->
+						<td></td>
+						<!--{/loop}-->
+						<!--{/if}-->
+						<td><!--{if $list[total_eagle]}--><!--{$list[total_eagle]}--><!--{/if}--></td>
+						<td><!--{if $list[eagle_rank]}--><!--{$list[eagle_rank]}--><!--{/if}--></td>
+					</tr>
+					<tr>
+						<td class='first'>小鸟球</td>
+						<!--{if $list[birdie]}-->
+						<!--{loop $list[birdie] $k $v}-->
+						<td><!--{$v}--></td>
+						<!--{/loop}-->
+						<!--{else}-->
+						<!--{loop $coun $k $v}-->
+						<td></td>
+						<!--{/loop}-->
+						<!--{/if}-->
+						<td><!--{if $list[total_birdie]}--><!--{$list[total_birdie]}--><!--{/if}--></td>
+						<td><!--{if $list[birdie_rank]}--><!--{$list[birdie_rank]}--><!--{/if}--></td>
+					</tr>
+					<tr>
+						<td class='first'>沙坑救球率</td>
+						<!--{if $list[bunkerlv]}-->
+						<!--{loop $list[bunkerlv] $k $v}-->
+						<td><!--{$v}--></td>
+						<!--{/loop}-->
+						<!--{else}-->
+						<!--{loop $coun $k $v}-->
+						<td></td>
+						<!--{/loop}-->
+						<!--{/if}-->
+						<td><!--{if $list[total_bunkerlv]}--><!--{$list[total_bunkerlv]}--><!--{/if}--></td>
+						<td><!--{if $list[bunkerlv_rank]}--><!--{$list[bunkerlv_rank]}--><!--{/if}--></td>
+					</tr>
+					<tr>
+						<td class='first'>沙坑救球</td>
+						<!--{if $list[bunker]}-->
+						<!--{loop $list[bunker] $k $v}-->
+						<td><!--{$v}--></td>
+						<!--{/loop}-->
+						<!--{else}-->
+						<!--{loop $coun $k $v}-->
+						<td></td>
+						<!--{/loop}-->
+						<!--{/if}-->
+						<td><!--{if $list[total_bunker]}--><!--{$list[total_bunker]}--><!--{/if}--></td>
+						<td><!--{if $list[bunker_rank]}--><!--{$list[bunker_rank]}--><!--{/if}--></td>
+					</tr>
+					<tr>
+						<td class='first'>平均每轮推杆数</td>
+						<!--{if $list[avepush]}-->
+						<!--{loop $list[avepush] $k $v}-->
+						<td><!--{$v}--></td>
+						<!--{/loop}-->
+						<!--{else}-->
+						<!--{loop $coun $k $v}-->
+						<td></td>
+						<!--{/loop}-->
+						<!--{/if}-->
+						<td><!--{if $list[total_avepush]}--><!--{$list[total_avepush]}--><!--{/if}--></td>
+						<td><!--{if $list[avepush_rank]}--><!--{$list[avepush_rank]}--><!--{/if}--></td>
+					</tr>
+					<tr>
+						<td class='first'>最远击球距离</td>
+						<!--{if $list[furthest]}-->
+						<!--{loop $list[furthest] $k $v}-->
+						<td><!--{$v}--></td>
+						<!--{/loop}-->
+						<!--{else}-->
+						<!--{loop $coun $k $v}-->
+						<td></td>
+						<!--{/loop}-->
+						<!--{/if}-->
+						<td><!--{if $list[total_furthest]}--><!--{$list[total_furthest]}--><!--{/if}--></td>
+						<td><!--{if $list[furthest_rank]}--><!--{$list[furthest_rank]}--><!--{/if}--></td>
+					</tr>
+					<tr>
+						<td class='first'>柏忌数</td>
+						<!--{if $list[bogi]}-->
+						<!--{loop $list[bogi] $k $v}-->
+						<td><!--{$v}--></td>
+						<!--{/loop}-->
+						<!--{else}-->
+						<!--{loop $coun $k $v}-->
+						<td></td>
+						<!--{/loop}-->
+						<!--{/if}-->
+						<td><!--{if $list[total_bogi]}--><!--{$list[total_bogi]}--><!--{/if}--></td>
+						<td><!--{if $list[bogi_rank]}--><!--{$list[bogi_rank]}--><!--{/if}--></td>
+					</tr>
+					<tr>
+						<td class='first'>双柏忌数</td>
+						<!--{if $list[doubles]}-->
+						<!--{loop $list[doubles] $k $v}-->
+						<td><!--{$v}--></td>
+						<!--{/loop}-->
+						<!--{else}-->
+						<!--{loop $coun $k $v}-->
+						<td></td>
+						<!--{/loop}-->
+						<!--{/if}-->
+						<td><!--{if $list[total_doubles]}--><!--{$list[total_doubles]}--><!--{/if}--></td>
+						<td><!--{if $list[doubles_rank]}--><!--{$list[doubles_rank]}--><!--{/if}--></td>
+					</tr>
+					<tr>
+						<td class='first'>其他</td>
+						<!--{if $list[other]}-->
+						<!--{loop $list[other] $k $v}-->
+						<td><!--{$v}--></td>
+						<!--{/loop}-->
+						<!--{else}-->
+						<!--{loop $coun $k $v}-->
+						<td></td>
+						<!--{/loop}-->
+						<!--{/if}-->
+						<td><!--{if $list[total_other]}--><!--{$list[total_other]}--><!--{/if}--></td>
+						<td><!--{if $list[other_rank]}--><!--{$list[other_rank]}--><!--{/if}--></td>
+					</tr>
+					<tr>
+						<td class='first'>被罚杆数</td>
+						<!--{if $list[penalty]}-->
+						<!--{loop $list[penalty] $k $v}-->
+						<td><!--{$v}--></td>
+						<!--{/loop}-->
+						<!--{else}-->
+						<!--{loop $coun $k $v}-->
+						<td></td>
+						<!--{/loop}-->
+						<!--{/if}-->
+						<td><!--{if $list[total_penalty]}--><!--{$list[total_penalty]}--><!--{/if}--></td>
+						<td><!--{if $list[penalty_rank]}--><!--{$list[penalty_rank]}--><!--{/if}--></td>
+					</tr>
+					<tr>
+						<td class='first'>打平标准杆</td>
+						<!--{if $list[evenpar]}-->
+						<!--{loop $list[evenpar] $k $v}-->
+						<td><!--{$v}--></td>
+						<!--{/loop}-->
+						<!--{else}-->
+						<!--{loop $coun $k $v}-->
+						<td></td>
+						<!--{/loop}-->
+						<!--{/if}-->
+						<td><!--{if $list[total_evenpar]}--><!--{$list[total_evenpar]}--><!--{/if}--></td>
+						<td><!--{if $list[evenpar_rank]}--><!--{$list[evenpar_rank]}--><!--{/if}--></td>
+					</tr>
+				</table>
+				<!--{else}-->
+				<p style='height:550px; line-height:100px; text-align:center'>为添加过成绩卡</p>
+				<!--{/if}-->
+				<!--{if $id && !empty($list)}-->
+				<table cellspacing='0' cellpadding='0' class='score'>
+					<tr>
+						<td colspan='22' class='first' style='text-align:right' id='base'><span onclick='getmore()' id='getmore' style='cursor:hand'>更多资料 >></span>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+					</tr>
+				</table>
+				<!--{/if}-->
+
+
+				<!--{if empty($id)}-->
+				<!--{if $scorelist}-->
+				<!--{loop $scorelist $key $val}-->
+				<table cellspacing='0' cellpadding='0' class='score'>
+					<tr>
+						<td colspan='22' style='border-left:1px solid #abcdef; border-top:1px solid #abcdef'>
+							<!--{if $space[self]}-->
+							<a href='home.php?mod=spacecp&ac=score&op=edit&id=<!--{$val[id]}-->'>修改</a> | 
+							<a href='home.php?mod=spacecp&ac=score&op=del&id=<!--{$val[id]}-->' onclick="{if(confirm('确定操作吗？')){return true;}return false;}">删除</a>
+							<!--{/if}-->
+							<a href='home.php?mod=space&do=common&op=score&uid=<!--{$uid}-->&id=<!--{$val[id]}-->'>查看</a>
+						</td>
+					</tr>
+					<tr>
+						<td class='first'>球场</td>
+						<td colspan='21' style='border-top:1px solid #abcdef'><!--{$val[fieldname]}--></td>
+					</tr>
+					<tr>
+						<td class='first'>时间</td>
+						<td colspan='21'><!--{$val[fieldtime]}--></td>
+					</tr>
+					<tr>
+						<td class='first'>参加人数</td>
+						<td colspan='4'><!--{$val[member]}--></td>
+						<td class='first' colspan='3'>备注</td>
+						<td colspan='16' style='border-top:1px solid #abcdef'><!--{if $val[content]}--><!--{$val[content]}--><!--{else}-->未填写<!--{/if}--></td>
+					</tr>
+					<tr>
+						<td class='first'>球洞</td>
+						<!--{loop $data $k $v}-->
+						<td class='num'><!--{$v}--></td>
+						<!--{/loop}-->
+					</tr>
+					<tr>
+						<td class='first'>标准杆</td>
+						<!--{loop $val[par] $k $v}-->
+						<td><!--{$v}-->&nbsp;</td>
+						<!--{/loop}-->
+					</tr>
+					<tr>
+						<td class='first'>成绩</td>
+						<!--{loop $val[score] $k $v}-->
+						<td><!--{$v}-->&nbsp;</td>
+						<!--{/loop}-->
+					</tr>
+					<tr>
+						<td class='first'>距离总标准杆</td>
+						<!--{loop $val[pars] $k $v}-->
+						<td><!--{$v}-->&nbsp;</td>
+						<!--{/loop}-->
+					</tr>
+				</table><br /><br />
+				<!--{/loop}-->
+				<!--{/if}-->
+				<!--{/if}-->
+			<!--{elseif  $option == 'visiter'}-->
+				<!--{if $visitermore}-->
+				<!--{loop $visitermore $k $v}-->
+				<div id="circular-tou" class="clearfix">
+					<a target="_blank" href="home.php?mod=space&uid=<!--{$v[vuid]}-->">
+						<img src="uc_server/avatar.php?uid=<!--{$v[vuid]}-->&size=middle" width="80" height="74" />
+						<span class="cir-bg"></span>
+					</a>
+					<p class="center top5"><!--{$v[vusername]}--></p>
+				</div>
+				<!--{/loop}-->
+				<!--{else}-->
+				<p style='height:550px; line-height:100px; text-align:center'>还没有访客</p>
+				<!--{/if}-->
+			<!--{elseif  $option == 'grouplist'}-->
+				<!--{if $groupmore}-->
+				<div class="qunzu">
+					<!--{loop $groupmore $k $v}-->
+						<dl style='float:left; width:100px; height:150px'>
+							<dt class="qunztu">
+								<p class="center"><a href='forum.php?mod=group&fid=<!--{$v[fid]}-->'><img src="<!--{$v[icon]}-->" width="70" height="50"></a></p>
+								<p class="font10 center"><!--{$v[foundername]}--></p>
+							</dt>
+							<dd><p><a href='forum.php?mod=group&fid=<!--{$v[fid]}-->'><!--{$v[name]}--></a><!--{$v[count]}-->人</p></dd>
+						</dl>
+					<!--{/loop}-->
+				</div>
+				<!--{else}-->
+				<p style='height:550px; line-height:100px; text-align:center'>黑没有群组</p>
+				<!--{/if}-->
+			<!--{elseif  $option == 'medalmore'}-->
+				<div class="huizhang">
+					<!--{if $medalmore}-->
+					<ul>
+						<!--{loop $medalmore $v}-->
+						<li><img src="static/image/common/<!--{$v[image]}-->" width="25" height="45"><p><!--{$v[name]}--></p></li>
+						<!--{/loop}-->
+						
+					</ul>
+					<!--{else}-->
+					<p style='height:550px; line-height:100px; text-align:center'>未获得勋章</p>
+					<!--{/if}-->
+				</div>
+			<!--{/if}-->
+
+			<!--{if $multi}-->
+				<p style='margin-top:-35px'><!--{$multi}--></p>
+			<!--{/if}-->
+		<!-----------结束------------->
+
+			</div>
+		</div>
+		<br>
+	</div>
+	<!--{subtemplate home/24_right}-->
+	<div class="clear"></div>
+</div>
+
+<br>
+<!--{subtemplate home/24_foot}-->
+
+<script type="text/javascript" src='static/js/jquery.js'></script>
+<script type="text/javascript">
+	function getmore() {
+		jQuery('#more').css('display', 'inline');
+		var html = "<span onclick='getbase()' id='getmore' style='cursor:hand'>基本资料 >></span>&nbsp;&nbsp;&nbsp;&nbsp;";
+		jQuery('#base').html(html);
+	}
+	function getbase() {
+		jQuery('#more').css('display', 'none');
+		var html = "<span onclick='getmore()' id='getmore' style='cursor:hand'>更多资料 >></span>&nbsp;&nbsp;&nbsp;&nbsp;";
+		jQuery('#base').html(html);
+	}
+</script>

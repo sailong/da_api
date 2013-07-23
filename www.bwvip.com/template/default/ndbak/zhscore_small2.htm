@@ -1,0 +1,215 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>中韩对抗赛竖版</title>
+<style type="text/css"> 
+body{	margin-left: 0px;
+	margin-top: 0px;
+	margin-right: 0px;
+	margin-bottom: 0px;}
+</style>
+</head>
+
+<body>
+	<table width="{$width}" border="0" cellpadding="0" cellspacing="0">
+    	
+    <tr style="background:#fff; width:{$width}px;">
+        	<td>
+            	<table width="98%" style="background:#f4f4f4;text-align:center; margin-top:10px;" align="center" border="0" cellpadding="0" cellspacing="0">
+                	<tr height="80px" >
+                    	<td colspan="3" style="text-align:center;font-size:{$sb2}px;font-weight:bold;">中国VS韩国十佳俱乐部对抗赛</td>             
+                    </tr>
+                    <tr height="110px" style=" background:url(images/line-bg.gif) no-repeat left bottom;" align="center">
+                    	<td><img src="images/but-1.gif" width="{$dbut1}"/></td>
+                        <td><img src="images/guoqi.png"  width="{$szhongjian1}"/></td>
+                        <td><img src="images/but-2.gif"  width="{$dbut1}"/></td>
+                    </tr>
+                    <tr height="60px" align="center">
+                    	<td>{$nblist[0]['realname']}</td>
+                        <td></td>
+                        <td>{$nblist[1]['realname']}</td>
+                    </tr>
+                    <tr height="90px" style=" background:url(images/line-bg.gif) no-repeat left bottom;" align="center">
+                    	<td style="font-weight:bold;color:#000;font-size:{$sb1}px;">{echo Getuname($dyarray[$nblist[0]['uid']],2)}</td>
+                        <td>
+                   	    <table width="{$wfenz1}" height="{$wfenz2}" border="0" cellpadding="0" cellspacing="6" style="background:url(images/{echo Getwin($nblist[0]['tlcave'],$nblist[1]['tlcave'],2)}) repeat-x; color:#fff;font-size:{$zt1}px;">
+                            	<tr>
+                                	<td align="center" valign="bottom">{echo Getwin($nblist[0]['tlcave'],$nblist[1]['tlcave'],1)}</td>
+                                </tr>
+                                <tr>
+                                	<td align="center" valign="top">第1组</td>
+                                </tr>
+                            </table>
+                      </td>
+                        <td style="font-weight:bold;color:#000;font-size:{$sb1}px;">{echo Getuname($dyarray[$nblist[1]['uid']],2)}</td>
+                    </tr>
+                    <tr height="60px" align="center">
+                      <td>{$nblist[2]['realname']}</td>
+                      <td></td>
+                      <td>{$nblist[3]['realname']}</td>
+                    </tr>
+                    <tr height="90px" style=" background:url(images/line-bg.gif) no-repeat left bottom;" align="center">
+                      <td style="font-weight:bold;color:#000;font-size:{$sb1}px;">{echo Getuname($dyarray[$nblist[2]['uid']],2)}</td>
+                      <td><table width="{$wfenz1}" height="{$wfenz2}" border="0" cellpadding="0" cellspacing="6" style="background:url(images/{echo Getwin($nblist[2]['tlcave'],$nblist[3]['tlcave'],2)}) repeat-x; color:#fff;font-size:{$zt1}px;">
+    <tr>
+        <td align="center" valign="bottom">{echo Getwin($nblist[2]['tlcave'],$nblist[3]['tlcave'],1)}</td>
+    </tr>
+    <tr>
+        <td align="center" valign="top">第2组</td>
+    </tr>
+</table>
+</td>
+                      <td style="font-weight:bold;color:#000;font-size:{$sb1}px;">{echo Getuname($dyarray[$nblist[3]['uid']],2)}</td>
+                    </tr>
+                    <tr height="60px" align="center">
+                      <td>{$nblist[4]['realname']}</td>
+                      <td></td>
+                      <td>{$nblist[5]['realname']}</td>
+                    </tr>
+                    <tr height="90px" style=" background:url(images/line-bg.gif) no-repeat left bottom;" align="center">
+                      <td style="font-weight:bold;color:#000;font-size:{$sb1}px;">{echo Getuname($dyarray[$nblist[4]['uid']],2)}</td>
+                      <td><table width="{$wfenz1}" height="{$wfenz2}" border="0" cellpadding="0" cellspacing="6" style="background:url(images/{echo Getwin($nblist[4]['tlcave'],$nblist[5]['tlcave'],2)}) repeat-x; color:#fff;font-size:{$zt1}px;">
+    <tr>
+        <td align="center" valign="bottom">{echo Getwin($nblist[4]['tlcave'],$nblist[5]['tlcave'],1)}</td>
+    </tr>
+    <tr>
+        <td align="center" valign="top">第3组</td>
+    </tr>
+</table>
+</td>
+                      <td style="font-weight:bold;color:#000;font-size:{$sb1}px;">{echo Getuname($dyarray[$nblist[5]['uid']],2)}</td>
+                    </tr>
+                    <tr height="60px" align="center">
+                      <td>{$nblist[6]['realname']}</td>
+                      <td></td>
+                      <td>{$nblist[7]['realname']}</td>
+                    </tr>
+                    <tr height="90px" style=" background:url(images/line-bg.gif) no-repeat left bottom;" align="center">
+                      <td style="font-weight:bold;color:#000;font-size:{$sb1}px;">{echo Getuname($dyarray[$nblist[6]['uid']],2)}</td>
+                      <td><table width="{$wfenz1}" height="{$wfenz2}" border="0" cellpadding="0" cellspacing="6" style="background:url(images/{echo Getwin($nblist[6]['tlcave'],$nblist[7]['tlcave'],2)}) repeat-x; color:#fff;font-size:{$zt1}px;">
+    <tr>
+        <td align="center" valign="bottom">{echo Getwin($nblist[6]['tlcave'],$nblist[7]['tlcave'],1)}</td>
+    </tr>
+    <tr>
+        <td align="center" valign="top">第4组</td>
+    </tr>
+</table></td>
+                      <td style="font-weight:bold;color:#000;font-size:{$sb1}px;">{echo Getuname($dyarray[$nblist[7]['uid']],2)}</td>
+                    </tr>
+                    <tr height="60px" align="center">
+                      <td>{$nblist[8]['realname']}</td>
+                      <td></td>
+                      <td>{$nblist[9]['realname']}</td>
+                    </tr>
+                    <tr height="90px" style=" background:url(images/line-bg.gif) no-repeat left bottom;" align="center">
+                      <td style="font-weight:bold;color:#000;font-size:{$sb1}px;">{echo Getuname($dyarray[$nblist[8]['uid']],2)}</td>
+                      <td><table width="{$wfenz1}" height="{$wfenz2}" border="0" cellpadding="0" cellspacing="6" style="background:url(images/{echo Getwin($nblist[8]['tlcave'],$nblist[9]['tlcave'],2)}) repeat-x; color:#fff;font-size:{$zt1}px;">
+    <tr>
+        <td align="center" valign="bottom">{echo Getwin($nblist[8]['tlcave'],$nblist[9]['tlcave'],1)}</td>
+    </tr>
+    <tr>
+        <td align="center" valign="top">第5组</td>
+    </tr>
+</table></td>
+                      <td style="font-weight:bold;color:#000;font-size:{$sb1}px;">{echo Getuname($dyarray[$nblist[9]['uid']],2)}</td>
+                    </tr>
+                    <tr height="60px" align="center">
+                      <td>{$nblist[10]['realname']}</td>
+                      <td></td>
+                      <td>{$nblist[11]['realname']}</td>
+                    </tr>
+                    <tr height="90px" style=" background:url(images/line-bg.gif) no-repeat left bottom;" align="center">
+                      <td style="font-weight:bold;color:#000;font-size:{$sb1}px;">{echo Getuname($dyarray[$nblist[10]['uid']],2)}</td>
+                      <td><table width="{$wfenz1}" height="{$wfenz2}" border="0" cellpadding="0" cellspacing="6" style="background:url(images/{echo Getwin($nblist[10]['tlcave'],$nblist[11]['tlcave'],2)}) repeat-x; color:#fff;font-size:{$zt1}px;">
+    <tr>
+        <td align="center" valign="bottom">{echo Getwin($nblist[10]['tlcave'],$nblist[11]['tlcave'],1)}</td>
+    </tr>
+    <tr>
+        <td align="center" valign="top">第6组</td>
+    </tr>
+</table></td>
+                      <td style="font-weight:bold;color:#000;font-size:{$sb1}px;">{echo Getuname($dyarray[$nblist[11]['uid']],2)}</td>
+                    </tr>
+                    <tr height="60px" align="center">
+                      <td>{$nblist[12]['realname']}</td>
+                      <td></td>
+                      <td>{$nblist[13]['realname']}</td>
+                    </tr>
+                    <tr height="90px" style=" background:url(images/line-bg.gif) no-repeat left bottom;" align="center">
+                      <td style="font-weight:bold;color:#000;font-size:{$sb1}px;">{echo Getuname($dyarray[$nblist[12]['uid']],2)}</td>
+                      <td><table width="{$wfenz1}" height="{$wfenz2}" border="0" cellpadding="0" cellspacing="6" style="background:url(images/{echo Getwin($nblist[12]['tlcave'],$nblist[13]['tlcave'],2)}) repeat-x; color:#fff;font-size:{$zt1}px;">
+    <tr>
+        <td align="center" valign="bottom">{echo Getwin($nblist[12]['tlcave'],$nblist[13]['tlcave'],1)}</td>
+    </tr>
+    <tr>
+        <td align="center" valign="top">第7组</td>
+    </tr>
+</table></td>
+                      <td style="font-weight:bold;color:#000;font-size:{$sb1}px;">{echo Getuname($dyarray[$nblist[13]['uid']],2)}</td>
+                    </tr>
+                    <tr height="60px" align="center">
+                      <td>{$nblist[14]['realname']}</td>
+                      <td></td>
+                      <td>{$nblist[15]['realname']}</td>
+                    </tr>
+                    <tr height="90px" style=" background:url(images/line-bg.gif) no-repeat left bottom;" align="center">
+                      <td style="font-weight:bold;color:#000;font-size:{$sb1}px;">{echo Getuname($dyarray[$nblist[14]['uid']],2)}</td>
+                      <td>
+<table width="{$wfenz1}" height="{$wfenz2}" border="0" cellpadding="0" cellspacing="6" style="background:url(images/{echo Getwin($nblist[14]['tlcave'],$nblist[15]['tlcave'],2)}) repeat-x; color:#fff;font-size:{$zt1}px;">
+    <tr>
+        <td align="center" valign="bottom">{echo Getwin($nblist[14]['tlcave'],$nblist[15]['tlcave'],1)}</td>
+    </tr>
+    <tr>
+        <td align="center" valign="top">第8组</td>
+    </tr>
+</table>
+</td>
+                      <td style="font-weight:bold;color:#000;font-size:{$sb1}px;">{echo Getuname($dyarray[$nblist[15]['uid']],2)}</td>
+                    </tr>
+                    <tr height="60px" align="center">
+                      <td>{$nblist[16]['realname']}</td>
+                      <td></td>
+                      <td>{$nblist[17]['realname']}</td>
+                    </tr>
+                    <tr height="90px" style=" background:url(images/line-bg.gif) no-repeat left bottom;" align="center">
+                      <td style="font-weight:bold;color:#000;font-size:{$sb1}px;">{echo Getuname($dyarray[$nblist[16]['uid']],2)}</td>
+                      <td>
+<table width="{$wfenz1}" height="{$wfenz2}" border="0" cellpadding="0" cellspacing="6" style="background:url(images/{echo Getwin($nblist[16]['tlcave'],$nblist[17]['tlcave'],2)}) repeat-x; color:#fff;font-size:{$zt1}px;">
+    <tr>
+        <td align="center" valign="bottom">{echo Getwin($nblist[16]['tlcave'],$nblist[17]['tlcave'],1)}</td>
+    </tr>
+    <tr>
+        <td align="center" valign="top">第9组</td>
+    </tr>
+</table>
+</td>
+                      <td style="font-weight:bold;color:#000;font-size:{$sb1}px;">{echo Getuname($dyarray[$nblist[17]['uid']],2)}</td>
+                    </tr>
+                    <tr height="60px" align="center">
+                      <td>{$nblist[18]['realname']}</td>
+                      <td></td>
+                      <td>{$nblist[19]['realname']}</td>
+                    </tr>
+                    <tr height="90px" style=" background:url(images/line-bg.gif) no-repeat left bottom;" align="center">
+                      <td style="font-weight:bold;color:#000;font-size:{$sb1}px;">{echo Getuname($dyarray[$nblist[18]['uid']],2)}</td>
+                      <td><table width="{$wfenz1}" height="{$wfenz2}" border="0" cellpadding="0" cellspacing="6" style="background:url(images/{echo Getwin($nblist[16]['tlcave'],$nblist[17]['tlcave'],2)}) repeat-x; color:#fff;font-size:{$zt1}px;">
+    <tr>
+        <td align="center" valign="bottom">{echo Getwin($nblist[18]['tlcave'],$nblist[19]['tlcave'],1)}</td>
+    </tr>
+    <tr>
+        <td align="center" valign="top">第9组</td>
+    </tr>
+</table>
+</td>
+                      <td style="font-weight:bold;color:#000;font-size:{$sb1}px;">{echo Getuname($dyarray[$nblist[19]['uid']],2)}</td>
+                    </tr>
+                </table>
+</td>
+      </tr>
+    <tr style="background:#fff; width:{$width}px;">
+      <td height="44">&nbsp;</td>
+    </tr>
+    </table>
+</body>
+</html>

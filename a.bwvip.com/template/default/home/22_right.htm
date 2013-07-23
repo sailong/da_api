@@ -1,0 +1,112 @@
+		<!--div class="rightlm"><span class="rlm1"><h1>二手信息</h1></span>  <span class="rlm2"><a href="home.php?mod=space&uid=$uid&do=ershou">更多</a></span></div-->
+		 <!--div class="ylmcon">
+			<div class="rmht_miao">
+            <!--{loop $ler $ak}-->
+            <div>
+              <ul>
+                   <li><a href="home.php?mod=space&uid=$uid&do=ershou&op=view&id=$ak[id]" style="color:#6F0000;"><img src="{STATICURL}space/20/images/dian.gif" border="0" />$ak["name"]</span></a>
+                   </li>
+                   <li style=" padding-left:10px;">
+                        <a href="home.php?mod=space&uid=$uid&do=ershou&op=view&id=$ak[id]">$ak["title"]</a> <span style="color:#986a14"> &yen;$ak["price"]</span>
+                   </li>
+                 </ul>
+            </div>
+            <br />
+            <!--{/loop}-->
+            </div>
+		</div-->
+        <div class="rightlmn"><span class="rlm1">
+        <h1>会员</h1></span>  <span class="rlm2"><a href="home.php?mod=space&uid=$uid&do=member">更多</a></span></div>
+		<div class="ylmcon">
+			<div id="circular-box" class="clearfix">
+			<ul>
+            <!--{loop $yglist $value}-->
+			<li><a href="home.php?mod=space&uid=$value[userid]"><img src="uc_server/avatar.php?uid=$value[userid]&size=middle" width="62" height="57" onerror="this.src='/weibo/images/qun_img/000/00/00/2_b.jpg'"/><span class="cir-bg"></span></a><p class="center top5"><a href="home.php?mod=space&uid=$value[userid]"><!--{if strlen($value[realname]) ==0 }-->$value[username]<!--{else}-->$value[realname]<!--{/if}--></a></p>
+            </li>
+			<!--{/loop}-->
+			</ul>
+		</div>
+		<div class="clear"></div>
+      </div>
+
+
+
+
+
+
+        <!--推荐球星-->
+        <!--{eval $star_list  = brand_star_list(); }-->
+        <!--{if !empty($star_list)}-->
+            <div class="rightlm"><span class="rlm1"><h1>赞助球星</h1></span></div>
+            <div class="qx_tx">
+                  <ul>
+                   <!--{loop $star_list $value}-->
+                                   
+                        <li><a href="home.php?mod=space&uid=$value[uid]"><img title="{$value['realname']}" src="{$value['avatar']}"/></a></li>                    
+                   <!--{/loop}-->
+                  </ul>                  
+                  <div class="clear"></div>
+            </div>
+        <!--{/if}-->
+
+
+
+
+
+
+		<div class="rightlm"><span class="rlm1"><h1>企业群组</h1></span>  <span class="rlm2"><a href="$qunmorurl" >更多</a></span></div>
+		<div class="ylmcon">
+			<!--{if $grouplist}-->
+            <!--{loop $grouplist $v}-->
+            <p class="center"><a href='$v[wburl]'><img src="/weibo/<!--{$v[icon]}-->" width="78" height="47" onerror="this.src='/weibo/images/qun_img/000/00/00/2_b.jpg'"></a></p>
+            <p class="center"><!--{$v[name]}--></p>
+            <p class="center"><span><a href='home.php?mod=space&uid=<!--{$v[founderuid]}-->'><!--{$v[foundername]}--></a></span><span><!--{$v[member_num]}-->人</span></p>
+            <!--{/loop}-->
+			<!--{else}-->
+            <p class="center">未创建或参加任何群组</p>
+            <!--{/if}-->
+            
+		</div>
+		 
+		 
+		<div class="rightlm"><span class="rlm1"><h1>热门话题</h1></span>  <span class="rlm2">
+		<!--{if $uid==$_G[uid]}-->
+        <a href="home.php?mod=spacecp&ac=weibo&op=topic&id=#maoweibo">
+        <!--{else}-->
+        <a href="home.php?mod=space&do=common&op=topic&uid=$uid&id=#maoweibo">
+        <!--{/if}-->
+		更多</a></span></div>
+		<div class="ylmcon">
+			<div class="rmht">
+				<!--{if $topic}-->
+                <!--{loop $topic $val}-->
+                <p><!--{$val}--></p>
+				<!--{/loop}-->
+				<!--{else}-->
+				<p>未参加任何话题</p>
+				<!--{/if}-->
+		    </div>
+		</div>
+
+
+
+
+
+		<div class="rightlm"><span class="rlm1"><h1>热门标签</h1></span>  <span class="rlm2">
+		<!--{if $uid==$_G[uid]}-->
+            <a href="home.php?mod=spacecp&ac=weibo&op=tag">
+        <!--{else}-->
+            <a href="home.php?mod=space&do=common&op=tag&tag=$value[tag_name]&uid=<!--{$uid}-->&id=#maoweibo">
+        <!--{/if}--> 
+		更多</a></span></div>
+		<div class="ylmcon">
+			<div class="rmbq">
+			<!--{loop $tagblglist $value}-->
+            <span><a href="$value['tag_url']">$value['tag_name']</a></span><span> | </span>
+			<!--{/loop}-->
+            </div>
+		</div>
+		<div class="rightlm"><span class="rlm1"><h1>友情链接</h1></span>  <span class="rlm2"><a href="#"></a></span></div>
+		<div class="ylmcon">
+			<!--{template home/spacelink}-->
+        </div>

@@ -1,0 +1,66 @@
+<!--{template home/space_header}-->
+<div id="ct" class="wp w cl">
+	<div id="diypage" class="area">
+		<div id="frame1" class="frame cl" noedit="1">
+			<div id="frame1_left" style="width:{$widths[0]}px" class="z column">
+				<!--{if empty($leftlist)}-->
+				<div id="left_temp" class="move-span temp"></div>
+				<!--{/if}-->
+				<!--{loop $leftlist $key $value}-->
+				<!--{if !empty($key)}-->
+					<div id="$key" class="block move-span">
+						$value
+					</div>
+				<!--{/if}-->
+				<!--{/loop}-->
+			</div>
+
+			<div id="frame1_center" style="width:{$widths[1]}px" class="z column">
+				<!--{if empty($centerlist)}-->
+				<div id="center_temp" class="move-span temp"></div>
+				<!--{/if}-->
+				<!--{loop $centerlist $key $value}-->
+					<!--{if !empty($key)}-->
+						<div id="$key" class="block move-span">
+							$value
+						</div>
+					<!--{/if}-->
+				<!--{/loop}-->
+				<!--{if ($_G['groupid'] == '21')}-->
+				<div id="blog" class="block move-span">
+					<div class="blocktitle title">
+						<span>
+							<a>记分卡</a>
+						</span>
+					</div>
+					<div id="blog_content" class="dxb_bc xld">
+						<!--{if $info}-->
+						<!--{loop $info $key $val}-->
+						<p class="emp"><!--{if $val[thumb]}--><img src='<!--{$val[thumb]}-->' width='220' height='100' /><!--{else}-->现在还没有记分卡<!--{/if}--></p>
+						<!--{/loop}-->
+						<!--{else}-->
+						<p class="emp">现在还没有记分卡</p>
+						<!--{/if}-->
+					</div>
+				</div>
+				<!--{/if}-->
+			</div>
+
+			<!--{if (strlen($userdiy['currentlayout']) > 3) }-->
+			<div id="frame1_right" style="width:{$widths[2]}px" class="z column">
+				<!--{if empty($rightlist)}-->
+				<div id="right_temp" class="move-span temp"></div>
+				<!--{/if}-->
+				<!--{loop $rightlist $key $value}-->
+				<!--{if !empty($key)}-->
+					<div id="$key" class="block move-span">
+						$value
+					</div>
+				<!--{/if}-->
+				<!--{/loop}-->
+			</div>
+			<!--{/if}-->
+		</div>
+	</div>
+</div>
+<!--{template common/footer}-->

@@ -1,0 +1,62 @@
+<style type='text/css'>
+.score {
+	width:100%; font-size:22px; height:100%; font-weight:bold
+}
+.score td {
+	border-bottom:1px solid #abcdef; border-right:1px solid #abcdef; height:10%; width:2%; text-align:center; padding:0; color:#128255
+}
+#top td {
+	border-top:1px solid #abcdef
+}
+.score tr .first {
+	width:10%; color:#128128255; text-align:center; border-left:1px solid #abcdef;
+}
+.score tr #hole {
+	color:gray
+}
+.score tr .num {
+	font-weight:bold
+}
+</style>
+<table cellspacing='0' cellpadding='0' class='score'>
+	<!--{if $list}-->
+	<tr id='top'>
+		<td class='first'>球场</td>
+		<td colspan='21' style='text-align:left; width:600px'><!--{$list[fieldname]}--></td>
+	</tr>
+	<tr>
+		<td class='first'>时间</td>
+		<td colspan='21' style='text-align:left; width:600px'><!--{$list[fieldtime]}--></td>
+	</tr>
+	<tr>
+		<td class='first'>参加人数</td>
+		<td colspan='3' style='text-align:left'><!--{if $list[member]}--><!--{$list[member]}--><!--{else}-->无<!--{/if}--></td>
+		<td class='first' colspan='3' style='border-left:none'>备注</td>
+		<td colspan='16' style='text-align:left'><!--{if $list[content]}--><!--{$list[content]}--><!--{else}-->未添加备注信息<!--{/if}--></td>
+	</tr>
+	<tr>
+		<td class='first'>球洞</td>
+		<!--{loop $data $k $v}-->
+		<td class='num' id='hole'><!--{$v}--></td>
+		<!--{/loop}-->
+	</tr>
+	<tr>
+		<td class='first'>标准杆</td>
+		<!--{loop $list[par] $k $v}-->
+		<td><!--{$v}--></td>
+		<!--{/loop}-->
+	</tr>
+	<tr>
+		<td class='first'>成绩</td>
+		<!--{loop $list[score] $k $v}-->
+		<td><!--{$v}--></td>
+		<!--{/loop}-->
+	</tr>
+	<tr>
+		<td class='first'>距离总标准杆</td>
+		<!--{loop $list[pars] $k $v}-->
+		<td><!--{$v}--></td>
+		<!--{/loop}-->
+	</tr>
+	<!--{/if}-->
+</table>

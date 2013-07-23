@@ -1,0 +1,13 @@
+<!--{if $album[albumname]}-->
+$album[albumname]&ndash;$getstat['spnickname']的空间_大正网_高尔夫主题社区
+<!--{elseif $blog[subject]}-->
+$blog[subject]&ndash;$getstat['spnickname']的空间_大正网_高尔夫主题社区
+<!--{elseif $video[0][title]}-->
+$video[0][title]&ndash;$getstat['spnickname']_大正网_高尔夫主题社区
+<!--{elseif $_GET[tcode]}-->
+$_GET[tcode]&ndash;$getstat['spnickname']_大正网_高尔夫主题社区
+<!--{elseif $_GET[op]=='weibo'}-->
+微博&ndash;$getstat['spnickname']_大正网_高尔夫主题社区
+<!--{else}-->
+$getstat['spnickname']的空间_大正网_高尔夫主题社区
+<!--{/if}-->

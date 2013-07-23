@@ -1,0 +1,43 @@
+  <!--{subtemplate home/20_header}-->
+<div id="wtcontent">
+	<div class="z z1">
+		<!--{subtemplate home/20_left}-->
+	</div>
+	<div class="z z2">
+		<!--{subtemplate home/common_center}-->
+
+		<a name="qymember"><div class="cdt_lm">
+			<span><h1>$string</h1></span>
+		</div>
+        </a>
+		<div class="cdt_2">
+		</div>
+		<div class="cbg2">
+			  <div style="background-color:#FFF;">
+				  <!--start -->
+          
+<!--{if $akarr}-->	   
+
+<!--{loop $akarr $value}-->
+					<div class="z center" style="padding:10px;">
+                    <div style="width:62px; height:57px; padding:2px; border:1px solid #E8E8E8;"><a href="home.php?mod=space&uid=$value[recomid]"><img src="uc_server/avatar.php?uid=$value[recomid]&size=middle" width="62" height="57" /></a></div>
+                    <div style="padding-top:5px;"><a href="home.php?mod=space&uid=$value[recomid]">$value[realname]</a></div>
+            </div> 
+					<!--{/loop}-->
+
+				<!--{if $multi}--><div class="pgs cl mtm">$multi</div><!--{/if}--> 
+ <!--{/if}-->  
+ 
+  <div class="clear"></div>
+                  <!--end -->
+			  </div>
+		</div>
+		<br>
+	</div>
+	<div class="y y3">
+		<!--{subtemplate home/20_right}-->
+	</div>
+	<div class="clear"></div>
+</div>
+
+<!--{subtemplate home/20_foot}-->

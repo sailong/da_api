@@ -1,0 +1,156 @@
+<!--{template home/space_header_comm}-->
+<div id="wtcontent">
+	<!-- 左侧 -->
+	<!--{template home/spacecp_00_left}-->
+	<div class="rightw">
+     <!--右侧开始-->		
+  <!--{if $ac == 'qiye'}-->
+<div style="margin:0 auto; width:600px; background-color:#FFF; padding:10px;">
+<a name="maoqiye">
+    <ul class="tb cl" style='margin-bottom:10px;'>
+        <li $opactives[chazhao]><a href="home.php?mod=spacecp&ac=qiye&op=chazhao">查找企业用户</a></li>
+        <li $opactives[shenhe]><a href="home.php?mod=spacecp&ac=qiye&op=shenhe">发出申请状态</a></li>
+        <li $opactives[yaoqing]><a href="home.php?mod=spacecp&ac=qiye&op=yaoqing">审核企业邀请</a></li>
+        <li $opactives[myqy]><a href="home.php?mod=spacecp&ac=qiye&op=myqy">我的企业</a></li>
+    </ul>
+</a>
+<!--{/if}-->
+
+<!--{if $operation == 'chazhao'}-->
+<div><form name="form1" method="post" action="home.php?mod=spacecp&ac=qiye&user=key">
+<span><strong>根据企业用户登录名查找</strong>：</span>
+<span>
+  <input type="text" name="username">
+  <input type="submit" name="Submit" value="查找">
+</span>
+</form>
+</div>
+<!--{if $userr == 'key'}-->
+	<div>
+	<!--{if $user[username]==''}-->
+	没有此用户
+	<!--{else}-->
+	企业用户名：{$user[username]}    
+		<!--{if $gxiscomp[isuser] == '0'}-->
+			<font color="#FF0000">企业已发邀请</font>
+			<!--{elseif $gxiscomp[isuser] == '1'}-->
+			<font color="#FF0000">已经是其会员</font>
+			<!--{elseif $gxiscomp[iscomp] == '0'}-->
+			<font color="#FF0000">已经发出申请</font>
+			<!--{elseif $gxiscomp[iscomp] == '1'}-->
+			<font color="#FF0000">已经是其会员</font>
+			<!--{else}-->
+		<a href="home.php?mod=spacecp&ac=qiye&qiyeid=$user[uid]">申请会员</a>
+		<!--{/if}-->
+	<!--{/if}-->
+	</div>
+<!--{/if}-->
+<br>
+<span><strong>根据类别查找</strong>：<select name="comptype" size="1" onchange=javascript:window.location=(this.options[this.selectedIndex].value); >
+							 <option value="">查找用户</option>
+							 <option value="home.php?mod=spacecp&ac=qiye&sea=chaxun">全部机构用户</option>
+							 <!--{loop $compclass $key $sort}-->
+							<option value="home.php?mod=spacecp&ac=qiye&sea=chaxun&groupid=$sort[groupid]">$sort[sortname]</option>
+							<!--{/loop}-->
+					        </select></span>
+			<br>
+            <br>
+			<table width="90%"  border="0" align="center" cellpadding="2" cellspacing="1" bgcolor="#657C96">
+              <tr align="center" bgcolor="#9AC0BD">
+                <td height="25">机构名称</td>
+                <td height="25">机构介绍</td>
+                <td height="25">申请操作</td>
+              </tr>
+			  <!--{loop $chaxunqy $key $cx}-->
+              <tr align="center" bgcolor="#FFFFFF">
+                <td height="25"><a href="home.php?mod=space&uid=$cx[uid]" target="_blank">$cx[field1]</a></td>
+                <td height="25">$cx[bio]</td>
+				<!--{if $cx[iscomp] == '0'}-->
+                <td height="25"><font color="#FF0000">已提交申请</font></td>
+				<!--{elseif $cx[iscomp] == '1'}-->
+				<td height="25"><font color="#FF0000">已是企业会员</font></td>
+				<!--{elseif $cx[isuser] == '0'}-->
+				<td height="25"><font color="#FF0000">企业已经发出邀请</font></td>
+				<!--{elseif $cx[isuser] == '1'}-->
+				<td height="25"><font color="#FF0000">已是企业会员</font></td>
+				<!--{else}-->
+				<td height="25"><a href="home.php?mod=spacecp&ac=qiye&qiyeid=$cx[uid]">申请会员</a></td>
+				<!--{/if}-->
+              </tr>
+			  <!--{/loop}-->
+</table>
+
+<!--{/if}-->
+<!--{if $operation == 'shenhe'}-->
+
+<table width="90%"  border="0" align="center" cellpadding="2" cellspacing="1" bgcolor="#999999">
+  <tr align="center" bgcolor="#FFFFFF">
+    <td height="25">申请企业ID</td>
+    <td height="25">企业名称</td>
+    <td height="25">公司介绍</td>
+	<td height="25">删除申请</td>
+    <td height="25">企业审核状态</td>
+  </tr>
+  <!--{loop $shenqsh $key $sqsh}-->
+  <tr align="center" bgcolor="#FFFFFF">
+    <td height="25">{$sqsh[compid]}</td>
+    <td height="25">{$sqsh[field1]}</td>
+    <td height="25">{$sqsh[field3]}</td>
+	<td height="25"><a href="home.php?mod=spacecp&ac=qiye&cz=del&compid={$sqsh[compid]}">取消申请</a></td>
+    <td height="25"><!--{if $sqsh[iscomp]==1}-->审核通过<!--{else}-->还未通过审核<!--{/if}--></td>
+  </tr>
+  <!--{/loop}-->
+</table>
+<!--{/if}-->
+
+
+<!--{if $operation == 'yaoqing'}-->
+
+<table width="90%"  border="0" align="center" cellpadding="2" cellspacing="1" bgcolor="#999999">
+  <tr align="center">
+    <td height="25" bgcolor="#FFFFFF">企业ID</td>
+    <td height="25" bgcolor="#FFFFFF">企业用户名</td>
+    <td height="25" bgcolor="#FFFFFF">是否审核</td>
+    <td height="25" bgcolor="#FFFFFF">操作</td>
+  </tr>
+  <!--{loop $shenqing $key $sq}-->
+  <tr align="center">
+    <td height="25" bgcolor="#FFFFFF">{$sq[compid]}</td>
+    <td height="25" bgcolor="#FFFFFF">{$sq[username]}</td>
+    <td height="25" bgcolor="#FFFFFF"><!--{if $sq[iscomp]==0}-->未批准<!--{else}--><font color="#FF0000">批准</font><!--{/if}--></td>
+    <td height="25" bgcolor="#FFFFFF"><!--{if $sq[iscomp]==0}--><a href="home.php?mod=spacecp&ac=qiye&isuser=1&compid={$sq[compid]}">同意</a> | <a href="home.php?mod=spacecp&ac=qiye&cz=del&compid={$sq[compid]}">拒绝</a><!--{/if}--></td>
+  </tr>
+  <!--{/loop}-->
+</table>
+
+<!--{/if}-->
+
+
+<!--{if $operation == 'myqy'}-->
+<h1>我的所属企业</h1>
+<table width="90%"  border="0" align="center" cellpadding="2" cellspacing="1" bgcolor="#999999">
+  <tr align="center">
+    <td height="25" bgcolor="#FFFFFF">会员ID</td>
+    <td height="25" bgcolor="#FFFFFF">会员用户名</td>
+    <td height="25" bgcolor="#FFFFFF">加入方式</td>
+    <td height="25" bgcolor="#FFFFFF">操作</td>
+  </tr>
+  <!--{loop $myhy $key $hy}-->
+  <tr align="center">
+    <td height="25" bgcolor="#FFFFFF">{$hy[compid]}</td>
+    <td height="25" bgcolor="#FFFFFF"><a href="home.php?mod=space&uid={$hy[compid]}" title="查看空间" target="_blank">{$hy[realname]} 【查看其空间】</a></td>
+    <td height="25" bgcolor="#FFFFFF"><!--{if $hy[iscomp]==1}--><font color="#FF0000">申请</font><!--{/if}--> <!--{if $hy[isuser]==1}--><font color="#FF0000">邀请</font><!--{/if}--></td>
+    <td height="25" bgcolor="#FFFFFF"><!--{if $hy[iscomp]==1}--><a href="home.php?mod=spacecp&ac=qiye&cz=del&compid={$hy[compid]}">删除企业</a><!--{/if}--><!--{if $hy[isuser]==1}--><a href="home.php?mod=spacecp&ac=qiye&cz=del&compid={$hy[compid]}">删除企业</a><!--{/if}--></td>
+  </tr>
+  <!--{/loop}-->
+</table>
+
+<!--{/if}-->
+
+		</div>
+	 <!--右侧结束-->
+    </div>
+<div class="clear"></div>		 
+</div>
+
+<!--{template home/spacecp_foot_comm}--> 

@@ -1,0 +1,274 @@
+<!--{template common/header}-->
+
+<div id="pt" class="bm cl">
+	<!--{subtemplate common/simplesearchform}-->
+</div>
+
+<div id="ct" class="ct2_a wp cl">
+	<div class="mn">
+		<div class="bm bw0"> 
+<!--{if $ac == 'fz'}-->
+        <form action="test.php">
+		<ul>
+				<li>报分员ID:<input type="text"  name=fuid id=fuid value="$_G[uid]" /></li>
+				<li>赛事ID:<input type="text"  name=sais_id id=sais_id  value="1"/><input type="hidden"  name=ac id=ac  value="tj"/> </li>
+                <li><input type="submit" value="提交" /></li>
+		 </ul>
+         </form>
+  <!--{/if}-->
+  <!--{if $ac == 'qd'}-->
+        <form action="test.php">
+		<ul>	
+                <li>报分员：
+                  <input type="text"  name="fuid" id="fuid" value="$_G[uid]" />
+                </li>
+                <li>球洞:
+                  <p>
+                    <label>
+                      <input type="checkbox" name="dong[]" value="1" id="dong_0" />
+                      1</label>
+                    <label>
+                      <input type="checkbox" name="dong[]" value="2" id="dong_1" />
+                    2</label>
+                    <label>
+                      <input type="checkbox" name="dong[]" value="3" id="dong_2" />
+                      3</label>
+                    <label>
+                      <input type="checkbox" name="dong[]" value="4" id="dong_3" />
+                      4
+                    </label>
+                    <label>
+                      <input type="checkbox" name="dong[]" value="5" id="dong_4" />
+                      5</label>
+                    <label>
+                      <input type="checkbox" name="dong[]" value="6" id="dong_5" />
+                      6</label>
+                    <label>
+                      <input type="checkbox" name="dong[]" value="7" id="dong_6" />
+                      7</label>
+                    <label>
+                      <input type="checkbox" name="dong[]" value="8" id="dong_7" />
+                      8</label>
+                    <label>
+                      <input type="checkbox" name="dong[]" value="9" id="dong_8" />
+                      9</label>
+                    <label>
+                      <input type="checkbox" name="dong[]" value="10" id="dong_9" />
+                      10</label>
+                    <label>
+                      <input type="checkbox" name="dong[]" value="11" id="dong_10" />
+                      11</label>
+                    <label>
+                      <input type="checkbox" name="dong[]" value="12" id="dong_11" />
+                      12</label>
+                    <label>
+                      <input type="checkbox" name="dong[]" value="13" id="dong_12" />
+                      13</label>                    
+                    <label>
+                      <input type="checkbox" name="dong[]" value="14" id="dong_13" />
+                      14</label>
+                    <label>
+                      <input type="checkbox" name="dong[]" value="15" id="dong_14" />
+                      15</label>
+                    <label>
+                      <input type="checkbox" name="dong[]" value="16" id="dong_15" />
+                      16</label>
+                    <label>
+                      <input type="checkbox" name="dong[]" value="17" id="dong_16" />
+                      17</label>
+                    <label>
+                      <input type="checkbox" name="dong[]" value="18" id="dong_17" />
+                      18</label> 
+                      <input type="hidden"  name=ac id=ac  value="nd"/> 
+</p>
+                </li>
+                <li>
+                  <p>
+                    <input type="submit" value="提交" />
+                    <br />
+                  </p>
+                </li>
+		 </ul>
+         </form>
+  <!--{/if}-->
+   <!--{if $ac == 'bf'}-->
+        <form action="test.php">
+		<ul>	
+                <li>报分:<input type="text"  name="fuid" id="fuid" value="$_G[uid]" /></li>
+                <li>
+                   <div style="width:600px;"><ul style="width:600px;">
+                      <!--{loop $arr $key $val}-->
+				<li style="width:100px;float:left;">$val<input  name="$key" type="text" id="uid" value="$val" size="5" /></li>
+				<!--{/loop}-->
+                </ul>
+                   </div>
+                </li>
+                <li><input type="submit" value="提交" /></li>
+		 </ul>
+         </form>
+  <!--{/if}-->
+     <!--{if $ac == 'xs'}-->
+        <form action="test.php">
+		<ul>	
+                <li>报名选手:</li>
+                <li>
+                <div style="width:600px;">
+                <ul style="width:600px;">
+                    <!--{loop $bmlist $v}-->
+                    <li style="width:200px; float:left;"><input type="checkbox" name="scid" id="scid" value="$v[uid]" />
+                      <label for="scid"></label>$v[realname]//$v[cahdian]
+                    </li> 
+                      <!--{/loop}--> 
+              </ul>
+              </div>
+                </li>
+		 </ul>
+         </form>
+  <!--{/if}-->
+  
+   <!--{if $ac == 'cjk'}-->
+        <form action="test.php">
+		<ul>	
+                <li>成绩卡:                </li>
+                <li>
+                  <table width="800" border="1" cellpadding="0" cellspacing="0">
+                    <tr>
+                      <td rowspan="2">选手名</td>
+                      <td rowspan="2">成绩</td>
+                      <td>1</td>
+                      <td>2</td>
+                      <td>3</td>
+                      <td>4</td>
+                      <td>5</td>
+                      <td>6</td>
+                      <td>7</td>
+                      <td>8</td>
+                      <td>9</td>
+                      <td>OUT</td>
+                      <td>10</td>
+                      <td>11</td>
+                      <td>12</td>
+                      <td>13</td>
+                      <td>14</td>
+                      <td>15</td>
+                      <td>16</td>
+                      <td>17</td>
+                      <td>18</td>
+                      <td>TOTAL</td>
+                    </tr>
+                    <tr>
+                      <td>5</td>
+                      <td>4</td>
+                      <td>3</td>
+                      <td>4</td>
+                      <td>2</td>
+                      <td>&nbsp;</td>
+                      <td>&nbsp;</td>
+                      <td>&nbsp;</td>
+                      <td>&nbsp;</td>
+                      <td>&nbsp;</td>
+                      <td>&nbsp;</td>
+                      <td>&nbsp;</td>
+                      <td>&nbsp;</td>
+                      <td>&nbsp;</td>
+                      <td>&nbsp;</td>
+                      <td>&nbsp;</td>
+                      <td>&nbsp;</td>
+                      <td>&nbsp;</td>
+                      <td>&nbsp;</td>
+                      <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                      <td>张三</td>
+                      <td>88</td>
+                      <td>5</td>
+                      <td>5</td>
+                      <td>4</td>
+                      <td>5</td>
+                      <td>4</td>
+                      <td>5</td>
+                      <td>5</td>
+                      <td>5</td>
+                      <td>5</td>
+                      <td>15</td>
+                      <td>5</td>
+                      <td>5</td>
+                      <td>5</td>
+                      <td>5</td>
+                      <td>5</td>
+                      <td>5</td>
+                      <td>5</td>
+                      <td>5</td>
+                      <td>5</td>
+                      <td>88</td>
+                    </tr>
+                    <tr>
+                      <td>李四</td>
+                      <td>81</td>
+                      <td>&nbsp;</td>
+                      <td>&nbsp;</td>
+                      <td>&nbsp;</td>
+                      <td>&nbsp;</td>
+                      <td>&nbsp;</td>
+                      <td>&nbsp;</td>
+                      <td>&nbsp;</td>
+                      <td>&nbsp;</td>
+                      <td>&nbsp;</td>
+                      <td>&nbsp;</td>
+                      <td>&nbsp;</td>
+                      <td>&nbsp;</td>
+                      <td>&nbsp;</td>
+                      <td>&nbsp;</td>
+                      <td>&nbsp;</td>
+                      <td>&nbsp;</td>
+                      <td>&nbsp;</td>
+                      <td>&nbsp;</td>
+                      <td>&nbsp;</td>
+                      <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                      <td>王二</td>
+                      <td>75</td>
+                      <td>&nbsp;</td>
+                      <td>&nbsp;</td>
+                      <td>&nbsp;</td>
+                      <td>&nbsp;</td>
+                      <td>&nbsp;</td>
+                      <td>&nbsp;</td>
+                      <td>&nbsp;</td>
+                      <td>&nbsp;</td>
+                      <td>&nbsp;</td>
+                      <td>&nbsp;</td>
+                      <td>&nbsp;</td>
+                      <td>&nbsp;</td>
+                      <td>&nbsp;</td>
+                      <td>&nbsp;</td>
+                      <td>&nbsp;</td>
+                      <td>&nbsp;</td>
+                      <td>&nbsp;</td>
+                      <td>&nbsp;</td>
+                      <td>&nbsp;</td>
+                      <td>&nbsp;</td>
+                    </tr>
+                  </table>
+                </li>
+		 </ul>
+         </form>
+  <!--{/if}-->
+		</div>
+	</div>
+	<div class="appl">
+		<div class="tbn">
+			<h2 class="mt bbda">N洞报分</h2>
+			<ul>
+				<li><a href="test.php?ac=xs">报名选手表</a></li>
+				<li><a href="test.php?ac=fz">分组</a></li>
+				<li><a href="test.php?ac=qd">报分员分配球洞</a></li>
+				<li><a href="test.php?ac=bf">报分</a></li>
+				<li><a href="test.php?ac=cjk">成绩表</a></li>
+				 
+			</ul>
+		</div>
+	</div>
+</div>
+<!--{subtemplate common/footer}-->

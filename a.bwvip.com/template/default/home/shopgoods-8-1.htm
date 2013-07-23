@@ -1,0 +1,68 @@
+<style type="text/css">
+
+#shop_content{width:704px; float:right; background:#7c7c7c url(../images/content_bg.jpg) repeat-x; padding-top:56px;}
+#shop_box{ background:#fff; width:665px; }
+#pmenu{ background:url(../images/box_men_2.jpg) repeat-y ; width:665px;padding-top:10px;}
+#pmenu a{color:#fff; text-decoration:none; margin:0 17px;white-space:nowrap;
+ }
+#pmenu a:hover{ color:#fff; text-decoration:underline; margin:0 17px;white-space:nowrap;
+ }
+#pmenu ul{ margin:0px 8px;}
+#pmenu li{color:#fff; float:left;line-height:25px;}
+#pmenu span{color:#fff; float:left;line-height:25px;}
+#pmenu li{ list-style:none; }
+
+/*内容css*/
+#content_tilte{ margin-top:5px;background:none repeat scroll 0 0 #8D8D8D;padding:3px;}
+#content_tilte_1{background:#8d8d8d; padding:5px 0px 5px 10px;;text-align:left; width:655px; margin-top:5px;}
+#content_tilte .left{float:left; padding-top:3px; width:445px;height:26px;  text-align:left;background:#8d8d8d; padding-left:12px;}
+#content_tilte .right{float:right;width:68px;padding-top:6px;  height:23px; text-align:left; padding-left:140px;background:#8d8d8d; }
+#content_tilte .right a{background:#ccc; color:#000; padding-left:15px; padding-right:15px; height:18px; line-height:18px;}
+#content{width:665px; height:auto;padding-top:10px;}
+#content ul,#content ul:hover{float:left; width:157px; margin:11px 7px 0px 0px;list-style:none; padding:0px;}
+#content ul{border:1px solid #949494; background:#e5e5e5;}
+#content ul:hover{border:1px solid #949494; background:#fff url(../images/pro_bg.jpg) repeat-x;}
+
+#content li{list-style:none; padding:0px; width:157px; text-align:center; clear:both; line-height:15px;}
+#content .pimg {padding-bottom:8px; width: 157px; height:172px; border:0px;}
+#content .pimg:hover {padding-bottom:8px; width: 150px; height:164px; padding-top:8px;border:0px;}
+/*#content .pimg {padding-bottom:8px; width: 157px; height:172px; border:0px;}
+#content .pimg:hover {padding-bottom:8px; width: 150px; height:164px; padding-top:8px;border:0px;}*/
+
+/*商品部分*/
+.pname{font-weight:bold;  text-align:center; color:#a02d00;}
+  </style>
+<div id="shopcontent">
+             <div id="shop_box">
+                               <!-- 商品分类开始-->
+                               <div><img src="images/box_men_1.jpg"></div>
+                               <div id="pmenu">
+                                       <ul>  	
+                                       <!--{loop $sortlist $key $value}-->
+                                     <!--{if $key>0}-->  <!--{/if}-->  <li><a href="home.php?mod=space&uid=$value[uid]&do=shop&cat_id=$value[cat_id]">$value[cat_name]</a>|</li> 
+                                       <!--{/loop}--><li>  <a href="home.php?mod=space&uid=$value[uid]&do=shop">全部</a></li>
+                                       </ul>
+                                       <div class="clear"></div>
+                               </div>
+                               <div><img src="images/box_men_3.jpg"></div>
+                               <!--商品分类结束-->
+                               <!-- 高尔夫球开始杆-->
+							   <div id="content_tilte">
+								<span style='padding-left:10px;'>当前位置：<a href="home.php?mod=space&uid=$_GET['uid']&do=shop">产品</a> >> $getloc</span>
+								<span style="float:right;padding-right:10px;"><a href="home.php?mod=space&uid=$_G['gp_uid']&do=shop&act=cart">购物车</a></span>
+							    <span style="float:right;padding-right:10px;"><a href="home.php?mod=space&uid=$_G['gp_uid']&do=shop&act=order">订单</a></span>
+                               </div>
+							   
+                                <div class="clear"></div>
+                               <div id="content" >
+                                 <IFRAME id="kjian" name="kjian" frameBorder=0 scrolling=no src="/shop/goods.php?id={$_G['gp_goods_id']}&uid={$_G['gp_uid']}"width="100%" height="800" onload="Javascript:SetWinHeight(this)" ></iframe>                  
+                               </div>
+                               <div class="clear"></div> 
+                                
+                                
+                               <!--高尔夫球杆结束--> 
+                               
+                               
+               </div>
+               
+    </div>

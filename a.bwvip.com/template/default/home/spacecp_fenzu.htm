@@ -1,0 +1,97 @@
+<!--{subtemplate common/header}-->
+	<!--{subtemplate home/spacecp_header}-->
+		
+        <ul class="tb cl">
+        <li {$actives['m_list']}><a href="home.php?mod=spacecp&ac=fenzu">【分站】会员列表</a></li>
+        <li {$actives['qyfenzu']}><a href="home.php?mod=spacecp&ac=fenzu&op=members_fenzu">【分站】会员分组</a></li>
+        <li {$actives['event_rule_list']}><a href="home.php?mod=spacecp&ac=fenzu&op=event_fenzu_rule_list">【赛事】分组规则列表</a></li>
+        <li {$actives['baofen']}><a href="home.php?mod=spacecp&ac=fenzu&op=baofen">【赛事】报分列表</a></li>
+        <li><a href="home.php?mod=spacecp&ac=ulist">返回赛事管理</a></li>
+        
+        </ul>
+
+		<!--{if $operation == 'base'}-->
+		
+			<div class="tbmu bw0">
+				<p>
+                    <form id="addfundsform" name="addfundsform" method="post" autocomplete="off" action="home.php?mod=spacecp&ac=fenzu&op=base">
+                    <input type="hidden" name="formhash" value="{FORMHASH}" />
+                    <input type="hidden" name="searchsubmit" value="true" />
+                          <div class="exfm" style="margin-top: 0;">
+                                <table cellspacing="0" cellpadding="0">
+                                    <tr>
+                                        <th >分组会员查找:</th>
+                                        <td>
+                                            <span class="ftid">
+                                                <select id="exttype" name="fenz" class="ps" width="168">
+                                                    <option value="0" >请选择分站</option>
+                                                    <!--{loop $fz_rows $fz_rows}-->
+                                                    <option value="$fz_rows['fz_id']"   {if $_G['gp_fenz']== $fz_rows['fz_id']} selected {/if}>{$fz_rows[fenz_name]}</option>
+                                                    <!--{/loop}-->
+                                                </select>
+                                            </span>
+
+                                            <span class="ftid">
+                                                <select id="income" name="field" class="ps" width="168">
+                                                    <option value="0">请选球场</option>
+                                                    <!--{loop $qc_rows $qc_rows}-->
+                                                    <option value="$qc_rows['field_id']"  {if $_G['gp_field']== $qc_rows['field_id']} selected {/if}>{$qc_rows[field_name]}</option>
+                                                    <!--{/loop}-->
+                                                </select>
+                                            </span>
+                                            <button type="submit" class="pn" name="search" value="true"><strong>搜 索</strong></button>
+                                            <input type="submit" name="export" class="btn" value="导出Excel">
+                                            <input name="ac" value="fenzu" type="hidden"><input name="op" value="base" type="hidden">                                 
+                                        </td>
+                                    </tr>
+                                  </table>
+                                    <script type="text/javascript">
+                                        simulateSelect('exttype');
+                                        simulateSelect('income');
+                                        simulateSelect('optype');
+                                    </script>
+                              </div>
+                    </form>
+                </p>
+			</div>
+			<table cellspacing="0" cellpadding="0" class="dt valt">
+				<tr>
+					<th class="xw1">选手名称</th>
+					<th class="xw1">比赛开始时间</th>
+					<th class="xw1">开球Tee台</th>
+					<th class="xw1">分组标示</th>
+                    <th class="xw1">上/下 半场</th>
+                    <th class="xw1">选手差点</th>
+                    <th class="xw1">操作动作</th>
+				</tr>
+              <!--{if $fenzhan_members}-->
+                    <!--{eval $i = 0;}-->
+                    <!--{loop $fenzhan_members $key $value}-->
+                    <!--{eval $i++;}-->
+                    <tr{if $i % 2 == 0} class="alt"{/if}>
+                        <td><a href="dazbm.php?bm_page=1&member_id={$value['uid']}" target="_blank">{$value['realname']}</a></td>
+                        <td>{$value['start_time']}</td>
+                        <td>{if $value['tee'] == 0}<font color="red"  >【停赛】</font>{else}{$value['tee']}Tee{/if}</td>
+                        <td>{if $value['tee'] == 0}<font color="red"  >【停赛】</font>{else}{$value['team_number']}-组{/if}</td>
+                        <td><!--{if $value['am_pm'] > 1}-->下午<!--{else}-->上午<!--{/if}--></td>
+                        <td> $value['chadian']</td>
+                        <td> <a href="home.php?mod=spacecp&ac=fenzu&op=member_allot&fz_m_id={$value['fz_m_id']}" target="_blank">[调 配]</a>  <a href="home.php?mod=spacecp&ac=fenzu&op=stopgame&fz_m_id={$value['fz_m_id']}&field={$_G['gp_field']}&fenz={$_G['gp_fenz']}">停赛</a></td>					
+                    </tr>
+                    <!--{/loop}-->
+              <!--{else}-->
+                <!--{if submitcheck('searchsubmit')}-->
+                     <tr>
+                        <td colspan="8" style="vertical-align:middle; text-align:center; color:red;"> <font>没有相关数据 请从新搜索</font></td>
+                     </tr>
+                <!--{/if}-->
+              <!--{/if}-->
+			</table>
+		<!--{/if}-->
+		<!--{hook/spacecp_credit_bottom}-->
+		</div>
+	</div>
+	<div class="appl">
+		<!--{subtemplate home/spacecp_footer}-->
+	</div>
+</div>
+<!--{subtemplate common/footer}-->

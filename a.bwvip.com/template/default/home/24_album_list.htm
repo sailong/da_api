@@ -1,0 +1,56 @@
+<!--{if empty($diymode)}-->
+
+<!--{template home/spacecp_24_head}-->
+<div id="wtcontent">
+	<!-- 左侧 -->
+	<!--{template home/spacecp_24_left}-->
+	<!-- 右侧 -->
+	<div class="rightw">
+		<div class="rightlm"><h1>我的相册</h1></div>
+		<br />
+		<div class="rcontent">
+
+		<!--{subtemplate home/space_comm_albumsz}-->	
+		<!--{subtemplate home/space_comm_albumlist}-->	
+			<div class="clear"></div>
+    		</div>
+    	</div>
+    </div>
+    <div class="clear"></div>
+	<!--{subtemplate home/spacecp_foot_comm}-->
+<!--{else}-->
+
+	<!--{subtemplate home/24_header}-->
+<!--    <style type="text/css">
+.ml img { display:block; margin:0 auto; border:1px solid #CCCCCC; padding:2px;}
+</style> -->
+	<div id="wtcontent">
+	<!--{subtemplate home/24_left}-->
+    <div class="z z2">
+		<div><img src="{STATICURL}space/24/images/chx.jpg" width="482" height="8"></div>
+		<br />
+		<!--{subtemplate home/common_center}-->
+       <a name="maoxiangce"> <div class="cdt_lm">
+          <span><h1><!--{$visitname}-->的相册</h1></span>
+        </div>
+        </a>
+        <div class="cdt_2">
+			<!--<span>&nbsp;&nbsp;<img src="{STATICURL}space/24/images/new.gif"></span>
+			<span>您有一条新的微博消息，请注意查收</span> -->
+		</div>
+		<div class="cbg2">
+		    <div style="background-color:#FFF;">
+
+					<!--{subtemplate home/space_comm_albumlist}-->		
+
+			</div>
+		</div>			
+	<br />
+	</div>
+    <!--右侧开始-->
+    <!--{subtemplate home/24_right}-->
+	<div class="clear"></div>
+	</div>
+	<br />
+	<!--{subtemplate home/24_foot}-->
+<!--{/if}-->

@@ -1,0 +1,329 @@
+﻿<!--{subtemplate home/20_header}-->
+<script type="text/javascript" src="static/js/jquery.js"></script>
+<script type="text/javascript" src="static/js/jquery.form.js"></script>
+<script type="text/javascript"> 
+        // wait for the DOM to be loaded 
+        //$(document).ready(function() { 
+            // bind 'myForm' and provide a simple callback function 
+            //$('#myForm').ajaxForm(function() { 
+               // alert("Thank you for your comment!"); 
+            //});
+        //}); 
+</script> 
+<div id="wtcontent">
+	<div class="z z1">
+		<!--{subtemplate home/20_left}-->
+	</div>
+	<style type="text/css">
+.qpg_z4 {width:698px; overflow:hidden; background-color:#7C7C7C; margin-left:6px;}
+.qixian_21 li {height:25px;}
+#getphone li {
+	float:left
+}
+.iphone {
+	border:1px solid #CCC
+}
+td {height:30px;}
+input {border:1px solid #CCC; height:22px;}
+.iphone {border:1px solid #CCC; height:22px; margin-left:10px; margin-top:15px; text-align:center;}
+.tijiao_d {width:120px; height:25px; border:1px solid #E8E8E8; background-color:#EFEFEF;}
+.tijiao_d_2 {margin-top:15px; margin-left:10px;}
+.innn {height:25px; margin-left:10px; margin-top:15px; width:137px; text-align:center; background:url({STATICURL}space/uidcss_1889193/images/qpg_hbg.jpg);}
+.titi_d {width:134px; height:33px; border:0}
+</style>
+	<div class="z qpg_z4">
+		<br>
+        <div class="fenx"></div>
+	    <div class="qpg_xin clear">&nbsp;</div>
+            <div class="center"><img src="{STATICURL}space/uidcss_1889193/images/4s_qx.jpg" width="676" height="101"></div>
+            <div class="center"><img src="{STATICURL}space/uidcss_1889193/images/4s_lc.jpg" width="676" height="150"></div>
+            <div style="width:676px; height:28px; margin:0 auto; background-image:url(images/4s_lc_1.jpg);"></div>
+<div style="width:676px; margin:0 auto; background:url({STATICURL}space/uidcss_1889193/images/4s_lc_2.jpg) left top repeat-y; height:700px;;">
+                <div style="padding:10px 40px;">
+                <!--start -->
+				  <form id="form1" name="form1" method="post" action="home.php?mod=space&do=action&act=iphone4s&op=<!--{if $operation == 'tel'}-->iphonenumber<!--{else}-->subscribe<!--{/if}-->" onsubmit="return validate_form(this)">
+					<!--{if $operation == 'tel'}-->
+					<div class='qpg_lh'>
+						<!--{if $phonearr}-->
+						<p style="font-weight:700; font-size:14px; margin-left:10px;">您可能喜欢的号码</p>
+						<input type='hidden' name='uid' id='uid' value='<!--{$_GET[uid]}-->' readonly />
+						<input type='hidden' name='iphoneval' id='iphoneval' value='<!--{if $iphoneval}--><!--{$iphoneval}--><!--{/if}-->' readonly />
+						<ul>
+							<!--{loop $phonearr $k $v}-->
+							<input type='text' name='iphone' id='xh_$k' value='$v[phone]' class='iphone' readonly onclick='showbgcolor($k)' />
+							<!--{/if}-->
+						</ul>
+						<input type='submit' class="tijiao_d tijiao_d_2" name='iphonesubmit' value='确定' onclick='return checkphomenumber()' />
+						<a href='home.php?mod=space&uid=2&do=action&act=iphone4s&op=tel&num=$tel&page=$page'>换一组</a>
+						<!--{else}-->
+						<p style='height:100px; line-height:50px; text-align:center'>抱歉！未找到与您匹配的号码</p>
+						<!--{/if}-->
+					</div>
+					<!--{else}-->
+					<table width=95% border="0" cellpadding="2" cellspacing="3" style="z-index:1">
+						<!--<tr>
+						<td bgcolor="#FFFFFF">提交人姓名</td>
+						<td bgcolor="#FFFFFF"><input type="text" name="username" id="username" /></td>
+						</tr>-->
+						<tr>
+							<td align="right" bgcolor="#FFFFFF">手机号：</td>
+						  <td bgcolor="#FFFFFF"><input type="text" name="mobile" id="mobile"   onkeyup="value=value.replace(/[^\d]/g,'') " 	onbeforepaste="clipboardData.setData('text',clipboardData.getData('text').replace(/[^\d]/g,''))" maxlength='11' /></td>
+						</tr>
+						<tr>
+							<td align="right" bgcolor="#FFFFFF">驾照编号：</td>
+						  <td bgcolor="#FFFFFF"><input type="text" name="license" id="license" /></td>
+						</tr>
+						<tr>
+							<td align="right" bgcolor="#FFFFFF">汽车类型：</td>
+							<td bgcolor="#FFFFFF">
+							  <SELECT id=fctbox name="fctbox" class=sub_sinput onchange=_AutoBrandCHange()>
+									<OPTION selected value=0>选择品牌</OPTION>
+									<!--{loop $carlst $value}--> 	
+									<OPTION   value=$value[id]>$value[firstletter]  $value['name']</OPTION>
+									<!--{/loop}-->
+								</SELECT> 
+								<SELECT id=brbox class=sub_sinput disabled onchange=comp_splist() name=brbox>
+									<OPTION selected value=0>选择车系</OPTION>
+								</SELECT> 
+								<SELECT id=spbox class=sub_sinput disabled name=spbox> 
+									<OPTION selected value=0>选择车型</OPTION>
+								</SELECT>
+								<SCRIPT type=text/javascript>
+									function AutohomeJsLoad(args) {
+										var s = document.createElement("script");
+										s.setAttribute("type", "text/javascript");
+										s.setAttribute("src", args.url);
+										s.onload = s.onreadystatechange = function() {
+											if(!this.readyState || this.readyState == "loaded" || this.readyState == "complete") {
+												if(typeof args.callBack == "function") args.callBack(args.args);
+													s.onload = s.onreadystatechange = null;
+													try {
+														s.parentNode && s.parentNode.removeChild(s)
+													} catch(e) {
+														
+													}
+												}
+											};
+											document.getElementsByTagName("head")[0].appendChild(s)
+										};
+										Function.prototype.bind = function(bindObj, args) {
+											var _self = this;
+											return function() {
+												return _self.apply(bindObj, [].concat(args))
+											}
+										};
+										function _AutoBrandCHange() {
+											AutohomeJsLoad({ url: 'autojs.js?$rand(10,100)',
+											callBack: function () {
+												document.getElementById("fctbox").onchange = function () {
+													comp_brlist();
+												};
+												comp_brlist();
+											}
+										});
+									}
+								</SCRIPT>
+							</td>
+						</tr>
+						<tr>
+							<td align="right" bgcolor="#FFFFFF">车驾号：</td>
+						  <td bgcolor="#FFFFFF"><input type="text" name="chejiahao" id="chejiahao" /></td>
+						</tr>
+						<tr>
+							<td align="right" bgcolor="#FFFFFF">车型名称：</td>
+						  <td bgcolor="#FFFFFF"><input type="text" name="chexing" id="chexing" /></td>
+						</tr>
+						<tr>
+							<td align="right" bgcolor="#FFFFFF">车牌号：</td>
+						  <td bgcolor="#FFFFFF"><input type="text" name="chepai" id="chepai" maxlength='5' /></td>
+						</tr>
+						<tr>
+							<td align="right" bgcolor="#FFFFFF">发动机型号：</td>
+						  <td bgcolor="#FFFFFF"><input type="text" name="fadongji" id="fadongji" /></td>
+						</tr>
+						<tr>
+							<td align="right" bgcolor="#FFFFFF">手机颜色：</td>
+							<td bgcolor="#FFFFFF">
+							  <select name="telcolor" id="telcolor">
+									<option value="黑色">黑色</option>
+									<option value="白色">白色</option>
+								</select>
+							</td>
+						</tr>
+						<tr>
+							<td align="right" bgcolor="#FFFFFF">可用空间：</td>
+						  <td bgcolor="#FFFFFF"><input type="radio" name="kongjian" value="16GB" checked="checked" />16GB&nbsp;
+								<input type="radio" name="kongjian" value="32GB" />32GB&nbsp;
+								<input type="radio" name="kongjian" value="64GB" />64GB&nbsp;
+							</td>
+						</tr>
+						<tr>
+							<td align="right" bgcolor="#FFFFFF">合约计划：</td>
+						  <td bgcolor="#FFFFFF"><select name="plan"><option value="298元">298元</option><option value="398元">398元</option></select></td>
+						</tr>
+						<tr>
+							<td align="right" bgcolor="#FFFFFF">合约期限：</td>
+						  <td bgcolor="#FFFFFF"><select name="qixian"><option value="一年">一年</option><option value="两年">两年</option></select></td>
+						</tr>
+						<tr>
+							<td align="right" bgcolor="#FFFFFF">证件类型：</td>
+							<td bgcolor="#FFFFFF">
+							  <select name="zjtype">
+									<option value="身份证">身份证</option>
+									<option value="护照">护照</option>
+									<option value="驾驶证">驾驶证</option>
+								</select>
+							</td>
+						</tr>
+						<tr>
+							<td align="right" bgcolor="#FFFFFF">证件号码：</td>
+						  <td bgcolor="#FFFFFF"><input type="text" name="zhengjian" id="zhengjian" maxlength='18' onkeyup="value=value.replace(/[^\d]/g,'')" /></td>
+						</tr>
+						<tr>
+							<td align="right" bgcolor="#FFFFFF">联系地址：</td>
+						  <td bgcolor="#FFFFFF"><input type="text" name="address" id="address" maxlength='100' /></td>
+						</tr>
+						<tr>
+							<td align="right" bgcolor="#FFFFFF">邮编：</td>
+						  <td bgcolor="#FFFFFF"><input type="text" name="youbian" id="youbian" maxlength='8' /></td>
+						</tr>
+						<tr>
+							<td bgcolor="#FFFFFF"><input  type="hidden"name="compid" id="compid"   value="$_GET['uid']" />
+							<td height="40" bgcolor="#FFFFFF"><input type="submit" class="tijiao_d" name="sub" id="button" value="提交" /> <!--<input type="image" src="{STATICURL}space/uidcss_1889193/images/qpg_tj.jpg" width="134" height="33" name="sub" id="button" class="titi_d"> --></td>
+						</tr>
+					</table>
+					<!--{/if}-->
+					</form>
+                  <!--end -->
+</div>
+            </div>
+            <div style="width:676px; height:23px; margin:0 auto; background-image:url({STATICURL}space/uidcss_1889193/images/4s_lc_3.jpg);"></div>
+            <br>
+  </div>
+	
+	<div class="clear"></div>
+</div>
+<script>
+
+function validate_required(field, alerttxt) {
+	with(field) {
+		if(value == null || value == "") {
+			alert(alerttxt);return false
+		} else {
+			return true
+		}
+	}
+}
+
+function validate_form(thisform) {
+   with(thisform) {
+       if(validate_required(mobile, "手机号不能为空") == false) {
+            mobile.focus();
+            return false
+       }
+      if(validate_required(license, "驾照号码必须填写") == false) {
+            license.focus();
+            return false
+      }
+      if(validate_required(chejiahao, "车驾号必须填写") == false) {
+           chejiahao.focus();
+           return false
+      }
+      if(validate_required(chexing, "车型必须填写") == false) {
+           chexing.focus();
+           return false
+      }
+      if(validate_required(chepai, "车牌号必须填写") == false) {
+           chepai.focus();
+           return false
+      }
+      
+      if(validate_required(fadongji,"发动机型号必须填写")==false) {
+           fadongji.focus();
+           return false
+      }
+      if(validate_required(kongjian, "可用空间必须填写") == false) {
+           kongjian.focus();
+           return false
+      }
+      if(validate_required(plan, "合约计划必须填写") == false) {
+           plan.focus();
+           return false
+      }
+      if(validate_required(qixian, "合约期限必须填写") == false) {
+           qixian.focus();
+           return false
+      }
+      if(validate_required(zhengjian, "证件号码必须填写") == false) {
+            zhengjian.focus();
+           return false
+      }
+      if(validate_required(address, "联系地址必须填写") == false) {
+           address.focus();
+           return false
+      }
+      if(validate_required(youbian, "邮编址必须填写") == false) {
+           youbian.focus();
+           return false
+      }
+   }
+}
+function getphonenumber() {
+	var number = jQuery('#chepai').val();
+	if(number == '' || number == '0') {
+		jQuery('#phonenumber').val('');
+		jQuery('#rnumber').css('display', 'none');
+		jQuery('#changephone').css('display', 'none');
+	} else {
+		var url = 'ajax.php?do=phone&num='+number;
+		jQuery.post(url, {}, function(msg) {
+			if(msg) {
+				jQuery('#rnumber').css('display', '');
+				jQuery('#changephone').css('display', '');
+				jQuery('#rnumber').html(msg);
+			}
+		});
+	}
+}
+function getnum(val) {
+	jQuery('#phonenumber').val(val);
+	jQuery('#rnumber').css('display', 'none');
+	jQuery('#changephone').css('display', 'none');
+}
+function backcolor(flag, id) {
+	alert(flag);
+	alert(id);
+}
+function changephone(i) {
+	i++;
+	var url = 'ajax.php?do=phone&page='+i;
+	jQuery.post(url, {}, function(msg) {
+	alert(msg);
+		if(msg) {
+			jQuery('#rnumber').css('display', '');
+			jQuery('#changephone').css('display', '');
+			jQuery('#rnumber').html(msg);
+		}
+	});
+}
+function clearbgcolor()	{
+	for(var i = 0; i < 30; i++) {
+		jQuery('#xh_'+i).css('background', '');
+		jQuery('#xh_'+i).css('border', '1px solid #CCCCCC');
+    }
+}
+function showbgcolor(id) {
+	clearbgcolor();
+	var val = jQuery('#xh_'+id).val();
+	jQuery('#iphoneval').val(val);
+	jQuery('#xh_'+id).css('background', 'gray');
+}
+function checkphomenumber() {
+	var val = jQuery('#iphoneval').val();
+	if(val == '' || val == '0') {
+		alert('选择一个号码');
+		return false;
+	}
+}
+</script>
+<!--{subtemplate home/20_foot}-->

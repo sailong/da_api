@@ -1,0 +1,22 @@
+<!--{template home/spacecp_20_head}-->
+<div id="wtcontent">
+	<!-- 左侧 -->
+	<!--{template home/spacecp_00_left}-->
+	<!-- 右侧 -->
+	<div class="rightw">
+		<div class="rightlm"><h1>我的<!--{if $option == 'mywb'}-->微博<!--{elseif $option == 'event'}-->活动<!--{elseif $option == 'qun'}-->群组<!--{elseif $option == 'vote'}-->投票<!--{elseif $option == 'follow'}-->关注<!--{elseif $option == 'fans'}-->粉丝<!--{elseif $option == 'favorite'}-->收藏<!--{elseif $option == 'discuss'}-->评论<!--{elseif $option == 'settag'}-->标签<!--{/if}--></h1></div>
+		<br>
+		<div class="rcontent">
+			<div style='height:800px'>
+			<!----------微博开始----------->
+				<!--{if $url}-->
+				<iframe src='<!--{$url}-->' width='590' height='100%' scrolling='no' frameborder='0'></iframe>
+				<!--{/if}-->
+			<!----------微博结束----------->
+
+			</div>
+		</div>
+	</div>
+	<div class="clear"></div>
+</div>
+<!--{template home/spacecp_foot_comm}-->

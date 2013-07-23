@@ -1,0 +1,45 @@
+  <!--{subtemplate home/26_header}-->
+<div id="wtcontent">
+	<div class="z z1">
+		<!--{subtemplate home/26_left}-->
+	</div>
+	<div class="z z2">
+		<!--{subtemplate home/26_center}-->
+
+		<a name="maomember"><div class="cdt_lm">
+			<span><h1>会员列表</h1></span>
+		</div>
+        </a>
+		<div class="cdt_2">
+			<!--<span>&nbsp;&nbsp;<img src="{STATICURL}space/20/images/new.gif"></span>
+			<span>您有一条新的微博消息，请注意查收</span> -->
+		</div>
+		<div class="cbg2">
+			  <div style="background-color:#FFF;">
+				  <!--start -->
+          
+<!--{if $memberlist}-->	   
+
+<!--{loop $memberlist $value}-->
+					<div class="z center" style="padding:10px;">
+                    <div style="width:62px; height:57px; padding:2px; border:1px solid #E8E8E8;"><a href="home.php?mod=space&uid=$value[userid]"><img src="uc_server/avatar.php?uid=$value[userid]&size=middle" width="62" height="57" /></a></div>
+                    <div style="padding-top:5px;"><a href="home.php?mod=space&uid=$value[userid]"><!--{if strlen($value[realname]) ==0 }-->$value[username]<!--{else}-->$value[realname]<!--{/if}--></a></div>
+            </div> 
+					<!--{/loop}-->
+
+				<!--{if $multi}--><div class="pgs cl mtm">$multi</div><!--{/if}--> 
+ <!--{/if}-->  
+ 
+  <div class="clear"></div>
+                  <!--end -->
+			  </div>
+		</div>
+		<br>
+	</div>
+	<div class="y y3">
+		<!--{subtemplate home/26_right}-->
+	</div>
+	<div class="clear"></div>
+</div>
+
+<!--{subtemplate home/26_foot}-->

@@ -1,0 +1,688 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link rel="stylesheet" href="js/dojo-release-1.7.2/dijit/themes/claro/claro.css">
+<script src="js/dojo-release-1.7.2/dojo/dojo.js" type="text/javascript" djConfig="isDebug: true, parseOnLoad: true"></script>
+<title>
+<!--{if $album[albumname]}-->
+$album[albumname]&ndash;$getstat['spnickname']的空间_大正网_高尔夫主题社区_www.bwvip.com
+<!--{elseif $blog[subject]}-->
+$blog[subject]&ndash;$getstat['spnickname']的空间_大正网_高尔夫主题社区_www.bwvip.com
+<!--{elseif $video[0][title]}-->
+$video[0][title]&ndash;$getstat['spnickname']_大正网_高尔夫主题社区_www.bwvip.com
+<!--{elseif $_GET[tcode]}-->
+<!--{echo $tcode}-->&ndash;$getstat['spnickname']_大正网_高尔夫主题社区_www.bwvip.com
+<!--{elseif $_GET[op]=='weibo'}-->
+微博&ndash;$getstat['spnickname']_大正网_高尔夫主题社区_www.bwvip.com
+<!--{else}-->
+$getstat['spnickname'] 的空间_大正网_高尔夫主题社区_www.bwvip.com
+<!--{/if}-->
+</title>
+<meta name="keywords" content="{if !empty($metakeywords)}{echo htmlspecialchars($metakeywords)}{/if}" />
+<meta name="description" content="{if !empty($metadescription)}{echo htmlspecialchars($metadescription)} {/if}{if empty($nobbname)},$_G['setting']['bbname']{/if}" />
+<script type="text/javascript">var STYLEID = '{STYLEID}', STATICURL = '{STATICURL}', IMGDIR = '{IMGDIR}', VERHASH = '{VERHASH}', charset = '{CHARSET}', discuz_uid = '$_G[uid]', cookiepre = '{$_G[config][cookie][cookiepre]}', cookiedomain = '{$_G[config][cookie][cookiedomain]}', cookiepath = '{$_G[config][cookie][cookiepath]}', showusercard = '{$_G[setting][showusercard]}', attackevasive = '{$_G[config][security][attackevasive]}', disallowfloat = '{$_G[setting][disallowfloat]}', creditnotice = '<!--{if $_G['setting']['creditnotice']}-->$_G['setting']['creditnames']<!--{/if}-->', defaultstyle = '$_G[style][defaultextstyle]', REPORTURL = '$_G[currenturl_encode]', SITEURL = '$_G[siteurl]', JSPATH = '$_G[setting][jspath]';</script>
+<link href="http://www.bwvip.com/static/space/person/style.css" rel="stylesheet" type="text/css">
+<link href="http://www.bwvip.com/static/space/person/spaces.css" rel="stylesheet" type="text/css">
+<link href="static/home/css/jls.css" rel="stylesheet" type="text/css">
+
+<script type="text/javascript" src="{STATICURL}space/person/js/i.js"></script>
+<script type="text/javascript" src="{STATICURL}space/person/js/iepngfix_tilebg.js"></script>
+<script type="text/javascript" src="{$_G[setting][jspath]}home.js?{VERHASH}"></script>
+<script type="text/javascript" src="{$_G[setting][jspath]}common.js?{VERHASH}"></script>
+<script type="text/javascript" src='static/js/jquery.js'></script>
+
+<script type="text/javascript">
+	
+	dojo.addOnLoad(function(){
+		init_dialog_of_rating();
+        	dojo.connect(dojo.byId("rating_button"), "onclick", function(){
+                	dijit.byId('dialog_of_rating').show();
+        	});
+	});
+
+	function guanzhu(guid) {
+		var val = jQuery('#share_space').html();
+		var gudo = '';
+		var notic = '';
+		var str = '';
+		if(val == '已关注') {
+			gudo = '0';
+			notic = '您已经取消了对此人的关注，不需要重复取消';
+		} else {
+			gudo = '1';
+			notic = '您已经关注此人了，不需要重复关注';
+		}
+		var url = 'ajax.php?do=buddys&guid='+guid+'&gudo='+gudo+'&time='+new Date().getTime();
+		if(gudo == '0') {
+			str = "+关注";
+		} else {
+			str = "已关注";
+		}
+		jQuery.get(url, {}, function(msg) {
+			if(msg == '1') {
+				jQuery('#share_space').html(str);
+			} else if(msg == '2') {
+				alert(notic);
+				jQuery('#share_space').html(str);
+				return false;
+			}
+		});
+	}
+
+	dojo.require("dijit.Dialog");
+	dojo.require("dojo.io.iframe");
+	dojo.require("dijit.Tooltip");
+
+	var score = 0;
+	var star1_address = 'star1.gif';
+	var star2_address = 'star2.gif';
+
+	function tmp(){
+		if(score==0){
+			dojo.attr('p1','src',star1_address);
+			dojo.attr('p2','src',star1_address);
+			dojo.attr('p3','src',star1_address);
+			dojo.attr('p4','src',star1_address);
+			dojo.attr('p5','src',star1_address);
+		}
+
+		if(score==1){
+
+			dojo.attr('p1','src',star2_address);
+			dojo.attr('p2','src',star1_address);
+			dojo.attr('p3','src',star1_address);
+			dojo.attr('p4','src',star1_address);
+			dojo.attr('p5','src',star1_address);
+
+		}
+
+		if(score==2){
+
+			dojo.attr('p1','src',star2_address);
+			dojo.attr('p2','src',star2_address);
+			dojo.attr('p3','src',star1_address);
+			dojo.attr('p4','src',star1_address);
+			dojo.attr('p5','src',star1_address);
+
+		}
+		
+		if(score==3){
+			dojo.attr('p1','src',star2_address);
+			dojo.attr('p2','src',star2_address);
+			dojo.attr('p3','src',star2_address);
+			dojo.attr('p4','src',star1_address);
+			dojo.attr('p5','src',star1_address);
+		}
+
+		if(score==4){
+			dojo.attr('p1','src',star2_address);
+			dojo.attr('p2','src',star2_address);
+			dojo.attr('p3','src',star2_address);
+			dojo.attr('p4','src',star2_address);
+			dojo.attr('p5','src',star1_address);
+		}
+
+		if(score==5){
+			dojo.attr('p1','src',star2_address);
+			dojo.attr('p2','src',star2_address);
+			dojo.attr('p3','src',star2_address);
+			dojo.attr('p4','src',star2_address);
+			dojo.attr('p5','src',star2_address);
+		}
+	}
+
+	function init_dialog_of_rating(){
+	
+		if(score==1){
+			dojo.attr('p1','src',star2_address);
+			dojo.attr('p2','src',star1_address);
+			dojo.attr('p3','src',star1_address);
+			dojo.attr('p4','src',star1_address);
+			dojo.attr('p5','src',star1_address);
+		}
+
+		if(score==2){
+			dojo.attr('p1','src',star2_address);
+			dojo.attr('p2','src',star2_address);
+			dojo.attr('p3','src',star1_address);
+			dojo.attr('p4','src',star1_address);
+			dojo.attr('p5','src',star1_address);
+		}
+
+		if(score==3){
+			dojo.attr('p1','src',star2_address);
+			dojo.attr('p2','src',star2_address);
+			dojo.attr('p3','src',star2_address);
+			dojo.attr('p4','src',star1_address);
+			dojo.attr('p5','src',star1_address);
+		}
+
+		if(score==4){
+			dojo.attr('p1','src',star2_address);
+			dojo.attr('p2','src',star2_address);
+			dojo.attr('p3','src',star2_address);
+			dojo.attr('p4','src',star2_address);
+			dojo.attr('p5','src',star1_address);
+		}
+
+		if(score==5){
+        		dojo.attr('p1','src',star2_address);
+			dojo.attr('p2','src',star2_address);
+			dojo.attr('p3','src',star2_address);
+			dojo.attr('p4','src',star2_address);
+			dojo.attr('p5','src',star2_address);
+		}
+
+		dojo.connect(dojo.byId('p1'),'onmouseover',function(){
+			dojo.attr('p1','src',star2_address);
+			dojo.attr('p2','src',star1_address);
+			dojo.attr('p3','src',star1_address);
+			dojo.attr('p4','src',star1_address);
+			dojo.attr('p5','src',star1_address);
+		});
+	
+		dojo.connect(dojo.byId('p2'),'onmouseover',function(){
+			dojo.attr('p1','src',star2_address);
+			dojo.attr('p2','src',star2_address);
+			dojo.attr('p3','src',star1_address);
+			dojo.attr('p4','src',star1_address);
+			dojo.attr('p5','src',star1_address);
+		});
+	
+		dojo.connect(dojo.byId('p3'),'onmouseover',function(){
+			dojo.attr('p1','src',star2_address);
+			dojo.attr('p2','src',star2_address);
+			dojo.attr('p3','src',star2_address);
+			dojo.attr('p4','src',star1_address);
+			dojo.attr('p5','src',star1_address);
+		});
+	
+		dojo.connect(dojo.byId('p4'),'onmouseover',function(){
+			dojo.attr('p1','src',star2_address);
+			dojo.attr('p2','src',star2_address);
+			dojo.attr('p3','src',star2_address);
+			dojo.attr('p4','src',star2_address);
+			dojo.attr('p5','src',star1_address);
+		});
+	
+		dojo.connect(dojo.byId('p5'),'onmouseover',function(){
+			dojo.attr('p1','src',star2_address);
+			dojo.attr('p2','src',star2_address);
+			dojo.attr('p3','src',star2_address);
+			dojo.attr('p4','src',star2_address);
+			dojo.attr('p5','src',star2_address);
+		});
+	
+		dojo.connect(dojo.byId('p1'),'onmouseout',function(){
+			tmp();
+		});
+	
+		dojo.connect(dojo.byId('p2'),'onmouseout',function(){
+			tmp();
+		});
+	
+		dojo.connect(dojo.byId('p3'),'onmouseout',function(){
+			tmp();
+		});
+	
+		dojo.connect(dojo.byId('p4'),'onmouseout',function(){
+			tmp();
+		});
+	
+		dojo.connect(dojo.byId('p5'),'onmouseout',function(){
+			tmp();
+		});
+	
+		dojo.connect(dojo.byId('p1'),'onclick',function(){
+			score = 1;
+		});
+
+		dojo.connect(dojo.byId('p2'),'onclick',function(){
+			score = 2;
+		});
+
+		dojo.connect(dojo.byId('p3'),'onclick',function(){
+			score = 3;
+		});
+
+		dojo.connect(dojo.byId('p4'),'onclick',function(){
+			score = 4;
+		});
+
+		dojo.connect(dojo.byId('p5'),'onclick',function(){
+			score = 5;
+		});
+	
+	}
+
+	function send_data(){
+
+		dojo.attr('submitting_microblog_content','value',dojo.attr('microblog_content','value'));
+
+		dojo.attr('submitting_score','value',score);
+
+		dojo.io.iframe.send({
+			form: "submitting_data",
+			handleAs: "html",
+			load: function(response, ioArgs){
+				console.log(response.body.outerHTML);
+
+				if(response.body.outerHTML.toLowerCase().match('ok')==null){
+					var tmp = response.body.outerHTML.toLowerCase();
+					tmp = tmp.replace("<body>","");
+					tmp = tmp.replace("</body>","");
+					dojo.byId('error_desc').innerHTML = tmp;	
+				}else{
+					dijit.byId('dialog_of_rating').hide();
+				}
+				return response;
+			},
+			error: function(response, ioArgs){
+				return response;
+			}
+		});
+
+		dojo.byId('error_desc').innerHTML = '';
+		dojo.io.iframe.send({
+			url:'join.php?mod=update_microblog_source',
+			handleAs: "html",
+			load: function(response, ioArgs){
+				console.log(response.body.outerHTML);		
+				return response;
+			},
+			error: function(response, ioArgs){
+				return response;
+			}
+		});
+	}
+
+	function setting_trainer_avg_score(node_id,avg_score){
+		
+		dojo.byId(node_id).innerHTML = '';
+	
+		if(avg_score == 0){
+			var img_el = dojo.doc.createElement('img');
+			dojo.attr(img_el,'src','http://www.bwvip.com/jiaoliansai/images/half.jpg');
+			dojo.attr(img_el,'width',16);
+			dojo.attr(img_el,'height',14);
+			dojo.byId(node_id).appendChild(img_el);
+			
+			var span_el = dojo.doc.createElement('span');
+			span_el.innerHTML = avg_score + '分';
+			dojo.byId(node_id).appendChild(span_el);
+			
+			return;
+		}
+	
+		var part1 = Math.floor(avg_score);
+		var part2 = avg_score - part1;
+
+		for(var i=0;i<part1;i++){
+			var img_el = dojo.doc.createElement('img');
+			dojo.attr(img_el,'src','http://www.bwvip.com/jiaoliansai/images/one.jpg');
+			dojo.attr(img_el,'width',16);
+			dojo.attr(img_el,'height',14);
+			dojo.byId(node_id).appendChild(img_el);
+		}
+
+		if(part2 >= 0.75){
+			var img_el = dojo.doc.createElement('img');
+			img_el.src = "http://www.bwvip.com/jiaoliansai/images/three-quarter.jpg";
+			dojo.attr(img_el,'width',16);
+			dojo.attr(img_el,'height',14);
+			dojo.byId(node_id).appendChild(img_el);
+		}else if(part2 >= 0.5){
+			var img_el = dojo.doc.createElement('img');
+			img_el.src = "http://www.bwvip.com/jiaoliansai/images/half.jpg";
+			dojo.attr(img_el,'width',16);
+			dojo.attr(img_el,'height',14);
+			dojo.byId(node_id).appendChild(img_el);
+		}else if(part2 >= 0.25){
+			var img_el = dojo.doc.createElement('img');
+			img_el.src = "http://www.bwvip.com/jiaoliansai/images/quarter.jpg";
+			dojo.attr(img_el,'width',16);
+			dojo.attr(img_el,'height',14);
+			dojo.byId(node_id).appendChild(img_el);
+		}
+		
+		var span_el = dojo.doc.createElement('span');
+		span_el.innerHTML = avg_score + '分';
+		dojo.byId(node_id).appendChild(span_el);
+		
+	}
+	
+	function temp(str,len_per_line){
+		var start = 0;
+		var tmp = '';
+		while(1){
+    		tmp = tmp + str.substr(start,len_per_line) + '<br>';
+    		if( str.substr(start,len_per_line).length < len_per_line ){
+        		break;
+    		}
+    		start = start + len_per_line;
+		}
+		return tmp;
+	}
+	
+	dojo.addOnLoad(function(){
+		setting_trainer_avg_score('avg_score_desc',dojo.attr('hide_avg_score','value'));
+		
+		var str = dojo.byId('hmt_trainer_teaching_strong_point').innerHTML;
+		var len_per_line = 11;
+		dojo.byId('hmt_trainer_teaching_strong_point').innerHTML = temp(str,len_per_line);
+		
+		str = dojo.byId('hmt_trainer_duty').innerHTML;
+		dojo.byId('hmt_trainer_duty').innerHTML = temp(str,len_per_line);
+		
+		str = dojo.byId('org_hmt_trainer_belonging').innerHTML;
+		dojo.byId('org_hmt_trainer_belonging').innerHTML = temp(str,len_per_line);
+		
+	});
+</script>
+
+<style type="text/css"> 
+.gl_xinx {text-align:center; margin:0 auto; width:160px; height:20px; background-color:#CCC; margin-bottom:10px;}
+.claro .dijitDialogPaneContent {
+    border-top: none;
+    padding: 10px 8px 10px 10px;
+    position: relative;
+}
+.claro .dijitDialog {
+     box-shadow: 0 0px 0px rgba(0, 0, 0, 0.25);
+}
+.claro .dijitDialogTitleBar {
+    -moz-border-bottom-colors: none;
+    -moz-border-left-colors: none;
+    -moz-border-right-colors: none;
+    -moz-border-top-colors: none;
+    background: none;
+    background-repeat: repeat-x;
+    border-color: -moz-use-text-color #FFFFFF #FFFFFF;
+    border-image: none;
+    border-right: 1px solid #FFFFFF;
+    border-style: none solid solid;
+    border-width: medium 1px 1px;
+    padding: 5px 7px 4px;}
+</style>
+</head>
+<body class="claro">
+
+<div id="dialog_of_rating" data-dojo-type="dijit.Dialog" title="" style="background:url(static/apply_badge/images/tan_bg_2.png) no-repeat; border:0px; width:440px; box-shadow:0; height:340px; padding:18px 60px 30px 60px;"">
+	<div>
+		<div style="padding-bottom:3px;">
+			<img src="uc_server/avatar.php?uid=<!--{$uid}-->&size=small" align="absmiddle"/>&nbsp;
+			 <!--{$realname}-->
+		</div>
+		<img id="p1" src="star1.gif"/>
+		<img id="p2" src="star1.gif"/>
+		<img id="p3" src="star1.gif"/>
+		<img id="p4" src="star1.gif"/>
+		<img id="p5" src="star1.gif"/>
+
+		<div style="line-height:20px;">给<!--{$realname}-->的评价</div>
+
+		<textarea id="microblog_content" style="width:393px; height:106px; padding:10px 30px; border:0px; overflow:hidden;background:url(static/apply_badge/images/tan_ly.jpg); text-align:left;">对#<!--{$realname}-->#的评价是：</textarea>
+
+		<div id="error_desc"></div>
+        <div align="center" style="padding:5px 0px;">登录大正微博，分享你的观点！还没有大正微博账号？请<a href="member.php?mod=register">立即注册</a>》</div>
+		<div align="right">
+			<input type="image"  src="static/apply_badge/images/tan_wb_5.jpg" value="发布" onclick="dojo.addOnLoad(function(){
+				send_data();
+			});"/>
+		</div>
+
+	</div>
+	
+</div>
+
+<form id="submitting_data" method="post" action="join.php?mod=trainer_score">
+
+	<input id="submitting_trainer_uid" name="submitting_trainer_uid" type="hidden" value="<!--{$uid}-->"/>
+	<input id="submitting_microblog_content" name="submitting_microblog_content" type="hidden"/>
+	<input id="submitting_score" name="submitting_score" type="hidden"/>
+
+</form>
+
+<input type="hidden" id="hidden_uid" value="<!--{$uid}-->"/>
+<input type="hidden" id="hidden_realname" value="<!--{$realname}-->"/>
+
+<div id="append_parent"></div>
+<div class="wad">
+        <!--{subtemplate home/head_gobal}-->
+        <!--{if $bm_pay_status == 1}-->
+    <div class="headad_miao"><img src="../../../static/space/10/images/miao_banner_1.jpg" width="960" height="211" border="0" usemap="#Map2">
+      <map name="Map2">
+        <area shape="rect" coords="610,70,959,211" href="http://www.bwvip.com" target="_blank">
+      </map>
+</div>
+    <!--{else}-->
+    <div><img src="../../../static/space/person/images/duan_banner.jpg" width="960" height="160" border="0" usemap="#Map">
+      <map name="Map">
+        <area shape="rect" coords="670,25,955,160" href="http://www.bwvip.com" target="_blank">
+      </map>
+</div>
+    <!--{/if}-->
+<div class="middlexx_duan">
+<div class="biag_duan">
+<div class="z touxiang_d">
+<div class="touxiang">
+<div id="circular-tou" class="clearfix">
+<a href="home.php?mod=space&uid=<!--{$uid}-->">
+<img src="http://www.bwvip.com/uc_server/avatar.php?uid=<!--{$uid}-->&size=middle" width="115" height="106" />
+<span class="cir-bg"></span>
+</a>
+<p class="center top5">
+<!--{if $userinfo['realname']}--><!--{$userinfo['realname']}--><!--{else}--><!--{$userinfo[username]}--><!--{/if}-->
+							<!--{if $userinfo['validate']}--><img src='weibo/images/vip.gif' width='12' height='12' /><!--{/if}-->
+</p>
+</div>
+</div>
+<div class="clear"></div>
+<div class="gl_xinx">
+<span>粉丝：<!--{$fsnum["num"]}--></span>
+<span> 关注：<!--{$gznum["num"]}--></span>
+</div>
+<ul class="xinx2_1">
+<li class="z">
+<a id="share_space" href="home.php?mod=spacecp&amp;ac=weibo&amp;op=follow">我的关注</a>
+</li>
+<li class="z"><a href="home.php?mod=spacecp&amp;ac=weibo&amp;op=refer">@ 我的</a></li>
+</ul>
+<!--<div class="cxzs_duan" >诚信指数</div>-->
+</div>
+
+<div class="miao_jl">
+                <div class="miao_jl_left">
+				           <ul>
+						           <li class="miao_jl_bg">所属机构：</li>
+								   <li class="miao_jl_t"><span id="org"><!--{$org}--></span></li>
+								   <li class="miao_jl_bg">职务：</li>
+								   <li class="miao_jl_t"><span id="duty"><!--{$duty}--></span></li>
+								   <li class="miao_jl_bg">擅长：</li>
+								   <li class="miao_jl_t_1"><span id="strong_point"><!--{$strong_point}--></span></li>
+						   </ul>
+						   <ul>
+						           <li class="miao_jl_bg">学员打分：</li>
+								   <li class="miao_jl_xing">
+<div><span id="avg_score_desc"></span></div>
+										   已有<span><!--{$rating_amount}--></span>人给他打分
+								   </li>
+								   <li class="miao_jx_dafen"><a id="rating_button" style="cursor:pointer"><img src="static/home/images/dafen.jpg" border="0"></a></li>
+								   <li class="miao_jx_dafen">
+								
+
+    <div><!--{if $space['self']}-->
+                    <a href="home.php?mod=spacecp&ac=mingpianall"><img src="{STATICURL}space/person/images/mp_gl.jpg" width="95" height="27" border="0"></a>
+                    <!--{elseif empty($_G['uid'])}-->
+                    <a href="member.php?mod=logging&action=login&referer={echo get_current_page_url()}" onclick="showWindow('login', this.href);return false;"><img src="{STATICURL}space/person/images/dingmp.jpg" width="145" height="37" border="0" /></a>
+                    <!--{else}-->
+                    <a href="home.php?mod=space&do=mingpian&cz=add&uid=<!--{$uid}-->&cid=$_G['uid']" ><img src="{STATICURL}space/person/images/dingmp.jpg" width="145" height="37" border="0" /></a>
+                    <!--{/if}--></div>
+					</li>
+								    <!--<li class="miao_jx_dafen" style="padding-top:5px;"><a href="#"><img src="static/home/images/tmp.jpg" border="0"></a></li>-->
+						   </ul>
+				</div> 
+				<div class="miao_jl_right">
+				         
+						  <ul>
+							<!--
+						          <li><a href="#"><img src="static/home/images/jls_logo_1.jpg"></a><br><a href="#">中高协教练</a></li>
+								  <li><a href="#"><img src="static/home/images/jls_logo_2.jpg"></a><br><a href="#">PGA教练</a></li>
+								  <li><a href="#"><img src="static/home/images/jls_logo_3.jpg"></a><br><a href="#">初级教练</a></li>
+								  <li><a href="#"><img src="static/home/images/jls_logo_4.jpg"></a><br><a href="#">皇冠车主</a></li>
+								  <li><a href="#"><img src="static/home/images/jls_logo_5.jpg"></a><br><a href="#">电信白金卡用户</a></li>
+								  <li><a href="#"><img src="static/home/images/jls_logo_6.jpg"></a><br><a href="#">金鹏俱乐部会员</a></li>
+								-->
+							<!--{loop $first_six_record $value}-->
+
+								<!--{if $value['badge_id']==1}-->
+									<li><img width="79" height="79" src="static/apply_badge/images/zs_1_xiao.jpg"></li>
+								<!--{/if}-->
+
+								<!--{if $value['badge_id']==2}-->
+									<li><img width="79" height="79" src="static/apply_badge/images/zs_2_xiao.jpg"></li>
+								<!--{/if}-->
+
+								<!--{if $value['badge_id']==3}-->
+									<li><img width="79" height="79" src="static/apply_badge/images/zs_3_xiao.jpg"></li>
+								<!--{/if}-->
+
+								<!--{if $value['badge_id']==4}-->
+									<li><img width="79" height="79" src="static/apply_badge/images/zs_4_xiao.jpg"></li>
+								<!--{/if}-->
+
+								<!--{if $value['badge_id']==5}-->
+									<li><img width="79" height="79" src="static/apply_badge/images/jk_1_xiao.jpg"></li>
+								<!--{/if}-->
+
+								<!--{if $value['badge_id']==6}-->
+									<li><img width="79" height="79" src="static/apply_badge/images/jk_2_xiao.jpg"></li>
+								<!--{/if}-->
+
+								<!--{if $value['badge_id']==7}-->
+									<li><img width="79" height="79" src="static/apply_badge/images/jk_3_xiao.jpg"></li>
+								<!--{/if}-->
+
+								<!--{if $value['badge_id']==8}-->
+									<li><img width="79" height="79" src="static/apply_badge/images/yhsf_7_xiao.jpg"></li>
+								<!--{/if}-->
+
+								<!--{if $value['badge_id']==9}-->
+									<li><img width="79" height="79" src="static/apply_badge/images/jk_5_xiao.jpg"></li>
+								<!--{/if}-->
+
+								<!--{if $value['badge_id']==10}-->
+									<li><img width="79" height="79" src="static/apply_badge/images/jk_7_xiao.jpg"></li>
+								<!--{/if}-->
+
+								<!--{if $value['badge_id']==11}-->
+									<li><img width="79" height="79" src="static/apply_badge/images/jk_8_xiao.jpg"></li>
+								<!--{/if}-->
+
+								<!--{if $value['badge_id']==12}-->
+									<li><img width="79" height="79" src="static/apply_badge/images/jk_9_xiao.jpg"></li>
+								<!--{/if}-->
+
+								<!--{if $value['badge_id']==13}-->
+									<li><img width="79" height="79" src="static/apply_badge/images/qyyh_1_xiao.jpg"></li>
+								<!--{/if}-->
+
+								<!--{if $value['badge_id']==14}-->
+									<li><img width="79" height="79" src="static/apply_badge/images/qyyh_2_xiao.jpg"></li>
+								<!--{/if}-->
+
+								<!--{if $value['badge_id']==15}-->
+									<li><img width="79" height="79" src="static/apply_badge/images/yk_3_xiao.jpg"></li>
+								<!--{/if}-->
+
+								<!--{if $value['badge_id']==16}-->
+									<li><img width="79" height="79" src="static/apply_badge/images/yk_4_xiao.jpg"></li>
+								<!--{/if}-->
+
+								<!--{if $value['badge_id']==17}-->
+									<li><img width="79" height="79" src="static/apply_badge/images/yk_5_xiao.jpg"></li>
+								<!--{/if}-->
+
+								<!--{if $value['badge_id']==18}-->
+									<li><img width="79" height="79" src="static/apply_badge/images/gj_1.jpg"></li>
+								<!--{/if}-->
+
+								<!--{if $value['badge_id']==19}-->
+									<li><img width="79" height="79" src="static/apply_badge/images/yhsf_8_xiao.jpg"></li>
+								<!--{/if}-->
+
+								<!--{if $value['badge_id']==20}-->
+									<li><img width="79" height="79" src="static/apply_badge/images/gj_3_xiao.jpg"></li>
+								<!--{/if}-->
+
+								<!--{if $value['badge_id']==21}-->
+									<li><img width="79" height="79" src="static/apply_badge/images/gj_4_xiao.jpg"></li>
+								<!--{/if}-->
+
+								<!--{if $value['badge_id']==22}-->
+									<li><img width="79" height="79" src="static/apply_badge/images/qyyh_6_xiao.jpg"></li>
+								<!--{/if}-->
+
+								<!--{if $value['badge_id']==23}-->
+									<li><img width="79" height="79" src="static/apply_badge/images/qyyh_7_xiao.jpg"></li>
+								<!--{/if}-->
+
+								<!--{if $value['badge_id']==24}-->
+									<li><img width="79" height="79" src="static/apply_badge/images/qyyh_8_xiao.jpg"></li>
+								<!--{/if}-->
+
+								<!--{if $value['badge_id']==25}-->
+									<li><img width="79" height="79" src="static/apply_badge/images/qyyh_9_xiao.jpg"></li>
+								<!--{/if}-->
+
+								<!--{if $value['badge_id']==26}-->
+									<li><img width="79" height="79" src="static/apply_badge/images/gj_9_xiao.jpg"></li>
+								<!--{/if}-->
+
+								<!--{if $value['badge_id']==27}-->
+									<li><img width="79" height="79" src="static/apply_badge/images/gj_10_xiao.jpg"></li>
+								<!--{/if}-->
+
+								<!--{if $value['badge_id']==28}-->
+									<li><img width="79" height="79" src="static/apply_badge/images/gj_11_xiao.jpg"></li>
+								<!--{/if}-->
+
+								<!--{if $value['badge_id']==29}-->
+									<li><img width="79" height="79" src="static/apply_badge/images/gj_12_xiao.jpg"></li>
+								<!--{/if}-->
+
+							<!--{/loop}-->
+						  </ul>
+						 
+				</div>
+				<div style=" text-align:right; clear:both;"> 
+				      <a target="_blank" href="apply_badge.php">更多</a>&nbsp;
+					  <a href="apply_badge.php?mod=got_badge_list" target="_blank">徽章排序</a>
+				</div>
+</div>
+</div>
+<div class="clear"></div>
+</div>
+<div class="footxx_duan"></div>
+</div>
+
+<!--{if $org_hmt_trainer_belonging != $org}-->
+	<div data-dojo-type="dijit.Tooltip" data-dojo-props="connectId:'org',position:['below']" id="org_hmt_trainer_belonging">
+		<!--{$org_hmt_trainer_belonging}-->
+	</div>
+<!--{/if}-->
+
+<!--{if $hmt_trainer_duty != $duty}-->
+	<div data-dojo-type="dijit.Tooltip" data-dojo-props="connectId:'duty',position:['below']" id="hmt_trainer_duty">
+		<!--{$hmt_trainer_duty}-->
+	</div>
+<!--{/if}-->
+
+<!--{if $hmt_trainer_teaching_strong_point != $strong_point}-->
+	<div data-dojo-type="dijit.Tooltip" data-dojo-props="connectId:'strong_point',position:['below']" id="hmt_trainer_teaching_strong_point">
+		<!--{$hmt_trainer_teaching_strong_point}-->
+	</div>
+<!--{/if}-->
+
+<input type="hidden" id="hide_avg_score" value="<!--{$avg_score}-->" />

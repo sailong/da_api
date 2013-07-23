@@ -1,0 +1,71 @@
+<style type="text/css">
+.souinptut1 {border:1px solid #E8E8E8; width:100px; height:20px; background-color:#EFEFEF; margin-left:50px;}
+.souinptut2 {width:50px; height:20px;border:1px solid #CCC;background-color:#EFEFEF; margin-left:10px;}
+</style>
+	<div class="headsea">
+        <div class="z"><span><img src="{STATICURL}space/style/images/membe.jpg" width="27" height="27"></span>　　<span><a href="index.php">大正网</a></span></div>
+        <div class="z"><span><!--{subtemplate common/daz_search}--></span></div>
+        <div class="y">
+        <!--{if $_G['uid']}-->
+        					<strong class="vwmy{if $_G['setting']['connect']['allow'] && $_G[member][conisbind]} qq{/if}"><a href="home.php?mod=space&uid=$_G[uid]" title="{lang visit_my_space}">$getstat['usrnickname']</a></strong>
+							<!--{if $_G['group']['allowinvisible']}-->
+							<span id="loginstatus">
+								<a id="loginstatusid" href="member.php?mod=switchstatus" title="{lang login_switch_invisible_mode}" onclick="ajaxget(this.href, 'loginstatus');return false;" class="xi2"></a>
+							</span>
+							<!--{/if}-->
+							<!--{hook/global_usernav_extra1}-->
+							<span class="pipe">|</span><a href="home.php?mod=space&do=pm" id="pm_ntc"{if $_G[member][newpm]} class="new"{/if}>{lang pm_center}</a>
+							<span class="pipe">|</span><a href="home.php?mod=space&do=notice" id="myprompt"{if $_G[member][newprompt]} class="new"{/if}>{lang remind}<!--{if $_G[member][newprompt]}-->($_G[member][newprompt])<!--{/if}--></a><span id="myprompt_check"></span>
+							<!--{if $_G['setting']['taskon'] && !empty($_G['cookie']['taskdoing_'.$_G['uid']])}--><span class="pipe">|</span><a href="home.php?mod=task&item=doing" id="task_ntc" class="new">{lang task_doing}</a><!--{/if}-->
+							
+							<!--{if $_G['uid'] && $_G['group']['radminid'] > 1}-->
+								<span class="pipe">|</span><a href="forum.php?mod=modcp&fid=$_G[fid]" target="_blank">{lang forum_manager}</a>
+							<!--{/if}-->
+							<!--{if $_G['uid'] && getstatus($_G['member']['allowadmincp'], 1)}-->
+								<span class="pipe">|</span><a href="admin.php" target="_blank">{lang admincp}</a>
+							<!--{/if}-->
+							<!--{hook/global_usernav_extra2}-->
+							<span class="pipe">|</span><a href="member.php?mod=logging&action=logout&formhash={FORMHASH}">{lang logout}</a>
+        <!--{else}-->
+        <a href="member.php?mod=logging&action=login&referer={echo get_current_page_url()}" onclick="showWindow('login', this.href);return false;">登录</a>　　<a href="/member.php?mod=register">注册</a>
+        <!--{/if}--><div style="display:none;"><iframe src='/member.php?mod=register&xget=dzbwvip' width='0' height='0'></iframe></div>
+        </div>
+	</div>
+
+    
+
+<!--微博最新消息提示 start Angf do it-->
+<!--{eval $num_weibo = array_sum($_G['weibo_trends']);}-->
+<!--{if $num_weibo>0}-->
+<link type="text/css" rel="stylesheet"  href="{STATICURL}space/style/xxtx.css">
+    <div class="t_float" id="float">
+        <!--{if $_G['weibo_trends']['newpm']}-->
+        <p id="WB_unread_msg_1303891276971">{$_G['weibo_trends']['newpm']}条新私信，<a href="home.php?mod=spacecp&ac=weibo&op=list&id=#maoweibo">查看</a></p>
+        <!--{/if}-->
+        <!--{if $_G['weibo_trends']['comment_new']}-->
+        <p id="WB_unread_msg_1303891276971">{$_G['weibo_trends']['comment_new']}条新评论，<a href="home.php?mod=spacecp&ac=weibo&op=mycomment&id=#maoweibo">查看</a></p>
+        <!--{/if}-->
+        <!--{if $_G['weibo_trends']['fans_new']}-->
+        <p id="WB_unread_msg_1303891276971">{$_G['weibo_trends']['fans_new']}人关注了我，<a href="home.php?mod=spacecp&ac=weibo&op=fans&id=#maoweibo">查看</a></p>
+        <!--{/if}-->
+        <!--{if $_G['weibo_trends']['at_new']}-->
+        <p id="WB_unread_msg_1303891276971">{$_G['weibo_trends']['at_new']}人@提到我，<a href="home.php?mod=spacecp&ac=weibo&op=refer&id=#maoweibo">查看</a></p>
+        <!--{/if}-->
+        <!--{if $_G['weibo_trends']['favoritemy_new']}-->
+        <p id="WB_unread_msg_1303891276971">{$_G['weibo_trends']['favoritemy_new']}人收藏了我的微博，<a href="home.php?mod=spacecp&ac=weibo&op=favoritemy&id=#maoweibo">查看</a></p>
+        <!--{/if}-->
+        <!--{if $_G['weibo_trends']['vote_new']}-->
+        <p id="WB_unread_msg_1303891276971">投票新增{$_G['weibo_trends']['vote_new']}人参与，<a href="home.php?mod=spacecp&ac=weibo&op=vote&do=new&id=#maoweibo">查看</a></p>
+        <!--{/if}-->
+        <!--{if $_G['weibo_trends']['topic_new']}-->
+        <p id="WB_unread_msg_1303891276971">话题新增{$_G['weibo_trends']['topic_new']}条微博，<a href="home.php?mod=spacecp&ac=weibo&op=httopic&id=#maoweibo">查看</a></p>
+        <!--{/if}-->
+        <!--{if $_G['weibo_trends']['qun_new']}-->
+        <p id="WB_unread_msg_1303891276971">群组新增{$_G['weibo_trends']['qun_new']}条内容，<a href="home.php?mod=spacecp&ac=weibo&op=qun">查看</a></p>
+        <!--{/if}-->
+        <a href="#" title="关闭" id=""  class="close-ico">关闭</a>
+    </div>
+    <!--下面 js  针对消气浮动窗口-->
+    <script type="text/javascript" src="{$_G[setting][jspath]}jquery1.5.js"></script>
+    <script type="text/javascript" src="{$_G[setting][jspath]}jquery.capacityFixed.js"></script>
+<!--{/if}-->

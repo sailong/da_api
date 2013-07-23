@@ -1,0 +1,36 @@
+<!--{subtemplate common/wap_header}-->
+<!--nav--> <!--{subtemplate common/wap_nav}--> <!--/nav-->
+
+  <div id="centenr" style="height:auto;" >  
+  	  
+	  <div id="qiuc" style="height:auto;">
+		<div id="con1_s"></div>
+			<div id="con1_t2" style="height:auto;">
+				  <div class="t_top">
+					   <div class="dh_le2 fl" ><span>【{$group_ids[$get_groupid]}】【<a href="javascript:;" onclick="javascript:history.back(-1);">返回</a>】</span>    </div>
+					   <div class="dh_ri2 fr"></div>
+				  </div><br>
+					<div class="nav_u" style="height:auto;">
+						<ul>
+						 <!--{if $new_blogs}-->
+						   <!--{loop $new_blogs $key $value}-->
+						      <li>
+							   <A href="./index.php?mod=news&do=details&id={$key}&uid={$uid}">{$value['subject']}</A>
+							  </li>
+						   <!--{/loop}-->
+						 <!--{else}-->
+						      <li>暂无内容 ··谢谢你的关注</li>
+						 <!--{/if}-->
+						</ul>
+					</div>
+		     </div>
+		 <div id="con1_p"></div>
+	  </div>
+
+
+    
+   <div class="top" style="margin-top:10px;"><a href="#"><img src="http://www.bwvip.com/static/wap/t1/images/top_08.gif" width="38" height="13" /></a></div>
+ </div>
+
+
+<!--{subtemplate common/wap_footer}-->

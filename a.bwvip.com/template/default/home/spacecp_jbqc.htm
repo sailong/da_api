@@ -1,0 +1,160 @@
+<!--{template home/spacecp_25_head}-->
+<div id="wtcontent">
+	<!-- 左侧 -->
+	<!--{template home/spacecp_25_left}-->
+    
+	<!-- 右侧 -->
+	<div class="rightw">
+		<div class="rightlm"><span class="title_1">举办场地</span></div>
+		
+		<div class="rcontent" style="border:1px solid #DBDBDB; margin-top:10px;">
+		<!--中间内容-->
+	<div style="height:3px;clear:both;"></div>
+       <!--{if $op=='list'}-->
+       <!--list-->
+              <div class="sapce_view_content">  
+                   <form action="home.php?mod=spacecp&ac=jbqc&op=del" method="post" name="form1" autocomplete="off">
+                            <div class="sapce_view_content_div">
+                                    	<!--{loop $endrow $ava}-->
+                                                   <div class="sapce_view_libiao">
+                                                                   <div>
+                                                                             <a href="home.php?mod=space&uid=$ava[cdid]" target="_blank">
+                                                                             <img src="$ava[fieldimg]" width="200" height="121" /></a>
+                                                                   </div>
+                                                                   <div class="div_center">
+                                                                              <a href="home.php?mod=space&uid=$ava[cdid]" target="_blank">$ava[field1]</a>
+                                                                   </div>
+                                                                   <div class="div_center">
+                                                                         $ava[seq]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                                         <a href="home.php?mod=spacecp&ac=jbqc&op=edit&id=$ava[cdid]">编辑排序</a>
+                                                                   </div>
+                                                                   <div class="div_center">
+                                                                        	<input type="radio" name="delid" value="$ava[cdid]" />&nbsp;&nbsp;&nbsp;&nbsp;删除选定
+                                                                   </div>
+                                                      </div>
+                                              <!--{/loop}-->
+                                              
+                                         
+
+                                              <div class="clear"></div>
+                                       
+  	                           </div>
+                                 
+                                     <!--{if $endrow}-->
+                                     <div  class="sapce_view_content_div" style="text-align:center;">
+                                    <input type="submit" onclick="if(!confirm('确认要删除吗？')) return false" value="&nbsp;删&nbsp;除&nbsp;" />
+                                    </div>
+                                    <!--{/if}-->
+                               
+                     </form>
+                 </div>
+                <!--{/if}-->
+                          <!--{if $op=='edit'}-->
+                            <form action="home.php?mod=spacecp&ac=jbqc&op=edit&id=$editarr[cdid]" method="post" name="form1" autocomplete="off">
+                              <img src="$editarr[fieldimg]" width="184" height="113" /><br />&nbsp;&nbsp;&nbsp;$editarr[field1]<br />&nbsp;&nbsp;&nbsp;
+                              <input type="text" value="$editarr[seq]" name="changeid" size="5" maxlength="2" onkeyup="this.value=this.value.replace(/[^\d]/g,'')" />&nbsp;&nbsp;&nbsp;
+                              <input type="hidden" value="$editarr[groupid]" name="groupid" />
+                              <input type="hidden" value="$editarr[cdid]" name="cdid" />
+                              <div style="height:8px;clear:both;"></div>
+                              
+                              <input type="submit" value="修改" />
+                              
+                              
+                            </form>
+             
+  <!--{/if}-->
+  <!--{if $_GET[op]=='search'}-->
+  <!--search-->
+               <div class="sapce_view_content"> 
+                    <div class="sapce_view_content_div" style="padding:15px;">
+                                  <form action="home.php?mod=spacecp&ac=jbqc&op=add" method="post" name="form1" autocomplete="off">
+                                  <table style="line-height:30px;width:500px;text-align:center;" border="1" bordercolor="#E1E1E1">
+                                  <tr>
+                                  <td width="28%">所在城市</td><td width="36%">场地名称</td><td width="22%">排序(1最前)</td><td width="14%">操作</td>
+                                  </tr>
+                                  <tr>
+                                  <td height="30">
+                                <select onchange="getarea(this.value)" id="province" name="provinceid">
+                                <option value="0" selected="">请选择</option>
+                                <option value="1">北京市</option>
+                                <option value="2">天津市</option>
+                                <option value="3">河北省</option>
+                                <option value="4">山西省</option>
+                                <option value="5">内蒙古自治区</option>
+                                <option value="6">辽宁省</option>
+                                <option value="7">吉林省</option>
+                                <option value="8">黑龙江省</option>
+                                <option value="9">上海市</option>
+                                <option value="10">江苏省</option>
+                                <option value="11">浙江省</option>
+                                <option value="12">安徽省</option>
+                                <option value="13">福建省</option>
+                                <option value="14">江西省</option>
+                                <option value="15">山东省</option>
+                                <option value="16">河南省</option>
+                                <option value="17">湖北省</option>
+                                <option value="18">湖南省</option>
+                                <option value="19">广东省</option>
+                                <option value="20">广西壮族自治区</option>
+                                <option value="21">海南省</option>
+                                <option value="22">重庆市</option>
+                                <option value="23">四川省</option>
+                                <option value="24">贵州省</option>
+                                <option value="25">云南省</option>
+                                <option value="26">西藏自治区</option>
+                                <option value="27">陕西省</option>
+                                <option value="28">甘肃省</option>
+                                <option value="29">青海省</option>
+                                <option value="30">宁夏回族自治区</option>
+                                <option value="31">新疆维吾尔自治区</option>
+                                <option value="32">台湾省</option>
+                                <option value="33">香港特别行政区</option>
+                                <option value="34">澳门特别行政区</option>
+                                <option value="35">海外</option>
+                                <option value="36">其他</option>
+                                </select>
+                                  </td>
+                                  <td>
+                                  <select style="width:150px; height:100%; border:none; border-right:1px solid #abcdef; border-left:1px solid #abcdef; font-size:13px" id="field" name="fuid">
+                                <option value="0">请选择</option>
+                                </select></td>
+                                  <td>
+                                  <input type="text" name="myseq" size="5" maxlength="2" onkeyup="this.value=this.value.replace(/[^\d]/g,'')"/>
+                                  </td>
+                                  <td>
+                                  <input type="submit" value="&nbsp;添&nbsp;加&nbsp;" />
+                                  </td>
+                                  </tr>
+                                  </table>
+                                  </form>
+                     <div class="clear"></div>
+                   </div>
+               </div>
+</div>
+
+  <script type="text/javascript" src='static/js/jquery.js'></script>
+  <script>
+  function getarea(val) {
+    var url = 'home.php?mod=spacecp&ac=jbqc&op=area&val='+val;
+    jQuery.post(url, {}, function(msg) {
+    jQuery('#field').html(msg);
+    });
+  }
+  
+  </script>
+  
+  <!--search end-->
+  <!--{/if}-->
+
+		
+		<!--中间内容-->
+		</div>
+	<div class="clear"></div>
+</div>
+<script>
+	function aaa(aa){
+		//alert(aa);
+		document.getElementById(aa).checked=true;
+	}
+	</script>
+<!--{template home/spacecp_foot_comm}-->

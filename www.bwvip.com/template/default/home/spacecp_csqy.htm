@@ -1,0 +1,151 @@
+<!--{template home/spacecp_25_head}-->
+<div id="wtcontent">
+	<!-- 左侧 -->
+	<!--{template home/spacecp_25_left}-->
+	<!-- 右侧 -->
+    <!--{eval $color = " style=\" background-color:#FFFFFF; padding:4px;\"";}-->
+	<div class="rightw">
+		<div class="rightlm">
+        <span class="title_1">         
+            <a {if $_G['gp_op']=='search'}$color{/if} href="home.php?mod=spacecp&ac=csqy&op=search">会员搜索</a> | 
+            <a {if $user_type==0 && $_G['gp_op']=='list' }$color{/if} href="home.php?mod=spacecp&ac=csqy&op=list">球星列表</a> | 
+            <a {if $user_type==1}$color{/if} href="home.php?mod=spacecp&ac=csqy&op=list&user_type=1">专家列表</a> | 
+            <a {if $user_type==2}$color{/if} href="home.php?mod=spacecp&ac=csqy&op=list&user_type=2">教练列表</a>
+         </span>
+        </div>
+		<div class="rcontent" style="border:1px solid #DBDBDB; margin-top:10px;">
+                 <div class="sapce_view_content"> 
+                        <div class="sapce_view_content_div" style="padding:15px;"> 
+			<!--中间内容-->
+<!--{if $op=='edit'}-->
+<form action="home.php?mod=spacecp&ac=csqy&op=edit&id=$editarr[userid]" method="post" name="form1" autocomplete="off">
+			<div>$editarr[userid]&nbsp;&nbsp;&nbsp;<img src="uc_server/avatar.php?uid=$editarr[userid]&size=middle" />&nbsp;&nbsp;&nbsp;$editarr[username]&nbsp;&nbsp;&nbsp;<input type="text" value="$editarr[seq]" name="myseq" size="5" maxlength="2" onkeyup="this.value=this.value.replace(/[^\d]/g,'')" />&nbsp;&nbsp;&nbsp;<input type="submit" value="修改" /></div>
+			<input type="hidden" value="$editarr[userid]" name="userid" />
+			<input type="hidden" value="$editarr[groupid]" name="groupid" />
+</form>
+<!--{/if}-->
+<!--{if $op=='list'}-->
+    <!--{if $earr}-->
+    <form action="home.php?mod=spacecp&ac=csqy&op=del" method="post" autocomplete="off" name="forma">
+    <table cellpadding="0" cellspacing="0" border="1" width="97%" bordercolor="#D5D5D5" style="font-size:12px;">
+          <tr>
+               <td align="center" height="25">删除选定</td>
+               <td align="center">明星ID</td>
+               <td align="center">明星照片</td>
+               <td align="center">英文名</td>
+               <td align="center">中文名</td>
+               <td align="center">编辑排序</td>
+         <tr>
+          <!--{loop $earr $key $value}-->
+          <tr>
+               <td align="center"><input type="checkbox" value="$value[userid]" name="delid[]"/></td>
+               <td align="center">$value[userid]</td>
+               <td align="center"><img src="/uc_server/avatar.php?uid=$value[userid]&size=small" style="padding-top:5px; padding-bottom:5px;" /></td>
+               <td align="center"> $value[username]</td>
+               <td align="center">$value[realname]</td>
+               <td align="center">
+                        $value[seq]&nbsp;&nbsp;
+                        <a href="home.php?mod=spacecp&ac=csqy&op=edit&id=$value[userid]" style="font-size:13px; color:#9F5000;">编辑排序</a>
+               </td>
+           </tr>
+          <!--{/loop}-->
+          <tr>
+                <td colspan="6" height="40" align="center">
+                    <input type="submit" value="删除" onclick="if(!confirm('确认要删除吗？')) return false" /> &nbsp;&nbsp;
+                    <a href="javascript:void(0)" onclick="chooseall()">全选</a>&nbsp;/&nbsp;<a href="javascript:void(0)" onclick="choosefan()">反选</a>
+                </td>
+          </tr>
+    </table>
+    </form>
+    <!--{else}-->
+         未添加数据 <a style="color:blue;" href ="home.php?mod=spacecp&ac=csqy&op=search">【添加】</a>
+    <!--{/if}-->
+<!--{elseif $op=='search' || $op=='slist'}-->
+<form name="form2" action="home.php?mod=spacecp&ac=csqy&op=slist" method="post" onsubmit="return check();">
+ <div style="line-height:50px;">
+           <input type="text" name="searchname" id="searchname" /> &nbsp;&nbsp;&nbsp;
+           <input type="submit" value="用户搜索"/>&nbsp;&nbsp;(输入用户名或真实姓名)
+ </div>
+</form>
+
+
+
+
+<form method="post" name="form1" action="home.php?mod=spacecp&ac=csqy&op=searchsub" autocomplete="off">
+<!--{if $earr}-->
+    <table cellpadding="0" cellspacing="0" border="1" width="97%" bordercolor="#D5D5D5" style="font-size:12px;">
+          <tr>   
+                 <td align="center" height="25">删除选择</td>
+                 <td align="center">用户id</td> 
+                 <td align="center">头像</td> 
+                 <td  align="center">用户名</td>
+                 <td align="center">真实姓名</td>
+          </tr>
+<!--{/if}-->
+<!--{if $earr}-->
+<!--{loop $earr $value}-->
+          <tr>
+                 <td align="center"><input type="checkbox" name="userid[]" value="$value[uid]" />
+                 <td align="center">$value[uid] </td>
+                 <td align="center"><img src="/uc_server/avatar.php?uid=$value[uid]&size=small" style="padding-top:5px; padding-bottom:5px;"/> </td> 
+                 <td align="center">$value[username]</td>
+                 <td align="center"> $value[realname]</td>
+           </tr>
+<!--{/loop}-->
+<!--{else}-->
+没有找到球星用户 &nbsp;&nbsp;&nbsp;&nbsp;<a href="home.php?mod=spacecp&ac=csqy&op=search" style="color:#f00">返回</a>
+<!--{/if}-->
+         <tr>
+            <td align="center">
+                        <!--{if $earr}-->
+                        <select name="user_type">
+                            <option value="">—选择人物职业—</option>
+                            <option value="0">添加球星</option>
+                            <option value="1">添加专家</option>
+                            <option value="2">添加教练</option>
+                        </select>
+                        <input type="submit" value="添加" />
+                        <!--{/if}-->
+           </td>
+             <td colspan="4"  height="50">
+                   $disppage 
+             </td>
+         </tr>
+      </table>
+</form>
+<!--{/if}-->
+<script>
+function chooseall(){
+    for (var i=0;i<document.forma.elements.length;i++){
+        var e = document.forma.elements[i];
+        e.checked=true;
+    }
+}
+function choosefan(forma){
+    for (var i=0;i<document.forma.elements.length;i++){
+        var e = document.forma.elements[i];
+        if(e.checked){
+            e.checked=false;
+        }else{
+            e.checked=true;
+        }
+    }
+}
+function check(){
+    var ky=$("#searchname").val();
+    if(''==ky){
+        alert('请输入球星的名字');
+        return false;
+    }
+}
+
+
+</script>
+			<!--中间内容-->
+		           </div>
+              </div>
+		</div>
+	</div>
+	<div class="clear"></div>
+</div>
+<!--{template home/spacecp_foot_comm}-->

@@ -1,0 +1,121 @@
+<link href="static/space/style/usercpleft.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="js/sdmenu.js"></script>
+<script type="text/javascript">
+	var myMenu;
+	window.onload = function() {
+	myMenu = new SDMenu("my_menu");
+	myMenu.init();
+	};
+</script>
+<div class="leftw">
+	<div class="xlogo_duan">
+		<p><img src="uc_server/avatar.php?uid=<!--{$uid}-->&size=middle" width='100' height='100'></p>
+		<p><!--{$getstat['usrnickname']}--></p>	
+	</div>
+	<div class="gl_xinx">
+		<span>粉丝：<!--{$userinfo[fans_count]}--></span><span> 关注：<!--{$userinfo[follow_count]}--></span><span> 微博：<!--{$userinfo[topic_count]}--></span>
+	</div>
+
+	<div style="float: left" id="my_menu" class="sdmenu">
+		<!--公共部分 star-->
+		<div ><span  style="cursor:pointer">我的信息</span>
+            <a href="home.php?mod=spacecp&ac=weibo&op=mywb" title="我的微博">我的微博</a>
+			<a href="home.php?mod=space&do=blog&view=me" title="我的博客">我的博客</a>
+			<a href="home.php?mod=space&do=album&view=me" title="我的相册">我的相册</a>
+			<a href="home.php?mod=spacecp&ac=vupload&op=list" title="我的视频">我的视频</a>
+			<a href="home.php?mod=spacecp&ac=weibo&op=qun" title="我的群组">我的群组</a>
+			<a href="home.php?mod=spacecp&ac=weibo&op=tag" title="我的标签">我的标签</a>
+		</div>
+		<!--公共部分 end-->
+
+		<!--自定义替换部分 star-->
+		<!--{if $_G['groupid'] < '20'}-->
+		<div ><span  style="cursor:pointer">我的任务</span>
+			<a href="home.php?mod=task&item=new" title="新手任务">新任务</a>
+			<a href="home.php?mod=task&item=doing" title="新手任务">进行中的任务</a>
+			<a href="home.php?mod=task&item=done" title="新手任务">已完成的任务</a>
+			<a href="home.php?mod=task&item=failed" title="新手任务">失败的任务</a>
+		</div>
+        <div ><span  style="cursor:pointer">会员管理</span>
+			<a href="home.php?mod=spacecp&ac=qiye&op=yaoqing" title="审核企业邀请"> 审核企业邀请</a>
+			<a href="home.php?mod=spacecp&ac=qiye&op=myqy" title="我的企业"> 我的企业</a>
+			<a href="home.php?mod=spacecp&ac=qiye&op=chazhao" title="申请会员"> 申请会员</a>
+		</div>
+		<!--{/if}-->
+		<!--{if $_G['groupid'] <= '20' || $_G['groupid'] == '23' || $_G['groupid'] == '26' || $_G['groupid'] == '27'}-->
+		<div ><span  style="cursor:pointer">功能管理</span>
+			<!--{if $_G['groupid'] == '20' || $_G['groupid'] == '23' || $_G['groupid'] == '26' || $_G['groupid'] == '27'}-->
+			<a href="home.php?mod=spacecp&ac=action" title="手机预订">手机预订</a>
+			<!--<a href="home.php?mod=task&item=doing" title="员工管理"> 员工管理</a>-->
+			<a href="home.php?mod=spacecp&ac=spacelink&op=listlink" title="友情链接"> 友情链接</a>
+			<!--{else}-->
+			<a href="home.php?mod=spacecp&ac=apply&op=caddie" title="申请球童"> 申请球童</a>
+			<a href="home.php?mod=spacecp&ac=apply&op=drill" title="申请教练"> 申请教练</a>
+			<a href="home.php?mod=spacecp&ac=apply&op=expert" title="申请专家"> 申请专家</a>
+			<a href="home.php?mod=spacecp&ac=score" title="成绩卡">成绩卡</a>
+			<!--{/if}-->
+		</div>
+		<!--{/if}-->
+		<!--{if $_G['groupid'] == '25'}-->
+		<div ><span  style="cursor:pointer">赛事管理</span>
+			<a href="home.php?mod=spacecp&ac=ssinfo" title="编辑赛事信息"> 编辑赛事信息</a>
+			<a href="home.php?mod=spacecp&ac=jbqc&op=list" title="查看举办场地"> 查看举办场地</a>
+			<a href="home.php?mod=spacecp&ac=jbqc&op=search" title="添加举办场地"> 添加举办场地</a>
+			<a href="home.php?mod=spacecp&ac=csqy&op=list" title="查看参赛明星"> 查看参赛明星</a>
+			<a href="home.php?mod=spacecp&ac=csqy&op=search" title="添加参赛明星"> 添加参赛明星</a>
+		</div>
+		<!--{/if}-->
+		<!--{if $_G['groupid'] == '25' || $_G['groupid'] == '24'}-->
+		<div ><span  style="cursor:pointer">赞助商管理</span>
+			<a href="home.php?mod=spacecp&ac=zanzhushang" title="查看赞助商"> 查看赞助商</a>
+			<a href="home.php?mod=spacecp&ac=zanzhushang&op=add" title="添加赞助商"> 添加赞助商</a>
+		</div>
+		<!--{/if}-->
+		<!--{if $_G['groupid'] == '20' || $_G['groupid'] == '21' || $_G['groupid'] == '23' || $_G['groupid'] == '26' || $_G['groupid'] == '27'}-->
+		<div ><span  style="cursor:pointer">会员管理</span>
+			<a href="home.php?mod=spacecp&ac=hygl&op=shenhe" title="审核会员申请"> 审核会员申请</a>
+			<a href="home.php?mod=spacecp&ac=hygl&op=myhy" title="我的会员"> 我的会员</a>
+			<a href="home.php?mod=spacecp&ac=hygl&op=invite" title="会员邀请"> 会员邀请</a>
+		</div>
+		<!--{/if}-->
+		<!--{if $_G['groupid'] == '21'}-->
+		<div ><span  style="cursor:pointer">球场管理</span>
+			<a href="home.php?mod=spacecp&ac=field&op=field" title="球场申请资料"> 球场申请资料</a>
+		</div>
+        <div ><span  style="cursor:pointer">教练管理</span>
+			<a href="home.php?mod=spacecp&ac=jguser&type=1&op=add" title="添加教练"> 添加教练</a>
+			<a href="home.php?mod=spacecp&ac=jguser&type=1" title="查看教练"> 查看教练</a>
+		</div>
+        <div ><span  style="cursor:pointer">专家管理</span>
+			<a href="home.php?mod=spacecp&ac=jguser&type=2&op=add" title="添加专家"> 添加专家</a>
+			<a href="home.php?mod=spacecp&ac=jguser&type=2" title="查看专家"> 查看专家</a>
+		</div>
+		<!--{/if}-->
+        <!--{if $_G['groupid'] >= '20'}-->
+        <div ><span  style="cursor:pointer">模板设置</span>
+			<a href="home.php?mod=spacecp&ac=qylogo" title="logo管理"> logo管理</a>
+            <a href="home.php?mod=spacecp&ac=bgset" title="模板设置"> 模板设置</a>
+        </div>
+        
+        <!--{/if}-->
+		<!--自定义替换部分 end-->
+
+		<!--公共部分 star-->
+		<div ><span  style="cursor:pointer">日常查询</span>
+			<a href="home.php?mod=space&do=pm" title="我的消息"> 我的消息</a>
+			<a href="home.php?mod=space&do=notice" title="我的提醒"> 我的提醒</a>
+			<a href="home.php?mod=spacecp&ac=weibo&op=discuss" title="我的评论"> 我的评论</a>         
+			<a href="home.php?mod=spacecp&ac=weibo&op=follow" title="我的关注"> 我的关注</a>
+			<a href="home.php?mod=spacecp&ac=weibo&op=favorite" title="我的收藏"> 我的收藏</a>
+			<a href="home.php?mod=spacecp&ac=weibo&op=fans" title="我的粉丝"> 我的粉丝</a>
+		</div>
+		<div ><span  style="cursor:pointer">个人设置</span>
+			<a href="home.php?mod=spacecp&ac=avatar" title="修改头像">修改头像</a>
+			<a href="home.php?mod=spacecp&ac=profile" title="我的资料">我的资料</a>
+			<a href="home.php?mod=spacecp&ac=profile&op=verify" title="认证信息">认证信息</a>
+			<a href="home.php?mod=spacecp&ac=profile&op=password" title="密码安全">密码安全</a>
+			<a href="home.php?mod=spacecp&ac=privacy" title="隐私筛选">隐私筛选</a>
+		</div>
+		 <!--公共部分 end-->
+	</div>
+</div>

@@ -1,0 +1,91 @@
+{if $test == 1}
+<!--{subtemplate common/wap_header}-->
+
+
+<!--nav--> <!--{subtemplate common/wap_nav}--> <!--/nav-->
+<base href="http://www.bwvip.com/" />
+
+  <div id="centenr" style="height:auto;" >  
+  	  
+	  <div id="qiuc" style="height:auto;">
+		<div id="con1_s"></div>
+			<div id="con1_t2" style="height:auto;">
+				  <div class="t_top">
+					   <div class="dh_le2 fl" ><span>【<a href="javascript:;" onclick="javascript:history.back(-1);">返回</a>】{if $test==1}test{/if}</span>    </div>
+					   <div class="dh_ri2 fr"></div>
+				  </div><br>
+					<div class="nav_u" style="height:auto; white-space:normal;    overflow-x:hidden; ">
+						<ul>
+						  <h4>标题：<br/><br/><font color="red">{$news_blog['subject']}</font></h4><br/>
+						  <li>{$news_blog['message']}</li>
+						</ul>
+						
+					</div>
+		     </div>
+		 <div id="con1_p"></div>
+	  </div>
+
+
+    
+   <div class="top" style="margin-top:10px;"><a href="#"><img src="/static/wap/t1/images/top_08.gif" width="38" height="13" /></a></div>
+ </div>
+ 
+<!--{subtemplate common/wap_footer}-->
+{else}
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>weibo</title>
+<style type="text/css">
+body{margin:0;padding:0;font-size:12pt;color:#000000; line-height:150%; font-family:"微软雅黑","宋体"; width:100%;}
+p{margin:0;padding:0;}
+img{margin:0;padding:0;border:0;width:100%;}
+p a:link,p a:visited{text-decoration:none; font-size:12pt;color:#000000;}
+p a:hover{text-decoration:none;color:000;}
+
+</style>
+</head>
+
+<body>
+<base href="http://www.bwvip.com/" />
+<table border="0" cellpadding="0" cellspacing="0"  width="100%">
+	<tr style="background:url(http://www.bwvip.com/images/wap/top-bg.png) repeat-x;">
+    <td width="52" align="right"><img src="http://www.bwvip.com/images/wap/logo.png" width="52"  /></td>
+    <td align="left" style="color:#fff;font-size:24pt; line-height:40px;">大正传媒球场资讯</td>
+    </tr>
+   
+	<tr style="background:url(http://www.bwvip.com/images/wap/line.png) no-repeat left bottom; height:100px;">
+		<td colspan="2" style="font-size:18pt; font-weight:bold; line-height:30px;">{$news_blog['subject']}</td>
+	</tr>
+	<tr style="margin-top:10px;">
+		<td colspan="2" >
+		{$news_blog['message']}
+		</td>
+	</tr>
+	<tr style="background:url(http://www.bwvip.com/images/wap/line.png) no-repeat left bottom; height:100px;">
+		<td colspan="2" style="font-size:18pt; font-weight:bold; line-height:30px;">相关推荐</td>
+	</tr>
+	<tr>
+		<td colspan="2" >
+			<table border="0" cellpadding="5px" cellspacing="0"  width="90%" >
+				<!--{if $new_blogs_list}-->
+	   			<!--{loop $new_blogs_list $key $value}-->
+		   		<tr>
+                	<td width="13px" style="padding-left:0;"><img src="http://www.bwvip.com/images/wap/dian.png" width="13" height="13" /></td>
+                    <td align="left"><p><a href="http://wap.bwvip.com/index.php?mod=news&do=details&id={$key}&uid={$uid}" target="_blank">{$value}</a></p></td>
+               	</tr>
+	      <!--<li>
+		   <A href="./index.php?mod=news&do=details&id={$key}&uid={$uid}">{$value}</A>
+		  </li>
+	   --><!--{/loop}-->
+		 <!--{else}-->
+		      <li>暂无内容 ··谢谢你的关注</li>
+		 <!--{/if}-->
+			</table>
+		</td>
+	</tr>
+</table>
+</body>
+</html>
+{/if}

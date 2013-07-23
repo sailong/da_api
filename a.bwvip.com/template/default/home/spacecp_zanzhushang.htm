@@ -1,0 +1,91 @@
+<!--{template home/space_header_comm}-->
+<div id="wtcontent">
+	<!-- 左侧 -->
+	<!--{template home/spacecp_00_left}-->
+	<!-- 右侧 -->
+	<div class="rightw">
+	<div class="rightlm"><span class="title_1">赞助商</span></div>
+               <div class="rcontent" style="border:1px solid #DBDBDB; margin-top:10px;">
+                       <div class="sapce_view_content"> 
+                           <div class="sapce_view_content_div" style="padding:15px;"> 
+                            <!--中间内容开始-->
+                            <!--{if $op=='list' || empty($op)}-->
+                            <form action="home.php?mod=spacecp&ac=zanzhushang&op=del" method="post" name="form1">
+                            
+                            
+                            <table width="98%" style="line-height:25px; color:#6A6A6A;" border="1" bordercolor="#C5C5C5">
+                            <tr>
+                                 <td align="center"><b>删除选定</b></td>
+                                 <td align="center"><b>图片</b></td>
+                                 <td align="center"><b>类型</b></td>
+                                 <td align="center"><b>名称</b></td>
+                                 <td align="center"><b>排序</b></td>
+                                 <td align="center"><b>操作</b></td>
+                            </tr>
+                            <!--{eval $type_lang=array('0'=>'赞助商','1'=>'大正竞猜','2'=>'赛事行程');}-->
+                            <!--{loop $endrow $value}-->
+                            <tr>
+                            <td width="70" align="center"><input type="checkbox" name="del[]" value="$value[id]" /></td>
+                            <td align="center"><img src="$value[logo]" style="padding-top:5px;padding-bottom:5px; width:150px;height:100px;" /></td>
+                            <td align="center">{$type_lang[$value['type']]}</td>
+                            <td align="center">$value[name]</td>
+                            <td align="center">$value[seq]</td>
+                            <td align="center"><a href="home.php?mod=spacecp&ac=zanzhushang&op=edit&id=$value[id]" >编辑排序</a></td>
+                            </tr>
+                            <!--{/if}-->
+                           <tr><td colspan="7" align="center" height="40">暂未数据
+                            <!--{if $endrow}-->
+                            <input type="submit" value="删除" />
+                            <!--{/if}--> 
+                            </td></tr>
+                            </table>
+                            </form>
+                            <!--{/if}-->
+                            
+                            <!--{if $op=='edit'}-->
+                            <form action="home.php?mod=spacecp&ac=zanzhushang&op=editseq" method="post" name="form1">
+                            <input type="hidden" value="$_GET[id]" name="myid" />
+                            logo：<img src="$fkre[logo]" name="logo" /><br /><br />
+                            名称：<input type="text" name="my" value="$fkre[name]" maxlength="50" /><br /><br />
+                            排序：<input type="text" name="seq" value="$fkre[seq]" size="5" maxlength="2" onKeyUp="this.value=this.value.replace(/[^\d]/g,'')" /><br /><br />
+                            
+                            广告类型：
+                            <label><input type="radio" value="0" type="radio" name="type" <!--{if $fkre['type']==0}-->checked="checked"<!--{/if}--> > 赞助商</label>
+                            <!--{eval $event_check = in_array($_G['uid'],$event_system); }-->
+                            <!--{if   $event_check  }-->
+                                 <label><input type="radio" value="1" name="type" <!--{if $fkre['type']==1}-->checked="checked"<!--{/if}--> > 大正竞猜 </label>        
+                                 <label><input type="radio" value="2" name="type" <!--{if $fkre['type']==2}-->checked="checked"<!--{/if}--> > 赛事行程</label>
+                            <!--{/if}-->
+                            
+                            <input type="submit" value="修改" />
+                            </form>
+                            <!--{/if}-->
+                            
+                            <!--{if $op=='add'}-->
+                            <div style="padding:5px 10px">
+                            <form action="home.php?mod=spacecp&ac=zanzhushang&op=addsub" method="post" enctype="multipart/form-data">
+                            名称:&nbsp;<input type="text" name="myname" maxlength="50" /><br /><br />
+                            logo:&nbsp;<input type="file" name="myfile" /> <br /><br />
+                            网址:&nbsp;<input type="text" name="href" maxlength="100" />(例：http://www.bwvip.com/)<br /><br />
+                            排序:&nbsp;<input type="text" name="seq" size="5" maxlength="2" onKeyUp="this.value=this.value.replace(/[^\d]/g,'')" />&nbsp;(只能输入数字)<br /><br />
+
+                            广告类型：<label><input type="radio" value="0" type="radio" checked="checked" name="type">赞助商</label>
+                            <!--{eval $event_check = in_array($_G['uid'],$event_system); }-->
+                            <!--{if   $event_check  }-->
+                                 <label><input type="radio" value="1" name="type"> 大正竞猜 </label>                        
+                                 <label><input type="radio" value="2" name="type"> 赛事行程</label>
+                            <!--{/if}-->
+
+                           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                           <input type="submit" value="添加" />
+                            </form>
+                            </div>
+                            <!--{/if}-->
+                            <!--中间内容结束-->
+                          </div>
+                        </div>
+                   </div>		
+	</div>
+	<div class="clear"></div>
+</div>
+<!--{template home/spacecp_foot_comm}-->

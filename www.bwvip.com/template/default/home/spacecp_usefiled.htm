@@ -1,0 +1,84 @@
+<!--{template home/spacecp_25_head}-->
+<div id="wtcontent">
+	<!-- 左侧 -->
+	<!--{template home/spacecp_25_left}-->
+	<!-- 右侧 -->
+	<div class="rightw">
+		<div class="rightlm"><span class="title_1" style="color:#fff;font-size:14px;">添加最喜欢的球场</div>
+		<div class="rcontent" style="border:1px solid #DBDBDB; margin-top:10px;">
+                 <div class="sapce_view_content"> 
+                        <div class="sapce_view_content_div" style="padding:15px;"> 
+			<!--中间内容-->
+            <form action="home.php?mod=spacecp&ac=usefiled&op=addsub" name="form1" method="post">
+            第一个：<select name="one" id="one" onchange="ffield('one')">
+            <option value="">请选择</option>
+            <!--{loop $cityarr $vk}-->
+                <!--{if $tk[1][pid]==$vk[id]}-->
+                    <option value="$vk[id]" selected="">$vk["name"]</option>
+                    <!--{else}-->
+                    <option value="$vk[id]">$vk["name"]</option>
+                <!--{/if}-->
+            <!--{/loop}-->
+            </select><select name="onea" id="onea">
+            <!--{if $tk[1][fieldname]}-->
+                    <option value="$tk[1][fid]" selected="">$tk[1][fieldname]</option>
+                    <!--{else}-->
+                    <option value="">请选择</option>
+                <!--{/if}-->
+            
+            </select><br /> <br />
+            第二个：<select name="two" id="two" onchange="ffield('two')">
+            <option value="">请选择</option>
+            <!--{loop $cityarr $vk}-->
+            <!--{if $tk[2][pid]==$vk[id]}-->
+                    <option value="$vk[id]" selected="">$vk["name"]</option>
+                    <!--{else}-->
+                    <option value="$vk[id]">$vk["name"]</option>
+                <!--{/if}-->
+            <!--{/loop}-->
+            </select><select name="twoa" id="twoa">
+            <!--{if $tk[2][fieldname]}-->
+                    <option value="$tk[2][fid]" selected="">$tk[2][fieldname]</option>
+                    <!--{else}-->
+                    <option value="">请选择</option>
+                <!--{/if}-->
+            </select><br /> <br />
+            第三个：<select name="three" id="three" onchange="ffield('three')">
+            <option value="">请选择</option>
+            <!--{loop $cityarr $vk}-->
+            <!--{if $tk[3][pid]==$vk[id]}-->
+                    <option value="$vk[id]" selected="">$vk["name"]</option>
+                    <!--{else}-->
+                    <option value="$vk[id]">$vk["name"]</option>
+                <!--{/if}-->
+            <!--{/loop}-->
+            </select><select name="threea" id="threea">
+            <!--{if $tk[3][fieldname]}-->
+                    <option value="$tk[3][fid]" selected="">$tk[3][fieldname]</option>
+                    <!--{else}-->
+                    <option value="">请选择</option>
+                <!--{/if}-->
+            </select><br /> <br />
+            <input type="submit" value="提交" />
+            </form>
+			<!--中间内容-->
+		           </div>
+              </div>
+		</div>
+	</div>
+	<div class="clear"></div>
+</div>
+<script src="static/js/jquery.js"></script>
+<script>
+function ffield(fvalue){
+    var ty=jQuery("#"+fvalue).val();
+    jQuery.post('home.php?mod=spacecp&ac=usefiled&op=aj',{pid:ty},function(msg){
+        //alert(msg);
+        jQuery("#"+fvalue+"a").html(msg);
+        
+    })
+}
+
+</script>
+
+<!--{template home/spacecp_foot_comm}-->

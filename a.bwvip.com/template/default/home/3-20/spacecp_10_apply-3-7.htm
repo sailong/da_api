@@ -1,0 +1,216 @@
+<!--{template home/spacecp_10_head}-->
+<style type='text/css'>
+.apply {
+	width:99%; border:1px solid #abcdef
+}
+.apply td {
+	border:1px solid #abcdef; height:25px; width:20px; text-align:center; padding:0; text-align:left
+}
+.apply tr .first {
+	width:15%; color:blue
+}
+.apply tr td input {
+	width:20px; height:25px; line-height:25px; margin:0; border:1px dashed gray
+}
+.apply tr td #year {
+	width:80px; border:1px solid gray; text-align:center
+}
+.apply tr td #content {
+	border:1px dashed gray
+}
+</style>
+<div id="wtcontent">
+	<!-- 左侧 -->
+	<!--{template home/spacecp_10_left}-->
+	<!-- 右侧 -->
+	<div class="rightw">
+		<div class="rightlm"><h1>申请<!--{if $operation == caddie}-->球童<!--{else}-->教练<!--{/if}--></h1></div>
+		<div class="rcontent">
+			<br />
+			<div style='height:900px'>
+
+		<!-------开始------->
+				<form action='home.php?mod=spacecp&ac=apply&op=<!--{if $operation == caddie}-->caddie<!--{else}-->drill<!--{/if}-->&do=save<!--{if $do == edit}-->&c=up<!--{/if}-->' method='post' enctype='multipart/form-data'>
+				<!--{if $operation == 'caddie'}-->
+				<table cellspacing='0' cellpadding='0' class='apply'>
+					<!--{if empty($apply) || $do == 'edit'}-->
+					<!--{if $do == 'edit'}-->
+					<input type='hidden' name='caddieid' value='<!--{$apply[id]}-->' />
+					<!--{/if}-->
+					<tr>
+						<td class='first'>所属球场</td>
+						<td>
+							<select name='provinceid' id='province' style='width:100px; height:100%; border:none; border-right:1px solid #abcdef; font-size:13px' onchange='getarea(this.value)'>
+								<option value='0'>请选择</option>
+								<!--{loop $area $key $val}-->
+								<!--{if $apply['provinceid'] == $val[id]}-->
+								<option value='<!--{$apply[provinceid]}-->' selected><!--{$apply[name]}--></option>
+								<!--{else}-->
+								<option value='<!--{$val[id]}-->'><!--{$val[name]}--></option>
+								<!--{/if}-->
+								<!--{/loop}-->
+							</select>
+							<select name='fieldid' id='field' style='width:150px; height:100%; border:none; border-right:1px solid #abcdef; border-left:1px solid #abcdef; font-size:13px'>
+								<!--{if $field}-->
+								<!--{loop $field $key $val}-->
+								<!--{if $apply['fieldid'] == $val[id]}-->
+								<option value='<!--{$apply[fieldid]}-->' selected><!--{$apply[fieldname]}--></option>
+								<!--{else}-->
+								<option value='<!--{$val[id]}-->'><!--{$val[fieldname]}--></option>
+								<!--{/if}-->
+								<!--{/loop}-->
+								<!--{else}-->
+								<option value='0'>请选择</option>
+								<!--{/if}-->
+							</select>
+							<span id='rfield' style='color:red'></span>
+						</td>
+					</tr>
+					<tr>
+						<td class='first'>从业年限</td>
+						<td>
+							<select name='year' id='year'>
+								<option value='0'>请选择</option>
+								<!--{loop $year $k $v}-->
+								 <!--{if $apply['year'] == $v}-->
+								 <option value='<!--{$v}-->' selected><!--{$v}--></option>
+								 <!--{else}-->
+								<option value='<!--{$v}-->'><!--{$v}--></option>
+								<!--{/if}-->
+								<!--{/loop}-->
+							</select>
+							<span id='rtime' style='color:red'></span>
+						</td>
+					</tr>
+					<tr>
+						<td class='first'>从业简介</td>
+						<td>
+							<textarea rows='5' cols='50' name='content' id='content'><!--{if $apply}--><!--{$apply[content]}--><!--{/if}--></textarea>
+						</td>
+					</tr>
+					<tr>
+						<td colspan='2' style='width:100%; text-align:center'>
+							<button type='submit' name='profilesubmitbtn' value='true' id='profilesubmitbtn' onclick='return checksubmit()' class='pn pnc' /><strong>提交申请</strong></button>
+						</td>
+					</tr>
+					<!--{else}-->
+					<tr>
+						<td class='first'>所属球场</td>
+						<td><!--{$apply[name]}--> >> <!--{$apply[fieldname]}--></td>
+					</tr>
+					<tr>
+						<td class='first'>从业年限</td>
+						<td><!--{$apply[year]}--></td>
+					</tr>
+					<tr>
+						<td class='first'>申请时间</td>
+						<td><!--{$apply[lasttime]}--></td>
+					</tr>
+					<tr>
+						<td class='first'>申请状态</td>
+						<td style='color:red'><!--{if $apply[isverify] == '0'}-->正在审核<!--{elseif $apply[isverify] == '1'}-->已通过审核<!--{else}-->未通过审核<!--{/if}--></td>
+					</tr>
+					<tr>
+						<td class='first'>从业简介</td>
+						<td><!--{$apply[content]}--></td>
+					</tr>
+					<tr>
+						<td colspan='2' style='width:100%; text-align:center'>
+							<a href='home.php?mod=spacecp&ac=apply&op=caddie&do=edit&id=<!--{$apply[id]}-->'>重新编辑</a>
+						</td>
+					</tr>
+					<!--{/if}-->
+				</table>
+				<!--{elseif $operation == 'drill'}-->
+				<table cellspacing='0' cellpadding='0' class='apply'>
+					<!--{if empty($apply) || $do == 'edit'}-->
+					<!--{if $do == 'edit'}-->
+					<input type='hidden' name='drillid' value='<!--{$apply[id]}-->' />
+					<!--{/if}-->
+					<tr>
+						<td class='first'>从业年限</td>
+						<td>
+							<select name='year' id='year'>
+								<option value='0'>请选择</option>
+								<!--{loop $year $k $v}-->
+								 <!--{if $apply['year'] == $v}-->
+								 <option value='<!--{$v}-->' selected><!--{$v}--></option>
+								 <!--{else}-->
+								<option value='<!--{$v}-->'><!--{$v}--></option>
+								<!--{/if}-->
+								<!--{/loop}-->
+							</select>
+							<span id='rtime' style='color:red'></span>
+						</td>
+					</tr>
+					<tr>
+						<td class='first'>从业简介</td>
+						<td>
+							<textarea rows='5' cols='50' name='content' id='content'><!--{if $apply}--><!--{$apply[content]}--><!--{/if}--></textarea>
+						</td>
+					</tr>
+					<tr>
+						<td colspan='2' style='width:100%; text-align:center'>
+							<button type='submit' name='profilesubmitbtn' value='true' id='profilesubmitbtn' onclick='return checksubmit()' class='pn pnc' /><strong>提交申请</strong></button>
+						</td>
+					</tr>
+					<!--{else}-->
+					<tr>
+						<td class='first'>从业年限</td>
+						<td><!--{$apply[year]}--></td>
+					</tr>
+					<tr>
+						<td class='first'>申请时间</td>
+						<td><!--{$apply[lasttime]}--></td>
+					</tr>
+					<tr>
+						<td class='first'>申请状态</td>
+						<td style='color:red'><!--{if $apply[isverify] == '0'}-->正在审核<!--{elseif $apply[isverify] == '1'}-->已通过审核<!--{else}-->未通过审核<!--{/if}--></td>
+					</tr>
+					<tr>
+						<td class='first'>从业简介</td>
+						<td><!--{$apply[content]}--></td>
+					</tr>
+					<tr>
+						<td colspan='2' style='width:100%; text-align:center'>
+							<a href='home.php?mod=spacecp&ac=apply&op=drill&do=edit&id=<!--{$apply[id]}-->'>重新编辑</a>
+						</td>
+					</tr>
+					<!--{/if}-->
+				</table>
+				<!--{/if}-->
+				</form>
+		<!-------结束------->
+
+			</div>
+		</div>
+	</div>
+	<div class="clear"></div>
+</div>
+<!--{template home/spacecp_foot_comm}-->
+<script type="text/javascript" src='static/js/jquery.js'></script>
+<script type="text/javascript">
+	function getarea(val) {
+		var url = 'home.php?mod=spacecp&ac=score&op=area&val='+val;
+		jQuery.post(url, {}, function(msg) {
+			jQuery('#field').html(msg);
+		});
+	}
+	function checksubmit() {
+		var area = jQuery('#province').val();
+		var val = jQuery('#field').val();
+		var year = jQuery('#year').val();
+		if(area == '' || area == '0') {
+			jQuery('#rfield').html('请选择地点');
+			return false;
+		}
+		if(val == '' || val == '0') {
+			jQuery('#rfield').html('选择球场');
+			return false;
+		}
+		if(year == '' || year == '0') {
+			jQuery('#rtime').html('选择从业年限');
+			return false;
+		}
+	}
+</script>

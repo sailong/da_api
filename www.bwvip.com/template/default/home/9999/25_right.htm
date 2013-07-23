@@ -1,0 +1,60 @@
+<div class="y y3">
+		<div class="rightlmn"><span class="rlm1"><h1>赛事赞助商</h1></span>  <!--span class="rlm2"><a href="#">更多</a></span--></div>
+		<div class="ylmcon">
+			
+            <!--{loop $endzz $value}-->
+			<div class="zbms">
+				<p><a href="$value[href]" target="_blank"><img src="$value[logo]" width="78" height="55" /></a></p>
+				<p><a href="$value[href]" target="_blank">$value[name]</a></p>
+			</div>
+		    <!--{/loop}-->
+			
+			<div class="clear"></div>
+		</div>
+		<div class="rightlm"><span class="rlm1"><h1>参赛明星</h1></span>  <span class="rlm2"><a href="home.php?mod=space&uid=1621&do=saishiinfo&op=mingxing">更多</a></span></div>
+		<div class="ylmcon">
+			<!--{loop $cansaire $cva}-->
+		   <div class="zbms zbmswidt">
+				<p><a href="/home.php?mod=space&uid=$cva[userid]" target="_blank"><img src="uc_server/avatar.php?uid=$cva[userid]&size=middle" width="50" height="50" alt="$cva[cname]" /></a></p>
+				<p><a href="/home.php?mod=space&uid=$cva[userid]" target="_blank">$cva[subname]</a></p>
+		  </div>
+			<!--{/loop}-->
+		   
+			
+			<div class="clear"></div>
+	    </div>
+		<div class="rightlm"><span class="rlm1"><h1>举办球场</h1></span>  <span class="rlm2"><!--<a href="#">更多</a>--></span></div>
+		<div class="ylmcon">
+			<p class="center">
+            <!--{if $cdarr[fieldimg]}-->
+            <a href="home.php?mod=space&uid=$cdarr[cdid]" target="_blank"><img src="$cdarr[fieldimg]" height="113" width="184" /></a>
+            <!--{/if}-->
+            </p>
+			<p class="center top10"><a href="home.php?mod=space&uid=$cdarr[cdid]" target="_blank">$cdarr[field1]</a></p>
+        </div>
+
+		
+		<div class="rightlm"><span class="rlm1"><h1>热门话题</h1></span>  <span class="rlm2"><a href="#">更多</a></span></div>
+		<div class="ylmcon">
+			<div class="rmht">
+				<!--{if $topic}-->
+					<!--{loop $topic $val}-->
+				<p><a href="home.php?mod=space&do=common&op=topic&tcode=<!--{$val}-->&uid=$uid"><!--{$val}--></a></p>
+				<!--{/loop}-->
+				<!--{else}-->
+				没有话题
+				<!--{/if}-->
+		    </div>
+		</div>
+		
+		<div class="rightlm"><span class="rlm1"><h1>热门标签</h1></span>  <span class="rlm2"><a href="#">更多</a></span></div>
+		<div class="ylmcon">
+			<div class="rmbq">
+			<!--{loop $tags $value}--> 
+			<span><a href="home.php?mod=space&do=common&op=tag&tag=$value[tag_name]&uid=$_GET[uid]">$value[tag_name]</a></span> | 
+			<!--{/loop}-->
+	
+			</div>
+		</div>
+		
+	</div>

@@ -1,0 +1,15 @@
+<script type="text/javascript" src="js/dojo-release-1.7.2/dojo/dojo.js" djConfig="isDebug: true, parseOnLoad: true"></script>
+<script type="text/javascript">
+	dojo.require("dojo.cookie");
+	dojo.addOnLoad(function(){
+		var address = dojo.cookie("guess_activity_address");
+		if(address!=undefined){
+			var child = dojo.byId('myprompt');
+			var spanEl = dojo.doc.createElement("span");spanEl.innerHTML = '| <a href="'+address+'">继续竞猜</a>';
+			dojo.addClass(spanEl, "pipe");
+			child.parentNode.insertBefore(spanEl,child.nextSibling);
+			dojo.cookie("guess_activity_address", guess_activity_address, {expires: -1});
+		}
+		
+	});
+</script>

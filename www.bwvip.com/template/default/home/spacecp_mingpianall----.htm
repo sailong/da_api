@@ -1,0 +1,110 @@
+<!--{template home/space_header_comm}-->
+<div id="wtcontent">
+	<!-- 左侧 -->
+	<!--{template home/spacecp_00_left}-->
+	<!-- 右侧 -->
+	<div class="rightw">
+		 <a name="#minpain"><div class="rightlm">
+		  <span style="color:#fff; font-family:'方正准圆简体'; font-size:14px;">名片管理</span></h1></div></a>
+		<br>
+		<div class="rcontent">
+		  
+    <ul class="tb cl" style='margin-bottom:10px;'>
+        <li $opactives[jiaohuan]><a href="home.php?mod=spacecp&ac=mingpianall&op=jiaohuan">交换邀请</a></li>
+        <li $opactives[cunchu]><a href="home.php?mod=spacecp&ac=mingpianall&op=cunchu">存储的名片</a></li>
+    </ul>
+          
+          <!--{if $operation == 'jiaohuan'}-->
+          <!--{if $mingpian}-->
+          <!--{loop $mingpian $value}-->
+          <div style="margin:0 auto; width:400px;">
+          <table width="280" border="0" cellpadding="2" cellspacing="1">
+		    <tr>
+		      <td height="30">$value[company]</td>
+		      <td rowspan="3" align="right"><img src="uc_server/avatar.php?uid=$value[uid]&size=middle" width="115" height="106" /></td>
+	        </tr>
+		    <tr>
+		      <td height="30">$value[realname]</td>
+	        </tr>
+		    <tr>
+		      <td height="30">$value[position]</td>
+	        </tr>
+	      </table>
+		  <table border="0" cellspacing="0" cellpadding="0">
+		    <tr>
+		      <td width="50" height="25">电话：</td>
+		      <td height="25">$value[mobile]</td>
+	        </tr>
+		    <tr>
+		      <td height="25">邮箱：</td>
+		      <td height="25">$value[email]</td>
+	        </tr>
+		    <tr>
+		      <td height="25">QQ:</td>
+		      <td height="25">$value[qq]</td>
+	        </tr>
+		    <tr>
+		      <td height="25">大正：</td>
+		      <td height="25">http://www.bwvip.com/home.php?mod=space&uid=$value[uid] </td>
+	        </tr>
+		    <tr>
+		      <td height="25">地址：</td>
+		      <td height="25">$value[address]</td>
+	        </tr>
+	      </table>
+          <div style="background-color:#999; width:300px; height:20px; text-align:center;"><span><a href="home.php?mod=spacecp&ac=mingpianall&cz=cunhuan&cid=$value[uid]">存储并交换</a></span>&nbsp;&nbsp;<span><a href="home.php?mod=spacecp&ac=mingpianall&cz=cunchu&cid=$value[uid]">仅存储</a></span>&nbsp;&nbsp;&nbsp;<span><a href="home.php?mod=spacecp&ac=mingpianall&cz=del&cid=$value[uid]">放弃此名片</a></span></div>
+          </div>
+          <!--{/loop}-->
+          <!--{/if}-->
+          <!--{/if}-->
+          
+          <!--{if $operation == 'cunchu'}-->
+          <!--{if $mingpianall}-->
+          <!--{loop $mingpianall $valueall}-->
+          <div style="margin:0 auto; width:400px;">
+          <div style="background-color:#999; width:80px; height:20px; text-align:center;"><a href="home.php?mod=spacecp&ac=mingpianall&cz=del&cid=$valueall[uid]">删除</a></div>
+          <table width="280" border="0" cellpadding="2" cellspacing="1">
+		    <tr>
+		      <td height="30">$valueall[company]</td>
+		      <td rowspan="3" align="right"><img src="uc_server/avatar.php?uid=$valueall[uid]&size=middle" width="115" height="106" /></td>
+	        </tr>
+		    <tr>
+		      <td height="30">$valueall[realname]</td>
+	        </tr>
+		    <tr>
+		      <td height="30">$valueall[position]</td>
+	        </tr>
+	      </table>
+		  <table border="0" cellspacing="0" cellpadding="0">
+		    <tr>
+		      <td width="50" height="25">电话：</td>
+		      <td height="25">$valueall[mobile]</td>
+	        </tr>
+		    <tr>
+		      <td height="25">邮箱：</td>
+		      <td height="25">$valueall[email]</td>
+	        </tr>
+		    <tr>
+		      <td height="25">QQ:</td>
+		      <td height="25">$valueall[qq]</td>
+	        </tr>
+		    <tr>
+		      <td height="25">大正：</td>
+		      <td height="25">http://www.bwvip.com/home.php?mod=space&uid=$valueall[uid] </td>
+	        </tr>
+		    <tr>
+		      <td height="25">地址：</td>
+		      <td height="25">$valueall[address]</td>
+	        </tr>
+	      </table>
+          <!--{/loop}-->
+          <!--{/if}-->
+          <!--{/if}-->
+
+      </div></div>
+      <div class="clear"></div>		
+	</div>
+	<div class="clear"></div>
+</div>
+<div class="clear"></div>
+<!--{template home/spacecp_foot_comm}-->

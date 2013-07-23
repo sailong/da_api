@@ -1,0 +1,190 @@
+﻿<!--{subtemplate home/game_header}-->
+<div id="wtcontent">
+	
+    <!-- 左边  -->
+	<!--{subtemplate home/game_left}-->
+    
+	<div class="z z2">
+		<div class="cbg1"><a href="#"><img src="{STATICURL}space/game/images/cdl.jpg" width="144" height="34" border="0"></a>&nbsp;&nbsp;</div>
+		<div class="fenx">
+		  <span><a href="#"><img src="{STATICURL}space/game/images/ca1.jpg" width="246" height="27" border="0"></a></span>
+			<span><a href="#"><img src="{STATICURL}space/game/images/ca2.jpg" width="101" height="34" border="0"></a></span>
+			<span><a href="#"><img src="{STATICURL}space/game/images/ca3.jpg" width="101" height="33" border="0"></a></span>
+	    </div>
+	    <div><img src="{STATICURL}space/game/images/chx.jpg" width="482" height="8"></div>
+		<br />
+		<!--中间上部-->
+		<!--{subtemplate home/game_center}-->
+		
+		
+		<div class="cincontent">
+		  <div class="cinbiaoti"><h2>日志栏目</h2></div>
+		  <div>
+				<!--{if $count}-->
+			<div class="xld {if empty($diymode)}xlda{/if}">
+			<!--{loop $list $k $value}-->
+				<dl class="bbda">
+					<!--{if empty($diymode)}-->
+					<dd class="m">
+						<div class="avt"><a href="home.php?mod=space&uid=$value[uid]" c="1"><!--{avatar($value[uid],small)}--></a></div>
+					</dd>
+					<!--{/if}-->
+
+					<dt class="xs2">
+						<!--{eval $stickflag = isset($value['stickflag']) ? 0 : 1;}-->
+						<!--{if !$stickflag}--><span class="xi1">{lang stick}</span> &middot;<!--{/if}-->
+						<a href="home.php?mod=spacecp&ac=share&type=blog&id=$value[blogid]&handlekey=lsbloghk_{$value[blogid]}" id="a_share_$value[blogid]" onclick="showWindow(this.id, this.href, 'get', 0);" class="oshr xs1 xw0">{lang share}</a>
+						<a href="home.php?mod=space&uid=$value[uid]&do=blog&id=$value[blogid]"{if $value[magiccolor]} style="color: {$_G[colorarray][$value[magiccolor]]}"{/if} target="_blank">$value[subject]</a>
+						<!--{if $value[status] == 1}--> <span class="xi1">({lang pending})</span><!--{/if}-->
+					</dt>
+					<dd>
+						<!--{if $value['friend']}-->
+						<span class="y"><a href="$theurl&friend=$value[friend]" class="xg1">{$friendsname[$value[friend]]}</a></span>
+						<!--{/if}-->
+						<!--{if empty($diymode)}--><a href="home.php?mod=space&uid=$value[uid]">$value[username]</a> <!--{/if}--><span class="xg1">$value[dateline]</span>
+					</dd>
+					<dd class="cl" id="blog_article_$value[blogid]">
+						<!--{if $value[pic]}--><div class="atc"><a href="home.php?mod=space&uid=$value[uid]&do=blog&id=$value[blogid]" target="_blank"><img src="$value[pic]" alt="$value[subject]" class="tn" /></a></div><!--{/if}-->
+						$value[message]
+					</dd>
+					<dd class="xg1">
+						<!--{if $classarr[$value[classid]]}-->{lang personal_category}: <a href="home.php?mod=space&uid=$value[uid]&do=blog&classid=$value[classid]&view=me">{$classarr[$value[classid]]}</a><span class="pipe">|</span><!--{/if}-->
+						<!--{if $value[viewnum]}--><a href="home.php?mod=space&uid=$value[uid]&do=blog&id=$value[blogid]" target="_blank">$value[viewnum] {lang blog_read}</a><span class="pipe">|</span><!--{/if}-->
+						<a href="home.php?mod=space&uid=$value[uid]&do=blog&id=$value[blogid]#comment" target="_blank"><span id="replynum_$value[blogid]">$value[replynum]</span> {lang blog_replay}</a>
+						<!--{hook/space_blog_list_status $k}-->
+						<!--{if $_GET['view']=='me' && $space['self']}-->
+							<span class="pipe">|</span><a href="home.php?mod=spacecp&ac=blog&blogid=$value[blogid]&op=edit">{lang edit}</a><span class="pipe">|</span>
+							<a href="home.php?mod=spacecp&ac=blog&blogid=$value[blogid]&op=delete&handlekey=delbloghk_{$value[blogid]}" id="blog_delete_$value[blogid]" onclick="showWindow(this.id, this.href, 'get', 0);">{lang delete}</a>
+							<!--{if empty($value['status'])}-->
+							<span class="pipe">|</span>
+							
+							<a href="home.php?mod=spacecp&ac=blog&blogid=$value[blogid]&op=stick&stickflag=$stickflag&handlekey=stickbloghk_{$value[blogid]}" id="blog_stick_$value[blogid]" onclick="showWindow(this.id, this.href, 'get', 0);"><!--{if $stickflag}-->{lang stick}<!--{else}-->{lang cancel_stick}<!--{/if}--></a>
+							<!--{/if}-->
+						<!--{/if}-->
+						<!--{if $value['hot']}--><span class="hot">{lang hot} <em>$value[hot]</em> </span><!--{/if}-->
+					</dd>
+				</dl>
+			<!--{/loop}-->
+			<!--{if $pricount}-->
+				<p class="mtm">{lang hide_blog}</p>
+			<!--{/if}-->
+			</div>
+			<!--{if $multi}--><div class="pgs cl mtm">$multi</div><!--{/if}-->
+		<!--{else}-->
+			<div class="emp">{lang no_related_blog}</div>
+		<!--{/if}-->
+		  </div>
+		  </div>
+		
+		
+		
+		
+	</div>
+	<div class="y y3">
+		<div class="rightlmn"><span class="rlm1"><h1>赛事赞助商</h1></span>  <span class="rlm2"><a href="#">更多</a></span></div>
+		<div class="ylmcon">
+			<div class="zbms">
+				<p><img src="{STATICURL}space/game/images/qczb.jpg" width="78" height="55"></p>
+				<p>网罗姓名</p>
+			</div>
+			<div class="zbms">
+				<p><img src="{STATICURL}space/game/images/qczb.jpg" width="78" height="55"></p>
+				<p>网罗姓名</p>
+			</div>
+		    <div class="zbms">
+				<p><img src="{STATICURL}space/game/images/qczb.jpg" width="78" height="55"></p>
+			    <p>网罗姓名</p>
+			</div>
+			<div class="zbms">
+				<p><img src="{STATICURL}space/game/images/qczb.jpg" width="78" height="55"></p>
+			    <p>网罗姓名</p>
+			</div>
+			<div class="clear"></div>
+		</div>
+		<div class="rightlm"><span class="rlm1"><h1>参赛明星</h1></span>  <span class="rlm2"><a href="#">更多</a></span></div>
+		<div class="ylmcon">
+		   <div class="zbms">
+				<p><img src="{STATICURL}space/game/images/zbms.jpg" width="50" height="50"></p>
+				<p>网罗姓名</p>
+		  </div>
+			<div class="zbms">
+				<p><img src="{STATICURL}space/game/images/zbms.jpg" width="50" height="50"></p>
+				<p>网罗姓名</p>
+			</div>
+		    <div class="zbms">
+				<p><img src="{STATICURL}space/game/images/zbms.jpg" width="50" height="50"></p>
+			    <p>网罗姓名</p>
+			</div>
+			<div class="zbms">
+				<p><img src="{STATICURL}space/game/images/zbms.jpg" width="50" height="50"></p>
+			    <p>网罗姓名</p>
+			</div>
+			<div class="clear"></div>
+	    </div>
+		<div class="rightlm"><span class="rlm1"><h1>举办球场</h1></span>  <span class="rlm2"><a href="#">更多</a></span></div>
+		<div class="ylmcon">
+			<p class="center"><img src="{STATICURL}space/game/images/ssqc.jpg"></p>
+			<p class="center top10">上海佘山高尔夫球场</p>
+        </div>
+		<div class="rightlm"><span class="rlm1">
+		<h1>周边旅游线路推荐</h1>
+		</span>  <span class="rlm2"><a href="#">更多</a></span></div>
+		<div class="ylmcon">
+			<p class="center"><img src="{STATICURL}space/game/images/lvxl.jpg"></p>
+			<p class="center top10">广东观澜湖游</p>
+        </div>
+		<div class="rightlm"><span class="rlm1"><h1>专家</h1></span>  <span class="rlm2"><a href="#">更多</a></span></div>
+		<div class="ylmcon">
+			<div class="qcjl">
+			<p class="center"><img src="{STATICURL}space/game/images/jiaolian.jpg" width="50" height="50"></p>
+			<p class="center">耐克体育</p>
+			</div>
+			<div class="qcjl">
+			<p class="center"><img src="{STATICURL}space/game/images/jiaolian.jpg" width="50" height="50"></p>
+			<p class="center">耐克体育</p>
+			</div>
+			<div class="qcjl">
+			<p class="center"><img src="{STATICURL}space/game/images/jiaolian.jpg" width="50" height="50"></p>
+			<p class="center">耐克体育</p>
+			</div>
+			<div class="clear"></div>
+      </div>
+		<div class="rightlm"><span class="rlm1"><h1>活动推荐</h1></span>  <span class="rlm2"><a href="#">更多</a></span></div>
+		<div class="ylmcon">
+			<p class="center"><img src="{STATICURL}space/game/images/hdtj.jpg" width="147" height="70"></p>
+			<p class="center top10">最新活动推荐</p>
+			<p class="center"><img src="{STATICURL}space/game/images/hdtj.jpg" width="147" height="70"></p>
+			<p class="center top10">最新活动推荐</p>
+        </div>
+		<div class="rightlm"><span class="rlm1"><h1>热门话题</h1></span>  <span class="rlm2"><a href="#">更多</a></span></div>
+		<div class="ylmcon">
+			<div class="rmht">
+				<p>#<a href="#">大正高尔夫</a>#</p>
+				<p>#<a href="#">皇冠赛事直播</a>#</p>
+				<p>#<a href="#">九州岛冠军赛</a>#</p>
+		    </div>
+		</div>
+		
+		<div class="rightlm"><span class="rlm1"><h1>热门标签</h1></span>  <span class="rlm2"><a href="#">更多</a></span></div>
+		<div class="ylmcon">
+			<div class="rmbq">
+			<span>养身</span><span> | </span><span>汽车</span><span> | </span><span>养身</span><span> | </span>
+			<span>养身</span><span> | </span><span>汽车</span><span> | </span><span>养身</span><span> | </span><span>养身</span><span> | </span><span>汽车</span><span> | </span><span>养身</span><span> | </span>
+			<span>养身</span><span> | </span><span>汽车</span><span> | </span><span>养身</span>
+			</div>
+		</div>
+		
+	</div>
+	<div class="clear"></div>
+</div>
+
+<br>
+<div id="wt" class="footer top20">
+  <div class="footer2">
+  <span class="z"><a href="/home.php"><img src="{STATICURL}space/game/images/bottomlogo.jpg" width="175" height="65" border="0"></a></span>
+  <span>关于大正 | 商务合作 | 招贤纳士 | 合作伙伴 | 联系我们 | 投诉建议 | 免责声明    <br>
+  大正网版权归北京大正承平文化传播有限公司 <br>
+  京ICP证110339号 京公网安备110108008116号 </span></div>
+</div>
+</body>
+</html>

@@ -1,0 +1,55 @@
+<!--{template home/space_header_comm}-->
+<div id="wtcontent">
+<!-- 左侧 --> <!--{template home/spacecp_00_left}-->
+<!-- 右侧 -->
+<div class="rightw">
+<div class="rightlm"><span class="title_1"><a
+	href="/home.php?mod=spacecp&ac=weiyuan">$tishi</a></span></div>
+<div class="rcontent" style="border: 1px solid #DBDBDB; margin-top: 10px;">
+<div class="sapce_view_content">
+<div class="sapce_view_content_div" style="padding: 15px; line-height: 30px;">
+<!--中间内容--> 
+查看：<select onchange="javascript:location.href='/home.php?mod=spacecp&ac=weiyuan&op=list&typelist='+this.value" name="typelist"><option option="0">请选择</option><!--{loop $array $key $t}--><option value="$key">$t</option><!--{/loop}--></select>
+<!--{if $op=='index' || $op=='submit'}-->
+	<form name="form1" method="post" action="/home.php?mod=spacecp&ac=weiyuan&op=submit">
+	查找：id：<input type="text" name='sid' >&nbsp;&nbsp;真实姓名：<input type="text" name="uname" />&nbsp;&nbsp;<input type="submit" value="查询" name="sub" />
+	</form>
+	<!--{if $endarr}-->
+	<form action="/home.php?mod=spacecp&ac=weiyuan&op=add" method="post" name="form2">
+	<table width='100%'>
+	<tr>
+	<td>id</td><td>真实姓名</td><td>推荐类型</td><!--td>状态</td-->
+	</tr>
+	<!--{loop $endarr $v}-->
+	<tr>
+	<td><input type="checkbox" name="ch[]" value="$v[uid]" /> &nbsp; $v["uid"]</td><td>$v["realname"]</td><td><select name="typelist"><!--{loop $array $key $t}--><option value="$key">$t</option><!--{/loop}--></select>&nbsp;</td>
+	</tr>
+	<!--{/loop}-->
+	<tr>
+	<td rowspan='3'><input type="submit" value="添加" name='sub' /></td>
+	</tr>
+	</table>
+	</form>
+	<!--{/if}-->
+<!--{elseif $op=='list'}-->	
+	<!--{if $typerow}-->
+	<form action="/home.php?mod=spacecp&ac=weiyuan&op=del" name="form1" method="post">
+		<table width="100%">
+		<tr><td>操作</td><td>id</td><td>真实姓名</td><td>头像</td></tr>
+		<!--{loop $typerow $ty}-->
+		<tr><td><input type="checkbox" name="del[]" value="$ty[id]" /></td><td>$ty[uid]</td><td>$ty[realname]</td><td><a href="/home.php?mod=space&uid=$ty[uid]" target="_blank"><img src="uc_server/avatar.php?uid=$ty[uid]&size=small" /></a></td></tr>
+		<!--{/loop}-->
+		<tr><td rowspan="2"><input type="submit" value="删除" name="sub" /></td><td rowspan="2">$disppage</td></tr>
+		</table>
+		
+	</form>
+	<!--{/if}-->
+<!--{/if}-->
+ </div>
+ <!--中间内容-->
+</div>
+</div>
+</div>
+<div class="clear"></div>
+</div>
+<!--{template home/spacecp_foot_comm}-->

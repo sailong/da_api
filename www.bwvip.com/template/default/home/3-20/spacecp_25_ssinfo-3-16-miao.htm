@@ -1,0 +1,46 @@
+<!--{template home/spacecp_25_head}-->
+<div id="wtcontent">
+	<!-- 左侧 -->
+	<!--{template home/spacecp_00_left}-->
+	<!-- 右侧 -->
+	<div class="rightw">
+		<div class="rightlm"><h1>赛事信息</h1></div>
+		<br />
+		<div class="rcontent">
+		<!--内容开始-->
+        <div style="padding:20px 100px;">
+        <!--{if $op=='list'}-->
+        <table width="100%" cellspacing="20">
+        <tr>
+        <td>赛事名称</td><td>赛事地址</td><td>开始时间</td><td>结束时间</td><td>操作</td>
+        </tr>
+        <!--{loop $endrow $value}-->
+        <tr>
+        <td>$value[name]</td><td>$value[address]</td><td>$value[start]</td><td>$value[end]</td>
+        <td><a href="home.php?mod=spacecp&ac=ssinfo&op=edit&id=$value[id]">编辑</a>&nbsp;/&nbsp;<a href="home.php?mod=spacecp&ac=ssinfo&op=del&id=$value[id]" onclick="if(!confirm('确认要删除吗？')) return false">删除</a></td>
+        </tr>
+        <!--{/loop}-->
+        </table>
+        <!--{/if}-->
+        
+        
+        <!--{if $op=='edit'}-->
+        <script src="static/js/calendar.js"></script>
+        <form name="form2" action="home.php?mod=spacecp&ac=ssinfo&op=change" method="post">
+        <input type="hidden" value="$editre[id]" name="saishiid" />
+        赛事名称：<input type="text" name="tname" value="$editre[name]"maxlength="100" /><br /><br />
+        赛事地址：<input type="text" name="address" value="$editre[address]" maxlength="100" /><br /><br />
+        开始时间：<input type="text" name="start" value="$editre[start]" maxlength="10" id="caca" onclick="showcalendar(event, this)" />(例2012-03-05)<br /><br />
+        结束时间：<input type="text" name="end" value="$editre[end]" maxlength="10" id="cbcb" onclick="showcalendar(event, this)" />(例2012-03-05)<br /><br />
+        <input type="submit" value="编辑" /><br /><br />
+        </form>
+        
+        <!--{/if}-->
+        </div>
+        <!--内容结束-->
+	   </div>
+	<div class="clear"></div>
+</div>
+</div>
+<div style="clear:both;height:8px;"></div>
+<!--{template home/spacecp_foot_comm}-->

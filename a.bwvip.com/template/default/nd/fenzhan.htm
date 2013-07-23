@@ -1,0 +1,47 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> 
+<meta http-equiv="Cache-Control" content="no-cache"/> 
+<title>大正社区手机版</title>
+<style>
+body{font-size:18px;}
+</style>
+</head>
+
+<body>
+
+<table width="100%" align="center" cellpadding="0" cellspacing="0" style="background-attachment:#e7e7e7;">
+ 
+ <tr>
+    <td    >排名</td>
+    <td   >姓名</td>
+    <td   >分组</td>
+    <td  >成绩</td>
+    <td  >ALL</td>
+  
+      
+  </tr>
+  
+<!--{loop $fz $n  $v}-->
+ <!--{if $n%2==1}-->
+  <!--{eval $bgcolor = "#D5E6F6";}-->
+<!--{else}-->
+  <!--{eval $bgcolor = "#C3CED4";}-->
+<!--{/if}-->
+  <tr  bgcolor="<!--{$bgcolor}-->">
+    <td  >{echo $n+1}</td>
+    <td  ><a href="score.php?ndid={$v['nd_id']}"><strong>{$v['realname']}</strong></a></td>
+    <td>{$v['team_num']}</td>
+    <td>{if $v['avcave']<900}{echo Getchd($v['avcave'])}{else}&nbsp;{/if} </td>
+      <td> {echo Getstat($v[tlcave])}</td>
+
+  </tr>
+<!--{/loop}-->
+   <tr>
+    <td colspan="5" align="center" style="background:#dae7f0; border-left: 1px solid #ffffff;" ><img src="/images/nd/fenzbt.jpg" ></td>
+  </tr>
+</table>
+
+</body>
+</html>

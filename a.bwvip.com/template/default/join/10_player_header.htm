@@ -1,0 +1,900 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<link rel="stylesheet" href="static/join/css/zyz.css"  type="text/css">
+	<link rel="stylesheet" href="js/dojo-release-1.7.2/dijit/themes/claro/claro.css">
+	<title>中国高尔夫教练锦标赛</title>
+	<script type="text/javascript" src="js/dojo-release-1.7.2/dojo/dojo.js" djConfig="isDebug: true, parseOnLoad: true"></script>
+	<script src="static/js/jquery.js" type="text/javascript"></script>
+	<script type="text/javascript">
+		dojo.require("dijit.form.DateTextBox");
+		dojo.require("dojo.io.iframe");
+		dojo.require("dijit.Dialog");
+
+		function init(){
+			
+			var birth_year = dojo.attr('stored_birth_year','value');
+			var birth_month = dojo.attr('stored_birth_month','value');
+			var birth_day = dojo.attr('stored_birth_day','value');
+
+			if(birth_month==0||birth_day==0){
+				dijit.byId('birth_date').set('displayedValue','');
+			}else{
+				dijit.byId('birth_date').set('displayedValue',birth_year+'-'+birth_month+'-'+birth_day);	
+			}
+			/*
+			var hidden_referee_getting_certificate_date = dojo.attr('hidden_referee_getting_certificate_date','value');
+			if(hidden_referee_getting_certificate_date == '0000-00-00'){
+				dijit.byId('referee_getting_certificate_date').set('displayedValue','');
+			}else{
+				dijit.byId('referee_getting_certificate_date').set('displayedValue',hidden_referee_getting_certificate_date);
+			}
+			*/
+		}
+
+		function upload_avatar(){
+			dojo.io.iframe.send({
+				form: "upload_avatar",
+				handleAs: "html",
+				load: function(response, ioArgs){
+
+					console.log(response.body.outerHTML);
+					if(response.body.outerHTML.toLowerCase().match('ok')==null){
+						if(dojo.byId('span')!=null){
+							dojo.byId('span').innerHTML = '';	
+						}
+					}else{
+						
+						if(dojo.byId('span')!=null){
+							var num = Math.random();
+							dojo.byId('span').innerHTML = '<img src="join.php?mod=read_avatar&uid='+dojo.attr('hidden_uid','value')+'&num='+num+'"/>';
+						}
+						if(dojo.byId('span2')!=null){
+							dojo.byId('span2').innerHTML = '<input type="button" value="删除头像" onclick="remove_avatar();" />';
+						}
+					}
+
+					return response;
+				},
+				error: function(response, ioArgs){
+					console.log(response);
+					return response;
+				}
+			});
+		}
+
+		function remove_avatar(){
+			
+			dojo.io.iframe.send({
+				form: "remove_avatar",
+				handleAs: "html",
+				load: function(response, ioArgs){
+
+					if(response.body.outerHTML.toLowerCase().match('ok')==null){
+							
+					}else{
+						if(dojo.byId('span')!=null){
+							dojo.byId('span').innerHTML = '';
+						}
+						if(dojo.byId('span2')!=null){
+							dojo.byId('span2').innerHTML = '';
+						}
+					}
+
+					return response;
+				},
+				error: function(response, ioArgs){
+					return response;
+                                }
+			});
+			
+		}
+
+		function send_submitting_data(){	
+
+			var realname = dojo.attr('realname','value');
+			
+			var male = dojo.attr('male','checked');
+			var female = dojo.attr('female','checked');
+						
+
+			if(male==true){
+				var gender = 1;
+			}
+
+			if(female==true){
+                                var gender = 2;
+                        }
+
+			//var birth_date = dojo.attr('birth_date','value');
+			var birth_date = dijit.byId('birth_date').get('displayedValue');
+			var nationality = dojo.attr('nationality','value');
+			var mobile = dojo.attr('mobile','value');
+			var email = dojo.attr('email','value');
+			var telephone = dojo.attr('telephone','value');
+			var fax_num = dojo.attr('fax_num','value');
+			var idcardtype = dojo.attr('idcardtype','value');
+			var idcard = dojo.attr('idcard','value');
+			var address = dojo.attr('address','value');
+			var zipcode = dojo.attr('zipcode','value');
+			
+			if(dojo.attr('getting_game_info_by_website','checked')==true){
+				var getting_game_info_by_website = 1;	
+			}else{
+				var getting_game_info_by_website = 0;
+			}
+	
+			if(dojo.attr('getting_game_info_by_inews','checked')==true){
+				var getting_game_info_by_inews = 1;	
+			}else{
+				var getting_game_info_by_inews = 0;
+			}
+
+			if(dojo.attr('getting_game_info_by_microblog','checked')==true){
+				var getting_game_info_by_microblog = 1;	
+			}else{
+				var getting_game_info_by_microblog = 0;
+			}
+
+			if(dojo.attr('getting_game_info_by_tmk','checked')==true){
+				var getting_game_info_by_tmk = 1;	
+			}else{
+				var getting_game_info_by_tmk = 0;
+			}
+
+			if(dojo.attr('getting_game_info_by_short_message','checked')==true){
+				var getting_game_info_by_short_message = 1;	
+			}else{
+				var getting_game_info_by_short_message = 0;
+			}
+
+			if(dojo.attr('getting_game_info_by_friend','checked')==true){
+				var getting_game_info_by_friend = 1;	
+			}else{
+				var getting_game_info_by_friend = 0;
+			}
+
+			if(dojo.attr('getting_game_info_by_other_way','checked')==true){
+				var getting_game_info_by_other_way = 1;	
+			}else{
+				var getting_game_info_by_other_way = 0;
+			}
+			
+			if(dojo.attr('trainer_joining_game','checked')==true){
+				var trainer_joining_game = 1;
+			}else{
+				var trainer_joining_game = 0;
+			}
+
+			if(dojo.attr('referee_joining_game','checked')==true){
+				var referee_joining_game = 1;
+			}else{
+				var referee_joining_game = 0;
+			}
+
+			dojo.attr('submitting_realname','value',realname);
+			
+			dojo.attr('submitting_gender','value',gender);
+			dojo.attr('submitting_birth_date','value',birth_date);
+			dojo.attr('submitting_nationality','value',nationality);
+			dojo.attr('submitting_mobile','value',mobile);
+			dojo.attr('submitting_email','value',email);
+			dojo.attr('submitting_telephone','value',telephone);
+			dojo.attr('submitting_fax_num','value',fax_num);
+			dojo.attr('submitting_idcardtype','value',idcardtype);
+			dojo.attr('submitting_idcard','value',idcard);
+			dojo.attr('submitting_address','value',address);
+			dojo.attr('submitting_zipcode','value',zipcode);
+			
+			dojo.attr('submitting_getting_game_info_by_website','value',getting_game_info_by_website);
+			dojo.attr('submitting_getting_game_info_by_inews','value',getting_game_info_by_inews);
+			dojo.attr('submitting_getting_game_info_by_microblog','value',getting_game_info_by_microblog);
+			dojo.attr('submitting_getting_game_info_by_tmk','value',getting_game_info_by_tmk);
+			dojo.attr('submitting_getting_game_info_by_short_message','value',getting_game_info_by_short_message);
+			dojo.attr('submitting_getting_game_info_by_friend','value',getting_game_info_by_friend);
+			dojo.attr('submitting_getting_game_info_by_other_way','value',getting_game_info_by_other_way);
+			dojo.attr('submitting_trainer_joining_game','value',trainer_joining_game);
+			dojo.attr('submitting_referee_joining_game','value',referee_joining_game);
+
+			dojo.io.iframe.send({
+                                form: "submitting_data",
+                                handleAs: "html",
+                                load: function(response, ioArgs){
+					console.log(response.body.outerHTML);
+                                        if(response.body.outerHTML.match('ok')==null){
+						
+						var tmp = response.body.outerHTML.toLowerCase();
+						
+						tmp = tmp.replace("<body>","");
+						tmp = tmp.replace("</body>","");
+						tip = new dijit.Dialog({
+							title: "提示",
+							content: tmp
+						});
+						
+						tip.show();
+						
+                                        }else{
+                                                
+						
+						var address = "join.php?mod=player&page=2&uid=";
+						address = address.replace('&amp;','&');
+						address = address.replace('&amp;','&');
+						address = address + dojo.attr('hidden_uid','value');
+						window.location.assign(address);
+											
+
+                                        }
+					
+                                        return response;
+                                },
+                                error: function(response, ioArgs){
+                                        return response;
+                                }
+                        });		
+			
+		}
+
+		var iframe_loading_finish_or_not = 0;
+
+		function iframe_loading_finish(){
+			iframe_loading_finish_or_not = 1;
+		}
+
+		function init_referee_course(){
+			
+			if(iframe_loading_finish_or_not==0){
+                                setTimeout("init_referee_course()",1000);
+                                return;
+                        }
+			var main_window = window;
+                        var htmlFragment1 = '';
+                        var htmlFragment2 = '';
+			
+			var course_info_page = dojo.byId('course_info_page').contentWindow;
+                        dojo.setContext(course_info_page.window, course_info_page.window.document);
+                        htmlFragment1 = '<select id="one" onchange="ffield(' + "'one'" + ')" name="one">'+dojo.byId('one').innerHTML + '</select>';
+                        htmlFragment2 = '<select id="onea" name="onea">' + dojo.byId('onea').innerHTML + '</select>';
+                        dojo.setContext(main_window, main_window.document);
+			
+                        dojo.byId('course_info3').innerHTML = htmlFragment1;
+                        dojo.byId('course_info4').innerHTML = htmlFragment2;
+			
+			dojo.attr('one','value',dojo.attr('hidden_referee_course_info1_of_getting_personal_best','value'));
+			
+			ffield('one');
+			
+			fef2();
+			
+			
+		}
+
+		function init_trainer_course(){
+
+			if(iframe_loading_finish_or_not==0){
+				setTimeout("init_trainer_course()",1000);
+				return;	
+			}
+
+			var main_window = window;
+			var htmlFragment1 = '';
+			var htmlFragment2 = '';
+			
+			var course_info_page = dojo.byId('course_info_page').contentWindow;
+			dojo.setContext(course_info_page.window, course_info_page.window.document);
+			htmlFragment1 = '<select id="one" onchange="ffield(' + "'one'" + ')" name="one">'+dojo.byId('one').innerHTML + '</select>';
+			htmlFragment2 = '<select id="onea" name="onea">' + dojo.byId('onea').innerHTML + '</select>';
+			dojo.setContext(main_window, main_window.document);
+			dojo.byId('course_info1').innerHTML = htmlFragment1;
+			dojo.byId('course_info2').innerHTML = htmlFragment2;
+			
+			dojo.attr('one','value',dojo.attr('hidden_trainer_course_info1_of_getting_personal_best','value'));
+			ffield('one');
+			fef();
+
+		}
+
+		function fef(){
+			if(ffield_executing_finish == 0){
+				setTimeout("fef()",1000);
+				return;	
+			}
+			dojo.attr('onea','value',dojo.attr('hidden_trainer_course_info2_of_getting_personal_best','value'));	
+		}
+
+		function fef2(){
+                        if(ffield_executing_finish == 0){
+                                setTimeout("fef2()",1000);
+                                return;
+                        }
+                        dojo.attr('onea','value',dojo.attr('hidden_referee_course_info2_of_getting_personal_best','value'));
+                }
+
+		var ffield_executing_finish = 0;
+
+		function ffield(fvalue){
+			var ty=jQuery("#"+fvalue).val();
+			
+			
+			jQuery.post('home.php?mod=spacecp&ac=usefiled&op=aj',{pid:ty},function(msg){
+				jQuery("#"+fvalue+"a").html(msg);
+				ffield_executing_finish = 1;
+			});
+			
+		}
+
+		function upload_trainer_certificate(){
+			dojo.io.iframe.send({
+				form: "upload_trainer_certificate",
+                                handleAs: "html",
+				load: function(response, ioArgs){
+					console.log(response.body.outerHTML);
+                                        if(response.body.outerHTML.toLowerCase().match('ok')==null){
+                                                if(dojo.byId('span')!=null){
+                                                        dojo.byId('span').innerHTML = '';
+                                                }
+                                        }else{
+
+                                                if(dojo.byId('span')!=null){
+                                                        var num = Math.random();
+                                                        dojo.byId('span').innerHTML = '<a target="_blank" href="join.php?mod=read_trainer_certificate_original_size&uid='+dojo.attr('hidden_uid','value')+'"><img src="join.php?mod=read_trainer_certificate&uid='+dojo.attr('hidden_uid','value')+'&num='+num+'"/></a>';
+                                                }
+                                                if(dojo.byId('span2')!=null){
+                                                        dojo.byId('span2').innerHTML = '<input type="button" value="删除教练资格证书" onclick="remove_trainer_certificate();" />';
+                                                }
+                                        }
+					return response;
+				},
+				error: function(response, ioArgs){
+                                        console.log(response);
+                                        return response;
+                                }
+			});
+		}
+		
+		function upload_recommendation_letter(){
+			dojo.io.iframe.send({
+				form: "upload_recommendation_letter",
+                                handleAs: "html",
+				load: function(response, ioArgs){
+					console.log(response.body.outerHTML);
+                                        if(response.body.outerHTML.toLowerCase().match('ok')==null){
+                                                if(dojo.byId('span3')!=null){
+                                                        dojo.byId('span').innerHTML = '';
+                                                }
+                                        }else{
+
+                                                if(dojo.byId('span3')!=null){
+                                                        var num = Math.random();
+                                                        dojo.byId('span3').innerHTML = '<a target="_blank" href="join.php?mod=read_recommendation_letter_original_size&uid='+dojo.attr('hidden_uid','value')+'"><img src="join.php?mod=read_recommendation_letter&uid='+dojo.attr('hidden_uid','value')+'&num='+num+'"/></a>';
+                                                }
+                                                if(dojo.byId('span4')!=null){
+                                                        dojo.byId('span4').innerHTML = '<input type="button" value="删除推荐信" onclick="remove_recommendation_letter();" />';
+                                                }
+                                        }
+					return response;
+				},
+				error: function(response, ioArgs){
+                                        console.log(response);
+                                        return response;
+                                }
+			});
+		}
+
+		function remove_trainer_certificate(){
+			dojo.io.iframe.send({
+                                form: "remove_trainer_certificate",
+                                handleAs: "html",
+                                load: function(response, ioArgs){
+
+                                        if(response.body.outerHTML.toLowerCase().match('ok')==null){
+
+                                        }else{
+                                                if(dojo.byId('span')!=null){
+                                                        dojo.byId('span').innerHTML = '';
+                                                }
+                                                if(dojo.byId('span2')!=null){
+                                                        dojo.byId('span2').innerHTML = '';
+                                                }
+                                        }
+
+                                        return response;
+                                },
+                                error: function(response, ioArgs){
+                                        return response;
+                                }
+                        });
+		}
+
+		function remove_recommendation_letter(){
+			dojo.io.iframe.send({
+                                form: "remove_recommendation_letter",
+                                handleAs: "html",
+                                load: function(response, ioArgs){
+
+                                        if(response.body.outerHTML.toLowerCase().match('ok')==null){
+
+                                        }else{
+                                                if(dojo.byId('span3')!=null){
+                                                        dojo.byId('span3').innerHTML = '';
+                                                }
+                                                if(dojo.byId('span4')!=null){
+                                                        dojo.byId('span4').innerHTML = '';
+                                                }
+                                        }
+
+                                        return response;
+                                },
+                                error: function(response, ioArgs){
+                                        return response;
+                                }
+                        });
+		}
+
+		function send_page2_referee_submitting_data(){
+
+			
+			var referee_level = dojo.attr('referee_level','value');
+			dojo.attr('submitting_referee_level','value',referee_level);
+
+			var referee_getting_certificate_date = dojo.attr('referee_getting_certificate_date','value');
+			dojo.attr('submitting_referee_getting_certificate_date','value',referee_getting_certificate_date);			
+
+			var referee_judging_game_num = dojo.attr('referee_judging_game_num','value');
+			dojo.attr('submitting_referee_judging_game_num','value',referee_judging_game_num);
+
+			var referee_playing_yearsexp = dojo.attr('referee_playing_yearsexp','value');
+			dojo.attr('submitting_referee_playing_yearsexp','value',referee_playing_yearsexp);
+
+			var referee_handicap = dojo.attr('referee_handicap','value');
+			dojo.attr('submitting_referee_handicap','value',referee_handicap);
+
+			var referee_personal_best = dojo.attr('referee_personal_best','value');
+			dojo.attr('submitting_referee_personal_best','value',referee_personal_best);
+			
+			var referee_course_info1_of_getting_personal_best = dojo.attr('one','value');
+			dojo.attr('submitting_referee_course_info1_of_getting_personal_best','value',referee_course_info1_of_getting_personal_best);
+
+			var referee_course_info2_of_getting_personal_best = dojo.attr('onea','value');
+			dojo.attr('submitting_referee_course_info2_of_getting_personal_best','value',referee_course_info2_of_getting_personal_best);
+			
+			dojo.io.iframe.send({
+				form: "referee_submitting_data",
+                                handleAs: "html",
+                                load: function(response, ioArgs){
+					console.log(response.body.outerHTML);
+					if(response.body.outerHTML.match('ok')==null){
+                                                var tmp = response.body.outerHTML.toLowerCase();
+
+                                                tmp = tmp.replace("<body>","");
+                                                tmp = tmp.replace("</body>","");
+                                                tip = new dijit.Dialog({
+                                                        title: "提示",
+                                                        content: tmp
+                                                });
+
+                                                tip.show();
+                                        }else{
+						var address = "join.php?mod=player&page=3&uid=";
+						address = address.replace('&amp;','&')
+						address = address.replace('&amp;','&');
+						address = address + dojo.attr('hidden_uid','value');
+						window.location.assign(address);
+                                        }
+					return response;
+				},
+                                error: function(response, ioArgs){
+                                        return response;
+                                }
+			});
+			
+
+		}
+
+		function send_page2_trainer_submitting_data(){
+
+			var trainer_organization = dojo.attr('trainer_organization','value');
+			dojo.attr('submitting_trainer_organization','value',trainer_organization);
+
+			var trainer_duty = dojo.attr('trainer_duty','value');
+			dojo.attr('submitting_trainer_duty','value',trainer_duty);
+
+			var trainer_teaching_yearsexp = dojo.attr('trainer_teaching_yearsexp','value');
+			dojo.attr('submitting_trainer_teaching_yearsexp','value',trainer_teaching_yearsexp);
+
+			var trainer_playing_yearsexp = dojo.attr('trainer_playing_yearsexp','value');
+			dojo.attr('submitting_trainer_playing_yearsexp','value',trainer_playing_yearsexp);
+
+			var trainer_handicap = dojo.attr('trainer_handicap','value');
+			dojo.attr('submitting_trainer_handicap','value',trainer_handicap);
+			
+			var trainer_personal_best = dojo.attr('trainer_personal_best','value');
+			dojo.attr('submitting_trainer_personal_best','value',trainer_personal_best);
+			
+			var trainer_course_info1_of_getting_personal_best = dojo.attr('one','value');
+			dojo.attr('submitting_trainer_course_info1_of_getting_personal_best','value',trainer_course_info1_of_getting_personal_best);
+
+			var trainer_course_info2_of_getting_personal_best = dojo.attr('onea','value');
+			dojo.attr('submitting_trainer_course_info2_of_getting_personal_best','value',trainer_course_info2_of_getting_personal_best);
+			
+			var trainer_good_at_teaching = dojo.attr('trainer_good_at_teaching','value');
+			dojo.attr('submitting_trainer_good_at_teaching','value',trainer_good_at_teaching);
+			
+			dojo.io.iframe.send({
+				form: "trainer_submitting_data",
+				handleAs: "html",
+				load: function(response, ioArgs){
+					console.log(response.body.outerHTML);
+					if(response.body.outerHTML.match('ok')==null){
+						var tmp = response.body.outerHTML.toLowerCase();
+
+                                                tmp = tmp.replace("<body>","");
+                                                tmp = tmp.replace("</body>","");
+                                                tip = new dijit.Dialog({
+                                                        title: "提示",
+                                                        content: tmp
+                                                });
+
+                                                tip.show();
+					}else{
+						var address = "join.php?mod=player&page=3&uid=";
+						address = address.replace('&amp;','&');
+						address = address.replace('&amp;','&');
+						address = address + dojo.attr('hidden_uid','value');
+						window.location.assign(address);
+					}
+					return response;
+				},
+                                error: function(response, ioArgs){
+                                        return response;
+                                }
+			});
+
+		}
+
+		function init_for_page3(){
+			var ids = new Array(
+                                'joining_golf_equipment_forum',
+                                'joining_golf_rules_forum',
+                                'joining_golf_etiquette_forum',
+                                'joining_teaching_forum',
+                                'joining_sports_injury_forum',
+                                'joining_lawn_care_forum',
+                                'joining_course_design_research_forum',
+                                'joining_trying_play_party_forum',
+                                'joining_fun_golf_game_forum',
+                                'loving_Adams',
+                                'loving_Callaway',
+                                'loving_Cleverland',
+                                'loving_Co_bra',
+                                'loving_Dunlop',
+                                'loving_ECCO',
+                                'loving_FootJoy',
+                                'loving_HONMA',
+                                'loving_Kasco',
+                                'loving_MAC_GREGON',
+                                'loving_Mizuno',
+                                'loving_MURUMAN',
+                                'loving_Nike_Golf',
+                                'loving_Odyssey',
+                                'loving_PING',
+                                'loving_PRGR',
+                                'loving_SRIXON',
+                                'loving_S_YARD',
+                                'loving_Taylormade',
+                                'loving_Titleist',
+                                'loving_XXIO',
+                                'accept_or_not'
+                        );
+
+			for(var i=0;i<ids.length;i++){
+
+                                if(dojo.attr('hidden_'+ids[i],'value')==1){
+                                        dojo.attr(ids[i],'checked',true);
+                                }
+
+                        }
+
+                        dojo.attr('loving_other_brand','value',dojo.attr('hidden_loving_other_brand','value'));
+                        dojo.attr('loving_reason','value',dojo.attr('hidden_loving_reason','value'));
+
+			if(dojo.attr('hidden_game_area','value')=='华北地区'){
+				dojo.attr('joining_game_in_north_china','checked',true);
+			}
+
+			if(dojo.attr('hidden_game_area','value')=='华东地区'){
+				dojo.attr('joining_game_in_east_china','checked',true);
+			}
+
+			if(dojo.attr('hidden_game_area','value')=='华南地区'){
+				dojo.attr('joining_game_in_south_china','checked',true);
+			}
+
+			if(dojo.attr('hidden_game_area','value')=='中南地区'){
+				dojo.attr('joining_game_in_south_central_china','checked',true);
+			}
+
+		}
+
+		function send_page3_submitting_data(){
+			
+			if(dojo.attr('joining_game_in_north_china','checked')){
+				dojo.attr('submitting_game_area','value','华北地区');
+			}
+
+			if(dojo.attr('joining_game_in_east_china','checked')){
+				dojo.attr('submitting_game_area','value','华东地区');
+			}
+
+			if(dojo.attr('joining_game_in_south_china','checked')){
+				dojo.attr('submitting_game_area','value','华南地区');
+			}
+
+			if(dojo.attr('joining_game_in_south_central_china','checked')){
+				dojo.attr('submitting_game_area','value','中南地区');
+			}
+
+			var ids = new Array(
+				'joining_golf_equipment_forum',
+                                'joining_golf_rules_forum',
+                                'joining_golf_etiquette_forum',
+                                'joining_teaching_forum',
+                                'joining_sports_injury_forum',
+                                'joining_lawn_care_forum',
+                                'joining_course_design_research_forum',
+                                'joining_trying_play_party_forum',
+                                'joining_fun_golf_game_forum',
+                                'loving_Adams',
+                                'loving_Callaway',
+                                'loving_Cleverland',
+                                'loving_Co_bra',
+                                'loving_Dunlop',
+                                'loving_ECCO',
+                                'loving_FootJoy',
+                                'loving_HONMA',
+                                'loving_Kasco',
+                                'loving_MAC_GREGON',
+                                'loving_Mizuno',
+                                'loving_MURUMAN',
+                                'loving_Nike_Golf',
+                                'loving_Odyssey',
+                                'loving_PING',
+                                'loving_PRGR',
+                                'loving_SRIXON',
+                                'loving_S_YARD',
+                                'loving_Taylormade',
+                                'loving_Titleist',
+                                'loving_XXIO',
+                                'accept_or_not'	
+			);
+			
+			for(var i=0;i<ids.length;i++){
+
+				//console.log(dojo.byId('submitting_'+ids[i]));
+
+                                if(dojo.attr(ids[i],'checked')){
+										
+                                        dojo.attr('submitting_'+ids[i],'value',1);
+                                }else{
+                                        dojo.attr('submitting_'+ids[i],'value',0);
+                                }
+
+                        }
+			
+			dojo.attr('submitting_loving_other_brand','value',dojo.attr('loving_other_brand','value'));
+			
+                        dojo.attr('submitting_loving_reason','value',dojo.attr('loving_reason','value'));
+			
+			dojo.io.iframe.send({
+                                form: "submitting_data",
+                                handleAs: "html",
+                                load: function(response, ioArgs){
+                                        console.log(response.body.outerHTML);
+										if(response.body.outerHTML.match('ok')==null){
+											
+											var tmp = response.body.outerHTML.toLowerCase();
+											tmp = tmp.replace("<body>","");
+											tmp = tmp.replace("</body>","");
+											tip = new dijit.Dialog({
+												title: "提示",
+												content: tmp
+											});
+											tip.show();
+											
+										}else{
+											
+											var address = "join.php?mod=player&page=4&uid=";
+											address = address.replace('&amp;','&');
+											address = address.replace('&amp;','&');
+											address = address + dojo.attr('hidden_uid','value');
+											window.location.assign(address);
+											
+										}
+                                        return response;
+                                },
+                                error: function(response, ioArgs){
+                                        return response;
+                                }
+                        });
+			
+		}
+
+		function send_page2_submitting_data(){
+			
+			var trainer_organization = dojo.attr('trainer_organization','value');
+                        dojo.attr('submitting_trainer_organization','value',trainer_organization);
+
+                        var trainer_duty = dojo.attr('trainer_duty','value');
+                        dojo.attr('submitting_trainer_duty','value',trainer_duty);
+
+                        var trainer_teaching_yearsexp = dojo.attr('trainer_teaching_yearsexp','value');
+                        dojo.attr('submitting_trainer_teaching_yearsexp','value',trainer_teaching_yearsexp);
+
+                        var trainer_good_at_teaching = dojo.attr('trainer_good_at_teaching','value');
+                        dojo.attr('submitting_trainer_good_at_teaching','value',trainer_good_at_teaching);
+
+			var referee_level = dojo.attr('referee_level','value');
+                        dojo.attr('submitting_referee_level','value',referee_level);
+
+                        var referee_getting_certificate_date = dojo.attr('referee_getting_certificate_date','value');
+                        dojo.attr('submitting_referee_getting_certificate_date','value',referee_getting_certificate_date);
+
+                        var referee_judging_game_num = dojo.attr('referee_judging_game_num','value');
+                        dojo.attr('submitting_referee_judging_game_num','value',referee_judging_game_num);
+
+			var referee_playing_yearsexp = dojo.attr('referee_playing_yearsexp','value');
+                        dojo.attr('submitting_referee_playing_yearsexp','value',referee_playing_yearsexp);
+
+                        var referee_handicap = dojo.attr('referee_handicap','value');
+                        dojo.attr('submitting_referee_handicap','value',referee_handicap);
+
+                        var referee_personal_best = dojo.attr('referee_personal_best','value');
+                        dojo.attr('submitting_referee_personal_best','value',referee_personal_best);
+
+			var referee_course_info1_of_getting_personal_best = dojo.attr('one','value');
+			dojo.attr('submitting_referee_course_info1_of_getting_personal_best','value',referee_course_info1_of_getting_personal_best);
+
+			var referee_course_info2_of_getting_personal_best = dojo.attr('onea','value');
+			dojo.attr('submitting_referee_course_info2_of_getting_personal_best','value',referee_course_info2_of_getting_personal_best);
+
+			dojo.io.iframe.send({
+				form: "trainer_and_referee_submitting_data",
+                                handleAs: "html",
+                                load: function(response, ioArgs){
+					console.log(response.body.outerHTML);
+					if(response.body.outerHTML.match('ok')==null){
+                                                var tmp = response.body.outerHTML.toLowerCase();
+
+                                                tmp = tmp.replace("<body>","");
+                                                tmp = tmp.replace("</body>","");
+                                                tip = new dijit.Dialog({
+                                                        title: "提示",
+                                                        content: tmp
+                                                });
+
+                                                tip.show();
+                                        }else{
+						var address = "join.php?mod=player&page=3&uid=";
+						address = address.replace('&amp;','&');
+						address = address.replace('&amp;','&');
+						address = address + dojo.attr('hidden_uid','value');
+						window.location.assign(address);
+                                        }
+					return response;
+				},
+                                error: function(response, ioArgs){
+                                        return response;
+                                }
+			});
+
+		}
+
+		function init_for_page2(){
+			dojo.attr('trainer_organization','value',dojo.attr('hidden_trainer_organization','value'));
+			dojo.attr('trainer_duty','value',dojo.attr('hidden_trainer_duty','value'));
+			dojo.attr('trainer_teaching_yearsexp','value',dojo.attr('hidden_trainer_teaching_yearsexp','value'));
+			dojo.attr('trainer_playing_yearsexp','value',dojo.attr('hidden_trainer_playing_yearsexp','value'));
+			
+			dojo.attr('trainer_handicap','value',dojo.attr('hidden_trainer_handicap','value'));
+			dojo.attr('trainer_personal_best','value',dojo.attr('hidden_trainer_personal_best','value'));
+			dojo.attr('trainer_good_at_teaching','value',dojo.attr('hidden_trainer_good_at_teaching','value'));
+		}
+
+		function init_referee_for_page2(){
+			dojo.attr('referee_level','value',dojo.attr('hidden_referee_level','value'));
+			dojo.attr('referee_judging_game_num','value',dojo.attr('hidden_referee_judging_game_num','value'));
+			dojo.attr('referee_playing_yearsexp','value',dojo.attr('hidden_referee_playing_yearsexp','value'));
+			dojo.attr('referee_handicap','value',dojo.attr('hidden_referee_handicap','value'));
+			dojo.attr('referee_personal_best','value',dojo.attr('hidden_referee_personal_best','value'));
+
+                        var hidden_referee_getting_certificate_date = dojo.attr('hidden_referee_getting_certificate_date','value');
+                        if(hidden_referee_getting_certificate_date == '0000-00-00'){
+                                dijit.byId('referee_getting_certificate_date').set('displayedValue','');
+                        }else{
+                                dijit.byId('referee_getting_certificate_date').set('displayedValue',hidden_referee_getting_certificate_date);
+                        }
+
+			//dijit.byId('referee_getting_certificate_date').set('displayedValue',dojo.attr('hidden_referee_getting_certificate_date','value'));
+                        
+
+		}
+
+		function init_trainer_and_referee_for_page2(){
+			dojo.attr('trainer_organization','value',dojo.attr('hidden_trainer_organization','value'));
+                        dojo.attr('trainer_duty','value',dojo.attr('hidden_trainer_duty','value'));
+                        dojo.attr('trainer_teaching_yearsexp','value',dojo.attr('hidden_trainer_teaching_yearsexp','value'));
+                        dojo.attr('trainer_good_at_teaching','value',dojo.attr('hidden_trainer_good_at_teaching','value'));
+
+			dojo.attr('referee_level','value',dojo.attr('hidden_referee_level','value'));
+                        dojo.attr('referee_judging_game_num','value',dojo.attr('hidden_referee_judging_game_num','value'));
+                        dojo.attr('referee_playing_yearsexp','value',dojo.attr('hidden_referee_playing_yearsexp','value'));
+                        dojo.attr('referee_handicap','value',dojo.attr('hidden_referee_handicap','value'));
+                        dojo.attr('referee_personal_best','value',dojo.attr('hidden_referee_personal_best','value'));
+
+			var hidden_referee_getting_certificate_date = dojo.attr('hidden_referee_getting_certificate_date','value');
+                        if(hidden_referee_getting_certificate_date == '0000-00-00'){
+                                dijit.byId('referee_getting_certificate_date').set('displayedValue','');
+                        }else{
+                                dijit.byId('referee_getting_certificate_date').set('displayedValue',hidden_referee_getting_certificate_date);
+                        }
+
+                        //dijit.byId('referee_getting_certificate_date').set('displayedValue',dojo.attr('hidden_referee_getting_certificate_date','value'));
+		}
+
+		function upload_referee_certificate(){
+                        dojo.io.iframe.send({
+                                form: "upload_referee_certificate",
+                                handleAs: "html",
+                                load: function(response, ioArgs){
+                                        console.log(response.body.outerHTML);
+                                        if(response.body.outerHTML.toLowerCase().match('ok')==null){
+                                                if(dojo.byId('span5')!=null){
+                                                        dojo.byId('span5').innerHTML = '';
+                                                }
+                                        }else{
+
+                                                if(dojo.byId('span5')!=null){
+                                                        var num = Math.random();
+                                                        dojo.byId('span5').innerHTML = '<a target="_blank" href="join.php?mod=read_referee_certificate_original_size&uid='+dojo.attr('hidden_uid','value')+'"><img src="join.php?mod=read_referee_certificate&uid='+dojo.attr('hidden_uid','value')+'&num='+num+'"/></a>';
+                                                }
+                                                if(dojo.byId('span6')!=null){
+                                                        dojo.byId('span6').innerHTML = '<input type="button" value="删除裁判资格证书头像" onclick="remove_referee_certificate();" />';
+                                                }
+                                        }
+                                        return response;
+                                },
+                                error: function(response, ioArgs){
+                                        console.log(response);
+                                        return response;
+                                }
+                        });
+                }
+
+		function remove_referee_certificate(){
+                        dojo.io.iframe.send({
+                                form: "remove_referee_certificate",
+                                handleAs: "html",
+                                load: function(response, ioArgs){
+
+                                        if(response.body.outerHTML.toLowerCase().match('ok')==null){
+
+                                        }else{
+                                                if(dojo.byId('span5')!=null){
+                                                        dojo.byId('span5').innerHTML = '';
+                                                }
+                                                if(dojo.byId('span6')!=null){
+                                                        dojo.byId('span6').innerHTML = '';
+                                                }
+                                        }
+
+                                        return response;
+                                },
+                                error: function(response, ioArgs){
+                                        return response;
+                                }
+                        });
+                }
+
+	</script>
+</head>

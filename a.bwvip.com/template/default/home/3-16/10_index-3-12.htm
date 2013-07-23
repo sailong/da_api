@@ -1,0 +1,288 @@
+<!--{subtemplate home/10_header}-->
+<style type='text/css'>
+#spacescore {
+	width:100%
+}
+#spacescore tr td {
+	border-bottom:1px solid #A2A2A2; border-right:1px solid #A2A2A2; text-align:center
+}
+#spacescore tr .first {
+	border-top:1px solid #A2A2A2; border-left:1px solid #A2A2A2;
+}
+.e{overflow:hidden;}
+.e .i,.el .i{padding:6px 10px;border-bottom:1px dashed #CDCDCD;background:#F7F7F7;}
+.el{}.et{margin:20px 0 10px;}
+.el li{padding:10px 20px;min-height:20px;border-bottom:1px dashed #CDCDCD;}
+.ie6 .el,.ie6 .el li{zoom:1;}
+.el .t{position:absolute;margin:1px 0 0 -20px;}
+.el .o{overflow:hidden;float:right;margin:4px -20px -4px 0;width:16px;height:16px;text-indent:20px;background:url(../../static/image/common/op.png) no-repeat -2px -62px;}
+.ie6 .el .o{position:absolute;margin:2px 0 0 525px;}
+.el .del{background-position:-2px -22px;}
+.el .d{padding-top:10px;color:#666;}
+.ec .tn{margin:10px 10px 0 0;cursor:pointer;}
+.ec a .tn{float:left;padding:2px;max-width:90px;max-height:90px;border:1px solid #CDCDCD;}
+.ie6 .ec a .tn{width:expression(this.width > 90 && this.width >= this.height ? 90:true);height:expression(this.height > 90 && this.width <= this.height ? 90:true);}
+.el .ec .hot{float:right;margin:10px 0 0 10px;width:55px;height:50px;background:url(../../static/image/common/hotspot.gif) no-repeat;}
+.el .ec .hot a{display:block;line-height:20px;text-align:center;color:#FFF;}
+.el .ec .hot a:hover{text-decoration:none;}
+.el .ec .hot em{display:block;line-height:30px;font-size:16px;color:#369;cursor:pointer;}
+.el a{color:#369;}
+.et {font-weight:bold;}
+.cdt_duan {width:461px; height:40px; background-image:url({STATICURL}space/style/images/cdt.jpg); margin:0 auto; line-height:40px;}
+.cdt_duan span {margin-left:30px; font-size:14px; font-weight:bold;}
+</style>
+<div class="wad">
+	<div class="lefter z">
+		<div class="ifs"><img src="{STATICURL}space/10/images/4s.jpg" width="253" height="102"></div>
+		<div class="ifs"><img src="{STATICURL}space/10/images/leftad.jpg" width="230" height="164"></div>
+		<div class="leftlm"><span class="font_1"><!--{$visitname}-->的主页</span></div>
+		<!--{subtemplate home/space_header_personnav}-->
+		<div class="leftlm">
+			<span class="font_1">博客精选</span>
+			<span><a href="home.php?mod=space&uid=<!--{$uid}-->&do=blog&view=me&from=space" class="leftlm_a">更多</a></span>
+        </div>
+		<div class="bkxx">
+			<ul>
+            <!--{if $blog}-->
+			<!--{loop $blog $v}-->
+			<li><img src="{STATICURL}space/10/images/new.jpg" width="23" height="15" align="absbottom" style="padding-right:5px;"><a href='home.php?mod=space&uid=<!--{$uid}-->&do=blog&id=<!--{$v[blogid]}-->' class="leftlm_a3"><!--{$v[subject]}--></a></li>
+			<!--{/loop}-->
+			<!--{else}-->
+			<p>还没有发表过任何博客</p>
+			<!--{/if}-->
+            </ul>
+		</div>
+		<div class="leftlm">
+			<span class="font_1">最新相册</span>
+			<span><a href="home.php?mod=space&uid=<!--{$uid}-->&do=album&view=me&from=space" class="leftlm_a">更多</a></span>
+		</div>
+		<div class="leftcon">
+			<div id="circular-box" class="clearfix">
+				<ul>
+				<!--{if $albumlist}-->
+				<!--{loop $albumlist $value}-->
+					<li>
+						<a href="home.php?mod=space&uid=<!--{$uid}-->&do=album&id=<!--{$value[albumid]}-->"><img src="data/attachment/album/<!--{$value[pic]}-->" width="62" height="57"><span class="cir-bg"></span></a><p class="font_2" align="center"><!--{$value[albumname]}--></p>
+					</li>
+				<!--{/loop}-->
+				<!--{else}-->
+					<li>还没有创建或发表相册</li>
+				<!--{/if}-->
+				</ul>
+			</div>
+			<div class="clear"></div>
+		</div>
+		<div class="leftlm">
+			<span class="font_1">精彩视频</span>
+			<span><a href="home.php?mod=space&uid=<!--{$uid}-->&do=video&act=list" class="leftlm_a">更多</a></span>
+		</div>
+		<div class="leftcon">
+			<div style="margin:5px 0px 10px 10px;">
+            <!--{if $spacevideo}-->
+			<!--{loop $spacevideo $k $v}-->
+			<div class="videoimg z">
+				<p><a href='home.php?mod=space&uid=<!--{$uid}-->&do=video&id=<!--{$v[vid]}-->'><img src="<!--{$v[images]}-->" width="65" height="57"></a></p>
+				<p style="height:25px;"><a href='home.php?mod=space&uid=<!--{$uid}-->&do=video&id=<!--{$v[vid]}-->'><!--{$v[title]}--></a></p>
+		    </div>
+			<!--{/loop}-->
+			<!--{else}-->
+			<p style='text-align:center;'>还没有视频</p>
+			<!--{/if}-->
+            </div>
+		</div>
+	</div>
+	<div class="righter y">
+		<div class="gglb">
+			<div class="font_2" style="padding-top:10px; padding-left:52px;">品味高球人生，分享高球乐趣，您有什么球坛乐事，与大家分享一下吧！</div></div>
+			<div class="righter">
+				<div class="right_left z">
+					<div class="ggbg">&nbsp;</div>
+
+					<!--{subtemplate home/10_center}-->
+
+					<!-- 滑动按钮 -->
+					<div class="hd" style="padding-top:5px;">
+						<div class="maininfoTab clearfix">
+							<ul>
+								<li id="xT1" onmouseover="TabMore('x',1);" class="cssxon"><!--{$visitname}-->的动态</li>
+								<li id="xT2" onmouseover="TabMore('x',2);" class="cssx">博客</li>
+								<li id="xT3" onmouseover="TabMore('x',3);" class="cssx">图片</li>
+								<li id="xT4" onmouseover="TabMore('x',4);" class="cssx">视频</li>
+							</ul>
+						</div>
+						<div class="hdgg clearfix" style="padding-top:5px; color:#fff; padding-left:10px; font-family:'微软雅黑';"><!--您有一条新的消息请注意查收 --></div>
+						<div id="xC1" class="maininfoTable">
+						<!--{if $spacefeed}-->
+							<div>
+							<!--{$spacefeed}-->
+						<!--{else}-->
+							没有新动态
+						<!--{/if}-->
+						</div>
+						<div id="xC2" class="maininfoTable" style="display:none;">
+						<!--{if $spaceblog}-->
+							<div>
+							<!--{$spaceblog}-->
+						<!--{/if}-->
+						</div>
+						<div id="xC3" class="maininfoTable" style="display:none;">
+						<!--{if $spacealbum}-->
+							<div>
+							<!--{$spacealbum}-->
+						<!--{/if}-->
+						</div>
+						<div id="xC4" class="maininfoTable" style="display:none; padding-top:15px;">
+							<!--{if $spacevideo}-->
+							<!--{loop $spacevideo $k $v}-->
+							<div class="videoimg z">
+								<p><a href='home.php?mod=space&uid=<!--{$uid}-->&do=video&id=<!--{$v[vid]}-->'><img src="<!--{$v[images]}-->" width="65" height="57"></a></p>
+								<p><a href='home.php?mod=space&uid=<!--{$uid}-->&do=video&id=<!--{$v[vid]}-->'><!--{$v[title]}--></a></p>
+							</div>
+							<!--{/loop}-->
+							<!--{else}-->
+							<p style='text-align:center; height:50px; line-height:50px'>还没有可以播放的视频</p>
+							<!--{/if}-->
+                            <div class="clear"></div>
+						</div>
+					</div>
+					<!-- 滑动按钮 -->
+				</div>
+				<div class="right_right y">
+					<div class="rightlm"><span class="font_4" style="margin-left:15px;"><!--{$visitname}-->的徽章</span>  <span class="rlm3"><a href='home.php?mod=space&do=common&op=medalmore&uid=<!--{$uid}-->'  class="leftlm_a">更多</a></span></div>
+					<div class="huizhang" style="padding-top:10px;">
+						<ul>
+							<!--{if $medal}-->
+							<!--{loop $medal $value}-->
+							<li style="width:50px; text-align:center">
+								<img src="static/image/common/<!--{$value[image]}-->" width="25" height="45">
+								<p class="font_2"><!--{$value[name]}--></p>
+							</li>
+							<!--{/loop}-->
+							<!--{else}-->
+							<li>未获得任何勋章</li>
+							<!--{/if}-->
+					  </ul>
+				  </div>
+				<div class="clear"></div>
+				<div class="rightlm">
+					<span class="font_4" style="margin-left:15px;"><!--{$visitname}-->参与的竞猜</span> 
+					<span  style="margin-left:48px;"><a href="#" class="leftlm_a">更多</a></span>
+				 </div>
+				<div class="center top10">
+					 <p><img src="{STATICURL}space/10/images/jingcai.jpg" width="135" height="84"></p>
+					 <p class="font_2">美巡赛竞猜</p>
+				</div>
+				<div class="rightlm">
+					<span class="font_4" style="margin-left:15px;"><!--{$visitname}-->的标签</span>
+					<span class="rlm3"><a href='t/index.php?mod=user_tag' class="leftlm_a">更多</a></span>
+				</div>
+				<div class="biaoqian">
+					<!--{if $tags}-->
+					<!--{loop $tags $value}-->
+					<span><a href='t/index.php?mod=search&code=usertag&usertag=<!--{$value[tag_name]}-->' class="leftlm_a3"><!--{$value[tag_name]}--></a></span>
+					<!--{/loop}-->
+					<!--{else}-->
+					<span style='height:50px; line-height:50px; text-align:center'>未添加任何标签</span>
+					<!--{/if}-->
+				</div>
+				<div class="clear"></div>
+				<div class="rightlm">
+					<span class="font_4" style="margin-left:15px;"><!--{$visitname}-->的群组</span>
+					<span style="margin-left:80px;"><a href='t/index.php?mod=qun&code=profile' class="leftlm_a">更多</a></span>
+				</div>
+				<div class="rlmcon">
+					<!--{if $grouplist}-->
+					<!--{loop $grouplist $v}-->
+					  <div class="qunzu">
+						<div class="qunztu z">
+							<p class="center" style="line-height:23px;"><a href='t/index.php?mod=qun&qid=<!--{$v[qid]}-->'><img src="weibo/<!--{$v[icon]}-->" width="78" height="47"></a></p>
+							<p class="font10 center" style="line-height:23px;"><!--{$v[foundername]}--></p>
+						</div>
+						<div class="qunzujs y">
+							<p><a href='t/index.php?mod=qun&qid=<!--{$v[qid]}-->' class="leftlm_a"><!--{$v[name]}--></a></p>
+							<p class="font_2"><!--{$v[member_num]}-->人</p>
+						</div>
+					  </div>
+					<div class="clear"></div>
+					<!--{/loop}-->
+					<!--{else}-->
+					<span style='height:50px; line-height:50px; margin-left:30px'>未创建或参加任何群组</span>
+					<!--{/if}-->
+				</div>
+				<div class="rightlm">
+					<span class="font_4" style="margin-left:15px;"><!--{$visitname}-->参加的活动</span>
+					<span style="margin-left:48px;"><a href='t/index.php?mod=event' class="leftlm_a">更多</a></span>
+				</div>
+				<div class="rlmcon">
+					<!--{if $event}-->
+					<!--{loop $event $value}-->
+					<div class="huodong_m" align="center">
+						<div style="width:70px; height:50px; padding:2px; border:1px solid #E8E8E8;"><a href='t/index.php?mod=event&code=detail&id=<!--{$value[id]}-->'><img  src="weibo/<!--{$value[image]}-->" width="70" height="50" boder="0" ></a></div>
+						<div style="padding:5px 0px;"><!--{$value[title]}--></div>
+					</div>
+					<!--{/loop}-->
+					<!--{else}-->
+					<span style='height:50px; line-height:50px; margin-left:30px'>未参加任何活动</span>
+					<!--{/if}-->
+				</div>
+				<div class="clear"></div>
+				<div class="rightlm">
+					<span class="font_4" style="margin-left:15px;"><!--{$visitname}-->参加的话题</span>
+					<span style="margin-left:47px;"><a href='t/index.php?mod=<!--{$userinfo[username]}-->' class="leftlm_a">更多</a></span>
+				</div>
+				<div class="rlmcon pabottom10 patop10">
+					<div style="border:1px solid #E8E8E8; padding:5px; background-color:#EFEFEF; width:180px; margin:0 auto;">
+                    <!--{if $topic}-->
+					<!--{loop $topic $k $val}-->
+					<div class="z" style="padding:5px; word-break:break-all;">
+					   <a href='t/index.php?mod=tag&code=<!--{$val[name]}-->' class="leftlm_a3">#<!--{$val[name]}-->#</a>
+					</div>
+					<!--{/loop}-->
+					<!--{else}-->
+					未参加任何话题
+					<!--{/if}-->
+                    <div class="clear"></div>
+                    </div>
+				</div>
+				<div class="rightlm">
+					<span class="font_4" style="margin-left:15px;"><!--{$visitname}-->的关注</span>
+					<span class="rlm3"><a href='t/index.php?mod=<!--{$userinfo[username]}-->&code=follow' class="leftlm_a">更多</a></span>
+				</div>
+				<div class="rlmcon">
+						<!--{if $buddys}-->
+							<!--{loop $buddys $k $v}-->
+                            <div class="z center" style="padding:5px 10px 0px 20px;">
+							<div style="width:62px; height:57px; padding:2px; border:1px solid #E8E8E8;"><a href="home.php?mod=space&uid=<!--{$v[uid]}-->">
+							<img src="uc_server/avatar.php?uid=<!--{$v[uid]}-->&size=middle" width="62" height="57"></a></div>
+							<div style="padding:5px 0px;"><!--{$v[username]}--></div>
+                            </div>
+							<!--{/loop}-->
+						
+						<!--{else}-->
+						<span style='height:50px; line-height:50px; text-align:center'>未关注其他人</span>
+						<!--{/if}-->
+					
+					<div class="clear"></div>
+				</div>
+				<div class="rightlm">
+					<span class="font_4" style="margin-left:15px;"><!--{$visitname}-->的粉丝</span>
+					<span class="rlm3"><a href='t/index.php?mod=<!--{$userinfo[username]}-->&code=fans' class="leftlm_a">更多</a></span>
+				</div>
+				<div class="rlmcon">
+						<!--{if $fans}-->
+							<!--{loop $fans $v}-->
+							<div class="z center" style="padding:5px 10px 0px 20px;">
+                            <div style="width:62px; height:57px; padding:2px; border:1px solid #E8E8E8;"><a href="home.php?mod=space&uid=<!--{$v[uid]}-->"><img src="uc_server/avatar.php?uid=<!--{$v[uid]}-->&size=middle" width="62" height="57" boder="0"></a></div>
+                            <div style="padding:5px 0px;"><!--{$v[username]}--></div>
+                            </div>
+							<!--{/loop}-->
+						<!--{else}-->
+						<p style='text-align:center'>现在还没有粉丝</p>
+						<!--{/if}-->
+					<div class="clear"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!--{subtemplate home/10_footer}-->

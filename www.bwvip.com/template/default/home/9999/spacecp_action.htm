@@ -1,0 +1,44 @@
+<!--{template home/space_header_comm}-->
+<div id="wtcontent">
+	<!-- 左侧 -->
+	<!--{template home/spacecp_00_left}-->
+	<!-- 右侧 -->
+	<div class="rightw">
+		<div class="rightlm">
+		  <h1>手机预订</h1></div>
+		<br>
+		<div class="rcontent">
+ <ul class="tb cl" >
+	<li  class="o">手机预订</li> 
+</ul> 
+			<div>
+<table width=100% border="0" cellpadding="1" cellspacing="1" style="background:#cdcdcd">
+  <tr>
+<td bgcolor="#FFFFFF">提交人姓名</td>
+<td bgcolor="#FFFFFF">手机号</td>
+<td bgcolor="#FFFFFF">汽车类型</td>
+<td bgcolor="#FFFFFF">车驾号</td>
+<td bgcolor="#FFFFFF">车型名称</td>
+<td bgcolor="#FFFFFF">车牌号</td>
+<td bgcolor="#FFFFFF">驾照编号</td>
+</tr>
+<!--{loop $list $key $value}--> 
+                <tr>
+<td bgcolor="#FFFFFF">$value['uid']</td>
+<td bgcolor="#FFFFFF">$value['mobile']</td>
+<td bgcolor="#FFFFFF">$value['autoid'];</td>
+<td bgcolor="#FFFFFF">$value['chejiahao']</td>
+<td bgcolor="#FFFFFF">$value['autoname']</td>
+<td bgcolor="#FFFFFF">$value['autoplate']</td>
+<td bgcolor="#FFFFFF">$value['license']</td>
+</tr> 
+<!--{/loop}-->
+</table>
+		<!--{if $multi}--><div class="pgs cl mtm">$multi</div><!--{/if}-->
+		  </div>
+		
+	  </div>
+	</div>
+	<div class="clear"></div>
+</div>
+<!--{template home/spacecp_foot_comm}-->

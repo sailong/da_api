@@ -1,0 +1,70 @@
+<div class="z z1">
+		<div class="zname"><h1>$compy</h1></div>
+		<div class="zxinxi">
+			<div class="zxinxi2">
+				<div class="xlogo_duan">
+                <!--{if $field3}-->
+                <img src="data/attachment/profile/$field3" />
+                <!--{else}-->
+                <img src="uc_server/avatar.php?uid=$_GET[uid]&size=middle" />
+                <!--{/if}-->
+                </div>
+				<div class="xinx">粉丝：<a href="$fansurl" id="fensiadd" >$fans_count</a>  <span>关注：<a href="$followurl">$follow_count</a></span></div>
+				<div class="xinx_2">人气：$space[views]  <span>微博：<a href="$wbsurl">$topic_count</a></span></div>
+				<ul class="sq">
+					<li class="hysq z"><a onclick="showWindow(this.id, this.href, 'get', 0);doane(event);" id="qiye" href="home.php?mod=spacecp&ac=hygl&op=shenqing&compid=$_GET[uid]&userid=$_G[uid]">会员申请</a></li>
+					<li class="fssq y"> 
+                    <!--{if !$space['self'] && empty($_G['uid'])}-->
+                    <a id="share_space" href="home.php?mod=spacecp&ac=share&type=space&id=<!--{$uid}-->" onclick="showWindow(this.id, this.href, 'get', 0);">粉丝申请</a>
+                    <!--{else}-->
+                    <a id="share_space" href="javascript:void(0)" onclick="applyfensi($_GET[uid])">粉丝申请</a>
+                    <!--{/if}-->
+                    </li>
+                         
+				</ul>
+				<div class="clear"></div>
+				<div class="leftad">
+				<p class="center"><img src="{STATICURL}space/21/images/leftad1.jpg" border="0"></p>
+				<p class="center"><img src="{STATICURL}space/21/images/leftad2.jpg" border="0"></p>
+				</div>
+			</div>
+		</div>
+		<div class="leftlm"><h1>博客精选</h1> <span><a href="home.php?mod=space&uid=$_GET[uid]&do=blog&view=me&from=space">更多</a></span></div>
+		<div class="bjjx2">
+        <div class="bkc">
+        <ul>
+        <!--{loop $leftblog $key $value}-->
+			<li>
+            <img src="{STATICURL}space/21/images/new.jpg" width="24" height="16">&nbsp;<a href="home.php?mod=space&uid=$value[uid]&do=blog&id=$value['blogid']">{$value["subject"]}</a>		
+           	</li>
+			<!--{/loop}-->
+        </ul>
+        </div>
+		</div>
+		<div class="leftlm"><h1>最新相册</h1> <span><a href="home.php?mod=space&uid=$uid&do=album&view=me&from=space">更多</a></span></div>
+		<div class="bjjx3">
+        <!--{loop $albumre $key $value}-->
+			<div class="xcimg z left10">
+			<ul>
+				<li class="xcbg"><a href="home.php?mod=space&uid=$uid&do=album&id=$value["albumid"]"><img src="data/attachment/album/$value[pic]" width="63" height="57" alt="文件数$value[picnum]"></a></li>
+				<li style="padding-top:5px;">$value["albumname"]</li>
+		    </ul>
+			</div>
+			<!--{/loop}-->
+			<div class="clear"></div>
+		</div>
+		<div class="leftlm"><h1>精彩视频</h1> <span><a href="home.php?mod=space&uid=$_GET[uid]&do=video&act=list">更多</a></span></div>
+		<div class="bjjx3">
+        <!--{loop $spacevideo $value}-->
+			<div class="videoimg z left10">
+			<p><a href="home.php?mod=space&uid=$_GET[uid]&do=video&id=$value[videoid]"><img src="$value[images]" width="65" height="57" /></a></p>
+			<p style="padding-top:5px;"><a href="home.php?mod=space&uid=$_GET[uid]&do=video&id=$value[videoid]">$value[title]</a></p>
+		    </div>
+        <!--{/loop}-->    
+		
+            
+		  <div class="clear"></div>
+		</div>
+	</div>
+    <script src="static/js/jquery.js"></script>
+    <script src="static/js/fensi.js"></script>

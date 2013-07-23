@@ -1,0 +1,43 @@
+<html>
+<head>
+	<title>Zero Clipboard Test</title>
+	<style type="text/css">
+		body { font-family:微软雅黑,sans-serif; font-size:9pt; }
+		.my_clip_button { width:80px; text-align:center; border:1px solid #202831; background-color:#ccc; margin:0px; padding:6px; cursor:default; font-size:9pt; }
+		.my_clip_button.hover { background-color:#eee; }
+		.my_clip_button.active { background-color:#388AA2; }
+	</style>
+	<script type="text/javascript" src="/js/ZeroClipboard.js"></script>
+	<script language="JavaScript">
+		var clip = null;
+		function $(id) { return document.getElementById(id); }
+		function init() {
+			clip = new ZeroClipboard.Client();
+			clip.setHandCursor( true );	
+			clip.addEventListener('mouseOver', function (client) {
+				// update the text on mouse over
+				clip.setText( $('fe_text').value );
+			});
+			
+			clip.addEventListener('complete', function (client, text) {
+				debugstr("Copied text to clipboard: " + text );
+			});
+			
+			clip.glue( 'd_clip_button', 'd_clip_container' );
+		}
+		
+		function debugstr(msg) {
+        alert('博客链接已成功复制到剪贴板上');
+			var p = document.createElement('p');
+			p.innerHTML = msg;  
+			$('d_debug').appendChild(p);
+		}
+	</script>
+</head>
+<body onLoad="init()">   
+    <input type="hidden" value="我刚刚发布了博客：{$blog[subject]} http://www.bwvip.com/home.php?mod=space&uid={$_G[uid]}&do=blog&id={$_G['gp_id']}，快来看看吧！" id="fe_text">
+    <div id="d_clip_container" style="position:relative">
+    <div id="d_clip_button" class="my_clip_button" ><b>复制博客链接</b></div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,221 @@
+<!--{subtemplate home/20_header}-->
+
+<div id="wt">
+	    <!--{subtemplate home/20_left}-->   
+        
+	<div class="z z2">
+		<!--{subtemplate home/20_sinfo}-->
+		<div class="clear"></div>
+		<div style="margin-top:10px; ">&nbsp;</div>
+		<div class="cintro">
+		 <div class="cincontent">
+		  <div class="cinbiaoti"><h2>动态</h2></div>
+		  <div>
+	<ul class="tb cl">
+						<li$actives[we]><a href="home.php?mod=space&uid=$uid&do=home&view=we">{lang friend_feed}</a></li>
+						<li$actives[me]><a href="home.php?mod=space&uid=$uid&do=home&view=me">{lang my_feed}</a></li>
+						<li$actives[all]><a href="home.php?mod=space&uid=$uid&do=home&view=all">{lang view_all}</a></li>
+						<!--{if $_G['setting']['my_app_status']}-->
+						<li$actives[app]><a href="home.php?mod=space&uid=$uid&do=home&view=app">{lang view_app_feed}</a></li>
+						<!--{/if}-->
+						<!--{hook/space_home_navlink}-->
+						<!--{if $_G['setting']['magicstatus'] && $_G['setting']['magics']['thunder']}-->
+						<li class="y"><a id="a_magic_thunder" href="home.php?mod=magic&uid=$uid&mid=thunder" onclick="showWindow('magics', this.href, 'get', 0)" style="padding-left: 18px; background: url({STATICURL}image/magic/thunder.small.gif) no-repeat 0 50%;">{$_G[setting][magics][thunder]}</a></li>
+						<!--{/if}-->
+					</ul>
+    	<div id="feed_div" class="e">
+			<!--{if $hotlist}-->
+				<h4 class="et"><a href="home.php?mod=space&uid=$uid&do=home&view=all&order=hot" class="y xw0">{lang view_more_hot} <em>&rsaquo;</em></a>{lang recent_recommended_hot}</h4>
+				<ul class="el">
+				<!--{loop $hotlist $value}-->
+				<!--{eval $value = mkfeed($value);}-->
+				<!--{template home/space_feed_li}-->
+				<!--{/loop}-->
+				</ul>
+			<!--{/if}-->
+
+			<!--{if $list}-->
+				<!--{if $_GET[view] == 'app' && $_G['setting']['my_app_status']}-->
+				
+					<div class="xld xlda mtm">
+						<!--{loop $list $appicon $values}-->
+							<dl class="bbda cl">
+								<dd class="m avt">
+									<a href="userapp.php?mod=app&id=$appicon"><img src="http://appicon.manyou.com/logos/$appicon" alt="" /></a>
+								</dd>
+								<dd class="cl">
+									<ul class="el">
+										<!--{loop $values $value}-->
+										<li class="cl">
+											<a class="t" href="userapp.php?icon=$value[icon]" title="{lang just_look_dynamic}">
+												<img width="16" height="16" {if $_G[cache][myapp][$value[icon]][icon]}src="$_G[cache][myapp][$value[icon]][icon]" onerror="this.onerror=null;this.src='http://appicon.manyou.com/icons/$value[icon]'"{else} src="http://appicon.manyou.com/icons/$value[icon]"{/if} />
+											</a>
+											$value[title_template] 
+											<span class="xg1"><!--{date($value[dateline], 'n-j H:i')}--></span>
+	
+											<div class="ec">
+												<!--{if $value['image_1']}-->
+												<a href="$value[image_1_link]"{$value[target]}><img src="$value[image_1]" class="tn" /></a>
+												<!--{/if}-->
+												<!--{if $value['image_2']}-->
+												<a href="$value[image_2_link]"{$value[target]}><img src="$value[image_2]" class="tn" /></a>
+												<!--{/if}-->
+												<!--{if $value['image_3']}-->
+												<a href="$value[image_3_link]"{$value[target]}><img src="$value[image_3]" class="tn" /></a>
+												<!--{/if}-->
+												<!--{if $value['image_4']}-->
+												<a href="$value[image_4_link]"{$value[target]}><img src="$value[image_4]" class="tn" /></a>
+												<!--{/if}-->
+	
+												<!--{if $value['body_template']}-->
+												<div class="detail"{if $value['image_3']} style="clear: both; zoom: 1;"{/if}>
+													$value[body_template]
+												</div>
+												<!--{/if}-->
+	
+												<!--{if $value['body_general']}-->
+												<div class="quote"><blockquote>$value[body_general]</blockquote></div>
+												<!--{/if}-->
+											</div>
+										</li>
+									<!--{/loop}-->
+									</ul>
+								</dd>
+							</dl>
+						<!--{/loop}-->
+					</div>
+				
+				<!--{else}-->
+					<!--{loop $list $day $values}-->
+						<!--{if $_GET['view']!='hot'}-->
+							<h4 class="et">
+								<!--{if $day=='yesterday'}-->{lang yesterday}<!--{elseif $day=='today'}-->{lang today}<!--{else}-->$day<!--{/if}-->
+							</h4>
+						<!--{/if}-->
+	
+						<ul class="el">
+						<!--{loop $values $value}-->
+							<!--{template home/space_feed_li}-->
+						<!--{/loop}-->
+						</ul>
+					<!--{/loop}-->
+				<!--{/if}-->
+			<!--{elseif $feed_users}-->
+				<div class="xld xlda mtm">
+				<!--{loop $feed_users $day $users}-->
+				<h4 class="et">
+					<!--{if $day=='yesterday'}-->{lang yesterday}<!--{elseif $day=='today'}-->{lang today}<!--{else}-->$day<!--{/if}-->
+				</h4>
+				<!--{loop $users $user}-->
+				<!--{eval $daylist = $feed_list[$day][$user[uid]];}-->
+				<!--{eval $morelist = $more_list[$day][$user[uid]];}-->
+				<dl class="bbda cl">
+					<dd class="m avt">
+						<!--{if $user[uid]}-->
+						<a href="home.php?mod=space&uid=$user[uid]" target="_blank" c="1"><!--{avatar($user[uid],small)}--></a>
+						<!--{else}-->
+						<img src="{IMGDIR}/systempm.png" alt="" />
+						<!--{/if}-->
+					</dd>
+					<dd class="cl">
+						<ul class="el">
+						<!--{loop $daylist $value}-->
+							<!--{template home/space_feed_li}-->
+						<!--{/loop}-->
+						</ul>
+
+						<!--{if $morelist}-->
+						<p class="xg1 cl"><span onclick="showmore('$day', '$user[uid]', this);" class="unfold">{lang open}</span></p>
+						<div id="feed_more_div_{$day}_{$user[uid]}" style="display:none;">
+							<ul class="el">
+							<!--{loop $morelist $value}-->
+								<!--{template home/space_feed_li}-->
+							<!--{/loop}-->
+							</ul>
+						</div>
+						<!--{/if}-->
+					</dd>
+				</dl>
+				<!--{/loop}-->
+				<!--{/loop}-->
+				</div>
+			<!--{else}-->
+				<p class="emp">{lang no_feed}</p>
+			<!--{/if}-->
+
+			<!--{if $filtercount}-->
+				<div class="i" id="feed_filter_notice_{$start}">
+					{lang depending_your}<a href="home.php?mod=spacecp&ac=privacy&op=filter" target="_blank" class="xi2 xw1">{lang filter_settings}</a>,{lang shield_feed_message} (<a href="javascript:;" onclick="filter_more($start);" id="a_feed_privacy_more" class="xi2">{lang click_view}</a>)
+				</div>
+				<div id="feed_filter_div_{$start}" style="display:none;">
+					<h4 class="et">{lang following_feed_shielding}</h4>
+					<ul class="el">
+					<!--{loop $filter_list $value}-->
+					<!--{template home/space_feed_li}-->
+					<!--{/loop}-->
+					<li><a href="javascript:;" onclick="filter_more($start);">&laquo; {lang pack_up}</a></li>
+					</ul>
+				</div>
+			<!--{/if}-->
+
+			</div>
+    
+    
+		  </div>
+		  </div>
+		</div>
+        <div style="margin-top:20px; ">&nbsp;</div>
+	</div>
+    
+	    <!--{subtemplate home/20_right}-->   
+        
+</div>
+<div class="clear"></div>
+<br>
+
+<script type="text/javascript">
+	function filter_more(id) {
+		if($('feed_filter_div_'+id).style.display == '') {
+			$('feed_filter_div_'+id).style.display = 'none';
+			$('feed_filter_notice_'+id).style.display = '';
+		} else {
+			$('feed_filter_div_'+id).style.display = '';
+			$('feed_filter_notice_'+id).style.display = 'none';
+		}
+	}
+
+	function close_feedbox() {
+		var x = new Ajax();
+		x.get('home.php?mod=spacecp&ac=common&op=closefeedbox', function(s){
+			$('feed_box').style.display = 'none';
+		});
+	}
+
+	function showmore(day, uid, e) {
+		var obj = 'feed_more_div_'+day+'_'+uid;
+		$(obj).style.display = $(obj).style.display == ''?'none':'';
+		if(e.className == 'unfold'){
+			e.innerHTML = '{lang pack_up}';
+			e.className = 'fold';
+		} else if(e.className == 'fold') {
+			e.innerHTML = '{lang open}';
+			e.className = 'unfold';
+		}
+	}
+
+	var elems = selector('li[class~=magicthunder]', $('feed_div'));
+	for(var i=0; i<elems.length; i++){
+		magicColor(elems[i]);
+	}
+
+	function showEditAvt(id) {
+		$(id).style.display = $(id).style.display == '' ? 'block' : '';
+	}
+	if($('edit_avt') && BROWSER.ie && BROWSER.ie == 6) {
+		_attachEvent($('edit_avt'), 'mouseover', function () { showEditAvt('edit_avt_tar'); });
+		_attachEvent($('edit_avt'), 'mouseout', function () { showEditAvt('edit_avt_tar'); });
+	}
+</script>
+<!--{subtemplate home/20_foot}-->   
+</body>
+</html>

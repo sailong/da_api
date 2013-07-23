@@ -1,0 +1,151 @@
+<!--{template home/spacecp_21_head}-->
+<style type='text/css'>
+.field {
+	width:99%; border:1px solid #abcdef
+}
+.field td {
+	border:1px solid #abcdef; height:25px; width:20px; text-align:center; padding:0; text-align:left
+}
+.field tr .first {
+	width:15%; color:blue
+}
+.field tr td input {
+	width:20px; height:25px; line-height:25px; margin:0; border:1px dashed gray
+}
+.field tr td #year {
+	width:80px; border:1px solid gray; text-align:center
+}
+.field tr td #content {
+	border:1px dashed gray
+}
+.field tr td .text {
+	width:100px;
+}
+</style>
+<div id="wtcontent">
+	<!-- 左侧 -->
+	<!--{template home/spacecp_00_left}-->
+	<!-- 右侧 -->
+	<div class="rightw">
+		<div class="rightlm"><h1>球场申请资料</h1></div>
+		<br>
+		<div class="rcontent">
+			<div>
+
+		<!-------开始------->
+				<form action='home.php?mod=spacecp&ac=field&op=field&do=save<!--{if $do == edit}-->&c=1<!--{/if}-->' method='post' enctype='multipart/form-data'>
+				<!--{if $operation == 'field'}-->
+				<table cellspacing='0' cellpadding='0' class='field'>
+					<tr class='first'>
+						<td>用户名</td>
+						<td colspan='21'><!--{$fielduser[username]}--></td>
+					</tr>
+					<tr>
+						<td class='first'>公司名称</td>
+						<td colspan='21'><!--{$fielduser[field1]}--></td>
+					</tr>
+					<!--{if empty($fielduser['province']) || $do == 'edit'}-->
+					<tr>
+						<td class='first'>所属球场</td>
+						<td colspan='21'>
+							<select name='province' id='province' style='width:100px; height:100%; border:none; border-right:1px solid #abcdef; font-size:13px' onchange='getarea(this.value)'>
+								<option value='0'>请选择</option>
+								<!--{loop $area $key $val}-->
+								<option value='<!--{$val[id]}-->'><!--{$val[name]}--></option>
+								<!--{/loop}-->
+							</select>
+							<span id='rfield' style='color:red'></span>
+						</td>
+					</tr>
+					<tr>
+						<td class='first'>球场洞数</td>
+						<td colspan='21'><input type='text' name='cup' value='' class='text' maxlength='2' /></td>
+					</tr>
+					<tr>
+						<td class='first'>总标准杆</td>
+						<td colspan='21'><input type='text' name='standardpar' class='text' value='' maxlength='5' /></td>
+					</tr>
+					<tr>
+						<td class='first'>码距</td>
+						<td colspan='21'><input type='text' name='length' class='text' value='' maxlength='5' /></td>
+					</tr>
+					<tr>
+						<td class='first'>标准杆</td>
+						<!--{loop $parnum $k $v}-->
+						<td><input type='text' name='par[]' id='par_<!--{$k}-->' value='' maxlength='2' /></td>
+						<!--{/loop}-->
+					</tr>
+					<tr>
+						<td class='first'>地址</td>
+						<td colspan='21'><input type='text' name='address' style='width:300px' value='' maxlength='50' /></td>
+					</tr>
+					<tr>
+						<td colspan='22' style='text-align:center'>
+							<button type='submit' name='profilesubmitbtn' value='true' id='profilesubmitbtn' onclick='return checksubmit()' class='pn pnc' /><strong>{lang save}</strong></button>
+						</td>
+					</tr>
+					<!--{else}-->
+					<tr>
+						<td class='first'>所属球场</td>
+						<td colspan='21'><!--{$fielduser['name']}--></td>
+					</tr>
+					<tr>
+						<td class='first'>球场洞数</td>
+						<td colspan='21'><!--{$fielduser['cup']}--></td>
+					</tr>
+					<tr>
+						<td class='first'>总标准杆</td>
+						<td colspan='21'><!--{$fielduser['standardpar']}--></td>
+					</tr>
+					<tr>
+						<td class='first'>码距</td>
+						<td colspan='21'><!--{$fielduser['length']}--></td>
+					</tr>
+					<tr>
+						<td class='first'>标准杆</td>
+						<!--{loop $par $k $v}-->
+						<td><!--{$v}--></td>
+						<!--{/loop}-->
+					</tr>
+					<tr>
+						<td class='first'>地址</td>
+						<td colspan='21'><!--{$fielduser['address']}--></td>
+					</tr>
+					<tr>
+						<td colspan='22' style='text-align:center'>
+							<a href='home.php?mod=spacecp&ac=field&op=field&do=edit&id=<!--{$fielduser[id]}-->'>重新编辑</a>
+						</td>
+					</tr>
+					<!--{/if}-->
+				</table>
+				<!--{/if}-->
+				</form>
+		<!-------结束------->
+
+			</div>
+		</div>
+	</div>
+	<div class="clear"></div>
+</div>
+<!--{template home/spacecp_foot_comm}-->
+<script type="text/javascript" src='static/js/jquery.js'></script>
+<script type="text/javascript">
+	function checksubmit() {
+		var area = jQuery('#province').val();
+		if(area == '' || area == '0') {
+			jQuery('#rfield').html('请选择地点');
+			return false;
+		}
+		var flag = '1';
+		for(var i = 0; i <= 21; i++) {
+			var par = jQuery('#par_'+i).val();
+			if(par == '') {
+				flag = '0';
+			}
+		}
+		if(flag == '0') {
+			jQuery('#rfield').html('请填写标准杆');
+			return false;
+		}
+	}
+</script>

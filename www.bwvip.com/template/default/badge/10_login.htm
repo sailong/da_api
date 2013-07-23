@@ -1,0 +1,74 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<link rel="stylesheet" href="http://www.bwvip.com/js/dojo-release-1.7.2/dijit/themes/claro/claro.css">
+		<script src="http://www.bwvip.com/js/dojo-release-1.7.2/dojo/dojo.js" type="text/javascript" djConfig="isDebug: true, parseOnLoad: true"></script>
+
+		<script type="text/javascript">
+			dojo.require("dijit.Dialog");
+			dojo.require("dojo.io.iframe");
+			dojo.require("dojo.date.stamp");
+			
+			function send_data(){
+				
+				var d = new Date(); 
+				var random_num = dojo.date.stamp.toISOString(d)+Math.random();
+				
+				dojo.attr('random_num','value',random_num);
+				
+				
+				dojo.io.iframe.send({
+					form: "login_form",
+					handleAs: "html",
+					load: function(response, ioArgs){
+						console.log(response.body.outerHTML);
+						
+						if(response.body.outerHTML != '<body>var uid=0;</body>'){
+							var url = dojo.attr('url','value');
+							location.assign(url);
+						}else{
+							
+						}
+						
+						return response;
+					},
+					error: function(response, ioArgs){
+						return response;
+					}
+				});
+				
+			}
+			
+			dojo.addOnLoad(function(){
+			
+				dojo.connect(dojo.byId("login_button"), "onclick", "send_data");
+				dijit.byId('dialog_of_login').show();
+			
+			});
+		</script>
+
+	</head>
+
+	<body class="claro">
+		尚未登录
+		<div id="dialog_of_login" data-dojo-type="dijit.Dialog" title="用户登录">
+			<form id="login_form" method="get" action="member.php">
+				<table>
+					<tr><td align="right">Email：</td><td align="left"><input name="username" type="text" id="username"/></td></tr>
+					<tr><td align="right">密码：</td><td align="left"><input name="password" type="password" id="password"/></td></tr>
+				</table>
+				<input type="hidden" name="mod" value="logging"/>
+				<input type="hidden" name="action" value="login"/>
+				<input type="hidden" name="loginsubmit" value="yes"/>
+				<input type="hidden" name="infloat" value="yes"/>
+				<input type="hidden" name="lssubmit" value="yes"/>
+				<input type="hidden" name="cross_domain" value="1"/>
+				<input type="hidden" name="random_num" id="random_num"/>
+				
+			</form>
+			<div align="center"><input id="login_button" type="button" value="提交"/></div>
+		</div>
+		<input type="hidden" id="url" value="badge.php?<!--{$query_string}-->"/>
+	</body>
+</html>

@@ -1,0 +1,37 @@
+<!--{subtemplate home/25_header}-->
+<div id="wtcontent">
+    <!--{subtemplate home/25_left}-->
+    
+    
+	<div class="z z2"> 
+	<br /><br /><br /><br /><br />
+   	   <div class="cintro">
+	  <a name="maoweibo"> <div class="cdt_lm">
+		    <span><h1>
+            <!--{if $_GET[op]=='topic'}-->
+        热门话题
+        <!--{elseif $_GET[op]=='weibo'}-->
+        微博
+        <!--{else}-->
+        热门标签
+        <!--{/if}-->
+            </h1></span>
+		</div>
+        </a>
+		<div>
+		<iframe  id="kjian" name="kjian"  src='<!--{$url}-->'  width='440' height='800' scrolling='no' frameborder='0' onload="Javascript:SetWinHeight(this)" ></iframe>  
+
+
+		</div> 
+		</div>
+        <br />
+	</div>
+    <!--{subtemplate home/25_right}-->    
+
+   <div class="clear"></div>  
+	
+</div>
+<br>
+<!--{subtemplate home/25_foot}-->   
+</body>
+</html>

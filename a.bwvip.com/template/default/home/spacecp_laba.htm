@@ -1,0 +1,120 @@
+<!--{template home/space_header_comm}--> 
+<div id="wtcontent">
+	<!-- 左侧 -->
+	<!--{template home/spacecp_00_left}-->
+	<!-- 右侧 -->
+	<div class="rightw">
+	<div class="rightlm"><h1>我的广播</h1></div> 
+		<div class="rcontent"> 
+      
+ <script language="javascript">
+ 
+function check() 
+{ 
+
+if(document.pmform_0.msgtype.value==0)
+	{
+	alert("请选择类别！");
+	document.pmform_0.msgtype.focus();
+	return false;
+	}
+	if(document.pmform_0.title.value.length==0)
+	{
+	alert("请写标题！");
+	document.pmform_0.title.focus();
+	return false;
+	}
+   if(document.pmform_0.sendmessage.value.length==0)
+	{
+	alert("内容不能为空！");
+	document.pmform_0.sendmessage.focus();
+	return false;
+	}
+	if(document.pmform_0.sendmessage.value.length>255)
+	{
+	alert("不能超过255个字符！");
+	document.pmform_0.sendmessage.focus();
+	return false;
+	}
+}
+
+
+</script>
+
+
+<div id="ct"  >
+<div class="mn">
+<div class="bm bw0">
+   <ul class="tb cl">
+<li class="a"><a href="home.php?mod=spacecp&ac=laba">我要广播</a></li>
+<!--<li class="o"><a href="home.php?mod=spacecp&amp;ac=pm&amp;type=1">群聊</a></li>-->
+</ul>        
+ 
+<div id="__pmform_0">
+<form id="pmform_0" name="pmform_0" method="post"   action="home.php?mod=spacecp&ac=laba&op=send" onsubmit="return check()">
+
+<div class="c">
+<script src="static/js/home_friendselector.js?mUb" type="text/javascript"></script>
+<script type="text/javascript">
+var fs;
+var clearlist = 0;
+</script>
+<table cellspacing="0" cellpadding="0" class="tfm pmform mtm"> 
+<tr>
+  <th align="right">选择类别：</th>
+  <td><select name="msgtype" id="msgtype">
+   <option value="0">选择类别</option>
+   <option value="1">全体会员</option>
+   <option value="2">全体粉丝</option>
+   </select>  </td>
+</tr> 
+<tr>
+  <th align="right">标题：</th>
+  <td><input name="title" id="title" type="text"  /></td>
+</tr>
+<tr>
+<th align="right">内容:</th>
+<td>
+<!--
+<div class="tedt">
+<div class="bar"><script src="static/js/seditor.js?mUb" type="text/javascript"></script>
+<div class="fpd">
+<a href="javascript:;" title="文字加粗" class="fbld" onclick="seditor_insertunit('send', '[b]', '[/b]');doane(event);">B</a>
+<a href="javascript:;" title="设置文字颜色" class="fclr" id="sendforecolor" onclick="showColorBox(this.id, 2, 'send');doane(event);">Color</a>
+<a id="sendimg" href="javascript:;" title="图片" class="fmg" onclick="seditor_menu('send', 'img');doane(event);">Image</a>
+<a id="sendurl" href="javascript:;" title="添加链接" class="flnk" onclick="seditor_menu('send', 'url');doane(event);">Link</a>
+<a id="sendquote" href="javascript:;" title="引用" class="fqt" onclick="seditor_menu('send', 'quote');doane(event);">Quote</a>
+<a id="sendcode" href="javascript:;" title="代码" class="fcd" onclick="seditor_menu('send', 'code');doane(event);">Code</a>
+<a href="javascript:;" class="fsml" id="sendsml" onclick="showMenu({'ctrlid':this.id,'evt':'click','layer':2});return false;">Smilies</a>
+<script type="text/javascript" reload="1">smilies_show('sendsmiliesdiv', 8, 'send');</script>
+</div></div>
+-->
+<div class="area">
+<textarea rows="8" cols="40" name="sendmessage" class="pt" id="sendmessage" onkeydown="ctrlEnter(event, 'pmsubmit_btn');"></textarea>
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<th>&nbsp;</th>
+<td>
+<button type="submit" name="pmsubmit_btn" id="pmsubmit_btn"   value="true" class="pn pnc"><strong>发送</strong></button>
+</td>
+</tr>
+</table>
+</div>
+</form>
+</div>
+</div>
+</div> 
+</div>
+          
+   </div> 
+            </div> 
+</div> 
+
+	</div>
+	</div>
+	<div class="clear"></div>
+</div>
+<!--{template home/spacecp_foot_comm}-->

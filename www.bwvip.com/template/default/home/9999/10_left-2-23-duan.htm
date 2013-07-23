@@ -1,0 +1,50 @@
+<div class="lefter z">
+	<div class="touxiang">
+		<div id="circular-tou" class="clearfix">
+			<a target="_blank" href="home.php?mod=space&uid=$uid">
+				<img src="uc_server/avatar.php?uid=$uid&size=middle" width="80" height="74" />
+			<span class="cir-bg"></span></a>
+			<p class="center top5"><!--{$userinfo[username]}--></p>
+		</div>
+	</div>
+	<div class="clear"></div>
+	<div class="xinx">
+	粉丝：<a href="home.php?mod=space&do=common&op=fans&uid=<!--{$uid}-->"><!--{if $userinfo[fans_count]}--><!--{$userinfo[fans_count]}--><!--{else}-->0<!--{/if}--></a>
+	关注：<a href="home.php?mod=space&do=common&op=follow&uid=<!--{$uid}-->"><!--{if $userinfo[follow_count]}--><!--{$userinfo[follow_count]}--><!--{else}-->0<!--{/if}--></a>
+	微博：<a href="home.php?mod=space&do=common&op=weibo&uid=<!--{$uid}-->"><!--{if $userinfo[topic_count]}--><!--{$userinfo[topic_count]}--><!--{else}-->0<!--{/if}--></a>
+	</div>
+	<div class="xinx">空间人气榜：总排名&nbsp;<!--{if $visitrank}--><!--{$visitrank}--><!--{else}-->0<!--{/if}-->&nbsp;位</div>
+	<div class="top10">
+		<ul class="xinx2">
+			<li class="z">
+			<!--{if !$space['self'] && empty($_G['uid'])}-->
+			<a id="share_space" href="home.php?mod=spacecp&ac=share&type=space&id=<!--{$uid}-->" onclick="showWindow(this.id, this.href, 'get', 0);">+关注</a>
+			<!--{elseif $guanzhu[buddy] == '1'}-->
+			<a id="share_space" href="javascript:void(0)" onclick="guanzhu(<!--{$uid}-->);">已关注</a>
+			<!--{else}-->
+			<a id="share_space" href="javascript:void(0)" onclick="guanzhu(<!--{$uid}-->);">+关注</a>
+			<!--{/if}-->
+			</li>
+			<li class="z"><a href="home.php?mod=space&do=common&op=him&uid=<!--{$uid}-->">@他</a></li>
+		</ul>
+	</div>
+	<div class="clear"></div>
+	<div class="ifs"><img src="{STATICURL}space/person/images/4s.jpg" width="253" height="102"></div>
+	<div class="leftlm"><h1><!--{$visitname}-->的主页</h1></div>
+	<!--{subtemplate home/space_header_personalnv}-->
+  <div class="leftlm"><h1><!--{$visitname}-->的访客</h1> <span><a href="home.php?mod=space&do=common&op=visiter&uid=<!--{$uid}-->">更多</a></span></div>
+	<div class="leftcon">
+		<div id="circular-box" class="clearfix">
+			<ul>
+			<!--{if $visit}-->
+			<!--{loop $visit $value}-->
+			<li><a href="home.php?mod=space&uid=<!--{$value[vuid]}-->"><img src="uc_server/avatar.php?uid=<!--{$value[vuid]}-->&size=middle" width="62" height="57"><span class="cir-bg"></span></a><p class="center top5"><!--{$value[vusername]}--></p></li>
+			<!--{/loop}-->
+			<!--{else}-->
+			<li align='center'>暂时无人访问</li>
+			<!--{/if}-->
+			</ul>
+		</div>
+		<div class="clear"></div>
+	</div>
+</div>

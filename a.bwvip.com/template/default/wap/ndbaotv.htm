@@ -1,0 +1,115 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd"> 
+<html> 
+<head> 
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"> 
+<title>一汽丰田皇冠杯 大正高尔夫赛事成绩表</title>  
+</head>
+<style type="text/css"> 
+body { font: normal 12px auto "Trebuchet MS", Verdana, Arial, Helvetica, sans-serif; color: #4f6b72; background: #dae7f0;margin:0 auto ; } 
+a { color: #c75f3e; } 
+td {line-height:15px; border-right: 1px solid #ffffff; border-bottom: 1px solid #ffffff;  font-size:12px; padding: 4px; color: #4f6b72;  text-align:center;} 
+td.alt { border-left: 1px solid #ffffff; border-top: 0; background:#d5e6f6; color: #797268; width:3%;height:20px; } 
+td.spec { border-left: 1px solid #ffffff; border-top: 0; background: #bdd3e8; font:  12px; }
+td.specalt {border-left: 1px solid #ffffff; border-top: 0;  font:12px; color: #272727; text-align:center; }
+ /*---------for IE 5.x bug*/ html>body td{ font-size:12px;} 
+ body,td,th { font-family: 宋体, Arial; font-size: 12px; } 
+ 
+</style> 
+<META   HTTP-EQUIV=REFRESH   CONTENT=120;URL=nd.php?ac=ndtv&qc_id=<!--{echo $qc_id;}-->&page=<!--{echo $page;}-->&pm=<!--{$pm}--> > 
+<body>
+    <table width="896" align="center" cellpadding="0" cellspacing="0" style="background-attachment:#e7e7e7;">
+  <tr>
+    <td colspan="25" align="right" style="background:#F9F9F9; border-top: 1px solid #ffffff; height:40px;" ><img src="/images/gcctourtou.jpg" width="800" ></td>
+  </tr> 
+ <tr>
+    <td width="5%" rowspan="2" style="background:#67859f;color:ffffff;"><font color="#ffffff">排名</font></td>
+    <td width="5%" rowspan="2" style="background:#67859f;color:ffffff;"><font color="#ffffff">姓名</font></td>
+    <td width="5%" rowspan="2" style="background:#67859f;color:ffffff;"><font color="#ffffff">分组</font></td>
+    <td width="5%" rowspan="2" style="background:#67859f;color:ffffff;"><font color="#ffffff">成绩</font></td>
+    <td  class="alt">1</td>
+    <td  class="alt">2</td>
+    <td  class="alt">3</td>
+    <td  class="alt">4</td>
+    <td  class="alt">5</td>
+    <td  class="alt">6</td>
+    <td  class="alt">7</td>
+    <td  class="alt">8</td>
+    <td  class="alt">9</td>
+    <td  class="alt">OUT</td>
+    <td  class="alt">10</td>
+    <td  class="alt">11</td>
+    <td  class="alt">12</td>
+    <td  class="alt">13</td>
+    <td  class="alt">14</td>
+    <td  class="alt">15</td>
+    <td  class="alt">16</td>
+    <td  class="alt">17</td>
+    <td  class="alt">18</td>
+    <td  class="alt">IN</td>
+    <td  class="alt">All</td>
+  </tr>
+   <tr>
+    <td class="spec">$par[0]</td>
+    <td class="spec">$par[1]</td>
+    <td class="spec">$par[2]</td>
+    <td class="spec">$par[3]</td>
+    <td class="spec">$par[4]</td>
+    <td class="spec">$par[5]</td>
+    <td class="spec">$par[6]</td>
+    <td class="spec">$par[7]</td>
+    <td class="spec">$par[8]</td>
+    <td class="spec">$POUT</td>
+   <td class="spec">$par[9]</td>
+    <td class="spec">$par[10]</td>
+    <td class="spec">$par[11]</td>
+    <td class="spec">$par[12]</td>
+    <td class="spec">$par[13]</td>
+    <td class="spec">$par[14]</td>
+    <td class="spec">$par[15]</td>
+    <td class="spec">$par[16]</td>
+    <td class="spec">$par[17]</td>
+    <td class="spec">$PIN</td>
+    <td class="spec">$PTL</td>
+  </tr>
+<!--{loop $nbtvlist $n  $v}-->                          
+ <!--{if $n%2==1}-->
+  <!--{eval $bgcolor = "#D5E6F6";}-->	
+<!--{else}-->
+  <!--{eval $bgcolor = "#C3CED4";}-->	
+<!--{/if}-->			         
+  <tr  bgcolor="<!--{$bgcolor}-->">  
+    <td style="background:#42a7c3;color:ffffff; "><font color="#ffffff">{$v['pm']}</font></td>
+    <td style="background:#2e96b1;color:ffffff;"><font color="#ffffff">{$v['realname']}</font></td>
+    <td style="background:#12748f;color:ffffff;"><font color="#ffffff">{$v['zid']}</td>
+    <td style="background:#12748f;color:ffffff;"><font color="#FFFFFF">{if $v['avscore']<900}{echo Getchd($v['avscore'])}{else}0{/if} </font></td>
+    <td class="specalt" {if $v['score1']!=0}{echo Getcss($v['score1'],$par[0])}{/if}>{if $v['score1']!=-1}{echo $v['score1']}{else}DQ{/if}</td>
+    <td class="specalt" {if $v['score2']!=0}{echo Getcss($v['score2'],$par[1])}{/if}>{if $v['score2']!=-1}{echo $v['score2']}{else}DQ{/if}</td>
+    <td class="specalt" {if $v['score3']!=0}{echo Getcss($v['score3'],$par[2])}{/if}>{if $v['score3']!=-1}{echo $v['score3']}{else}DQ{/if}</td>
+    <td class="specalt" {if $v['score4']!=0}{echo Getcss($v['score4'],$par[3])}{/if}>{if $v['score4']!=-1}{echo $v['score4']}{else}DQ{/if}</td>
+    <td class="specalt" {if $v['score5']!=0}{echo Getcss($v['score5'],$par[4])}{/if}>{if $v['score5']!=-1}{echo $v['score5']}{else}DQ{/if}</td>
+    <td class="specalt" {if $v['score6']!=0}{echo Getcss($v['score6'],$par[5])}{/if}>{if $v['score6']!=-1}{echo $v['score6']}{else}DQ{/if}</td>
+    <td class="specalt" {if $v['score7']!=0}{echo Getcss($v['score7'],$par[6])}{/if}>{if $v['score7']!=-1}{echo $v['score7']}{else}DQ{/if}</td>
+    <td class="specalt" {if $v['score8']!=0}{echo Getcss($v['score8'],$par[7])}{/if}>{if $v['score8']!=-1}{echo $v['score8']}{else}DQ{/if}</td>
+    <td class="specalt" {if $v['score9']!=0}{echo Getcss($v['score9'],$par[8])}{/if}>{if $v['score9']!=-1}{echo $v['score9']}{else}DQ{/if}</td>
+    <td class="specalt" style="text-align:center;">{$v['lout']}</td>
+    <td class="specalt" {if $v['score10']!=0}{echo Getcss($v['score10'],$par[9])}{/if}>{if $v['score10']!=-1}{echo $v['score10']}{else}DQ{/if}</td>    
+    <td class="specalt" {if $v['score11']!=0}{echo Getcss($v['score11'],$par[10])}{/if}>{if $v['score11']!=-1}{echo $v['score11']}{else}DQ{/if}</td>
+    <td class="specalt" {if $v['score12']!=0}{echo Getcss($v['score12'],$par[11])}{/if}>{if $v['score12']!=-1}{echo $v['score12']}{else}DQ{/if}</td>
+    <td class="specalt" {if $v['score13']!=0}{echo Getcss($v['score13'],$par[12])}{/if}>{if $v['score13']!=-1}{echo $v['score13']}{else}DQ{/if}</td>
+    <td class="specalt" {if $v['score14']!=0}{echo Getcss($v['score14'],$par[13])}{/if}>{if $v['score14']!=-1}{echo $v['score14']}{else}DQ{/if}</td>
+    <td class="specalt" {if $v['score15']!=0}{echo Getcss($v['score15'],$par[14])}{/if}>{if $v['score15']!=-1}{echo $v['score15']}{else}DQ{/if}</td>
+    <td class="specalt" {if $v['score16']!=0}{echo Getcss($v['score16'],$par[15])}{/if}>{if $v['score16']!=-1}{echo $v['score16']}{else}DQ{/if}</td>
+    <td class="specalt" {if $v['score17']!=0}{echo Getcss($v['score17'],$par[16])}{/if}>{if $v['score17']!=-1}{echo $v['score17']}{else}DQ{/if}</td>
+    <td class="specalt" {if $v['score18']!=0}{echo Getcss($v['score18'],$par[17])}{/if}>{if $v['score18']!=-1}{echo $v['score18']}{else}DQ{/if}</td>
+    <td class="specalt" style="text-align:center;">{$v['lin']}</td>
+    <td class="specalt" style="text-align:center;{if $v['tlscore']==1000}color:#FFffff;background:#089218;{/if}" >{echo Getstat($v['tlscore'])}</td>
+  </tr> 
+<!--{/loop}-->
+ 
+  <tr>
+    <td colspan="25" align="right" style="background:#dae7f0; border-left: 1px solid #ffffff;" ><img src="/images/bsslt0000.jpg" width="393" height="42" /></td>
+  </tr> 
+</table>
+</body>
+</html>
+ 

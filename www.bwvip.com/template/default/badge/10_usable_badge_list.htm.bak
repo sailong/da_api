@@ -1,0 +1,367 @@
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<link rel="stylesheet" href="js/dojo-release-1.7.2/dijit/themes/claro/claro.css">
+		<script src="js/dojo-release-1.7.2/dojo/dojo.js" type="text/javascript" djConfig="isDebug: true, parseOnLoad: true"></script>
+
+		<script type="text/javascript">
+
+			dojo.require("dojo.io.iframe");
+
+			function storing_showed_order(){
+				dojo.io.iframe.send({
+					form: "storing_showed_order",
+					handleAs: "html",
+					load: function(response, ioArgs){
+						console.log(response.body.outerHTML);
+
+						if(response.body.outerHTML.match('ok')==null){
+
+                                                        var tmp = response.body.outerHTML.toLowerCase();
+                                                        tmp = tmp.replace("<body>","");
+                                                        tmp = tmp.replace("</body>","");
+                                                        
+
+                                                }else{
+
+                                                        
+
+
+                                                }
+
+						return response;
+					},
+					error: function(response, ioArgs){
+						return response;
+					}
+				});	
+			}
+
+			function choosing_badge(){
+				
+				dojo.io.iframe.send({
+                                        form: "choosing_badge",
+                                        handleAs: "html",
+                                        load: function(response, ioArgs){
+                                                console.log(response.body.outerHTML);
+
+                                                if(response.body.outerHTML.match('ok')==null){
+
+                                                        var tmp = response.body.outerHTML.toLowerCase();
+                                                        tmp = tmp.replace("<body>","");
+                                                        tmp = tmp.replace("</body>","");
+
+
+                                                }else{
+
+
+
+
+                                                }
+
+                                                return response;
+                                        },
+                                        error: function(response, ioArgs){
+                                                return response;
+                                        }
+                                });
+
+			}
+
+			dojo.addOnLoad(function(){
+				dojo.connect(dojo.byId("storing_showed_order_button"), "onclick", "storing_showed_order");
+				dojo.connect(dojo.byId("choosing_badge_button"), "onclick", "choosing_badge");
+			});
+
+
+		</script>
+
+	</head>
+	<body>
+		<form id="storing_showed_order" method="post" action="badge.php?mod=storing_showed_order">
+		<!--{loop $rows $value}-->
+			
+			
+			<!--{if $value['badge_type']=='中高协教练徽章'}-->
+				<div>
+					中高协教练徽章显示顺序：<input name="cga_trainer_badge_showed_order" type="text"/>
+				</div>
+			<!--{/if}-->
+			
+
+			
+			<!--{if $value['badge_type']=='俱乐部教练徽章'}-->
+				<div>
+                                        俱乐部教练徽章显示顺序：<input name="certificated_club_badge_showed_order" type="text"/>
+				</div>
+                        <!--{/if}-->
+			
+
+			
+			<!--{if $value['badge_type']=='港澳台教练徽章'}-->
+				<div>
+                                        港澳台教练徽章显示顺序：<input name="hmt_trainer_badge_showed_order" type="text"/>
+				</div>
+                        <!--{/if}-->
+			
+
+			
+			<!--{if $value['badge_type']=='外籍教练徽章'}-->
+				<div>
+                                        外籍教练徽章显示顺序：<input name="foreign_trainer_badge_showed_order" type="text"/>
+				</div>
+                        <!--{/if}-->
+			
+
+			
+			<!--{if $value['badge_type']=='球场总经理徽章'}-->
+				<div>
+                                        球场总经理徽章显示顺序：<input name="course_manager_badge_showed_order" type="text"/>
+				</div>
+                        <!--{/if}-->
+			
+
+			
+			<!--{if $value['badge_type']=='草坪专家徽章'}-->
+				<div>
+                                        草坪专家徽章显示顺序：<input name="lawn_expert_badge_showed_order" type="text"/>
+				</div>
+                        <!--{/if}-->
+			
+
+			
+			<!--{if $value['badge_type']=='专家徽章'}-->
+				<div>
+                                        专家徽章显示顺序：<input name="expert_badge_showed_order" type="text"/>
+				</div>
+                        <!--{/if}-->
+			
+
+			
+			<!--{if $value['badge_type']=='皇冠车主徽章'}-->
+				<div>
+                                        皇冠车主徽章显示顺序：<input name="toyota_crown_owner_badge_showed_order" type="text"/>
+				</div>
+                        <!--{/if}-->
+
+			
+			<!--{if $value['badge_type']=='电信钻石卡徽章'}-->
+				<div>
+                                        电信钻石卡徽章显示顺序：<input name="ct_diamond_card_badge_showed_order" type="text"/>
+				</div>
+                        <!--{/if}-->
+			
+
+			
+			<!--{if $value['badge_type']=='中高协裁判徽章'}-->
+				<div>
+                                        中高协裁判徽章显示顺序：<input name="cga_referee_badge_showed_order" type="text"/>
+				</div>
+                        <!--{/if}-->
+			
+
+			
+			<!--{if $value['badge_type']=='普通从业者徽章'}-->
+				<div>
+                                        普通从业者徽章显示顺序：<input name="common_employee_badge_showed_order" type="text"/>
+				</div>
+                        <!--{/if}-->
+			
+			<!--{if $value['badge_type']=='泰勒梅徽章'}-->
+				<div>
+                                        泰勒梅徽章显示顺序：<input name="taylormade_badge_showed_order" type="text"/>
+				</div>
+                        <!--{/if}-->
+			
+
+			
+			<!--{if $value['badge_type']=='中国高尔夫媒体联盟徽章'}-->
+				<div>
+                                        中国高尔夫媒体联盟徽章显示顺序：<input name="china_golf_media_league_badge_showed_order" type="text"/>
+				</div>
+                        <!--{/if}-->
+			
+
+			
+			<!--{if $value['badge_type']=='劳力士会员徽章'}-->
+				<div>
+                                        劳力士会员徽章显示顺序：<input name="rolex_member_badge_showed_order" type="text"/>
+				</div>
+                        <!--{/if}-->
+			
+
+			
+			<!--{if $value['badge_type']=='紫金理财俱乐部会员徽章'}-->
+				<div>
+                                        紫金理财俱乐部会员徽章显示顺序：<input name="ziji_investment_club_member_badge_showed_order" type="text"/>
+				</div>
+                        <!--{/if}-->
+			
+
+			
+			<!--{if $value['badge_type']=='帕米尔矿泉水俱乐部会员徽章'}-->
+				<div>
+                                        帕米尔矿泉水俱乐部会员徽章显示顺序：<input name="pamirs_spring_water_club_member_badge_showed_order" type="text"/>
+				</div>
+                        <!--{/if}-->
+			
+
+			
+			<!--{if $value['badge_type']=='耐克高尔夫徽章'}-->
+				<div>
+                                        耐克高尔夫徽章显示顺序：<input name="nike_golf_badge_showed_order" type="text"/>
+				</div>
+                        <!--{/if}-->
+			
+
+			
+			<!--{if $value['badge_type']=='微博达人金牌'}-->
+				<div>
+                                        微博达人金牌显示顺序：<input name="microblog_gold_medal_showed_order" type="text"/>
+				</div>
+                        <!--{/if}-->
+			
+			
+			<!--{if $value['badge_type']=='博客达人金牌'}-->
+				<div>
+                                        博客达人金牌显示顺序：<input name="blog_gold_medal_showed_order" type="text"/>
+				</div>
+                        <!--{/if}-->
+
+			<!--{if $value['badge_type']=='成绩卡达人金牌'}-->
+				<div>
+                                        成绩卡达人金牌显示顺序：<input name="grade_card_gold_medal_showed_order" type="text"/>
+				</div>
+                        <!--{/if}-->
+
+			<!--{if $value['badge_type']=='微博达人银牌'}-->
+                                <div>
+                                        微博达人银牌显示顺序：<input name="microblog_silver_medal_showed_order" type="text"/>
+                                </div>
+                        <!--{/if}-->
+
+			<!--{if $value['badge_type']=='博客达人银牌'}-->
+                                <div>
+                                        博客达人银牌显示顺序：<input name="blog_silver_medal_showed_order" type="text"/>
+                                </div>
+                        <!--{/if}-->
+
+			<!--{if $value['badge_type']=='成绩卡达人银牌'}-->
+                                <div>
+                                        成绩卡达人银牌显示顺序：<input name="grade_card_silver_medal_showed_order" type="text"/>
+                                </div>
+                        <!--{/if}-->
+		
+			<!--{if $value['badge_type']=='微博达人铜牌'}-->
+                                <div>
+                                        微博达人铜牌显示顺序：<input name="microblog_bronze_medal_showed_order" type="text"/>
+                                </div>
+                        <!--{/if}-->
+
+			<!--{if $value['badge_type']=='博客达人铜牌'}-->
+                                <div>
+                                        博客达人铜牌显示顺序：<input name="blog_bronze_medal_showed_order" type="text"/>
+                                </div>
+                        <!--{/if}-->
+
+			<!--{if $value['badge_type']=='成绩卡达人铜牌'}-->
+                                <div>
+                                        成绩卡达人铜牌显示顺序：<input name="grade_card_bronze_medal_showed_order" type="text"/>
+                                </div>
+                        <!--{/if}-->
+
+			<!--{if $value['badge_type']=='球童徽章'}-->
+                                <div>
+                                        球童徽章显示顺序：<input name="caddie_badge_showed_order" type="text"/>
+                                </div>
+                        <!--{/if}-->
+
+			<!--{if $value['badge_type']=='实名认证徽章'}-->
+                                <div>
+                                        实名认证徽章显示顺序：<input name="certificated_name_badge_showed_order" type="text"/>
+                                </div>
+                        <!--{/if}-->
+
+			<!--{if $value['badge_type']=='皇冠杯城市挑战赛徽章'}-->
+                                <div>
+                                        皇冠杯城市挑战赛徽章显示顺序：<input name="toyota_crown_city_challenge_badge_showed_order" type="text"/>
+                                </div>
+                        <!--{/if}-->
+
+			<!--{if $value['badge_type']=='大正商城徽章'}-->
+                                <div>
+                                        大正商城徽章显示顺序：<input name="dazheng_shop_badge_showed_order" type="text"/>
+                                </div>
+                        <!--{/if}-->
+
+		<!--{/loop}-->
+	</form>
+
+	<div><input id="storing_showed_order_button" type="button" value="提交"/></div>
+
+	<!--{if $cga_trainer_badge_amount == 1 || $certificated_club_badge_amount == 1 || $foreign_trainer_badge_amount == 1 || $hmt_trainer_badge_amount == 1 || $cga_referee_badge_amount == 1 || $common_employee_badge_amount == 1 || $course_manager_badge_amount == 1 || $caddie_badge_amount == 1 || $lawn_expert_badge_amount == 1 || $expert_badge_amount == 1}-->
+
+	<br/>
+
+	<div>
+	选择徽章：
+
+	<form id="choosing_badge" method="post" action="badge.php?mod=choosing_badge">
+
+	<select name="badge_type">
+		<!--{if $cga_trainer_badge_amount == 1}-->
+		<option value="中高协教练徽章">中高协教练徽章</option>
+		<!--{/if}-->
+
+		<!--{if $certificated_club_badge_amount == 1}-->
+		<option value="俱乐部教练徽章">俱乐部教练徽章</option>
+		<!--{/if}-->
+
+		<!--{if $foreign_trainer_badge_amount == 1}-->
+		<option value="外籍教练徽章">外籍教练徽章</option>
+		<!--{/if}-->
+
+		<!--{if $hmt_trainer_badge_amount == 1}-->
+		<option value="港澳台教练徽章">港澳台教练徽章</option>
+		<!--{/if}-->
+
+		<!--{if $cga_referee_badge_amount == 1}-->
+		<option value="中高协裁判徽章">中高协裁判徽章</option>
+		<!--{/if}-->
+
+		<!--{if $common_employee_badge_amount == 1}-->
+		<option value="普通从业者徽章">普通从业者徽章</option>
+		<!--{/if}-->
+
+		<!--{if $course_manager_badge_amount == 1}-->
+		<option value="球场总经理徽章">球场总经理徽章</option>
+		<!--{/if}-->
+
+		<!--{if $caddie_badge_amount == 1}-->
+		<option value="球童徽章">球童徽章</option>
+		<!--{/if}-->
+
+		<!--{if $lawn_expert_badge_amount == 1}-->
+		<option value="草坪专家徽章">草坪专家徽章</option>
+		<!--{/if}-->
+
+		<!--{if $expert_badge_amount == 1}-->
+		<option value="专家徽章">专家徽章</option>
+		<!--{/if}-->
+
+		
+
+	</select>
+
+	</form>
+
+	<input id="choosing_badge_button" type="button" value="提交"/>
+
+	</div>
+
+	<!--{/if}-->
+
+	
+
+	</body>
+</html>

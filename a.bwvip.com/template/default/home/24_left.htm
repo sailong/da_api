@@ -1,0 +1,135 @@
+<div class="z z1">
+	<div class="zname"><h1><!--{if $userinfo[realname]}--><!--{$userinfo[realname]}--><!--{else}--><!--{$userinfo[username]}--><!--{/if}--></h1></div>
+	<div class="zxinxi">
+		<div class="zxinxi2">
+			<div class="xlogo_duan">
+            <img width="95" height="95" src="uc_server/avatar.php?uid=$uid&size=middle" />
+            </div>
+			<div class="xinx">粉丝：<!--{if $userinfo[fans_count]}--><!--{$userinfo[fans_count]}--><!--{else}-->0<!--{/if}--></a><span>关注：<a href='home.php?mod=space&do=common&op=follow&uid=<!--{$uid}-->'><!--{if $userinfo[follow_count]}--><!--{$userinfo[follow_count]}--><!--{else}-->0<!--{/if}--></a></span>
+			
+			</div>
+			<div class="xinx_2">人气：<!--{if $userinfo[views]}--><!--{$userinfo[views]}--><!--{else}-->0<!--{/if}--><span>微博：<a href='home.php?mod=space&do=common&op=weibo&uid=<!--{$uid}-->'><!--{if $userinfo[topic_count]}--><!--{$userinfo[topic_count]}--><!--{else}-->0<!--{/if}--></a></span></div>
+			<!--{if $_G['uid'] != $uid}-->
+				<ul class="sq">
+					<li class="fssq y" style="margin-right:50px;"> 
+                    <!--{if !$space['self'] && empty($_G['uid'])}-->
+                    <a id="share_space" href="home.php?mod=spacecp&ac=share&type=space&id=<!--{$uid}-->" onclick="showWindow(this.id, this.href, 'get', 0);">加入粉丝团</a>
+                    <!--{elseif $guanzhu[buddy] == '1'}-->
+                    <a id="share_space" href="javascript:void(0)" onclick="guanzhu(<!--{$uid}-->);">取消关注</a>
+                    <!--{else}-->
+                    <a id="share_space" href="javascript:void(0)" onclick="guanzhu(<!--{$uid}-->);">关注</a>
+                    <!--{/if}-->
+                    </li>
+                         
+				</ul>
+                <!--{/if}-->
+            <div class="clear"></div>
+			<div class="leftlm_2">
+				<h1><!--{$visitname}-->的粉丝团</h1>
+				<span><a href="home.php?mod=space&do=common&op=fans&uid=<!--{$uid}-->&id=#maoweibo">更多</a></span>
+			</div>
+			<div class="leftlmc">
+				<!--{if $fans}-->
+				<!--{loop $fans $k $v}-->
+				<div class="videoimg z">
+				<p><a href="home.php?mod=space&uid=<!--{$v[uid]}-->" title="<!--{$v[username]}-->"><img src="uc_server/avatar.php?uid=<!--{$v[uid]}-->&size=middle" width="65" height="57"  alt="<!--{$v[username]}-->"/></a></p>
+				<p><a href="home.php?mod=space&uid=<!--{$v[uid]}-->" title="<!--{$v[username]}-->"><!--{echo cutstr($v['username'],10,'...')}--></a></p>
+				</div>
+				<!--{/loop}-->
+				<!--{else}-->
+				<p style='text-align:center; height:50px; line-height:50px'>还没有粉丝</p>
+				<!--{/if}-->
+			  <div class="clear"></div>
+			</div>
+			<div class="leftad">
+			<p class="center"><a href="$leftarr[25][adverturl]" target="_blank"><img src="$leftarr[25][imglogo]" border="0" /></a></p>
+			</div>
+		</div>
+	</div>
+	<div class="leftlm">
+		<h1>博客精选</h1>
+		<span><a href="home.php?mod=space&uid=<!--{$uid}-->&do=blog&view=me&from=space&id=#maoboke">更多</a></span>
+	</div>
+	<div class="bjjx2">
+		<div class="bkc">
+        <ul>
+        <!--{if $bestblog}-->
+		<!--{loop $bestblog $k $v}-->
+		<li><img src="{STATICURL}space/24/images/new.jpg" width="24" height="16" />
+			<a href="home.php?mod=space&uid=<!--{$uid}-->&do=blog&id=<!--{$v[blogid]}-->"><!--{$v[subject]}--></a>
+		</li>
+		<!--{/loop}-->
+		<!--{else}-->
+		<p style='text-align:center; height:50px; line-height:50px'>还没有博客</p>
+		<!--{/if}-->
+        </ul>
+        </div>
+	</div>
+	<div class="leftlm">
+		<h1>最新相册</h1>
+		<span><a href="home.php?mod=space&uid=<!--{$uid}-->&do=album&view=me&from=space&id=#maoxiangce">更多</a></span>
+	</div>
+	<div class="bjjx3">
+		<!--{if $albumlist}-->
+		<!--{loop $albumlist $k $v}-->
+		<div class="xcimg z left10">
+			<ul>
+				<li class="xcbg"><a href='home.php?mod=space&uid=<!--{$uid}-->&do=album&id=<!--{$v[albumid]}-->'><img src="data/attachment/album/<!--{$v[pic]}-->" width="63" height="57"></a></li>
+				<li><a href='home.php?mod=space&uid=<!--{$uid}-->&do=album&id=<!--{$v[albumid]}-->'><!--{$v[albumname]}--></a></li>
+			</ul>
+		</div>
+		<!--{/loop}-->
+		<!--{else}-->
+		<p style='text-align:center; height:50px; line-height:50px'>还没有相册</p>
+		<!--{/if}-->
+		<div class="clear"></div>
+	</div>
+	<div class="leftlm">
+		<h1>精彩视频</h1>
+		<span><a href="home.php?mod=space&uid=<!--{$uid}-->&do=video&act=list&id=#maovideo">更多</a></span>
+	</div>
+	<div class="bjjx3">
+		<!--{if $spacevideo}-->
+		<!--{loop $spacevideo $k $v}-->
+		<div class="videoimg z left10">
+			<p><a href='home.php?mod=space&uid=<!--{$uid}-->&do=video&id=<!--{$v[vid]}-->'><img src="<!--{$v[images]}-->" width="65" height="57"></a></p>
+			<p><a href='home.php?mod=space&uid=<!--{$uid}-->&do=video&id=<!--{$v[vid]}-->'><!--{$v[title]}--></a></p>
+		</div>
+		<!--{/loop}-->
+		<!--{else}-->
+		<p style='text-align:center; height:50px; line-height:50px'>还没有视频</p>
+		<!--{/if}-->
+	  <div class="clear"></div>
+	</div>
+</div>
+<script type='text/javascript' src='static/js/jquery.js'></script>
+<script type='text/javascript'>
+	function guanzhu(guid) {
+		var val = jQuery('#share_space').html();
+		var gudo = '';
+		var notic = '';
+		var str = '';
+		if(val == '取消关注') {
+			gudo = '0';
+			notic = '您已经取消了对此人的关注，不需要重复取消';
+		} else {
+			gudo = '1';
+			notic = '您已经关注此人了，不需要重复关注';
+		}
+		var url = 'ajax.php?do=buddys&guid='+guid+'&gudo='+gudo+'&time='+new Date().getTime();
+		if(gudo == '0') {
+			str = "+关注";
+		} else {
+			str = "取消关注";
+		}
+		jQuery.get(url, {}, function(msg) {
+			if(msg == '1') {
+				jQuery('#share_space').html(str);
+			} else if(msg == '2') {
+				alert(notic);
+				jQuery('#share_space').html(str);
+				return false;
+			}
+		});
+	}
+</script>

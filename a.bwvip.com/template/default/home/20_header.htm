@@ -1,0 +1,57 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>
+<!--{if $album[albumname]}-->
+$album[albumname]&ndash;$getstat['spnickname']的空间_大正网_www.bwvip.com
+<!--{elseif $blog[subject]}-->
+$blog[subject]&ndash;$getstat['spnickname']的空间_大正网_www.bwvip.com
+<!--{elseif $video[0][title]}-->
+$video[0][title]&ndash;$getstat['spnickname']_大正网_www.bwvip.com
+<!--{elseif $_GET[tcode]}-->
+<!--{echo $tcode}-->&ndash;$getstat['spnickname']_大正网_www.bwvip.com
+<!--{elseif $_GET[op]=='weibo'}-->
+微博&ndash;$getstat['spnickname']_大正网_www.bwvip.com
+<!--{elseif $_GET[0wburl]}-->
+群组&ndash;$getstat['spnickname']_大正网_www.bwvip.com
+<!--{else}-->
+$qiyename&ndash;的空间_大正网_www.bwvip.com
+<!--{/if}-->
+</title>
+<meta name="keywords" content="{if !empty($metakeywords)}{echo htmlspecialchars($metakeywords)}{/if}" />
+<meta name="description" content="{if !empty($metadescription)}{echo htmlspecialchars($metadescription)} {/if}{if empty($nobbname)},$_G['setting']['bbname']{/if}" />
+<!--{if $_G['config']['output']['iecompatible']}--><meta http-equiv="X-UA-Compatible" content="IE=EmulateIE{$_G['config']['output']['iecompatible']}" /><!--{/if}-->
+<base href="{$_G['siteurl']}" /> 
+<script type="text/javascript">var STYLEID = '{STYLEID}', STATICURL = '{STATICURL}', IMGDIR = '{IMGDIR}', VERHASH = '{VERHASH}', charset = '{CHARSET}', discuz_uid = '$_G[uid]', cookiepre = '{$_G[config][cookie][cookiepre]}', cookiedomain = '{$_G[config][cookie][cookiedomain]}', cookiepath = '{$_G[config][cookie][cookiepath]}', showusercard = '{$_G[setting][showusercard]}', attackevasive = '{$_G[config][security][attackevasive]}', disallowfloat = '{$_G[setting][disallowfloat]}', creditnotice = '<!--{if $_G['setting']['creditnotice']}-->$_G['setting']['creditnames']<!--{/if}-->', defaultstyle = '$_G[style][defaultextstyle]', REPORTURL = '$_G[currenturl_encode]', SITEURL = '$_G[siteurl]', JSPATH = '$_G[setting][jspath]';</script>
+<link href="{STATICURL}space/style/style_gobal.css?{VERHASH}" rel="stylesheet">
+<link href="{STATICURL}space/style/style_duan.css?{VERHASH}" rel="stylesheet">
+<link href="{STATICURL}space/person/spaces.css" rel="stylesheet" type="text/css">
+<link href="{STATICURL}space/style/common.css?{VERHASH}" rel="stylesheet">
+<link href="{STATICURL}space/$getstat['cssid']/style.css?{VERHASH}" rel="stylesheet">
+<script type="text/javascript" src="{STATICURL}space/person/js/iepngfix_tilebg.js"></script>
+<script type="text/javascript" src="{$_G[setting][jspath]}common.js?{VERHASH}"></script> 
+<script type="text/javascript" src="{$_G[setting][jspath]}home.js?{VERHASH}"></script>
+<!--{if $bgsetarr["bgcolor"]}-->
+<style type="text/css">
+body { background: $bgsetarr["bgcolor"] url(static/space/uid$uid/$bgsetarr["bgpic"]); background-repeat:repeat-x;}
+</style>
+<!--{/if}-->
+</head>
+
+<body id="nv_{$_G[basescript]}" class="pg_{CURMODULE}" onkeydown="if(event.keyCode==27) return false;">
+<div id="append_parent"></div><div id="ajaxwaitid"></div>
+<div class="headseaa">
+    <div id="wt">
+    <!--{subtemplate home/head_gobal}-->
+    </div>
+</div>
+<div id="wt">
+    <!--{if $bgsetarr["headerpic"]}-->
+    <div align="center"><img src="static/space/uid$uid/$bgsetarr["headerpic"]" border="0" width="980" /></div>
+    <!--{else}-->
+	<div class="headad">&nbsp;</div>
+    <!--{/if}-->
+	<div class="menubg"><!--{subtemplate home/space_header_personalnv}--></div>
+</div>

@@ -1,0 +1,825 @@
+<!--{template common/dazbm_header}-->
+<link href="static/space/comm/style_dazbm.css" rel="stylesheet" type="text/css">
+<link rel="stylesheet" href="static/daz_js/css/validationEngine.jquery.css" type="text/css"/>
+<link rel="stylesheet" href="static/daz_js/css/template.css" type="text/css"/>
+<script src="static/daz_js/jquery.js" type="text/javascript"></script>
+<script src="static/daz_js/jquery.validationEngine-en.js" type="text/javascript"></script>
+<script src="static/daz_js/jquery.validationEngine.js" type="text/javascript"></script>
+
+<script>
+           var bm_page = {$bm_page};
+           jQuery(document).ready(function(){
+		        jQuery.noConflict();
+				jQuery("#dazbmform").validationEngine();
+			    setTab('one',bm_page,4)
+			
+					document.getElementById("realname").focus();
+				   
+								
+            });
+            
+</script>
+
+
+<!-- 主体开始 -->
+<form method="post"  name="dazbm" id="dazbmform" enctype="multipart/form-data" action="dazbm.php?mod=dazbm&do={$apply_do}">
+ <div class="wadbody body_bg">
+  	<div class="zhuce_1_duan"></div>
+    <div class="zhuce_2_duan"></div>
+    <div class="zhuce_3_duan">
+	  <div class="bodypadding" >
+      	<a name="maodazbm"><div class="buzhou_duan"><img id="bm_image" src="/static/space/comm/images/buzou_1_duan.jpg"></div></a>
+		  <div style="background: url({$background}) no-repeat bottom transparent ; width:860px;">
+	         <div class="Contentbox" style="height:auto;">
+
+			  <!--选项卡-->
+			  <div id="Tab1">
+				<!--选项卡 标签start-->
+				<div class="Menubox">
+					<ul>
+					    <input name="member_id" type="hidden" value="{$member_id}">
+						<li id="one1" onclick="setTab('one',1,4)" class="hover"></li>
+						<li id="one2" onclick="setTab('one',2,4)" ></li>
+						<li id="one3" onclick="setTab('one',3,4)"></li>
+						<li id="one4" onclick="setTab('one',4,4)"></li>
+					</ul>
+				</div>
+				<!--选项卡 标签-end-->
+
+
+               <div class="Contentboxss">
+				<!--第一步开始-->
+		         <div id="con_one_1" class="hover"  >
+		           <table cellpadding="3" cellspacing="1" border="0" width="760"  style="line-height:40px; font-size:13px;">
+						<tr>
+							<td class="dazbm_td" align="right">{$bitian}真实姓名：</td>
+							<td align="left">
+							<input  class="validate[realname]text-input" type="text" name="realname" id="realname" value="{$user_info['realname']}"  >
+							</td>
+							<td align="right">{$bitian}手 机：</td>
+							<td align="left">
+							<input class="validate[required,custom[phone]] text-input" name="moblie" id="moblie"   value="{$user_info['mobile']}">
+							</td>
+						</tr>
+
+
+
+						<tr>
+							<td align="right">{$bitian}性 别：</td>
+							<td align="left">
+							<input type="radio"  name="gender" value="1" {if $bm_info['gender']==1}checked{/if} {if !isset($bm_info['gender'])}checked{/if}  > 男
+							<input type="radio"  name="gender" value="2"    {if $bm_info['gender']==2}checked{/if} > 女 
+							</td>
+							<td align="right" >{$bitian}国 籍：</td>
+							<td align="left" >
+							<select name="nationality">
+							<option value="中国" {if $bm_info['nationality']=="中国"} selected {/if}>中国</option>
+							<option value="美国" {if $bm_info['nationality']=="美国"} selected {/if}>美国</option>
+							<option value="日本" {if $bm_info['nationality']=="日本"} selected {/if}>日本</option>
+							</select>
+							</td>
+						</tr>
+
+
+						<tr>
+							<td align="right">{$bitian}真实照片：<!--新加字段--></td>
+							<td align="left" >
+							<input type="file" name="realname_photo" id="file"  />
+							</td>
+							<td align="right" >身 高：</td>
+							<td align="left" >
+							<input type="input"  name="height" value="{$bm_info['height']}">（cm）
+							</td>
+						</tr>
+
+
+						<tr>
+							<td align="right">真实年龄：<!--新加字段--></td>
+							<td align="left" >
+							<input   id="birth"  name="birth"  value="{$bm_info['birth']}"   />
+							</td>
+							<td align="right" >传 真：</td>
+							<td align="left" >
+							<input type="input"  name="fax" value="{$bm_info['fax']}">
+							</td>
+						</tr>
+
+
+
+						<tr>
+							<td align="right">{$bitian}证件类型：</td>
+							<td align="left" >
+							<select name='credentials'>
+							<option value="1" {if $bm_info['credentials']==1}selected{/if} >身份证</option>
+							<option value="2" {if $bm_info['credentials']==2}selected{/if}>驾驶本</option>
+							<option value="3" {if $bm_info['credentials']==3}selected{/if}>台胞证</option>
+							<option value="4" {if $bm_info['credentials']==4}selected{/if}>回乡证</option>
+							</select>
+							</td>
+							<td align="right" >{$bitian}证件号码：</td>
+							<td align="left" >
+							<input class="validate[required,custom[onlyLetterNumber],minSize[6]] text-input"  id="credentials_num"   name="credentials_num" size="25" value="{$bm_info['credentials_num']}">
+							</td>
+						</tr>
+
+
+						<tr>
+						
+						<td align="left" colspan="4" >{$nbsp}{$nbsp}{$nbsp}{$nbsp}{$nbsp}{$nbsp}{$nbsp}{$nbsp}{$nbsp}{$nbsp}{$nbsp}今后比赛的机票预订、球手积分、差点证明将使用此证件号码，且不可更改。请认真填写</td>
+						</tr>
+
+
+						<tr>
+							<td align="right">上传证件：</td>
+							<td align="left" >
+							<input type="file" name="credentials_photo" id="file"  />
+							</td>
+							<td align="right" >{$bitian}电子邮箱：</td>
+							<td align="left" >
+							<input type="input"  name="email" value="{$user_info['email']}">
+							</td>
+						</tr>
+						<tr>
+							<td align="right">所在地区：</td>
+							<td align="left" colspan="3">
+							<div ><div style="float:left;"><h2></h2></div><div style="float:left;"> {$htmls['residecity']} </div>{$bm_info['quyu']} </div>
+							</td>
+						</tr>
+
+
+
+						<tr>
+							<td align="right">个人年收入：</td>
+							<td align="left" >
+
+							<select name="income">
+							<option value="1" {if $bm_info['income']=="1"} selected {/if}/> 15万元以下 </option>
+							<option value="2" {if $bm_info['income']=="2"} selected {/if}/> 15-20万元  </option>
+							<option value="3" {if $bm_info['income']=="3"} selected {/if}/> 20-30万元  </option>
+							<option value="4" {if $bm_info['income']=="4"} selected {/if}/> 30-50万元  </option>
+							<option value="5" {if $bm_info['income']=="5"} selected {/if}/> 50万-100万 </option>
+							<option value="6" {if $bm_info['income']=="6"} selected {/if}/> 100万以上  </option>
+							</select>
+							</td>
+
+
+							<td align="right" >公司名称：</td>
+							<td align="left" >
+							<input   type="input"  name="company" value="{$bm_info['company']}">			
+							</td>
+						</tr>			
+
+
+
+															
+						<tr>
+							<td align="right">职 务：</td>
+							<td align="left" >
+
+							<select id="position" name="position">
+							<option>请选择</option>
+							<option value="1" {if $bm_info['position']==1} selected {/if}>总裁/总经理/CEO</option>
+							<option value="2" {if $bm_info['position']==2} selected {/if}>副总裁/副总经理/COO</option>
+							<option value="3" {if $bm_info['position']==3} selected {/if}>总监/分公司负责人</option>
+							<option value="4" {if $bm_info['position']==4} selected {/if}>合伙人</option>
+							<option value="5" {if $bm_info['position']==5} selected {/if}>经理/主管</option>
+							<option value="6" {if $bm_info['position']==6} selected {/if}>公务人员</option>
+							<option value="7" {if $bm_info['position']==7} selected {/if}>企业员工</option>
+							<option value="0" {if $bm_info['position']==0} selected {/if}>其他</option>
+							</select>
+
+
+							</td>
+
+
+							<td align="right" >所属行业：</td>
+							<td align="left" >
+							<select name="company_class" id="company_class">
+							<option value="0">请选择</option>
+							<option value="1" {if $bm_info['company_class']==1}selected{/if}>IT/互联网/电子商务</option>
+							<option value="2" {if $bm_info['company_class']==2}selected{/if}>通讯/电子/仪器仪表</option>
+							<option value="3" {if $bm_info['company_class']==3}selected{/if}>金融/银行/投资</option>
+							<option value="4" {if $bm_info['company_class']==4}selected{/if}>保险</option>
+							<option value="5" {if $bm_info['company_class']==5}selected{/if}>房地产/建筑/建材/物业</option>
+							<option value="6" {if $bm_info['company_class']==6}selected{/if}>广告/设计/公关</option>
+							<option value="7" {if $bm_info['company_class']==7}selected{/if}>媒体/出版/影视/文化/印刷</option>
+							<option value="8" {if $bm_info['company_class']==8}selected{/if}>机械/重工/制造</option>
+							<option value="9" {if $bm_info['company_class']==9}selected{/if}>法律/财会/咨询</option>
+							<option value="10" {if $bm_info['company_class']==10}selected{/if}>教育/培训</option>
+							<option value="11" {if $bm_info['company_class']==11}selected{/if}>石油/化工/能源/矿产/冶金</option>
+							<option value="12" {if $bm_info['company_class']==12}selected{/if}>贸易/进出口</option>
+							<option value="13" {if $bm_info['company_class']==13}selected{/if}>零售/批发</option>
+							<option value="14" {if $bm_info['company_class']==14}selected{/if}>交通/运输</option>
+							<option value="15" {if $bm_info['company_class']==15}selected{/if}>娱乐/体育/休闲</option>
+							<option value="16" {if $bm_info['company_class']==16}selected{/if}>旅游服务</option>
+							<option value="17" {if $bm_info['company_class']==17}selected{/if}>医疗/医药</option>
+							<option value="18" {if $bm_info['company_class']==18}selected{/if}>政府机关/事业单位/非赢利机构</option>
+							<option value="19" {if $bm_info['company_class']==19}selected{/if}>其它</option>
+							</select>
+							</td>
+						</tr>
+
+
+
+						<tr>
+							<td align="right">{$bitian}通讯地址：</td>
+							<td align="left" >
+
+							<input class="validate[required] text-input"  id="address"  type="text"  name="address" value="{$bm_info['address']}" size="40"/>	
+							</td>
+
+							<td align="right" >邮 编：</td>
+							<td align="left" >
+							<input type="input"  name="zipcode" value="{$bm_info['zipcode']}" size="20"/>
+							</td>
+						</tr>
+
+
+
+
+						<tr>
+							<td align="right">{$bitian}皇冠车主：</td>
+							<td align="left" >
+							<input name="is_huang" type="radio" value="1" onclick="disable_hc(this.value)" {if $bm_info['is_huang']==1} checked {/if} {if !isset($bm_info['is_huang'])} checked {/if} >是
+							<input name="is_huang" type="radio" value="0" onclick="disable_hc(this.value)" {if isset($bm_info['is_huang']) && $bm_info['is_huang']==0} checked {/if}>否
+							</td>
+
+
+							<td id="car_brand_td1" align="right" style="display:none" >您座驾品牌：</td> 
+							<td id="car_brand_td2" align="left" style="display:none" >
+							<select name="car_brand">
+							{$bm_info['car_brand_option']}
+							</select>		
+							</td>
+						</tr>
+
+		           
+
+						<tr id="h_c">
+							<td align="right">{$bitian}皇冠车型：</td>
+							<td align="left"  >
+							<input class="validate[required] text-input"  size="40" type="input"  id="h_car_type" name="h_car_type" value="{$bm_info['h_car_type']}" />
+							</td>
+
+							<td align="right" >{$bitian}皇冠车驾号：</td> 
+							<td align="left" >
+							<input class="validate[required] text-input"  id="car_j_type"  type="input"  name="car_j_type" value="{$bm_info['car_j_type']}" />
+							</td>
+						</tr>
+
+
+						<tr id="h_c_">
+							<td align="right">{$bitian}所属经销店：</td>
+							<td align="left"  >
+							<input class="validate[required] text-input"  id="car_marking_shop" size="40"  name="car_marking_shop" value="{$bm_info['car_marking_shop']}" /> 	
+							</td>
+
+							<td align="right" >{$bitian}上传行驶本：</td> 
+							<td align="left" >
+							<input type="file"  name="car_drive_pic" value="{$bm_info['car_drive_pic']}" />
+							</td>
+						</tr>
+
+
+				
+
+
+						<tr>
+							<td align="right" > 您了解皇冠? ：</td>
+							<td align="left"  >
+							<input type="radio" name="sure_realize" value="1" {if $bm_info['sure_realize']=="1"} checked {/if} > 了解
+							<input type="radio" name="sure_realize" value="0" {if $bm_info['sure_realize']=="0"} checked {/if} > 不了解 
+							</td>
+
+							<td align="right" >您试驾皇冠?： </td> 
+							<td align="left" >
+							<input type="radio" name="sure_drive" value="1" {if $bm_info['sure_drive']=="1"} checked {/if} > 试驾过  
+							<input type="radio" name="sure_drive" value="0" {if $bm_info['sure_drive']=="0"} checked {/if}
+							{if !isset($bm_info['sure_drive'])} checked {/if}>  没有 
+							</td>
+						</tr>
+
+
+
+						<tr>
+							<td align="right"> 您对评价皇冠： </td>
+							<td align="left" >
+							<input type="radio" name="assess_price" value="1"  {if $bm_info['assess_price']=="1"} checked {/if} {if !isset($bm['assess_price'])} checked {/if}>中级车
+							<input type="radio" name="assess_price" value="2"  {if $bm_info['assess_price']=="2"} checked {/if} >中高级车
+							<input type="radio" name="assess_price" value="3"  {if $bm_info['assess_price']=="3"} checked {/if} >高级车
+							</td>
+
+							<!--<td align="right" style="width:150px; padding-left:-5px;">{$bitian}知道别克俱乐部联赛：</td> 
+							<td align="left" >
+							<input type="radio" name="realize_club" value="0"  {if $bm_info['realize_club']=="0"} checked {/if} {if !isset($bm['realize_club'])} checked {/if}> 不知道         
+							<input type="radio" name="realize_club" value="1"  {if $bm_info['realize_club']=="1"} checked {/if}> 听说过 
+							<input type="radio" name="realize_club" value="2"  {if $bm_info['realize_club']=="2"} checked {/if}> 参加过
+							</td>-->
+
+							<!--<td align="right" >请问您对皇冠车的品牌印象：</td>
+							<td align="left" >
+							<input  name="h_car_yinx" type="text" size="30" value="{$bm_info['h_car_yinx']}">
+							</td>-->
+
+
+						</tr>
+
+
+						<!--<tr>
+							<td align="right" colspan="3"> {$bitian}请问您是否知道奥迪QUATTRO杯高尔夫锦标赛： </td>
+							<td align="left"  >
+							<input type="radio" name="realize_quattro" value="0" {if $bm_info['realize_quattro']=="0"} checked {/if} {if !isset($bm['realize_quattro'])} checked {/if}/> 不知道             
+							<input type="radio" name="realize_quattro" value="1" {if $bm_info['realize_quattro']=="1"} checked {/if}> 听说过 
+							<input type="radio" name="realize_quattro" value="2" {if $bm_info['realize_quattro']=="2"} checked {/if}> 参加过
+							</td>
+						</tr>-->
+
+						<tr>
+							<td align="right" colspan="3"   >您都知道哪些（汽车类）厂商举办的高尔夫赛事：</td>
+						    <td align="left" >
+							 <input  name="konw_saishi" type="text" size="30" value="{$bm_info['konw_saishi']}">
+							</td>						
+						</tr>
+
+
+                        <tr>
+							<td align="right" colspan="3"   >您认为本次赛事让您对皇冠车的品牌印象产生了哪些变化：</td>
+						    <td align="left" >
+							 <input   name="bianhua" type="text" size="30" value="{$bm_info['bianhua']}" >
+							</td>						
+						</tr>
+
+
+						<tr>
+							<td align="right" colspan="3" >半年内是否有购买CROWN皇冠轿车意向：</td>
+							<td align="left" >
+							<input name="buy_car" type="radio" value="1" {if $bm_info['buy_car']==1} checked {/if} {if !isset($bm_info['buy_car'])} checked {/if} >是 &nbsp;&nbsp;
+							<input name="buy_car" type="radio" value="0"  {if isset($bm_info['buy_car']) && $bm_info['buy_car']==0} checked {/if}>否
+							</td>
+						</tr>
+
+
+
+
+					  <tr>
+						 <td align="left" colspan="4"  >{$nbsp}请问您对CROWN皇冠轿车形象的评价（可多选,最多三项） ：</td>
+					  </tr>
+
+					  <tr>
+						<td align="left" colspan="4"  >
+							{$nbsp}{$nbsp}{$nbsp}{$nbsp}
+							<input type="checkbox" name="car_impress[]" value="先进的"  {if strexists($bm_info['car_impress'],'先进的')} checked {/if} />
+							&nbsp;先进的&nbsp;&nbsp;
+							<input type="checkbox" name="car_impress[]" value="高科技感的" {if strexists($bm_info['car_impress'],'高科技感的')} checked {/if}/>
+							&nbsp;高科技感的&nbsp;&nbsp;
+							<input type="checkbox" name="car_impress[]" value="不断创新的" {if strexists($bm_info['car_impress'],'不断创新的')} checked {/if}/> 
+							&nbsp;不断创新的&nbsp;&nbsp;
+							<input type="checkbox" name="car_impress[]" value="引领时代"  {if strexists($bm_info['car_impress'],'引领时代')} checked {/if} />
+							&nbsp;引领时代&nbsp;&nbsp;
+							<input type="checkbox" name="car_impress[]" value="时尚的" {if strexists($bm_info['car_impress'],'时尚的')} checked {/if}/>
+							&nbsp;时尚的&nbsp;&nbsp;
+							<input type="checkbox" name="car_impress[]" value="有活力的" {if strexists($bm_info['car_impress'],'有活力的')} checked {/if}/> 
+							&nbsp;有活力的&nbsp;&nbsp;
+							<input type="checkbox" name="car_impress[]" value="年轻的"  {if strexists($bm_info['car_impress'],'年轻的')} checked {/if} />
+							&nbsp;年轻的&nbsp;&nbsp;<br>
+
+                            {$nbsp}{$nbsp}{$nbsp}{$nbsp}
+							<input type="checkbox" name="car_impress[]" value="个性的" {if strexists($bm_info['car_impress'],'个性的')} checked {/if}/>
+							&nbsp;个性的&nbsp;&nbsp;
+							<input type="checkbox" name="car_impress[]" value="勇于挑战的" {if strexists($bm_info['car_impress'],'勇于挑战的')} checked {/if}/> 
+							&nbsp;勇于挑战的&nbsp;&nbsp;
+							<input type="checkbox" name="car_impress[]" value="传统的"  {if strexists($bm_info['car_impress'],'传统的')} checked {/if} />
+							&nbsp;传统的&nbsp;&nbsp;
+							<input type="checkbox" name="car_impress[]" value="富有激情的" {if strexists($bm_info['car_impress'],'富有激情的')} checked {/if}/>
+							&nbsp;富有激情的&nbsp;&nbsp;
+							<input type="checkbox" name="car_impress[]" value="富有驾驶乐趣的" {if strexists($bm_info['car_impress'],'富有驾驶乐趣的')} checked {/if}/> 
+							&nbsp;富有驾驶乐趣的&nbsp;&nbsp;
+						    <input type="checkbox" name="car_impress[]" value="动感十足的"  {if strexists($bm_info['car_impress'],'动感十足的')} checked {/if} />
+							&nbsp;动感十足的&nbsp;&nbsp;
+							<input type="checkbox" name="car_impress[]" value="知性的" {if strexists($bm_info['car_impress'],'知性的')} checked {/if}/>
+							&nbsp;知性的&nbsp;&nbsp;<br>
+
+                            {$nbsp}{$nbsp}{$nbsp}{$nbsp}
+							<input type="checkbox" name="car_impress[]" value="稳重的" {if strexists($bm_info['car_impress'],'稳重的')} checked {/if}/> 
+							&nbsp;稳重的&nbsp;&nbsp;
+							<input type="checkbox" name="car_impress[]" value="务实的"  {if strexists($bm_info['car_impress'],'务实的')} checked {/if} />
+							&nbsp;务实的&nbsp;&nbsp;
+							<input type="checkbox" name="car_impress[]" value="值得信赖的" {if strexists($bm_info['car_impress'],'值得信赖的')} checked {/if}/>
+							&nbsp;值得信赖的&nbsp;&nbsp;
+							<input type="checkbox" name="car_impress[]" value="经典的" {if strexists($bm_info['car_impress'],'经典的')} checked {/if}/> 
+							&nbsp;经典的&nbsp;&nbsp;
+							<input type="checkbox" name="car_impress[]" value="大气的"  {if strexists($bm_info['car_impress'],'大气的')} checked {/if} />
+							&nbsp;大气的&nbsp;&nbsp;
+							<input type="checkbox" name="car_impress[]" value="精致的" {if strexists($bm_info['car_impress'],'精致的')} checked {/if}/>
+							&nbsp;精致的&nbsp;&nbsp;
+							<input type="checkbox" name="car_impress[]" value="有品味的" {if strexists($bm_info['car_impress'],'有品味的')} checked {/if}/> 
+							&nbsp;有品味的&nbsp;&nbsp;<br>
+
+
+
+                            {$nbsp}{$nbsp}{$nbsp}{$nbsp}
+							<input type="checkbox" name="car_impress[]" value="有高级感的"  {if strexists($bm_info['car_impress'],'有高级感的')} checked {/if} />
+							&nbsp;有高级感的&nbsp;&nbsp;
+							<input type="checkbox" name="car_impress[]" value="豪华的" {if strexists($bm_info['car_impress'],'豪华的')} checked {/if}/>
+							&nbsp;豪华的&nbsp;&nbsp;
+							<input type="checkbox" name="car_impress[]" value="尊贵的" {if strexists($bm_info['car_impress'],'尊贵的')} checked {/if}/> 
+							&nbsp;尊贵的&nbsp;&nbsp;
+							<input type="checkbox" name="car_impress[]" value="有亲近感的"  {if strexists($bm_info['car_impress'],'有亲近感的')} checked {/if} />
+							&nbsp;有亲近感的&nbsp;&nbsp;
+							<input type="checkbox" name="car_impress[]" value="让人感到安心的" {if strexists($bm_info['car_impress'],'让人感到安心的')} checked {/if}/>
+							&nbsp; 让人感到安心的&nbsp;&nbsp;
+							<input type="checkbox" name="car_impress[]" value="口碑好的" {if strexists($bm_info['car_impress'],'口碑好的')} checked {/if}/> 
+							&nbsp;口碑好的&nbsp;&nbsp;
+							<input type="checkbox" name="car_impress[]" value="能够体现身份地位的"  {if strexists($bm_info['car_impress'],'能够体现身份地位的')} checked {/if} />&nbsp;能够体现身份地位的 &nbsp;&nbsp;
+						</td>
+					</tr>
+
+                    </table>	
+					</h2><br>
+				
+					<br/>
+					{$nbsp}{if $bm_info['credentials_photo']}
+					{$nbsp} <img src="{$_G['siteurl']}data/attachment/profile/{$bm_info['credentials_photo']}" width="80" height="80"> 
+					{/if}
+						{if $bm_info['realname_photo']}
+					{$nbsp}  <img src="{$_G['siteurl']}data/attachment/profile/{$bm_info['realname_photo']}" width="80" height="80"> 
+					{/if}
+						{if $bm_info['car_drive_pic']}
+					{$nbsp} <img src="{$_G['siteurl']}data/attachment/profile/{$bm_info['car_drive_pic']}" width="80" height="80"> 
+					{/if}
+					</h2><br>
+
+				   <div class="xyb_duan" style="padding-bottom:121px;"> 
+					   <input type="submit" value="" style="background:url(/static/space/comm/images/xyb_duan.jpg) no-repeat;width:105px;height:35px;border:none;">
+				   </div>									
+			    </div>
+			 <!--第一步结束-->
+            
+
+           
+	         <!--第二步-->
+					<div id="con_one_2" style="display:none;padding-bottom:100px;">
+					{$nbsp}{$nbsp}{$nbsp}{$bitian}球龄：
+					<input  class="validate[required] text-input" id="ball_age" name="ball_age" size="3" type='input' value="{$bm_info['ball_age']}"> (年)
+					{$nbsp}{$nbsp}{$nbsp}{$bitian}差点：
+					<input  class="validate[required,custom[number]] text-input" id="cahdian" name="cahdian" size="3" type='input' value="{$bm_info['cahdian']}">
+					{$nbsp}{$nbsp}{$nbsp}{$bitian}您的最好成绩：
+					<input   class="validate[required] text-input" id="best_score" name="best_score" size="3" type='input' value="{$bm_info['best_score']}"> (杆)	<br></br> 
+					
+					<!--<div style="float:left">
+					{$nbsp}{$nbsp}{$nbsp}成绩所在球场：
+					<select name='cj_province' id='cj_province'  onchange="ajaxget('{$ajaxget_url}'+this.value,'cj_saicahng')">
+						<option value='0'>请选择</option>
+						<!--{loop $area $key $val}-->
+						   <!--<option value='<!--{$val[id]}-->'><!--{$val[name]}--></option>-->
+						<!--{/loop}-->
+					<!--</select>
+					</div>
+					<div id="cj_saicahng" style="float:left;"></div>
+					<br><br>-->
+
+					{$nbsp}{$nbsp}{$nbsp}您拥有的球具品牌:<br><br>
+					 
+					{$nbsp}{$nbsp}{$nbsp}{$nbsp}{$nbsp}{$nbsp}&nbsp;&nbsp;<input type="checkbox" name="tool_brand[]" value="Callaway"   {if strexists($bm_info['tool_brand'],'Callaway')} checked {/if}/> Callaway
+					<input type="checkbox" name="tool_brand[]" value="Cleverland" {if strexists($bm_info['tool_brand'],'Cleverland')} checked {/if}/>
+					Cleverland{$nbsp}
+					<input type="checkbox" name="tool_brand[]" value="PING"       {if strexists($bm_info['tool_brand'],'PING')} checked {/if}/>
+					PING{$nbsp}
+					<input type="checkbox" name="tool_brand[]" value="MAC_GREGON" {if strexists($bm_info['tool_brand'],'MAC_GREGON')} checked {/if}/>
+					MAC GREGON{$nbsp}
+					<input type="checkbox" name="tool_brand[]" value="Admas"      {if strexists($bm_info['tool_brand'],'Admas')} checked {/if}/>
+					Admas{$nbsp}<br><br>
+
+
+
+					{$nbsp}{$nbsp}{$nbsp}{$nbsp}{$nbsp}{$nbsp}&nbsp;&nbsp;
+					<input type="checkbox" name="tool_brand[]" value="Odyssey"    {if strexists($bm_info['tool_brand'],'Odyssey')} checked {/if}/> 
+					Odyssey{$nbsp}
+					<input type="checkbox" name="tool_brand[]" value="Nike_Golf"  {if strexists($bm_info['tool_brand'],'Nike_Golf')} checked {/if}/>
+					Nike Golf{$nbsp}
+					<input type="checkbox" name="tool_brand[]" value="Titleist"   {if strexists($bm_info['tool_brand'],'Titleist')} checked {/if}/> Titleist{$nbsp}
+					<input type="checkbox" name="tool_brand[]" value="Taylormade" {if strexists($bm_info['tool_brand'],'Taylormade')} checked {/if}/>
+					Taylormade{$nbsp}<br/><br>
+
+
+					{$nbsp}{$nbsp}{$nbsp}{$nbsp}{$nbsp}{$nbsp}&nbsp;&nbsp;
+					<input type="checkbox" name="tool_brand[]" value="Dunlop"     {if strexists($bm_info['tool_brand'],'Dunlop')} checked {/if}/> 
+					Dunlop{$nbsp}
+					<input type="checkbox" name="tool_brand[]" value="Wilson"     {if strexists($bm_info['tool_brand'],'Wilson')} checked {/if}/>
+					Wilson{$nbsp}
+					<input type="checkbox" name="tool_brand[]" value="Co_bra"     {if strexists($bm_info['tool_brand'],'Co_bra')} checked {/if}/> 
+					Co bra{$nbsp}
+					<input type="checkbox" name="tool_brand[]" value="Kasco"      {if strexists($bm_info['tool_brand'],'Kasco')} checked {/if}/> 
+					Kasco {$nbsp}
+					<input type="checkbox" name="tool_brand[]" value="MURUMAN"    {if strexists($bm_info['tool_brand'],'MURUMAN')} checked {/if}/>
+					MURUMAN {$nbsp}<br><br>
+
+					{$nbsp}{$nbsp}{$nbsp}{$nbsp}{$nbsp}{$nbsp}&nbsp;&nbsp;
+					<input type="checkbox" name="tool_brand[]" value="Mizuno"     {if strexists($bm_info['tool_brand'],'Mizuno')} checked {/if}/>
+					Mizuno{$nbsp}
+					<input type="checkbox" name="tool_brand[]" value="HONMAN"     {if strexists($bm_info['tool_brand'],'HONMAN')} checked {/if}/>
+					HONMAN{$nbsp}
+					<input type="checkbox" name="tool_brand[]" value="SRIXON"     {if strexists($bm_info['tool_brand'],'SRIXON')} checked {/if}/>
+					SRIXON{$nbsp}  
+					<input type="checkbox" name="tool_brand[]" value="S-YARD"     {if strexists($bm_info['tool_brand'],'S-YARD')} checked {/if}/>
+					S-YARD  {$nbsp}
+					<input type="checkbox" name="tool_brand[]" value="PRGR"       {if strexists($bm_info['tool_brand'],'PRGR')} checked {/if}/> 
+					PRGR {$nbsp}
+					<input type="checkbox" name="tool_brand[]" value="other"      {if strexists($bm_info['tool_brand'],'other')} checked {/if}>
+					其他{$nbsp}<br><br> 
+					  
+					
+					{$nbsp}{$nbsp}{$nbsp} 拥有会籍数量：<input name="num_qiu_hui" type="input" value="{$bm_info['num_qiu_hui']}" size="3">
+					您拥有球会的会籍：
+					<input name='faction' type='input' size="50" value="{$bm_info['faction']}"> （可多填 用逗号隔开）
+								
+					<div class="xyb_duan">					 
+						<div style="float:right;padding-left:10px;">
+						   <input type="submit" value="" style="background:url(/static/space/comm/images/xyb_duan.jpg) no-repeat;width:105px;height:35px;border:none;">
+						</div>
+						
+						<div style="float:right;"> 
+						 <a  onclick="javascript:window.location.href='dazbm.php?bm_page=1{$form_ac}'"><img src="/static/space/comm/images/syb_duan.jpg" width="105" height="35"></a>
+						</div>
+
+					</div>
+				</div>
+			
+			<!--第二部结束end-->
+			
+
+            
+   		    
+			<!--第三步-->
+			
+				<div id="con_one_3" style="display:none;padding-bottom:100px;">
+					{$bitian}请问您参加本次比赛的原因？：<br><br>
+					{$nbsp}{$nbsp}{$nbsp}{$nbsp}<input type="checkbox" name="attract[]" value="1"  {if strexists($bm_info['attract'],'1')} checked {/if} />喜爱高尔夫运动&nbsp;&nbsp;
+					<input type="checkbox" name="attract[]" value="2"  {if strexists($bm_info['attract'],'2')} checked {/if}>&nbsp;&nbsp;本赛事是中国业余顶级赛事，是中高协主办的正规比赛&nbsp;&nbsp;
+					<input type="checkbox" name="attract[]" value="5"  {if strexists($bm_info['attract'],'5')} checked {/if}>朋友介绍&nbsp;&nbsp;
+					<br><br/>
+					{$nbsp}{$nbsp}{$nbsp}{$nbsp}<input type="checkbox" name="attract[]" value="3"  {if strexists($bm_info['attract'],'3')} checked {/if}>赛事知名度高（宣传力度较大/有知名品牌赞助）
+					<input type="checkbox" name="attract[]" value="4"  {if strexists($bm_info['attract'],'4')} checked {/if}>经销店邀请 &nbsp;&nbsp;
+					<input type="checkbox" name="attract[]" value="6"  {if strexists($bm_info['attract'],'6')} checked {/if}>奖品丰厚有吸引力&nbsp;&nbsp;
+					<input type="checkbox" name="attract[]" value="7"  {if strexists($bm_info['attract'],'7')} checked {/if}>可以获得CGA认定业余选手积分&nbsp;&nbsp;
+			
+					<br><br>{$bitian}你希望参加哪个地区的分站赛：<br><br>
+					{$nbsp}{$nbsp}{$nbsp}{$nbsp}
+					<input type="checkbox" name="hot_district[]" value="tj57"  {if strexists($bm_info['hot_district'],'tj57')} checked {/if} />
+					&nbsp;5/5长沙&nbsp;&nbsp;
+					<input type="checkbox" name="hot_district[]" value="bj513" {if strexists($bm_info['hot_district'],'bj513')} checked {/if}/>
+					&nbsp; 5/18广州&nbsp;&nbsp;
+					<input type="checkbox" name="hot_district[]" value="gz527" {if strexists($bm_info['hot_district'],'gz527')} checked {/if}/> 
+					&nbsp;5/27杭州&nbsp;&nbsp;
+					<input type="checkbox" name="hot_district[]" value="cs611" {if strexists($bm_info['hot_district'],'cs611')} checked {/if}/>
+					&nbsp;6/16天津 &nbsp;&nbsp;
+
+	
+					<input type="checkbox" name="hot_district[]" value="nvzbj" {if strexists($bm_info['hot_district'],'nvzbj')} checked {/if}/>
+                    &nbsp;6/28北京女子邀请赛&nbsp;&nbsp;
+
+					<input type="checkbox" name="hot_district[]" value="qd625" {if strexists($bm_info['hot_district'],'qd625')} checked {/if}/>
+					&nbsp;6/29北京&nbsp;&nbsp;
+					<input type="checkbox" name="hot_district[]" value="hz72"  {if strexists($bm_info['hot_district'],'hz72')} checked {/if} /> 
+					&nbsp;7/6深圳 &nbsp;&nbsp;
+					<br><br>{$nbsp}{$nbsp}{$nbsp}{$nbsp}
+					<input type="checkbox" name="hot_district[]" value="sh721" {if strexists($bm_info['hot_district'],'sh721')} checked {/if}/>
+					&nbsp;7/14青岛 &nbsp;&nbsp;
+					<input type="checkbox" name="hot_district[]" value="dl729" {if strexists($bm_info['hot_district'],'dl729')} checked {/if}/>
+					&nbsp;7/27上海&nbsp;&nbsp;
+					<input type="checkbox" name="hot_district[]" value="sz84"  {if strexists($bm_info['hot_district'],'sz84')} checked {/if}/>
+					&nbsp;8/3大连 &nbsp;&nbsp;
+					<input type="checkbox" name="hot_district[]" value="cd812" {if strexists($bm_info['hot_district'],'cd812')} checked {/if}/> 
+					&nbsp;8/18成都&nbsp;&nbsp;
+					<input type="checkbox" name="hot_district[]" value="km827" {if strexists($bm_info['hot_district'],'km827')} checked {/if}/>
+					&nbsp;8/31苏州&nbsp;&nbsp;
+					<input type="checkbox" name="hot_district[]" value="fz93"  {if strexists($bm_info['hot_district'],'fz93')} checked {/if} /> 
+					&nbsp;9/8福州&nbsp;&nbsp;
+					<br><br>
+					
+
+					<!--报名支付方式：-->
+					<!--<input   disabled="disabled" type="radio" name="pay_way" value="1" {if $bm_info['pay_way']=="1"} checked {/if} > 网银支付(暂未开通)-->
+					<!--<input type="radio" name="pay_way" value="2" {if $bm_info['pay_way']=="2"} checked {/if}> 信用卡支付
+					<input type="radio" name="pay_way" value="3" {if $bm_info['pay_way']=="3"} checked {/if} {if !isset($bm_info['pay_way'])} checked {/if}> 银行汇款
+					<br><br>
+
+					 支付费用可使用 银行：<br><br>{$nbsp}{$nbsp}{$nbsp}{$nbsp}
+					<input type="checkbox" value="1" name="banklist[]" {if strexists($bm_info['banklist'],'1')} checked {/if}/> 
+					&nbsp;中国工商银行&nbsp;&nbsp;
+					<input type="checkbox" value="2" name="banklist[]" {if strexists($bm_info['banklist'],'2')} checked {/if}/>
+					&nbsp;中国招商银行&nbsp;&nbsp;
+					<input type="checkbox" value="3" name="banklist[]" {if strexists($bm_info['banklist'],'3')} checked {/if}/>
+					&nbsp;中国建设银行&nbsp;&nbsp;
+					<input type="checkbox" value="4" name="banklist[]" {if strexists($bm_info['banklist'],'4')} checked {/if}/>
+					&nbsp;中国农业银行&nbsp;&nbsp;
+					<input type="checkbox" value="5" name="banklist[]" {if strexists($bm_info['banklist'],'5')} checked {/if}/>
+					&nbsp;中国银行&nbsp;&nbsp;<br><br>
+					{$nbsp}{$nbsp}{$nbsp}{$nbsp}<input type="checkbox" value="6" name="banklist[]" {if strexists($bm_info['banklist'],'6')} checked {/if}/>
+					&nbsp;中国交通银行&nbsp;&nbsp;
+					<input type="checkbox" value="7" name="banklist[]" {if strexists($bm_info['banklist'],'7')} checked {/if}/>
+					&nbsp;中国交通银行&nbsp;&nbsp;
+					<input type="checkbox" value="8" name="banklist[]" {if strexists($bm_info['banklist'],'8')} checked {/if}/>
+					&nbsp;中国民生银行&nbsp;&nbsp;
+					<br><br>{$nbsp}{$nbsp}{$nbsp}{$nbsp}
+					<input type="checkbox" value="9" name="banklist[]" {if strexists($bm_info['banklist'],'9')} checked {/if}/>
+					&nbsp;广东发展银行&nbsp;&nbsp;
+					<input type="checkbox" value="10" name="banklist[]" {if strexists($bm_info['banklist'],'10')} checked {/if}/>
+					&nbsp;中信银行&nbsp;&nbsp;
+					<input type="checkbox" value="11" name="banklist[]" {if strexists($bm_info['banklist'],'11')} checked {/if}/>
+					&nbsp;华夏银行&nbsp;&nbsp;
+					<input type="checkbox" value="12" name="banklist[]" {if strexists($bm_info['banklist'],'12')} checked {/if}/>
+					&nbsp;兴业银行&nbsp;&nbsp;<br><br>
+					{$nbsp}{$nbsp}{$nbsp}{$nbsp}<input type="checkbox" value="13" name="banklist[]" {if strexists($bm_info['banklist'],'13')} checked {/if}/>
+					&nbsp;中国交通银行&nbsp;&nbsp;
+					<input type="checkbox" value="14" name="banklist[]" {if strexists($bm_info['banklist'],'14')} checked {/if}/>
+					&nbsp;中国邮政&nbsp;&nbsp;
+				
+					<input type="checkbox" value="16" name="banklist[]" {if strexists($bm_info['banklist'],'16')} checked {/if}/>
+					&nbsp;上海浦发银行&nbsp;&nbsp;
+					<input type="checkbox" value="17" name="banklist[]" {if strexists($bm_info['banklist'],'17')} checked {/if}/>
+					&nbsp;快钱信用卡&nbsp;&nbsp;
+					<input type="checkbox" value="15" name="banklist[]" {if strexists($bm_info['banklist'],'15')} checked {/if}/>
+					&nbsp;其他银行其他银行&nbsp;&nbsp;-->
+				
+					
+
+				  
+					<br><br> {$bitian}赛事信息获取途径
+					<select name="accept_way" onchange="enable_yiqiship(this.value)"> 
+					   <option value="1"   {if $bm_info['accept_way']=='1'} selected {/if}>手机短信</option>
+					   <option value="2"   {if $bm_info['accept_way']=='2'} selected {/if} >一汽丰田营销店</option>
+					   <option value="3"   {if $bm_info['accept_way']=='3'} selected {/if}>赛事官网</option>
+    			       <option value="8"   {if $bm_info['accept_way']=='8'} selected {/if} >高尔夫练习场</option>
+					   <option value="4"   {if $bm_info['accept_way']=='4'} selected {/if}>球场宣传页</option>
+					   <option value="5"   {if $bm_info['accept_way']=='5'} selected {/if}>网络广告</option>
+					   <option value="6"   {if $bm_info['accept_way']=='6'} selected {/if}>杂志或报刊广告</option>
+					   <option value="7"   {if $bm_info['accept_way']=='7'} selected {/if}>朋友介绍</option>
+					 
+					</select>
+					<span id="yiqi_info" style="display:none" >填写营销店 详细信息：<input  type="input" size="40" value="{$bm_info['yiqi_shop']}" name="yiqi_shop"></span>
+					
+						
+							
+
+					<br><br> {$bitian} 是否参加去年城市挑战赛：
+					<input name="is_join_c" type="radio"  value="1"  {if $bm_info['is_join_c']==1} checked {/if}> 是
+					<input name="is_join_c" type="radio"  value="0"  {if $bm_info['is_join_c']==0} checked {/if}> 否
+
+					<br><br>{$nbsp}{$nbsp}{$nbsp}{$nbsp}<input type="checkbox" name="is_treaty" value="1" checked>本人自愿报名此赛事，<br>{$nbsp}{$nbsp}{$nbsp}{$nbsp}已阅读并接受下述协议书：<br>
+					{$nbsp}{$nbsp}{$nbsp}{$nbsp}{$nbsp}{$nbsp}{$nbsp}{$nbsp}
+						<a target="_blank" href="http://www.bwvip.com/crown/zongze.shtml">《2012皇冠杯城市挑战赛总则》</a><br>
+					{$nbsp}{$nbsp}{$nbsp}{$nbsp}{$nbsp}{$nbsp}{$nbsp}{$nbsp}
+						<a target="_blank" href="http://www.bwvip.com/crown/xuzhi.shtml">《城市选拔赛参赛须知》</a><br>
+					{$nbsp}{$nbsp}{$nbsp}{$nbsp}{$nbsp}{$nbsp}{$nbsp}{$nbsp}
+						<a target="_blank" href="http://www.bwvip.com/crown/chengnuo-book.shtml">《球员参赛承诺书》</a><br>
+					{$nbsp}{$nbsp}{$nbsp}{$nbsp}{$nbsp}{$nbsp}{$nbsp}{$nbsp}
+						<a target="_blank" href="http://www.bwvip.com/crown/w-xuzhi.shtml">《外卡资格赛参赛须知》</a><br>
+
+		
+				   <div class="xyb_duan">
+                        {if $bm_info['apply_status']==0}
+							<div style="float:right;padding-left:10px;">
+							   <input type="submit" value="" style="background:url(/static/space/comm/images/xyb_duan.jpg) no-repeat;width:105px;height:35px;border:none;">
+							</div>
+						{else}
+						    <span><font color="red"><h2>已经审核 不能再修改 <h2></font></span>
+						{/if}
+
+						<div style="float:right;"> 
+						   <a  onclick="javascript:window.location.href='dazbm.php?bm_page=2{$form_ac}'"><img src="/static/space/comm/images/syb_duan.jpg" width="105" height="35"></a>
+						</div>
+                          
+						</span>
+					</div>
+				</div>
+				
+			  <!--第三步 结束end-->
+		
+
+
+              
+			    <!--第四步-->
+					<div id="con_one_4" style="display:none;padding-bottom:100px;">
+						<div style="margin-left:50px;"><img src="/static/space/comm/images/register_dazbm.jpg"  width="640" height="280"></div>
+
+						 <input type="hidden" value={$bm_info['bm_id']}  name="bm_id"/ >
+						 <input type="hidden" value={$bm_info['pay_status']} name="pay_status" >
+						 <input name="credentials_photo" value="{$bm_info['credentials_photo']}" type="hidden" >
+						 <input name="car_drive_pic" value="{$bm_info['car_drive_pic']}" type="hidden" >
+						 <input name="realname_photo" value="{$bm_info['realname_photo']}" type="hidden" >
+						 <input name="bm_page" type="hidden" value="{$bm_page}">
+
+					   <div class="xyb_duan">
+					    <div style="float:right;"> 
+							{if $bm_info['apply_status']==0}
+						
+							  <span><a href="home.php?mod=space"><img src="/static/space/comm/images/jinru_duan.jpg" width="159" height="35"></a></span>
+							{else}
+							  <span><font color="red"><h2>已经审核 不能再修改 <h2></font></span>
+							{/if}
+                        </div> 
+
+						<div style="float:right;padding-right:10px;"> 
+						   <a  onclick="javascript:window.location.href='dazbm.php?bm_page=3{$form_ac}'"><img src="/static/space/comm/images/syb_duan.jpg" width="105" height="35"></a>
+						</div>
+                     </div>
+				  </div>					
+			    <!--第四步结束end-->
+			   </div><!--contesssxx结束-->
+			   </div><!--tab enD 结束-->
+				
+			 </div>
+		  </div>
+		</div>
+	 </div>
+  </div>
+</form>
+
+
+
+
+
+
+
+
+
+
+
+<style type="text/css">
+
+
+/*选项卡1*/
+#Tab1{width:100%;margin:0px;padding:0px;margin:0 auto;}
+/*选项卡2*/
+#Tab2{width:576px;margin:0px;padding:0px;margin:0 auto;}
+/*菜单class*/
+.Menubox {width:100%;height:28px;line-height:28px;}
+.Menubox ul{margin:0px;padding:0px;}
+.Menubox li{float:left;display:block;cursor:pointer;width:114px;text-align:center;color:#949694;font-weight:bold;}
+.Menubox li.hover{padding:0px;background:#fff;width:116px;border-left:0px solid #A8C29F;border-top:0px solid #A8C29F;border-right:0px solid  #A8C29F;color:#739242;font-weight:bold;height:27px;line-height:27px;}
+.Contentbox{clear:both;margin-top:0px;border:0px solid #A8C29F;border-top:none;height:500px;text-align:left;padding-top:8px;margin-left:50px;}
+
+</style>
+
+
+<script>
+<!--
+/*第一种形式 第二种形式 更换显示样式*/
+function setTab(name,cursel,n){
+    for(i=1;i<=n;i++){
+		var menu=document.getElementById(name+i);
+		var con=document.getElementById("con_"+name+"_"+i);
+		menu.className=i==cursel?"hover":"";
+		con.style.display=i==cursel?"block":"none";
+	}
+	
+	var img1=document.getElementById("bm_image");
+        img1.src="/static/space/comm/images/buzou_"+cursel+"_duan.jpg";
+}
+//-->
+</script>
+
+
+<!--隐藏表单 js show hide start-->
+<script type="text/javascript">
+
+
+    
+	/*皇冠车的选项*/
+	function disable_hc(value){
+	   if(value==1){
+         if(BROWSER.ie){
+		   document.getElementById("h_c").style.display = "block";
+		   document.getElementById("h_c_").style.display = "block";
+		 }else{
+		   document.getElementById("h_c").style.display = "table-row";
+		   document.getElementById("h_c_").style.display = "table-row";
+		 }
+		   
+		   document.getElementById("car_brand_td1").style.display = "none";
+		   document.getElementById("car_brand_td2").style.display = "none";
+		   
+
+	   }else{
+		   document.getElementById("h_c").style.display = "none";
+		   document.getElementById("h_c_").style.display = "none";
+		   document.getElementById("car_brand_td1").style.display = "block";
+		   document.getElementById("car_brand_td2").style.display = "";
+	   }
+	   
+	}
+
+    function enable_yiqiship(value){
+	     if(value=="2"){
+	        document.getElementById("yiqi_info").style.display = "";
+		 }
+		 else{
+		    document.getElementById("yiqi_info").style.display = "none";
+		 }
+	}
+
+</script>
+
+
+<!--{template common/dazbm_footer}-->

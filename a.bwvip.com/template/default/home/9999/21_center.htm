@@ -1,0 +1,21 @@
+	<!--{if $string=="yes"}-->
+    	<div class="cbg1"><a href="home.php?mod=spacecp" target="_blank"><img src="{STATICURL}space/21/images/cdl.jpg" width="144" height="34" border="0"></a>&nbsp;&nbsp;</div>
+	<!--{/if}-->
+        <div class="fenx">
+		    <div class="z mingcheng">
+		    <span><h1>$compy</h1></span>
+			</div>
+		    <div class="y">
+			<span><a id="domainurl" href="$space[domainurl]" onclick="setCopy('http://'+window.location.host+'/home.php?mod=space&uid=<!--{$uid}-->', '{lang copy_space_address}');return false;"><img src="{STATICURL}space/21/images/ca2.jpg" width="101" height="34" border="0" /></a></span>
+			<span><a id="share_space" href="home.php?mod=spacecp&ac=share&type=space&id=$space[uid]" onclick="showWindow(this.id, this.href, 'get', 0);"><img src="{STATICURL}space/21/images/ca3.jpg" width="101" height="33" border="0" /></a></span>
+			</div>
+	    </div>
+	    <div><img src="{STATICURL}space/21/images/chx.jpg" width="482" height="8" /></div>
+		<br />
+		<div class="cintro">
+		  <div class="cintro_1"><img src="uc_server/avatar.php?uid=$uid&size=middle"  width="95" height="93"/></div> 
+		  <div class="cintro_2">$bio</div>
+		  <div class="clear"></div>
+		</div>
+        <br />
+		

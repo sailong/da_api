@@ -1,0 +1,63 @@
+<!--{template common/header}-->
+<div class="ct2_a wp cl" id="ct">
+<!--右侧开始-->
+<div class="mn">
+	<div style="height:8px;clear:both;"></div>
+	<div><a href="home.php?mod=spacecp&ac=jbqc&op=list">查看举办球场</a>&nbsp;&nbsp;&nbsp;<a href="home.php?mod=spacecp&ac=jbqc&op=search">添加举办球场</a></div>
+	<hr />
+	<div style="height:8px;clear:both;"></div>
+  <!--{if $op=='list'}-->
+  <!--list-->
+  <form action="home.php?mod=spacecp&ac=jbqc&op=del" method="post" name="form1" autocomplete="off">
+  	<!--{loop $endrow $ava}-->
+  	<input type="radio" name="delid" value="$ava[cdid]" />&nbsp;&nbsp;<img src="$ava[fieldimg]" width="184" height="113" />&nbsp;&nbsp;&nbsp;$ava[field1]&nbsp;&nbsp;&nbsp;$ava[seq]&nbsp;&nbsp;&nbsp;<a href="home.php?mod=spacecp&ac=jbqc&op=edit&id=$ava[cdid]">编辑排序</a>
+  	<div style="height:8px;clear:both;"></div>
+  	<!--{/loop}-->
+  	<!--{if $endrow}-->
+  	<input type="submit" onclick="if(!confirm('确认要删除吗？')) return false" value="删除" />
+  	<!--{/if}-->
+  	
+  </form>
+  <!--{/if}-->
+  <!--list end-->
+  <!--{if $op=='edit'}-->
+  <form action="home.php?mod=spacecp&ac=jbqc&op=edit&id=$editarr[cdid]" method="post" name="form1" autocomplete="off">
+  	<img src="$editarr[fieldimg]" width="184" height="113" /><br />&nbsp;&nbsp;&nbsp;$editarr[field1]<br />&nbsp;&nbsp;&nbsp;
+  	<input type="text" value="$editarr[seq]" name="changeid" />&nbsp;&nbsp;&nbsp;
+  	<input type="hidden" value="$editarr[groupid]" name="groupid" />
+  	<input type="hidden" value="$editarr[cdid]" name="cdid" />
+  	<div style="height:8px;clear:both;"></div>
+  	
+  	<input type="submit" value="修改" />
+  	
+  	
+  </form>
+  
+  <!--{/if}-->
+  <!--{if $_GET[op]=='search'}-->
+  <!--search-->
+   <form action="home.php?mod=spacecp&ac=jbqc&op=add" method="post" name="form1" autocomplete="off">
+  	<!--{loop $searchrow $svalue}-->
+  	<input type="radio" name="changdi" value="$svalue[uid]" />&nbsp;&nbsp;<img src="$svalue[fieldimg]" width="184" height="113" />&nbsp;&nbsp;&nbsp;$svalue[field1] &nbsp;&nbsp;&nbsp;&nbsp;<input type="text" name="myseq$svalue[uid]" size="10" />(排序)
+  	<div style="height:8px;clear:both;"></div>
+  	<!--{/if}-->
+  	<br />
+  	<div style="text-align:center">$disppage</div>
+  	<br />
+  	<input type="submit" value="添加" />
+  </form>
+  
+  <!--search end-->
+  <!--{/if}-->
+</div>
+<!--{右侧结束}-->
+
+<!--左侧开始-->
+<div class="appl">
+<!--{template home/spacecp_footer}-->
+</div>
+<!--左侧开始结束-->
+</div>
+
+<!--{template common/footer}-->
+

@@ -1,0 +1,195 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<script type="text/javascript" src='../static/js/jquery.js'></script>
+<title>中韩挑战赛</title>
+<style type="text/css">
+body {
+margin-left: 0px;
+margin-top: 0px;
+margin-right: 0px;
+margin-bottom: 0px;
+}
+</style>
+</head>
+
+<body>
+<table width="{$width}" border="0">
+	  <tr style="background:#f4f4f4;">
+	    <td>
+        	<table width="{$width}" border="0" cellpadding="0" cellspacing="0" style="background:#f4f4f4; font-size:{$hb1}px;">
+            	<tr>
+                	<td colspan="21" align="center" style="background:url(images/nav-bg1.png) repeat-x;"><table>
+                	  <tr>
+                	    <td colspan="2"><img src="images/big-guoqi.png" width="{$dguoqi1}"/></td>
+                	    <td colspan="4" style="text-align:center;font-size:{$hb3}px;">中国<br />
+                	      CHINA</td>
+                	    <td colspan="2"><table  style="background:url(images/nav-bg.png) repeat-x;">
+                	      <tr >
+                	        <td style="font-size:{$hb2}px;color:#6a6a6a;font-weight:bold;"><span id="zgscore"></span>&nbsp;1/2</td>
+                	        <td ><img src="images/guoqi.png"  width="{$zhongjian1}"/></td>
+                	        <td  style="font-size:{$hb2}px;color:#6a6a6a;font-weight:bold;"><span id="hgscore"></span>&nbsp;1/2</td>
+              	        </tr>
+              	      </table></td>
+                	    <td colspan="3" style="text-align:left;font-size:{$hb3}px;">韩国<br />
+                	       SOUTH KOREA</td>
+                	    <td colspan="10" align="left"><img src="images/big-hanguo.png"  width="{$dguoqi1}"/></td>
+              	    </tr>
+              	  </table></td>
+                </tr>
+<!--{loop $nblist $n  $v}-->   
+                 <tr style="background:#dadada;height:42px;">
+                	<td colspan="1" align="center" cellpadding="0" cellspacing="0">第{$n}组</td>
+                    <td colspan="5" align="right" cellpadding="0" cellspacing="0"><img src="images/{$qzarray[$nblist[$n]['uid']]}"  width="{$xguoqi1}"/></td>
+                    <td colspan="5">{$nblist[$n]['realname']}</td>
+                    <td colspan="1" style="color:#565656;text-align:center" cellpadding="0" cellspacing="0">VS</td>
+                    <td colspan="1"><img src="images/{$qzarray[$nblist[1]['uid']]}" width="{$xguoqi1}"/></td>
+                    <td colspan="9" >{$nblist[1]['realname']}</td>
+                </tr>
+                   <tr style="height:50px;font-size:{$hb3}px;" align="center">
+                	<td align="center" style="color:#767676;" width="12%">球洞</td>
+                    <td width="4%">1</td>
+                    <td width="4%">2</td>
+                    <td width="4%">3</td>
+                    <td width="4%">4</td>
+                    <td width="4%">5</td>
+                    <td width="4%">6</td>
+                    <td width="4%">7</td>
+                    <td width="4%">8</td>
+                    <td width="4%">9</td>
+                    <td width="4%">10</td>
+                    <td width="4%">11</td>
+                    <td width="4%">12</td>
+                    <td width="4%">13</td>
+                    <td width="4%">14</td>
+                    <td width="4%">15</td>
+                    <td width="4%">16</td>
+                    <td width="4%">17</td>
+                    <td width="4%">18</td>
+                    <td width="4%">ALL</td>
+                    <td width="5%">得分</td> 
+                </tr>
+                <tr style="height:50px;font-size:{$hb3}px;" align="center">
+                	<td align="center" style="color:#767676;">标准杆</td>
+                    <td>$par[0]</td>
+                    <td>$par[1]</td>                    
+                    <td>$par[2]</td>
+                    <td>$par[3]</td>
+                    <td>$par[4]</td>
+                    <td>$par[5]</td>
+                    <td>$par[6]</td>
+                    <td>$par[7]</td>
+                    <td>$par[8]</td>
+                    <td>$par[9]</td>
+                    <td>$par[10]</td>
+                    <td>$par[11]</td>
+                    <td>$par[12]</td>
+                    <td>$par[13]</td>
+                    <td>$par[14]</td>
+                    <td>$par[15]</td>
+                    <td>$par[16]</td>
+                    <td>$par[17]</td>
+                    <td>72</td>
+                    <td></td> 
+                </tr>
+              <tr style="height:50px;font-size:{$hb4}px;" align="left">
+                	<td  style="vertical-align:middle;align:left;padding-left:10px;"><table><tr><td><img src="images/{$qzarray[$nblist[$n]['uid']]}" width="{$xguoqi1}"/></td> <td>{echo Getuname($dyarray[$nblist[$n]['uid']],2)}</td></tr></table></td>
+                	<td {if $nblist[$n]['cave_1']!=0}{echo Getcss($nblist[$n]['cave_1'],$par[0])}{/if}>{if $nblist[$n]['cave_1']<=0}&nbsp;{else}{$nblist[$n]['cave_1']}{/if}</td>
+    <td {if $nblist[$n]['cave_2']!=0}{echo Getcss($nblist[$n]['cave_2'],$par[1])}{/if}>{if $nblist[$n]['cave_2']<=0}&nbsp;{else}{$nblist[$n]['cave_2']}{/if}</td>
+    <td {if $nblist[$n]['cave_3']!=0}{echo Getcss($nblist[$n]['cave_3'],$par[2])}{/if}>{if $nblist[$n]['cave_3']<=0}&nbsp;{else}{$nblist[$n]['cave_3']}{/if}</td>
+    <td {if $nblist[$n]['cave_4']!=0}{echo Getcss($nblist[$n]['cave_4'],$par[3])}{/if}>{if $nblist[$n]['cave_4']<=0}&nbsp;{else}{$nblist[$n]['cave_4']}{/if}</td>
+    <td {if $nblist[$n]['cave_5']!=0}{echo Getcss($nblist[$n]['cave_5'],$par[4])}{/if}>{if $nblist[$n]['cave_5']<=0}&nbsp;{else}{$nblist[$n]['cave_5']}{/if}</td>
+    <td {if $nblist[$n]['cave_6']!=0}{echo Getcss($nblist[$n]['cave_6'],$par[5])}{/if}>{if $nblist[$n]['cave_6']<=0}&nbsp;{else}{$nblist[$n]['cave_6']}{/if}</td>
+    <td {if $nblist[$n]['cave_7']!=0}{echo Getcss($nblist[$n]['cave_7'],$par[6])}{/if}>{if $nblist[$n]['cave_7']<=0}&nbsp;{else}{$nblist[$n]['cave_7']}{/if}</td>
+    <td {if $nblist[$n]['cave_8']!=0}{echo Getcss($nblist[$n]['cave_8'],$par[7])}{/if}>{if $nblist[$n]['cave_8']<=0}&nbsp;{else}{$nblist[$n]['cave_8']}{/if}</td>
+    <td {if $nblist[$n]['cave_9']!=0}{echo Getcss($nblist[$n]['cave_9'],$par[8])}{/if}>{if $nblist[$n]['cave_9']<=0}&nbsp;{else}{$nblist[$n]['cave_9']}{/if}</td> 
+    <td {if $nblist[$n]['cave_10']!=0}{echo Getcss($nblist[$n]['cave_10'],$par[9])}{/if}>{if $nblist[$n]['cave_10']<=0}&nbsp;{else}{$nblist[$n]['cave_10']}{/if}</td>
+    <td {if $nblist[$n]['cave_11']!=0}{echo Getcss($nblist[$n]['cave_11'],$par[10])}{/if}>{if $nblist[$n]['cave_11']<=0}&nbsp;{else}{$nblist[$n]['cave_11']}{/if}</td>
+    <td {if $nblist[$n]['cave_12']!=0}{echo Getcss($nblist[$n]['cave_12'],$par[11])}{/if}>{if $nblist[$n]['cave_12']<=0}&nbsp;{else}{$nblist[$n]['cave_12']}{/if}</td>
+    <td {if $nblist[$n]['cave_13']!=0}{echo Getcss($nblist[$n]['cave_13'],$par[12])}{/if}>{if $nblist[$n]['cave_13']<=0}&nbsp;{else}{$nblist[$n]['cave_13']}{/if}</td>
+    <td {if $nblist[$n]['cave_14']!=0}{echo Getcss($nblist[$n]['cave_14'],$par[13])}{/if}>{if $nblist[$n]['cave_14']<=0}&nbsp;{else}{$nblist[$n]['cave_14']}{/if}</td>
+    <td {if $nblist[$n]['cave_15']!=0}{echo Getcss($nblist[$n]['cave_15'],$par[14])}{/if}>{if $nblist[$n]['cave_15']<=0}&nbsp;{else}{$nblist[$n]['cave_15']}{/if}</td>
+    <td {if $nblist[$n]['cave_16']!=0}{echo Getcss($nblist[$n]['cave_16'],$par[15])}{/if}>{if $nblist[$n]['cave_16']<=0}&nbsp;{else}{$nblist[$n]['cave_16']}{/if}</td>
+    <td {if $nblist[$n]['cave_17']!=0}{echo Getcss($nblist[$n]['cave_17'],$par[16])}{/if}>{if $nblist[$n]['cave_17']<=0}&nbsp;{else}{$nblist[$n]['cave_17']}{/if}</td>
+    <td {if $nblist[$n]['cave_18']!=0}{echo Getcss($nblist[$n]['cave_18'],$par[17])}{/if}>{if $nblist[$n]['cave_18']<=0}&nbsp;{else}{$nblist[$n]['cave_18']}{/if}</td>
+    <td align="center">{echo Getstat($nblist[$n]['tlcave'])}</td>
+<td  align="center" id="nd{$nblist[$n]['uid']}">{echo Getdefen($nblist[$n]['tlcave'],$nblist[1]['tlcave'])}</td> 
+                </tr>
+                           
+ <tr style="height:50px;font-size:{$hb4}px;" align="left">
+                	<td  style="vertical-align:middle;align:left;padding-left:10px;"><table><tr><td><img src="images/{$qzarray[$nblist[1]['uid']]}" width="{$xguoqi1}"/></td> <td>{echo Getuname($dyarray[$nblist[1]['uid']],2)}</td></tr></table>
+</td>
+                	<td {if $nblist[1]['cave_1']!=0}{echo Getcss($nblist[1]['cave_1'],$par[0])}{/if}>{if $nblist[1]['cave_1']<=0}&nbsp;{else}{$nblist[1]['cave_1']}{/if}</td>
+    <td {if $nblist[1]['cave_2']!=0}{echo Getcss($nblist[1]['cave_2'],$par[1])}{/if}>{if $nblist[1]['cave_2']<=0}&nbsp;{else}{$nblist[1]['cave_2']}{/if}</td>
+    <td {if $nblist[1]['cave_3']!=0}{echo Getcss($nblist[1]['cave_3'],$par[2])}{/if}>{if $nblist[1]['cave_3']<=0}&nbsp;{else}{$nblist[1]['cave_3']}{/if}</td>
+    <td {if $nblist[1]['cave_4']!=0}{echo Getcss($nblist[1]['cave_4'],$par[3])}{/if}>{if $nblist[1]['cave_4']<=0}&nbsp;{else}{$nblist[1]['cave_4']}{/if}</td>
+    <td {if $nblist[1]['cave_5']!=0}{echo Getcss($nblist[1]['cave_5'],$par[4])}{/if}>{if $nblist[1]['cave_5']<=0}&nbsp;{else}{$nblist[1]['cave_5']}{/if}</td>
+    <td {if $nblist[1]['cave_6']!=0}{echo Getcss($nblist[1]['cave_6'],$par[5])}{/if}>{if $nblist[1]['cave_6']<=0}&nbsp;{else}{$nblist[1]['cave_6']}{/if}</td>
+    <td {if $nblist[1]['cave_7']!=0}{echo Getcss($nblist[1]['cave_7'],$par[6])}{/if}>{if $nblist[1]['cave_7']<=0}&nbsp;{else}{$nblist[1]['cave_7']}{/if}</td>
+    <td {if $nblist[1]['cave_8']!=0}{echo Getcss($nblist[1]['cave_8'],$par[7])}{/if}>{if $nblist[1]['cave_8']<=0}&nbsp;{else}{$nblist[1]['cave_8']}{/if}</td>
+    <td {if $nblist[1]['cave_9']!=0}{echo Getcss($nblist[1]['cave_9'],$par[8])}{/if}>{if $nblist[1]['cave_9']<=0}&nbsp;{else}{$nblist[1]['cave_9']}{/if}</td> 
+    <td {if $nblist[1]['cave_10']!=0}{echo Getcss($nblist[1]['cave_10'],$par[9])}{/if}>{if $nblist[1]['cave_10']<=0}&nbsp;{else}{$nblist[1]['cave_10']}{/if}</td>
+    <td {if $nblist[1]['cave_11']!=0}{echo Getcss($nblist[1]['cave_11'],$par[10])}{/if}>{if $nblist[1]['cave_11']<=0}&nbsp;{else}{$nblist[1]['cave_11']}{/if}</td>
+    <td {if $nblist[1]['cave_12']!=0}{echo Getcss($nblist[1]['cave_12'],$par[11])}{/if}>{if $nblist[1]['cave_12']<=0}&nbsp;{else}{$nblist[1]['cave_12']}{/if}</td>
+    <td {if $nblist[1]['cave_13']!=0}{echo Getcss($nblist[1]['cave_13'],$par[12])}{/if}>{if $nblist[1]['cave_13']<=0}&nbsp;{else}{$nblist[1]['cave_13']}{/if}</td>
+    <td {if $nblist[1]['cave_14']!=0}{echo Getcss($nblist[1]['cave_14'],$par[13])}{/if}>{if $nblist[1]['cave_14']<=0}&nbsp;{else}{$nblist[1]['cave_14']}{/if}</td>
+    <td {if $nblist[1]['cave_15']!=0}{echo Getcss($nblist[1]['cave_15'],$par[14])}{/if}>{if $nblist[1]['cave_15']<=0}&nbsp;{else}{$nblist[1]['cave_15']}{/if}</td>
+    <td {if $nblist[1]['cave_16']!=0}{echo Getcss($nblist[1]['cave_16'],$par[15])}{/if}>{if $nblist[1]['cave_16']<=0}&nbsp;{else}{$nblist[1]['cave_16']}{/if}</td>
+    <td {if $nblist[1]['cave_17']!=0}{echo Getcss($nblist[1]['cave_17'],$par[16])}{/if}>{if $nblist[1]['cave_17']<=0}&nbsp;{else}{$nblist[1]['cave_17']}{/if}</td>
+    <td {if $nblist[1]['cave_18']!=0}{echo Getcss($nblist[1]['cave_18'],$par[17])}{/if}>{if $nblist[1]['cave_18']<=0}&nbsp;{else}{$nblist[1]['cave_18']}{/if}</td>
+    <td align="center">{echo Getstat($nblist[1]['tlcave'])}</td>
+<td  align="center" id="nd{$nblist[1]['uid']}">{echo Getdefen($nblist[1]['tlcave'],$nblist[$n]['tlcave'])}</td> 
+</tr>
+
+
+    
+                <tr height="50px;">
+                	<td></td>
+                </tr>
+                
+ <!--{/loop}--> 
+ 
+                
+           
+                
+            </table>
+        </td>
+        </tr>
+        <tr><td height="45">
+        </td>
+  </tr>
+  
+</table>
+<script>
+
+ var nd3804025 = parseFloat(jQuery('#nd3804025').html()) ? parseFloat(jQuery('#nd3804025').html()) : parseFloat(0);
+ var nd3804026 = parseFloat(jQuery('#nd3804025').html()) ? parseFloat(jQuery('#nd3804026').html()) : parseFloat(0);
+ var nd3804027 = parseFloat(jQuery('#nd3804025').html()) ? parseFloat(jQuery('#nd3804027').html()) : parseFloat(0);
+ var nd3804028 = parseFloat(jQuery('#nd3804025').html()) ? parseFloat(jQuery('#nd3804028').html()) : parseFloat(0);
+ var nd3804029 = parseFloat(jQuery('#nd3804025').html()) ? parseFloat(jQuery('#nd3804029').html()) : parseFloat(0);
+ var nd3804031 = parseFloat(jQuery('#nd3804025').html()) ? parseFloat(jQuery('#nd3804031').html()) : parseFloat(0);
+ var nd3804032 = parseFloat(jQuery('#nd3804032').html()) ? parseFloat(jQuery('#nd3804032').html()) : parseFloat(0);
+ var nd3804033 = parseFloat(jQuery('#nd3804033').html()) ? parseFloat(jQuery('#nd3804033').html()) : parseFloat(0);
+ var nd3804034 = parseFloat(jQuery('#nd3804034').html()) ? parseFloat(jQuery('#nd3804034').html()) : parseFloat(0);
+ var nd3804035 = parseFloat(jQuery('#nd3804035').html()) ? parseFloat(jQuery('#nd3804035').html()) : parseFloat(0);
+ 
+var hgscore=nd3804025+nd3804026+nd3804027+nd3804028+nd3804029+nd3804031+nd3804032+nd3804033+nd3804034+nd3804035;
+ 
+ var nd3803491 = parseFloat(jQuery('#nd3803491').html()) ? parseFloat(jQuery('#nd3803491').html()) : parseFloat(0);
+ var nd948 = parseFloat(jQuery('#nd948').html()) ? parseFloat(jQuery('#nd948').html()) : parseFloat(0);
+ var nd1178 = parseFloat(jQuery('#nd1178').html()) ? parseFloat(jQuery('#nd1178').html()) : parseFloat(0);
+ var nd1195 = parseFloat(jQuery('#nd1195').html()) ? parseFloat(jQuery('#nd1195').html()) : parseFloat(0);
+ var nd1035 = parseFloat(jQuery('#nd1035').html()) ? parseFloat(jQuery('#nd1035').html()) : parseFloat(0);
+ var nd1013 = parseFloat(jQuery('#nd1013').html()) ? parseFloat(jQuery('#nd1013').html()) : parseFloat(0);
+ var nd1187 = parseFloat(jQuery('#nd1187').html()) ? parseFloat(jQuery('#nd1187').html()) : parseFloat(0);
+ var nd1212 = parseFloat(jQuery('#nd1212').html()) ? parseFloat(jQuery('#nd1212').html()) : parseFloat(0);
+ var nd1210 = parseFloat(jQuery('#nd1210').html()) ? parseFloat(jQuery('#nd1210').html()) : parseFloat(0);
+ var nd1150 = parseFloat(jQuery('#nd1150').html()) ? parseFloat(jQuery('#nd1150').html()) : parseFloat(0); 
+ 
+var zgscore=nd3803491+nd948+nd1178+nd1195+nd1035+nd1013+nd1187+nd1212+nd1210+nd1150;
+ jQuery('#zgscore').html(zgscore);
+ jQuery('#hgscore').html(hgscore);
+</script>
+</body>
+</html>

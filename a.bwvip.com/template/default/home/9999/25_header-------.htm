@@ -1,0 +1,72 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>赛事用户 ---大正高尔夫</title>
+<!--{if $_G['config']['output']['iecompatible']}--><meta http-equiv="X-UA-Compatible" content="IE=EmulateIE{$_G['config']['output']['iecompatible']}" /><!--{/if}-->
+	<base href="{$_G['siteurl']}" /> 
+	<script type="text/javascript">var STYLEID = '{STYLEID}', STATICURL = '{STATICURL}', IMGDIR = '{IMGDIR}', VERHASH = '{VERHASH}', charset = '{CHARSET}', discuz_uid = '$_G[uid]', cookiepre = '{$_G[config][cookie][cookiepre]}', cookiedomain = '{$_G[config][cookie][cookiedomain]}', cookiepath = '{$_G[config][cookie][cookiepath]}', showusercard = '{$_G[setting][showusercard]}', attackevasive = '{$_G[config][security][attackevasive]}', disallowfloat = '{$_G[setting][disallowfloat]}', creditnotice = '<!--{if $_G['setting']['creditnotice']}-->$_G['setting']['creditnames']<!--{/if}-->', defaultstyle = '$_G[style][defaultextstyle]', REPORTURL = '$_G[currenturl_encode]', SITEURL = '$_G[siteurl]', JSPATH = '$_G[setting][jspath]';</script>
+    
+<link href="{STATICURL}space/common.css?{VERHASH}" rel="stylesheet">
+
+
+<link href="{STATICURL}space/game/style.css" rel="stylesheet" type="text/css" >
+
+<!--下面两个调取的徐建-->
+<script type="text/javascript" src="{STATICURL}space/person/js/i.js"></script>
+<script type="text/javascript" src="{STATICURL}space/person/js/iepngfix_tilebg.js"></script>
+
+<script type="text/javascript" src="{$_G[setting][jspath]}common.js?{VERHASH}"></script> 
+<script type="text/javascript" src="{$_G[setting][jspath]}home.js?{VERHASH}"></script>
+</head>
+
+<body id="nv_{$_G[basescript]}" class="pg_{CURMODULE}" onkeydown="if(event.keyCode==27) return false;">
+	<div id="append_parent"></div><div id="ajaxwaitid"></div>
+<div id="wt">
+	<div class="headsea"><div class="z"><span><img src="{STATICURL}space/game/images/membe.jpg" width="27" height="27"></span>　　<span><a href="/home.php">大正网</a></span></div><div class="y">
+    
+    <!--{if $_G['uid']}-->
+				<p>
+					<strong class="vwmy{if $_G['setting']['connect']['allow'] && $_G[member][conisbind]} qq{/if}"><a href="home.php?mod=space&uid=$_G[uid]" target="_blank" title="{lang visit_my_space}">{$_G[member][username]}</a></strong>
+					<!--{if $_G['group']['allowinvisible']}-->
+					<span id="loginstatus">
+						<a id="loginstatusid" href="member.php?mod=switchstatus" title="{lang login_switch_invisible_mode}" onclick="ajaxget(this.href, 'loginstatus');return false;" class="xi2"></a>
+					</span>
+					<!--{/if}-->
+					<!--{hook/global_usernav_extra1}-->
+					<span class="pipe">|</span><a href="home.php?mod=spacecp">{lang setup}</a>
+					<span class="pipe">|</span><a href="home.php?mod=space&do=pm" id="pm_ntc"{if $_G[member][newpm]} class="new"{/if}>{lang pm_center}</a>
+					<span class="pipe">|</span><a href="home.php?mod=space&do=notice" id="myprompt"{if $_G[member][newprompt]} class="new"{/if}>{lang remind}<!--{if $_G[member][newprompt]}-->($_G[member][newprompt])<!--{/if}--></a><span id="myprompt_check"></span>
+					<!--{if $_G['setting']['taskon'] && !empty($_G['cookie']['taskdoing_'.$_G['uid']])}--><span class="pipe">|</span><a href="home.php?mod=task&item=doing" id="task_ntc" class="new">{lang task_doing}</a><!--{/if}-->
+					<!--{if ($_G['group']['allowmanagearticle'] || $_G['group']['allowpostarticle'] || $_G['group']['allowdiy'] || getstatus($_G['member']['allowadmincp'], 4) || getstatus($_G['member']['allowadmincp'], 6) || getstatus($_G['member']['allowadmincp'], 2) || getstatus($_G['member']['allowadmincp'], 3))}-->
+						<span class="pipe">|</span><a href="portal.php?mod=portalcp"><!--{if $_G['setting']['portalstatus'] }-->{lang portal_manage}<!--{else}-->{lang portal_block_manage}<!--{/if}--></a>
+					<!--{/if}-->
+					<!--{if $_G['uid'] && $_G['group']['radminid'] > 1}-->
+						<span class="pipe">|</span><a href="forum.php?mod=modcp&fid=$_G[fid]" target="_blank">{lang forum_manager}</a>
+					<!--{/if}-->
+					 
+					<!--{hook/global_usernav_extra2}-->
+					<span class="pipe">|</span><a href="member.php?mod=logging&action=logout&formhash={FORMHASH}">{lang logout}</a>
+				</p>
+			<!--{else}-->
+				<a href="/home.php?mod=spacecp">登录</a>　　<a href="/member.php?mod=register">注册</a>
+			<!--{/if}-->
+    
+    </div>
+	</div>
+	<div class="headad">&nbsp;</div>
+	<div class="menubg">
+ 
+    <div id="nv">
+        <ul>
+        <li><a href="home.php?mod=space&uid=$uid">赛事首页</a></li>
+        <li><a href="home.php?mod=space&uid=$uid&do=home&view=me&from=space">动态</a></li>
+        <li><a href="home.php?mod=space&uid=$_GET['uid']&do=action&act=weibo&wburl=d2VpYm8v">微博</a></li>
+        <li><a href="home.php?mod=space&uid=$uid&do=blog&view=me&from=space">博客</a></li>
+        <li><a href="home.php?mod=space&uid=$uid&do=album&view=me&from=space">相册</a></li>           
+        <li><a href="home.php?mod=space&uid=$uid&do=wall">留言板</a></li>
+        <li><a href="home.php?mod=space&uid=$uid&do=saishiinfo">赛事信息</a></li>
+        </ul>
+    </div>
+ </div>
+</div>

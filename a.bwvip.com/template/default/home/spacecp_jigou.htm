@@ -1,0 +1,186 @@
+<!--{subtemplate common/header}-->
+	<!--{subtemplate home/spacecp_header}-->
+			<!--{hook/spacecp_promotion_top}-->
+			<!--{if $_G['setting']['creditspolicy']['promotion_visit'] || $_G['setting']['creditspolicy']['promotion_register']}-->
+
+<!--{if $ac == 'jigou'}-->
+<ul class="tb cl" style='margin-bottom:2px'>
+	<li $opactives[xunzhang]><a href="home.php?mod=spacecp&ac=jigou&op=xunzhang">勋章设置</a></li>
+	<li $opactives[shenqing]><a href="home.php?mod=spacecp&ac=jigou&op=shenqing">其他设置</a></li>
+</ul>
+<!--{/if}-->
+<!--{if $operation == 'shenqing'}-->
+
+<!--{/if}-->
+<!--{if $operation == 'xunzhang'}-->
+			
+				
+<table width="90%"  border="0" cellspacing="0" cellpadding="0">
+  <tr align="center" bgcolor="#CCCCCC">
+    <td height="25">等级名称</td>
+    <td height="25">等级勋章</td>
+    <td height="25">等级描述</td>
+    <td height="25">等级权限</td>
+    <td height="25">操作</td>
+  </tr>
+  <!--{loop $xunzhang $key $xz}-->
+  <tr>
+    <td height="25">$xz[mdname]</td>
+    <td height="25"><img src="$xz[mdimg]" width="50"></td>
+    <td height="25">$xz[mdcontent]</td>
+    <td height="25">$xz[mditem]</td>
+    <td height="25"><a href="home.php?mod=spacecp&ac=jigou&op=xunzhang&cz=update&id=$xz[id]">修改</a> | <a href="home.php?mod=spacecp&ac=jigou&op=xunzhang&cz=del&id=$xz[id]">删除</a></td>
+  </tr>
+  <!--{/loop}-->
+</table>
+<script type="text/javascript">
+function insertImage(url)       //想在此处添加一个参数传递给select中的地址 
+{ 
+var obj=document.getElementById("mdimg"); 
+obj.value=url; 
+} 
+</script>
+<!--{if $cz == 'update'}-->
+
+<form action="home.php?mod=spacecp&ac=jigou&do=xunzhangg&cz=updates" method="post" name="f" enctype="multipart/form-data">
+<table width="70%"  border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <th height="30" bgcolor="#CCCCCC"><strong>会员勋章修改</strong></th>
+	<td bgcolor="#CCCCCC"></td>
+  </tr>
+  <tr>
+    <td width="20%" height="28" align="right">等级名称：</td>
+    <td height="28"><input type="test" size="15" name="mdname" value="{$xzxg[mdname]}"> 如：金牌会员</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td width="20%" height="28" align="right">等级排序：</td>
+    <td height="28">
+      <select name="mdid" size="1">
+        <!--{if {$xzxg[mdid]} == '1'}-->
+		<option value="1" selected>1</option>
+		<!--{else}-->
+		<option value="1">1</option>
+		<!--{/if}-->
+        <!--{if {$xzxg[mdid]} == '2'}-->
+		<option value="2" selected>2</option>
+		<!--{else}-->
+		<option value="2">2</option>
+		<!--{/if}-->
+        <!--{if {$xzxg[mdid]} == '3'}-->
+		<option value="3" selected>3</option>
+		<!--{else}-->
+		<option value="3">3</option>
+		<!--{/if}-->
+        <!--{if {$xzxg[mdid]} == '4'}-->
+		<option value="4" selected>4</option>
+		<!--{else}-->
+		<option value="4">4</option>
+		<!--{/if}-->
+      </select> 对应等级名称</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td height="28" align="right">勋章上传：</td>
+    <td height="28"><input type="text" name="mdimg" id="mdimg"> <input type="file" size="30" name="mdimg" id="mdimg"></td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td height="28" align="right">&nbsp;</td>
+    <td height="28"><img src="../../../data/memberpic/default/jin.jpg" width="36" height="48" onClick="insertImage('../../../data/memberpic/default/jin.jpg')" style="cursor:hand; "> <img src="../../../data/memberpic/default/yin.jpg" width="36" height="48" onClick="insertImage('../../../data/memberpic/default/yin.jpg')" style="cursor:hand; "> <img src="../../../data/memberpic/default/tong.jpg" width="36" height="48" onClick="insertImage('../../../data/memberpic/default/tong.jpg')" style="cursor:hand; "> <img src="../../../data/memberpic/default/tie.jpg" width="36" height="48" onClick="insertImage('../../../data/memberpic/default/tie.jpg')" style="cursor:hand; "> </td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td height="28" align="right">等级描述：</td>
+    <td height="28"><textarea name="mdcontent" cols="50" rows="5">{$xzxg[mdcontent]}</textarea></td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td height="28" align="right">等级权限：</td>
+    <td height="28"><input type="checkbox" name="mditem[]" value="评论">
+      评论
+        <input type="checkbox" name="mditem[]" value="发私信">
+        发私信
+        <input type="checkbox" name="mditem[]" value="邀请其他会员">
+        邀请其他会员
+		<input type="checkbox" name="mditem[]" value="查看俱乐部资料">
+        查看俱乐部资料</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td height="28" align="right">&nbsp;</td>
+    <td height="28"><input type="submit" name="pwdsubmit" value="提交申请" class="submit" /><input type="hidden" name="id" value="{$xzxg[id]}"></td>
+    <td>&nbsp;</td>
+  </tr>
+</table>
+</form>
+
+<!--{else}-->
+<form action="home.php?mod=spacecp&ac=jigou&do=xunzhang" method="post" name="f" enctype="multipart/form-data">
+<table width="70%"  border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <th height="30" bgcolor="#CCCCCC"><strong>会员勋章管理</strong></th>
+	<td bgcolor="#CCCCCC">会员分类最高4级</td>
+  </tr>
+  <tr>
+    <td width="20%" height="28" align="right">等级名称：</td>
+    <td height="28"><input type="test" size="15" name="mdname"> 如：金牌会员</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td width="20%" height="28" align="right">等级排序：</td>
+    <td height="28">
+      <select name="mdid" size="1">
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+      </select> 对应等级名称</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td height="28" align="right">勋章上传：</td>
+    <td height="28"><input type="text" name="mdimg" id="mdimg"> <input type="file" size="30" name="mdimg" id="mdimg"></td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td height="28" align="right">&nbsp;</td>
+    <td height="28"><img src="../../../data/memberpic/default/jin.jpg" width="36" height="48" onClick="insertImage('../../../data/memberpic/default/jin.jpg')" style="cursor:hand; "> <img src="../../../data/memberpic/default/yin.jpg" width="36" height="48" onClick="insertImage('../../../data/memberpic/default/yin.jpg')" style="cursor:hand; "> <img src="../../../data/memberpic/default/tong.jpg" width="36" height="48" onClick="insertImage('../../../data/memberpic/default/tong.jpg')" style="cursor:hand; "> <img src="../../../data/memberpic/default/tie.jpg" width="36" height="48" onClick="insertImage('../../../data/memberpic/default/tie.jpg')" style="cursor:hand; "> </td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td height="28" align="right">等级描述：</td>
+    <td height="28"><textarea name="mdcontent" cols="50" rows="5"></textarea></td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td height="28" align="right">等级权限：</td>
+    <td height="28"><input type="checkbox" name="mditem[]" value="评论">
+      评论
+        <input type="checkbox" name="mditem[]" value="发私信">
+        发私信
+        <input type="checkbox" name="mditem[]" value="邀请其他会员">
+        邀请其他会员
+		<input type="checkbox" name="mditem[]" value="查看俱乐部资料">
+        查看俱乐部资料</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td height="28" align="right">&nbsp;</td>
+    <td height="28"><input type="submit" name="pwdsubmit" value="提交申请" class="submit" /></td>
+    <td>&nbsp;</td>
+  </tr>
+</table>
+</form>
+<!--{/if}-->
+					<!--{/if}-->
+					
+			<!--{/if}-->
+			<!--{hook/spacecp_promotion_bottom}-->
+		</div>
+	</div>
+	<div class="appl">
+		<!--{subtemplate home/spacecp_footer}-->
+	</div>
+</div>
+<!--{subtemplate common/footer}-->

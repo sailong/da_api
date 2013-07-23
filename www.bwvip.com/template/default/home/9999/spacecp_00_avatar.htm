@@ -1,0 +1,41 @@
+	<!-- 右侧 star-->
+	<div class="rightw">
+		<div class="rightlm"><h1>我的头像</h1></div>
+		<br>
+		<div class="rcontent">
+			
+				<!----------修改头像开始----------->
+				<script type="text/javascript">
+					function updateavatar() {
+						window.location.reload();
+					}
+				</script>
+				<form method="post" autocomplete="off" action="home.php?mod=spacecp&ac=avatar&ref">
+					<table cellspacing="0" cellpadding="0" class="tfm">
+						<tr>
+							<td>
+								<!--{avatar($space[uid],big)}-->
+							</td>
+                            <td>
+                                    <h2 style="font-size:16px; font-weight:bold; color:#333; padding:10px">{lang current_my_space}</h2>
+                                    <p style="color:#666; padding:10px; line-height:1.8">{lang setting_avatar_message}</p>
+                            </td>
+						</tr>
+					</table><br />
+
+					<table cellspacing="0" cellpadding="0" class="tfm">
+							<h2 style="font-size:16px; font-weight:bold; color:#333; padding:10px">{lang setting_my_new_avatar}</h2>
+							<p style="color:#666; padding:10px; line-height:1.8">{lang setting_my_new_avatar_message}</p>
+						<tr>
+							<td>
+								<script type="text/javascript">document.write(AC_FL_RunContent('<!--{echo implode("','", $uc_avatarflash);}-->'));</script>
+							</td>
+						</tr>
+					</table>
+					<input type="hidden" name="formhash" value="{FORMHASH}" />
+				</form>
+				<!----------修改头像结束----------->
+		</div>
+	</div>
+	<div class="clear"></div>
+	<!-- 右侧 end-->

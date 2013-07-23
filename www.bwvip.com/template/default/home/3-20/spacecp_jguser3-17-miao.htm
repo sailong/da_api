@@ -1,0 +1,78 @@
+<!--{template home/space_header_comm}-->
+<div id="wtcontent">
+	<!-- 左侧 -->
+	<!--{template home/spacecp_00_left}-->
+    
+	<div class="rightw">
+     <!--右侧开始-->
+     <div class="rightlm"><h1>$alttitle</h1></div>
+     <div class="rcontent">	
+     <br />
+     <!--{if $op=='add'}-->
+       <form action="home.php?mod=spacecp&ac=jguser&type=$type&op=addsub" method="post" name="form1">
+      <table width="80%">
+      <tr>
+      <td>&nbsp;</td><td>用户id</td><td>用户名</td>
+      </tr>
+      <!--{loop $jiaolian $value}-->
+      <tr>
+      <td><input type="checkbox" name="add[]" value="$value[uid]" /></td><td><img src="/uc_server/avatar.php?uid=$value[uid]&size=small" /></td><td>$value[username]</td>
+      </tr>
+      <!--{/loop}-->
+      
+      </table>
+      <br /><br />
+       <input type="submit" value="添加" />
+       </form>
+       <!--{/if}-->
+       
+       <!--{if $op=='list'}-->
+       <form action="home.php?mod=spacecp&ac=jguser&type=$type&op=del" method="post" name="form1">
+      <table width="80%">
+      <tr>
+      <td>&nbsp;</td><td>用户id</td><td>用户名</td><td>真实姓名</td><td>排序</td><td>操作</td>
+      </tr>
+      <!--{loop $listrow $kyy}-->
+      <tr>
+      <td><input type="checkbox" name="del[]" value="$kyy[userid]" /></td><td><img src="/uc_server/avatar.php?uid=$kyy[userid]&size=small" /></td><td>$kyy["username"]</td><td>$kyy["realname"]</td><td><input type="text" maxlength="3" size="5" value="$kyy[seq]" id="seq_$kyy[userid]" onkeyup="this.value=this.value.replace(/[^\d]/g,'')" /></td><td><a href="javascript:void(0)" onclick="editseq($kyy[userid])" >修改排序</a></td>
+      </tr>
+      <!--{/loop}-->
+      </table>
+      <br /><br />
+      <!--{if $listrow}-->
+       <input type="submit" value="删除" />
+       <!--{/if}-->
+       </form>
+       
+       <!--{/if}-->
+       </div>
+	 <!--右侧结束-->
+    </div>
+		 
+</div>
+<input type="hidden" value="$type" id="typeid" />	
+<script src="static/js/jquery1.5.js"></script>
+<script>
+function editseq(uid){
+    var pid=$("#seq_"+uid).val();
+    var tpvalue=$("#typeid").val();
+    
+    if(pid){
+        $.post("jigou_user.php",{type:tpvalue,id:uid,op:'edit','seq':pid},function(msg){
+            //alert(msg);
+            if(msg=='no'){
+                alert('参数错误');
+            }else if(msg=='yes'){
+                alert('修改成功');
+            }else if(msg=='wrong'){
+                alert('修改错误');
+            }
+            
+        })
+    }
+    
+}
+
+</script>
+<div class="clear"></div>
+<!--{template home/spacecp_foot_comm}--> 

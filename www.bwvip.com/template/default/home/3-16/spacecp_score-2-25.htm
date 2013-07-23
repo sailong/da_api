@@ -1,0 +1,556 @@
+<!--{template home/spacecp_10_head}-->
+<div id="wtcontent">
+	<!-- 左侧 -->
+	<!--{template home/spacecp_10_left}-->
+	<!-- 右侧 -->
+	<div class="rightw">
+		<div class="rightlm"><h1>我的成绩卡</h1></div>
+		<br>
+		<div class="rcontent">
+			<div style='height:860px'>
+<style type='text/css'>
+.score {
+	width:99%; border:1px solid #abcdef
+}
+.score td {
+	border:1px solid #abcdef; height:25px; width:20px; text-align:center; padding:0
+}
+.score tr .first {
+	width:80px; color:blue
+}
+.score tr .num {
+	font-weight:bold; width:20px
+}
+.score tr td input {
+	width:20px; height:25px; line-height:25px; margin:0; border:none
+}
+.score tr td .bottom {
+	width:96%
+}
+.score tr td #time {
+	width:150px; border:1px dashed gray
+}
+</style>
+
+			<!--{subtemplate home/spacecp_score_nav}-->
+			<script type="text/javascript" src="{$_G[setting][jspath]}calendar.js?{VERHASH}"></script>
+			<form action='home.php?mod=spacecp&ac=score&op=save&do=<!--{if $operation == add}-->add<!--{else}-->edit<!--{/if}-->' method='post' enctype='multipart/form-data' onsubmit='clearErrorInfo();'>
+			<!--{if $operation == 'add' || $operation == 'edit'}-->
+			<table cellspacing='0' cellpadding='0' class='score'>
+				<!--{if $operation == 'edit'}-->
+				<input type='hidden' name='id' value='<!--{$arr[id]}-->' />
+				<!--{/if}-->
+				<tr>
+					<td class='first' style='width:100px'>球场</td>
+					<td colspan='21' style='text-align:left'>
+						<!--{if $operation == 'add'}-->
+						<select name='province' id='province' style='width:100px; height:100%; border:none; border-right:1px solid #abcdef; font-size:13px' onchange='getarea(this.value)'>
+							<option value='0'>请选择</option>
+							<!--{loop $area $key $val}-->
+							<option value='<!--{$val[id]}-->'><!--{$val[name]}--></option>
+							<!--{/loop}-->
+						</select>
+						<select name='fieldid' id='field' style='width:150px; height:100%; border:none; border-right:1px solid #abcdef; border-left:1px solid #abcdef; font-size:13px' onchange='getpar(this.value)'>
+							<option value='0'>请选择</option>
+						</select>
+						<!--{else}-->
+						<!--{if $arr[name]}--><!--{$arr[name]}--> >> <!--{/if}-->
+						<!--{$arr[fieldname]}-->
+						<!--{/if}-->
+						<span id='rfield' style='color:red'></span>
+					</td>
+				</tr>
+				<tr>
+					<td class='first'>时间</td>
+					<td colspan='21' style='text-align:left'>
+						<input type="text" name='fieldtime' id='time' value="<!--{if $arr[time]}-->$arr[time]<!--{else}-->$_G[gp_starttime]<!--{/if}-->" onclick="showcalendar(event, this)" />
+						<span id='rtime' style='color:red'></span>
+					</td>
+				</tr>
+				<tr>
+					<td class='first'>参加人数</td>
+					<td colspan='4'><input type='text' style='width:100%; border:1px dashed gray' name='member' value='<!--{if $arr[member]}-->$arr[member]<!--{/if}-->' /></td>
+					<td class='first' colspan='3'>备注</td>
+					<td colspan='16'><input type='text' style='width:99%; border:1px dashed gray' name='content' value='<!--{if $arr[content]}-->$arr[content]<!--{/if}-->' /></td>
+				</tr>
+				<tr>
+					<td class='first'>上传积分卡</td>
+					<td colspan='21' style='text-align:left'><input type='file' name='uploadimg' style='width:400px' /></td>
+				</tr>
+				<tr>
+					<td class='first'>球洞</td>
+					<!--{loop $data $k $v}-->
+					<td class='num'><!--{$v}--></td>
+					<!--{/loop}-->
+				</tr>
+				<tr id='par'>
+					<td class='first'>标准杆</td>
+					<!--{if $arr[par]}-->
+					<!--{loop $arr[par] $key $val}-->
+					<td><input type='text' id='par_<!--{$key}-->' name='par[]' value='<!--{$val}-->' readonly /></td>
+					<!--{/loop}-->
+					<!--{else}-->
+					<!--{loop $num $key $val}-->
+					<td>
+						<input type='text' id='par_$key' name='par[]' value='' readonly />
+					</td>
+					<!--{/loop}-->
+					<!--{/if}-->
+				</tr>
+				<tr id='score'>
+					<td class='first'>成绩</td>
+					<!--{if $arr[score]}-->
+					<!--{loop $arr[score] $key $val}-->
+					<td>
+						<input type='text' name='score[]' value='<!--{$val}-->' id='score_<!--{$key}-->' onblur="getscore('score_<!--{$key}-->')" maxlength='1' />
+					</td>
+					<!--{/loop}-->
+					<!--{else}-->
+					<!--{loop $num $key $val}-->
+					<td><input type='text' name='score[]' value='' id='score_<!--{$key}-->' onblur="getscore('score_<!--{$key}-->')" maxlength='1' /></td>
+					<!--{/loop}-->
+					<!--{/if}-->
+				</tr>
+				<tr id='pars'>
+					<td class='first'>距离总标准杆</td>
+					<!--{if $arr[pars]}-->
+					<!--{loop $arr[pars] $key $val}-->
+					<td><input type='text' name='pars[]' id='pars_<!--{$key}-->' value='<!--{$val}-->' readonly /></td>
+					<!--{/loop}-->
+					<!--{else}-->
+					<!--{loop $num $key $val}-->
+					<td id='<!--{$key}-->'><input type='text' id='pars_<!--{$key}-->' name='pars[]' value='' readonly /></td>
+					<!--{/loop}-->
+					<!--{/if}-->
+				</tr>
+			</table>
+			<table cellspacing='0' cellpadding='0' id='more' class='score' style='display:none'>
+				<tr>
+					<td colspan='7'>详细资料</td>
+				</tr>
+				<tr>
+					<td style='width:20%'></td>
+					<td style='width:10%'>第一轮</td>
+					<td style='width:10%'>第二轮</td>
+					<td style='width:10%'>第三轮</td>
+					<td style='width:10%'>第四轮</td>
+					<td style='width:10%'>总数</td>
+					<td style='width:10%'>排名</td>
+				</tr>
+				<tr>
+					<td>平均开球距离</td>
+					<!--{if $arr[avglength]}-->
+					<!--{loop $arr[avglength] $k $v}-->
+					<td><input type='text' name='avglength[]' class='bottom' value='<!--{$v}-->' maxlength='6' /></td>
+					<!--{/loop}-->
+					<!--{else}-->
+					<!--{loop $coun $k $v}-->
+					<td><input type='text' name='avglength[]' class='bottom' value='' maxlength='6' /></td>
+					<!--{/loop}-->
+					<!--{/if}-->
+					<td><input type='text' name='total_avglength' class='bottom' value='<!--{if $arr[total_avglength]}--><!--{$arr[total_avglength]}--><!--{/if}-->' maxlength='6' /></td>
+					<td><input type='text' name='avglength_rank' class='bottom' value='<!--{if $arr[avglength_rank]}--><!--{$arr[avglength_rank]}--><!--{/if}-->' maxlength='11' /></td>
+				</tr>
+				<tr>
+					<td class='morefir'>开球上球道率</td>
+					<!--{if $arr[shangdaolv]}-->
+					<!--{loop $arr[shangdaolv] $k $v}-->
+					<td><input type='text' name='shangdaolv[]' class='bottom' value='<!--{$v}-->' maxlength='6' /></td>
+					<!--{/loop}-->
+					<!--{else}-->
+					<!--{loop $coun $k $v}-->
+					<td><input type='text' name='shangdaolv[]' class='bottom' value='' maxlength='6' /></td>
+					<!--{/loop}-->
+					<!--{/if}-->
+					<td><input type='text' name='total_shangdaolv' class='bottom' value='<!--{if $arr[total_shangdaolv]}--><!--{$arr[total_shangdaolv]}--><!--{/if}-->' maxlength='6' /></td>
+					<td><input type='text' name='shangdaolv_rank' class='bottom' value='<!--{if $arr[shangdaolv_rank]}--><!--{$arr[shangdaolv_rank]}--><!--{/if}-->' maxlength='11' /></td>
+				</tr>
+				<tr>
+					<td class='morefir'>开球上球道</td>
+					<!--{if $arr[shangdao]}-->
+					<!--{loop $arr[shangdao] $k $v}-->
+					<td><input type='text' name='shangdao[]' class='bottom' value='<!--{$v}-->' maxlength='2' /></td>
+					<!--{/loop}-->
+					<!--{else}-->
+					<!--{loop $coun $k $v}-->
+					<td><input type='text' name='shangdao[]' class='bottom' value='' maxlength='2' /></td>
+					<!--{/loop}-->
+					<!--{/if}-->
+					<td><input type='text' name='total_shangdao' class='bottom' value='<!--{if $arr[total_shangdao]}--><!--{$arr[total_shangdao]}--><!--{/if}-->' maxlength='2' /></td>
+					<td><input type='text' name='shangdao_rank' class='bottom' value='<!--{if $arr[shangdao_rank]}--><!--{$arr[shangdao_rank]}--><!--{/if}-->' maxlength='11' /></td>
+				</tr>
+				<tr>
+					<td>标准杆上果岭率</td>
+					<!--{if $arr[greenslv]}-->
+					<!--{loop $arr[greenslv] $k $v}-->
+					<td><input type='text' name='greenslv[]' class='bottom' value='<!--{$v}-->' maxlength='6' /></td>
+					<!--{/loop}-->
+					<!--{else}-->
+					<!--{loop $coun $k $v}-->
+					<td><input type='text' name='greenslv[]' class='bottom' value='' maxlength='6' /></td>
+					<!--{/loop}-->
+					<!--{/if}-->
+					<td><input type='text' name='total_greenslv' class='bottom' value='<!--{if $arr[total_greenslv]}--><!--{$arr[total_greenslv]}--><!--{/if}-->' maxlength='6' /></td>
+					<td><input type='text' name='greenslv_rank' class='bottom' value='<!--{if $arr[greenslv_rank]}--><!--{$arr[greenslv_rank]}--><!--{/if}-->' maxlength='11' /></td>
+				</tr>
+				<tr>
+					<td>标准杆上果岭</td>
+					<!--{if $arr[greens]}-->
+					<!--{loop $arr[greens] $k $v}-->
+					<td><input type='text' name='greens[]' class='bottom' value='<!--{$v}-->' maxlength='2' /></td>
+					<!--{/loop}-->
+					<!--{else}-->
+					<!--{loop $coun $k $v}-->
+					<td><input type='text' name='greens[]' class='bottom' value='' maxlength='2' /></td>
+					<!--{/loop}-->
+					<!--{/if}-->
+					<td><input type='text' name='total_greens' class='bottom' value='<!--{if $arr[total_greens]}--><!--{$arr[total_greens]}--><!--{/if}-->' maxlength='3' /></td>
+					<td><input type='text' name='greens_rank' class='bottom' value='<!--{if $arr[greens_rank]}--><!--{$arr[greens_rank]}--><!--{/if}-->' maxlength='11' /></td>
+				</tr>
+				<tr>
+					<td>标准杆上果岭后平均推求率</td>
+					<!--{if $arr[avepushs]}-->
+					<!--{loop $arr[avepushs] $k $v}-->
+					<td><input type='text' name='avepushs[]' class='bottom' value='<!--{$v}-->' maxlength='6' /></td>
+					<!--{/loop}-->
+					<!--{else}-->
+					<!--{loop $coun $k $v}-->
+					<td><input type='text' name='avepushs[]' class='bottom' value='' maxlength='6' /></td>
+					<!--{/loop}-->
+					<!--{/if}-->
+					<td><input type='text' name='total_avepushs' class='bottom' value='<!--{if $arr[total_avepushs]}--><!--{$arr[total_avepushs]}--><!--{/if}-->' maxlength='6' /></td>
+					<td><input type='text' name='avepushs_rank' class='bottom' value='<!--{if $arr[avepushs_rank]}--><!--{$arr[avepushs_rank]}--><!--{/if}-->' maxlength='11' /></td>
+				</tr>
+				<tr>
+					<td>标准杆上果岭总推杆数</td>
+					<!--{if $arr[pushs]}-->
+					<!--{loop $arr[pushs] $k $v}-->
+					<td><input type='text' name='pushs[]' class='bottom' value='<!--{$v}-->' maxlength='2' /></td>
+					<!--{/loop}-->
+					<!--{else}-->
+					<!--{loop $coun $k $v}-->
+					<td><input type='text' name='pushs[]' class='bottom' value='' maxlength='2' /></td>
+					<!--{/loop}-->
+					<!--{/if}-->
+					<td><input type='text' name='total_pushs' class='bottom' value='<!--{if $arr[total_pushs]}--><!--{$arr[total_pushs]}--><!--{/if}-->' maxlength='3' /></td>
+					<td><input type='text' name='pushs_rank' class='bottom' value='<!--{if $arr[pushs_rank]}--><!--{$arr[pushs_rank]}--><!--{/if}-->' maxlength='11' /></td>
+				</tr>
+				<tr>
+					<td>老鹰球</td>
+					<!--{if $arr[eagle]}-->
+					<!--{loop $arr[eagle] $k $v}-->
+					<td><input type='text' name='eagle[]' class='bottom' value='<!--{$v}-->' maxlength='2' /></td>
+					<!--{/loop}-->
+					<!--{else}-->
+					<!--{loop $coun $k $v}-->
+					<td><input type='text' name='eagle[]' class='bottom' value='' maxlength='2' /></td>
+					<!--{/loop}-->
+					<!--{/if}-->
+					<td><input type='text' name='total_eagle' class='bottom' value='<!--{if $arr[total_eagle]}--><!--{$arr[total_eagle]}--><!--{/if}-->' maxlength='2' /></td>
+					<td><input type='text' name='eagle_rank' class='bottom' value='<!--{if $arr[eagle_rank]}--><!--{$arr[eagle_rank]}--><!--{/if}-->' maxlength='11' /></td>
+				</tr>
+				<tr>
+					<td>小鸟球</td>
+					<!--{if $arr[birdie]}-->
+					<!--{loop $arr[birdie] $k $v}-->
+					<td><input type='text' name='birdie[]' class='bottom' value='<!--{$v}-->' maxlength='2' /></td>
+					<!--{/loop}-->
+					<!--{else}-->
+					<!--{loop $coun $k $v}-->
+					<td><input type='text' name='birdie[]' class='bottom' value='' maxlength='2' /></td>
+					<!--{/loop}-->
+					<!--{/if}-->
+					<td><input type='text' name='total_birdie' class='bottom' value='<!--{if $arr[total_birdie]}--><!--{$arr[total_birdie]}--><!--{/if}-->' maxlength='2' /></td>
+					<td><input type='text' name='birdie_rank' class='bottom' value='<!--{if $arr[birdie_rank]}--><!--{$arr[birdie_rank]}--><!--{/if}-->' maxlength='11' /></td>
+				</tr>
+				<tr>
+					<td>沙坑救球率</td>
+					<!--{if $arr[bunkerlv]}-->
+					<!--{loop $arr[bunkerlv] $k $v}-->
+					<td><input type='text' name='bunkerlv[]' class='bottom' value='<!--{$v}-->' maxlength='6' /></td>
+					<!--{/loop}-->
+					<!--{else}-->
+					<!--{loop $coun $k $v}-->
+					<td><input type='text' name='bunkerlv[]' class='bottom' value='' maxlength='6' /></td>
+					<!--{/loop}-->
+					<!--{/if}-->
+					<td><input type='text' name='total_bunkerlv' class='bottom' value='<!--{if $arr[total_bunkerlv]}--><!--{$arr[total_bunkerlv]}--><!--{/if}-->' maxlength='6' /></td>
+					<td><input type='text' name='bunkerlv_rank' class='bottom' value='<!--{if $arr[bunkerlv_rank]}--><!--{$arr[bunkerlv_rank]}--><!--{/if}-->' maxlength='11' /></td>
+				</tr>
+				<tr>
+					<td>沙坑救球</td>
+					<!--{if $arr[bunker]}-->
+					<!--{loop $arr[bunker] $k $v}-->
+					<td><input type='text' name='bunker[]' class='bottom' value='<!--{$v}-->' maxlength='2' /></td>
+					<!--{/loop}-->
+					<!--{else}-->
+					<!--{loop $coun $k $v}-->
+					<td><input type='text' name='bunker[]' class='bottom' value='' maxlength='2' /></td>
+					<!--{/loop}-->
+					<!--{/if}-->
+					<td><input type='text' name='total_bunker' class='bottom' value='<!--{if $arr[total_bunker]}--><!--{$arr[total_bunker]}--><!--{/if}-->' maxlength='2' /></td>
+					<td><input type='text' name='bunker_rank' class='bottom' value='<!--{if $arr[bunker_rank]}--><!--{$arr[bunker_rank]}--><!--{/if}-->' maxlength='11' /></td>
+				</tr>
+				<tr>
+					<td>平均每轮推杆数</td>
+					<!--{if $arr[avepush]}-->
+					<!--{loop $arr[avepush] $k $v}-->
+					<td><input type='text' name='avepush[]' class='bottom' value='<!--{$v}-->' maxlength='5' /></td>
+					<!--{/loop}-->
+					<!--{else}-->
+					<!--{loop $coun $k $v}-->
+					<td><input type='text' name='avepush[]' class='bottom' value='' maxlength='5' /></td>
+					<!--{/loop}-->
+					<!--{/if}-->
+					<td><input type='text' name='total_avepush' class='bottom' value='<!--{if $arr[total_avepush]}--><!--{$arr[total_avepush]}--><!--{/if}-->' maxlength='5' /></td>
+					<td><input type='text' name='avepush_rank' class='bottom' value='<!--{if $arr[avepush_rank]}--><!--{$arr[avepush_rank]}--><!--{/if}-->' maxlength='11' /></td>
+				</tr>
+				<tr>
+					<td>最远击球距离</td>
+					<!--{if $arr[furthest]}-->
+					<!--{loop $arr[furthest] $k $v}-->
+					<td><input type='text' name='furthest[]' class='bottom' value='<!--{$v}-->' maxlength='4' /></td>
+					<!--{/loop}-->
+					<!--{else}-->
+					<!--{loop $coun $k $v}-->
+					<td><input type='text' name='furthest[]' class='bottom' value='' maxlength='4' /></td>
+					<!--{/loop}-->
+					<!--{/if}-->
+					<td><input type='text' name='total_furthest' class='bottom' value='<!--{if $arr[total_furthest]}--><!--{$arr[total_furthest]}--><!--{/if}-->' maxlength='4' /></td>
+					<td><input type='text' name='furthest_rank' class='bottom' value='<!--{if $arr[furthest_rank]}--><!--{$arr[furthest_rank]}--><!--{/if}-->' maxlength='11' /></td>
+				</tr>
+				<tr>
+					<td>柏忌数</td>
+					<!--{if $arr[bogi]}-->
+					<!--{loop $arr[bogi] $k $v}-->
+					<td><input type='text' name='bogi[]' class='bottom' value='<!--{$v}-->' maxlength='2' /></td>
+					<!--{/loop}-->
+					<!--{else}-->
+					<!--{loop $coun $k $v}-->
+					<td><input type='text' name='bogi[]' class='bottom' value='' maxlength='2' /></td>
+					<!--{/loop}-->
+					<!--{/if}-->
+					<td><input type='text' name='total_bogi' class='bottom' value='<!--{if $arr[total_bogi]}--><!--{$arr[total_bogi]}--><!--{/if}-->' maxlength='2' /></td>
+					<td><input type='text' name='bogi_rank' class='bottom' value='<!--{if $arr[bogi_rank]}--><!--{$arr[bogi_rank]}--><!--{/if}-->' maxlength='11' /></td>
+				</tr>
+				<tr>
+					<td>双柏忌数</td>
+					<!--{if $arr[doubles]}-->
+					<!--{loop $arr[doubles] $k $v}-->
+					<td><input type='text' name='doubles[]' class='bottom' value='<!--{$v}-->' maxlength='2' /></td>
+					<!--{/loop}-->
+					<!--{else}-->
+					<!--{loop $coun $k $v}-->
+					<td><input type='text' name='doubles[]' class='bottom' value='' maxlength='2' /></td>
+					<!--{/loop}-->
+					<!--{/if}-->
+					<td><input type='text' name='total_doubles' class='bottom' value='<!--{if $arr[total_doubles]}--><!--{$arr[total_doubles]}--><!--{/if}-->' maxlength='2' /></td>
+					<td><input type='text' name='doubles_rank' class='bottom' value='<!--{if $arr[doubles_rank]}--><!--{$arr[doubles_rank]}--><!--{/if}-->' maxlength='11' /></td>
+				</tr>
+				<tr>
+					<td>其他</td>
+					<!--{if $arr[other]}-->
+					<!--{loop $arr[other] $k $v}-->
+					<td><input type='text' name='other[]' class='bottom' value='<!--{$v}-->' maxlength='1' /></td>
+					<!--{/loop}-->
+					<!--{else}-->
+					<!--{loop $coun $k $v}-->
+					<td><input type='text' name='other[]' class='bottom' value='' maxlength='1' /></td>
+					<!--{/loop}-->
+					<!--{/if}-->
+					<td><input type='text' name='total_other' class='bottom' value='<!--{if $arr[total_other]}--><!--{$arr[total_other]}--><!--{/if}-->' maxlength='1' /></td>
+					<td><input type='text' name='other_rank' class='bottom' value='<!--{if $arr[other_rank]}--><!--{$arr[other_rank]}--><!--{/if}-->' maxlength='11' /></td>
+				</tr>
+				<tr>
+					<td>被罚杆数</td>
+					<!--{if $arr[penalty]}-->
+					<!--{loop $arr[penalty] $k $v}-->
+					<td><input type='text' name='penalty[]' class='bottom' value='<!--{$v}-->' maxlength='2' /></td>
+					<!--{/loop}-->
+					<!--{else}-->
+					<!--{loop $coun $k $v}-->
+					<td><input type='text' name='penalty[]' class='bottom' value='' maxlength='2' /></td>
+					<!--{/loop}-->
+					<!--{/if}-->
+					<td><input type='text' name='total_penalty' class='bottom' value='<!--{if $arr[total_penalty]}--><!--{$arr[total_penalty]}--><!--{/if}-->' maxlength='2' /></td>
+					<td><input type='text' name='penalty_rank' class='bottom' value='<!--{if $arr[penalty_rank]}--><!--{$arr[penalty_rank]}--><!--{/if}-->' maxlength='11' /></td>
+				</tr>
+				<tr>
+					<td>打平标准杆</td>
+					<!--{if $arr[evenpar]}-->
+					<!--{loop $arr[evenpar] $k $v}-->
+					<td><input type='text' name='evenpar[]' class='bottom' value='<!--{$v}-->' maxlength='2' /></td>
+					<!--{/loop}-->
+					<!--{else}-->
+					<!--{loop $coun $k $v}-->
+					<td><input type='text' name='evenpar[]' class='bottom' value='' maxlength='2' /></td>
+					<!--{/loop}-->
+					<!--{/if}-->
+					<td><input type='text' name='total_evenpar' class='bottom' value='<!--{if $arr[total_evenpar]}--><!--{$arr[total_evenpar]}--><!--{/if}-->' maxlength='2' /></td>
+					<td><input type='text' name='evenpar_rank' class='bottom' value='<!--{if $arr[evenpar_rank]}--><!--{$arr[evenpar_rank]}--><!--{/if}-->' maxlength='11' /></td>
+				</tr>
+			</table>
+
+			<!--{elseif $operation == 'list'}-->
+			<!--{if $list}-->
+			<!--{loop $list $key $val}-->
+			<table cellspacing='0' cellpadding='0' class='score' style='margin-bottom:50px'>
+				<tr>
+					<td colspan='22'>
+						<a href='home.php?mod=spacecp&ac=score&op=edit&id=<!--{$val[id]}-->'>修改</a> | 
+						<a href='home.php?mod=spacecp&ac=score&op=del&id=<!--{$val[id]}-->' onclick="{if(confirm('确定操作吗？')){return true;}return false;}">删除</a>
+					</td>
+				</tr>
+				<tr>
+					<td class='first'>球场</td>
+					<td colspan='21' style='text-align:left' style='border:1px solid #dabaac'><!--{$val[fieldname]}--></td>
+				</tr>
+				<tr>
+					<td class='first'>时间</td>
+					<td colspan='5' style='border:1px solid #dabaac'><!--{$val[fieldtime]}--></td>
+					<td colspan='16'></td>
+				</tr>
+				<tr>
+					<td class='first'>参加人数</td>
+					<td colspan='4'><!--{$val[member]}--></td>
+					<td class='first' colspan='3'>备注</td>
+					<td colspan='16'><!--{if $val[content]}--><!--{$val[content]}--><!--{else}-->无<!--{/if}--></td>
+				</tr>
+				<tr>
+					<td class='first'>球洞</td>
+					<!--{loop $data $k $v}-->
+					<td class='num'><!--{$v}--></td>
+					<!--{/loop}-->
+				</tr>
+				<tr>
+					<td class='first'>标准杆</td>
+					<!--{loop $val[par] $k $v}-->
+					<td><!--{$v}-->&nbsp;</td>
+					<!--{/loop}-->
+				</tr>
+				<tr>
+					<td class='first'>成绩</td>
+					<!--{loop $val[score] $k $v}-->
+					<td><!--{$v}-->&nbsp;</td>
+					<!--{/loop}-->
+				</tr>
+				<tr>
+					<td class='first'>距离总标准杆</td>
+					<!--{loop $val[pars] $k $v}-->
+					<td><!--{$v}-->&nbsp;</td>
+					<!--{/loop}-->
+				</tr>
+				<!--{/loop}-->
+			</table>
+			<!--{else}-->
+			<p style='height:50px; line-height:50px; width:99%; text-align:center; border:1px dashed #abcdef'>暂无数据</p>
+			<!--{/if}-->
+			<!--{/if}-->
+			<!--{if $operation == 'add' || $operation == 'edit'}-->
+			<table cellspacing='0' cellpadding='0' class='score'>
+				<tr>
+					<td style='width:800px'>
+						<button type='submit' name='profilesubmitbtn' value='true' id='profilesubmitbtn' onclick='return checksubmit()' class='pn pnc' /><strong>{lang save}</strong></button>
+					</td>
+				</tr>
+				<tr>
+					<td colspan='22' style='text-align:right' id='base'><span onclick='getmore()' id='getmore' style='cursor:hand'>更多资料 >></span>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+				</tr>
+			</table>
+			<!--{/if}-->
+			<!--{if $multi}-->
+			<p style='height:30px; width:99%; margin-top:-60px'><!--{$multi}--></p>
+			<!--{/if}-->
+		</form>
+
+
+		<script type="text/javascript" src='static/js/jquery.js'></script>
+		<script type="text/javascript">
+			function getmore() {
+				jQuery('#more').css('display', 'inline');
+				var html = "<span onclick='getbase()' id='getmore' style='cursor:hand'>基本资料 >></span>&nbsp;&nbsp;&nbsp;&nbsp;";
+				jQuery('#base').html(html);
+			}
+			function getbase() {
+				jQuery('#more').css('display', 'none');
+				var html = "<span onclick='getmore()' id='getmore' style='cursor:hand'>更多资料 >></span>&nbsp;&nbsp;&nbsp;&nbsp;";
+				jQuery('#base').html(html);
+			}
+			function getarea(val) {
+				var url = 'home.php?mod=spacecp&ac=score&op=area&val='+val;
+				jQuery.post(url, {}, function(msg) {
+					jQuery('#field').html(msg);
+				});
+			}
+			function getscore(str) {
+				var prefix = str.substr(0, 5);
+				var num = str.substr(6, 2);
+
+				var sco = parseInt(jQuery('#'+str).val()) ? parseInt(jQuery('#'+str).val()) : parseInt(0);
+
+				var par = jQuery('#par_'+num).val() ? parseInt(jQuery('#par_'+num).val()) : parseInt(0);
+				var pars = sco - par;
+				pars = (pars == '0') ? 'E' : pars;
+				jQuery('#'+'pars_'+num).val(pars);
+
+				var sum = 0;
+				var val = 0;
+				var cou = 0;
+				var plus = 0;
+				for(var i = 0; i < 9; i++) {
+					var val = parseInt(jQuery('#'+(prefix+'_'+i)).val()) ? parseInt(jQuery('#'+(prefix+'_'+i)).val()) : parseInt(0);
+					sum = sum + val;
+				}
+				jQuery('#'+prefix+'_9').val(sum);
+				for(var i = 10; i < 19; i++) {
+					var cou = parseInt(jQuery('#'+(prefix+'_'+i)).val()) ? parseInt(jQuery('#'+(prefix+'_'+i)).val()) : parseInt(0);
+					plus = plus + cou;
+				}
+				jQuery('#'+prefix+'_19').val(plus);
+				var sums = sum + plus;
+				jQuery('#'+prefix+'_20').val(sums);
+			}
+			function checksubmit() {
+				var area = jQuery('#province').val();
+				var val = jQuery('#field').val();
+				var time = jQuery('#time').val();
+				if(area == '' || area == '0') {
+					jQuery('#rfield').html('请选择地点');
+					return false;
+				}
+				if(val == '' || val == '0') {
+					jQuery('#rfield').html('选择球场');
+					return false;
+				}
+				if(time == '' || time == '0') {
+					jQuery('#rtime').html('请填写时间');
+					return false;
+				}
+			}
+			function getpar(id) {
+				var url = 'home.php?mod=spacecp&ac=score&op=par&id='+id;
+				jQuery.get(url, {}, function(msg) {
+					var arr = new Array();
+					arr = msg.split('|');
+					jQuery.each(arr, function(k, v) {
+						jQuery('#par_'+k).val(v);
+					})
+				});
+			}
+		</script>
+		</div>
+	</div>
+</div>
+
+
+
+
+
+
+			</div>
+		
+		</div>
+	</div>
+	<div class="clear"></div>
+</div>
+<!--{template home/spacecp_foot_comm}-->

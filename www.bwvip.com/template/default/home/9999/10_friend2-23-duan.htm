@@ -1,0 +1,254 @@
+<!--{subtemplate home/10_header}-->
+
+	<!--{subtemplate home/10_left}-->
+
+
+	<div class="righter y">
+		<div class="logoad"></div>
+		<div class="gglb"></div>
+		<div class="righter">
+			<div class="right_left z">
+				<div class="ggbg">&nbsp;</div>
+				
+
+				<!--{subtemplate home/10_top}-->
+
+				<!-- 滑动按钮 -->
+				<div class="hd">
+				<div class="erbg"><p class="erbiaoti"><!--{$visitname}-->的好友</p></div>
+				<div class="ercontent">
+
+					<div class="bm_c">
+						<!--{if $space[self]}-->
+							<!--{if $groups}-->
+								<div class="ct_vw cl">
+									<div class="ct_vw_sd">
+										<div class="bm mtm">
+											<div class="bm_h">
+												<h3>{lang search_friend}</h3>
+											</div>
+											<div class="bm_c">
+												<form method="get" autocomplete="off" action="home.php" class="pns">
+													<input type="hidden" name="mod" value="space" />
+													<input type="hidden" name="do" value="friend" />
+													<input type="hidden" name="searchmode" value="1" />
+													<input type="hidden" name="searchsubmit" value="1" />
+													<input type="text" name="searchkey" class="px vm" size="20" value="" onclick="if(this.value=='{lang search_friend}')this.value='';" />
+													<button type="submit" class="pn vm"><em>{lang search}</em></button>
+												</form>
+											</div>
+										</div>
+
+										<!--{if $_G['setting']['my_app_status']}-->
+											<script type="text/javascript">
+												function my_sync_tip(msg, close_time) {;
+													showDialog(msg, 'notice');
+												}
+												function my_sync_friend() {
+													my_sync_tip('{lang syn_friend}', 0);
+													var my_scri = document.createElement("script");
+													document.getElementsByTagName("head")[0].appendChild(my_scri);
+													my_scri.charset = "UTF-8";
+													var url = "http://uchome.manyou.com/user/syncFriends";
+													my_scri.src = url + "?sId=$_G['setting'][my_siteid]&uUchId=$space[uid]&ts=$_G[timestamp]&key=<!--{eval echo md5($_G['setting'][my_siteid] . $_G['setting'][my_sitekey] . $space[uid] . $_G[timestamp]);}-->";
+												}
+											</script>
+											<div class="bm mtm">
+												<div class="bm_h cl">
+													<h3>{lang cannot_find_friend}</h3>
+												</div>
+												<div class="bm_c">
+													<p>{lang click_syn}</p>
+													<p class="pns mtm hm"><button type="button" onclick="my_sync_friend(); return false;" title="{lang friend_manyou_message}" class="pn"><em>{lang refresh_friend}</em></button></p>
+												</div>
+											</div>
+										<!--{/if}-->
+
+										<div class="bm mtm">
+											<div class="bm_h cl">
+												<a href="home.php?mod=spacecp&ac=friend&op=group" class="y xi2">{lang volume_group}</a>
+												<h3>{lang set_friend_group}</h3>
+											</div>
+											<div class="bm_c">
+												<ul class="buddy_group">
+													<li{if $_G['gp_group'] == -1} class="a"{/if}><a href="home.php?mod=space&do=friend&group=-1">{lang all_friends}</a></li>
+													<!--{loop $groups $key $value}-->
+													<li{$groupselect[$key]}>
+														<a href="home.php?mod=spacecp&ac=friend&op=groupignore&group=$key&handlekey=ignorehk_{$key}" id="c_ignore_$key" onclick="showWindow('ignoregroup', this.href, 'get', 0);" title="{lang ignore_group_feed}" class="b"><!--{if isset($space['privacy']['filter_gid'][$key])}-->{lang cancel}<!--{else}-->{lang shield}<!--{/if}--></a>
+														<!--{if $key}-->
+															<a href="home.php?mod=spacecp&ac=friend&op=groupname&group=$key&handlekey=edithk_{$key}" id="c_edit_$key" onclick="showWindow(this.id, this.href, 'get', 0);" title="{lang edit_group_name}" class="o">{lang edit}</a>
+														<!--{/if}-->
+														<a href="home.php?mod=space&do=friend&group=$key" id="friend_groupname_$key" groupname="$value"><!--{if isset($space['privacy']['filter_gid'][$key])}--><span class="xg1">[{lang shield}]</span><!--{/if}-->$value</a>
+													</li>
+													<!--{/loop}-->
+												</ul>
+											</div>
+										</div>
+										<script type="text/javascript">
+											function succeedhandle_ignoregroup(url, msg, values) {
+												var liObj = $('friend_groupname_'+values['group']);
+												var prefix = '';
+												if(values['ignore']) {
+													prefix = '<span class="xg1">[{lang shield}]</span>';
+												}
+												$('c_ignore_'+values['group']).innerHTML = values['ignore'] ? '{lang cancel}' : '{lang shield}';
+												liObj.innerHTML = prefix + liObj.getAttribute('groupname');
+											}
+										</script>
+									</div>
+									<div class="ct_vw_mn">
+							<!--{/if}-->
+									<!--{if $list}-->
+										<div id="friend_ul">
+											<ul class="buddy cl">
+											<!--{loop $list $key $value}-->
+												<li id="friend_{$value[uid]}_li">
+												<!--{if $value[username] == ''}-->
+													<div class="avt"><img src="{STATICURL}image/magic/hidden.gif" alt="{lang anonymity}" /></div>
+													<h4>{lang anonymity}</h4>
+												<!--{else}-->
+													<div class="avt">
+														<a href="home.php?mod=space&uid=$value[uid]" c="1">
+															<!--{if $ols[$value[uid]]}--><em class="gol" title="{lang online} {date($ols[$value[uid]], 'H:i')}"></em><!--{/if}-->
+															<!--{avatar($value[uid],small)}-->
+														</a>
+													</div>
+													<h4>
+														<a href="home.php?mod=space&uid=$value[uid]"{eval g_color($value[groupid]);}>$value[username]</a> 
+														<!--{eval g_icon($value[groupid]);}--> 
+														<!--{if $value['videostatus']}-->
+															<img src="{IMGDIR}/videophoto.gif" alt="videophoto" class="vm" /> 
+														<!--{/if}-->
+														<!--{if $space[self]}-->
+															<span id="friend_note_$value[uid]" class="note xw0" title="$value[note]">$value[note]</span>
+														<!--{/if}-->
+													</h4>
+													<p class="maxh">$value[recentnote]</p>
+												<!--{/if}-->
+
+													<div class="xg1">
+														<!--{if $_GET['view'] == 'blacklist'}-->
+															<a href="home.php?mod=spacecp&ac=friend&op=blacklist&subop=delete&uid=$value[uid]&start=$_GET[start]">{lang delete_blacklist}</a>
+														<!--{elseif $_GET['view'] == 'visitor' || $_GET['view'] == 'trace'}-->
+															<!--{date($value[dateline], 'n{lang month}j{lang day}')}-->
+														<!--{elseif $_GET['view'] == 'online'}-->
+															<!--{date($ols[$value[uid]], 'H:i')}-->
+														<!--{else}-->
+															<a href="home.php?mod=spacecp&ac=friend&op=changenum&uid=$value[uid]&handlekey=hotuserhk_{$value[uid]}" id="friendnum_$value[uid]" onclick="showWindow(this.id, this.href, 'get', 0);" title="{lang hot}">{lang hot}(<span id="spannum_$value[uid]">$value[num]</span>)</a>
+														<!--{/if}-->
+														<!--{if $value[uid] != $_G['uid'] && $value[username] != ''}-->
+														<span class="pipe">|</span>
+														<a href="javascript:;" id="interaction_$value[uid]" onmouseover="showMenu(this.id);" class="showmenu">{lang interactive}</a>
+														<!--{/if}-->
+														<!--{if !$value[isfriend] && $value[username] != ''}-->
+														<span class="pipe">|</span>
+														<a href="home.php?mod=spacecp&ac=friend&op=add&uid=$value[uid]&handlekey=adduserhk_{$value[uid]}" id="a_friend_$key" onclick="showWindow(this.id, this.href, 'get', 0);" title="{lang add_friend}">{lang add_friend}</a>
+														<!--{elseif !in_array($_GET['view'], array('blacklist', 'visitor', 'trace', 'online'))}-->
+														<span class="pipe">|</span>
+														<a href="javascript:;" id="opfrd_$value[uid]" onmouseover="showMenu(this.id);" class="showmenu">{lang manage}</a>
+														<!--{/if}-->
+													</div>
+													<!--{if $value[isfriend] && !in_array($_GET['view'], array('blacklist', 'visitor', 'trace', 'online'))}-->
+														<div id="opfrd_$value[uid]_menu" class="p_pop" style="display: none; width: 80px;">
+															<p><a href="home.php?mod=spacecp&ac=friend&op=changegroup&uid=$value[uid]&handlekey=editgrouphk_{$value[uid]}" id="friend_group_$value[uid]" onclick="showWindow(this.id, this.href, 'get', 0);" title="{lang set_friend_group}">{lang set_friend_group}</a></p>
+															<p><a href="home.php?mod=spacecp&ac=friend&op=editnote&uid=$value[uid]&handlekey=editnote_{$value[uid]}" id="friend_editnote_$value[uid]" onclick="showWindow(this.id, this.href, 'get', 0);" title="{lang friend_editnote}">{lang friend_editnote}</a></p>
+															<p><a href="home.php?mod=spacecp&ac=friend&op=ignore&uid=$value[uid]&handlekey=delfriendhk_{$value[uid]}" id="a_ignore_$key" onclick="showWindow(this.id, this.href, 'get', 0);" title="{lang delete}">{lang delete}</a></p>
+														</div>
+													<!--{/if}-->
+													<!--{if $value[uid] != $_G['uid'] && $value[username] != ''}-->
+													<div id="interaction_$value[uid]_menu" class="p_pop" style="display: none; width: 80px;">
+														<p><a href="home.php?mod=space&uid=$value[uid]&do=profile" target="_blank" title="{lang view_profile}">{lang view_profile}</a></p>
+														<!--{if $_G['setting']['homestatus']}--><p><a href="home.php?mod=space&uid=$value[uid]" target="_blank" title="{lang visit_friend}">{lang visit_friend}</a></p><!--{/if}-->
+														<p><a href="home.php?mod=spacecp&ac=poke&op=send&uid=$value[uid]" id="a_poke_$key" onclick="showWindow(this.id, this.href, 'get', 0);" title="{lang say_hi}">{lang say_hi}</a></p>
+														<p><a href="home.php?mod=spacecp&ac=pm&op=showmsg&handlekey=showmsg_$value[uid]&touid=$value[uid]&pmid=0&daterange=2" id="a_sendpm_$key" onclick="showWindow('showMsgBox', this.href, 'get', 0)" title="{lang send_pm}">{lang send_pm}</a></p>
+														<!--{hook/space_interaction_extra}-->
+													</div>
+													<!--{/if}-->
+												</li>
+											<!--{/loop}-->
+											</ul>
+										</div>
+										<!--{if $multi}--><div class="pgs cl mtm">$multi</div><!--{/if}-->
+									<!--{else}-->
+										<!--{if $_GET['view'] == 'me' && !$friendnum}-->
+											<!--{if $specialuser_list}-->
+												<div id="friend_ul">
+													<h2 class="mtw">{lang recommend_friend}</h2>
+													<ul class="buddy cl">
+														<!--{loop $specialuser_list $key $value}-->
+															<li id="friend_{$value[uid]}_li">
+																<div class="avt">
+																	<a href="home.php?mod=space&uid=$value[uid]" c="1">
+																		<!--{if $ols[$value[uid]]}--><em class="gol" title="{lang online} {date($ols[$value[uid]], 'H:i')}"></em><!--{/if}-->
+																		<!--{avatar($value[uid],small)}-->
+																	</a>
+																</div>
+																<h4>
+																	<a href="home.php?mod=space&uid=$value[uid]">$value[username]</a>
+																</h4>
+																<p class="maxh">$value[reason]</p>
+																<div class="xg1">
+																<a href="home.php?mod=spacecp&ac=friend&op=add&uid=$value[uid]&handlekey=adduserhk_{$value[uid]}" id="a_friend_$key" onclick="showWindow(this.id, this.href, 'get', 0);" title="{lang add_friend}">{lang add_friend}</a></div>
+															</li>
+														<!--{/loop}-->
+													</ul>
+												</div>
+											<!--{/if}-->
+											<!--{if $online_list}-->
+												<div id="friend_ul">
+													<h2 class="mtw">{lang online_member}</h2>
+													<ul class="buddy cl">
+														<!--{loop $online_list $key $value}-->
+															<li id="friend_{$value[uid]}_li">
+																<div class="avt">
+																	<a href="home.php?mod=space&uid=$value[uid]" c="1">
+																		<!--{if $ols[$value[uid]]}--><em class="gol" title="{lang online} {date($ols[$value[uid]], 'H:i')}"></em><!--{/if}-->
+																		<!--{avatar($value[uid],small)}-->
+																	</a>
+																</div>
+																<h4>
+																	<a href="home.php?mod=space&uid=$value[uid]">$value[username]</a>
+																</h4>
+																<p class="maxh">$value[recentnote]</p>
+																<div class="xg1">
+													<a href="home.php?mod=spacecp&ac=friend&op=add&uid=$value[uid]&handlekey=adduserhk_{$value[uid]}" id="a_friend_$key" onclick="showWindow(this.id, this.href, 'get', 0);" title="{lang add_friend}">{lang add_friend}</a></div>
+															</li>
+														<!--{/loop}-->
+													</ul>
+												</div>
+											<!--{/if}-->
+										<!--{else}-->
+											<div class="emp">{lang no_friend_list}</div>
+										<!--{/if}-->
+									<!--{/if}-->
+							<!--{if $groups}-->
+									</div>
+								</div>
+							<!--{/if}-->
+						<!--{else}-->
+							<p class="tbmu">{lang count_member}</p>
+							<!--{template home/space_list}-->
+						<!--{/if}-->
+					</div>
+
+				</div>
+				</div>
+				</div>
+
+
+				<!--{subtemplate home/10_right}-->
+
+
+		</div>
+	</div>
+</div>
+<div class="clear">&nbsp;</div>
+<div class="wad footer">
+<div class="footer2">
+	<div class="z"><img src="{STATICURL}space/person/images/footlogo.jpg" width="175" height="59"></div>
+	<div class="y"> 关于大正 | 商务合作 | 招贤纳士 | 合作伙伴 | 联系我们 | 投诉建议 | 免责声明 <br>
+	大正网版权归北京大正承平文化传播有限公司 <br>
+	京ICP证110339号 京公网安备110108008116号 </div></div>
+</div>
+</body>
+</html>

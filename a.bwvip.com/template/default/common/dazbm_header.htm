@@ -1,0 +1,65 @@
+<!--{subtemplate common/header_common}-->
+	<meta name="application-name" content="$_G['setting']['bbname']" />
+	<meta name="msapplication-tooltip" content="$_G['setting']['bbname']" />
+	<!--{if $_G['setting']['portalstatus']}--><meta name="msapplication-task" content="name=$_G['setting']['navs'][1]['navname'];action-uri={echo !empty($_G['setting']['domain']['app']['portal']) ? 'http://'.$_G['setting']['domain']['app']['portal'] : $_G[siteurl].'portal.php'};icon-uri={$_G[siteurl]}{IMGDIR}/portal.ico" /><!--{/if}-->
+	<meta name="msapplication-task" content="name=$_G['setting']['navs'][2]['navname'];action-uri={echo !empty($_G['setting']['domain']['app']['forum']) ? 'http://'.$_G['setting']['domain']['app']['forum'] : $_G[siteurl].'forum.php'};icon-uri={$_G[siteurl]}{IMGDIR}/bbs.ico" />
+	<!--{if $_G['setting']['groupstatus']}--><meta name="msapplication-task" content="name=$_G['setting']['navs'][3]['navname'];action-uri={echo !empty($_G['setting']['domain']['app']['group']) ? 'http://'.$_G['setting']['domain']['app']['group'] : $_G[siteurl].'group.php'};icon-uri={$_G[siteurl]}{IMGDIR}/group.ico" /><!--{/if}-->
+	<!--{if $_G['setting']['homestatus']}--><meta name="msapplication-task" content="name=$_G['setting']['navs'][4]['navname'];action-uri={echo !empty($_G['setting']['domain']['app']['home']) ? 'http://'.$_G['setting']['domain']['app']['home'] : $_G[siteurl].'home.php'};icon-uri={$_G[siteurl]}{IMGDIR}/home.ico" /><!--{/if}-->
+	<!--{if $_G['basescript'] == 'forum' && $_G['setting']['archiver']}-->
+		<link rel="archives" title="$_G['setting']['bbname']" href="{$_G[siteurl]}archiver/" />
+	<!--{/if}-->
+	<!--{if defined('CURMODULE') && ($_G['basescript'] == 'forum' || $_G['basescript'] == 'group') && (CURMODULE == 'index' || CURMODULE == 'forumdisplay' || CURMODULE == 'group')}-->$rsshead<!--{/if}-->
+	<!--{if $_G['basescript'] == 'forum' || $_G['basescript'] == 'group'}-->
+		<!--{if $_G['basescript'] == 'forum' && empty($_G['disabledwidthauto']) && $_G['forum_widthauto']}-->
+			<link rel="stylesheet" id="css_widthauto" type="text/css" href="data/cache/style_{STYLEID}_widthauto.css?{VERHASH}" />
+			<script type="text/javascript">HTMLNODE.className += ' widthauto'</script>
+		<!--{/if}-->
+		<script type="text/javascript" src="{$_G[setting][jspath]}forum.js?{VERHASH}"></script>
+	<!--{elseif $_G['basescript'] == 'home' || $_G['basescript'] == 'userapp'}-->
+		<script type="text/javascript" src="{$_G[setting][jspath]}home.js?{VERHASH}"></script>
+	<!--{elseif $_G['basescript'] == 'portal'}-->
+		<script type="text/javascript" src="{$_G[setting][jspath]}portal.js?{VERHASH}"></script>
+	<!--{/if}-->
+	<!--{if $_G['basescript'] != 'portal' && $_GET['diy'] == 'yes' && (CURMODULE == 'topic' || $_G['group']['allowdiy']) && !empty($_G['style']['tplfile'])}-->
+		<script type="text/javascript" src="{$_G[setting][jspath]}portal.js?{VERHASH}"></script>
+	<!--{/if}-->
+	<!--{if $_GET['diy'] == 'yes' && (CURMODULE == 'topic' || $_G['group']['allowdiy']) && !empty($_G['style']['tplfile'])}-->
+	<link rel="stylesheet" type="text/css" id="diy_common" href="data/cache/style_{STYLEID}_css_diy.css?{VERHASH}" />
+	<!--{/if}-->
+    <link rel="stylesheet" type="text/css" href="/static/space/comm/dazbm_header.css">
+</head>
+
+
+
+
+
+
+
+
+
+<body>
+<div id="box" >
+	<!--第1个头部文件开始-->
+	<div id="box_0">
+	<div id="top_0">
+	<div id="top_1" >
+	<span style="CURSOR: hand" onClick="window.external.addFavorite('http://www.gcctour.cn','2012皇冠杯中国业余高尔夫球城市挑战赛')"  class="f12_w">加入收藏</span> <span class="f12_w">|</span> <a onClick="this.style.behavior='url(#default#homepage)';this.setHomePage('http://www.gcctour.cn');" href="#" class="f12_w">设为首页</a> <span class="f12_w">|</span> <a href="http://www.bwvip.com" class="f12_w" target="_blank">大正网</a></div>
+	</div></div>
+	<!--第1个头部文件结束-->
+	
+	<div id="box_2_liu">
+		<!--daohang-->
+		<div class="ad_pic"><img src="http://www.bwvip.com/crown/images/gcct_pic_2012.jpg"  width="960" height="182"/></div>
+		<div class="daohang_">
+			<dd><a href="http://www.gcctour.cn/" class="f9hei3">首页</a></dd>
+			<dd><a href="http://www.gcctour.cn/jieshao.shtml" class="f9hei3">赛事介绍</a></dd>
+			<dd><a href="http://www.bwvip.com/member.php?mod=register&apply=dazbm" class="f9hei3" target="_blank">在线报名</a></dd>
+			<dd><a href="http://www.bwvip.com/crown/dv_tuji.shtml" class="f9hei3">精彩瞬间</a></dd>
+			<dd><a href="http://www.bwvip.com/home.php?mod=space&uid=1000333" class="f9hei3" target="_blank">皇冠精英俱乐部</a></dd>
+			<dd><a href="http://www.bwvip.com" class="f9hei3">大正网</a></dd>
+			<dt><a href="http://www.gcctour.cn" class="f9hei2">2012年皇冠杯</a></dt>
+		</div>
+		<div class="clearfix"></div>
+		<!--over daohang-->
+	</div>
+</div>

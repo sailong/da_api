@@ -1,0 +1,738 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="css/jlgks.css"  type="text/css">
+<title>教练公开赛</title>
+<link rel="stylesheet" href="http://test.bwvip.com/js/dojo-release-1.7.2/dijit/themes/claro/claro.css">
+<script src="http://test.bwvip.com/js/dojo-release-1.7.2/dojo/dojo.js" type="text/javascript" type="text/javascript" djConfig="isDebug: true, parseOnLoad: true"></script>
+
+<script type="text/javascript">
+	dojo.require("dijit.Dialog");
+	dojo.require("dojo.io.script");
+
+	var dlg;
+	var iframe_loading_finish_or_not = 0;
+
+	function iframe_loading_finish(){
+		//iframe_loading_finish_or_not = 1;
+		iframe_loading_finish_or_not++;
+	}
+
+	function init(){
+
+		if(iframe_loading_finish_or_not==0){
+			setTimeout("init()",1000);
+			return;	
+		}
+
+		dojo.connect(dojo.byId("login_link"), "onclick", "init_dialog");
+	}
+
+	function get_login_status(){
+		if(iframe_loading_finish_or_not!=3){
+                        setTimeout("get_login_status()",1000);
+                        return;
+                }
+		var jsonpArgs = {
+			url: "http://test.bwvip.com/login_status.php",
+			checkString: "uid",
+			load: function(data){
+				if(uid>0){
+					//console.log('登录成功');
+					dojo.byId("login_link").parentNode.removeChild(dojo.byId("login_link"));
+				}else{
+					//console.log('登录失败');
+				}
+			},
+			error: function(error){
+				console.log(error);
+			}
+		};
+		dojo.io.script.get(jsonpArgs);
+	}
+
+	function init_dialog(){
+
+		if(dlg!=undefined){
+			dlg.show();
+			return;
+		}
+
+		var dlg = new dijit.Dialog({
+			title: '用户登录',
+			style: 'width: 300px'
+		});
+
+		var container = dojo.doc.createElement('div');
+
+		var span_el = dojo.doc.createElement('span');
+		span_el.innerHTML = "Email:";
+		var input_el = dojo.doc.createElement('input');		
+		dojo.attr(input_el,'type','text');
+		dojo.attr(input_el,'id','username');
+		var div_el = dojo.doc.createElement('div');
+		div_el.appendChild(span_el);
+		div_el.appendChild(input_el);
+
+		container.appendChild(div_el);
+		
+		var br_el = dojo.doc.createElement('br');
+		container.appendChild(br_el);
+
+		var span_el = dojo.doc.createElement('span');
+		span_el.innerHTML = "密码:";
+		var input_el = dojo.doc.createElement('input');
+                dojo.attr(input_el,'type','password');
+		dojo.attr(input_el,'id','password');
+		var div_el = dojo.doc.createElement('div');
+                div_el.appendChild(span_el);
+                div_el.appendChild(input_el);
+
+		container.appendChild(div_el);
+
+		
+
+		var input_el = dojo.doc.createElement('input');
+		dojo.attr(input_el,'type','button');
+		dojo.attr(input_el,'value','提交');
+
+		
+		
+		container.appendChild(input_el);
+
+		dlg.set('content',container);
+
+		dlg.show();
+		
+		dojo.connect(input_el,"onclick",function(){
+			
+			var main = window;
+			var iframe = dojo.byId('iframe').contentWindow;
+			var username = dojo.attr('username','value');
+			var password = dojo.attr('password','value');
+
+			dojo.setContext(iframe.window, iframe.window.document);
+
+			dojo.attr('hidden_username','value',username);
+			dojo.attr('hidden_password','value',password);		
+
+			dojo.byId('sending_data').submit();
+			dojo.setContext(main,main.document);
+			dlg.hide();
+			
+			get_login_status();
+			
+		});
+
+	}
+
+	dojo.addOnLoad(init);
+
+</script>
+
+</head>
+
+<body class="claro">
+
+<div id="append_parent"></div><div id="ajaxwaitid"></div>
+    <!-- 头部开始-->
+	   <div id="jls_header">
+			   <div class="sc">
+					   <a href="#">加入收藏</a>&nbsp;|&nbsp;
+					   <a href="#">设为首页</a>&nbsp;|&nbsp;
+					   <a href="www.bwvip.com" target="_blank">大正网</a>
+			   </div>
+			   <div><img src="images/flash.jpg"></div>
+			   <div class="dh">
+						<ul>
+								<li><a href="#">首页</a></li>
+								<li><a href="#">赛事介绍</a></li>
+								<li><a href="#">在线报名</a></li>
+								<li><a href="#">精彩瞬间</a></li>
+								<li><a href="#">教练俱乐部</a></li>
+								<li><a href="#">规则俱乐部</a></li>
+								<li><a href="#">大正网</a></li>
+						</ul>
+						<div class="clear"></div>
+			   </div>
+        </div>
+	  <!-- 头部结束-->
+	  <!-- 内容部分开始-->
+	         <div id="content">
+                <!-- 第一个焦点图开始-->
+				     <div class="first_f">
+					           <div class="first_f_l"><img src="images/jd_1.jpg"></div>
+							   <div class="first_f_r">
+							           <div class="first_lv">
+									         <a href="http://www.bwvip.com/home.php?mod=space&uid=1888969&do=blog&quickforward=1&id=23343">依云赛朴英碧险胜夺冠 冯珊珊末洞沙坑射鹰第四</a>
+									   </div>
+									   <div>
+									        <a href="http://www.bwvip.com/home.php?mod=space&uid=1899209&do=blog&id=23287">最后一轮分组出炉 </a> |
+											<a href="http://www.bwvip.com/home.php?mod=space&uid=1899209&do=blog&id=23285">米克尔森遭淘汰 </a> |
+											<a href="http://www.bwvip.com/home.php?mod=space&uid=1899209&do=blog&quickforward=1&id=23275">约翰逊有望入荣誉阵营</a> |
+																				   </div>
+									   <div class="first_lv"><br>
+									         <a href="http://www.bwvip.com/home.php?mod=space&uid=1000333&do=blog&id=23334">炽热考验城市挑战赛上海站 张顺福76杆夺冠</a>
+									   </div>
+									   <div>
+									        <a href="http://www.bwvip.com/home.php?mod=space&uid=1000333&do=blog&id=23334">上海站成绩揭晓</a> |
+											<a href="http://www.bwvip.com/home.php?mod=space&uid=1000333&do=blog&quickforward=1&id=23316">大连站缴费通知</a> |
+											<a href="http://www.bwvip.com/home.php?mod=space&uid=1000333&do=blog&id=23219">2013参赛资格说明</a> |
+											
+									   </div>
+									   <div class="first_lv"><br>
+									         <a href="http://www.bwvip.com/home.php?mod=space&uid=1888968&do=blog&id=23345">加拿大公开赛皮尔西夺冠 麦吉尔特72洞柏忌败北</a>
+									   </div>
+									   <div >
+									          <a href="http://www.bwvip.com/home.php?mod=space&uid=1888967&do=blog&id=23344">英国公开赛：这里没有失败者</a><br> 
+											  <a href="http://www.bwvip.com/home.php?mod=space&uid=1889013&do=blog&quickforward=1&id=23338">洪水无情人有情 高友联盟北京队月例赛举办慈善拍卖</a><br>  
+											  <a href="http://www.bwvip.com/home.php?mod=space&uid=1889013&do=blog&quickforward=1&id=23311">亚当-斯科特 赢在英国公开赛之后</a><br>  
+											  <a href="http://www.bwvip.com/home.php?mod=space&uid=1160&do=blog&id=23310">第十八届全国青少年高尔夫球锦标赛南山开幕</a><br>
+											  <a href="http://www.bwvip.com/home.php?mod=space&uid=1629&do=blog&id=23300">特大暴雨侵袭北京 北京高尔夫球场多可正常营业</a><br>
+									   </div>
+							   </div>
+							   <div class="clear"></div>
+					 </div>
+				<!-- 第一个焦点图结束-->
+				<!--第二个焦点图开始-->
+				     <div class="sec_f">
+					           <div class="sec_f_l">
+							              <ul>
+										         <li><img src="images/ht.jpg"></li>
+												 <li>
+												         <span class="xm">张海涛</span>：恭喜#冯珊珊#拿到了LPGA的 <br>
+														 <span class="rq">07月12日</span>  
+														 来自 大正网<img src="images/dian.png">2
+													  
+												 </li>
+										  </ul>
+										  <ul>
+										         <li><img src="images/ht.jpg"></li>
+												 <li>
+												         <span class="xm">张海涛</span>：恭喜#冯珊珊#拿到了LPGA的 <br>
+														 <span class="rq">07月12日</span>  
+														 来自 大正网<img src="images/dian.png">2
+													  
+												 </li>
+										  </ul>
+										  	 <ul>
+										         <li><img src="images/ht.jpg"></li>
+												 <li>
+												         <span class="xm">张海涛</span>：恭喜#冯珊珊#拿到了LPGA的 <br>
+														 <span class="rq">07月12日</span>  
+														 来自 大正网<img src="images/dian.png">2
+													  
+												 </li>
+										  </ul>
+							   </div>
+							   <div class="sec_f_r"><img src="images/jd_2.jpg"></div>
+							   <div class="clear"></div>
+					 </div>
+				<!--第二个焦点图结束-->
+				
+				<!--名将风采部分开始-->
+				     <div class="content_left">
+					               <div><img src="images/mj.jpg" border="0" usemap="#Map"><map name="Map" id="Map"><area shape="rect" coords="455,3,536,26" href="#" /></map></div>
+								   <div class="content_left_bg clearfix"  id="circular-jls-1" >
+												<ul> 
+													 <li> <dt><a href="#" target="_blank">
+															  <img src="http://www.bwvip.com/uc_server/avatar.php?uid=1000265&size=middle" width="79" height="72" border="0" />
+															  <span class="cir-bg"></span> </a></dt>
+															  <dt>
+																  <a href="#" target="_blank">陈旭</a>
+															  </dt>
+															  <dt>
+																  <img src="images/xing.jpg">
+																  <img src="images/xing.jpg">
+																  <img src="images/xing.jpg">
+																  <img src="images/xing.jpg">
+																  <img src="images/xing.jpg">
+															  </dt>
+															  <dt class="pl">117个评论</dt>
+													 </li>
+												</ul>   
+												<ul> 
+													 <li> <dt><a href="#" target="_blank">
+															  <img src="http://www.bwvip.com/uc_server/avatar.php?uid=1000170&size=middle" width="79" height="72" border="0" />
+															  <span class="cir-bg"></span> </a></dt>
+															  <dt>
+																  <a href="#" target="_blank">吴永健</a>
+															  </dt>
+															  <dt>
+																  <img src="images/xing.jpg">
+																  <img src="images/xing.jpg">
+																  <img src="images/xing.jpg">
+																  <img src="images/xing.jpg">
+																  <img src="images/xing.jpg">
+															  </dt>
+															  <dt class="pl">117个评论</dt>
+													 </li>
+												</ul> 
+												<ul> 
+													 <li> <dt><a href="#" target="_blank">
+															  <img src="http://www.bwvip.com/uc_server/avatar.php?uid=1000139&size=middle" width="79" height="72" border="0" />
+															  <span class="cir-bg"></span> </a></dt>
+															  <dt>
+																  <a href="#" target="_blank">刘熙</a>
+															  </dt>
+															  <dt>
+																  <img src="images/xing.jpg">
+																  <img src="images/xing.jpg">
+																  <img src="images/xing.jpg">
+																  <img src="images/xing.jpg">
+																  <img src="images/xing.jpg">
+															  </dt>
+															  <dt class="pl">117个评论</dt>
+													 </li>
+												</ul> 
+												<ul> 
+													 <li> <dt><a href="#" target="_blank">
+															  <img src="http://www.bwvip.com/uc_server/avatar.php?uid=1899668&size=middle" width="79" height="72" border="0" />
+															  <span class="cir-bg"></span> </a></dt>
+															  <dt>
+																  <a href="#" target="_blank">张勐</a>
+															  </dt>
+															  <dt>
+																  <img src="images/xing.jpg">
+																  <img src="images/xing.jpg">
+																  <img src="images/xing.jpg">
+																  <img src="images/xing.jpg">
+																  <img src="images/xing.jpg">
+															  </dt>
+															  <dt class="pl">117个评论</dt>
+													 </li>
+												</ul>  
+												<ul> 
+													 <li> <dt><a href="#" target="_blank">
+															  <img src="http://www.bwvip.com/uc_server/avatar.php?uid=1629&size=middle" width="79" height="72" border="0" />
+															  <span class="cir-bg"></span> </a></dt>
+															  <dt>
+																  <a href="#" target="_blank">郑媛</a>
+															  </dt>
+															  <dt>
+																  <img src="images/xing.jpg">
+																  <img src="images/xing.jpg">
+																  <img src="images/xing.jpg">
+																  <img src="images/xing.jpg">
+																  <img src="images/xing.jpg">
+															  </dt>
+															  <dt class="pl">117个评论</dt>
+													 </li>
+												</ul> 
+												<ul> 
+													 <li> <dt><a href="#" target="_blank">
+															  <img src="http://www.bwvip.com/uc_server/avatar.php?uid=1900411&size=middle" width="79" height="72" border="0" />
+															  <span class="cir-bg"></span> </a></dt>
+															  <dt>
+																  <a href="#" target="_blank">李亚伟</a>
+															  </dt>
+															  <dt>
+																  <img src="images/xing.jpg">
+																  <img src="images/xing.jpg">
+																  <img src="images/xing.jpg">
+																  <img src="images/xing.jpg">
+																  <img src="images/xing.jpg">
+															  </dt>
+															  <dt class="pl">117个评论</dt>
+													 </li>
+												</ul> 
+<!--																								<ul> 
+													 <li> <dt><a href="#" target="_blank">
+															  <img src="images/ljl.jpg" border="0" />
+															  <span class="cir-bg"></span> </a></dt>
+															  <dt>
+																  <a href="#" target="_blank">李金亮</a>
+															  </dt>
+															  <dt>
+																  <img src="images/xing.jpg">
+																  <img src="images/xing.jpg">
+																  <img src="images/xing.jpg">
+																  <img src="images/xing.jpg">
+																  <img src="images/xing.jpg">
+															  </dt>
+															  <dt class="pl">117个评论</dt>
+													 </li>
+												</ul>
+-->
+<!--												<ul> 
+													 <li> <dt><a href="#" target="_blank">
+															  <img src="images/ljl.jpg" border="0" />
+															  <span class="cir-bg"></span> </a></dt>
+															  <dt>
+																  <a href="#" target="_blank">李金亮</a>
+															  </dt>
+															  <dt>
+																  <img src="images/xing.jpg">
+																  <img src="images/xing.jpg">
+																  <img src="images/xing.jpg">
+																  <img src="images/xing.jpg">
+																  <img src="images/xing.jpg">
+															  </dt>
+															  <dt class="pl">117个评论</dt>
+													 </li>
+												</ul> 
+-->
+<!--																							<ul> 
+													 <li> <dt><a href="#" target="_blank">
+															  <img src="images/ljl.jpg" border="0" />
+															  <span class="cir-bg"></span> </a></dt>
+															  <dt>
+																  <a href="#" target="_blank">李金亮</a>
+															  </dt>
+															  <dt>
+																  <img src="images/xing.jpg">
+																  <img src="images/xing.jpg">
+																  <img src="images/xing.jpg">
+																  <img src="images/xing.jpg">
+																  <img src="images/xing.jpg">
+															  </dt>
+															  <dt class="pl">117个评论</dt>
+													 </li>
+												</ul> 
+-->
+<!--												<ul> 
+													 <li> <dt><a href="#" target="_blank">
+															  <img src="images/ljl.jpg" border="0" />
+															  <span class="cir-bg"></span> </a></dt>
+															  <dt>
+																  <a href="#" target="_blank">李金亮</a>
+															  </dt>
+															  <dt>
+																  <img src="images/xing.jpg">
+																  <img src="images/xing.jpg">
+																  <img src="images/xing.jpg">
+																  <img src="images/xing.jpg">
+																  <img src="images/xing.jpg">
+															  </dt>
+															  <dt class="pl">117个评论</dt>
+													 </li>
+												</ul>
+-->
+<!--																								<ul> 
+													 <li> <dt><a href="#" target="_blank">
+															  <img src="images/ljl.jpg" border="0" />
+															  <span class="cir-bg"></span> </a></dt>
+															  <dt>
+																  <a href="#" target="_blank">李金亮</a>
+															  </dt>
+															  <dt>
+																  <img src="images/xing.jpg">
+																  <img src="images/xing.jpg">
+																  <img src="images/xing.jpg">
+																  <img src="images/xing.jpg">
+																  <img src="images/xing.jpg">
+															  </dt>
+															  <dt class="pl">117个评论</dt>
+													 </li>
+												</ul> 
+-->
+<!--
+												<ul> 
+													 <li> <dt><a href="#" target="_blank">
+															  <img src="images/ljl.jpg" border="0" />
+															  <span class="cir-bg"></span> </a></dt>
+															  <dt>
+																  <a href="#" target="_blank">李金亮</a>
+															  </dt>
+															  <dt>
+																  <img src="images/xing.jpg">
+																  <img src="images/xing.jpg">
+																  <img src="images/xing.jpg">
+																  <img src="images/xing.jpg">
+																  <img src="images/xing.jpg">
+															  </dt>
+															  <dt class="pl">117个评论</dt>
+													 </li>
+												</ul>
+-->
+									            <div class="clear"></div>
+								   </div>
+								   <div><img src="images/c_l_b.jpg"></div>
+					 </div>
+				<!--名将风采部分结束-->
+				<!--专属俱乐部、赛事报名部分开始-->
+					<div class="content_right">
+					               <div><img src="images/zsjlb.jpg"></div>
+								   <div class="content_right_bg">
+											<a href="http://www.bwvip.com/home.php?mod=space&uid=1899467"><img src="images/jlb_1.jpg"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+											<a href="http://www.bwvip.com/home.php?mod=space&uid=1899466"><img src="images/jlb_2.jpg"></a> 
+											<div class="clear"></div>  
+									 </div>
+								   <div><img src="images/c_r_b.jpg"></div>
+								   <div class="bfzb"><img src="images/bfzb.jpg"></div>
+								   <div><img src="images/ssbm.jpg"></div>
+								   <div class="content_right_bg  ssbm" >
+											<ul>
+												 <li>
+												       <img src="images/csbm.jpg"><br>
+													   <img src="images/cpbm.jpg" class="ssbm_img_1">
+												 </li>
+												 <li><a id="login_link"><img src="images/dlrk.jpg" class="ssbm_img_2"></a></li>
+											</ul>
+											<div class="clear"></div>  
+											
+								   </div>
+								   <div><img src="images/c_r_b.jpg"></div>
+					 </div>
+			   <!--专属俱乐部、赛事报名部分结束-->
+			         <div class="tlm"><a href="#"><img src="images/tlm.jpg"></a></div>
+			   <!--专业论坛部分开始-->
+			         <div class="content_left">
+								 <div><img src="images/zylt.jpg" border="0" usemap="#Map2"><map name="Map2" id="Map2"><area shape="rect" coords="460,3,534,26" href="#" /></map></div>
+								 <div class="content_left_bg">
+								        <!--高尔夫装备开始-->
+									      <div class="zylt_title">
+										           <ul>
+												         <li class="zylt_img"><img src="images/lt_1.jpg"></li>
+														 <li class="zylt_ss"><a href="#">我来说说</a></li>
+												   </ul>
+										  </div>
+										  <div style="padding:0px; margin:0px;">
+										           <div class="zylt_content_l"><img src="images/lt_img_1.jpg"></div>
+												   <div class="zylt_content_r">
+												            <ul>
+															       <li class="zylt_lv"><a href="#">北方信托公开赛哈斯延长赛神奇夺冠</a></li>
+																   <li><a href="#">近期检查结果 高尔夫球场违规用水占一半</a></li>
+																    <li><a href="#">观澜湖少东朱鼎耀出任同一亚洲赛事秘书长 </a></li>
+															</ul>
+												   </div>
+										  </div>
+										  <div class="clear"></div>
+										   <!--高尔夫装备结束-->
+										   <!--高尔夫规则开始-->
+									      <div class="zylt_title">
+										           <ul>
+												         <li class="zylt_img"><img src="images/lt_2.jpg"></li>
+														 <li class="zylt_ss"><a href="#">我来说说</a></li>
+												   </ul>
+										  </div>
+										  <div>
+										           <div class="zylt_content_l"><img src="images/lt_img_2.jpg"></div>
+												   <div class="zylt_content_r">
+												            <ul>
+															       <li class="zylt_lv"><a href="#">北方信托公开赛哈斯延长赛神奇夺冠</a></li>
+																   <li><a href="#">近期检查结果 高尔夫球场违规用水占一半</a></li>
+																    <li><a href="#">观澜湖少东朱鼎耀出任同一亚洲赛事秘书长 </a></li>
+															</ul>
+												   </div>
+										  </div>
+										  <div class="clear"></div>
+										   <!--高尔夫规则结束-->
+										   <!--高尔夫教练教学开始-->
+									      <div class="zylt_title">
+										           <ul>
+												         <li class="zylt_img"><img src="images/lt_3.jpg"></li>
+														 <li class="zylt_ss"><a href="#">我来说说</a></li>
+												   </ul>
+										  </div>
+										  <div>
+										           <div class="zylt_content_l"><img src="images/lt_img_3.jpg"></div>
+												   <div class="zylt_content_r">
+												            <ul>
+															       <li class="zylt_lv"><a href="#">北方信托公开赛哈斯延长赛神奇夺冠</a></li>
+																   <li><a href="#">近期检查结果 高尔夫球场违规用水占一半</a></li>
+																    <li><a href="#">观澜湖少东朱鼎耀出任同一亚洲赛事秘书长 </a></li>
+															</ul>
+												   </div>
+										  </div>
+										  <div class="clear"></div>
+										   <!--高尔夫教练教学结束-->
+										   <!--高尔夫球场管理开始-->
+									      <div class="zylt_title">
+										           <ul>
+												         <li class="zylt_img"><img src="images/lt_4.jpg"></li>
+														 <li class="zylt_ss"><a href="#">我来说说</a></li>
+												   </ul>
+										  </div>
+										  <div>
+										           <div class="zylt_content_l"><img src="images/lt_img_4.jpg"></div>
+												   <div class="zylt_content_r">
+												            <ul>
+															       <li class="zylt_lv"><a href="#">北方信托公开赛哈斯延长赛神奇夺冠</a></li>
+																   <li><a href="#">近期检查结果 高尔夫球场违规用水占一半</a></li>
+																    <li><a href="#">观澜湖少东朱鼎耀出任同一亚洲赛事秘书长 </a></li>
+															</ul>
+												   </div>
+										  </div>
+										  <div class="clear"></div>
+										   <!--高尔夫球场管理结束-->
+										  <div class="clear"></div>
+								 </div>
+								 <div><img src="images/c_l_b.jpg"></div>
+				     
+			   <!--专业论坛部分结束-->
+			   				
+			   <!--微博互动部分开始-->
+			       
+								 <div class="wbhd_top"><img src="images/wbhd.jpg"></div>
+								 <div class="content_left_bg">
+										  <ul>
+												 <li class="wbhd_t">您还可以输入140个字</li>
+												 <li>
+												       <textarea name="" cols="" rows="" class="wbhd_textarea">#暑期高尔夫故事#</textarea>
+												 </li>
+												 <li class="wbhd_ts">
+												       登录大正微博，分享你的观点！还没有大正微博账号？请<a href="#" target="_blank">立即注册》</a>                                                 </li>
+											     <li>
+												          <img src="images/danang_pic_12.jpg" align="absmiddle">
+														  &nbsp;<a href="#">图片</a>&nbsp;&nbsp;
+														  <img src="images/danang_pic_13.jpg" align="absmiddle">
+														  &nbsp;<a href="#">视频</a>&nbsp;&nbsp;
+														  <img src="images/danang_pic_13.jpg" align="absmiddle">
+														  &nbsp;<a href="#">视频</a>&nbsp;&nbsp;
+														  <img src="images/danang_pic_13.jpg"  align="absmiddle">
+														  &nbsp;<a href="#">话题</a>&nbsp;
+														  <img src="images/wb_fb.jpg">
+											     </li>
+										  </ul>
+										  <div class="clear"></div>
+								 </div>
+								 <div><img src="images/c_l_b.jpg"></div>
+				     </div>
+			   <!--微博互动部分结束-->
+			   <!--赛事Q&A部分开始-->
+			        <div class="content_right">
+					             <div><img src="images/ss.jpg" border="0" usemap="#Map3"><map name="Map3" id="Map3"><area shape="rect" coords="309,4,380,26" href="#" /></map></div>
+								 <div class="content_right_bg  qa">
+								             <ul>
+											      <li class="q">
+												           <dt><img src="images/qa_tou.jpg"></dt>
+														   <dt>Q：&nbsp;</dt>
+												           <dt class="q_content">赛事什么时候举办？如何参加此项赛事？报名需要什么条件？</dt>                       
+												  </li>
+												  <li class="a">
+												           <dt><img src="images/qa_tou.jpg"></dt>
+														   <dt>A：&nbsp;</dt>
+												           <dt class="q_content">每年9月举办一届赛事，参加者需要是正规裁判员要求有中高协的教练证明和资质。报名需要先注册大正网，成为会员，然后报名赛事，约朋友一起最好。最后电话预约，确认了身份后即可报名成功！
+														   </dt>                       
+												  </li>
+											 </ul>
+											 <ul>
+											      <li class="q">
+												           <dt><img src="images/qa_tou.jpg"></dt>
+														   <dt>Q：&nbsp;</dt>
+												           <dt class="q_content">赛事什么时候举办？如何参加此项赛事？报名需要什么条件？</dt>                       
+												  </li>
+												  <li class="a">
+												           <dt><img src="images/qa_tou.jpg"></dt>
+														   <dt>A：&nbsp;</dt>
+												           <dt class="q_content">每年9月举办一届赛事，参加者需要是正规裁判员要求有中高协的教练证明和资质。报名需要先注册大正网，成为会员，然后报名赛事，约朋友一起最好。最后电话预约，确认了身份后即可报名成功！
+														   </dt>                       
+												  </li>
+											 </ul>
+											 <ul>
+											      <li class="q">
+												           <dt><img src="images/qa_tou.jpg"></dt>
+														   <dt>Q：&nbsp;</dt>
+												           <dt class="q_content">赛事什么时候举办？如何参加此项赛事？报名需要什么条件？</dt>                       
+												  </li>
+												  <li class="a">
+												           <dt><img src="images/qa_tou.jpg"></dt>
+														   <dt>A：&nbsp;</dt>
+												           <dt class="q_content">每年9月举办一届赛事，参加者需要是正规裁判员要求有中高协的教练证明和资质。报名需要先注册大正网，成为会员，然后报名赛事，约朋友一起最好。最后电话预约，确认了身份后即可报名成功！
+														   </dt>                       
+												  </li>
+											 </ul>
+											 <ul>
+											      <li class="q">
+												           <dt><img src="images/qa_tou.jpg"></dt>
+														   <dt>Q：&nbsp;</dt>
+												           <dt class="q_content">赛事什么时候举办？如何参加此项赛事？报名需要什么条件？</dt>                       
+												  </li>
+												  <li class="a">
+												           <dt><img src="images/qa_tou.jpg"></dt>
+														   <dt>A：&nbsp;</dt>
+												           <dt class="q_content">每年9月举办一届赛事，参加者需要是正规裁判员要求有中高协的教练证明和资质。报名需要先注册大正网，成为会员，然后报名赛事，约朋友一起最好。最后电话预约，确认了身份后即可报名成功！
+														   </dt>                       
+												  </li>
+											 </ul>
+								 </div>
+								 <div><img src="images/c_r_b.jpg"></div>
+					</div>
+			   <!--赛事Q&A部分结束-->
+               <!--合作媒体 赛事组织部分开始-->
+			        <div class="hzzz">
+					          <div class="hz">
+									   <div><img src="images/hzmt.jpg"></div>
+									   <div class="hz_bg">
+									           <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;排名部分先后：<br>
+									               <ul>
+												           <li><img src="images/hz_1.jpg"></li>
+														   <li><img src="images/hz_2.jpg"></li>
+														   <li><img src="images/hz_3.jpg"></li>
+														   <li><img src="images/hz_4.jpg"></li>
+														   <li><img src="images/hz_1.jpg"></li>
+														   <li><img src="images/hz_2.jpg"></li>
+														   <li><img src="images/hz_3.jpg"></li>
+														   <li><img src="images/hz_4.jpg"></li>
+														   <li><img src="images/hz_1.jpg"></li>
+														   <li><img src="images/hz_2.jpg"></li>
+														   <li><img src="images/hz_3.jpg"></li>
+														   <li><img src="images/hz_4.jpg"></li>
+												   </ul>
+												   <div class="clear"></div>
+									     </div>
+									     <div><img src="images/hz_b.jpg"></div>
+							   </div>
+							   <div class="sszz">
+							           <div><img src="images/sszz.jpg"></div>
+									   <div class="sszz_bg">
+											   <ul>
+											           <li>主办方<br><span>中国高尔夫球协会</span></li>
+													  
+													   <li><img src="images/zb_1.jpg"></li>
+												</ul>
+												<img src="images/line.jpg">
+												<ul>
+											           <li>承办方<br><span>大正高尔夫</span></li>
+													   <li><img src="images/zb_2.jpg"></li>
+												</ul>
+											   <div class="clear"></div>
+									   </div> 
+									   <div><img src="images/sszz_b.jpg"></div>   
+							   </div>
+					</div>
+			   <!--合作媒体 赛事组织部分结束-->
+			       <div class="tlm"><img src="images/sm.jpg"></div>
+				   <div class="yg">
+				              <ul>
+							         <li><img src="images/dll.jpg"> &nbsp;&nbsp;杜丽娜</li>
+									 <li><span>赛事邮箱：</span>saishi@bwvip.com</li>
+									 <li><span>合作球场洽谈/球员意见反馈</span></li>
+							  </ul>
+							  <ul>
+							         <li><img src="images/jy.jpg"> &nbsp;&nbsp;静云</li>
+									 <li><span>联系邮箱：</span>jingyun@bwvip.com</li>
+									 <li><span>赛事合作招商</span></li>
+							  </ul>
+							  <ul>
+							         <li><img src="images/wm.jpg"> &nbsp;&nbsp;王萌</li>
+									 <li><span>赛事球童QQ群：</span>222893142</li>
+									 <li><span>球童联络协调</span></li>
+							  </ul>
+							  <ul>
+							         <li><img src="images/mch.jpg"> &nbsp;&nbsp;缪春华</li>
+									 <li><span>赛事规则答疑</span></li>
+							  </ul>
+							  <ul>
+							         <li><img src="images/lx.jpg"> &nbsp;&nbsp;刘熙</li>
+									 <li><span>网络技术支持</span></li>
+									 <li><span>电话：</span>13331005019</li>
+							  </ul>
+							  <div class="clear"></div>
+				   </div>
+		 </div>
+ <!-- 内容部分结束-->
+ <!--底部开始-->
+          <div id="foot">
+		            <div class="foot">
+					            <div class="foot_t">Copyright © 2010 Dazone Golf,All Rights Reserved 大正高尔夫 版权所有</div>
+								<div class="foot_line"><img src="images/foot_line.jpg"></div>
+								<div class="foot_logo"><img src="images/foot_logo.jpg"></div>
+				    </div>
+		  </div>
+ <!--底部结束-->
+		<iframe id="iframe" src="sending_data_form.html" width="1" height="1" onload="iframe_loading_finish();"></iframe>
+</body>
+</html>

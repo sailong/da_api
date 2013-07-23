@@ -1,0 +1,71 @@
+<!--{template home/space_header_comm}-->
+<script src="static/js/jbqc.js"></script>
+<div id="wtcontent">
+	<!-- 左侧 -->
+	<!--{template home/spacecp_00_left}-->
+	<!-- 右侧 -->
+	<div class="rightw">
+	<div class="rightlm"><h1>模板设置</h1></div><br />
+    <div class="rcontent">
+<!--中间内容开始-->
+<!--{if !empty($listre[headerpic]) || !empty($listre[bgpic]) || !empty($listre[bgcolor])}-->
+<div>
+<table border="1" width="80%">
+<tr>
+<td>顶部通栏图片</td><td><img src="$listre[headerpic]" width="200" height="200"/></td>
+</tr>
+<tr>
+<td>小背景图</td><td><img src="$listre[bgpic]" width="200" height="200" /></td>
+</tr>
+<tr>
+<td>背景颜色</td><td>$listre[bgcolor]</td>
+</tr>
+</table>
+<br />
+&nbsp;&nbsp;&nbsp;<a href="javascript:void(0)" onclick="change()">修改</a>
+<br />
+<script>
+function change(){
+    if(document.getElementById("ttty").style.display==""){
+        document.getElementById("ttty").style.display="none";
+    }else{
+        document.getElementById("ttty").style.display="";
+    }
+    
+}
+
+</script>
+
+</div>
+<!--{/if}-->
+<!--{if !empty($listre[headerpic]) || !empty($listre[bgpic]) || !empty($listre[bgcolor])}-->
+<div id="ttty" style="display: none;">
+<!--{else}-->
+<div id="ttty">
+<!--{/if}-->
+<form action="home.php?mod=spacecp&ac=bgset" method="post" name="form1" enctype="multipart/form-data">
+<table style="line-height:35px;width:80%;">
+<tr>
+<td>顶部通栏图片：<input type="file" name="fileimg" /></td>
+</tr>
+<tr>
+<td>小背景图：<input type="file" name="fileimgtwo" /></td>
+</tr>
+<tr>
+<td>背景颜色：<input type="text" name="bgcolor" maxlength="7" size="7" />(例#ff0000)</td>
+</tr>
+<tr>
+<td><input type="submit" value="提交" name="sub" /></td>
+</tr>
+</table>
+
+</form>
+
+</div>
+        <!--中间内容结束-->
+
+	</div>
+    </div>
+	<div class="clear"></div>
+</div>
+<!--{template home/spacecp_foot_comm}-->

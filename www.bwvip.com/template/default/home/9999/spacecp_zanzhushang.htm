@@ -1,0 +1,59 @@
+<!--{template home/space_header_comm}-->
+<div id="wtcontent">
+	<!-- 左侧 -->
+	<!--{template home/spacecp_00_left}-->
+	<!-- 右侧 -->
+	<div class="rightw">
+	<div class="rightlm"><h1>赞助商</h1></div>
+		<br />
+		<div class="rcontent">
+		<!--中间内容开始-->
+        <!--{if $op=='list' || empty($op)}-->
+        <form action="home.php?mod=spacecp&ac=zanzhushang&op=del" method="post" name="form1">
+        
+        <table width="80%" style="line-height:5;">
+        <tr><td>&nbsp;</td><td><b>logo</b></td><td><b>名称</b></td><td><b>排序</b></td><td><b>操作</b></td></tr>
+        <!--{loop $endrow $value}-->
+        <tr>
+        <td width="70"><input type="checkbox" name="del[]" value="$value[id]" /></td>
+        <td><img src="$value[logo]" /></td>
+        <td>$value[name]</td>
+        <td>$value[seq]</td>
+        <td><a href="home.php?mod=spacecp&ac=zanzhushang&op=edit&id=$value[id]" >编辑排序</a></td>
+        </tr>
+        <!--{/if}-->
+        </table>
+        <!--{if $endrow}-->
+        <input type="submit" value="删除" />
+        <!--{/if}-->
+        </form>
+		<!--{/if}-->
+        
+        <!--{if $op=='edit'}-->
+        <form action="home.php?mod=spacecp&ac=zanzhushang&op=editseq" method="post" name="form1">
+        <input type="hidden" value="$_GET[id]" name="myid" />
+        logo：<img src="$fkre[logo]" name="logo" /><br /><br />
+        名称：<input type="text" name="my" value="$fkre[name]" maxlength="50" /><br /><br />
+        排序：<input type="text" name="seq" value="$fkre[seq]" size="5" maxlength="2" onKeyUp="this.value=this.value.replace(/[^\d]/g,'')" /><br /><br />
+        
+        <input type="submit" value="修改" />
+        </form>
+        <!--{/if}-->
+        
+        <!--{if $op=='add'}-->
+        <div style="padding:20px 100px">
+        <form action="home.php?mod=spacecp&ac=zanzhushang&op=addsub" method="post" enctype="multipart/form-data">
+        名称：<input type="text" name="myname" maxlength="50" /><br /><br />
+        logo：<input type="file" name="myfile" /> <br /><br />
+        网址：<input type="text" name="href" maxlength="100" />(例：http://www.bwvip.com/)<br /><br />
+        排序：<input type="text" name="seq" size="5" maxlength="2" onKeyUp="this.value=this.value.replace(/[^\d]/g,'')" />(只能输入数字)<br /><br />
+        <input type="submit" value="添加" />
+        </form>
+        </div>
+        <!--{/if}-->
+		<!--中间内容结束-->
+		</div>		
+	</div>
+	<div class="clear"></div>
+</div>
+<!--{template home/spacecp_foot_comm}-->

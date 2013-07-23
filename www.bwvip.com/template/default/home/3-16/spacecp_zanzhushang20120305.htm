@@ -1,0 +1,50 @@
+<!--{template home/space_header_comm}-->
+<div id="wtcontent">
+	<!-- 左侧 -->
+	<!--{template home/spacecp_00_left}-->
+	<!-- 右侧 -->
+	<div class="rightw">
+	<div class="rightlm"><h1>赞助商</h1></div>
+		<br />
+		<div class="rcontent">
+		<!--中间内容开始-->
+        <!--{if $op=='list' || empty($op)}-->
+        <form action="home.php?mod=spacecp&ac=zanzhushang&op=del" method="post" name="form1">
+        
+        <ul>
+        <!--{loop $endrow $value}-->
+        <li><input type="checkbox" name="del[]" value="$value[id]" />&nbsp;<img src="$value[logo]" />&nbsp;&nbsp;$value[name]&nbsp;&nbsp;$value[seq]&nbsp;&nbsp;<a href="home.php?mod=spacecp&ac=zanzhushang&op=edit&id=$value[id]" >编辑排序</a></li>
+        <!--{/if}-->
+        </ul>
+        <!--{if $endrow}-->
+        <input type="submit" value="删除" />
+        <!--{/if}-->
+        </form>
+		<!--{/if}-->
+        
+        <!--{if $op=='edit'}-->
+        <form action="home.php?mod=spacecp&ac=zanzhushang&op=editseq" method="post" name="form1">
+        <input type="hidden" value="$_GET[id]" name="myid" />
+        logo：<img src="$fkre[logo]" name="logo" /><br /><br />
+        名称：<input type="text" name="my" value="$fkre[name]" /><br /><br />
+        排序：<input type="text" name="seq" value="$fkre[seq]" size="5" /><br /><br />
+        
+        <input type="submit" value="修改" />
+        </form>
+        <!--{/if}-->
+        
+        <!--{if $op=='add'}-->
+        <form action="home.php?mod=spacecp&ac=zanzhushang&op=addsub" method="post" enctype="multipart/form-data">
+        名称：<input type="text" name="myname" /><br /><br />
+        logo：<input type="file" name="myfile" /> <br /><br />
+        网址：<input type="text" name="href" />(例：http://www.bwvip.com/)<br /><br />
+        排序：<input type="text" name="seq" size="5" maxlength="2" /><br /><br />
+        <input type="submit" value="添加" />
+        </form>
+        <!--{/if}-->
+		<!--中间内容结束-->
+		</div>		
+	</div>
+	<div class="clear"></div>
+</div>
+<!--{template home/spacecp_foot_comm}-->

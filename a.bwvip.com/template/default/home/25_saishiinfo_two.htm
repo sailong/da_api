@@ -1,0 +1,60 @@
+﻿<!--{subtemplate home/25_header}-->
+<style>
+/* pages */
+.pg{ clear:both; margin:10px 0; }
+	.pg em, .pg a, .pg strong{ text-decoration:none; margin-left:3px; padding:2px 5px; border:1px solid #E5E5E5;background-color:#fff;}
+		.pg a:hover{ text-decoration:none; border:1px solid #09C; background:#09C; color:#FFF; }
+	.pg strong{ border:none; font-weight:700; }
+	.pg kbd input{ margin-left:5px; width:20px; vertical-align:middle; }
+.cuspages{ margin:3px 0; line-height:200%; }
+	.cuspages .pg{ display:inline; clear:none; margin-right:10px; }
+.fixsel select{ margin:3px 5px 3px 0; }
+.pg a.prev {
+    background-image: url("http://www.bwvip.com/static/image/common/arw_l.gif");
+    background-position: 50% 50%;
+}
+</style>
+<div id="wtcontent">
+	
+    <!-- 左边  -->
+	<!--{subtemplate home/25_left}-->
+    
+	<div class="z z2">
+	<!--{subtemplate home/common_center}-->
+	   
+       
+
+        <div class="cintro">
+	  <a name="saishiinfo"> <div class="cdt_lm">
+		    <span><h1>参赛明星</h1></span>
+		</div>
+        </a>
+	   <div class="cbg2_2">
+		  <!--中间部分-->
+		  <div class="cbg2_3">
+          <div style="padding-top:10px; padding-bottom:10px;">
+          <!--{loop $newlist $value}-->
+              <div class="z center" style="width:100px; height:100px; overflow:hidden;">
+                  <p class="center"><div style="padding:2px; border:1px solid #CCC; width:48px; height:48px; margin:0 auto;"><a href="/home.php?mod=space&uid=$value[userid]"><img src="uc_server/avatar.php?uid=$value[userid]&size=small" /></a></div></p>
+                  <p><a href="/home.php?mod=space&uid=$value[userid]">$value[realname]</a></p>
+              </div>
+          <!--{/loop}-->
+          <div class="clear8"></div>
+          $disppage
+          <div class="clear"></div>
+          </div>
+		  </div>
+
+          <!--中间部分-->
+		  </div>
+		  </div>
+
+       <br />
+	</div>
+	<!--右侧开始-->
+    <!--{subtemplate home/25_right}-->
+	<div class="clear"></div>
+</div>
+
+<br>
+<!--{subtemplate home/25_foot}-->

@@ -1,0 +1,74 @@
+<!--{template common/header}-->
+<link href="static/space/daz_app/guess/jingcai.css" rel="stylesheet" type="text/css">
+<body>
+<div id="box" style="margin-left:-18px;">
+
+<!--{loop $guess_list $key $value}-->
+      <div>
+           <div class="jc_3"><img src="static/space/daz_app/guess/images/body_bg_1.gif"></div>
+           <div class="jc_2">
+                 <div class="jc_4">
+                             <div> <img src="data/attachment/daz_app/{$value['guess_picture']}" width="339" height="237"></div>
+                             <div class="jc_8">竞猜开始时间：{$value['start_time']} 结束时间：{$value['end_time']}</div>
+                 </div>
+                 <div class="jc_5">
+                        <div>
+                              <div class="jc_bg_1"><span class="span_1">{$value['title']}</span></div>
+                              <div class="float_l"><img src="static/space/daz_app/guess/images/new.gif"></div>
+                        </div>
+                        <div>
+                            <!-- <div class="jc_6">
+                                     <div class="jc_7">{$value['describe']}</div>
+                                     <div style="float:left;"><img src="static/space/daz_app/images/1.jpg" style=" padding:0px 10px 0px 10px;"></div>
+                                     <div class="clear"></div>
+                             </div>-->
+
+
+							<div class="jc_6">
+								<div class="jc_7">
+									{$value['describe']}
+								</div>
+								<div class="jc_9"><span>{$value['guess_status']}</span></div>
+								<div class="clear"></div>
+							</div>
+
+
+
+
+
+                             <div class="jc_line">
+                                  <img src="static/space/daz_app/guess/images/line.gif">
+                              <div>
+                                  <div style="width:490px;">
+                                          <!--{loop $value['guess_tag'] $tag_key $tag_value}-->
+                                            <div class="bt_1">
+                                                  <div class="bt_2"><img src="static/space/daz_app/guess/images/bt_left.gif"></div>
+                                                  <div class="bt">
+													<a style="color: white;TEXT-DECORATION:none;" href="{CURSCRIPT}.php?mod=guess&do=view_guess_tag&guess_id={$key}&tag_id={$tag_key}&guess_object={$value['guess_object']}">{$tag_value}</a>
+												  </div>
+                                                  <div class="bt_2"><img src="static/space/daz_app/guess/images/bt_3.gif"></div>
+                                             </div>
+                                          <!--{/loop}-->
+                                  </div>
+                             </div>
+                        </div>
+                 </div>
+                 
+                 <div class="clear"></div>
+           </div>
+          <div><img src="static/space/daz_app/guess/images/body_bg_2.gif"></div>
+      </div>
+ 
+  </div>
+<!--{/loop}-->
+
+
+     <div class="jc_1">        
+              <div class="jc_page" style="height:30px;">{$multipage}</div>
+      </div>
+
+</div>
+</body>
+ 
+
+<!--{template common/footer}-->

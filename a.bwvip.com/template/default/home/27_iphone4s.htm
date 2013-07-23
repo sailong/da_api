@@ -1,0 +1,141 @@
+﻿<!--{subtemplate home/27_header}-->
+<script type="text/javascript" src="static/js/jquery.js"></script>
+<script type="text/javascript" src="static/js/jquery.form.js"></script>
+<script type="text/javascript"> 
+        // wait for the DOM to be loaded 
+        $(document).ready(function() { 
+            // bind 'myForm' and provide a simple callback function 
+            $('#myForm').ajaxForm(function() { 
+                alert("Thank you for your comment!"); 
+            }); 
+        }); 
+</script> 
+<div id="wtcontent">
+	<div class="z z1">
+		<!--{subtemplate home/27_left}-->
+	</div>
+	<div class="z z2">
+		<!--{subtemplate home/27_center}-->
+
+		<div class="cdt_lm">
+			<span><h1>Iphone4s 抢先订购</h1></span>
+		</div>
+		<div class="cdt_2">
+			<!--<span>&nbsp;&nbsp;<img src="{STATICURL}space/20/images/new.gif"></span>
+			<span>您有一条新的微博消息，请注意查收</span> -->
+		</div>
+		<div class="cbg2">
+		  <div class="cbg2_2">
+			  <div class="cbg2_2_lm">
+				  <!--start -->
+<form id="form1" name="form1" method="post" action="action/iphone4s.php"> 
+<table width=440 border="0" cellpadding="1" cellspacing="1" style="background:#cdcdcd">
+  
+<tr>
+<td bgcolor="#FFFFFF">提交人ID</td>
+<td bgcolor="#FFFFFF"><input type="text" name="uid" id="uid"  value="$_G['uid']" readonly="readonly"/></td>
+</tr>
+<!--<tr>
+  <td bgcolor="#FFFFFF">提交人姓名</td>
+  <td bgcolor="#FFFFFF"><input type="text" name="username" id="username" /></td>
+</tr>-->
+<tr>
+  <td bgcolor="#FFFFFF">手机号</td>
+  <td bgcolor="#FFFFFF"><input type="text" name="mobile" id="mobile"   onkeyup="value=value.replace(/[^\d]/g,'') " 
+      onbeforepaste="clipboardData.setData('text',clipboardData.getData('text').replace(/[^\d]/g,''))" 
+/></td>
+</tr>
+<tr>
+  <td bgcolor="#FFFFFF">驾照编号</td>
+  <td bgcolor="#FFFFFF"><input type="text" name="license" id="license" /></td>
+</tr>
+<tr>
+  <td bgcolor="#FFFFFF">汽车类型</td>
+  <td bgcolor="#FFFFFF"><SELECT id=fctbox class=sub_sinput onchange=_AutoBrandCHange()>
+    <OPTION selected value=0>
+        选择品牌
+    </OPTION>
+     <!--{loop $carlst $value}--> 	
+    <OPTION   value=$value[id]>$value[firstletter]  $value['name']
+   
+    </OPTION>
+  <!--{/loop}-->
+</SELECT> 
+<SELECT id=brbox class=sub_sinput disabled onchange=comp_splist() name=brbox>
+<OPTION selected value=0>选择车系</OPTION></SELECT> 
+<SELECT id=spbox class=sub_sinput disabled name=spbox> 
+<OPTION selected value=0>选择车型</OPTION></SELECT>
+<SCRIPT type=text/javascript>
+
+function AutohomeJsLoad(args) {
+    var s = document.createElement("script");
+    s.setAttribute("type", "text/javascript");
+    s.setAttribute("src", args.url);
+    s.onload = s.onreadystatechange = function() {
+        if (!this.readyState || this.readyState == "loaded" || this.readyState == "complete") {
+            if (typeof args.callBack == "function") args.callBack(args.args);
+            s.onload = s.onreadystatechange = null;
+            try {
+                s.parentNode && s.parentNode.removeChild(s)
+            } catch(e) {}
+        }
+    };
+    document.getElementsByTagName("head")[0].appendChild(s)
+};
+Function.prototype.bind = function(bindObj, args) {
+    var _self = this;
+    return function() {
+        return _self.apply(bindObj, [].concat(args))
+    }
+};
+ 
+ 
+    function _AutoBrandCHange() {
+        AutohomeJsLoad({ url: 'autojs.js?$rand(10,100)',
+            callBack: function () {
+                document.getElementById("fctbox").onchange = function () {
+                    comp_brlist();
+                };
+                comp_brlist();
+            }
+        });
+    }
+    
+   
+    
+</SCRIPT></td>
+</tr>
+<tr>
+  <td bgcolor="#FFFFFF">车驾号</td>
+  <td bgcolor="#FFFFFF"><input type="text" name="chejiahao" id="chejiahao" /></td>
+</tr>
+<tr>
+  <td bgcolor="#FFFFFF">车型名称</td>
+  <td bgcolor="#FFFFFF"><input type="text" name="autoname" id="autoname" /></td>
+</tr>
+<tr>
+  <td bgcolor="#FFFFFF">车牌号</td>
+  <td bgcolor="#FFFFFF"><input type="text" name="autoplate" id="autoplate" /></td>
+</tr>
+<tr>
+  <td bgcolor="#FFFFFF"><input  type="hidden"name="compid" id="compid"   value="$_GET['uid']" />
+       <input type="hidden" name="act" id="act" value="add"> </td>
+  <td bgcolor="#FFFFFF"><input type="submit" name="submit" id="submit" value="提交" /></td>
+</tr>
+ 
+</table>
+  </form>
+                  
+                  <!--end -->
+			  </div>
+		  </div>
+		</div>
+		<br>
+	</div>
+	<div class="y y3">
+		<!--{subtemplate home/27_right}-->
+	</div>
+	<div class="clear"></div>
+</div>
+
+<!--{subtemplate home/27_foot}-->

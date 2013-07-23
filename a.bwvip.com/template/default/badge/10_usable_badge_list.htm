@@ -1,0 +1,436 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="js/dojo-release-1.7.2/dijit/themes/claro/claro.css">
+<script src="js/dojo-release-1.7.2/dojo/dojo.js" type="text/javascript" djConfig="isDebug: true, parseOnLoad: true"></script>
+<link rel="stylesheet" href="static/badge/css/another_style.css">
+<link rel="stylesheet" href="static/badge/css/another_spaces.css">
+<link rel="stylesheet" href="static/badge/css/another_huizhang.css">
+
+<script type="text/javascript">
+
+			dojo.require("dojo.io.iframe");
+			dojo.require("dijit.Dialog");
+
+			function storing_showed_order(){
+				dojo.io.iframe.send({
+					form: "storing_showed_order",
+					handleAs: "html",
+					load: function(response, ioArgs){
+						console.log(response.body.outerHTML);
+
+						if(response.body.outerHTML.match('ok')==null){
+
+                                                        var tmp = response.body.outerHTML.toLowerCase();
+                                                        tmp = tmp.replace("<body>","");
+                                                        tmp = tmp.replace("</body>","");
+                                                        dojo.byId('tip_desc').innerHTML = tmp;
+                                                        dijit.byId("dialog_of_tip").show();
+
+                                                }else{
+
+							dojo.byId('tip_desc').innerHTML = '成功提交徽章显示顺序';
+							dijit.byId("dialog_of_tip").show();
+
+                                                }
+
+						return response;
+					},
+					error: function(response, ioArgs){
+						return response;
+					}
+				});	
+			}
+
+			function choosing_badge(){
+				
+				dojo.io.iframe.send({
+                                        form: "choosing_badge",
+                                        handleAs: "html",
+                                        load: function(response, ioArgs){
+                                                console.log(response.body.outerHTML);
+
+                                                if(response.body.outerHTML.match('ok')==null){
+
+                                                        var tmp = response.body.outerHTML.toLowerCase();
+                                                        tmp = tmp.replace("<body>","");
+                                                        tmp = tmp.replace("</body>","");
+							dojo.byId('tip_desc').innerHTML = tmp;
+                                                        dijit.byId("dialog_of_tip").show();
+
+                                                }else{
+
+							dojo.byId('tip_desc').innerHTML = '成功提交主页身份';
+                                                        dijit.byId("dialog_of_tip").show();
+
+                                                }
+
+                                                return response;
+                                        },
+                                        error: function(response, ioArgs){
+                                                return response;
+                                        }
+                                });
+
+			}
+
+			function init_badge_type(){
+				if(dojo.attr('hidden_badge_type','value') != ''){
+					dojo.attr('badge_type','value',dojo.attr('hidden_badge_type','value'));	
+				}
+			}
+
+			dojo.addOnLoad(function(){
+				dojo.connect(dojo.byId("storing_showed_order_button"), "onclick", "storing_showed_order");
+				dojo.connect(dojo.byId("choosing_badge_button"), "onclick", "choosing_badge");
+				init_badge_type();
+			});
+
+</script>
+<title>徽章排序</title>
+</head>
+
+<body class="claro">
+<div id="shop_wrapper">
+          <!-- head部分开始 -->
+          <div id="shop_head">
+		          <div style="height:42px;">
+				  <div class="member"><img src="static/badge/images/top_tx.jpg"></div>
+				<form id="scbar_form" target="_blank" action="search.php?searchsubmit=yes" method="post">
+					<div class="search">
+						<dt class="search_bt"><a><font color="white">大正网</font></a></dt>
+						<dt>&nbsp;</dt>
+						<dt class="search_input"><input type="text" name="srchtxt" value="" ></dt>
+						<dt class="search_bt"><input type="image" src="static/badge/images/search_bt.jpg"></dt>
+					</div>
+				</form>
+				<div class="denglu">
+					<a href="home.php?mod=space&uid=<!--{$uid}-->"><!--{$realname}--></a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="home.php?mod=space&do=pm">消息</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="home.php?mod=space&do=notice">提醒</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="member.php?mod=logging&action=logout">退出</a>
+				</div>		  
+				  </div>
+		          <div><img src="static/badge/images/flash-1.jpg"></div>
+		  </div>
+         <!-- head部分结束 -->
+          <!-- 内容部分开始-->
+           <div class="px_bg">
+		            <div><img src="static/badge/images/hz.jpg" ></div>
+					<div class="px">
+								  <ul>
+
+<form id="storing_showed_order" method="post" action="badge.php?mod=storing_showed_order">
+<!--{loop $rows $value}-->
+
+        <!--{if $value['badge_type']=='中高协教练徽章'}-->
+		<li>
+                	<img src="static/badge/images/zs_2.jpg">
+                	<dt><input style="margin:5px 0px;" name="cga_trainer_badge_showed_order" type="text" size="2" value="<!--{$value['showed_order']}-->"/></dt>
+		</li>
+        <!--{/if}-->
+
+        <!--{if $value['badge_type']=='俱乐部教练徽章'}-->
+		<li>
+                	<img src="static/badge/images/zs_1.jpg">
+                	<dt><input style="margin:5px 0px;" name="certificated_club_badge_showed_order" type="text" size="2" value="<!--{$value['showed_order']}-->"/></dt>
+		</li>
+        <!--{/if}-->
+
+	<!--{if $value['badge_type']=='港澳台教练徽章'}-->
+		<li>
+                	<img src="static/badge/images/zs_3.jpg">
+                	<dt><input style="margin:5px 0px;" name="hmt_trainer_badge_showed_order" type="text" size="2" value="<!--{$value['showed_order']}-->"/></dt>
+		</li>		
+	<!--{/if}-->
+
+	<!--{if $value['badge_type']=='外籍教练徽章'}-->
+		<li>
+                	<img src="static/badge/images/zs_4.jpg">
+                	<dt><input name="foreign_trainer_badge_showed_order" type="text" style="margin:5px 0px;" size="2" value="<!--{$value['showed_order']}-->"/></dt>
+		</li>
+	<!--{/if}-->
+
+	<!--{if $value['badge_type']=='球场总经理徽章'}-->
+		<li>
+                	<img src="static/badge/images/jk_3.jpg">
+                	<dt><input name="course_manager_badge_showed_order" type="text" style="margin:5px 0px;" size="2" value="<!--{$value['showed_order']}-->"/></dt>
+		</li>
+	<!--{/if}-->
+
+	<!--{if $value['badge_type']=='草坪专家徽章'}-->
+		<li>
+                	<img src="static/badge/images/jk_4.jpg">
+                	<dt><input name="lawn_expert_badge_showed_order" type="text" style="margin:5px 0px;" size="2" value="<!--{$value['showed_order']}-->"/></dt>
+		</li>
+	<!--{/if}-->
+
+	<!--{if $value['badge_type']=='专家徽章'}-->
+		<li>
+                	<img src="static/badge/images/jk_5.jpg">
+                	<dt><input name="expert_badge_showed_order" type="text" style="margin:5px 0px;" size="2" value="<!--{$value['showed_order']}-->"/></dt>
+		</li>	
+	<!--{/if}-->
+
+	<!--{if $value['badge_type']=='皇冠车主徽章'}-->
+		<li>
+                	<img src="static/badge/images/yk_1.jpg">
+                	<dt><input name="toyota_crown_owner_badge_showed_order" type="text" style="margin:5px 0px;" size="2" value="<!--{$value['showed_order']}-->"/></dt>
+		</li>
+	<!--{/if}-->
+
+	<!--{if $value['badge_type']=='电信钻石卡徽章'}-->
+		<li>
+                	<img src="static/badge/images/yk_2.jpg">
+                	<dt><input name="ct_diamond_card_badge_showed_order" type="text" style="margin:5px 0px;" size="2" value="<!--{$value['showed_order']}-->"/></dt>
+		</li>
+	<!--{/if}-->
+
+	<!--{if $value['badge_type']=='中高协裁判徽章'}-->
+		<li>
+                	<img src="static/badge/images/gj_1.jpg">
+                	<dt><input name="cga_referee_badge_showed_order" type="text" style="margin:5px 0px;" size="2" value="<!--{$value['showed_order']}-->"/></dt>
+		</li>
+	<!--{/if}-->
+
+	<!--{if $value['badge_type']=='普通从业者徽章'}-->
+		<li>
+                	<img src="static/badge/images/gj_3.jpg">
+                	<dt><input name="common_employee_badge_showed_order" type="text" style="margin:5px 0px;" size="2" value="<!--{$value['showed_order']}-->"/></dt>
+		</li>
+	<!--{/if}-->
+
+	<!--{if $value['badge_type']=='泰勒梅徽章'}-->
+		<li>
+                	<img src="static/badge/images/gj_4.jpg">
+                	<dt><input name="taylormade_badge_showed_order" type="text" style="margin:5px 0px;" size="2" value="<!--{$value['showed_order']}-->"/></dt>
+		</li>
+	<!--{/if}-->
+
+	<!--{if $value['badge_type']=='中国高尔夫媒体联盟徽章'}-->
+		<li>
+                	<img src="static/badge/images/gj_5.jpg">
+                	<dt><input name="china_golf_media_league_badge_showed_order" type="text" style="margin:5px 0px;" size="2" value="<!--{$value['showed_order']}-->"/></dt>
+		</li>
+	<!--{/if}-->
+
+	<!--{if $value['badge_type']=='劳力士会员徽章'}-->
+		<li>
+                	<img src="static/badge/images/gj_6.jpg">
+                	<dt><input name="rolex_member_badge_showed_order" type="text" style="margin:5px 0px;" size="2" value="<!--{$value['showed_order']}-->"/></dt>
+		</li>
+	<!--{/if}-->
+
+	<!--{if $value['badge_type']=='紫金理财俱乐部会员徽章'}-->
+		<li>
+                	<img src="static/badge/images/gj_7.jpg">
+                	<dt><input name="ziji_investment_club_member_badge_showed_order" type="text" style="margin:5px 0px;" size="2" value="<!--{$value['showed_order']}-->"/></dt>
+		</li>		
+	<!--{/if}-->
+
+	<!--{if $value['badge_type']=='帕米尔矿泉水俱乐部会员徽章'}-->
+		<li>
+                	<img src="static/badge/images/gj_8.jpg">
+                	<dt><input name="pamirs_spring_water_club_member_badge_showed_order" type="text" style="margin:5px 0px;" size="2" value="<!--{$value['showed_order']}-->"/></dt>
+		</li>
+	<!--{/if}-->
+
+	<!--{if $value['badge_type']=='耐克高尔夫徽章'}-->
+		<li>
+                	<img src="static/badge/images/gj_9.jpg">
+                	<dt><input name="nike_golf_badge_showed_order" type="text" style="margin:5px 0px;" size="2" value="<!--{$value['showed_order']}-->"/></dt>
+		</li>
+	<!--{/if}-->
+
+	<!--{if $value['badge_type']=='微博达人金牌'}-->
+		<li>
+                	<img src="static/badge/images/jk_7.jpg">
+                	<dt><input name="microblog_gold_medal_showed_order" type="text" style="margin:5px 0px;" size="2" value="<!--{$value['showed_order']}-->"/></dt>
+		</li>
+	<!--{/if}-->
+
+	<!--{if $value['badge_type']=='博客达人金牌'}-->
+		<li>
+                	<img src="static/badge/images/jk_8.jpg">
+                	<dt><input name="blog_gold_medal_showed_order" type="text" style="margin:5px 0px;" size="2" value="<!--{$value['showed_order']}-->"/></dt>
+		</li>	
+	<!--{/if}-->
+
+	<!--{if $value['badge_type']=='成绩卡达人金牌'}-->
+		<li>
+                	<img src="static/badge/images/jk_9.jpg">
+                	<dt><input name="grade_card_gold_medal_showed_order" type="text" style="margin:5px 0px;" size="2" value="<!--{$value['showed_order']}-->"/></dt>
+		</li>
+	<!--{/if}-->
+
+	<!--{if $value['badge_type']=='微博达人银牌'}-->
+		<li>
+                	<img src="static/badge/images/yk_3.jpg">
+                	<dt><input name="microblog_silver_medal_showed_order" type="text" style="margin:5px 0px;" size="2" value="<!--{$value['showed_order']}-->"/></dt>
+		</li>
+	<!--{/if}-->
+
+	<!--{if $value['badge_type']=='博客达人银牌'}-->
+		<li>
+                	<img src="static/badge/images/yk_4.jpg">
+                	<dt><input name="blog_silver_medal_showed_order" type="text" style="margin:5px 0px;" size="2" value="<!--{$value['showed_order']}-->"/></dt>
+		</li>
+	<!--{/if}-->
+
+	<!--{if $value['badge_type']=='成绩卡达人银牌'}-->
+		<li>
+                	<img src="static/badge/images/yk_5.jpg">
+                	<dt><input name="grade_card_silver_medal_showed_order" type="text" style="margin:5px 0px;" size="2" value="<!--{$value['showed_order']}-->"/></dt>
+		</li>
+	<!--{/if}-->
+
+	<!--{if $value['badge_type']=='微博达人铜牌'}-->
+		<li>
+                	<img src="static/badge/images/gj_10.jpg">
+                	<dt><input name="microblog_bronze_medal_showed_order" type="text" style="margin:5px 0px;" size="2" value="<!--{$value['showed_order']}-->"/></dt>
+		</li>
+	<!--{/if}-->
+
+	<!--{if $value['badge_type']=='博客达人铜牌'}-->
+		<li>
+                	<img src="static/badge/images/gj_11.jpg">
+                	<dt><input name="blog_bronze_medal_showed_order" type="text" style="margin:5px 0px;" size="2" value="<!--{$value['showed_order']}-->"/></dt>
+		</li>
+	<!--{/if}-->
+
+	<!--{if $value['badge_type']=='成绩卡达人铜牌'}-->
+		<li>
+                	<img src="static/badge/images/gj_12.jpg">
+                	<dt><input name="grade_card_bronze_medal_showed_order" type="text" style="margin:5px 0px;" size="2" value="<!--{$value['showed_order']}-->"/></dt>
+		</li>
+	<!--{/if}-->
+
+	<!--{if $value['badge_type']=='球童徽章'}-->
+		<li>
+                	<img src="static/badge/images/gj_2.jpg">
+                	<dt><input name="caddie_badge_showed_order" type="text" style="margin:5px 0px;" size="2" value="<!--{$value['showed_order']}-->"/></dt>
+		</li>
+	<!--{/if}-->
+
+	<!--{if $value['badge_type']=='实名认证徽章'}-->
+                <li>
+                	<img src="static/badge/images/lq.jpg">
+                	<dt><input name="certificated_name_badge_showed_order" type="text" style="margin:5px 0px;" size="2" value="<!--{$value['showed_order']}-->"/></dt>
+		</li>               
+	<!--{/if}-->
+
+	<!--{if $value['badge_type']=='皇冠杯城市挑战赛徽章'}-->
+		<li>
+                	<img src="static/badge/images/jk_1.jpg">
+                	<dt><input name="toyota_crown_city_challenge_badge_showed_order" type="text" style="margin:5px 0px;" size="2" value="<!--{$value['showed_order']}-->"/></dt>
+		</li>
+	<!--{/if}-->
+
+	<!--{if $value['badge_type']=='大正商城徽章'}-->
+                 <li>
+                	<img src="static/badge/images/jk_2.jpg">
+                	<dt><input name="dazheng_shop_badge_showed_order" type="text" style="margin:5px 0px;" size="2" value="<!--{$value['showed_order']}-->"/></dt>
+		</li>               
+	<!--{/if}-->
+
+<!--{/loop}-->
+</form>
+
+
+									</ul>
+					</div>
+					
+
+					<!--{if $cga_trainer_badge_amount == 1 || $certificated_club_badge_amount == 1 || $foreign_trainer_badge_amount == 1 || $hmt_trainer_badge_amount == 1 || $cga_referee_badge_amount == 1 || $common_employee_badge_amount == 1 || $course_manager_badge_amount == 1 || $caddie_badge_amount == 1 || $lawn_expert_badge_amount == 1 || $expert_badge_amount == 1}-->
+
+					<div class="px_ok" id="storing_showed_order_button"><img src="static/badge/images/bt_ok.jpg"></div>
+
+					<div><img src="static/badge/images/xzsf.jpg"></div>
+					<div class="xzsf">
+					         <ul>
+					              <li> 请选择您希望使用的身份主页</li>
+								  <li>
+									<form id="choosing_badge" method="post" action="badge.php?mod=choosing_badge">
+									<select id="badge_type" name="badge_type">
+										
+										
+											<option value="请选择">请选择</option>
+
+										<!--{if $cga_trainer_badge_amount == 1}-->
+											<option value="中高协教练徽章">中高协教练徽章</option>
+										<!--{/if}-->
+
+										<!--{if $certificated_club_badge_amount == 1}-->
+											<option value="俱乐部教练徽章">俱乐部教练徽章</option>
+										<!--{/if}-->
+
+										<!--{if $foreign_trainer_badge_amount == 1}-->
+											<option value="外籍教练徽章">外籍教练徽章</option>
+										<!--{/if}-->
+
+										<!--{if $hmt_trainer_badge_amount == 1}-->
+											<option value="港澳台教练徽章">港澳台教练徽章</option>
+										<!--{/if}-->
+
+										<!--{if $cga_referee_badge_amount == 1}-->
+											<option value="中高协裁判徽章">中高协裁判徽章</option>
+										<!--{/if}-->
+
+										<!--{if $common_employee_badge_amount == 1}-->
+											<option value="普通从业者徽章">普通从业者徽章</option>
+										<!--{/if}-->
+
+										<!--{if $course_manager_badge_amount == 1}-->
+											<option value="球场总经理徽章">球场总经理徽章</option>
+										<!--{/if}-->
+
+										<!--{if $caddie_badge_amount == 1}-->
+											<option value="球童徽章">球童徽章</option>
+										<!--{/if}-->
+
+										<!--{if $lawn_expert_badge_amount == 1}-->
+											<option value="草坪专家徽章">草坪专家徽章</option>
+										<!--{/if}-->
+
+										<!--{if $expert_badge_amount == 1}-->
+											<option value="专家徽章">专家徽章</option>
+										<!--{/if}-->					
+
+									</select>
+									</form>
+								  </li>
+								  <li class="xssf_sf">*获得相应身份徽章后 有权使用该身份主页</li>
+								<li><input id="choosing_badge_button" type="button" value="提交"/></li>
+							 </ul>
+					</div>
+
+					<!--{/if}-->
+
+				    <div><img src="static/badge/images/px_b.jpg"></div>
+		   </div>
+          <!-- 内容部分结束-->
+          <!-- 底部文件开始-->
+          <div  id="foot_1">&nbsp;</div>
+          <div id="foot">
+                     <div id="foot_logo"><img src="static/badge/images/foot_logo.jpg"></div>
+                     <div id="foot_right">
+                                <A  href="/about.php">关于大正</A>&nbsp;|&nbsp;
+                                <A class=f9 href="/about.php">商务合作</A>&nbsp;|&nbsp;
+                                <A class=f9 href="/zhaopin.php">招贤纳士</A>&nbsp;|&nbsp;
+                                <A class=f9  href="/huoban.php" >合作伙伴</A>&nbsp;|&nbsp;
+                                <A class=f9  href="/lianxi.php" >联系我们</A>&nbsp;|&nbsp;
+                                <A class=f9  href="/shengming.php" >免责声明</A>&nbsp;|&nbsp;
+                                <A class=f9  href="/sitemap.php" >网站地图</A><br>
+                                大正网版权归北京大正承平文化传播有限公司<br> 
+                                京ICP证110339号    京公网安备110108008116号 
+                    </div>
+					<div class="clear"></div>
+          </div>
+          <!--底部文件结束-->
+</div>
+<div id="dialog_of_tip" data-dojo-type="dijit.Dialog" title="提示">
+<span id="tip_desc"></span>
+<div>
+
+<input id="hidden_badge_type" type="hidden" value="<!--{$row['badge_type']}-->"/>
+
+</body>
+</html>

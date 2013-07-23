@@ -1,0 +1,68 @@
+<!--{subtemplate common/wap_header}-->
+<!--nav--> <!--{subtemplate common/wap_nav}--> <!--/nav-->
+
+  <div id="centenr" >
+  
+	<!--微博 start-->
+    <div id="weibo">
+       <div class="bo1"></div>
+         <div class="bo2">
+            <div class="dh_le fl"><span>》</span>&nbsp;<a href="www.bwvip.com/t/wap/">微 博</a></div>
+            <div class="dh_ri fr">您有大正微博了吗？<a href="http://www.bwvip.com/weibo/wap/index.php?mod=member">注册</a>|<a href="http://www.bwvip.com/weibo/wap/index.php?mod=login">登录</a>
+            </div>
+         </div>
+       <div class="bo3"></div>
+    </div>
+
+     <div id="cen1" style="height:auto;">
+        <div id="con1_s" ></div>
+        <div id="con1_t" style="height:auto;">
+		<br>
+			   <div id="t_bok"><!--angf-->
+				   <a href="http://wap.bwvip.com/index.php?mod=news&do=details&id=25095">
+				      <img src="http://www.bwvip.com/static/wap/t1/images/baofen11.jpg" width="225" height="124" />
+				   </a>
+			   </div>
+				   <div class="nav_u" style="height:auto;">
+						<ul>
+							<!--{loop $new_blogs $blogid $v1}-->
+							<li><A href="./index.php?mod=news&do=details&id={$blogid}&uid={$v1['uid']}">{$v1['subject']}</A></li>
+							<!--{/loop}-->
+						</ul>
+				   </div>
+			</div>
+        <div id="con1_p"></div>
+     </div>
+    <div id="pi_im"><a href="#"><img src="http://www.bwvip.com/static/wap/t1/images/img2_24.gif" width="287" height="153" /></a></div>
+
+
+
+<!--用户组下的 新闻博客-->
+  <!--{loop $index_blogs $key $value}-->
+	  <div id="qiuc">
+		<div id="con1_s"></div>
+			<div id="con1_t2">
+				  <div class="t_top">
+					   <div class="dh_le2 fl"><span></span>【{$key}】</div>
+					   <div class="dh_ri2 fr"></div>
+				  </div><br>
+			   <!--<div id="t_bok"><img src="/static/wap/t1/images/img1_18.jpg" width="225" height="124" /></div>-->
+			   <div class="nav_u">
+					<ul>
+						<!--{loop $value $v}-->
+
+							<li><A href="./index.php?mod=news&do=details&id={$v['blogid']}&uid={$v['uid']}">{$v['subject']}</A></li>
+
+						<!--{/loop}-->
+					</ul>
+				</div>
+		   </div>
+		 <div id="con1_p"></div>
+	  </div>
+  <!--{/loop}-->
+
+   <div class="top" style="margin-top:10px;"><a href="#"><img src="http://www.bwvip.com/static/wap/t1/images/top_08.gif" width="38" height="13" /></a></div>
+ </div>
+
+
+<!--{subtemplate common/wap_footer}-->

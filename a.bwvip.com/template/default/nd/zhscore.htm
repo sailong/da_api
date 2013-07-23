@@ -1,0 +1,1168 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>中韩挑战赛</title>
+<style type="text/css">
+body {
+margin-left: 0px;
+margin-top: 0px;
+margin-right: 0px;
+margin-bottom: 0px;
+}
+</style>
+</head>
+
+<body>
+<table width="{$width}" border="0">
+	  <tr style="background:#FFF;">
+	    <td>
+        	<table width="{$width1}" border="0" cellpadding="0" cellspacing="0" style="background:#f4f4f4;margin:0 auto;font-size:18px;">
+            	<tr>
+                	<td colspan="21" align="center"><table>
+                	  <tr>
+                	    <td colspan="2"><img src="images/big-guoqi.png" width="85" height="56"/></td>
+                	    <td colspan="4" style="text-align:center;font-size:28px;">中国<br />
+                	      CHINA</td>
+                	    <td colspan="2"><table  style="background:url(images/nav-bg.png) repeat-x;">
+                	      <tr >
+                	        <td style="font-size:30px;color:#6a6a6a;font-weight:bold;">14 1/2</td>
+                	        <td ><img src="images/guoqi.png" width="184" height="80"/></td>
+                	        <td  style="font-size:30px;color:#6a6a6a;font-weight:bold;">13 1/2</td>
+              	        </tr>
+              	      </table></td>
+                	    <td colspan="3" style="text-align:left;font-size:28px;">韩国<br />
+                	       SOUTH KOREA</td>
+                	    <td colspan="10" align="left"><img src="images/big-hanguo.png" width="84" height="57"/></td>
+              	    </tr>
+              	  </table></td>
+                </tr>
+               
+                 <tr style="background:#dadada;height:42px;">
+                	<td colspan="1" align="center" cellpadding="0" cellspacing="0">第1组</td>
+                    <td colspan="9" align="right" cellpadding="0" cellspacing="0"><img src="images/{$qzarray[$nblist[0]['uid']]}"/>{$nblist[0]['realname']}</td>
+                    <td colspan="1" style="color:#565656;text-align:center" cellpadding="0" cellspacing="0">VS</td>
+                    <td colspan="10" style="vertical-align:middle" cellpadding="0" cellspacing="0"><img src="images/{$qzarray[$nblist[1]['uid']]}"/>{$nblist[1]['realname']}</td>
+                </tr>
+                   <tr style="height:50px;font-size:28px;" align="center">
+                	<td align="center" style="color:#767676;">球洞</td>
+                    <td>1</td>
+                    <td>2</td>
+                    <td>3</td>
+                    <td>4</td>
+                    <td>5</td>
+                    <td>6</td>
+                    <td>7</td>
+                    <td>8</td>
+                    <td>9</td>
+                    <td>10</td>
+                    <td>11</td>
+                    <td>12</td>
+                    <td>13</td>
+                    <td>14</td>
+                    <td>15</td>
+                    <td>16</td>
+                    <td>17</td>
+                    <td>18</td>
+                    <td>总杆数</td>
+                    <td>得分</td> 
+                </tr>
+                <tr style="height:50px;font-size:28px;" align="center">
+                	<td align="center" style="color:#767676;">标准杆</td>
+                    <td>$par[0]</td>
+                    <td>$par[1]</td>                    
+                    <td>$par[2]</td>
+                    <td>$par[3]</td>
+                    <td>$par[4]</td>
+                    <td>$par[5]</td>
+                    <td>$par[6]</td>
+                    <td>$par[7]</td>
+                    <td>$par[8]</td>
+                    <td>$par[9]</td>
+                    <td>$par[10]</td>
+                    <td>$par[11]</td>
+                    <td>$par[12]</td>
+                    <td>$par[13]</td>
+                    <td>$par[14]</td>
+                    <td>$par[15]</td>
+                    <td>$par[16]</td>
+                    <td>$par[17]</td>
+                    <td>72</td>
+                    <td></td> 
+                </tr>
+              <tr style="height:50px;font-size:28px;" align="center">
+                	<td align="center" style="vertical-align:middle"><img src="images/{$qzarray[$nblist[0]['uid']]}"/>{echo Getuname($dyarray[$nblist[0]['uid']],1)}</td>
+                	<td {if $nblist[0]['cave_1']!=0}{echo Getcss($nblist[0]['cave_1'],$par[0])}{/if}>{if $nblist[0]['cave_1']<=0}&nbsp;{else}{$nblist[0]['cave_1']}{/if}</td>
+    <td {if $nblist[0]['cave_2']!=0}{echo Getcss($nblist[0]['cave_2'],$par[1])}{/if}>{if $nblist[0]['cave_2']<=0}&nbsp;{else}{$nblist[0]['cave_2']}{/if}</td>
+    <td {if $nblist[0]['cave_3']!=0}{echo Getcss($nblist[0]['cave_3'],$par[2])}{/if}>{if $nblist[0]['cave_3']<=0}&nbsp;{else}{$nblist[0]['cave_3']}{/if}</td>
+    <td {if $nblist[0]['cave_4']!=0}{echo Getcss($nblist[0]['cave_4'],$par[3])}{/if}>{if $nblist[0]['cave_4']<=0}&nbsp;{else}{$nblist[0]['cave_4']}{/if}</td>
+    <td {if $nblist[0]['cave_5']!=0}{echo Getcss($nblist[0]['cave_5'],$par[4])}{/if}>{if $nblist[0]['cave_5']<=0}&nbsp;{else}{$nblist[0]['cave_5']}{/if}</td>
+    <td {if $nblist[0]['cave_6']!=0}{echo Getcss($nblist[0]['cave_6'],$par[5])}{/if}>{if $nblist[0]['cave_6']<=0}&nbsp;{else}{$nblist[0]['cave_6']}{/if}</td>
+    <td {if $nblist[0]['cave_7']!=0}{echo Getcss($nblist[0]['cave_7'],$par[6])}{/if}>{if $nblist[0]['cave_7']<=0}&nbsp;{else}{$nblist[0]['cave_7']}{/if}</td>
+    <td {if $nblist[0]['cave_8']!=0}{echo Getcss($nblist[0]['cave_8'],$par[7])}{/if}>{if $nblist[0]['cave_8']<=0}&nbsp;{else}{$nblist[0]['cave_8']}{/if}</td>
+    <td {if $nblist[0]['cave_9']!=0}{echo Getcss($nblist[0]['cave_9'],$par[8])}{/if}>{if $nblist[0]['cave_9']<=0}&nbsp;{else}{$nblist[0]['cave_9']}{/if}</td> 
+    <td {if $nblist[0]['cave_10']!=0}{echo Getcss($nblist[0]['cave_10'],$par[9])}{/if}>{if $nblist[0]['cave_10']<=0}&nbsp;{else}{$nblist[0]['cave_10']}{/if}</td>
+    <td {if $nblist[0]['cave_11']!=0}{echo Getcss($nblist[0]['cave_11'],$par[10])}{/if}>{if $nblist[0]['cave_11']<=0}&nbsp;{else}{$nblist[0]['cave_11']}{/if}</td>
+    <td {if $nblist[0]['cave_12']!=0}{echo Getcss($nblist[0]['cave_12'],$par[11])}{/if}>{if $nblist[0]['cave_12']<=0}&nbsp;{else}{$nblist[0]['cave_12']}{/if}</td>
+    <td {if $nblist[0]['cave_13']!=0}{echo Getcss($nblist[0]['cave_13'],$par[12])}{/if}>{if $nblist[0]['cave_13']<=0}&nbsp;{else}{$nblist[0]['cave_13']}{/if}</td>
+    <td {if $nblist[0]['cave_14']!=0}{echo Getcss($nblist[0]['cave_14'],$par[13])}{/if}>{if $nblist[0]['cave_14']<=0}&nbsp;{else}{$nblist[0]['cave_14']}{/if}</td>
+    <td {if $nblist[0]['cave_15']!=0}{echo Getcss($nblist[0]['cave_15'],$par[14])}{/if}>{if $nblist[0]['cave_15']<=0}&nbsp;{else}{$nblist[0]['cave_15']}{/if}</td>
+    <td {if $nblist[0]['cave_16']!=0}{echo Getcss($nblist[0]['cave_16'],$par[15])}{/if}>{if $nblist[0]['cave_16']<=0}&nbsp;{else}{$nblist[0]['cave_16']}{/if}</td>
+    <td {if $nblist[0]['cave_17']!=0}{echo Getcss($nblist[0]['cave_17'],$par[16])}{/if}>{if $nblist[0]['cave_17']<=0}&nbsp;{else}{$nblist[0]['cave_17']}{/if}</td>
+    <td {if $nblist[0]['cave_18']!=0}{echo Getcss($nblist[0]['cave_18'],$par[17])}{/if}>{if $nblist[0]['cave_18']<=0}&nbsp;{else}{$nblist[0]['cave_18']}{/if}</td>
+    <td >{echo Getstat($nblist[0]['tlcave'])}</td>
+                    <td>1</td> 
+                </tr>
+                           
+ <tr style="height:50px;font-size:28px;" align="center">
+                	<td align="center" style="vertical-align:middle"><img src="images/{$qzarray[$nblist[1]['uid']]}"/>{echo Getuname($dyarray[$nblist[1]['uid']],1)}</td>
+                	<td {if $nblist[1]['cave_1']!=0}{echo Getcss($nblist[1]['cave_1'],$par[0])}{/if}>{if $nblist[1]['cave_1']<=0}&nbsp;{else}{$nblist[1]['cave_1']}{/if}</td>
+    <td {if $nblist[1]['cave_2']!=0}{echo Getcss($nblist[1]['cave_2'],$par[1])}{/if}>{if $nblist[1]['cave_2']<=0}&nbsp;{else}{$nblist[1]['cave_2']}{/if}</td>
+    <td {if $nblist[1]['cave_3']!=0}{echo Getcss($nblist[1]['cave_3'],$par[2])}{/if}>{if $nblist[1]['cave_3']<=0}&nbsp;{else}{$nblist[1]['cave_3']}{/if}</td>
+    <td {if $nblist[1]['cave_4']!=0}{echo Getcss($nblist[1]['cave_4'],$par[3])}{/if}>{if $nblist[1]['cave_4']<=0}&nbsp;{else}{$nblist[1]['cave_4']}{/if}</td>
+    <td {if $nblist[1]['cave_5']!=0}{echo Getcss($nblist[1]['cave_5'],$par[4])}{/if}>{if $nblist[1]['cave_5']<=0}&nbsp;{else}{$nblist[1]['cave_5']}{/if}</td>
+    <td {if $nblist[1]['cave_6']!=0}{echo Getcss($nblist[1]['cave_6'],$par[5])}{/if}>{if $nblist[1]['cave_6']<=0}&nbsp;{else}{$nblist[1]['cave_6']}{/if}</td>
+    <td {if $nblist[1]['cave_7']!=0}{echo Getcss($nblist[1]['cave_7'],$par[6])}{/if}>{if $nblist[1]['cave_7']<=0}&nbsp;{else}{$nblist[1]['cave_7']}{/if}</td>
+    <td {if $nblist[1]['cave_8']!=0}{echo Getcss($nblist[1]['cave_8'],$par[7])}{/if}>{if $nblist[1]['cave_8']<=0}&nbsp;{else}{$nblist[1]['cave_8']}{/if}</td>
+    <td {if $nblist[1]['cave_9']!=0}{echo Getcss($nblist[1]['cave_9'],$par[8])}{/if}>{if $nblist[1]['cave_9']<=0}&nbsp;{else}{$nblist[1]['cave_9']}{/if}</td> 
+    <td {if $nblist[1]['cave_10']!=0}{echo Getcss($nblist[1]['cave_10'],$par[9])}{/if}>{if $nblist[1]['cave_10']<=0}&nbsp;{else}{$nblist[1]['cave_10']}{/if}</td>
+    <td {if $nblist[1]['cave_11']!=0}{echo Getcss($nblist[1]['cave_11'],$par[10])}{/if}>{if $nblist[1]['cave_11']<=0}&nbsp;{else}{$nblist[1]['cave_11']}{/if}</td>
+    <td {if $nblist[1]['cave_12']!=0}{echo Getcss($nblist[1]['cave_12'],$par[11])}{/if}>{if $nblist[1]['cave_12']<=0}&nbsp;{else}{$nblist[1]['cave_12']}{/if}</td>
+    <td {if $nblist[1]['cave_13']!=0}{echo Getcss($nblist[1]['cave_13'],$par[12])}{/if}>{if $nblist[1]['cave_13']<=0}&nbsp;{else}{$nblist[1]['cave_13']}{/if}</td>
+    <td {if $nblist[1]['cave_14']!=0}{echo Getcss($nblist[1]['cave_14'],$par[13])}{/if}>{if $nblist[1]['cave_14']<=0}&nbsp;{else}{$nblist[1]['cave_14']}{/if}</td>
+    <td {if $nblist[1]['cave_15']!=0}{echo Getcss($nblist[1]['cave_15'],$par[14])}{/if}>{if $nblist[1]['cave_15']<=0}&nbsp;{else}{$nblist[1]['cave_15']}{/if}</td>
+    <td {if $nblist[1]['cave_16']!=0}{echo Getcss($nblist[1]['cave_16'],$par[15])}{/if}>{if $nblist[1]['cave_16']<=0}&nbsp;{else}{$nblist[1]['cave_16']}{/if}</td>
+    <td {if $nblist[1]['cave_17']!=0}{echo Getcss($nblist[1]['cave_17'],$par[16])}{/if}>{if $nblist[1]['cave_17']<=0}&nbsp;{else}{$nblist[1]['cave_17']}{/if}</td>
+    <td {if $nblist[1]['cave_18']!=0}{echo Getcss($nblist[1]['cave_18'],$par[17])}{/if}>{if $nblist[1]['cave_18']<=0}&nbsp;{else}{$nblist[1]['cave_18']}{/if}</td>
+    <td >{echo Getstat($nblist[1]['tlcave'])}</td>
+                    <td>1</td> 
+</tr>
+
+
+    
+                <tr height="50px;">
+                	<td></td>
+                </tr>
+                
+ 
+                 <tr style="background:#dadada;height:42px;">
+                	<td colspan="1" align="center" cellpadding="0" cellspacing="0">第2组</td>
+                    <td colspan="9" align="right" cellpadding="0" cellspacing="0"><img src="images/hanguo.gif"/>书院山谷高尔夫俱乐部</td>
+                    <td colspan="1" style="color:#565656;text-align:center" cellpadding="0" cellspacing="0">VS</td>
+                    <td colspan="10" style="vertical-align:middle" cellpadding="0" cellspacing="0"></td>
+                </tr>
+                   <tr style="height:50px;font-size:28px;" align="center">
+                	<td align="center" style="color:#767676;">球洞</td>
+                    <td>1</td>
+                    <td>2</td>
+                    <td>3</td>
+                    <td>4</td>
+                    <td>5</td>
+                    <td>6</td>
+                    <td>7</td>
+                    <td>8</td>
+                    <td>9</td>
+                    <td>10</td>
+                    <td>11</td>
+                    <td>12</td>
+                    <td>13</td>
+                    <td>14</td>
+                    <td>15</td>
+                    <td>16</td>
+                    <td>17</td>
+                    <td>18</td>
+                    <td>总杆数</td>
+                    <td>得分</td> 
+                </tr>
+                <tr style="height:50px;font-size:28px;" align="center">
+                	<td align="center" style="color:#767676;">标准杆</td>
+                    <td>$par[0]</td>
+                    <td>$par[1]</td>                    
+                    <td>$par[2]</td>
+                    <td>$par[3]</td>
+                    <td>$par[4]</td>
+                    <td>$par[5]</td>
+                    <td>$par[6]</td>
+                    <td>$par[7]</td>
+                    <td>$par[8]</td>
+                    <td>$par[9]</td>
+                    <td>$par[10]</td>
+                    <td>$par[11]</td>
+                    <td>$par[12]</td>
+                    <td>$par[13]</td>
+                    <td>$par[14]</td>
+                    <td>$par[15]</td>
+                    <td>$par[16]</td>
+                    <td>$par[17]</td>
+                    <td>72</td>
+                    <td></td> 
+                </tr>
+ <tr style="height:50px;font-size:28px;" align="center">
+                	<td align="center" style="vertical-align:middle"><img src="images/{$qzarray[$nblist[2]['uid']]}"/>{echo Getuname($dyarray[$nblist[2]['uid']],1)}</td>
+                	<td {if $nblist[2]['cave_1']!=0}{echo Getcss($nblist[2]['cave_1'],$par[0])}{/if}>{if $nblist[2]['cave_1']<=0}&nbsp;{else}{$nblist[2]['cave_1']}{/if}</td>
+    <td {if $nblist[2]['cave_2']!=0}{echo Getcss($nblist[2]['cave_2'],$par[1])}{/if}>{if $nblist[2]['cave_2']<=0}&nbsp;{else}{$nblist[2]['cave_2']}{/if}</td>
+    <td {if $nblist[2]['cave_3']!=0}{echo Getcss($nblist[2]['cave_3'],$par[2])}{/if}>{if $nblist[2]['cave_3']<=0}&nbsp;{else}{$nblist[2]['cave_3']}{/if}</td>
+    <td {if $nblist[2]['cave_4']!=0}{echo Getcss($nblist[2]['cave_4'],$par[3])}{/if}>{if $nblist[2]['cave_4']<=0}&nbsp;{else}{$nblist[2]['cave_4']}{/if}</td>
+    <td {if $nblist[2]['cave_5']!=0}{echo Getcss($nblist[2]['cave_5'],$par[4])}{/if}>{if $nblist[2]['cave_5']<=0}&nbsp;{else}{$nblist[2]['cave_5']}{/if}</td>
+    <td {if $nblist[2]['cave_6']!=0}{echo Getcss($nblist[2]['cave_6'],$par[5])}{/if}>{if $nblist[2]['cave_6']<=0}&nbsp;{else}{$nblist[2]['cave_6']}{/if}</td>
+    <td {if $nblist[2]['cave_7']!=0}{echo Getcss($nblist[2]['cave_7'],$par[6])}{/if}>{if $nblist[2]['cave_7']<=0}&nbsp;{else}{$nblist[2]['cave_7']}{/if}</td>
+    <td {if $nblist[2]['cave_8']!=0}{echo Getcss($nblist[2]['cave_8'],$par[7])}{/if}>{if $nblist[2]['cave_8']<=0}&nbsp;{else}{$nblist[2]['cave_8']}{/if}</td>
+    <td {if $nblist[2]['cave_9']!=0}{echo Getcss($nblist[2]['cave_9'],$par[8])}{/if}>{if $nblist[2]['cave_9']<=0}&nbsp;{else}{$nblist[2]['cave_9']}{/if}</td> 
+    <td {if $nblist[2]['cave_10']!=0}{echo Getcss($nblist[2]['cave_10'],$par[9])}{/if}>{if $nblist[2]['cave_10']<=0}&nbsp;{else}{$nblist[2]['cave_10']}{/if}</td>
+    <td {if $nblist[2]['cave_11']!=0}{echo Getcss($nblist[2]['cave_11'],$par[10])}{/if}>{if $nblist[2]['cave_11']<=0}&nbsp;{else}{$nblist[2]['cave_11']}{/if}</td>
+    <td {if $nblist[2]['cave_12']!=0}{echo Getcss($nblist[2]['cave_12'],$par[11])}{/if}>{if $nblist[2]['cave_12']<=0}&nbsp;{else}{$nblist[2]['cave_12']}{/if}</td>
+    <td {if $nblist[2]['cave_13']!=0}{echo Getcss($nblist[2]['cave_13'],$par[12])}{/if}>{if $nblist[2]['cave_13']<=0}&nbsp;{else}{$nblist[2]['cave_13']}{/if}</td>
+    <td {if $nblist[2]['cave_14']!=0}{echo Getcss($nblist[2]['cave_14'],$par[13])}{/if}>{if $nblist[2]['cave_14']<=0}&nbsp;{else}{$nblist[2]['cave_14']}{/if}</td>
+    <td {if $nblist[2]['cave_15']!=0}{echo Getcss($nblist[2]['cave_15'],$par[14])}{/if}>{if $nblist[2]['cave_15']<=0}&nbsp;{else}{$nblist[2]['cave_15']}{/if}</td>
+    <td {if $nblist[2]['cave_16']!=0}{echo Getcss($nblist[2]['cave_16'],$par[15])}{/if}>{if $nblist[2]['cave_16']<=0}&nbsp;{else}{$nblist[2]['cave_16']}{/if}</td>
+    <td {if $nblist[2]['cave_17']!=0}{echo Getcss($nblist[2]['cave_17'],$par[16])}{/if}>{if $nblist[2]['cave_17']<=0}&nbsp;{else}{$nblist[2]['cave_17']}{/if}</td>
+    <td {if $nblist[2]['cave_18']!=0}{echo Getcss($nblist[2]['cave_18'],$par[17])}{/if}>{if $nblist[2]['cave_18']<=0}&nbsp;{else}{$nblist[2]['cave_18']}{/if}</td>
+    <td >{echo Getstat($nblist[2]['tlcave'])}</td>
+                    <td>1</td> 
+</tr>
+
+ <tr style="height:50px;font-size:28px;" align="center">
+                	<td align="center" style="vertical-align:middle"><img src="images/{$qzarray[$nblist[3]['uid']]}"/>{echo Getuname($dyarray[$nblist[3]['uid']],1)}</td>
+                	<td {if $nblist[3]['cave_1']!=0}{echo Getcss($nblist[3]['cave_1'],$par[0])}{/if}>{if $nblist[3]['cave_1']<=0}&nbsp;{else}{$nblist[3]['cave_1']}{/if}</td>
+    <td {if $nblist[3]['cave_2']!=0}{echo Getcss($nblist[3]['cave_2'],$par[1])}{/if}>{if $nblist[3]['cave_2']<=0}&nbsp;{else}{$nblist[3]['cave_2']}{/if}</td>
+    <td {if $nblist[3]['cave_3']!=0}{echo Getcss($nblist[3]['cave_3'],$par[2])}{/if}>{if $nblist[3]['cave_3']<=0}&nbsp;{else}{$nblist[3]['cave_3']}{/if}</td>
+    <td {if $nblist[3]['cave_4']!=0}{echo Getcss($nblist[3]['cave_4'],$par[3])}{/if}>{if $nblist[3]['cave_4']<=0}&nbsp;{else}{$nblist[3]['cave_4']}{/if}</td>
+    <td {if $nblist[3]['cave_5']!=0}{echo Getcss($nblist[3]['cave_5'],$par[4])}{/if}>{if $nblist[3]['cave_5']<=0}&nbsp;{else}{$nblist[3]['cave_5']}{/if}</td>
+    <td {if $nblist[3]['cave_6']!=0}{echo Getcss($nblist[3]['cave_6'],$par[5])}{/if}>{if $nblist[3]['cave_6']<=0}&nbsp;{else}{$nblist[3]['cave_6']}{/if}</td>
+    <td {if $nblist[3]['cave_7']!=0}{echo Getcss($nblist[3]['cave_7'],$par[6])}{/if}>{if $nblist[3]['cave_7']<=0}&nbsp;{else}{$nblist[3]['cave_7']}{/if}</td>
+    <td {if $nblist[3]['cave_8']!=0}{echo Getcss($nblist[3]['cave_8'],$par[7])}{/if}>{if $nblist[3]['cave_8']<=0}&nbsp;{else}{$nblist[3]['cave_8']}{/if}</td>
+    <td {if $nblist[3]['cave_9']!=0}{echo Getcss($nblist[3]['cave_9'],$par[8])}{/if}>{if $nblist[3]['cave_9']<=0}&nbsp;{else}{$nblist[3]['cave_9']}{/if}</td> 
+    <td {if $nblist[3]['cave_10']!=0}{echo Getcss($nblist[3]['cave_10'],$par[9])}{/if}>{if $nblist[3]['cave_10']<=0}&nbsp;{else}{$nblist[3]['cave_10']}{/if}</td>
+    <td {if $nblist[3]['cave_11']!=0}{echo Getcss($nblist[3]['cave_11'],$par[10])}{/if}>{if $nblist[3]['cave_11']<=0}&nbsp;{else}{$nblist[3]['cave_11']}{/if}</td>
+    <td {if $nblist[3]['cave_12']!=0}{echo Getcss($nblist[3]['cave_12'],$par[11])}{/if}>{if $nblist[3]['cave_12']<=0}&nbsp;{else}{$nblist[3]['cave_12']}{/if}</td>
+    <td {if $nblist[3]['cave_13']!=0}{echo Getcss($nblist[3]['cave_13'],$par[12])}{/if}>{if $nblist[3]['cave_13']<=0}&nbsp;{else}{$nblist[3]['cave_13']}{/if}</td>
+    <td {if $nblist[3]['cave_14']!=0}{echo Getcss($nblist[3]['cave_14'],$par[13])}{/if}>{if $nblist[3]['cave_14']<=0}&nbsp;{else}{$nblist[3]['cave_14']}{/if}</td>
+    <td {if $nblist[3]['cave_15']!=0}{echo Getcss($nblist[3]['cave_15'],$par[14])}{/if}>{if $nblist[3]['cave_15']<=0}&nbsp;{else}{$nblist[3]['cave_15']}{/if}</td>
+    <td {if $nblist[3]['cave_16']!=0}{echo Getcss($nblist[3]['cave_16'],$par[15])}{/if}>{if $nblist[3]['cave_16']<=0}&nbsp;{else}{$nblist[3]['cave_16']}{/if}</td>
+    <td {if $nblist[3]['cave_17']!=0}{echo Getcss($nblist[3]['cave_17'],$par[16])}{/if}>{if $nblist[3]['cave_17']<=0}&nbsp;{else}{$nblist[3]['cave_17']}{/if}</td>
+    <td {if $nblist[3]['cave_18']!=0}{echo Getcss($nblist[3]['cave_18'],$par[17])}{/if}>{if $nblist[3]['cave_18']<=0}&nbsp;{else}{$nblist[3]['cave_18']}{/if}</td>
+    <td >{echo Getstat($nblist[3]['tlcave'])}</td>
+                    <td>1</td> 
+</tr>
+
+
+    
+                <tr height="50px;">
+                	<td></td>
+                </tr>
+                
+ 
+                 <tr style="background:#dadada;height:42px;">
+                	<td colspan="1" align="center" cellpadding="0" cellspacing="0">第3组</td>
+                    <td colspan="9" align="right" cellpadding="0" cellspacing="0"><img src="images/hanguo.gif"/>宇正山乡村俱乐部</td>
+                    <td colspan="1" style="color:#565656;text-align:center" cellpadding="0" cellspacing="0">VS</td>
+                    <td colspan="10" style="vertical-align:middle" cellpadding="0" cellspacing="0"></td>
+                </tr>
+                   <tr style="height:50px;font-size:28px;" align="center">
+                	<td align="center" style="color:#767676;">球洞</td>
+                    <td>1</td>
+                    <td>2</td>
+                    <td>3</td>
+                    <td>4</td>
+                    <td>5</td>
+                    <td>6</td>
+                    <td>7</td>
+                    <td>8</td>
+                    <td>9</td>
+                    <td>10</td>
+                    <td>11</td>
+                    <td>12</td>
+                    <td>13</td>
+                    <td>14</td>
+                    <td>15</td>
+                    <td>16</td>
+                    <td>17</td>
+                    <td>18</td>
+                    <td>总杆数</td>
+                    <td>得分</td> 
+                </tr>
+                <tr style="height:50px;font-size:28px;" align="center">
+                	<td align="center" style="color:#767676;">标准杆</td>
+                    <td>$par[0]</td>
+                    <td>$par[1]</td>                    
+                    <td>$par[2]</td>
+                    <td>$par[3]</td>
+                    <td>$par[4]</td>
+                    <td>$par[5]</td>
+                    <td>$par[6]</td>
+                    <td>$par[7]</td>
+                    <td>$par[8]</td>
+                    <td>$par[9]</td>
+                    <td>$par[10]</td>
+                    <td>$par[11]</td>
+                    <td>$par[12]</td>
+                    <td>$par[13]</td>
+                    <td>$par[14]</td>
+                    <td>$par[15]</td>
+                    <td>$par[16]</td>
+                    <td>$par[17]</td>
+                    <td>72</td>
+                    <td></td> 
+                </tr>
+ <tr style="height:50px;font-size:28px;" align="center">
+                	<td align="center" style="vertical-align:middle"><img src="images/{$qzarray[$nblist[4]['uid']]}"/>{echo Getuname($dyarray[$nblist[4]['uid']],1)}</td>
+                	<td {if $nblist[4]['cave_1']!=0}{echo Getcss($nblist[4]['cave_1'],$par[0])}{/if}>{if $nblist[4]['cave_1']<=0}&nbsp;{else}{$nblist[4]['cave_1']}{/if}</td>
+    <td {if $nblist[4]['cave_2']!=0}{echo Getcss($nblist[4]['cave_2'],$par[1])}{/if}>{if $nblist[4]['cave_2']<=0}&nbsp;{else}{$nblist[4]['cave_2']}{/if}</td>
+    <td {if $nblist[4]['cave_3']!=0}{echo Getcss($nblist[4]['cave_3'],$par[2])}{/if}>{if $nblist[4]['cave_3']<=0}&nbsp;{else}{$nblist[4]['cave_3']}{/if}</td>
+    <td {if $nblist[4]['cave_4']!=0}{echo Getcss($nblist[4]['cave_4'],$par[3])}{/if}>{if $nblist[4]['cave_4']<=0}&nbsp;{else}{$nblist[4]['cave_4']}{/if}</td>
+    <td {if $nblist[4]['cave_5']!=0}{echo Getcss($nblist[4]['cave_5'],$par[4])}{/if}>{if $nblist[4]['cave_5']<=0}&nbsp;{else}{$nblist[4]['cave_5']}{/if}</td>
+    <td {if $nblist[4]['cave_6']!=0}{echo Getcss($nblist[4]['cave_6'],$par[5])}{/if}>{if $nblist[4]['cave_6']<=0}&nbsp;{else}{$nblist[4]['cave_6']}{/if}</td>
+    <td {if $nblist[4]['cave_7']!=0}{echo Getcss($nblist[4]['cave_7'],$par[6])}{/if}>{if $nblist[4]['cave_7']<=0}&nbsp;{else}{$nblist[4]['cave_7']}{/if}</td>
+    <td {if $nblist[4]['cave_8']!=0}{echo Getcss($nblist[4]['cave_8'],$par[7])}{/if}>{if $nblist[4]['cave_8']<=0}&nbsp;{else}{$nblist[4]['cave_8']}{/if}</td>
+    <td {if $nblist[4]['cave_9']!=0}{echo Getcss($nblist[4]['cave_9'],$par[8])}{/if}>{if $nblist[4]['cave_9']<=0}&nbsp;{else}{$nblist[4]['cave_9']}{/if}</td> 
+    <td {if $nblist[4]['cave_10']!=0}{echo Getcss($nblist[4]['cave_10'],$par[9])}{/if}>{if $nblist[4]['cave_10']<=0}&nbsp;{else}{$nblist[4]['cave_10']}{/if}</td>
+    <td {if $nblist[4]['cave_11']!=0}{echo Getcss($nblist[4]['cave_11'],$par[10])}{/if}>{if $nblist[4]['cave_11']<=0}&nbsp;{else}{$nblist[4]['cave_11']}{/if}</td>
+    <td {if $nblist[4]['cave_12']!=0}{echo Getcss($nblist[4]['cave_12'],$par[11])}{/if}>{if $nblist[4]['cave_12']<=0}&nbsp;{else}{$nblist[4]['cave_12']}{/if}</td>
+    <td {if $nblist[4]['cave_13']!=0}{echo Getcss($nblist[4]['cave_13'],$par[12])}{/if}>{if $nblist[4]['cave_13']<=0}&nbsp;{else}{$nblist[4]['cave_13']}{/if}</td>
+    <td {if $nblist[4]['cave_14']!=0}{echo Getcss($nblist[4]['cave_14'],$par[13])}{/if}>{if $nblist[4]['cave_14']<=0}&nbsp;{else}{$nblist[4]['cave_14']}{/if}</td>
+    <td {if $nblist[4]['cave_15']!=0}{echo Getcss($nblist[4]['cave_15'],$par[14])}{/if}>{if $nblist[4]['cave_15']<=0}&nbsp;{else}{$nblist[4]['cave_15']}{/if}</td>
+    <td {if $nblist[4]['cave_16']!=0}{echo Getcss($nblist[4]['cave_16'],$par[15])}{/if}>{if $nblist[4]['cave_16']<=0}&nbsp;{else}{$nblist[4]['cave_16']}{/if}</td>
+    <td {if $nblist[4]['cave_17']!=0}{echo Getcss($nblist[4]['cave_17'],$par[16])}{/if}>{if $nblist[4]['cave_17']<=0}&nbsp;{else}{$nblist[4]['cave_17']}{/if}</td>
+    <td {if $nblist[4]['cave_18']!=0}{echo Getcss($nblist[4]['cave_18'],$par[17])}{/if}>{if $nblist[4]['cave_18']<=0}&nbsp;{else}{$nblist[4]['cave_18']}{/if}</td>
+    <td >{echo Getstat($nblist[4]['tlcave'])}</td>
+                    <td>1</td> 
+</tr>
+
+ <tr style="height:50px;font-size:28px;" align="center">
+                	<td align="center" style="vertical-align:middle"><img src="images/{$qzarray[$nblist[5]['uid']]}"/>{echo Getuname($dyarray[$nblist[5]['uid']],1)}</td>
+                	<td {if $nblist[5]['cave_1']!=0}{echo Getcss($nblist[5]['cave_1'],$par[0])}{/if}>{if $nblist[5]['cave_1']<=0}&nbsp;{else}{$nblist[5]['cave_1']}{/if}</td>
+    <td {if $nblist[5]['cave_2']!=0}{echo Getcss($nblist[5]['cave_2'],$par[1])}{/if}>{if $nblist[5]['cave_2']<=0}&nbsp;{else}{$nblist[5]['cave_2']}{/if}</td>
+    <td {if $nblist[5]['cave_3']!=0}{echo Getcss($nblist[5]['cave_3'],$par[2])}{/if}>{if $nblist[5]['cave_3']<=0}&nbsp;{else}{$nblist[5]['cave_3']}{/if}</td>
+    <td {if $nblist[5]['cave_4']!=0}{echo Getcss($nblist[5]['cave_4'],$par[3])}{/if}>{if $nblist[5]['cave_4']<=0}&nbsp;{else}{$nblist[5]['cave_4']}{/if}</td>
+    <td {if $nblist[5]['cave_5']!=0}{echo Getcss($nblist[5]['cave_5'],$par[4])}{/if}>{if $nblist[5]['cave_5']<=0}&nbsp;{else}{$nblist[5]['cave_5']}{/if}</td>
+    <td {if $nblist[5]['cave_6']!=0}{echo Getcss($nblist[5]['cave_6'],$par[5])}{/if}>{if $nblist[5]['cave_6']<=0}&nbsp;{else}{$nblist[5]['cave_6']}{/if}</td>
+    <td {if $nblist[5]['cave_7']!=0}{echo Getcss($nblist[5]['cave_7'],$par[6])}{/if}>{if $nblist[5]['cave_7']<=0}&nbsp;{else}{$nblist[5]['cave_7']}{/if}</td>
+    <td {if $nblist[5]['cave_8']!=0}{echo Getcss($nblist[5]['cave_8'],$par[7])}{/if}>{if $nblist[5]['cave_8']<=0}&nbsp;{else}{$nblist[5]['cave_8']}{/if}</td>
+    <td {if $nblist[5]['cave_9']!=0}{echo Getcss($nblist[5]['cave_9'],$par[8])}{/if}>{if $nblist[5]['cave_9']<=0}&nbsp;{else}{$nblist[5]['cave_9']}{/if}</td> 
+    <td {if $nblist[5]['cave_10']!=0}{echo Getcss($nblist[5]['cave_10'],$par[9])}{/if}>{if $nblist[5]['cave_10']<=0}&nbsp;{else}{$nblist[5]['cave_10']}{/if}</td>
+    <td {if $nblist[5]['cave_11']!=0}{echo Getcss($nblist[5]['cave_11'],$par[10])}{/if}>{if $nblist[5]['cave_11']<=0}&nbsp;{else}{$nblist[5]['cave_11']}{/if}</td>
+    <td {if $nblist[5]['cave_12']!=0}{echo Getcss($nblist[5]['cave_12'],$par[11])}{/if}>{if $nblist[5]['cave_12']<=0}&nbsp;{else}{$nblist[5]['cave_12']}{/if}</td>
+    <td {if $nblist[5]['cave_13']!=0}{echo Getcss($nblist[5]['cave_13'],$par[12])}{/if}>{if $nblist[5]['cave_13']<=0}&nbsp;{else}{$nblist[5]['cave_13']}{/if}</td>
+    <td {if $nblist[5]['cave_14']!=0}{echo Getcss($nblist[5]['cave_14'],$par[13])}{/if}>{if $nblist[5]['cave_14']<=0}&nbsp;{else}{$nblist[5]['cave_14']}{/if}</td>
+    <td {if $nblist[5]['cave_15']!=0}{echo Getcss($nblist[5]['cave_15'],$par[14])}{/if}>{if $nblist[5]['cave_15']<=0}&nbsp;{else}{$nblist[5]['cave_15']}{/if}</td>
+    <td {if $nblist[5]['cave_16']!=0}{echo Getcss($nblist[5]['cave_16'],$par[15])}{/if}>{if $nblist[5]['cave_16']<=0}&nbsp;{else}{$nblist[5]['cave_16']}{/if}</td>
+    <td {if $nblist[5]['cave_17']!=0}{echo Getcss($nblist[5]['cave_17'],$par[16])}{/if}>{if $nblist[5]['cave_17']<=0}&nbsp;{else}{$nblist[5]['cave_17']}{/if}</td>
+    <td {if $nblist[5]['cave_18']!=0}{echo Getcss($nblist[5]['cave_18'],$par[17])}{/if}>{if $nblist[5]['cave_18']<=0}&nbsp;{else}{$nblist[5]['cave_18']}{/if}</td>
+    <td >{echo Getstat($nblist[5]['tlcave'])}</td>
+                    <td>1</td> 
+</tr>
+
+
+    
+                <tr height="50px;">
+                	<td></td>
+                </tr>
+                
+ 
+                 <tr style="background:#dadada;height:42px;">
+                	<td colspan="1" align="center" cellpadding="0" cellspacing="0">第4组</td>
+                    <td colspan="9" align="right" cellpadding="0" cellspacing="0"><img src="images/hongqi.png"/>云南昆明滇池湖畔高尔夫球会</td>
+                    <td colspan="1" style="color:#565656;text-align:center" cellpadding="0" cellspacing="0">VS</td>
+                    <td colspan="10" style="vertical-align:middle" cellpadding="0" cellspacing="0"></td>
+                </tr>
+                   <tr style="height:50px;font-size:28px;" align="center">
+                	<td align="center" style="color:#767676;">球洞</td>
+                    <td>1</td>
+                    <td>2</td>
+                    <td>3</td>
+                    <td>4</td>
+                    <td>5</td>
+                    <td>6</td>
+                    <td>7</td>
+                    <td>8</td>
+                    <td>9</td>
+                    <td>10</td>
+                    <td>11</td>
+                    <td>12</td>
+                    <td>13</td>
+                    <td>14</td>
+                    <td>15</td>
+                    <td>16</td>
+                    <td>17</td>
+                    <td>18</td>
+                    <td>总杆数</td>
+                    <td>得分</td> 
+                </tr>
+                <tr style="height:50px;font-size:28px;" align="center">
+                	<td align="center" style="color:#767676;">标准杆</td>
+                    <td>$par[0]</td>
+                    <td>$par[1]</td>                    
+                    <td>$par[2]</td>
+                    <td>$par[3]</td>
+                    <td>$par[4]</td>
+                    <td>$par[5]</td>
+                    <td>$par[6]</td>
+                    <td>$par[7]</td>
+                    <td>$par[8]</td>
+                    <td>$par[9]</td>
+                    <td>$par[10]</td>
+                    <td>$par[11]</td>
+                    <td>$par[12]</td>
+                    <td>$par[13]</td>
+                    <td>$par[14]</td>
+                    <td>$par[15]</td>
+                    <td>$par[16]</td>
+                    <td>$par[17]</td>
+                    <td>72</td>
+                    <td></td> 
+                </tr>
+ <tr style="height:50px;font-size:28px;" align="center">
+                	<td align="center" style="vertical-align:middle"><img src="images/{$qzarray[$nblist[6]['uid']]}"/>{echo Getuname($dyarray[$nblist[6]['uid']],1)}</td>
+                	<td {if $nblist[6]['cave_1']!=0}{echo Getcss($nblist[6]['cave_1'],$par[0])}{/if}>{if $nblist[6]['cave_1']<=0}&nbsp;{else}{$nblist[6]['cave_1']}{/if}</td>
+    <td {if $nblist[6]['cave_2']!=0}{echo Getcss($nblist[6]['cave_2'],$par[1])}{/if}>{if $nblist[6]['cave_2']<=0}&nbsp;{else}{$nblist[6]['cave_2']}{/if}</td>
+    <td {if $nblist[6]['cave_3']!=0}{echo Getcss($nblist[6]['cave_3'],$par[2])}{/if}>{if $nblist[6]['cave_3']<=0}&nbsp;{else}{$nblist[6]['cave_3']}{/if}</td>
+    <td {if $nblist[6]['cave_4']!=0}{echo Getcss($nblist[6]['cave_4'],$par[3])}{/if}>{if $nblist[6]['cave_4']<=0}&nbsp;{else}{$nblist[6]['cave_4']}{/if}</td>
+    <td {if $nblist[6]['cave_5']!=0}{echo Getcss($nblist[6]['cave_5'],$par[4])}{/if}>{if $nblist[6]['cave_5']<=0}&nbsp;{else}{$nblist[6]['cave_5']}{/if}</td>
+    <td {if $nblist[6]['cave_6']!=0}{echo Getcss($nblist[6]['cave_6'],$par[5])}{/if}>{if $nblist[6]['cave_6']<=0}&nbsp;{else}{$nblist[6]['cave_6']}{/if}</td>
+    <td {if $nblist[6]['cave_7']!=0}{echo Getcss($nblist[6]['cave_7'],$par[6])}{/if}>{if $nblist[6]['cave_7']<=0}&nbsp;{else}{$nblist[6]['cave_7']}{/if}</td>
+    <td {if $nblist[6]['cave_8']!=0}{echo Getcss($nblist[6]['cave_8'],$par[7])}{/if}>{if $nblist[6]['cave_8']<=0}&nbsp;{else}{$nblist[6]['cave_8']}{/if}</td>
+    <td {if $nblist[6]['cave_9']!=0}{echo Getcss($nblist[6]['cave_9'],$par[8])}{/if}>{if $nblist[6]['cave_9']<=0}&nbsp;{else}{$nblist[6]['cave_9']}{/if}</td> 
+    <td {if $nblist[6]['cave_10']!=0}{echo Getcss($nblist[6]['cave_10'],$par[9])}{/if}>{if $nblist[6]['cave_10']<=0}&nbsp;{else}{$nblist[6]['cave_10']}{/if}</td>
+    <td {if $nblist[6]['cave_11']!=0}{echo Getcss($nblist[6]['cave_11'],$par[10])}{/if}>{if $nblist[6]['cave_11']<=0}&nbsp;{else}{$nblist[6]['cave_11']}{/if}</td>
+    <td {if $nblist[6]['cave_12']!=0}{echo Getcss($nblist[6]['cave_12'],$par[11])}{/if}>{if $nblist[6]['cave_12']<=0}&nbsp;{else}{$nblist[6]['cave_12']}{/if}</td>
+    <td {if $nblist[6]['cave_13']!=0}{echo Getcss($nblist[6]['cave_13'],$par[12])}{/if}>{if $nblist[6]['cave_13']<=0}&nbsp;{else}{$nblist[6]['cave_13']}{/if}</td>
+    <td {if $nblist[6]['cave_14']!=0}{echo Getcss($nblist[6]['cave_14'],$par[13])}{/if}>{if $nblist[6]['cave_14']<=0}&nbsp;{else}{$nblist[6]['cave_14']}{/if}</td>
+    <td {if $nblist[6]['cave_15']!=0}{echo Getcss($nblist[6]['cave_15'],$par[14])}{/if}>{if $nblist[6]['cave_15']<=0}&nbsp;{else}{$nblist[6]['cave_15']}{/if}</td>
+    <td {if $nblist[6]['cave_16']!=0}{echo Getcss($nblist[6]['cave_16'],$par[15])}{/if}>{if $nblist[6]['cave_16']<=0}&nbsp;{else}{$nblist[6]['cave_16']}{/if}</td>
+    <td {if $nblist[6]['cave_17']!=0}{echo Getcss($nblist[6]['cave_17'],$par[16])}{/if}>{if $nblist[6]['cave_17']<=0}&nbsp;{else}{$nblist[6]['cave_17']}{/if}</td>
+    <td {if $nblist[6]['cave_18']!=0}{echo Getcss($nblist[6]['cave_18'],$par[17])}{/if}>{if $nblist[6]['cave_18']<=0}&nbsp;{else}{$nblist[6]['cave_18']}{/if}</td>
+    <td >{echo Getstat($nblist[6]['tlcave'])}</td>
+                    <td>1</td> 
+</tr>
+
+
+                           
+  <tr style="height:50px;font-size:28px;" align="center">
+                	<td align="center" style="vertical-align:middle"><img src="images/{$qzarray[$nblist[7]['uid']]}"/>{echo Getuname($dyarray[$nblist[7]['uid']],1)}</td>
+                	<td {if $nblist[7]['cave_1']!=0}{echo Getcss($nblist[7]['cave_1'],$par[0])}{/if}>{if $nblist[7]['cave_1']<=0}&nbsp;{else}{$nblist[7]['cave_1']}{/if}</td>
+    <td {if $nblist[7]['cave_2']!=0}{echo Getcss($nblist[7]['cave_2'],$par[1])}{/if}>{if $nblist[7]['cave_2']<=0}&nbsp;{else}{$nblist[7]['cave_2']}{/if}</td>
+    <td {if $nblist[7]['cave_3']!=0}{echo Getcss($nblist[7]['cave_3'],$par[2])}{/if}>{if $nblist[7]['cave_3']<=0}&nbsp;{else}{$nblist[7]['cave_3']}{/if}</td>
+    <td {if $nblist[7]['cave_4']!=0}{echo Getcss($nblist[7]['cave_4'],$par[3])}{/if}>{if $nblist[7]['cave_4']<=0}&nbsp;{else}{$nblist[7]['cave_4']}{/if}</td>
+    <td {if $nblist[7]['cave_5']!=0}{echo Getcss($nblist[7]['cave_5'],$par[4])}{/if}>{if $nblist[7]['cave_5']<=0}&nbsp;{else}{$nblist[7]['cave_5']}{/if}</td>
+    <td {if $nblist[7]['cave_6']!=0}{echo Getcss($nblist[7]['cave_6'],$par[5])}{/if}>{if $nblist[7]['cave_6']<=0}&nbsp;{else}{$nblist[7]['cave_6']}{/if}</td>
+    <td {if $nblist[7]['cave_7']!=0}{echo Getcss($nblist[7]['cave_7'],$par[6])}{/if}>{if $nblist[7]['cave_7']<=0}&nbsp;{else}{$nblist[7]['cave_7']}{/if}</td>
+    <td {if $nblist[7]['cave_8']!=0}{echo Getcss($nblist[7]['cave_8'],$par[7])}{/if}>{if $nblist[7]['cave_8']<=0}&nbsp;{else}{$nblist[7]['cave_8']}{/if}</td>
+    <td {if $nblist[7]['cave_9']!=0}{echo Getcss($nblist[7]['cave_9'],$par[8])}{/if}>{if $nblist[7]['cave_9']<=0}&nbsp;{else}{$nblist[7]['cave_9']}{/if}</td> 
+    <td {if $nblist[7]['cave_10']!=0}{echo Getcss($nblist[7]['cave_10'],$par[9])}{/if}>{if $nblist[7]['cave_10']<=0}&nbsp;{else}{$nblist[7]['cave_10']}{/if}</td>
+    <td {if $nblist[7]['cave_11']!=0}{echo Getcss($nblist[7]['cave_11'],$par[10])}{/if}>{if $nblist[7]['cave_11']<=0}&nbsp;{else}{$nblist[7]['cave_11']}{/if}</td>
+    <td {if $nblist[7]['cave_12']!=0}{echo Getcss($nblist[7]['cave_12'],$par[11])}{/if}>{if $nblist[7]['cave_12']<=0}&nbsp;{else}{$nblist[7]['cave_12']}{/if}</td>
+    <td {if $nblist[7]['cave_13']!=0}{echo Getcss($nblist[7]['cave_13'],$par[12])}{/if}>{if $nblist[7]['cave_13']<=0}&nbsp;{else}{$nblist[7]['cave_13']}{/if}</td>
+    <td {if $nblist[7]['cave_14']!=0}{echo Getcss($nblist[7]['cave_14'],$par[13])}{/if}>{if $nblist[7]['cave_14']<=0}&nbsp;{else}{$nblist[7]['cave_14']}{/if}</td>
+    <td {if $nblist[7]['cave_15']!=0}{echo Getcss($nblist[7]['cave_15'],$par[14])}{/if}>{if $nblist[7]['cave_15']<=0}&nbsp;{else}{$nblist[7]['cave_15']}{/if}</td>
+    <td {if $nblist[7]['cave_16']!=0}{echo Getcss($nblist[7]['cave_16'],$par[15])}{/if}>{if $nblist[7]['cave_16']<=0}&nbsp;{else}{$nblist[7]['cave_16']}{/if}</td>
+    <td {if $nblist[7]['cave_17']!=0}{echo Getcss($nblist[7]['cave_17'],$par[16])}{/if}>{if $nblist[7]['cave_17']<=0}&nbsp;{else}{$nblist[7]['cave_17']}{/if}</td>
+    <td {if $nblist[7]['cave_18']!=0}{echo Getcss($nblist[7]['cave_18'],$par[17])}{/if}>{if $nblist[7]['cave_18']<=0}&nbsp;{else}{$nblist[7]['cave_18']}{/if}</td>
+    <td >{echo Getstat($nblist[7]['tlcave'])}</td>
+                    <td>1</td> 
+</tr>
+
+
+                <tr style="background:#d8d8d8;height:50px;" align="center">
+                	<td colspan="1"></td>
+                	<td style="color:#f00;">1up</td>
+                    <td style="color:#f00;">2up</td>
+                    <td style="color:#3a9de2;">3up</td>
+                    <td style="color:#f00;">4up</td>
+                    <td style="color:#3a9de2;">1up</td>
+                    <td style="color:#3a9de2;">2up</td>
+                    <td style="color:#3a9de2;">2up</td>
+                    <td style="color:#f00;">3up</td>
+                    <td style="color:#f00;">4up</td>
+                    <td style="color:#3a9de2;">1up</td>
+                    <td style="color:#f00;">1up</td>
+                    <td style="color:#f00;">2up</td>
+                    <td style="color:#3a9de2;">3up</td>
+                    <td style="color:#f00;">4up</td>
+                    <td style="color:#3a9de2;">4up</td>
+                    <td style="color:#f00;">6up</td>
+                    <td style="color:#3a9de2;">1up</td>
+                    <td style="color:#3a9de2;">3up</td>
+                    <td> </td> 
+                    <td> </td> 
+                </tr> 
+    
+                <tr height="50px;">
+                	<td></td>
+                </tr>
+                
+ 
+                 <tr style="background:#dadada;height:42px;">
+                	<td colspan="1" align="center" cellpadding="0" cellspacing="0">第5组</td>
+                    <td colspan="9" align="right" cellpadding="0" cellspacing="0"><img src="images/hongqi.png"/>广东深圳观澜湖高尔夫球会</td>
+                    <td colspan="1" style="color:#565656;text-align:center" cellpadding="0" cellspacing="0">VS</td>
+                    <td colspan="10" style="vertical-align:middle" cellpadding="0" cellspacing="0"></td>
+                </tr>
+                   <tr style="height:50px;font-size:28px;" align="center">
+                	<td align="center" style="color:#767676;">球洞</td>
+                    <td>1</td>
+                    <td>2</td>
+                    <td>3</td>
+                    <td>4</td>
+                    <td>5</td>
+                    <td>6</td>
+                    <td>7</td>
+                    <td>8</td>
+                    <td>9</td>
+                    <td>10</td>
+                    <td>11</td>
+                    <td>12</td>
+                    <td>13</td>
+                    <td>14</td>
+                    <td>15</td>
+                    <td>16</td>
+                    <td>17</td>
+                    <td>18</td>
+                    <td>总杆数</td>
+                    <td>得分</td> 
+                </tr>
+                <tr style="height:50px;font-size:28px;" align="center">
+                	<td align="center" style="color:#767676;">标准杆</td>
+                    <td>$par[0]</td>
+                    <td>$par[1]</td>                    
+                    <td>$par[2]</td>
+                    <td>$par[3]</td>
+                    <td>$par[4]</td>
+                    <td>$par[5]</td>
+                    <td>$par[6]</td>
+                    <td>$par[7]</td>
+                    <td>$par[8]</td>
+                    <td>$par[9]</td>
+                    <td>$par[10]</td>
+                    <td>$par[11]</td>
+                    <td>$par[12]</td>
+                    <td>$par[13]</td>
+                    <td>$par[14]</td>
+                    <td>$par[15]</td>
+                    <td>$par[16]</td>
+                    <td>$par[17]</td>
+                    <td>72</td>
+                    <td></td> 
+                </tr>
+  <tr style="height:50px;font-size:28px;" align="center">
+                	<td align="center" style="vertical-align:middle"><img src="images/{$qzarray[$nblist[8]['uid']]}"/>{echo Getuname($dyarray[$nblist[8]['uid']],1)}</td>
+                	<td {if $nblist[8]['cave_1']!=0}{echo Getcss($nblist[8]['cave_1'],$par[0])}{/if}>{if $nblist[8]['cave_1']<=0}&nbsp;{else}{$nblist[8]['cave_1']}{/if}</td>
+    <td {if $nblist[8]['cave_2']!=0}{echo Getcss($nblist[8]['cave_2'],$par[1])}{/if}>{if $nblist[8]['cave_2']<=0}&nbsp;{else}{$nblist[8]['cave_2']}{/if}</td>
+    <td {if $nblist[8]['cave_3']!=0}{echo Getcss($nblist[8]['cave_3'],$par[2])}{/if}>{if $nblist[8]['cave_3']<=0}&nbsp;{else}{$nblist[8]['cave_3']}{/if}</td>
+    <td {if $nblist[8]['cave_4']!=0}{echo Getcss($nblist[8]['cave_4'],$par[3])}{/if}>{if $nblist[8]['cave_4']<=0}&nbsp;{else}{$nblist[8]['cave_4']}{/if}</td>
+    <td {if $nblist[8]['cave_5']!=0}{echo Getcss($nblist[8]['cave_5'],$par[4])}{/if}>{if $nblist[8]['cave_5']<=0}&nbsp;{else}{$nblist[8]['cave_5']}{/if}</td>
+    <td {if $nblist[8]['cave_6']!=0}{echo Getcss($nblist[8]['cave_6'],$par[5])}{/if}>{if $nblist[8]['cave_6']<=0}&nbsp;{else}{$nblist[8]['cave_6']}{/if}</td>
+    <td {if $nblist[8]['cave_7']!=0}{echo Getcss($nblist[8]['cave_7'],$par[6])}{/if}>{if $nblist[8]['cave_7']<=0}&nbsp;{else}{$nblist[8]['cave_7']}{/if}</td>
+    <td {if $nblist[8]['cave_8']!=0}{echo Getcss($nblist[8]['cave_8'],$par[7])}{/if}>{if $nblist[8]['cave_8']<=0}&nbsp;{else}{$nblist[8]['cave_8']}{/if}</td>
+    <td {if $nblist[8]['cave_9']!=0}{echo Getcss($nblist[8]['cave_9'],$par[8])}{/if}>{if $nblist[8]['cave_9']<=0}&nbsp;{else}{$nblist[8]['cave_9']}{/if}</td> 
+    <td {if $nblist[8]['cave_10']!=0}{echo Getcss($nblist[8]['cave_10'],$par[9])}{/if}>{if $nblist[8]['cave_10']<=0}&nbsp;{else}{$nblist[8]['cave_10']}{/if}</td>
+    <td {if $nblist[8]['cave_11']!=0}{echo Getcss($nblist[8]['cave_11'],$par[10])}{/if}>{if $nblist[8]['cave_11']<=0}&nbsp;{else}{$nblist[8]['cave_11']}{/if}</td>
+    <td {if $nblist[8]['cave_12']!=0}{echo Getcss($nblist[8]['cave_12'],$par[11])}{/if}>{if $nblist[8]['cave_12']<=0}&nbsp;{else}{$nblist[8]['cave_12']}{/if}</td>
+    <td {if $nblist[8]['cave_13']!=0}{echo Getcss($nblist[8]['cave_13'],$par[12])}{/if}>{if $nblist[8]['cave_13']<=0}&nbsp;{else}{$nblist[8]['cave_13']}{/if}</td>
+    <td {if $nblist[8]['cave_14']!=0}{echo Getcss($nblist[8]['cave_14'],$par[13])}{/if}>{if $nblist[8]['cave_14']<=0}&nbsp;{else}{$nblist[8]['cave_14']}{/if}</td>
+    <td {if $nblist[8]['cave_15']!=0}{echo Getcss($nblist[8]['cave_15'],$par[14])}{/if}>{if $nblist[8]['cave_15']<=0}&nbsp;{else}{$nblist[8]['cave_15']}{/if}</td>
+    <td {if $nblist[8]['cave_16']!=0}{echo Getcss($nblist[8]['cave_16'],$par[15])}{/if}>{if $nblist[8]['cave_16']<=0}&nbsp;{else}{$nblist[8]['cave_16']}{/if}</td>
+    <td {if $nblist[8]['cave_17']!=0}{echo Getcss($nblist[8]['cave_17'],$par[16])}{/if}>{if $nblist[8]['cave_17']<=0}&nbsp;{else}{$nblist[8]['cave_17']}{/if}</td>
+    <td {if $nblist[8]['cave_18']!=0}{echo Getcss($nblist[8]['cave_18'],$par[17])}{/if}>{if $nblist[8]['cave_18']<=0}&nbsp;{else}{$nblist[8]['cave_18']}{/if}</td>
+    <td >{echo Getstat($nblist[8]['tlcave'])}</td>
+                    <td>1</td> 
+</tr>
+
+ <tr style="height:50px;font-size:28px;" align="center">
+                	<td align="center" style="vertical-align:middle"><img src="images/{$qzarray[$nblist[9]['uid']]}"/>{echo Getuname($dyarray[$nblist[9]['uid']],1)}</td>
+                	<td {if $nblist[9]['cave_1']!=0}{echo Getcss($nblist[9]['cave_1'],$par[0])}{/if}>{if $nblist[9]['cave_1']<=0}&nbsp;{else}{$nblist[9]['cave_1']}{/if}</td>
+    <td {if $nblist[9]['cave_2']!=0}{echo Getcss($nblist[9]['cave_2'],$par[1])}{/if}>{if $nblist[9]['cave_2']<=0}&nbsp;{else}{$nblist[9]['cave_2']}{/if}</td>
+    <td {if $nblist[9]['cave_3']!=0}{echo Getcss($nblist[9]['cave_3'],$par[2])}{/if}>{if $nblist[9]['cave_3']<=0}&nbsp;{else}{$nblist[9]['cave_3']}{/if}</td>
+    <td {if $nblist[9]['cave_4']!=0}{echo Getcss($nblist[9]['cave_4'],$par[3])}{/if}>{if $nblist[9]['cave_4']<=0}&nbsp;{else}{$nblist[9]['cave_4']}{/if}</td>
+    <td {if $nblist[9]['cave_5']!=0}{echo Getcss($nblist[9]['cave_5'],$par[4])}{/if}>{if $nblist[9]['cave_5']<=0}&nbsp;{else}{$nblist[9]['cave_5']}{/if}</td>
+    <td {if $nblist[9]['cave_6']!=0}{echo Getcss($nblist[9]['cave_6'],$par[5])}{/if}>{if $nblist[9]['cave_6']<=0}&nbsp;{else}{$nblist[9]['cave_6']}{/if}</td>
+    <td {if $nblist[9]['cave_7']!=0}{echo Getcss($nblist[9]['cave_7'],$par[6])}{/if}>{if $nblist[9]['cave_7']<=0}&nbsp;{else}{$nblist[9]['cave_7']}{/if}</td>
+    <td {if $nblist[9]['cave_8']!=0}{echo Getcss($nblist[9]['cave_8'],$par[7])}{/if}>{if $nblist[9]['cave_8']<=0}&nbsp;{else}{$nblist[9]['cave_8']}{/if}</td>
+    <td {if $nblist[9]['cave_9']!=0}{echo Getcss($nblist[9]['cave_9'],$par[8])}{/if}>{if $nblist[9]['cave_9']<=0}&nbsp;{else}{$nblist[9]['cave_9']}{/if}</td> 
+    <td {if $nblist[9]['cave_10']!=0}{echo Getcss($nblist[9]['cave_10'],$par[9])}{/if}>{if $nblist[9]['cave_10']<=0}&nbsp;{else}{$nblist[9]['cave_10']}{/if}</td>
+    <td {if $nblist[9]['cave_11']!=0}{echo Getcss($nblist[9]['cave_11'],$par[10])}{/if}>{if $nblist[9]['cave_11']<=0}&nbsp;{else}{$nblist[9]['cave_11']}{/if}</td>
+    <td {if $nblist[9]['cave_12']!=0}{echo Getcss($nblist[9]['cave_12'],$par[11])}{/if}>{if $nblist[9]['cave_12']<=0}&nbsp;{else}{$nblist[9]['cave_12']}{/if}</td>
+    <td {if $nblist[9]['cave_13']!=0}{echo Getcss($nblist[9]['cave_13'],$par[12])}{/if}>{if $nblist[9]['cave_13']<=0}&nbsp;{else}{$nblist[9]['cave_13']}{/if}</td>
+    <td {if $nblist[9]['cave_14']!=0}{echo Getcss($nblist[9]['cave_14'],$par[13])}{/if}>{if $nblist[9]['cave_14']<=0}&nbsp;{else}{$nblist[9]['cave_14']}{/if}</td>
+    <td {if $nblist[9]['cave_15']!=0}{echo Getcss($nblist[9]['cave_15'],$par[14])}{/if}>{if $nblist[9]['cave_15']<=0}&nbsp;{else}{$nblist[9]['cave_15']}{/if}</td>
+    <td {if $nblist[9]['cave_16']!=0}{echo Getcss($nblist[9]['cave_16'],$par[15])}{/if}>{if $nblist[9]['cave_16']<=0}&nbsp;{else}{$nblist[9]['cave_16']}{/if}</td>
+    <td {if $nblist[9]['cave_17']!=0}{echo Getcss($nblist[9]['cave_17'],$par[16])}{/if}>{if $nblist[9]['cave_17']<=0}&nbsp;{else}{$nblist[9]['cave_17']}{/if}</td>
+    <td {if $nblist[9]['cave_18']!=0}{echo Getcss($nblist[9]['cave_18'],$par[17])}{/if}>{if $nblist[9]['cave_18']<=0}&nbsp;{else}{$nblist[9]['cave_18']}{/if}</td>
+    <td >{echo Getstat($nblist[9]['tlcave'])}</td>
+                    <td>1</td> 
+</tr>
+
+
+    
+                <tr height="50px;">
+                	<td></td>
+                </tr>
+                
+ 
+                 <tr style="background:#dadada;height:42px;">
+                	<td colspan="1" align="center" cellpadding="0" cellspacing="0">第6组</td>
+                    <td colspan="9" align="right" cellpadding="0" cellspacing="0"><img src="images/hanguo.gif"/>韩国杰克尼克劳斯球场</td>
+                    <td colspan="1" style="color:#565656;text-align:center" cellpadding="0" cellspacing="0">VS</td>
+                    <td colspan="10" style="vertical-align:middle" cellpadding="0" cellspacing="0"></td>
+                </tr>
+                   <tr style="height:50px;font-size:28px;" align="center">
+                	<td align="center" style="color:#767676;">球洞</td>
+                    <td>1</td>
+                    <td>2</td>
+                    <td>3</td>
+                    <td>4</td>
+                    <td>5</td>
+                    <td>6</td>
+                    <td>7</td>
+                    <td>8</td>
+                    <td>9</td>
+                    <td>10</td>
+                    <td>11</td>
+                    <td>12</td>
+                    <td>13</td>
+                    <td>14</td>
+                    <td>15</td>
+                    <td>16</td>
+                    <td>17</td>
+                    <td>18</td>
+                    <td>总杆数</td>
+                    <td>得分</td> 
+                </tr>
+                <tr style="height:50px;font-size:28px;" align="center">
+                	<td align="center" style="color:#767676;">标准杆</td>
+                    <td>$par[0]</td>
+                    <td>$par[1]</td>                    
+                    <td>$par[2]</td>
+                    <td>$par[3]</td>
+                    <td>$par[4]</td>
+                    <td>$par[5]</td>
+                    <td>$par[6]</td>
+                    <td>$par[7]</td>
+                    <td>$par[8]</td>
+                    <td>$par[9]</td>
+                    <td>$par[10]</td>
+                    <td>$par[11]</td>
+                    <td>$par[12]</td>
+                    <td>$par[13]</td>
+                    <td>$par[14]</td>
+                    <td>$par[15]</td>
+                    <td>$par[16]</td>
+                    <td>$par[17]</td>
+                    <td>72</td>
+                    <td></td> 
+                </tr>
+
+ <tr style="height:50px;font-size:28px;" align="center">
+                	<td align="center" style="vertical-align:middle"><img src="images/{$qzarray[$nblist[10]['uid']]}"/>{echo Getuname($dyarray[$nblist[10]['uid']],1)}</td>
+                	<td {if $nblist[10]['cave_1']!=0}{echo Getcss($nblist[10]['cave_1'],$par[0])}{/if}>{if $nblist[10]['cave_1']<=0}&nbsp;{else}{$nblist[10]['cave_1']}{/if}</td>
+    <td {if $nblist[10]['cave_2']!=0}{echo Getcss($nblist[10]['cave_2'],$par[1])}{/if}>{if $nblist[10]['cave_2']<=0}&nbsp;{else}{$nblist[10]['cave_2']}{/if}</td>
+    <td {if $nblist[10]['cave_3']!=0}{echo Getcss($nblist[10]['cave_3'],$par[2])}{/if}>{if $nblist[10]['cave_3']<=0}&nbsp;{else}{$nblist[10]['cave_3']}{/if}</td>
+    <td {if $nblist[10]['cave_4']!=0}{echo Getcss($nblist[10]['cave_4'],$par[3])}{/if}>{if $nblist[10]['cave_4']<=0}&nbsp;{else}{$nblist[10]['cave_4']}{/if}</td>
+    <td {if $nblist[10]['cave_5']!=0}{echo Getcss($nblist[10]['cave_5'],$par[4])}{/if}>{if $nblist[10]['cave_5']<=0}&nbsp;{else}{$nblist[10]['cave_5']}{/if}</td>
+    <td {if $nblist[10]['cave_6']!=0}{echo Getcss($nblist[10]['cave_6'],$par[5])}{/if}>{if $nblist[10]['cave_6']<=0}&nbsp;{else}{$nblist[10]['cave_6']}{/if}</td>
+    <td {if $nblist[10]['cave_7']!=0}{echo Getcss($nblist[10]['cave_7'],$par[6])}{/if}>{if $nblist[10]['cave_7']<=0}&nbsp;{else}{$nblist[10]['cave_7']}{/if}</td>
+    <td {if $nblist[10]['cave_8']!=0}{echo Getcss($nblist[10]['cave_8'],$par[7])}{/if}>{if $nblist[10]['cave_8']<=0}&nbsp;{else}{$nblist[10]['cave_8']}{/if}</td>
+    <td {if $nblist[10]['cave_9']!=0}{echo Getcss($nblist[10]['cave_9'],$par[8])}{/if}>{if $nblist[10]['cave_9']<=0}&nbsp;{else}{$nblist[10]['cave_9']}{/if}</td> 
+    <td {if $nblist[10]['cave_10']!=0}{echo Getcss($nblist[10]['cave_10'],$par[9])}{/if}>{if $nblist[10]['cave_10']<=0}&nbsp;{else}{$nblist[10]['cave_10']}{/if}</td>
+    <td {if $nblist[10]['cave_11']!=0}{echo Getcss($nblist[10]['cave_11'],$par[10])}{/if}>{if $nblist[10]['cave_11']<=0}&nbsp;{else}{$nblist[10]['cave_11']}{/if}</td>
+    <td {if $nblist[10]['cave_12']!=0}{echo Getcss($nblist[10]['cave_12'],$par[11])}{/if}>{if $nblist[10]['cave_12']<=0}&nbsp;{else}{$nblist[10]['cave_12']}{/if}</td>
+    <td {if $nblist[10]['cave_13']!=0}{echo Getcss($nblist[10]['cave_13'],$par[12])}{/if}>{if $nblist[10]['cave_13']<=0}&nbsp;{else}{$nblist[10]['cave_13']}{/if}</td>
+    <td {if $nblist[10]['cave_14']!=0}{echo Getcss($nblist[10]['cave_14'],$par[13])}{/if}>{if $nblist[10]['cave_14']<=0}&nbsp;{else}{$nblist[10]['cave_14']}{/if}</td>
+    <td {if $nblist[10]['cave_15']!=0}{echo Getcss($nblist[10]['cave_15'],$par[14])}{/if}>{if $nblist[10]['cave_15']<=0}&nbsp;{else}{$nblist[10]['cave_15']}{/if}</td>
+    <td {if $nblist[10]['cave_16']!=0}{echo Getcss($nblist[10]['cave_16'],$par[15])}{/if}>{if $nblist[10]['cave_16']<=0}&nbsp;{else}{$nblist[10]['cave_16']}{/if}</td>
+    <td {if $nblist[10]['cave_17']!=0}{echo Getcss($nblist[10]['cave_17'],$par[16])}{/if}>{if $nblist[10]['cave_17']<=0}&nbsp;{else}{$nblist[10]['cave_17']}{/if}</td>
+    <td {if $nblist[10]['cave_18']!=0}{echo Getcss($nblist[10]['cave_18'],$par[17])}{/if}>{if $nblist[10]['cave_18']<=0}&nbsp;{else}{$nblist[10]['cave_18']}{/if}</td>
+    <td >{echo Getstat($nblist[10]['tlcave'])}</td>
+                    <td>1</td> 
+</tr>
+
+ <tr style="height:50px;font-size:28px;" align="center">
+                	<td align="center" style="vertical-align:middle"><img src="images/{$qzarray[$nblist[11]['uid']]}"/>{echo Getuname($dyarray[$nblist[11]['uid']],1)}</td>
+                	<td {if $nblist[11]['cave_1']!=0}{echo Getcss($nblist[11]['cave_1'],$par[0])}{/if}>{if $nblist[11]['cave_1']<=0}&nbsp;{else}{$nblist[11]['cave_1']}{/if}</td>
+    <td {if $nblist[11]['cave_2']!=0}{echo Getcss($nblist[11]['cave_2'],$par[1])}{/if}>{if $nblist[11]['cave_2']<=0}&nbsp;{else}{$nblist[11]['cave_2']}{/if}</td>
+    <td {if $nblist[11]['cave_3']!=0}{echo Getcss($nblist[11]['cave_3'],$par[2])}{/if}>{if $nblist[11]['cave_3']<=0}&nbsp;{else}{$nblist[11]['cave_3']}{/if}</td>
+    <td {if $nblist[11]['cave_4']!=0}{echo Getcss($nblist[11]['cave_4'],$par[3])}{/if}>{if $nblist[11]['cave_4']<=0}&nbsp;{else}{$nblist[11]['cave_4']}{/if}</td>
+    <td {if $nblist[11]['cave_5']!=0}{echo Getcss($nblist[11]['cave_5'],$par[4])}{/if}>{if $nblist[11]['cave_5']<=0}&nbsp;{else}{$nblist[11]['cave_5']}{/if}</td>
+    <td {if $nblist[11]['cave_6']!=0}{echo Getcss($nblist[11]['cave_6'],$par[5])}{/if}>{if $nblist[11]['cave_6']<=0}&nbsp;{else}{$nblist[11]['cave_6']}{/if}</td>
+    <td {if $nblist[11]['cave_7']!=0}{echo Getcss($nblist[11]['cave_7'],$par[6])}{/if}>{if $nblist[11]['cave_7']<=0}&nbsp;{else}{$nblist[11]['cave_7']}{/if}</td>
+    <td {if $nblist[11]['cave_8']!=0}{echo Getcss($nblist[11]['cave_8'],$par[7])}{/if}>{if $nblist[11]['cave_8']<=0}&nbsp;{else}{$nblist[11]['cave_8']}{/if}</td>
+    <td {if $nblist[11]['cave_9']!=0}{echo Getcss($nblist[11]['cave_9'],$par[8])}{/if}>{if $nblist[11]['cave_9']<=0}&nbsp;{else}{$nblist[11]['cave_9']}{/if}</td> 
+    <td {if $nblist[11]['cave_10']!=0}{echo Getcss($nblist[11]['cave_10'],$par[9])}{/if}>{if $nblist[11]['cave_10']<=0}&nbsp;{else}{$nblist[11]['cave_10']}{/if}</td>
+    <td {if $nblist[11]['cave_11']!=0}{echo Getcss($nblist[11]['cave_11'],$par[10])}{/if}>{if $nblist[11]['cave_11']<=0}&nbsp;{else}{$nblist[11]['cave_11']}{/if}</td>
+    <td {if $nblist[11]['cave_12']!=0}{echo Getcss($nblist[11]['cave_12'],$par[11])}{/if}>{if $nblist[11]['cave_12']<=0}&nbsp;{else}{$nblist[11]['cave_12']}{/if}</td>
+    <td {if $nblist[11]['cave_13']!=0}{echo Getcss($nblist[11]['cave_13'],$par[12])}{/if}>{if $nblist[11]['cave_13']<=0}&nbsp;{else}{$nblist[11]['cave_13']}{/if}</td>
+    <td {if $nblist[11]['cave_14']!=0}{echo Getcss($nblist[11]['cave_14'],$par[13])}{/if}>{if $nblist[11]['cave_14']<=0}&nbsp;{else}{$nblist[11]['cave_14']}{/if}</td>
+    <td {if $nblist[11]['cave_15']!=0}{echo Getcss($nblist[11]['cave_15'],$par[14])}{/if}>{if $nblist[11]['cave_15']<=0}&nbsp;{else}{$nblist[11]['cave_15']}{/if}</td>
+    <td {if $nblist[11]['cave_16']!=0}{echo Getcss($nblist[11]['cave_16'],$par[15])}{/if}>{if $nblist[11]['cave_16']<=0}&nbsp;{else}{$nblist[11]['cave_16']}{/if}</td>
+    <td {if $nblist[11]['cave_17']!=0}{echo Getcss($nblist[11]['cave_17'],$par[16])}{/if}>{if $nblist[11]['cave_17']<=0}&nbsp;{else}{$nblist[11]['cave_17']}{/if}</td>
+    <td {if $nblist[11]['cave_18']!=0}{echo Getcss($nblist[11]['cave_18'],$par[17])}{/if}>{if $nblist[11]['cave_18']<=0}&nbsp;{else}{$nblist[11]['cave_18']}{/if}</td>
+    <td >{echo Getstat($nblist[11]['tlcave'])}</td>
+                    <td>1</td> 
+</tr>
+
+  
+    
+                <tr height="50px;">
+                	<td></td>
+                </tr>
+                
+ 
+                 <tr style="background:#dadada;height:42px;">
+                	<td colspan="1" align="center" cellpadding="0" cellspacing="0">第7组</td>
+                    <td colspan="9" align="right" cellpadding="0" cellspacing="0"><img src="images/hanguo.gif"/>乐天天山济州乡村俱乐部</td>
+                    <td colspan="1" style="color:#565656;text-align:center" cellpadding="0" cellspacing="0">VS</td>
+                    <td colspan="10" style="vertical-align:middle" cellpadding="0" cellspacing="0"></td>
+                </tr>
+                   <tr style="height:50px;font-size:28px;" align="center">
+                	<td align="center" style="color:#767676;">球洞</td>
+                    <td>1</td>
+                    <td>2</td>
+                    <td>3</td>
+                    <td>4</td>
+                    <td>5</td>
+                    <td>6</td>
+                    <td>7</td>
+                    <td>8</td>
+                    <td>9</td>
+                    <td>10</td>
+                    <td>11</td>
+                    <td>12</td>
+                    <td>13</td>
+                    <td>14</td>
+                    <td>15</td>
+                    <td>16</td>
+                    <td>17</td>
+                    <td>18</td>
+                    <td>总杆数</td>
+                    <td>得分</td> 
+                </tr>
+                <tr style="height:50px;font-size:28px;" align="center">
+                	<td align="center" style="color:#767676;">标准杆</td>
+                    <td>$par[0]</td>
+                    <td>$par[1]</td>                    
+                    <td>$par[2]</td>
+                    <td>$par[3]</td>
+                    <td>$par[4]</td>
+                    <td>$par[5]</td>
+                    <td>$par[6]</td>
+                    <td>$par[7]</td>
+                    <td>$par[8]</td>
+                    <td>$par[9]</td>
+                    <td>$par[10]</td>
+                    <td>$par[11]</td>
+                    <td>$par[12]</td>
+                    <td>$par[13]</td>
+                    <td>$par[14]</td>
+                    <td>$par[15]</td>
+                    <td>$par[16]</td>
+                    <td>$par[17]</td>
+                    <td>72</td>
+                    <td></td> 
+                </tr>
+  <tr style="height:50px;font-size:28px;" align="center">
+                	<td align="center" style="vertical-align:middle"><img src="images/{$qzarray[$nblist[12]['uid']]}"/>{echo Getuname($dyarray[$nblist[12]['uid']],1)}</td>
+                	<td {if $nblist[12]['cave_1']!=0}{echo Getcss($nblist[12]['cave_1'],$par[0])}{/if}>{if $nblist[12]['cave_1']<=0}&nbsp;{else}{$nblist[12]['cave_1']}{/if}</td>
+    <td {if $nblist[12]['cave_2']!=0}{echo Getcss($nblist[12]['cave_2'],$par[1])}{/if}>{if $nblist[12]['cave_2']<=0}&nbsp;{else}{$nblist[12]['cave_2']}{/if}</td>
+    <td {if $nblist[12]['cave_3']!=0}{echo Getcss($nblist[12]['cave_3'],$par[2])}{/if}>{if $nblist[12]['cave_3']<=0}&nbsp;{else}{$nblist[12]['cave_3']}{/if}</td>
+    <td {if $nblist[12]['cave_4']!=0}{echo Getcss($nblist[12]['cave_4'],$par[3])}{/if}>{if $nblist[12]['cave_4']<=0}&nbsp;{else}{$nblist[12]['cave_4']}{/if}</td>
+    <td {if $nblist[12]['cave_5']!=0}{echo Getcss($nblist[12]['cave_5'],$par[4])}{/if}>{if $nblist[12]['cave_5']<=0}&nbsp;{else}{$nblist[12]['cave_5']}{/if}</td>
+    <td {if $nblist[12]['cave_6']!=0}{echo Getcss($nblist[12]['cave_6'],$par[5])}{/if}>{if $nblist[12]['cave_6']<=0}&nbsp;{else}{$nblist[12]['cave_6']}{/if}</td>
+    <td {if $nblist[12]['cave_7']!=0}{echo Getcss($nblist[12]['cave_7'],$par[6])}{/if}>{if $nblist[12]['cave_7']<=0}&nbsp;{else}{$nblist[12]['cave_7']}{/if}</td>
+    <td {if $nblist[12]['cave_8']!=0}{echo Getcss($nblist[12]['cave_8'],$par[7])}{/if}>{if $nblist[12]['cave_8']<=0}&nbsp;{else}{$nblist[12]['cave_8']}{/if}</td>
+    <td {if $nblist[12]['cave_9']!=0}{echo Getcss($nblist[12]['cave_9'],$par[8])}{/if}>{if $nblist[12]['cave_9']<=0}&nbsp;{else}{$nblist[12]['cave_9']}{/if}</td> 
+    <td {if $nblist[12]['cave_10']!=0}{echo Getcss($nblist[12]['cave_10'],$par[9])}{/if}>{if $nblist[12]['cave_10']<=0}&nbsp;{else}{$nblist[12]['cave_10']}{/if}</td>
+    <td {if $nblist[12]['cave_11']!=0}{echo Getcss($nblist[12]['cave_11'],$par[10])}{/if}>{if $nblist[12]['cave_11']<=0}&nbsp;{else}{$nblist[12]['cave_11']}{/if}</td>
+    <td {if $nblist[12]['cave_12']!=0}{echo Getcss($nblist[12]['cave_12'],$par[11])}{/if}>{if $nblist[12]['cave_12']<=0}&nbsp;{else}{$nblist[12]['cave_12']}{/if}</td>
+    <td {if $nblist[12]['cave_13']!=0}{echo Getcss($nblist[12]['cave_13'],$par[12])}{/if}>{if $nblist[12]['cave_13']<=0}&nbsp;{else}{$nblist[12]['cave_13']}{/if}</td>
+    <td {if $nblist[12]['cave_14']!=0}{echo Getcss($nblist[12]['cave_14'],$par[13])}{/if}>{if $nblist[12]['cave_14']<=0}&nbsp;{else}{$nblist[12]['cave_14']}{/if}</td>
+    <td {if $nblist[12]['cave_15']!=0}{echo Getcss($nblist[12]['cave_15'],$par[14])}{/if}>{if $nblist[12]['cave_15']<=0}&nbsp;{else}{$nblist[12]['cave_15']}{/if}</td>
+    <td {if $nblist[12]['cave_16']!=0}{echo Getcss($nblist[12]['cave_16'],$par[15])}{/if}>{if $nblist[12]['cave_16']<=0}&nbsp;{else}{$nblist[12]['cave_16']}{/if}</td>
+    <td {if $nblist[12]['cave_17']!=0}{echo Getcss($nblist[12]['cave_17'],$par[16])}{/if}>{if $nblist[12]['cave_17']<=0}&nbsp;{else}{$nblist[12]['cave_17']}{/if}</td>
+    <td {if $nblist[12]['cave_18']!=0}{echo Getcss($nblist[12]['cave_18'],$par[17])}{/if}>{if $nblist[12]['cave_18']<=0}&nbsp;{else}{$nblist[12]['cave_18']}{/if}</td>
+    <td >{echo Getstat($nblist[12]['tlcave'])}</td>
+                    <td>1</td> 
+</tr>
+
+ <tr style="height:50px;font-size:28px;" align="center">
+                	<td align="center" style="vertical-align:middle"><img src="images/{$qzarray[$nblist[13]['uid']]}"/>{echo Getuname($dyarray[$nblist[13]['uid']],1)}</td>
+                	<td {if $nblist[13]['cave_1']!=0}{echo Getcss($nblist[13]['cave_1'],$par[0])}{/if}>{if $nblist[13]['cave_1']<=0}&nbsp;{else}{$nblist[13]['cave_1']}{/if}</td>
+    <td {if $nblist[13]['cave_2']!=0}{echo Getcss($nblist[13]['cave_2'],$par[1])}{/if}>{if $nblist[13]['cave_2']<=0}&nbsp;{else}{$nblist[13]['cave_2']}{/if}</td>
+    <td {if $nblist[13]['cave_3']!=0}{echo Getcss($nblist[13]['cave_3'],$par[2])}{/if}>{if $nblist[13]['cave_3']<=0}&nbsp;{else}{$nblist[13]['cave_3']}{/if}</td>
+    <td {if $nblist[13]['cave_4']!=0}{echo Getcss($nblist[13]['cave_4'],$par[3])}{/if}>{if $nblist[13]['cave_4']<=0}&nbsp;{else}{$nblist[13]['cave_4']}{/if}</td>
+    <td {if $nblist[13]['cave_5']!=0}{echo Getcss($nblist[13]['cave_5'],$par[4])}{/if}>{if $nblist[13]['cave_5']<=0}&nbsp;{else}{$nblist[13]['cave_5']}{/if}</td>
+    <td {if $nblist[13]['cave_6']!=0}{echo Getcss($nblist[13]['cave_6'],$par[5])}{/if}>{if $nblist[13]['cave_6']<=0}&nbsp;{else}{$nblist[13]['cave_6']}{/if}</td>
+    <td {if $nblist[13]['cave_7']!=0}{echo Getcss($nblist[13]['cave_7'],$par[6])}{/if}>{if $nblist[13]['cave_7']<=0}&nbsp;{else}{$nblist[13]['cave_7']}{/if}</td>
+    <td {if $nblist[13]['cave_8']!=0}{echo Getcss($nblist[13]['cave_8'],$par[7])}{/if}>{if $nblist[13]['cave_8']<=0}&nbsp;{else}{$nblist[13]['cave_8']}{/if}</td>
+    <td {if $nblist[13]['cave_9']!=0}{echo Getcss($nblist[13]['cave_9'],$par[8])}{/if}>{if $nblist[13]['cave_9']<=0}&nbsp;{else}{$nblist[13]['cave_9']}{/if}</td> 
+    <td {if $nblist[13]['cave_10']!=0}{echo Getcss($nblist[13]['cave_10'],$par[9])}{/if}>{if $nblist[13]['cave_10']<=0}&nbsp;{else}{$nblist[13]['cave_10']}{/if}</td>
+    <td {if $nblist[13]['cave_11']!=0}{echo Getcss($nblist[13]['cave_11'],$par[10])}{/if}>{if $nblist[13]['cave_11']<=0}&nbsp;{else}{$nblist[13]['cave_11']}{/if}</td>
+    <td {if $nblist[13]['cave_12']!=0}{echo Getcss($nblist[13]['cave_12'],$par[11])}{/if}>{if $nblist[13]['cave_12']<=0}&nbsp;{else}{$nblist[13]['cave_12']}{/if}</td>
+    <td {if $nblist[13]['cave_13']!=0}{echo Getcss($nblist[13]['cave_13'],$par[12])}{/if}>{if $nblist[13]['cave_13']<=0}&nbsp;{else}{$nblist[13]['cave_13']}{/if}</td>
+    <td {if $nblist[13]['cave_14']!=0}{echo Getcss($nblist[13]['cave_14'],$par[13])}{/if}>{if $nblist[13]['cave_14']<=0}&nbsp;{else}{$nblist[13]['cave_14']}{/if}</td>
+    <td {if $nblist[13]['cave_15']!=0}{echo Getcss($nblist[13]['cave_15'],$par[14])}{/if}>{if $nblist[13]['cave_15']<=0}&nbsp;{else}{$nblist[13]['cave_15']}{/if}</td>
+    <td {if $nblist[13]['cave_16']!=0}{echo Getcss($nblist[13]['cave_16'],$par[15])}{/if}>{if $nblist[13]['cave_16']<=0}&nbsp;{else}{$nblist[13]['cave_16']}{/if}</td>
+    <td {if $nblist[13]['cave_17']!=0}{echo Getcss($nblist[13]['cave_17'],$par[16])}{/if}>{if $nblist[13]['cave_17']<=0}&nbsp;{else}{$nblist[13]['cave_17']}{/if}</td>
+    <td {if $nblist[13]['cave_18']!=0}{echo Getcss($nblist[13]['cave_18'],$par[17])}{/if}>{if $nblist[13]['cave_18']<=0}&nbsp;{else}{$nblist[13]['cave_18']}{/if}</td>
+    <td >{echo Getstat($nblist[13]['tlcave'])}</td>
+                    <td>1</td> 
+</tr>
+
+
+    
+                <tr height="50px;">
+                	<td></td>
+                </tr>
+                
+ 
+                 <tr style="background:#dadada;height:42px;">
+                	<td colspan="1" align="center" cellpadding="0" cellspacing="0">第8组</td>
+                    <td colspan="9" align="right" cellpadding="0" cellspacing="0"><img src="images/hongqi.png"/>北京华彬高尔夫俱乐部</td>
+                    <td colspan="1" style="color:#565656;text-align:center" cellpadding="0" cellspacing="0">VS</td>
+                    <td colspan="10" style="vertical-align:middle" cellpadding="0" cellspacing="0"></td>
+                </tr>
+                   <tr style="height:50px;font-size:28px;" align="center">
+                	<td align="center" style="color:#767676;">球洞</td>
+                    <td>1</td>
+                    <td>2</td>
+                    <td>3</td>
+                    <td>4</td>
+                    <td>5</td>
+                    <td>6</td>
+                    <td>7</td>
+                    <td>8</td>
+                    <td>9</td>
+                    <td>10</td>
+                    <td>11</td>
+                    <td>12</td>
+                    <td>13</td>
+                    <td>14</td>
+                    <td>15</td>
+                    <td>16</td>
+                    <td>17</td>
+                    <td>18</td>
+                    <td>总杆数</td>
+                    <td>得分</td> 
+                </tr>
+                <tr style="height:50px;font-size:28px;" align="center">
+                	<td align="center" style="color:#767676;">标准杆</td>
+                    <td>$par[0]</td>
+                    <td>$par[1]</td>                    
+                    <td>$par[2]</td>
+                    <td>$par[3]</td>
+                    <td>$par[4]</td>
+                    <td>$par[5]</td>
+                    <td>$par[6]</td>
+                    <td>$par[7]</td>
+                    <td>$par[8]</td>
+                    <td>$par[9]</td>
+                    <td>$par[10]</td>
+                    <td>$par[11]</td>
+                    <td>$par[12]</td>
+                    <td>$par[13]</td>
+                    <td>$par[14]</td>
+                    <td>$par[15]</td>
+                    <td>$par[16]</td>
+                    <td>$par[17]</td>
+                    <td>72</td>
+                    <td></td> 
+                </tr>
+ <tr style="height:50px;font-size:28px;" align="center">
+                	<td align="center" style="vertical-align:middle"><img src="images/{$qzarray[$nblist[14]['uid']]}"/>{echo Getuname($dyarray[$nblist[14]['uid']],1)}</td>
+                	<td {if $nblist[14]['cave_1']!=0}{echo Getcss($nblist[14]['cave_1'],$par[0])}{/if}>{if $nblist[14]['cave_1']<=0}&nbsp;{else}{$nblist[14]['cave_1']}{/if}</td>
+    <td {if $nblist[14]['cave_2']!=0}{echo Getcss($nblist[14]['cave_2'],$par[1])}{/if}>{if $nblist[14]['cave_2']<=0}&nbsp;{else}{$nblist[14]['cave_2']}{/if}</td>
+    <td {if $nblist[14]['cave_3']!=0}{echo Getcss($nblist[14]['cave_3'],$par[2])}{/if}>{if $nblist[14]['cave_3']<=0}&nbsp;{else}{$nblist[14]['cave_3']}{/if}</td>
+    <td {if $nblist[14]['cave_4']!=0}{echo Getcss($nblist[14]['cave_4'],$par[3])}{/if}>{if $nblist[14]['cave_4']<=0}&nbsp;{else}{$nblist[14]['cave_4']}{/if}</td>
+    <td {if $nblist[14]['cave_5']!=0}{echo Getcss($nblist[14]['cave_5'],$par[4])}{/if}>{if $nblist[14]['cave_5']<=0}&nbsp;{else}{$nblist[14]['cave_5']}{/if}</td>
+    <td {if $nblist[14]['cave_6']!=0}{echo Getcss($nblist[14]['cave_6'],$par[5])}{/if}>{if $nblist[14]['cave_6']<=0}&nbsp;{else}{$nblist[14]['cave_6']}{/if}</td>
+    <td {if $nblist[14]['cave_7']!=0}{echo Getcss($nblist[14]['cave_7'],$par[6])}{/if}>{if $nblist[14]['cave_7']<=0}&nbsp;{else}{$nblist[14]['cave_7']}{/if}</td>
+    <td {if $nblist[14]['cave_8']!=0}{echo Getcss($nblist[14]['cave_8'],$par[7])}{/if}>{if $nblist[14]['cave_8']<=0}&nbsp;{else}{$nblist[14]['cave_8']}{/if}</td>
+    <td {if $nblist[14]['cave_9']!=0}{echo Getcss($nblist[14]['cave_9'],$par[8])}{/if}>{if $nblist[14]['cave_9']<=0}&nbsp;{else}{$nblist[14]['cave_9']}{/if}</td> 
+    <td {if $nblist[14]['cave_10']!=0}{echo Getcss($nblist[14]['cave_10'],$par[9])}{/if}>{if $nblist[14]['cave_10']<=0}&nbsp;{else}{$nblist[14]['cave_10']}{/if}</td>
+    <td {if $nblist[14]['cave_11']!=0}{echo Getcss($nblist[14]['cave_11'],$par[10])}{/if}>{if $nblist[14]['cave_11']<=0}&nbsp;{else}{$nblist[14]['cave_11']}{/if}</td>
+    <td {if $nblist[14]['cave_12']!=0}{echo Getcss($nblist[14]['cave_12'],$par[11])}{/if}>{if $nblist[14]['cave_12']<=0}&nbsp;{else}{$nblist[14]['cave_12']}{/if}</td>
+    <td {if $nblist[14]['cave_13']!=0}{echo Getcss($nblist[14]['cave_13'],$par[12])}{/if}>{if $nblist[14]['cave_13']<=0}&nbsp;{else}{$nblist[14]['cave_13']}{/if}</td>
+    <td {if $nblist[14]['cave_14']!=0}{echo Getcss($nblist[14]['cave_14'],$par[13])}{/if}>{if $nblist[14]['cave_14']<=0}&nbsp;{else}{$nblist[14]['cave_14']}{/if}</td>
+    <td {if $nblist[14]['cave_15']!=0}{echo Getcss($nblist[14]['cave_15'],$par[14])}{/if}>{if $nblist[14]['cave_15']<=0}&nbsp;{else}{$nblist[14]['cave_15']}{/if}</td>
+    <td {if $nblist[14]['cave_16']!=0}{echo Getcss($nblist[14]['cave_16'],$par[15])}{/if}>{if $nblist[14]['cave_16']<=0}&nbsp;{else}{$nblist[14]['cave_16']}{/if}</td>
+    <td {if $nblist[14]['cave_17']!=0}{echo Getcss($nblist[14]['cave_17'],$par[16])}{/if}>{if $nblist[14]['cave_17']<=0}&nbsp;{else}{$nblist[14]['cave_17']}{/if}</td>
+    <td {if $nblist[14]['cave_18']!=0}{echo Getcss($nblist[14]['cave_18'],$par[17])}{/if}>{if $nblist[14]['cave_18']<=0}&nbsp;{else}{$nblist[14]['cave_18']}{/if}</td>
+    <td >{echo Getstat($nblist[14]['tlcave'])}</td>
+                    <td>1</td> 
+</tr>
+
+ <tr style="height:50px;font-size:28px;" align="center">
+                	<td align="center" style="vertical-align:middle"><img src="images/{$qzarray[$nblist[15]['uid']]}"/>{echo Getuname($dyarray[$nblist[15]['uid']],1)}</td>
+                	<td {if $nblist[15]['cave_1']!=0}{echo Getcss($nblist[15]['cave_1'],$par[0])}{/if}>{if $nblist[15]['cave_1']<=0}&nbsp;{else}{$nblist[15]['cave_1']}{/if}</td>
+    <td {if $nblist[15]['cave_2']!=0}{echo Getcss($nblist[15]['cave_2'],$par[1])}{/if}>{if $nblist[15]['cave_2']<=0}&nbsp;{else}{$nblist[15]['cave_2']}{/if}</td>
+    <td {if $nblist[15]['cave_3']!=0}{echo Getcss($nblist[15]['cave_3'],$par[2])}{/if}>{if $nblist[15]['cave_3']<=0}&nbsp;{else}{$nblist[15]['cave_3']}{/if}</td>
+    <td {if $nblist[15]['cave_4']!=0}{echo Getcss($nblist[15]['cave_4'],$par[3])}{/if}>{if $nblist[15]['cave_4']<=0}&nbsp;{else}{$nblist[15]['cave_4']}{/if}</td>
+    <td {if $nblist[15]['cave_5']!=0}{echo Getcss($nblist[15]['cave_5'],$par[4])}{/if}>{if $nblist[15]['cave_5']<=0}&nbsp;{else}{$nblist[15]['cave_5']}{/if}</td>
+    <td {if $nblist[15]['cave_6']!=0}{echo Getcss($nblist[15]['cave_6'],$par[5])}{/if}>{if $nblist[15]['cave_6']<=0}&nbsp;{else}{$nblist[15]['cave_6']}{/if}</td>
+    <td {if $nblist[15]['cave_7']!=0}{echo Getcss($nblist[15]['cave_7'],$par[6])}{/if}>{if $nblist[15]['cave_7']<=0}&nbsp;{else}{$nblist[15]['cave_7']}{/if}</td>
+    <td {if $nblist[15]['cave_8']!=0}{echo Getcss($nblist[15]['cave_8'],$par[7])}{/if}>{if $nblist[15]['cave_8']<=0}&nbsp;{else}{$nblist[15]['cave_8']}{/if}</td>
+    <td {if $nblist[15]['cave_9']!=0}{echo Getcss($nblist[15]['cave_9'],$par[8])}{/if}>{if $nblist[15]['cave_9']<=0}&nbsp;{else}{$nblist[15]['cave_9']}{/if}</td> 
+    <td {if $nblist[15]['cave_10']!=0}{echo Getcss($nblist[15]['cave_10'],$par[9])}{/if}>{if $nblist[15]['cave_10']<=0}&nbsp;{else}{$nblist[15]['cave_10']}{/if}</td>
+    <td {if $nblist[15]['cave_11']!=0}{echo Getcss($nblist[15]['cave_11'],$par[10])}{/if}>{if $nblist[15]['cave_11']<=0}&nbsp;{else}{$nblist[15]['cave_11']}{/if}</td>
+    <td {if $nblist[15]['cave_12']!=0}{echo Getcss($nblist[15]['cave_12'],$par[11])}{/if}>{if $nblist[15]['cave_12']<=0}&nbsp;{else}{$nblist[15]['cave_12']}{/if}</td>
+    <td {if $nblist[15]['cave_13']!=0}{echo Getcss($nblist[15]['cave_13'],$par[12])}{/if}>{if $nblist[15]['cave_13']<=0}&nbsp;{else}{$nblist[15]['cave_13']}{/if}</td>
+    <td {if $nblist[15]['cave_14']!=0}{echo Getcss($nblist[15]['cave_14'],$par[13])}{/if}>{if $nblist[15]['cave_14']<=0}&nbsp;{else}{$nblist[15]['cave_14']}{/if}</td>
+    <td {if $nblist[15]['cave_15']!=0}{echo Getcss($nblist[15]['cave_15'],$par[14])}{/if}>{if $nblist[15]['cave_15']<=0}&nbsp;{else}{$nblist[15]['cave_15']}{/if}</td>
+    <td {if $nblist[15]['cave_16']!=0}{echo Getcss($nblist[15]['cave_16'],$par[15])}{/if}>{if $nblist[15]['cave_16']<=0}&nbsp;{else}{$nblist[15]['cave_16']}{/if}</td>
+    <td {if $nblist[15]['cave_17']!=0}{echo Getcss($nblist[15]['cave_17'],$par[16])}{/if}>{if $nblist[15]['cave_17']<=0}&nbsp;{else}{$nblist[15]['cave_17']}{/if}</td>
+    <td {if $nblist[15]['cave_18']!=0}{echo Getcss($nblist[15]['cave_18'],$par[17])}{/if}>{if $nblist[15]['cave_18']<=0}&nbsp;{else}{$nblist[15]['cave_18']}{/if}</td>
+    <td >{echo Getstat($nblist[15]['tlcave'])}</td>
+                    <td>1</td> 
+</tr>
+
+
+    
+                <tr height="50px;">
+                	<td></td>
+                </tr>
+                
+ 
+                 <tr style="background:#dadada;height:42px;">
+                	<td colspan="1" align="center" cellpadding="0" cellspacing="0">第9组</td>
+                    <td colspan="9" align="right" cellpadding="0" cellspacing="0"><img src="images/hongqi.png"/>上海林克司高尔夫俱乐部</td>
+                    <td colspan="1" style="color:#565656;text-align:center" cellpadding="0" cellspacing="0">VS</td>
+                    <td colspan="10" style="vertical-align:middle" cellpadding="0" cellspacing="0"></td>
+                </tr>
+                   <tr style="height:50px;font-size:28px;" align="center">
+                	<td align="center" style="color:#767676;">球洞</td>
+                    <td>1</td>
+                    <td>2</td>
+                    <td>3</td>
+                    <td>4</td>
+                    <td>5</td>
+                    <td>6</td>
+                    <td>7</td>
+                    <td>8</td>
+                    <td>9</td>
+                    <td>10</td>
+                    <td>11</td>
+                    <td>12</td>
+                    <td>13</td>
+                    <td>14</td>
+                    <td>15</td>
+                    <td>16</td>
+                    <td>17</td>
+                    <td>18</td>
+                    <td>总杆数</td>
+                    <td>得分</td> 
+                </tr>
+                <tr style="height:50px;font-size:28px;" align="center">
+                	<td align="center" style="color:#767676;">标准杆</td>
+                    <td>$par[0]</td>
+                    <td>$par[1]</td>                    
+                    <td>$par[2]</td>
+                    <td>$par[3]</td>
+                    <td>$par[4]</td>
+                    <td>$par[5]</td>
+                    <td>$par[6]</td>
+                    <td>$par[7]</td>
+                    <td>$par[8]</td>
+                    <td>$par[9]</td>
+                    <td>$par[10]</td>
+                    <td>$par[11]</td>
+                    <td>$par[12]</td>
+                    <td>$par[13]</td>
+                    <td>$par[14]</td>
+                    <td>$par[15]</td>
+                    <td>$par[16]</td>
+                    <td>$par[17]</td>
+                    <td>72</td>
+                    <td></td> 
+                </tr>
+ <tr style="height:50px;font-size:28px;" align="center">
+                	<td align="center" style="vertical-align:middle"><img src="images/{$qzarray[$nblist[16]['uid']]}"/>{echo Getuname($dyarray[$nblist[16]['uid']],1)}</td>
+                	<td {if $nblist[16]['cave_1']!=0}{echo Getcss($nblist[16]['cave_1'],$par[0])}{/if}>{if $nblist[16]['cave_1']<=0}&nbsp;{else}{$nblist[16]['cave_1']}{/if}</td>
+    <td {if $nblist[16]['cave_2']!=0}{echo Getcss($nblist[16]['cave_2'],$par[1])}{/if}>{if $nblist[16]['cave_2']<=0}&nbsp;{else}{$nblist[16]['cave_2']}{/if}</td>
+    <td {if $nblist[16]['cave_3']!=0}{echo Getcss($nblist[16]['cave_3'],$par[2])}{/if}>{if $nblist[16]['cave_3']<=0}&nbsp;{else}{$nblist[16]['cave_3']}{/if}</td>
+    <td {if $nblist[16]['cave_4']!=0}{echo Getcss($nblist[16]['cave_4'],$par[3])}{/if}>{if $nblist[16]['cave_4']<=0}&nbsp;{else}{$nblist[16]['cave_4']}{/if}</td>
+    <td {if $nblist[16]['cave_5']!=0}{echo Getcss($nblist[16]['cave_5'],$par[4])}{/if}>{if $nblist[16]['cave_5']<=0}&nbsp;{else}{$nblist[16]['cave_5']}{/if}</td>
+    <td {if $nblist[16]['cave_6']!=0}{echo Getcss($nblist[16]['cave_6'],$par[5])}{/if}>{if $nblist[16]['cave_6']<=0}&nbsp;{else}{$nblist[16]['cave_6']}{/if}</td>
+    <td {if $nblist[16]['cave_7']!=0}{echo Getcss($nblist[16]['cave_7'],$par[6])}{/if}>{if $nblist[16]['cave_7']<=0}&nbsp;{else}{$nblist[16]['cave_7']}{/if}</td>
+    <td {if $nblist[16]['cave_8']!=0}{echo Getcss($nblist[16]['cave_8'],$par[7])}{/if}>{if $nblist[16]['cave_8']<=0}&nbsp;{else}{$nblist[16]['cave_8']}{/if}</td>
+    <td {if $nblist[16]['cave_9']!=0}{echo Getcss($nblist[16]['cave_9'],$par[8])}{/if}>{if $nblist[16]['cave_9']<=0}&nbsp;{else}{$nblist[16]['cave_9']}{/if}</td> 
+    <td {if $nblist[16]['cave_10']!=0}{echo Getcss($nblist[16]['cave_10'],$par[9])}{/if}>{if $nblist[16]['cave_10']<=0}&nbsp;{else}{$nblist[16]['cave_10']}{/if}</td>
+    <td {if $nblist[16]['cave_11']!=0}{echo Getcss($nblist[16]['cave_11'],$par[10])}{/if}>{if $nblist[16]['cave_11']<=0}&nbsp;{else}{$nblist[16]['cave_11']}{/if}</td>
+    <td {if $nblist[16]['cave_12']!=0}{echo Getcss($nblist[16]['cave_12'],$par[11])}{/if}>{if $nblist[16]['cave_12']<=0}&nbsp;{else}{$nblist[16]['cave_12']}{/if}</td>
+    <td {if $nblist[16]['cave_13']!=0}{echo Getcss($nblist[16]['cave_13'],$par[12])}{/if}>{if $nblist[16]['cave_13']<=0}&nbsp;{else}{$nblist[16]['cave_13']}{/if}</td>
+    <td {if $nblist[16]['cave_14']!=0}{echo Getcss($nblist[16]['cave_14'],$par[13])}{/if}>{if $nblist[16]['cave_14']<=0}&nbsp;{else}{$nblist[16]['cave_14']}{/if}</td>
+    <td {if $nblist[16]['cave_15']!=0}{echo Getcss($nblist[16]['cave_15'],$par[14])}{/if}>{if $nblist[16]['cave_15']<=0}&nbsp;{else}{$nblist[16]['cave_15']}{/if}</td>
+    <td {if $nblist[16]['cave_16']!=0}{echo Getcss($nblist[16]['cave_16'],$par[15])}{/if}>{if $nblist[16]['cave_16']<=0}&nbsp;{else}{$nblist[16]['cave_16']}{/if}</td>
+    <td {if $nblist[16]['cave_17']!=0}{echo Getcss($nblist[16]['cave_17'],$par[16])}{/if}>{if $nblist[16]['cave_17']<=0}&nbsp;{else}{$nblist[16]['cave_17']}{/if}</td>
+    <td {if $nblist[16]['cave_18']!=0}{echo Getcss($nblist[16]['cave_18'],$par[17])}{/if}>{if $nblist[16]['cave_18']<=0}&nbsp;{else}{$nblist[16]['cave_18']}{/if}</td>
+    <td >{echo Getstat($nblist[16]['tlcave'])}</td>
+                    <td>1</td> 
+</tr>
+
+ <tr style="height:50px;font-size:28px;" align="center">
+                	<td align="center" style="vertical-align:middle"><img src="images/{$qzarray[$nblist[17]['uid']]}"/>{echo Getuname($dyarray[$nblist[17]['uid']],1)}</td>
+                	<td {if $nblist[17]['cave_1']!=0}{echo Getcss($nblist[17]['cave_1'],$par[0])}{/if}>{if $nblist[17]['cave_1']<=0}&nbsp;{else}{$nblist[17]['cave_1']}{/if}</td>
+    <td {if $nblist[17]['cave_2']!=0}{echo Getcss($nblist[17]['cave_2'],$par[1])}{/if}>{if $nblist[17]['cave_2']<=0}&nbsp;{else}{$nblist[17]['cave_2']}{/if}</td>
+    <td {if $nblist[17]['cave_3']!=0}{echo Getcss($nblist[17]['cave_3'],$par[2])}{/if}>{if $nblist[17]['cave_3']<=0}&nbsp;{else}{$nblist[17]['cave_3']}{/if}</td>
+    <td {if $nblist[17]['cave_4']!=0}{echo Getcss($nblist[17]['cave_4'],$par[3])}{/if}>{if $nblist[17]['cave_4']<=0}&nbsp;{else}{$nblist[17]['cave_4']}{/if}</td>
+    <td {if $nblist[17]['cave_5']!=0}{echo Getcss($nblist[17]['cave_5'],$par[4])}{/if}>{if $nblist[17]['cave_5']<=0}&nbsp;{else}{$nblist[17]['cave_5']}{/if}</td>
+    <td {if $nblist[17]['cave_6']!=0}{echo Getcss($nblist[17]['cave_6'],$par[5])}{/if}>{if $nblist[17]['cave_6']<=0}&nbsp;{else}{$nblist[17]['cave_6']}{/if}</td>
+    <td {if $nblist[17]['cave_7']!=0}{echo Getcss($nblist[17]['cave_7'],$par[6])}{/if}>{if $nblist[17]['cave_7']<=0}&nbsp;{else}{$nblist[17]['cave_7']}{/if}</td>
+    <td {if $nblist[17]['cave_8']!=0}{echo Getcss($nblist[17]['cave_8'],$par[7])}{/if}>{if $nblist[17]['cave_8']<=0}&nbsp;{else}{$nblist[17]['cave_8']}{/if}</td>
+    <td {if $nblist[17]['cave_9']!=0}{echo Getcss($nblist[17]['cave_9'],$par[8])}{/if}>{if $nblist[17]['cave_9']<=0}&nbsp;{else}{$nblist[17]['cave_9']}{/if}</td> 
+    <td {if $nblist[17]['cave_10']!=0}{echo Getcss($nblist[17]['cave_10'],$par[9])}{/if}>{if $nblist[17]['cave_10']<=0}&nbsp;{else}{$nblist[17]['cave_10']}{/if}</td>
+    <td {if $nblist[17]['cave_11']!=0}{echo Getcss($nblist[17]['cave_11'],$par[10])}{/if}>{if $nblist[17]['cave_11']<=0}&nbsp;{else}{$nblist[17]['cave_11']}{/if}</td>
+    <td {if $nblist[17]['cave_12']!=0}{echo Getcss($nblist[17]['cave_12'],$par[11])}{/if}>{if $nblist[17]['cave_12']<=0}&nbsp;{else}{$nblist[17]['cave_12']}{/if}</td>
+    <td {if $nblist[17]['cave_13']!=0}{echo Getcss($nblist[17]['cave_13'],$par[12])}{/if}>{if $nblist[17]['cave_13']<=0}&nbsp;{else}{$nblist[17]['cave_13']}{/if}</td>
+    <td {if $nblist[17]['cave_14']!=0}{echo Getcss($nblist[17]['cave_14'],$par[13])}{/if}>{if $nblist[17]['cave_14']<=0}&nbsp;{else}{$nblist[17]['cave_14']}{/if}</td>
+    <td {if $nblist[17]['cave_15']!=0}{echo Getcss($nblist[17]['cave_15'],$par[14])}{/if}>{if $nblist[17]['cave_15']<=0}&nbsp;{else}{$nblist[17]['cave_15']}{/if}</td>
+    <td {if $nblist[17]['cave_16']!=0}{echo Getcss($nblist[17]['cave_16'],$par[15])}{/if}>{if $nblist[17]['cave_16']<=0}&nbsp;{else}{$nblist[17]['cave_16']}{/if}</td>
+    <td {if $nblist[17]['cave_17']!=0}{echo Getcss($nblist[17]['cave_17'],$par[16])}{/if}>{if $nblist[17]['cave_17']<=0}&nbsp;{else}{$nblist[17]['cave_17']}{/if}</td>
+    <td {if $nblist[17]['cave_18']!=0}{echo Getcss($nblist[17]['cave_18'],$par[17])}{/if}>{if $nblist[17]['cave_18']<=0}&nbsp;{else}{$nblist[17]['cave_18']}{/if}</td>
+    <td >{echo Getstat($nblist[17]['tlcave'])}</td>
+                    <td>1</td> 
+</tr>
+
+
+                <tr style="background:#d8d8d8;height:50px;" align="center">
+                	<td colspan="1"></td>
+                	<td style="color:#f00;">1up</td>
+                    <td style="color:#f00;">2up</td>
+                    <td style="color:#3a9de2;">3up</td>
+                    <td style="color:#f00;">4up</td>
+                    <td style="color:#3a9de2;">1up</td>
+                    <td style="color:#3a9de2;">2up</td>
+                    <td style="color:#3a9de2;">2up</td>
+                    <td style="color:#f00;">3up</td>
+                    <td style="color:#f00;">4up</td>
+                    <td style="color:#3a9de2;">1up</td>
+                    <td style="color:#f00;">1up</td>
+                    <td style="color:#f00;">2up</td>
+                    <td style="color:#3a9de2;">3up</td>
+                    <td style="color:#f00;">4up</td>
+                    <td style="color:#3a9de2;">4up</td>
+                    <td style="color:#f00;">6up</td>
+                    <td style="color:#3a9de2;">1up</td>
+                    <td style="color:#3a9de2;">3up</td>
+                    <td> </td> 
+                    <td> </td> 
+                </tr> 
+    
+                <tr height="50px;">
+                	<td></td>
+                </tr>
+                
+ 
+                 <tr style="background:#dadada;height:42px;">
+                	<td colspan="1" align="center" cellpadding="0" cellspacing="0">第10组</td>
+                    <td colspan="9" align="right" cellpadding="0" cellspacing="0"><img src="images/hongqi.png"/>北京雁栖湖国际高尔夫俱乐部</td>
+                    <td colspan="1" style="color:#565656;text-align:center" cellpadding="0" cellspacing="0">VS</td>
+                    <td colspan="10" style="vertical-align:middle" cellpadding="0" cellspacing="0"></td>
+                </tr>
+                   <tr style="height:50px;font-size:28px;" align="center">
+                	<td align="center" style="color:#767676;">球洞</td>
+                    <td>1</td>
+                    <td>2</td>
+                    <td>3</td>
+                    <td>4</td>
+                    <td>5</td>
+                    <td>6</td>
+                    <td>7</td>
+                    <td>8</td>
+                    <td>9</td>
+                    <td>10</td>
+                    <td>11</td>
+                    <td>12</td>
+                    <td>13</td>
+                    <td>14</td>
+                    <td>15</td>
+                    <td>16</td>
+                    <td>17</td>
+                    <td>18</td>
+                    <td>总杆数</td>
+                    <td>得分</td> 
+                </tr>
+                <tr style="height:50px;font-size:28px;" align="center">
+                	<td align="center" style="color:#767676;">标准杆</td>
+                    <td>$par[0]</td>
+                    <td>$par[1]</td>                    
+                    <td>$par[2]</td>
+                    <td>$par[3]</td>
+                    <td>$par[4]</td>
+                    <td>$par[5]</td>
+                    <td>$par[6]</td>
+                    <td>$par[7]</td>
+                    <td>$par[8]</td>
+                    <td>$par[9]</td>
+                    <td>$par[10]</td>
+                    <td>$par[11]</td>
+                    <td>$par[12]</td>
+                    <td>$par[13]</td>
+                    <td>$par[14]</td>
+                    <td>$par[15]</td>
+                    <td>$par[16]</td>
+                    <td>$par[17]</td>
+                    <td>72</td>
+                    <td></td> 
+                </tr>
+ <tr style="height:50px;font-size:28px;" align="center">
+                	<td align="center" style="vertical-align:middle"><img src="images/{$qzarray[$nblist[18]['uid']]}"/>{echo Getuname($dyarray[$nblist[18]['uid']],1)}</td>
+                	<td {if $nblist[18]['cave_1']!=0}{echo Getcss($nblist[18]['cave_1'],$par[0])}{/if}>{if $nblist[18]['cave_1']<=0}&nbsp;{else}{$nblist[18]['cave_1']}{/if}</td>
+    <td {if $nblist[18]['cave_2']!=0}{echo Getcss($nblist[18]['cave_2'],$par[1])}{/if}>{if $nblist[18]['cave_2']<=0}&nbsp;{else}{$nblist[18]['cave_2']}{/if}</td>
+    <td {if $nblist[18]['cave_3']!=0}{echo Getcss($nblist[18]['cave_3'],$par[2])}{/if}>{if $nblist[18]['cave_3']<=0}&nbsp;{else}{$nblist[18]['cave_3']}{/if}</td>
+    <td {if $nblist[18]['cave_4']!=0}{echo Getcss($nblist[18]['cave_4'],$par[3])}{/if}>{if $nblist[18]['cave_4']<=0}&nbsp;{else}{$nblist[18]['cave_4']}{/if}</td>
+    <td {if $nblist[18]['cave_5']!=0}{echo Getcss($nblist[18]['cave_5'],$par[4])}{/if}>{if $nblist[18]['cave_5']<=0}&nbsp;{else}{$nblist[18]['cave_5']}{/if}</td>
+    <td {if $nblist[18]['cave_6']!=0}{echo Getcss($nblist[18]['cave_6'],$par[5])}{/if}>{if $nblist[18]['cave_6']<=0}&nbsp;{else}{$nblist[18]['cave_6']}{/if}</td>
+    <td {if $nblist[18]['cave_7']!=0}{echo Getcss($nblist[18]['cave_7'],$par[6])}{/if}>{if $nblist[18]['cave_7']<=0}&nbsp;{else}{$nblist[18]['cave_7']}{/if}</td>
+    <td {if $nblist[18]['cave_8']!=0}{echo Getcss($nblist[18]['cave_8'],$par[7])}{/if}>{if $nblist[18]['cave_8']<=0}&nbsp;{else}{$nblist[18]['cave_8']}{/if}</td>
+    <td {if $nblist[18]['cave_9']!=0}{echo Getcss($nblist[18]['cave_9'],$par[8])}{/if}>{if $nblist[18]['cave_9']<=0}&nbsp;{else}{$nblist[18]['cave_9']}{/if}</td> 
+    <td {if $nblist[18]['cave_10']!=0}{echo Getcss($nblist[18]['cave_10'],$par[9])}{/if}>{if $nblist[18]['cave_10']<=0}&nbsp;{else}{$nblist[18]['cave_10']}{/if}</td>
+    <td {if $nblist[18]['cave_11']!=0}{echo Getcss($nblist[18]['cave_11'],$par[10])}{/if}>{if $nblist[18]['cave_11']<=0}&nbsp;{else}{$nblist[18]['cave_11']}{/if}</td>
+    <td {if $nblist[18]['cave_12']!=0}{echo Getcss($nblist[18]['cave_12'],$par[11])}{/if}>{if $nblist[18]['cave_12']<=0}&nbsp;{else}{$nblist[18]['cave_12']}{/if}</td>
+    <td {if $nblist[18]['cave_13']!=0}{echo Getcss($nblist[18]['cave_13'],$par[12])}{/if}>{if $nblist[18]['cave_13']<=0}&nbsp;{else}{$nblist[18]['cave_13']}{/if}</td>
+    <td {if $nblist[18]['cave_14']!=0}{echo Getcss($nblist[18]['cave_14'],$par[13])}{/if}>{if $nblist[18]['cave_14']<=0}&nbsp;{else}{$nblist[18]['cave_14']}{/if}</td>
+    <td {if $nblist[18]['cave_15']!=0}{echo Getcss($nblist[18]['cave_15'],$par[14])}{/if}>{if $nblist[18]['cave_15']<=0}&nbsp;{else}{$nblist[18]['cave_15']}{/if}</td>
+    <td {if $nblist[18]['cave_16']!=0}{echo Getcss($nblist[18]['cave_16'],$par[15])}{/if}>{if $nblist[18]['cave_16']<=0}&nbsp;{else}{$nblist[18]['cave_16']}{/if}</td>
+    <td {if $nblist[18]['cave_17']!=0}{echo Getcss($nblist[18]['cave_17'],$par[16])}{/if}>{if $nblist[18]['cave_17']<=0}&nbsp;{else}{$nblist[18]['cave_17']}{/if}</td>
+    <td {if $nblist[18]['cave_18']!=0}{echo Getcss($nblist[18]['cave_18'],$par[17])}{/if}>{if $nblist[18]['cave_18']<=0}&nbsp;{else}{$nblist[18]['cave_18']}{/if}</td>
+    <td >{echo Getstat($nblist[18]['tlcave'])}</td>
+                    <td>1</td> 
+</tr>
+
+ <tr style="height:50px;font-size:28px;" align="center">
+                	<td align="center" style="vertical-align:middle"><img src="images/{$qzarray[$nblist[19]['uid']]}"/>{echo Getuname($dyarray[$nblist[19]['uid']],1)}</td>
+                	<td {if $nblist[19]['cave_1']!=0}{echo Getcss($nblist[19]['cave_1'],$par[0])}{/if}>{if $nblist[19]['cave_1']<=0}&nbsp;{else}{$nblist[19]['cave_1']}{/if}</td>
+    <td {if $nblist[19]['cave_2']!=0}{echo Getcss($nblist[19]['cave_2'],$par[1])}{/if}>{if $nblist[19]['cave_2']<=0}&nbsp;{else}{$nblist[19]['cave_2']}{/if}</td>
+    <td {if $nblist[19]['cave_3']!=0}{echo Getcss($nblist[19]['cave_3'],$par[2])}{/if}>{if $nblist[19]['cave_3']<=0}&nbsp;{else}{$nblist[19]['cave_3']}{/if}</td>
+    <td {if $nblist[19]['cave_4']!=0}{echo Getcss($nblist[19]['cave_4'],$par[3])}{/if}>{if $nblist[19]['cave_4']<=0}&nbsp;{else}{$nblist[19]['cave_4']}{/if}</td>
+    <td {if $nblist[19]['cave_5']!=0}{echo Getcss($nblist[19]['cave_5'],$par[4])}{/if}>{if $nblist[19]['cave_5']<=0}&nbsp;{else}{$nblist[19]['cave_5']}{/if}</td>
+    <td {if $nblist[19]['cave_6']!=0}{echo Getcss($nblist[19]['cave_6'],$par[5])}{/if}>{if $nblist[19]['cave_6']<=0}&nbsp;{else}{$nblist[19]['cave_6']}{/if}</td>
+    <td {if $nblist[19]['cave_7']!=0}{echo Getcss($nblist[19]['cave_7'],$par[6])}{/if}>{if $nblist[19]['cave_7']<=0}&nbsp;{else}{$nblist[19]['cave_7']}{/if}</td>
+    <td {if $nblist[19]['cave_8']!=0}{echo Getcss($nblist[19]['cave_8'],$par[7])}{/if}>{if $nblist[19]['cave_8']<=0}&nbsp;{else}{$nblist[19]['cave_8']}{/if}</td>
+    <td {if $nblist[19]['cave_9']!=0}{echo Getcss($nblist[19]['cave_9'],$par[8])}{/if}>{if $nblist[19]['cave_9']<=0}&nbsp;{else}{$nblist[19]['cave_9']}{/if}</td> 
+    <td {if $nblist[19]['cave_10']!=0}{echo Getcss($nblist[19]['cave_10'],$par[9])}{/if}>{if $nblist[19]['cave_10']<=0}&nbsp;{else}{$nblist[19]['cave_10']}{/if}</td>
+    <td {if $nblist[19]['cave_11']!=0}{echo Getcss($nblist[19]['cave_11'],$par[10])}{/if}>{if $nblist[19]['cave_11']<=0}&nbsp;{else}{$nblist[19]['cave_11']}{/if}</td>
+    <td {if $nblist[19]['cave_12']!=0}{echo Getcss($nblist[19]['cave_12'],$par[11])}{/if}>{if $nblist[19]['cave_12']<=0}&nbsp;{else}{$nblist[19]['cave_12']}{/if}</td>
+    <td {if $nblist[19]['cave_13']!=0}{echo Getcss($nblist[19]['cave_13'],$par[12])}{/if}>{if $nblist[19]['cave_13']<=0}&nbsp;{else}{$nblist[19]['cave_13']}{/if}</td>
+    <td {if $nblist[19]['cave_14']!=0}{echo Getcss($nblist[19]['cave_14'],$par[13])}{/if}>{if $nblist[19]['cave_14']<=0}&nbsp;{else}{$nblist[19]['cave_14']}{/if}</td>
+    <td {if $nblist[19]['cave_15']!=0}{echo Getcss($nblist[19]['cave_15'],$par[14])}{/if}>{if $nblist[19]['cave_15']<=0}&nbsp;{else}{$nblist[19]['cave_15']}{/if}</td>
+    <td {if $nblist[19]['cave_16']!=0}{echo Getcss($nblist[19]['cave_16'],$par[15])}{/if}>{if $nblist[19]['cave_16']<=0}&nbsp;{else}{$nblist[19]['cave_16']}{/if}</td>
+    <td {if $nblist[19]['cave_17']!=0}{echo Getcss($nblist[19]['cave_17'],$par[16])}{/if}>{if $nblist[19]['cave_17']<=0}&nbsp;{else}{$nblist[19]['cave_17']}{/if}</td>
+    <td {if $nblist[19]['cave_18']!=0}{echo Getcss($nblist[19]['cave_18'],$par[17])}{/if}>{if $nblist[19]['cave_18']<=0}&nbsp;{else}{$nblist[19]['cave_18']}{/if}</td>
+    <td >{echo Getstat($nblist[19]['tlcave'])}</td>
+                    <td>1</td> 
+</tr>
+
+
+    
+                <tr height="50px;">
+                	<td></td>
+                </tr>
+                
+                
+           
+                
+            </table>
+        </td>
+  </tr>
+  
+</table>
+</body>
+</html>

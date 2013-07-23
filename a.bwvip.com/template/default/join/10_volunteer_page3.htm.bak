@@ -1,0 +1,260 @@
+<!--{subtemplate join/10_header}-->
+<body class="claro">
+<script type="text/javascript">
+	dojo.addOnLoad(init_for_page3);
+	dojo.addOnLoad(
+                function(){
+                        dojo.connect(dojo.byId('send_page3_submitting_data_link'),'onclick','send_page3_submitting_data');
+                }
+        );
+</script>
+
+<div id="jls_header">
+			   <div class="sc">
+					   <a href="#">加入收藏</a>&nbsp;|&nbsp;
+					   <a href="#">设为首页</a>&nbsp;|&nbsp;
+					   <a href="www.bwvip.com" target="_blank">大正网</a>
+			   </div>
+			   <div><img src="static/join/images/zyz_flash.jpg"></div>
+			   <div class="dh">
+						<ul>
+								<li><a href="#">首页</a></li>
+								<li><a href="#">赛事介绍</a></li>
+								<li><a href="http://www.bwvip.com/join.php?mod=player">参赛报名</a></li>
+								<li><a href="http://www.bwvip.com/join.php?mod=volunteer">志愿裁判报名</a></li>
+								<li><a href="http://www.bwvip.com/home.php?mod=space&uid=1899467">教练俱乐部</a></li>
+								<li><a href="http://www.bwvip.com/home.php?mod=space&uid=1899466">规则俱乐部</a></li>
+								<li><a href="http://www.bwvip.com/index.php">大正网</a></li>
+						</ul>
+						<div class="clear"></div>
+			   </div>
+</div>
+
+<div id="content">
+			             <div><img src="static/join/images/zyz_top.jpg"></div>
+						 <div class="zyz_bg">
+						           <div class="zyz_title ">
+								            <dt><a href="#"><img src="static/join/images/zyz_5.jpg"></a></dt>
+											<dt><a href="#"><img src="static/join/images/zyz_6.jpg"></a></dt>
+											<dt><a href="#"><img src="static/join/images/zyz_3.jpg"></a></dt>
+											<dt><a href="#"><img src="static/join/images/zyz_8.jpg"></a></dt>
+											<div class="clear"></div>
+								   </div>
+								   <div class="zyz_content">
+											 <div class="biao"><br>
+
+<div>
+*您希望参加哪个地区的分站赛？您希望执裁哪几轮比赛？
+</div>
+<div>
+<input type="checkbox"/>华北地区&nbsp;&nbsp;<input id="judging_game_round1_in_north_china" type="checkbox"/>第一轮&nbsp;&nbsp;<input id="judging_game_round2_in_north_china" type="checkbox"/>第二轮&nbsp;&nbsp;
+</div>
+<div>
+<input type="checkbox"/>华东地区&nbsp;&nbsp;<input id="judging_game_round1_in_east_china" type="checkbox"/>第一轮&nbsp;&nbsp;<input id="judging_game_round2_in_east_china" type="checkbox"/>第二轮&nbsp;&nbsp;
+</div>
+<div>
+<input type="checkbox"/>华南地区&nbsp;&nbsp;<input id="judging_game_round1_in_south_china" type="checkbox"/>第一轮&nbsp;&nbsp;<input id="judging_game_round2_in_south_china" type="checkbox"/>第二轮&nbsp;&nbsp;
+</div>
+<div>
+<input type="checkbox"/>中南地区&nbsp;&nbsp;<input id="judging_game_round1_in_south_central_china" type="checkbox"/>第一轮&nbsp;&nbsp;<input id="judging_game_round2_in_south_central_china" type="checkbox"/>第二轮&nbsp;&nbsp;
+</div>
+<div>
+<input type="checkbox"/>总决赛&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input id="judging_final_game_round1" type="checkbox"/>第一轮&nbsp;&nbsp;<input id="judging_final_game_round2" type="checkbox"/>第二轮&nbsp;&nbsp;<input id="judging_final_game_round3" type="checkbox"/>第三轮
+</div>
+<br/>
+<div>
+*您希望参加哪些专业论坛？
+</div>
+<div>
+<input id="joining_golf_equipment_forum" type="checkbox"/>高尔夫装备&nbsp;&nbsp;
+<input id="joining_golf_rules_forum" type="checkbox"/>高尔夫规则&nbsp;&nbsp;
+<input id="joining_golf_etiquette_forum" type="checkbox"/>高尔夫礼仪&nbsp;&nbsp;
+<input id="joining_teaching_forum" type="checkbox"/>教练教学&nbsp;&nbsp;
+<input id="joining_sports_injury_forum" type="checkbox"/>运动损伤&nbsp;&nbsp;
+<input id="joining_lawn_care_forum" type="checkbox"/>草坪养护&nbsp;&nbsp;
+<input id="joining_course_design_research_forum" type="checkbox"/>球场设计解析&nbsp;&nbsp;
+<input id="joining_trying_play_party_forum" type="checkbox"/>试打会&nbsp;&nbsp;
+<input id="joining_fun_golf_game_forum" type="checkbox"/>趣味高尔夫比赛&nbsp;&nbsp;
+</div>
+<br/>
+<div>
+*您偏好的高尔夫球具品牌？
+</div>
+<div>
+<input id="loving_Adams" type="checkbox"/>Adams&nbsp;&nbsp;<input id="loving_Callaway" type="checkbox"/>Callaway&nbsp;&nbsp;<input id="loving_Cleverland" type="checkbox"/>Cleverland&nbsp;&nbsp;<input id="loving_Co_bra" type="checkbox"/>Co_bra&nbsp;&nbsp;<input id="loving_Dunlop" type="checkbox"/>Dunlop&nbsp;&nbsp;<input id="loving_ECCO" type="checkbox"/>ECCO&nbsp;&nbsp;<input id="loving_FootJoy" type="checkbox"/>FootJoy&nbsp;&nbsp;<input id="loving_HONMA" type="checkbox"/>HONMA&nbsp;&nbsp;<input id="loving_Kasco" type="checkbox"/>Kasco&nbsp;&nbsp;<input id="loving_MAC_GREGON" type="checkbox"/>MAC_GREGON&nbsp;&nbsp;<input id="loving_Mizuno" type="checkbox"/>Mizuno&nbsp;&nbsp;<input id="loving_MURUMAN" type="checkbox"/>MURUMAN&nbsp;&nbsp;<input id="loving_Nike_Golf" type="checkbox"/>Nike_Golf&nbsp;&nbsp;<input id="loving_Odyssey" type="checkbox"/>Odyssey&nbsp;&nbsp;<input id="loving_PING" type="checkbox"/>PING&nbsp;&nbsp;<input id="loving_PRGR" type="checkbox"/>PRGR&nbsp;&nbsp;<input id="loving_SRIXON" type="checkbox"/>SRIXON&nbsp;&nbsp;<input id="loving_S_YARD" type="checkbox"/>S_YARD&nbsp;&nbsp;<input id="loving_Taylormade" type="checkbox"/>Taylormade&nbsp;&nbsp;<input id="loving_Titleist" type="checkbox"/>Titleist&nbsp;&nbsp;<input id="loving_XXIO" type="checkbox"/>XXIO&nbsp;&nbsp;其他品牌：<input id="loving_other_brand" type="text"/>
+</div>
+<br/>
+<div>
+偏好理由：<br/><textarea id="loving_reason"></textarea>
+</div>
+<br/>
+<div>
+*<input id="accept_or_not" type="checkbox"/>本人自愿报名赛事，并已阅读并接受下述协议书
+</div>
+<br/>
+<!--
+<div>
+<input type="button" value="下一步" onclick="dojo.addOnLoad(send_page3_submitting_data);"/>
+</div>
+-->
+<form id="submitting_data" action="join.php?mod=store_volunteer_page3_info&uid=<!--{$uid}-->" method="post">
+<input id="submitting_judging_game_round1_in_north_china" type="hidden" name="submitting_judging_game_round1_in_north_china"/>
+<input id="submitting_judging_game_round2_in_north_china" type="hidden" name="submitting_judging_game_round2_in_north_china"/>
+<input id="submitting_judging_game_round1_in_east_china" type="hidden" name="submitting_judging_game_round1_in_east_china"/>
+<input id="submitting_judging_game_round2_in_east_china" type="hidden" name="submitting_judging_game_round2_in_east_china"/>
+<input id="submitting_judging_game_round1_in_south_china" type="hidden" name="submitting_judging_game_round1_in_south_china"/>
+<input id="submitting_judging_game_round2_in_south_china" type="hidden" name="submitting_judging_game_round2_in_south_china"/>
+<input id="submitting_judging_game_round1_in_south_central_china" type="hidden" name="submitting_judging_game_round1_in_south_central_china"/>
+<input id="submitting_judging_game_round2_in_south_central_china" type="hidden" name="submitting_judging_game_round2_in_south_central_china"/>
+<input id="submitting_judging_final_game_round1" type="hidden" name="submitting_judging_final_game_round1"/>
+<input id="submitting_judging_final_game_round2" type="hidden" name="submitting_judging_final_game_round2"/>
+<input id="submitting_judging_final_game_round3" type="hidden" name="submitting_judging_final_game_round3"/>
+
+<input id="submitting_joining_golf_equipment_forum" type="hidden" name="submitting_joining_golf_equipment_forum"/>
+<input id="submitting_joining_golf_rules_forum" type="hidden" name="submitting_joining_golf_rules_forum"/>
+<input id="submitting_joining_golf_etiquette_forum" type="hidden" name="submitting_joining_golf_etiquette_forum"/>
+<input id="submitting_joining_teaching_forum" type="hidden" name="submitting_joining_teaching_forum"/>
+<input id="submitting_joining_sports_injury_forum" type="hidden" name="submitting_joining_sports_injury_forum"/>
+<input id="submitting_joining_lawn_care_forum" type="hidden" name="submitting_joining_lawn_care_forum"/>
+<input id="submitting_joining_course_design_research_forum" type="hidden" name="submitting_joining_course_design_research_forum"/>
+<input id="submitting_joining_trying_play_party_forum" type="hidden" name="submitting_joining_trying_play_party_forum"/>
+<input id="submitting_joining_fun_golf_game_forum" type="hidden" name="submitting_joining_fun_golf_game_forum"/>
+
+<input id="submitting_loving_Adams" type="hidden" name="submitting_loving_Adams"/>
+<input id="submitting_loving_Callaway" type="hidden" name="submitting_loving_Callaway"/>
+<input id="submitting_loving_Cleverland" type="hidden" name="submitting_loving_Cleverland"/>
+<input id="submitting_loving_Co_bra" type="hidden" name="submitting_loving_Co_bra"/>
+<input id="submitting_loving_Dunlop" type="hidden" name="submitting_loving_Dunlop"/>
+<input id="submitting_loving_ECCO" type="hidden" name="submitting_loving_ECCO"/>
+<input id="submitting_loving_FootJoy" type="hidden" name="submitting_loving_FootJoy"/>
+<input id="submitting_loving_HONMA" type="hidden" name="submitting_loving_HONMA"/>
+<input id="submitting_loving_Kasco" type="hidden" name="submitting_loving_Kasco"/>
+<input id="submitting_loving_MAC_GREGON" type="hidden" name="submitting_loving_MAC_GREGON"/>
+<input id="submitting_loving_Mizuno" type="hidden" name="submitting_loving_Mizuno"/>
+<input id="submitting_loving_MURUMAN" type="hidden" name="submitting_loving_MURUMAN"/>
+<input id="submitting_loving_Nike_Golf" type="hidden" name="submitting_loving_Nike_Golf"/>
+<input id="submitting_loving_Odyssey" type="hidden" name="submitting_loving_Odyssey"/>
+<input id="submitting_loving_PING" type="hidden" name="submitting_loving_PING"/>
+<input id="submitting_loving_PRGR" type="hidden" name="submitting_loving_PRGR"/>
+<input id="submitting_loving_SRIXON" type="hidden" name="submitting_loving_SRIXON"/>
+<input id="submitting_loving_S_YARD" type="hidden" name="submitting_loving_S_YARD"/>
+<input id="submitting_loving_Taylormade" type="hidden" name="submitting_loving_Taylormade"/>
+<input id="submitting_loving_Titleist" type="hidden" name="submitting_loving_Titleist"/>
+<input id="submitting_loving_XXIO" type="hidden" name="submitting_loving_XXIO"/>
+<input id="submitting_loving_other_brand" type="hidden" name="submitting_loving_other_brand"/>
+<input id="submitting_loving_reason" type="hidden" name="submitting_loving_reason"/>
+<input id="submitting_accept_or_not" type="hidden" name="submitting_accept_or_not"/>
+</form>
+
+<input id="hidden_judging_game_round1_in_north_china" type="hidden" value="<!--{$row['referee_judging_game_round1_in_north_china']}-->"/>
+
+<input id="hidden_judging_game_round2_in_north_china" type="hidden" value="<!--{$row['referee_judging_game_round2_in_north_china']}-->"/>
+
+<input id="hidden_judging_game_round1_in_east_china" type="hidden" value="<!--{$row['referee_judging_game_round1_in_east_china']}-->"/>
+
+<input id="hidden_judging_game_round2_in_east_china" type="hidden" value="<!--{$row['referee_judging_game_round2_in_east_china']}-->"/>
+
+<input id="hidden_judging_game_round1_in_south_china" type="hidden" value="<!--{$row['referee_judging_game_round1_in_south_china']}-->"/>
+
+<input id="hidden_judging_game_round2_in_south_china" type="hidden" value="<!--{$row['referee_judging_game_round2_in_south_china']}-->"/>
+
+<input id="hidden_judging_game_round1_in_south_central_china" type="hidden" value="<!--{$row['referee_judging_game_round1_in_south_central_china']}-->"/>
+
+<input id="hidden_judging_game_round2_in_south_central_china" type="hidden" value="<!--{$row['referee_judging_game_round2_in_south_central_china']}-->"/>
+
+<input id="hidden_judging_final_game_round1" type="hidden" value="<!--{$row['referee_judging_final_game_round1']}-->"/>
+
+<input id="hidden_judging_final_game_round2" type="hidden" value="<!--{$row['referee_judging_final_game_round2']}-->"/>
+
+<input id="hidden_judging_final_game_round3" type="hidden" value="<!--{$row['referee_judging_final_game_round3']}-->"/>
+
+<input id="hidden_joining_golf_equipment_forum" type="hidden" value="<!--{$row['joining_golf_equipment_forum']}-->"/>
+
+<input id="hidden_joining_golf_rules_forum" type="hidden" value="<!--{$row['joining_golf_rules_forum']}-->"/>
+
+<input id="hidden_joining_golf_etiquette_forum" type="hidden" value="<!--{$row['joining_golf_etiquette_forum']}-->"/>
+
+<input id="hidden_joining_teaching_forum" type="hidden" value="<!--{$row['joining_teaching_forum']}-->"/>
+
+<input id="hidden_joining_sports_injury_forum" type="hidden" value="<!--{$row['joining_sports_injury_forum']}-->"/>
+
+<input id="hidden_joining_lawn_care_forum" type="hidden" value="<!--{$row['joining_lawn_care_forum']}-->"/>
+
+<input id="hidden_joining_course_design_research_forum" type="hidden" value="<!--{$row['joining_course_design_research_forum']}-->"/>
+
+<input id="hidden_joining_trying_play_party_forum" type="hidden" value="<!--{$row['joining_trying_play_party_forum']}-->"/>
+
+<input id="hidden_joining_fun_golf_game_forum" type="hidden" value="<!--{$row['joining_fun_golf_game_forum']}-->"/>
+
+<input id="hidden_loving_Adams" type="hidden" value="<!--{$row['loving_Adams']}-->"/>
+
+<input id="hidden_loving_Callaway" type="hidden" value="<!--{$row['loving_Callaway']}-->"/>
+
+<input id="hidden_loving_Cleverland" type="hidden" value="<!--{$row['loving_Cleverland']}-->"/>
+
+<input id="hidden_loving_Co_bra" type="hidden" value="<!--{$row['loving_Co_bra']}-->"/>
+
+<input id="hidden_loving_Dunlop" type="hidden" value="<!--{$row['loving_Dunlop']}-->"/>
+
+<input id="hidden_loving_ECCO" type="hidden" value="<!--{$row['loving_ECCO']}-->"/>
+
+<input id="hidden_loving_FootJoy" type="hidden" value="<!--{$row['loving_FootJoy']}-->"/>
+
+<input id="hidden_loving_HONMA" type="hidden" value="<!--{$row['loving_HONMA']}-->"/>
+
+<input id="hidden_loving_Kasco" type="hidden" value="<!--{$row['loving_Kasco']}-->"/>
+
+<input id="hidden_loving_MAC_GREGON" type="hidden" value="<!--{$row['loving_MAC_GREGON']}-->"/>
+
+<input id="hidden_loving_Mizuno" type="hidden" value="<!--{$row['loving_Mizuno']}-->"/>
+
+<input id="hidden_loving_MURUMAN" type="hidden" value="<!--{$row['loving_MURUMAN']}-->"/>
+
+<input id="hidden_loving_Nike_Golf" type="hidden" value="<!--{$row['loving_Nike_Golf']}-->"/>
+
+<input id="hidden_loving_Odyssey" type="hidden" value="<!--{$row['loving_Odyssey']}-->"/>
+
+<input id="hidden_loving_PING" type="hidden" value="<!--{$row['loving_PING']}-->"/>
+
+<input id="hidden_loving_PRGR" type="hidden" value="<!--{$row['loving_PRGR']}-->"/>
+
+<input id="hidden_loving_SRIXON" type="hidden" value="<!--{$row['loving_SRIXON']}-->"/>
+
+<input id="hidden_loving_S_YARD" type="hidden" value="<!--{$row['loving_S_YARD']}-->"/>
+
+<input id="hidden_loving_Taylormade" type="hidden" value="<!--{$row['loving_Taylormade']}-->"/>
+
+<input id="hidden_loving_Titleist" type="hidden" value="<!--{$row['loving_Titleist']}-->"/>
+
+<input id="hidden_loving_XXIO" type="hidden" value="<!--{$row['loving_XXIO']}-->"/>
+
+<input id="hidden_loving_other_brand" type="hidden" value="<!--{$row['loving_other_brand']}-->"/>
+
+<input id="hidden_loving_reason" type="hidden" value="<!--{$row['loving_reason']}-->"/>
+
+<input id="hidden_accept_or_not" type="hidden" value="<!--{$row['accept_or_not']}-->"/>
+
+<input id="hidden_uid" type="hidden" value="<!--{$uid}-->"/>
+
+</div>
+											 <div class="bu">
+														   <a id="send_page3_submitting_data_link"><img src="static/join/images/next.jpg"></a>
+															<a href="join.php?mod=volunteer&page=2&uid=<!--{$uid}-->"><img src="static/join/images/last.jpg"></a>
+											 </div>
+											 <div class="clear"></div>
+								   </div>
+								   <div class="clear"></div>
+						 </div>
+						 <div><img src="static/join/images/zyz_b.jpg"></div>
+			 </div>
+	  
+<div id="foot">
+		            <div class="foot">
+					            <dt class="foot_t">Copyright © 2010 Dazone Golf,All Rights Reserved 大正高尔夫 版权所有</dt>
+								<dt class="foot_line"><img src="static/join/images/foot_line.jpg"></dt>
+								<dt class="foot_logo"><img src="static/join/images/foot_logo.jpg"></dt>
+				    </div>
+</div>
+
+</body>
+<!--{subtemplate join/10_footer}-->

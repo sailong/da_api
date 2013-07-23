@@ -1,0 +1,77 @@
+
+<!--{template home/space_header_comm}--> 
+<div id="wtcontent">
+	<!-- 左侧 -->
+	<!--{template home/spacecp_00_left}-->
+	<!-- 右侧 -->
+        <div class="rightw">
+            <div class="rightlm"><h1>赛事数据导入</h1></div>
+            <br>
+            <div class="rcontent">
+            <!--设置头部 -->
+                <ul class="tb cl">
+                    <li class="o"><a href="home.php?mod=space&amp;do=blog&amp;view=me">赛事数据导入</a></li>
+
+                </ul>
+			<div>
+            <div id="ct"  >
+                <div class="mn">
+                    <div class="bm bw0 cl">
+                        <script type="text/javascript" src="{STATICURL}image/editor/editor_function.js?{VERHASH}"></script>
+                        <script type="text/javascript" src="{$_G[setting][jspath]}home_blog.js?{VERHASH}"></script>
+                       
+               
+                            <form action="home.php?mod=spacecp&ac=event_data_imp&op=data_imp" method="post" enctype="multipart/form-data" autocomplete="off" target="frame_profile" >
+                            <input type="hidden" value="{FORMHASH}" name="formhash">
+                            <input type="hidden" value="6" name="submit_data_imp"><br>
+                            <table cellspacing="0" cellpadding="0" class="tfm" id="profilelist">
+                                <tbody>
+
+                                <tr id="tr_realname">
+                                    <td align="right" style="padding-right:10px" id="th_realname"><span title="必填" class="rq">*</span>选择你要导入的赛事数据：
+                                         </td><td id="td_realname">
+                                         
+                                         <select style="width:400px;" name="event_id">
+                                          <option value="{$_G['uid']}">-请选择导入的赛事-</option>
+                                          
+                                          <!--{loop $event_users $value}-->
+                                            <!--{eval $selected="";}-->
+                                            <!--{if $value['uid']==$event_id}-->
+                                                <!--{eval $selected='selected="selected"';}-->
+                                            <!--{/if}-->
+                                            <option value="{$value['uid']}" {$selected}>{$value['realname']}</option>
+                                          <!--{/loop}-->
+                                         </select>
+                                         <div id="showerror_realname" class="rq mtn"></div>
+                                    </td>
+                                  
+                                </tr>
+                                   
+
+                                    <tr>
+                                        <td align="right" style="padding-right:10px">&nbsp;
+                                        </td><td colspan="2">
+                                            <input type="hidden" name="profilesubmit" value="true">
+                                            <button type="submit" name="profilesubmitbtn" id="profilesubmitbtn" value="true" class="pn pnc"><strong>保存</strong></button>
+                                            <input name="ac" value="event_data_imp" type="hidden"><input name="op" value="data_imp" type="hidden">  
+                                        </td>
+                                    </tr>
+
+
+                                </tbody>
+                            </table>
+                            </form>
+
+
+
+                    </div>
+                </div> 
+            </div>
+
+			</div>
+		
+		</div>
+	</div>
+	<div class="clear"></div>
+</div>
+<!--{template home/spacecp_foot_comm}-->

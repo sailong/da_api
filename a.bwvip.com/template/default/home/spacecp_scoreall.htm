@@ -1,0 +1,112 @@
+<!--{template home/spacecp_10_head}-->
+<style type='text/css'>
+* {
+	margin:0; padding:0
+}
+img {
+	border:none; margin:0; padding:0
+}
+#groupscore tr td {
+	border-bottom:1px solid #abcdef; border-right:1px solid #abcdef; height:30px; margin:0; padding:0
+}
+#groupscore tr #bgtop {
+	border-top:1px solid #abcdef
+}
+#groupscore tr #bgright {
+	border-top:1px solid #abcdef; border-right:1px solid #abcdef
+}
+#groupscore tr .bgleft {
+	border-left:1px solid #abcdef
+}
+.table_miao{line-height:25px; border:1px solid #fff; padding:0px; margin-top:8px; margin-bottom:8px;background:##b5c5d2;}
+.td_line_1{ border-bottom:1px solid #fff; color:#fff; text-align:center;}
+.td_line_2{border-bottom:1px solid #fff; border-left:1px solid #fff;  color:#414141; text-align:center; width:20px}
+.td_line_3{border-bottom:1px solid #fff; border-left:1px solid #fff;  color:#fff; text-align:center;}
+.input_1{width:98%; background:#ccd9e2;border:none;}
+.input_2{width:98%;border:none; background:#9ad8e7; text-align:center}
+.input_3{width:98%;border:none; background:#62cae3; text-align:center}
+</style>
+
+<div id="wtcontent">
+	<!-- 左侧 -->
+	<!--{template home/spacecp_10_left}-->
+	<!-- 右侧 -->
+	<div class="rightw">
+		<a name="maoscore"><div class="rightlm"><span class="space_title">我的成绩卡</span></div></a>
+		<div class="rcontent" style="border:1px solid #DBDBDB; margin-top:10px;">
+			   <div class="sapce_view_content">
+                     <div class="sapce_view_content_div"  style="padding-left:15px; width:520px;">
+
+				<!-------开始--------->
+						<!--{if $arr}-->
+						<table cellspacing='0' cellpadding='0' id='groupscore' class='table_miao' style='margin-bottom:50px'>
+							<tr>
+								<td width='60' align='center' id='bgtop' class='bgleft'>球场</td>
+								<td colspan='22' id='bgright'>
+								<!--{$parscore['fieldname']}--> >> <!--{$parscore['tee']}-->
+								</td>
+							</tr>
+							<tr>
+								<td align='center' class='bgleft'>时间</td>
+								<td colspan='22'><!--{$parscore['dateline']}--></td>
+							</tr>
+							<tr>
+								<td align='center' class='bgleft'>球洞</td>
+								<!--{loop $data $k $v}-->
+								<td width='30' align='center'><!--{$v}--></td>
+								<!--{/loop}-->
+								<td align='center'></td>
+							</tr>
+							<tr>
+								<td align='center' class='bgleft'>标准杆</td>
+								<!--{loop $parscore['par'] $k $v}-->
+								<td align='center'><!--{$v}--></td>
+								<!--{/loop}-->
+								<td align='center'></td>
+							</tr>
+					<!--{loop $arr $key $val}-->
+						<!--{if $val['score']}-->
+							<!--{if ($val['status'] == 1)}-->
+							<tr bgcolor='#abcdef'>
+							<!--{elseif ($val['status'] == 2)}-->
+							<tr>
+							<!--{/if}-->
+								<td align='center' class='bgleft'>
+									<a href='home.php?mod=space&do=common&op=score&uid=<!--{$val[uid]}-->&id=<!--{$val[id]}-->'>
+										<img src='uc_server/avatar.php?uid=<!--{$val[uid]}-->&size=middle' width='40' height='40' /><br />
+										<!--{$val[realname]}-->
+									</a>
+								</td>
+								<!--{loop $val['score'] $k $v}-->
+								<td align='center'><!--{$v}--></td>
+								<!--{/loop}-->
+								<td><!--{if $_G['uid'] != $val['uid']}--><a href='home.php?mod=space&uid=<!--{$_G[uid]}-->&zyzw=皇冠杯城市挑战赛&zyyh=<!--{$val[realname]}-->'>质疑</a><!--{/if}--></td>
+							</tr>
+						<!--{else}-->
+							<tr bgcolor='gray'>
+								<td align='center' class='bgleft'>
+									<a href='home.php?mod=space&uid=<!--{$val[uid]}-->'>
+										<img src='uc_server/avatar.php?uid=<!--{$val[uid]}-->&size=middle' width='40' height='40' /><br />
+										<!--{$val[realname]}-->
+									</a>
+								</td>
+								<!--{loop $num $k $v}-->
+								<td align='center'></td>
+								<!--{/loop}-->
+								<td align='center'></td>
+							</tr>
+						<!--{/if}-->
+					<!--{/loop}-->
+					</table>
+					<!--{else}-->
+					<p style='height:100px; line-height:100px; text-align:center'>您搜索的内容不存在，请稍后重试...</p>
+					<!--{/if}-->
+		<!-------结束--------->
+
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="clear"></div>
+</div>
+<!--{template home/spacecp_foot_comm}-->

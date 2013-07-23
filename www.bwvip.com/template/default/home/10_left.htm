@@ -1,0 +1,181 @@
+<div class="lefter z">
+	<!--{if $personadvert}-->
+	<!--{loop $personadvert $k $v}-->
+	<div class="ifs"><a href='<!--{$v[adverturl]}-->' target='_blank'><img src="<!--{$v[imglogo]}-->" width="253" height="102"></a></div>
+	<!--{/loop}-->
+	<!--{/if}-->
+	<div class="leftlm"><span class="font_1"><a href="home.php?mod=space&uid=<!--{$uid}-->"><!--{$visitname}-->的主页</a> </span></div>
+	<!--{subtemplate home/space_header_personnav}-->
+	<!--{if $do == 'index'}-->
+	  
+
+    <!--{if $space['self']}-->
+      <!--{eval 
+         $tjblog=get_vip_ads('',15,4);           
+        }-->
+    
+     <div class="leftlm">
+        <span class="font_1">推荐博客</span>
+        
+    </div>
+    <div class="bkxx"> 
+        <ul>
+             <!--{loop $tjblog $value}-->				 
+            <li>
+            <img src="{STATICURL}space/10/images/new.jpg" width="23" height="15" align="absbottom" style="padding-right:5px;">
+                <a href="<!--{$value[adverturl]}-->" class="leftlm_a3" title="<!--{$value[advertname]}-->"> 
+                   <!--{eval echo cutstr($value[advertname],28,'');}-->
+                </a>
+            </li>
+            <!--{/loop}-->
+        </ul> 
+    </div>
+    
+
+        <!--{else}-->  
+
+
+ 
+    <div class="leftlm">
+        <span class="font_1">Ta的博客</span>
+        
+    </div>
+    <div class="bkxx">
+       <!--{if $blog}-->
+		<ul>
+			<!--{loop $blog $v}-->
+			<li><img src="{STATICURL}space/10/images/new.jpg" width="23" height="15" align="absbottom" style="padding-right:5px;">
+            <a href="home.php?mod=space&uid={$uid}&do=blog&id={$v[blogid]}" class="leftlm_a3"><!--{$v[subject]}--></a>
+            </li>
+			<!--{/loop}-->
+		</ul>
+        <!--{else}-->
+        <p style='height:50px; line-height:50px; margin-left:35px'>还没有推荐的博客</p>
+        <!--{/if}-->
+    </div>
+   <!--end-->
+
+    
+    <!--{/if}-->
+
+
+    <!--{if $space['self']}-->
+      <!--{eval 
+         $tjblog=get_vip_ads('',16,4);           
+        }-->
+    
+     <div class="leftlm">
+        <span class="font_1">推荐相册</span>
+        
+    </div>
+    <div class="leftcon">
+		<div id="circular-box" class="clearfix" >
+			
+			<ul>
+				<!--{loop $tjblog $value}-->
+				<li>
+					<a href="<!--{$value[adverturl]}-->"><img src="<!--{$value[imglogo]}-->" width="62" height="57"  alt="<!--{$value[advertname]}-->"><span class="cir-bg"></span></a><p class="font_2"><!--{eval echo cutstr($value[advertname],15,'');}--></p>
+				</li>
+				<!--{/loop}-->
+			</ul> 
+		</div>
+		<div class="clear"></div>
+	</div>
+     
+
+        <!--{else}-->  
+
+	<div class="leftlm">
+		<span class="font_1">Ta的相册</span>
+		<span><!--{if $space['self']}--><a href="home.php?mod=space&do=album&view=me&id=#maoxiangce" class="leftlm_a"><!--{else}--><a href="home.php?mod=space&uid=<!--{$uid}-->&do=album&view=me&from=space&id=#qianxiangce" class="leftlm_a"><!--{/if}-->更多</a></span>
+	</div>
+	<div class="leftcon">
+		<div id="circular-box" class="clearfix">
+			<!--{if $albumlist}-->
+			<ul>
+				<!--{loop $albumlist $value}-->
+				<li >
+					<a href="home.php?mod=space&uid=<!--{$uid}-->&do=album&id=<!--{$value[albumid]}-->&mao=#maoxiangce"><img src="data/attachment/album/<!--{$value[pic]}-->" width="62" height="57" alt="<!--{$value[albumname]}-->"><span class="cir-bg"></span></a><p class="font_2"  align="center"><!--{$value[albumname]}--></p>
+				</li>
+				<!--{/loop}-->
+			</ul>
+			<!--{else}-->
+			<p style='height:50px; line-height:50px; margin-left:50px'>还没有创建或发表相册</p>
+			<!--{/if}-->
+		</div>
+		<div class="clear"></div>
+	</div>
+  
+    <!--{/if}-->  
+    
+    <!--{if $space['self']}-->
+      <!--{eval 
+         $tjblog=get_vip_ads('',17,6);           
+        }-->
+    
+     <div class="leftlm">
+        <span class="font_1">推荐视频</span>
+        
+    </div>
+    <div class="leftcon">
+		<div id="circular-box" class="clearfix">
+			
+			<ul>
+				<!--{loop $tjblog $value}--> 
+                <div class="videoimg z">
+                    <p><a href='<!--{$value[adverturl]}-->'><img src="<!--{$value[imglogo]}-->" width="65" height="57" alt="<!--{$value[advertname]}-->"></a></p>
+                    <p style="height:25px;"><a href='<!--{$value[adverturl]}-->' title="<!--{$value[advertname]}-->"><!--{eval echo cutstr($value[advertname],8,'');}--></a></p>
+			    </div>
+				<!--{/loop}-->
+			</ul> 
+		</div>
+		<div class="clear"></div>
+	</div>
+     
+
+        <!--{else}-->  
+	<div class="leftlm">
+		<span class="font_1">Ta的视频</span>
+		<span><!--{if $space['self']}--><a href="home.php?mod=spacecp&ac=vupload&op=list&id=#maoshipin" class="leftlm_a"><!--{else}--><a href="home.php?mod=space&uid=<!--{$uid}-->&do=video&act=list&id=#qianvideo" class="leftlm_a"><!--{/if}-->更多</a></span>
+	</div>
+	<div class="leftcon">
+		<div style="margin:5px 0px 10px 10px;">
+			<!--{if $spacevideo}-->
+			<!--{loop $spacevideo $k $v}-->
+			<div class="videoimg z">
+				<p><a href='home.php?mod=space&uid=<!--{$uid}-->&do=video&id=<!--{$v[vpid]}-->'><img src="<!--{if $v[images]}--><!--{$v[images]}--><!--{else}-->uploadfile/common/videoimg.gif<!--{/if}-->" width="65" height="57"></a></p>
+				<p style="height:25px;"><a href='home.php?mod=space&uid=<!--{$uid}-->&do=video&id=<!--{$v[vpid]}-->'><!--{$v[title]}--></a></p>
+			</div>
+			<!--{/loop}-->
+			<!--{else}-->
+			<p style='height:50px; line-height:50px; margin-left:50px'>还没有视频</p>
+			<!--{/if}-->
+		</div>
+	</div>  
+		<!--{/if}-->    
+<!--{/if}-->
+	<!--{if $do != 'index'}-->
+	<div class="leftlm">
+		<span class="font_1"><!--{$visitname}-->的访客</span>
+		<span><a href="home.php?mod=space&do=common&op=visiter&uid=<!--{$uid}-->&id=#maocommon" class="leftlm_a">更多</a></span>
+	</div>
+	<div class="leftcon">
+		<div id="circular-box" class="clearfix">
+			<!--{if $visit}-->
+			<ul>
+				<!--{loop $visit $value}-->
+				<li style='width:65px; height:90px'>
+				<a href="home.php?mod=space&uid=<!--{$value[vuid]}-->"><img src="uc_server/avatar.php?uid=<!--{$value[vuid]}-->&size=middle" width="62" height="57">
+				<span class="cir-bg"></span></a>
+				<p align="center" class="font_2"  style="margin-top:5px; width:65px; text-align:center;"><!--{$value[vusername]}--></p>
+				</li>
+				<!--{/loop}-->
+			</ul>
+			<!--{else}-->
+			<p style='height:50px; line-height:50px; margin-left:50px'>还没有访客</p>
+			<!--{/if}-->
+		</div>
+		<div class="clear"></div>
+	</div>
+	<!--{/if}-->
+</div>

@@ -1,0 +1,286 @@
+<!--{subtemplate join/10_player_header}-->
+<body class="claro">
+		<script type="text/javascript">
+			dojo.addOnLoad(init);
+			dojo.addOnLoad(
+				function(){
+					dojo.connect(dojo.byId('send_submitting_data_link'),'onclick','send_submitting_data');
+				}
+			);
+		</script>
+
+<div id="jls_header">
+                           <div  style=" margin:10px 30px 10px auto;line-height:23px;">
+                                           &nbsp;
+                           </div>
+                           <div><img src="http://www.bwvip.com/jiaoliansai/images/flash.jpg"></div>
+                           <div class="dh">
+                                                <ul>
+                                                                <li>&nbsp;</li>
+								<li><a href="http://jiaoliansai.bwvip.com/index.html">首页</a></li>
+								<li><a href="http://jiaoliansai.bwvip.com/game_intro.html">赛事介绍</a></li>
+								<li><a href="http://jiaoliansai.bwvip.com/being_player.html">参赛须知</a></li>
+								<li><a target="_blank" href="http://www.bwvip.com/home.php?mod=space&uid=1899467">教练俱乐部</a></li>
+								<li><a target="_blank" href="http://www.bwvip.com/home.php?mod=space&uid=1899466">规则俱乐部</a></li>
+								<li><a target="_blank" href="http://www.bwvip.com">大正网</a></li>
+                                                </ul>
+                                                <div class="clear"></div>
+                           </div>
+</div>
+
+<div id="content">
+                                     <div><img src="static/join/images/zyz_top.jpg"></div>
+                                                 <div class="zyz_bg">
+                                                           <div class="zyz_title ">
+                                                                            <dt><img src="static/join/images/zyz_1.jpg"></dt>
+                                                                                        <dt><img src="static/join/images/bmz_6.jpg"></dt>
+                                                                                        <dt><img src="static/join/images/bmz_7.jpg"></dt>
+                                                                                        <dt><img src="static/join/images/bmz_8.jpg"></dt>
+                                                                                        <div class="clear"></div>
+                                                                   </div>
+                                                                   <div class="zyz_content">
+                                                                             <div class="biao">
+<!--
+			<div>
+				基本信息
+			</div>
+			-->
+			
+			<table width="900" border="0" cellspacing="0" cellpadding="10" align="left">
+			
+			
+			<tr>
+				<td align="right">*真实姓名：</td>
+				<td align="left"><input id='realname' type="text" value="<!--{$row['realname']}-->"/></td>
+
+				
+				<!--{if $row['gender'] == 0 }-->
+				<td align="right">*性别：</td>
+				<td align="left"><input id="male" type="radio"  name="gender"/>男<input id="female" type="radio" name="gender"/>女</td>
+				<!--{/if}-->
+
+				<!--{if $row['gender'] == 1 }-->
+				<td align="right">*性别：</td>
+				<td align="left"><input id="male" type="radio" checked="checked" name="gender"/>男<input id="female" type="radio" name="gender"/>女</td>
+				<!--{/if}-->
+				<!--{if $row['gender'] == 2 }-->
+				<td align="right">*性别：</td>
+				<td align="left"><input id="male" type="radio" name="gender"/>男<input id="female" type="radio" checked="checked" name="gender"/>女</td>
+				<!--{/if}-->
+				
+			</tr>
+			
+			<tr>
+				<td align="right">
+				<label for="date1">出生日期</label>：
+				</td>
+				<td align="left">
+				<input id='birth_date' type="text" data-dojo-type="dijit.form.DateTextBox"/>
+				</td>
+				
+				<td align="right">
+				国籍：
+				</td>
+				<td align="left">
+				<input id="nationality" value="<!--{$row['nationality']}-->" type="text"/>
+				</td>
+			</tr>
+			
+			<tr>
+			
+			<td align="right">
+			上传头像：
+			</td>
+			<td align="left" colspan="3">
+			<form id="upload_avatar" enctype="multipart/form-data" action="join.php?mod=upload_avatar&uid=<!--{$uid}-->" method="POST">
+				<input name="avatar" type="file" onchange="dojo.addOnLoad(upload_avatar);"/>
+				<!--{if $avatar_filename != ''}-->
+				<span id="span"><img src="join.php?mod=read_avatar&uid=<!--{$uid}-->"/></span><span id="span2"><input type="button" value="删除头像" onclick="dojo.addOnLoad(remove_avatar);" /></span>
+				<!--{else}-->
+				<span id="span"></span><span id="span2"></span>
+				<!--{/if}-->
+			</form>
+			</td>
+			
+			</tr>
+			
+			<tr>
+				<td align="right">*手机：</td>
+				<td align="left"><input id="mobile" type="text" value="<!--{$row['mobile']}-->"/></td>
+				<td align="right">*电子邮箱：</td>
+				<td align="left"><input id="email" type="text" value="<!--{$supplement_row['email']}-->"/></td>
+			</tr>
+			
+			<tr>
+				<td align="right">固定电话：</td>
+				<td align="left"><input id="telephone" type="text" value="<!--{$row['telephone']}-->"/></td>
+				<td align="right">传真：</td>
+				<td align="left"><input id="fax_num" type="text" value="<!--{$supplement_row['fax_num']}-->"/></td>
+			</tr>
+			
+			<tr>
+				<td align="right">*证件类型：</td>
+				<td align="left"><input id="idcardtype" type="text" value="<!--{$row['idcardtype']}-->"/></td>
+				<td align="right">*证件号码：</td>
+				<td align="left"><input id="idcard" type="text" value="<!--{$row['idcard']}-->"/></td>
+			</tr>
+			
+			<tr>
+				<td align="right">*通讯地址：</td>
+				<td align="left"><input id="address" type="text" value="<!--{$row['address']}-->"/></td>
+				<td align="right">邮编：</td>
+				<td align="left"><input id="zipcode" type="text" value="<!--{$row['zipcode']}-->"/></td>
+			</tr>
+			
+			<tr>
+				<td align="right">*赛事获取途径：</td>
+				<td align="left" colspan="3">
+				
+
+				<!--{if $supplement_row['getting_game_info_by_website'] == 1}-->
+				<input id="getting_game_info_by_website" type="checkbox" value="大正网" checked="checked"/>大正网&nbsp;&nbsp;
+				<!--{else}-->
+				<input id="getting_game_info_by_website" type="checkbox" value="大正网"/>大正网&nbsp;&nbsp;
+				<!--{/if}-->
+				
+				<!--{if $supplement_row['getting_game_info_by_inews'] == 1}-->
+				<input id="getting_game_info_by_inews" type="checkbox" value="手机报" checked="checked"/>手机报&nbsp;&nbsp;
+				<!--{else}-->
+				<input id="getting_game_info_by_inews" type="checkbox" value="手机报"/>手机报&nbsp;&nbsp;
+				<!--{/if}-->
+
+				<!--{if $supplement_row['getting_game_info_by_microblog'] == 1}-->
+				<input id="getting_game_info_by_microblog" type="checkbox" value="微博" checked="checked"/>微博&nbsp;&nbsp;
+				<!--{else}-->
+				<input id="getting_game_info_by_microblog" type="checkbox" value="微博"/>微博&nbsp;&nbsp;
+				<!--{/if}-->
+
+				<!--{if $supplement_row['getting_game_info_by_tmk'] == 1}-->
+				<input id="getting_game_info_by_tmk" type="checkbox" value="电话邀约" checked="checked"/>电话邀约&nbsp;&nbsp;
+				<!--{else}-->
+				<input id="getting_game_info_by_tmk" type="checkbox" value="电话邀约"/>电话邀约&nbsp;&nbsp;
+				<!--{/if}-->
+
+				<!--{if $supplement_row['getting_game_info_by_short_message'] == 1}-->
+				<input id="getting_game_info_by_short_message" type="checkbox" value="短信" checked="checked"/>短信&nbsp;&nbsp;
+				<!--{else}-->
+				<input id="getting_game_info_by_short_message" type="checkbox" value="短信"/>短信&nbsp;&nbsp;
+				<!--{/if}-->
+
+				<!--{if $supplement_row['getting_game_info_by_friend'] == 1}-->
+				<input id="getting_game_info_by_friend" type="checkbox" value="亲友" checked="checked"/>亲友&nbsp;&nbsp;
+				<!--{else}-->
+				<input id="getting_game_info_by_friend" type="checkbox" value="亲友"/>亲友&nbsp;&nbsp;
+				<!--{/if}-->
+
+				<!--{if $supplement_row['getting_game_info_by_other_way'] == 1}-->
+				<input id="getting_game_info_by_other_way" type="checkbox" value="其他途径" checked="checked"/>其他途径
+				<!--{else}-->
+				<input id="getting_game_info_by_other_way" type="checkbox" value="其他途径"/>其他途径
+				<!--{/if}-->
+				<td>
+			</tr>
+			
+			<tr>
+				<td align="right">
+				*参赛身份：
+				</td>
+				<td align="left" colspan="3">
+				<!--{if $supplement_row['trainer_joining_game'] == 1}-->
+					<input id="trainer_joining_game" type="checkbox" checked="checked"/>教练员
+				<!--{else}-->
+					<input id="trainer_joining_game" type="checkbox"/>教练员
+				<!--{/if}-->
+				&nbsp;&nbsp;
+				<!--{if $supplement_row['referee_joining_game'] == 1}-->
+					<input id="referee_joining_game" type="checkbox" checked="checked"/>裁判员
+				<!--{else}-->
+					<input id="referee_joining_game" type="checkbox"/>裁判员
+				<!--{/if}-->		
+				</td>
+			</tr>
+
+			</table>
+			
+		<div>
+
+		<input id="stored_birth_year" type="hidden" value="<!--{$row['birthyear']}-->"/>
+		<input id="stored_birth_month" type="hidden" value="<!--{$row['birthmonth']}-->"/>
+		<input id="stored_birth_day" type="hidden" value="<!--{$row['birthday']}-->"/>
+		<!--
+		<br/>
+		<input type="button" value="下一步" onclick="dojo.addOnLoad(send_submitting_data);"/>
+		-->
+		<form id="remove_avatar" action="join.php?mod=remove_avatar&uid=<!--{$uid}-->" method="POST">
+		</form>
+
+		<form id="submitting_data" action="join.php?mod=store_player_page1_info&uid=<!--{$uid}-->" method="post">
+			
+			<input id="submitting_realname" name="submitting_realname" type="hidden"/>
+
+			<input id="submitting_gender" name="submitting_gender" type="hidden"/>
+
+			<input id="submitting_birth_date" name="submitting_birth_date" type="hidden"/>
+
+			<input id="submitting_nationality" name="submitting_nationality" type="hidden"/>
+
+			<input id="submitting_mobile" name="submitting_mobile" type="hidden"/>
+
+			<input id="submitting_email" name="submitting_email" type="hidden"/>
+
+			<input id="submitting_telephone" name="submitting_telephone" type="hidden"/>
+
+			<input id="submitting_fax_num" name="submitting_fax_num" type="hidden"/>
+
+			<input id="submitting_idcardtype" name="submitting_idcardtype" type="hidden"/>
+
+			<input id="submitting_idcard" name="submitting_idcard" type="hidden"/>
+
+			<input id="submitting_address" name="submitting_address" type="hidden"/>
+
+			<input id="submitting_zipcode" name="submitting_zipcode" type="hidden"/>
+
+			<input id="submitting_getting_game_info_by_website" name="submitting_getting_game_info_by_website" type="hidden"/>
+
+			<input id="submitting_getting_game_info_by_inews" name="submitting_getting_game_info_by_inews" type="hidden"/>
+
+			<input id="submitting_getting_game_info_by_microblog" name="submitting_getting_game_info_by_microblog" type="hidden"/>
+
+			<input id="submitting_getting_game_info_by_tmk" name="submitting_getting_game_info_by_tmk" type="hidden"/>
+
+			<input id="submitting_getting_game_info_by_short_message" name="submitting_getting_game_info_by_short_message" type="hidden"/>
+
+			<input id="submitting_getting_game_info_by_friend" name="submitting_getting_game_info_by_friend" type="hidden"/>
+	
+			<input id="submitting_getting_game_info_by_other_way" name="submitting_getting_game_info_by_other_way" type="hidden"/>
+
+			<input id="submitting_trainer_joining_game" name="submitting_trainer_joining_game" type="hidden"/>
+
+			<input id="submitting_referee_joining_game" name="submitting_referee_joining_game" type="hidden"/>
+
+		</form>
+		
+		<input id="hidden_uid" type="hidden" value="<!--{$uid}-->"/>
+
+</div>
+                                                                                         
+</div>
+                                                                                         <div class="bu"><a style="cursor:pointer" id="send_submitting_data_link"><img src="static/join/images/next.jpg"></a></div>
+                                                                                         <div class="clear"></div>
+                                                                   </div>
+                                                                   <div class="clear"></div>
+                                                 </div>
+                                                 <div><img src="static/join/images/zyz_b.jpg"></div>
+                         </div>
+          <!-- 内容部分结束-->
+      <!--底部开始-->
+<div id="foot">
+                            <div class="foot">
+                                                    <dt class="foot_t">Copyright © 2010 Dazone Golf,All Rights Reserved 大正高尔夫 版权所有</dt>
+                                                                <dt class="foot_line"><img src="static/join/images/foot_line.jpg"></dt>
+                                                                <dt class="foot_logo"><img src="static/join/images/foot_logo.jpg"></dt>
+                                    </div>
+</div>
+		
+</body>
+<!--{subtemplate join/10_footer}-->

@@ -1,0 +1,196 @@
+<style type="text/css">
+body{ font-size:12px;}
+a{ text-decoration:none;}
+a:hover{ text-decoration:underline;}
+#shop_content{width:704px; float:right; background:#7c7c7c url(../images/content_bg.jpg) repeat-x; padding-top:56px;}
+#shop_box{ background:#fff; width:665px; }
+#pmenu{ background:url(../images/box_men_2.jpg) repeat-y ; width:665px;padding-top:10px;}
+#pmenu a{color:#fff; text-decoration:none; margin:0 17px;white-space:nowrap;
+ }
+#pmenu a:hover{ color:#fff; text-decoration:underline; margin:0 17px;white-space:nowrap;
+ }
+#pmenu ul{ margin:0px 8px;}
+#pmenu li{color:#fff; float:left;line-height:25px;}
+#pmenu span{color:#fff; float:left;line-height:25px;}
+#pmenu li{ list-style:none; }
+
+/*内容css*/
+#content_tilte{ margin-top:5px;background:none repeat scroll 0 0 #8D8D8D;padding:3px;}
+#content_tilte_1{background:#8d8d8d; padding:5px 0px 5px 10px;;text-align:left; width:655px; margin-top:5px;}
+#content_tilte .left{float:left; padding-top:3px; width:445px;height:26px;  text-align:left;background:#8d8d8d; padding-left:12px;}
+#content_tilte .right{float:right;width:68px;padding-top:6px;  height:23px; text-align:left; padding-left:140px;background:#8d8d8d; }
+#content_tilte .right a{background:#ccc; color:#000; padding-left:15px; padding-right:15px; height:18px; line-height:18px;}
+#content{width:665px; height:auto;padding-top:10px; }
+.lc{background:#FFFFFF; padding-left:10px;}
+.lc_title{background:#8d8d8d; line-height:25px; height:25px; margin-left:20px;width:645px; margin-left:10px;}
+.lc_title span,.lc_title a{color:#FFFFFF; font-weight:bold; font-size:14px;}
+.lc_title span{float:left; padding-left:20px;}
+.lc_title a{float:right; padding-right:20px;}
+.lc_content{width:665px; padding:10px;}
+.lc_content span{font-weight:bold; font-size:14px; line-height:30px;}
+.lc_content ul{margin:0px; padding:0px; list-style:none; width:645px;}
+.lc_content ul li{ margin:10px 0; padding:5px 20px; background:#ebebeb; border: 1px solid #a6a6a6; line-height:18px;}
+.clear{clear:both;}
+.bmenu{width:675px;padding-top:5px; background:#ccc; margin-left:11px; }
+.bmenu ul{ float:left; list-style:none; margin:10px 35px;}
+.bmenu ul li{ float:left;}
+.bmenu ul li img { padding-right:3px;}
+.bmenu ul li span{ font-weight:bold;}
+/*#content .pimg {padding-bottom:8px; width: 157px; height:172px; border:0px;}
+#content .pimg:hover {padding-bottom:8px; width: 150px; height:164px; padding-top:8px;border:0px;}*/
+
+/*商品部分*/
+.pname{font-weight:bold;  text-align:center; color:#a02d00;}
+  </style>
+<div id="shopcontent">
+             <div id="shop_box">
+                               <!-- 商品分类开始-->
+                               <div><img src="images/box_men_1.jpg"></div>
+                               <div id="pmenu">
+                                       <ul>  	
+                                       <!--{loop $sortlist $key $value}-->
+                                     <!--{if $key>0}-->  <!--{/if}-->  <li><a href="home.php?mod=space&uid=$value[uid]&do=shop&cat_id=$value[cat_id]">$value[cat_name]</a>|</li> 
+                                       <!--{/loop}--><li>  <a href="home.php?mod=space&uid=$value[uid]&do=shop">全部</a></li>
+                                       </ul>
+                                       <div class="clear"></div>
+                               </div>
+                               <div><img src="images/box_men_3.jpg"></div>
+                               <!--商品分类结束-->
+                               <!-- 内容开始-->
+							   <div id="content_tilte">
+								<span style='padding-left:10px;'>当前位置：<a href="home.php?mod=space&uid=$_GET['uid']&do=shop">产品</a> >> $getloc</span>
+								<span style="float:right;padding-right:10px;"><a href="home.php?mod=space&uid=$_G['gp_uid']&do=shop&act=cart">购物车</a></span>
+							    <span style="float:right;padding-right:10px;"><a href="home.php?mod=space&uid=$_G['gp_uid']&do=shop&act=order">订单</a></span>
+                               </div>
+							   
+                                <div class="clear"></div>
+								<div id="content" class="lc" >
+								      <!-- 购买流程部分开始-->
+									    <div class="lc_title">
+										        <span>购买流程</span>
+										        <a href="javascript:scroll(0,360)">↑Top</a> 
+												<div class="clear"></div>
+										</div>
+										<div class="lc_content">
+										         <span>一实名注册大正网并通过审核。</span><br>
+												 <img src="images/lc_1.jpg"><br>
+												 <span>二在各品牌俱乐部中购买所需产品。</span><br>
+												 <img src="images/lc_2.jpg">
+												 <span>三点击所需商品加入购物车。</span><br>
+												 <img src="images/lc_3.jpg"><br>
+												 <img src="images/lc_3_1.jpg">
+												 <span>四点击商品分类，继续购物；完成购买，点击立即结算。</span><br>
+												 <img src="images/lc_4.jpg">
+												 <span>五填写收货人信息，点击配送到这个地址。</span><br>
+												 <img src="images/lc_5.jpg">
+												 <span>六选择配送方式、支付方式，确认订单无误，点击提交订单。</span><br>
+												 <img src="images/lc_6.jpg"><br>
+												 <img src="images/lc_6_1.jpg">
+												 <span>七根据页面提示完成购买。</span><br>
+												 <img src="images/lc_7.jpg"><br>
+												 <img src="images/lc_7_1.jpg">
+										</div>
+										 <!-- 购买流程部分结束-->
+										 <!-- 常见问题部分开始-->
+										<div class="lc_title">
+										        <span>常见问题</span>
+										        <a href="javascript:scroll(0,360)">↑Top</a> 
+												<div class="clear"></div>
+										</div>
+										<div class="lc_content">
+										         <ul>
+												       <li>
+													        <span>1Q：我注册后如何通过审核？</span><br>
+	A：大正网是实名社区，所有注册用户均需通过人工审核。在您注册3天内，我们的客服人员将会与您联系，核实基本信息后通过审核。
+													   </li>
+													   <li>
+													        <span>2Q：我选择在线支付，需要在多久之内付款，付款后多久能发货呢？</span><br>
+	A：在线支付订单需要在下单后24小时内进行付款，如24小时内未付款 ，订单会被自动取消；支付完成后一般在3个工作小时内大正网客服会和您电话联系，进行确认。确认无误后，我们会尽快为您安排配货。
+													   </li>
+													    <li>
+													        <span>3Q：订单下错了，买了不想买的东西，应该怎么操作？</span><br>
+	A：如果您已经付款，请联系大正网客服（4008109966）取消订单，协商退款事宜；如果您还未付款，直接登录大正网账号，自行取消订单即可。
+
+													   </li>
+													   <li>
+													        <span>4Q：下单后多久能送到啊？</span><br>
+	A：大正网所有商品均使用顺丰速递发货，具体到货时间请参考快递运输。
+                                                       </li>
+													   <li>
+													        <span>5Q：确认收货时，我是否需要验货？</span><br>
+	A：大正网所有商品上均带有大正封条。收货时请开箱检验，确认封条完好。
+                                                       </li>
+													   <li>
+													        <span>6Q：我的产品使用过程中发现质量问题应该如何操作？</span><br>
+	A：如出现质量问题，您可以联系大正网客服，由大正网代为保修。
+                                                       </li>
+													   <li>
+													        <span>7Q：大正网所售商品都是正品行货吗？ </span><br>
+	A：大正网作为品牌代理商，所售商品都保证是正品行货。如发现假货，可凭检测报告，享受免费退换货服务。
+                                                       </li>
+												 </ul>
+										</div>
+										<!-- 常见问题部分结束-->
+										<!-- 联系客服部分开始-->
+										<div class="lc_title">
+										        <span>联系客服</span>
+										        <a href="javascript:scroll(0,360)">↑Top</a> 
+												<div class="clear"></div>
+										</div>
+										<div class="lc_content">
+										       <ul>
+												   <li>
+														<span>客服电话：<br>
+														400-810-9966（服务时间9:00-19:00，周一到周日）</span>
+													</li>
+											   </ul>
+                                        </div>
+										<!--联系客服部分结束-->
+								 </div>
+                               <div class="clear"></div> 
+                                
+                                
+                               <!--内容结束--> 
+                               
+                               
+  </div>
+               
+ </div>
+ <div class="bmenu">
+			  <ul>
+					<li><img src="images/bmenu_1.jpg"></li>
+					<li>
+						<span>购买指南</span><br>
+						<a href="#">购物流程</a><br>
+						<a href="#">常见问题</a><br>
+						<a href="#">联系客服</a>
+					</li>
+			  </ul>
+			  <ul>
+					<li><img src="images/bmenu_2.jpg"></li>
+					<li>
+						<span>快递运输</span><br>
+						<a href="#">配送说明</a><br>
+						<a href="#">收费标准</a><br>
+						<a href="#">到货时间</a>
+					</li>
+			  </ul>
+			  <ul>
+					<li><img src="images/bmenu_3.jpg"></li>
+					<li>
+						<span>支付方式</span><br>
+						<a href="#">在线支付</a><br>
+						<a href="#">线下汇款</a>
+					</li>
+			  </ul>
+			  <ul>
+					<li><img src="images/bmenu_4.jpg"></li>
+					<li>
+						<span>售后服务</span><br>
+						<a href="#">退换货政策</a><br>
+						<a href="#">维修政策</a><br>
+						<a href="#">售后服务流程</a>
+					</li>
+			  </ul>
+			  <div class="clear"></div>
+</div>

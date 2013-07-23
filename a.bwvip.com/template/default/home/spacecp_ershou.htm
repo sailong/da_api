@@ -1,0 +1,83 @@
+<!--{template home/space_header_comm}-->
+<script src="static/js/jbqc.js"></script>
+<div id="wtcontent">
+	<!-- 左侧 -->
+	<!--{template home/spacecp_00_left}-->
+	<!-- 右侧 -->
+	<div class="rightw">
+	<div class="rightlm"><span class="title_1">二手信息设置</span></div>
+    <div class="rcontent"  style="border:1px solid #DBDBDB; margin-top:10px;">
+                <div class="sapce_view_content"> 
+                        <div class="sapce_view_content_div" style="padding:15px;">
+<!--中间内容开始-->
+<!--{if $op=="add"}-->
+<form action="home.php?mod=spacecp&ac=ershou&op=add" method="post" enctype="multipart/form-data">
+    <table>
+    <tr>
+    <td>标题：</td><td style="padding:7px 0;"><input type="text" name="title" id="title" /></td>
+    </tr>
+    <tr>
+    <td>内容：</td><td style="padding:7px 0;"><textarea name="content" cols="50" rows="6"></textarea></td>
+    </tr>
+    <tr>
+    <td>价格：</td><td style="padding:7px 0;"><input type="text" name="price" id="price" /></td>
+    </tr>
+    <tr>
+    <td>图片：</td><td style="padding:7px 0;"><input type="file" name="myfile" /></td>
+    </tr>
+    <tr style="padding:7px 0;">
+    <td colspan="2"><input type="submit" value="提交" name="sub" /></td>
+    </tr>
+    </table>
+    </form>
+<!--{/if}-->
+
+<!--{if $op=='list'}-->
+<!--{if $lerf}-->
+<form name="form1" method="post" action="home.php?mod=spacecp&ac=ershou&op=del">
+<table width="100%" border="1">
+<tr>
+<td>删除</td><td>标题</td><td>内容</td><td>图片</td><td>价格</td>
+</tr>
+<!--{loop $lerf $value}-->
+<tr>
+<td><input type="checkbox" name="del[]" value="$value[id]" /></td><td>$value["title"]</td><td>$value["content"]</td><td><img src="static/space/uid$uid/$value[pic]" width="120" height="120" /></td><td>$value["price"]</td>
+</tr>
+<!--{/loop}-->
+<tr>
+<td><input type="submit" value="删除" name="shanchu" /></td><td colspan="5">$disppage</td>
+</tr>
+</table>
+</form>
+<!--{/if}-->
+<!--{/if}-->
+
+<!--{if $op=="edit"}-->
+<form action="home.php?mod=spacecp&ac=ershou&op=editsub" method="post" enctype="multipart/form-data">
+    <table>
+    <tr>
+    <td>标题：</td><td style="padding:7px 0;"><input type="text" name="title" id="title" value="$ty[title]" /></td>
+    </tr>
+    <tr>
+    <td>内容：</td><td style="padding:7px 0;"><textarea name="content" cols="50" rows="6">$ty[content]</textarea></td>
+    </tr>
+    <tr>
+    <td>价格：</td><td style="padding:7px 0;"><input type="text" name="price" id="price" value="$ty[price]" /></td>
+    </tr>
+    <tr style="padding:7px 0;">
+    <td colspan="2"><input type="submit" value="更新" name="sub" /></td>
+    </tr>
+    </table>
+    <input type="hidden" value="$_GET[id]" name="id" />
+    </form>
+<!--{/if}-->
+
+        <!--中间内容结束-->
+
+	</div>
+    </div>
+    </div>
+    </div>
+	<div class="clear"></div>
+</div>
+<!--{template home/spacecp_foot_comm}-->

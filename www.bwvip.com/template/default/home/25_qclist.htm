@@ -1,0 +1,46 @@
+﻿<!--{subtemplate home/25_header}-->
+<div id="wtcontent">
+	
+    <!-- 左边  -->
+	<!--{subtemplate home/25_left}-->
+    <style>
+    .qclist li{float:left;padding-left:8px;height:140px;padding-top:10px;padding-bottom:10px;text-align:center;}
+	.qclist {padding-left:2px;}
+    </style>
+	<div class="z z2">
+	<!--{subtemplate home/common_center}-->
+	   
+        <div class="cintro">
+	   <a name="qclist"><div class="cdt_lm">
+		    <span><h1>举办球场</h1></span>
+		</div>
+        </a>
+	   <div class="cbg2_2">
+		  <!--中间部分-->
+          <div class="qclist">
+          <ul>
+          <!--{loop $endarr $vk}-->
+          <li><a target="_blank" href="home.php?mod=space&uid=$vk[cdid]">
+          <!--{if $vk[fieldimg]}--> 
+          <img width="200" height="113"  src="$vk[fieldimg]" />
+          <!--{else}-->
+          <img width="200" height="113"  src="static/space/25/images/nopic.jpg" />
+          <!--{/if}-->
+          
+          </a><p><a target="_blank" href="home.php?mod=space&uid=$vk[cdid]">$vk[field1]</a></p></li>
+          <!--{/loop}-->
+          </ul>
+          <div style="clear: both;height:10px;"></div>
+          </div>
+          <!--中间部分-->
+		  </div>
+		  </div>
+       <br />
+	</div>
+	<!--右侧开始-->
+    <!--{subtemplate home/25_right}-->
+	<div class="clear"></div>
+</div>
+
+<br />
+<!--{subtemplate home/25_foot}-->

@@ -1,0 +1,33 @@
+﻿<div class="clear">&nbsp;</div>
+<div class="wad footer">
+<div class="footer2">
+	<div class="z"><img src="{STATICURL}space/10/images/footlogo.jpg" width="175" height="59"></div>
+	<div class="y"> <a href="http://www.bwvip.com/about.php" target="_blank">关于大正</a> | <a href="http://www.bwvip.com/about.php" target="_blank">商务合作</a> | <a href="http://www.bwvip.com/zhaopin.php" target="_blank">招贤纳士</a> | <a href="http://www.bwvip.com/huoban.php" target="_blank">合作伙伴</a> | <a href="http://www.bwvip.com/lianxi.php" target="_blank">联系我们</a>  | <a href="http://www.bwvip.com/shengming.php" target="_blank">免责声明</a><br />
+	大正网版权归北京大正承平文化传播有限公司 <br>
+	京ICP证110339号 京公网安备110108008116号 </div></div>
+</div>
+<div style="display: none;"><script language="javascript" src="http://count47.51yes.com/click.aspx?id=476847339&logo=12" charset="gb2312"></script></div>
+
+<!--{eval output();}-->
+
+
+
+
+</body>
+</html>
+
+
+
+<!--{if $is_buglet_msg }-->
+    <script type="text/javascript">
+	  var id       ="<!--{$trumpet_msg['id']}-->" ;
+	  var title    ="<!--{$trumpet_msg['title']}-->";
+	  var content  ="<!--{$trumpet_msg['content']}-->";
+	  var sendname ="<!--{$trumpet_msg['sendname']}-->";
+	  onload = function (){
+	     showDialog('标题：'+title+'<br> 内容：'+content+'<br>喇叭发起者：<font color="red">'+sendname+'</font><br>','alert');
+		 ajaxget('home.php?mod=space&update_status=window&bugletgx_id='+id,'','','',null);
+	   }
+
+    </script>
+<!--{/if}-->

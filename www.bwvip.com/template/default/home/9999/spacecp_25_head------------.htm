@@ -1,0 +1,72 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+	<meta http-equiv="Content-Type" content="text/html; charset={CHARSET}" />
+	<title><!--{if !empty($navtitle)}-->$navtitle - <!--{/if}--><!--{if empty($nobbname)}--> $_G['setting']['bbname'] - <!--{/if}--> Powered by Discuz!</title>
+	$_G['setting']['seohead']
+
+	<meta name="keywords" content="{if !empty($metakeywords)}{echo htmlspecialchars($metakeywords)}{/if}" />
+	<meta name="description" content="{if !empty($metadescription)}{echo htmlspecialchars($metadescription)} {/if}{if empty($nobbname)},$_G['setting']['bbname']{/if}" />
+	<meta name="generator" content="Discuz! $_G['setting']['version']" />
+	<meta name="author" content="Discuz! Team and Comsenz UI Team" />
+	<meta name="copyright" content="2001-2011 Comsenz Inc." />
+	<meta name="MSSmartTagsPreventParsing" content="True" />
+	<meta http-equiv="MSThemeCompatible" content="Yes" />
+	<!--{if $_G['config']['output']['iecompatible']}--><meta http-equiv="X-UA-Compatible" content="IE=EmulateIE{$_G['config']['output']['iecompatible']}" /><!--{/if}-->
+	<base href="{$_G['siteurl']}" />
+	<!--{csstemplate}-->
+	<script type="text/javascript">var STYLEID = '{STYLEID}', STATICURL = '{STATICURL}', IMGDIR = '{IMGDIR}', VERHASH = '{VERHASH}', charset = '{CHARSET}', discuz_uid = '$_G[uid]', cookiepre = '{$_G[config][cookie][cookiepre]}', cookiedomain = '{$_G[config][cookie][cookiedomain]}', cookiepath = '{$_G[config][cookie][cookiepath]}', showusercard = '{$_G[setting][showusercard]}', attackevasive = '{$_G[config][security][attackevasive]}', disallowfloat = '{$_G[setting][disallowfloat]}', creditnotice = '<!--{if $_G['setting']['creditnotice']}-->$_G['setting']['creditnames']<!--{/if}-->', defaultstyle = '$_G[style][defaultextstyle]', REPORTURL = '$_G[currenturl_encode]', SITEURL = '$_G[siteurl]', JSPATH = '$_G[setting][jspath]';</script>
+	<script type="text/javascript" src="{$_G[setting][jspath]}common.js?{VERHASH}"></script>
+    <!--下一行调取徐建的-->
+    <script type="text/javascript" src="{$_G[setting][jspath]}home.js?{VERHASH}"></script><!--博客-->
+<link href="{STATICURL}space/member/style.css" rel="stylesheet" type="text/css"> 
+</head>
+
+<body>
+<script type="text/javascript">
+var curPane="left_1";
+function show(switchSysBar)
+{
+if(switchSysBar==curPane){return;}
+document.getElementById(curPane).style.display="none";
+document.getElementById(switchSysBar).style.display="block";
+curPane=switchSysBar;
+}
+</script>
+<div id="wt">
+	<div class="headsea"><div class="z"><span><img src="{STATICURL}space/member/images/membe.jpg" width="27" height="27"></span>　　<span><a href="/home.php">大正网</a></span></div><div class="y">
+    
+    <!--{if $_G['uid']}-->
+			<p>
+				<strong class="vwmy{if $_G['setting']['connect']['allow'] && $_G[member][conisbind]} qq{/if}"><a href="home.php?mod=space&uid=$_G[uid]" target="_blank" title="{lang visit_my_space}">{$_G[member][username]}</a></strong>
+				<!--{if $_G['group']['allowinvisible']}-->
+				<span id="loginstatus">
+					<a id="loginstatusid" href="member.php?mod=switchstatus" title="{lang login_switch_invisible_mode}" onclick="ajaxget(this.href, 'loginstatus');return false;" class="xi2"></a>
+				</span>
+				<!--{/if}-->
+				<!--{hook/global_usernav_extra1}-->
+				<span class="pipe">|</span><a href="home.php?mod=spacecp">{lang setup}</a>
+				<span class="pipe">|</span><a href="home.php?mod=space&do=pm" id="pm_ntc"{if $_G[member][newpm]} class="new"{/if}>{lang pm_center}</a>
+				<span class="pipe">|</span><a href="home.php?mod=space&do=notice" id="myprompt"{if $_G[member][newprompt]} class="new"{/if}>{lang remind}<!--{if $_G[member][newprompt]}-->($_G[member][newprompt])<!--{/if}--></a><span id="myprompt_check"></span>
+				<!--{if $_G['setting']['taskon'] && !empty($_G['cookie']['taskdoing_'.$_G['uid']])}--><span class="pipe">|</span><a href="home.php?mod=task&item=doing" id="task_ntc" class="new">{lang task_doing}</a><!--{/if}-->
+				<!--{if ($_G['group']['allowmanagearticle'] || $_G['group']['allowpostarticle'] || $_G['group']['allowdiy'] || getstatus($_G['member']['allowadmincp'], 4) || getstatus($_G['member']['allowadmincp'], 6) || getstatus($_G['member']['allowadmincp'], 2) || getstatus($_G['member']['allowadmincp'], 3))}-->
+					<span class="pipe">|</span><a href="portal.php?mod=portalcp"><!--{if $_G['setting']['portalstatus'] }-->{lang portal_manage}<!--{else}-->{lang portal_block_manage}<!--{/if}--></a>
+				<!--{/if}-->
+				<!--{if $_G['uid'] && $_G['group']['radminid'] > 1}-->
+					<span class="pipe">|</span><a href="forum.php?mod=modcp&fid=$_G[fid]" target="_blank">{lang forum_manager}</a>
+				<!--{/if}-->
+				 
+				<!--{hook/global_usernav_extra2}-->
+				<span class="pipe">|</span><a href="member.php?mod=logging&action=logout&formhash={FORMHASH}">{lang logout}</a>
+			</p>
+			<!--{else}-->
+			<a href="/home.php?mod=spacecp">登录</a>　　<a href="/member.php?mod=register">注册</a>
+			<!--{/if}-->
+    
+    
+    </div>
+	</div>
+	<div class="headad">&nbsp;</div>
+	<div class="menubg"><span><a href="home.php?mod=space&uid=$_G[uid]">赛事首页</a></span> <span><a href="home.php?mod=space&uid=$_G[uid]&do=home&view=me&from=space">动态</a></span> <span><a href="home.php?mod=space&uid=$_G[uid]&do=action&act=weibo&wburl=d2VpYm8v">微博</a></span> <span><a href="home.php?mod=space&uid=$_G[uid]&do=blog&view=me&from=space">博客</a></span> <span><a href="home.php?mod=space&uid=1621&do=album&view=me&from=space">相册</a></span> <span><a href="home.php?mod=space&uid=1621&do=wall">留言本</a></span> <span><a href="home.php?mod=space&uid=1621&do=saishiinfo">赛事信息</a></span> </div>
+	<div class="clear"></div>
+</div>

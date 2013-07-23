@@ -1,0 +1,580 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<link rel="stylesheet" href="static/join/css/zyz.css"  type="text/css">
+	<link rel="stylesheet" href="js/dojo-release-1.7.2/dijit/themes/claro/claro.css">
+	<title>教练公开赛</title>
+	<script type="text/javascript" src="js/dojo-release-1.7.2/dojo/dojo.js" djConfig="isDebug: true, parseOnLoad: true"></script>
+	<script src="static/js/jquery.js" type="text/javascript"></script>
+	<script type="text/javascript">
+		
+		dojo.require("dijit.form.DateTextBox");
+		dojo.require("dojo.io.iframe");
+		dojo.require("dijit.Dialog");
+
+		var iframe_loading_finish_or_not = 0;
+
+		function init(){
+			var birth_year = dojo.attr('stored_birth_year','value');
+			var birth_month = dojo.attr('stored_birth_month','value');
+			var birth_day = dojo.attr('stored_birth_day','value');
+
+			if(birth_month==0||birth_day==0){
+				dijit.byId('birth_date').set('displayedValue','');
+			}else{
+				dijit.byId('birth_date').set('displayedValue',birth_year+'-'+birth_month+'-'+birth_day);	
+			}
+
+			
+
+		}
+	
+		function init_for_page2(){
+			
+			dojo.attr('level','value',dojo.attr('hidden_level','value'));
+	
+			if(dojo.attr('hidden_getting_certificate_date','value')=='0000-00-00'){
+				dijit.byId('getting_certificate_date').set('displayedValue','');
+			}else{
+				dijit.byId('getting_certificate_date').set('displayedValue',dojo.attr('hidden_getting_certificate_date','value'));
+			}
+		
+			dojo.attr('judging_game_num','value',dojo.attr('hidden_judging_game_num','value'));
+			
+			dojo.attr('playing_yearsexp','value',dojo.attr('hidden_playing_yearsexp','value'));
+			dojo.attr('handicap','value',dojo.attr('hidden_handicap','value'));
+			dojo.attr('personal_best','value',dojo.attr('hidden_personal_best','value'));
+			
+			
+
+		}
+
+		function init_for_page3(){
+			
+			var ids = new Array(
+                                'judging_game_round1_in_north_china',
+                                'judging_game_round2_in_north_china',
+                                'judging_game_round1_in_east_china',
+                                'judging_game_round2_in_east_china',
+                                'judging_game_round1_in_south_china',
+                                'judging_game_round2_in_south_china',
+                                'judging_game_round1_in_south_central_china',
+                                'judging_game_round2_in_south_central_china',
+                                'judging_final_game_round1',
+                                'judging_final_game_round2',
+                                'judging_final_game_round3',
+                                'joining_golf_equipment_forum',
+                                'joining_golf_rules_forum',
+                                'joining_golf_etiquette_forum',
+                                'joining_teaching_forum',
+                                'joining_sports_injury_forum',
+                                'joining_lawn_care_forum',
+                                'joining_course_design_research_forum',
+                                'joining_trying_play_party_forum',
+                                'joining_fun_golf_game_forum',
+                                'loving_Adams',
+                                'loving_Callaway',
+                                'loving_Cleverland',
+                                'loving_Co_bra',
+                                'loving_Dunlop',
+                                'loving_ECCO',
+                                'loving_FootJoy',
+                                'loving_HONMA',
+                                'loving_Kasco',
+                                'loving_MAC_GREGON',
+                                'loving_Mizuno',
+                                'loving_MURUMAN',
+                                'loving_Nike_Golf',
+                                'loving_Odyssey',
+                                'loving_PING',
+                                'loving_PRGR',
+                                'loving_SRIXON',
+                                'loving_S_YARD',
+                                'loving_Taylormade',
+                                'loving_Titleist',
+                                'loving_XXIO',
+                                'accept_or_not'
+                        );
+			
+			for(var i=0;i<ids.length;i++){
+								
+				if(dojo.attr('hidden_'+ids[i],'value')==1){
+					dojo.attr(ids[i],'checked',true);
+				}
+				
+			}
+			
+			dojo.attr('loving_other_brand','value',dojo.attr('hidden_loving_other_brand','value'));
+			dojo.attr('loving_reason','value',dojo.attr('hidden_loving_reason','value'));
+
+		}
+
+		var ffield_executing_finish = 0;
+
+		function ffield(fvalue){
+			var ty=jQuery("#"+fvalue).val();
+			
+			
+			jQuery.post('home.php?mod=spacecp&ac=usefiled&op=aj',{pid:ty},function(msg){
+				jQuery("#"+fvalue+"a").html(msg);
+				ffield_executing_finish = 1;
+			});
+			
+		}
+
+		function iframe_loading_finish(){
+			iframe_loading_finish_or_not = 1;
+		}
+		
+		/*
+		dojo.byId('one').value=1;
+		ffield('one');
+		dojo.byId('onea').value=5;
+		*/
+
+		function init_course(){
+
+			if(iframe_loading_finish_or_not==0){
+				setTimeout("init_course()",1000);
+				return;	
+			}
+
+			var main_window = window;
+			var htmlFragment1 = '';
+			var htmlFragment2 = '';
+			
+			var course_info_page = dojo.byId('course_info_page').contentWindow;
+			dojo.setContext(course_info_page.window, course_info_page.window.document);
+			htmlFragment1 = '<select id="one" onchange="ffield(' + "'one'" + ')" name="one">'+dojo.byId('one').innerHTML + '</select>';
+			htmlFragment2 = '<select id="onea" name="onea">' + dojo.byId('onea').innerHTML + '</select>';
+			dojo.setContext(main_window, main_window.document);
+			dojo.byId('course_info1').innerHTML = htmlFragment1;
+			dojo.byId('course_info2').innerHTML = htmlFragment2;
+
+			var course_info1_of_getting_personal_best = dojo.attr('hidden_course_info1_of_getting_personal_best','value');
+			var course_info2_of_getting_personal_best = dojo.attr('hidden_course_info2_of_getting_personal_best','value');
+
+			dojo.byId('one').value = course_info1_of_getting_personal_best;
+			ffield('one');
+			fef();
+
+		}
+
+		function fef(){
+			if(ffield_executing_finish == 0){
+                                setTimeout("fef()",1000);
+                                return;
+                        }
+			dojo.byId('onea').value = dojo.attr('hidden_course_info2_of_getting_personal_best','value');
+		}
+
+		function upload_referee_certificate(){
+			dojo.io.iframe.send({
+				form: "upload_referee_certificate",
+                                handleAs: "html",
+				load: function(response, ioArgs){
+					console.log(response.body.outerHTML);
+                                        if(response.body.outerHTML.toLowerCase().match('ok')==null){
+                                                if(dojo.byId('span')!=null){
+                                                        dojo.byId('span').innerHTML = '';
+                                                }
+                                        }else{
+
+                                                if(dojo.byId('span')!=null){
+                                                        var num = Math.random();
+                                                        dojo.byId('span').innerHTML = '<a target="_blank" href="join.php?mod=read_referee_certificate_original_size&uid='+dojo.attr('hidden_uid','value')+'"><img src="join.php?mod=read_referee_certificate&uid='+dojo.attr('hidden_uid','value')+'&num='+num+'"/></a>';
+                                                }
+                                                if(dojo.byId('span2')!=null){
+                                                        dojo.byId('span2').innerHTML = '<input type="button" value="删除裁判资格证书头像" onclick="remove_referee_certificate();" />';
+                                                }
+                                        }
+					return response;
+				},
+				error: function(response, ioArgs){
+                                        console.log(response);
+                                        return response;
+                                }
+			});
+		}
+
+		function remove_referee_certificate(){
+			dojo.io.iframe.send({
+                                form: "remove_referee_certificate",
+                                handleAs: "html",
+                                load: function(response, ioArgs){
+
+                                        if(response.body.outerHTML.toLowerCase().match('ok')==null){
+
+                                        }else{
+                                                if(dojo.byId('span')!=null){
+                                                        dojo.byId('span').innerHTML = '';
+                                                }
+                                                if(dojo.byId('span2')!=null){
+                                                        dojo.byId('span2').innerHTML = '';
+                                                }
+                                        }
+
+                                        return response;
+                                },
+                                error: function(response, ioArgs){
+                                        return response;
+                                }
+                        });
+		}
+
+		function upload_avatar(){
+			dojo.io.iframe.send({
+				form: "upload_avatar",
+				handleAs: "html",
+				load: function(response, ioArgs){
+
+					console.log(response.body.outerHTML);
+					if(response.body.outerHTML.toLowerCase().match('ok')==null){
+						if(dojo.byId('span')!=null){
+							dojo.byId('span').innerHTML = '';	
+						}
+					}else{
+						
+						if(dojo.byId('span')!=null){
+							var num = Math.random();
+							dojo.byId('span').innerHTML = '<img src="join.php?mod=read_avatar&uid='+dojo.attr('hidden_uid','value')+'&num='+num+'"/>';
+						}
+						if(dojo.byId('span2')!=null){
+							dojo.byId('span2').innerHTML = '<input type="button" value="删除头像" onclick="remove_avatar();" />';
+						}
+					}
+
+					return response;
+				},
+				error: function(response, ioArgs){
+					console.log(response);
+					return response;
+				}
+			});
+		}
+
+		function remove_avatar(){
+			
+			dojo.io.iframe.send({
+				form: "remove_avatar",
+				handleAs: "html",
+				load: function(response, ioArgs){
+
+					if(response.body.outerHTML.toLowerCase().match('ok')==null){
+							
+					}else{
+						if(dojo.byId('span')!=null){
+							dojo.byId('span').innerHTML = '';
+						}
+						if(dojo.byId('span2')!=null){
+							dojo.byId('span2').innerHTML = '';
+						}
+					}
+
+					return response;
+				},
+				error: function(response, ioArgs){
+					return response;
+                                }
+			});
+			
+		}
+
+		function send_submitting_data(){	
+
+			var realname = dojo.attr('realname','value');
+			var male = dojo.attr('male','checked');
+			var female = dojo.attr('female','checked');
+						
+
+			if(male==true){
+				var gender = 1;
+			}
+
+			if(female==true){
+                                var gender = 2;
+                        }
+
+			//var birth_date = dojo.attr('birth_date','value');
+			var birth_date = dijit.byId('birth_date').get('displayedValue');
+			var nationality = dojo.attr('nationality','value');
+			var mobile = dojo.attr('mobile','value');
+			var email = dojo.attr('email','value');
+			var telephone = dojo.attr('telephone','value');
+			var fax_num = dojo.attr('fax_num','value');
+			var idcardtype = dojo.attr('idcardtype','value');
+			var idcard = dojo.attr('idcard','value');
+			var address = dojo.attr('address','value');
+			var zipcode = dojo.attr('zipcode','value');
+			
+			if(dojo.attr('getting_game_info_by_website','checked')==true){
+				var getting_game_info_by_website = 1;	
+			}else{
+				var getting_game_info_by_website = 0;
+			}
+	
+			if(dojo.attr('getting_game_info_by_inews','checked')==true){
+				var getting_game_info_by_inews = 1;	
+			}else{
+				var getting_game_info_by_inews = 0;
+			}
+
+			if(dojo.attr('getting_game_info_by_microblog','checked')==true){
+				var getting_game_info_by_microblog = 1;	
+			}else{
+				var getting_game_info_by_microblog = 0;
+			}
+
+			if(dojo.attr('getting_game_info_by_tmk','checked')==true){
+				var getting_game_info_by_tmk = 1;	
+			}else{
+				var getting_game_info_by_tmk = 0;
+			}
+
+			if(dojo.attr('getting_game_info_by_short_message','checked')==true){
+				var getting_game_info_by_short_message = 1;	
+			}else{
+				var getting_game_info_by_short_message = 0;
+			}
+
+			if(dojo.attr('getting_game_info_by_friend','checked')==true){
+				var getting_game_info_by_friend = 1;	
+			}else{
+				var getting_game_info_by_friend = 0;
+			}
+
+			if(dojo.attr('getting_game_info_by_other_way','checked')==true){
+				var getting_game_info_by_other_way = 1;	
+			}else{
+				var getting_game_info_by_other_way = 0;
+			}
+			
+			dojo.attr('submitting_realname','value',realname);
+			
+			dojo.attr('submitting_gender','value',gender);
+			dojo.attr('submitting_birth_date','value',birth_date);
+			dojo.attr('submitting_nationality','value',nationality);
+			dojo.attr('submitting_mobile','value',mobile);
+			dojo.attr('submitting_email','value',email);
+			dojo.attr('submitting_telephone','value',telephone);
+			dojo.attr('submitting_fax_num','value',fax_num);
+			dojo.attr('submitting_idcardtype','value',idcardtype);
+			dojo.attr('submitting_idcard','value',idcard);
+			dojo.attr('submitting_address','value',address);
+			dojo.attr('submitting_zipcode','value',zipcode);
+			
+			dojo.attr('submitting_getting_game_info_by_website','value',getting_game_info_by_website);
+			dojo.attr('submitting_getting_game_info_by_inews','value',getting_game_info_by_inews);
+			dojo.attr('submitting_getting_game_info_by_microblog','value',getting_game_info_by_microblog);
+			dojo.attr('submitting_getting_game_info_by_tmk','value',getting_game_info_by_tmk);
+			dojo.attr('submitting_getting_game_info_by_short_message','value',getting_game_info_by_short_message);
+			dojo.attr('submitting_getting_game_info_by_friend','value',getting_game_info_by_friend);
+			dojo.attr('submitting_getting_game_info_by_other_way','value',getting_game_info_by_other_way);
+
+			
+
+			dojo.io.iframe.send({
+                                form: "submitting_data",
+                                handleAs: "html",
+                                load: function(response, ioArgs){
+					console.log(response.body.outerHTML);
+                                        if(response.body.outerHTML.match('ok')==null){
+						
+						var tmp = response.body.outerHTML.toLowerCase();
+						
+						tmp = tmp.replace("<body>","");
+						tmp = tmp.replace("</body>","");
+						tip = new dijit.Dialog({
+							title: "提示",
+							content: tmp
+						});
+						
+						tip.show();
+						
+                                        }else{
+                                                
+						
+						var address = "join.php?mod=volunteer&page=2&uid=";
+						address = address.replace('&amp;','&');
+						address = address.replace('&amp;','&');
+						address = address + dojo.attr('hidden_uid','value');
+						window.location.assign(address);
+											
+
+                                        }
+					
+                                        return response;
+                                },
+                                error: function(response, ioArgs){
+                                        return response;
+                                }
+                        });		
+			
+		}
+
+		function send_page2_submitting_data(){
+			
+			var submitting_level = dojo.attr('level','value');
+			dojo.attr('submitting_level','value',submitting_level);
+			
+			var submitting_getting_certificate_date = dijit.byId('getting_certificate_date').get('displayedValue');
+			dojo.attr('submitting_getting_certificate_date','value',submitting_getting_certificate_date);
+			
+			var submitting_judging_game_num = dojo.attr('judging_game_num','value');
+			dojo.attr('submitting_judging_game_num','value',submitting_judging_game_num);
+			
+			var submitting_playing_yearsexp = dojo.attr('playing_yearsexp','value');
+			dojo.attr('submitting_playing_yearsexp','value',submitting_playing_yearsexp);
+			
+			var submitting_handicap = dojo.attr('handicap','value');
+			dojo.attr('submitting_handicap','value',submitting_handicap);
+			
+			var submitting_personal_best = dojo.attr('personal_best','value');
+			dojo.attr('submitting_personal_best','value',submitting_personal_best);
+			
+			var submitting_course_info1_of_getting_personal_best = dojo.attr('one','value');
+			dojo.attr('submitting_course_info1_of_getting_personal_best','value',submitting_course_info1_of_getting_personal_best);
+			
+			var submitting_course_info2_of_getting_personal_best = dojo.attr('onea','value');
+			dojo.attr('submitting_course_info2_of_getting_personal_best','value',submitting_course_info2_of_getting_personal_best);		
+
+			dojo.io.iframe.send({
+				form: "submitting_data",
+				handleAs: "html",
+				load: function(response, ioArgs){
+					console.log(response.body.outerHTML);
+					if(response.body.outerHTML.match('ok')==null){
+						var tmp = response.body.outerHTML.toLowerCase();
+
+                                                tmp = tmp.replace("<body>","");
+                                                tmp = tmp.replace("</body>","");
+                                                tip = new dijit.Dialog({
+                                                        title: "提示",
+                                                        content: tmp
+                                                });
+
+                                                tip.show();
+					}else{
+
+						
+                                                var address = "join.php?mod=volunteer&page=3&uid=";
+                                                address = address.replace('&amp;','&')
+												address = address.replace('&amp;','&');
+												address = address + dojo.attr('hidden_uid','value');
+                                                window.location.assign(address);
+						
+
+                                        }
+					return response;
+				},
+				error: function(response, ioArgs){
+                                        return response;
+                                }			
+			});
+			
+		}	
+	
+		function send_page3_submitting_data(){
+			
+			var ids = new Array(
+				'judging_game_round1_in_north_china',
+				'judging_game_round2_in_north_china',
+				'judging_game_round1_in_east_china',
+				'judging_game_round2_in_east_china',
+				'judging_game_round1_in_south_china',
+				'judging_game_round2_in_south_china',
+				'judging_game_round1_in_south_central_china',
+				'judging_game_round2_in_south_central_china',
+				'judging_final_game_round1',
+				'judging_final_game_round2',
+				'judging_final_game_round3',
+				'joining_golf_equipment_forum',
+				'joining_golf_rules_forum',
+				'joining_golf_etiquette_forum',
+				'joining_teaching_forum',
+				'joining_sports_injury_forum',
+				'joining_lawn_care_forum',
+				'joining_course_design_research_forum',
+				'joining_trying_play_party_forum',
+				'joining_fun_golf_game_forum',
+				'loving_Adams',
+				'loving_Callaway',
+				'loving_Cleverland',
+				'loving_Co_bra',
+				'loving_Dunlop',
+				'loving_ECCO',
+				'loving_FootJoy',
+				'loving_HONMA',
+				'loving_Kasco',
+				'loving_MAC_GREGON',
+				'loving_Mizuno',
+				'loving_MURUMAN',
+				'loving_Nike_Golf',
+				'loving_Odyssey',
+				'loving_PING',
+				'loving_PRGR',
+				'loving_SRIXON',
+				'loving_S_YARD',
+				'loving_Taylormade',
+				'loving_Titleist',
+				'loving_XXIO',
+				'accept_or_not'
+			);
+			
+			for(var i=0;i<ids.length;i++){
+
+				if(dojo.attr(ids[i],'checked')){
+					dojo.attr('submitting_'+ids[i],'value',1);
+				}else{
+					dojo.attr('submitting_'+ids[i],'value',0);
+				}
+	
+			}
+			
+			dojo.attr('submitting_loving_other_brand','value',dojo.attr('loving_other_brand','value'));
+
+			dojo.attr('submitting_loving_reason','value',dojo.attr('loving_reason','value'));
+			
+			dojo.io.iframe.send({
+				form: "submitting_data",
+                                handleAs: "html",
+                                load: function(response, ioArgs){
+					console.log(response.body.outerHTML);
+
+					if(response.body.outerHTML.match('ok')==null){
+						var tmp = response.body.outerHTML.toLowerCase();
+
+                                                tmp = tmp.replace("<body>","");
+                                                tmp = tmp.replace("</body>","");
+                                                tip = new dijit.Dialog({
+                                                        title: "提示",
+                                                        content: tmp
+                                                });
+
+                                                tip.show();
+					}else{
+
+												
+                                                var address = "join.php?mod=volunteer&page=4&uid=";
+                                                address = address.replace('&amp;','&')
+												address = address.replace('&amp;','&');
+												address = address + dojo.attr('hidden_uid','value');
+                                                window.location.assign(address);
+												
+												
+
+                                        }
+					
+					return response;
+				},
+				error: function(response, ioArgs){
+                                        return response;
+                                }			
+			});
+			
+		}
+
+	</script>
+	
+</head>

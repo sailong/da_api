@@ -1,0 +1,80 @@
+<?php
+$option = $_GET['op'];
+$do = $_GET['do'];
+
+
+if($option == 'mywb') {
+	$url = 'weibo';
+}
+if($option == 'tag') {
+	$url = 'weibo/index.php?mod=search&code=usertag';
+}
+if($option == 'qun') {
+	$url = 'weibo/index.php?mod=qun';
+}
+if($option == 'event') {
+	$url = 'weibo/index.php?mod=event&code=myevent&type=part&uid='.$uid;
+}
+if($option == 'topic') {
+	$url = 'weibo/index.php?mod=tag';
+}
+if($option == 'refer') {
+	$url = 'weibo/index.php?mod=topic&code=myat';
+}
+if($option == 'follow') {
+	$url = 'weibo/index.php?mod='.$userinfo['username'].'&code=follow';
+}
+if($option == 'fans') {
+	$url = 'weibo/index.php?mod='.$userinfo['username'].'&code=fans';
+}
+if($option == 'vote') {
+	if($do == 'view') {
+		$url = 'weibo/index.php?mod=vote&view=me';
+	} else {
+		$url = 'weibo/index.php?mod=vote&code=create';
+	}
+}
+if($option == 'favorite') {
+	$url = 'weibo/index.php?mod=topic&code=myfavorite';
+}
+if($option == 'discuss') {
+	$url = 'weibo/index.php?mod=topic&code=mycomment';
+}
+if($option == 'settag') {
+	$url = 'weibo/index.php?mod=user_tag';
+}
+if($option == 'invite') {
+	$url = 'weibo/index.php?mod=profile&code=invite';
+}
+if($option == 'letter') {
+	$url = 'weibo/index.php?mod=pm&code=list';
+}
+if($option == 'bound') {
+	if($do == 'bound') {
+		$cardphone = $_POST['phone'];
+		$cardcode = $_POST['code'];
+		$card = DB::fetch_first('select cardid from '.DB::table('common_member_card')." where cardphone='$cardphone' and cardcode='$cardcode'");
+		if($card['cardid']) {
+			$row = DB::query('update '.DB::table('common_member')." set bound='$card[cardid]' where uid='$uid'");
+			if($row) {
+				showmessage('操作成功', 'home.php?mod=spacecp&ac=weibo&op=bound');
+			} else {
+				showmessage('操作失败', 'home.php?mod=spacecp&ac=weibo&op=bound');
+			}
+		}
+	} elseif($do == 'clear') {
+		$row = DB::query('update '.DB::table('common_member')." set bound=0 where uid='$uid'");
+		if($row) {
+			showmessage('操作成功', 'home.php?mod=spacecp&ac=weibo&op=bound');
+		} else {
+			showmessage('操作失败', 'home.php?mod=spacecp&ac=weibo&op=bound');
+		}
+	} else {
+		$arr = DB::fetch_first("select cmc.cardcode, cmc.cardphone, cm.bound from ".DB::table('common_member_card')." as cmc left join ".DB::table('common_member')." as cm on cm.bound=cmc.cardid where cm.uid='$uid'");
+	}
+}
+
+$templates='home/spacecp_'.$_G['groupid'].'_weibo';
+
+include_once(template($templates));    
+?>

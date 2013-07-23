@@ -1,0 +1,50 @@
+<!--{template home/spacecp_20_head}-->
+<div id="wtcontent">
+	<!-- 左侧 -->
+	<!--{template home/spacecp_20_left}-->
+	<!-- 右侧 -->
+	<div class="rightw">
+		<div class="rightlm"><h1>我的任务</h1></div>
+		<br>
+		<div class="rcontent">
+			<div style='height:800px'>
+
+
+
+
+
+
+<div id="pt" class="bm cl">
+	<!--{subtemplate common/simplesearchform}-->
+	<div class="z">
+		<a href="./" class="nvhm" title="{lang homepage}">$_G[setting][bbname]</a> <em>&rsaquo;</em>
+		<a href="home.php?mod=task">{lang task}</a>
+	</div>
+</div>
+
+<div id="ct">
+	<div class="mn">
+		<div class="bm bw0">
+		<!--{if empty($do)}-->
+			<!--{subtemplate home/space_task_list}-->
+		<!--{elseif $do == 'view'}-->
+			<!--{subtemplate home/space_task_detail}-->
+		<!--{/if}-->
+		</div>
+	</div>
+</div>
+
+
+
+
+
+
+
+
+			</div>
+		
+		</div>
+	</div>
+	<div class="clear"></div>
+</div>
+<!--{template home/spacecp_foot_comm}-->

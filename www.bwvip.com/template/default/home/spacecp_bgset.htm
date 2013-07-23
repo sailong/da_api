@@ -1,0 +1,75 @@
+<!--{template home/space_header_comm}-->
+<script src="static/js/jbqc.js"></script>
+<div id="wtcontent">
+	<!-- 左侧 -->
+	<!--{template home/spacecp_00_left}-->
+	<!-- 右侧 -->
+	<div class="rightw">
+	<a name="qybgset"><div class="rightlm"><span class="title_1">模板设置</span></div></a>
+    <div class="rcontent"  style="border:1px solid #DBDBDB; margin-top:10px;">
+                <div class="sapce_view_content"> 
+                        <div class="sapce_view_content_div" style="padding:15px;">
+<!--中间内容开始-->
+<!--{if !empty($listre[headerpic]) || !empty($listre[bgpic]) || !empty($listre[bgcolor])}-->
+
+<table style="width:500px;" cellpadding="10" cellspacing="10" border="0">
+<tr>
+<td width="104" align="right">顶部通栏图片:&nbsp;&nbsp;</td><td width="326"><!--{if $listre[headerpic]}--><img src="$listre[headerpic]" width="250" height="50"/><!--{/if}--></td>
+</tr>
+<tr>
+<td align="right">上部背景图:&nbsp;&nbsp;</td><td><!--{if $listre[bgpic]}--><img src="$listre[bgpic]" width="40" height="40" /><!--{/if}--></td>
+</tr>
+<tr>
+<td height="30" align="right">背景颜色:&nbsp;&nbsp;</td><td>$listre[bgcolor]</td>
+</tr>
+<tr><td colspan="2">&nbsp;&nbsp;&nbsp;<div style="width:60px; padding:5px 0px; text-align:center; background-color:#CCC;"><a href="javascript:void(0)" onclick="change()">修改</a></td></tr>
+</table>
+
+
+<script>
+function change(){
+    if(document.getElementById("ttty").style.display==""){
+        document.getElementById("ttty").style.display="none";
+    }else{
+        document.getElementById("ttty").style.display="";
+    }
+    
+}
+
+</script>
+
+</div>
+<!--{/if}-->
+<!--{if !empty($listre[headerpic]) || !empty($listre[bgpic]) || !empty($listre[bgcolor])}-->
+<div id="ttty" style="display: none;">
+<!--{else}-->
+<div id="ttty">
+<!--{/if}-->
+<form action="home.php?mod=spacecp&ac=bgset" method="post" name="form1" enctype="multipart/form-data">
+<table style="width:510x;" cellpadding="10" cellspacing="10" border="0">
+<tr>
+<td height="30" align="right">顶部通栏图片:&nbsp;&nbsp;</td><td><input type="file" name="fileimg" />&nbsp;(宽980，高不限)</td>
+</tr>
+<tr>
+<td height="30" align="right">上部背景图:&nbsp;&nbsp;</td><td><input type="file" name="fileimgtwo" />&nbsp;(2像素宽度即可)</td>
+</tr>
+<tr>
+<td height="30" align="right">背景颜色:&nbsp;&nbsp;</td><td><input type="text" name="bgcolor" maxlength="7" size="7" />&nbsp;(例#ff0000)</td>
+</tr>
+<tr>
+<td colspan="2" align="center"><input type="submit" value="提交" name="sub" /></td>
+</tr>
+</table>
+
+</form>
+
+</div>
+        <!--中间内容结束-->
+
+	</div>
+    </div>
+    </div>
+    </div>
+	<div class="clear"></div>
+</div>
+<!--{template home/spacecp_foot_comm}-->

@@ -1,0 +1,66 @@
+﻿<!--{subtemplate home/25_header}-->
+<div id="wtcontent">
+	
+    <!-- 左边  -->
+	<!--{subtemplate home/25_left}-->
+    
+	<div class="z z2">
+	<!--{subtemplate home/common_center}-->
+	   
+       
+       <!--{if $_GET[op]=='mingxing'}-->
+        <div class="cintro">
+	  <a name="saishiinfo"> <div class="cdt_lm">
+		    <span><h1>参赛明星</h1></span>
+		</div>
+        </a>
+	   <div class="cbg2_2">
+		  <!--中间部分-->
+          <!--{if $allmingxing}-->
+		  <div class="cbg2_3">
+          <div style="padding-top:10px; padding-bottom:10px;">
+          <!--{loop $allmingxing $value}-->
+              <div class="z center" style="width:100px; height:100px; overflow:hidden;">
+                  <p class="center"><div style="padding:2px; border:1px solid #CCC; width:48px; height:48px; margin:0 auto;"><a href="/home.php?mod=space&uid=$value[userid]"><img src="uc_server/avatar.php?uid=$value[userid]&size=small" /></a></div></p>
+                  <p><a href="/home.php?mod=space&uid=$value[userid]">$value[realname]</a></p>
+              </div>
+          <!--{/loop}-->
+          <div class="clear"></div>
+          </div>
+		  </div>
+          <!--{/if}-->
+          <!--中间部分-->
+		  </div>
+		  </div>
+       <!--{else}-->
+       <div class="cintro">
+	   <div class="cdt_lm">
+		    <span><h1>赛事信息</h1></span>
+		</div>
+	   <div class="cbg2_2">
+		  <!--中间部分-->
+          <!--{if $ssre}-->
+		  <div class="cbg2_3">
+          <div>赛事名称：$ssre[name]</div>
+          <div>赛事地址：$ssre[address]</div>
+          <div>开始时间：$ssre[start]</div>
+          <div>结束时间：$ssre[end]</div>
+		  </div>
+          <!--{/if}-->
+          <!--中间部分-->
+		  </div>
+		  </div>
+       
+       <!--{/if}-->
+       
+       
+       
+       <br />
+	</div>
+	<!--右侧开始-->
+    <!--{subtemplate home/25_right}-->
+	<div class="clear"></div>
+</div>
+
+<br>
+<!--{subtemplate home/25_foot}-->

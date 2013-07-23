@@ -1,0 +1,189 @@
+﻿<!--{subtemplate home/20_header}-->
+<div id="wtcontent">
+	<div class="z z1">
+		<!--{subtemplate home/20_left}-->
+	</div>
+    <style>
+    .bg{background-color:#00ff00;}
+    .nobg{background-color:#fff;}
+    </style>
+    
+	<div class="z qpg_z3">
+		<br>
+        <div class="qpg_fenx">
+		    <div class="z qpg_mingcheng">
+		    <span><h1>$field1</h1></span>
+			</div>
+		    <div class="y">
+			<span><a href="#"><img src="{STATICURL}space/uidcss_1889193/images/ca2_qpg.jpg" width="101" height="34" border="0"></a></span>
+			<span><a href="#"><img src="{STATICURL}space/uidcss_1889193/images/ca3_qpg.jpg" width="101" height="33" border="0"></a></span>
+			</div>
+		</div>
+	    <div class="qpg_xin clear">&nbsp;</div>
+        <div class="qpg_er">&nbsp;</div>
+        <div class="qpg_er_1">
+        <br />
+        <form name="form1" action="action/qpg_iphone4s.php" method="post" onsubmit="return validate_form(this)">
+            <div class="qpg_lhbg">
+            <div class="left20"><img src="{STATICURL}space/uidcss_1889193/images/qpg_lh.jpg" width="162" height="34"></div>
+                <div class="qpg_lh">
+                <input type="hidden" value="$countnum" id="contnum" />
+                    <ul>
+                    <!--{loop $arr $key $value}-->
+                    <input type="text" name="mobile" id="xh_$key" value="$value[tel]" onclick="cha($key)" />
+                    <!--{/if}-->
+                   <input type="hidden" value="" name="chosetel" id="chosetel" />
+                    </ul>
+                </div>
+                <script>
+function cha(idt){
+    //alert(idt);
+     //document.getElementById("xh_"+idt).className="nobg";
+    for(var i=0;i<12;i++){
+        if(i==idt){
+            document.getElementById("xh_"+i).className="bg";
+            //alert(idt);
+            document.getElementById("chosetel").value=document.getElementById("xh_"+idt).value;
+        }else{
+            document.getElementById("xh_"+i).className="nobg";
+           // alert(idt);
+        }
+        
+    }
+
+}
+
+</script>
+                <div class="clear"></div>
+                <div class="qpg_hyz"><img src="{STATICURL}space/uidcss_1889193/images/qpg_hyz.jpg" width="99" height="25" onclick="xuanhao()" /></div>
+            </div>
+            <br>
+            <div class="qpg_er_2">
+                <ul>
+                <li>预订数量：每个用户只可预定一部</li>
+                <li>手机颜色：<input type="radio" name="telcolor" checked="checked" value="黑色" /><img src="static/space/20/images/hei.jpg" /><input type="radio" name="telcolor" value="白色"/><img src="static/space/20/images/bai.jpg" /></li>
+                <li>可用空间：<input type="radio" name="kongjian" value="16GB" checked="checked" />16GB&nbsp;
+                <input type="radio" name="kongjian" value="32GB" />32GB&nbsp;
+                <input type="radio" name="kongjian" value="64GB" />64GB&nbsp;
+                </li>
+                <li>合约计划：<select name="plan"><option value="298元">298元</option><option value="398元">398元</option></select></li>
+                <li>合约期限：<select name="qixian"><option value="一年">一年</option><option value="两年">两年</option></select></li>
+                <li style="color: #f00;font-size:18px;"><b>￥5780</b></li>
+                <li><img src="{STATICURL}space/uidcss_1889193/images/qpg_tz.jpg" width="365" height="23"></li>
+                <li><img src="{STATICURL}space/uidcss_1889193/images/qpg_tj.jpg" width="134" height="33"></li>
+                </ul>
+            </div>
+            <br>
+            <input type="hidden" value="$uid" name="compid" />
+            <input type="hidden" value="$_G[uid]" name="dengid" id="dengid" />
+            <div class="center"><input type="submit" value="提交" name="sub" /><img src="{STATICURL}space/uidcss_1889193/images/qpg_kf.jpg" width="649" height="64"></div>
+            <br>
+            </form>
+        </div>
+
+  </div>
+	<div class="clear"></div>
+</div>
+ <script src="js/ajax_func.js"></script>
+    <script src="js/json2.js"></script>
+    <script src="js/json.js"></script>
+<script>
+
+//随机选号
+function xuanhao(xmlHttp){
+    var url = "action/huanhao.php?timestamp="+new Date().getTime();
+	XMLHttp.send_request("GET",url,null,"text",headwordsxml);
+}
+function headwordsxml(xmlHttp){
+    var resultText = xmlHttp.responseText;
+	var resultJsonObject = resultText.parseJSON();
+    //alert(resultJsonObject.user[0].tel);
+    var num=document.getElementById("contnum").value;
+    for(var i=0;i<num;i++){
+       document.getElementById("xh_"+i).value=resultJsonObject.user[i].tel;
+    }
+}
+/*
+function xuanhao(){
+    $.getJSON("action/huanhao.php",function(msg){
+        var num=msg.user.length;
+        for(var i=0;i<num;i++){
+            $("#xh_"+i).val(msg.user[i].tel);
+        }
+    })
+    
+}*/
+
+function validate_required(field,alerttxt)
+{
+with (field)
+  {
+  if (value==null||value=="")
+    {alert(alerttxt);return false}
+  else {return true}
+  }
+}
+
+function validate_form(thisform)
+{
+    with (thisform){
+        if (validate_required(dengid,"请先登录")==false){
+            //email.focus();
+            return false
+       }
+      if (validate_required(chosetel,"手机号必须选择")==false){
+            //email.focus();
+            return false
+      }
+      /*if (validate_required(kongjian,"可用空间必须填写")==false){
+            kongjian.focus();
+           return false
+      }
+      if (validate_required(plan,"合约计划必须填写")==false){
+            plan.focus();
+           return false
+      }
+      if (validate_required(qixian,"合约期限必须填写")==false) {
+            qixian.focus();
+           return false
+      }*/
+    }
+}
+
+
+/*
+function check(){
+    var chosetel=document.getElementById("chosetel").value;    //手机号
+    var tyk=document.getElementById("kongjian").value;     //可用空间
+    //alert(document.getElementById("kongjian").value);
+    var plan=$("#plan").val();    //合约计划
+    var qixian=$("#qixian").val();    //合约期限
+    var dengid=$("#dengid").val();
+    if(0==dengid || ''==dengid){
+        alert("请先登录");
+        return false;
+    }
+    if(''==chosetel){
+        alert("必须先选择一个手机号码");
+        return false;
+    }
+    if(''==tyk){
+        alert("可用空间不能为空");
+        return false;
+    }
+    if(''==plan){
+        alert("合约计划不能为空");
+        return false;
+    }
+    if(''==qixian){
+        alert("合约期限不能为空");
+        return false;
+    }
+    
+    
+    
+}
+*/
+</script>
+
+<!--{subtemplate home/20_foot}-->

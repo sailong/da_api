@@ -1,0 +1,146 @@
+<div class="y y3">
+         <!--大正竞猜-->
+		 <!--{eval $event_ads = get_event_ads(1,$_G['gp_uid']);}-->
+         <!--{if $event_ads}-->
+            <div class="rightlm"><span class="rlm1"><h1>大正竞猜</h1></span>  
+                <span class="rlm2">
+                    <a href="/home.php?mod=space&uid=$uid&do=saishiinfo&op=qclist&id=#qclist"></a>
+                </span>
+            </div>
+            <div class="ylmcon">
+              <!--{loop $event_ads  $value}-->
+                <p class="center">
+                <!--{if $value['logo']}-->
+                <a href="{$value['href']}" target="_blank"><img src="{$value['logo']}" width="184" title="{$value['name']}" alt="{$value['name']}" /></a>
+                <!--{/if}-->
+                </p>
+                <!--{if !$value['logo']}-->
+                    <p class="center top10"><a href="{$value['href']}" target="_blank"><!--{$value['name']}--></a></p>
+                <!--{/if}-->
+              <!--{/loop}-->
+            </div>
+        <!--{/if}-->
+       
+
+
+         <!--进行的赛事-->
+	     <!--{eval $event_ads = get_event_ads(2,$_G['gp_uid']);}-->
+         <!--{if $event_ads}-->
+            <div class="rightlm"><span class="rlm1"><h1>赛事行程</h1></span>  
+                <span class="rlm2">
+                    <a href="/home.php?mod=space&uid=$uid&do=saishiinfo&op=qclist&id=#qclist"></a>
+                </span>
+            </div>
+            <div class="ylmcon">
+              <!--{loop $event_ads  $value}-->
+                <p class="center">
+                <!--{if $value['logo']}-->
+                <a href="{$value['href']}" target="_blank"><img src="{$value['logo']}" width="184"  title="{$value['name']}" alt="{$value['name']}" /></a>
+                <!--{/if}-->
+                </p>
+                <!--{if !$value['logo']}-->
+                    <p class="center top10"><a href="{$value['href']}" target="_blank"><!--{$value['name']}--></a></p>
+                <!--{/if}-->
+              <!--{/loop}-->
+            </div>
+          <!--{/if}-->
+
+
+		<div class="rightlm"><span class="rlm1"><h1>参赛明星</h1></span>  <span class="rlm2"><a href="home.php?mod=space&uid=$uid&do=saishiinfo&op=mingxing&id=#saishiinfo">更多</a></span></div>
+		<div class="ylmcon">
+			<!--{loop $cansaire $cva}-->
+		   <div class="zbms zbmswidt">
+				<p><a href="home.php?mod=space&uid=$cva[userid]" target="_blank">
+                <img src="uc_server/avatar.php?uid=$cva[userid]&size=middle" width="50" height="50" title="{$cva[subname]}" alt="{$cva[subname]}" />
+                </a></p>
+				<p><a href="home.php?mod=space&uid=$cva[userid]" target="_blank">$cva[subname]</a></p>
+		  </div>
+     
+			<!--{/loop}-->			
+			<div class="clear"></div>
+	    </div>
+
+
+        <!--进行的赛事-->
+	    <!--{eval $event_ads = get_event_ads(0,$_G['gp_uid'],1); }-->
+        <div class="rightlmn"><span class="rlm1"><h1>赛事赞助商</h1></span>  <!--span class="rlm2"><a href="#">更多</a></span--></div>
+            <div class="ylmcon">
+                <!--{loop $event_ads $value}-->
+                <div class="zbms">
+                    <p><a href="$value[href]" target="_blank"><img src="$value[logo]" width="78" height="55" title="{$value['name']}" alt="{$value['name']}" /></a></p>
+                    <p><a href="$value[href]" target="_blank">$value[name]</a></p>
+                </div>
+                <!--{/loop}-->      
+                <div class="clear"></div>
+        </div>
+
+
+
+
+        <!--赛事专家列表-->
+        <!--{eval $experts =  get_event_experts($_G['gp_uid'],1);}-->
+        <!--{if $experts}-->
+        <div class="rightlm"><span class="rlm1"><h1>赛事专家</h1></span>  <span class="rlm2"><a href="home.php?mod=space&uid=$uid&do=saishiinfo&op=mingxing&user_type=1&id=#saishiinfo">更多</a></span></div>
+        <div class="ylmcon">
+            <!--{loop $experts $value}-->
+           <div class="zbms zbmswidt">
+                <p><a href="home.php?mod=space&uid=$value[userid]" target="_blank">
+                <img src="uc_server/avatar.php?uid=$value[userid]&size=middle" width="50" height="50" title="{$value[realname]}" alt="{$value[realname]}" />
+                </a></p>
+                <p><a href="home.php?mod=space&uid=$value[userid]" target="_blank">$value[realname]</a></p>
+          </div>
+
+            <!--{/loop}-->			
+            <div class="clear"></div>
+        </div>
+       <!--{/if}-->
+
+
+
+		<div class="rightlm"><span class="rlm1"><h1>举办球场</h1></span>  <span class="rlm2"><a href="/home.php?mod=space&uid=$uid&do=saishiinfo&op=qclist&id=#qclist">更多</a></span></div>
+		<div class="ylmcon">
+			<p class="center">
+            <!--{if $cdarr[fieldimg]}-->
+            <a href="home.php?mod=space&uid=$cdarr[cdid]" target="_blank"><img src="$cdarr[fieldimg]" height="113" width="184" /></a>
+            <!--{/if}-->
+            </p>
+			<p class="center top10"><a href="home.php?mod=space&uid=$cdarr[cdid]" target="_blank">$cdarr[field1]</a></p>
+        </div>
+
+		
+		<div class="rightlm"><span class="rlm1"><h1>热门话题</h1></span>  <span class="rlm2"><!--{if $uid==$_G[uid]}--><a href="home.php?mod=spacecp&ac=weibo&op=topic&id=#maoweibo"><!--{else}--><a href="home.php?mod=space&do=common&op=topic&uid=$uid&id=#maoweibo"><!--{/if}-->更多</a></span></div>
+		<div class="ylmcon">
+			<div class="rmht">
+				<!--{if $topic}-->
+					<!--{loop $topic $val}-->
+				<p>
+                <!--{if $space['self']}-->
+                <a href="home.php?mod=spacecp&ac=weibo&op=topic&tcode=<!--{$val[name]}-->">
+                <!--{else}-->
+                <a href="home.php?mod=space&do=common&op=topic&tcode=<!--{$val[name]}-->&uid=<!--{$uid}-->">
+                <!--{/if}-->
+                <!--{$val["name"]}--></a></p>
+				<!--{/loop}-->
+				<!--{else}-->
+				<p>没有话题</p>
+				<!--{/if}-->
+		    </div>
+		</div>
+		
+		<div class="rightlm"><span class="rlm1"><h1>热门标签</h1></span>  <span class="rlm2"><!--{if $uid==$_G[uid]}--><a href="home.php?mod=spacecp&ac=weibo&op=tag&id=#maoweibo"><!--{else}--><a href="home.php?mod=space&do=common&op=tag&uid=$uid&id=#maoweibo"><!--{/if}-->更多</a></span></div>
+		<div class="ylmcon">
+			<div class="rmbq">
+			<!--{loop $tags $value}--> 
+			<span>
+            <!--{if $space['self']}-->
+            <a href="home.php?mod=spacecp&ac=weibo&op=tag&tag=$value[tag_name]&id=#maoweibo">
+            <!--{else}-->
+            <a href="home.php?mod=space&do=common&op=tag&tag=$value[tag_name]&uid=<!--{$uid}-->&id=#maoweibo">
+            <!--{/if}-->
+            $value[tag_name]</a></span> | 
+			<!--{/loop}-->
+	
+			</div>
+		</div>
+		
+	</div>

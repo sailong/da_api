@@ -1,0 +1,50 @@
+<!--{subtemplate common/header}-->
+	<!--{subtemplate home/spacecp_header}-->
+		
+        <ul class="tb cl">
+        <li {$actives['m_list']}><a href="home.php?mod=spacecp&ac=fenzu">【分站】会员列表</a></li>
+        <li {$actives['qyfenzu']}><a href="home.php?mod=spacecp&ac=fenzu&op=members_fenzu">【分站】会员分组</a></li>
+        <li {$actives['event_rule_list']}><a href="home.php?mod=spacecp&ac=fenzu&op=event_fenzu_rule_list">【赛事】分组规则列表</a></li>
+        </ul>
+
+		<!--{if $operation == 'member_allot'}-->
+		
+			<div class="tbmu bw0">
+				<p>
+                 <script type="text/javascript" src="{$_G[setting][jspath]}calendar.js?{VERHASH}"></script>
+                    <form id="addfundsform" name="addfundsform" method="post" autocomplete="off" action="home.php?mod=spacecp&ac=fenzu&op=member_allot">
+                    <input type="hidden" name="formhash" value="{FORMHASH}" />
+                    <input type="hidden" name="member_allotsubmit" value="true" />
+                          <div class="exfm" style="margin-top: 0;">
+                                <table cellspacing="0" cellpadding="0">
+                                    <tr>
+                                        <th >会员【{$fenzu_member_info['realname']}】调拨</th>
+                                        <td>                                       
+                                            <span class="ftid"> 
+                                             UID：<input class="px" value="{$fenzu_member_info['uid']}" name ="uid"  size="10" onkeyup="this.value=this.value.replace(/\D/g,'')"  onafterpaste="this.value=this.value.replace(/\D/g,'')"/>
+                                              开球Tee台：<input class="px" value="{$fenzu_member_info['tee']}" name ="tee"  size="2"/>
+                                              分组号：<input  class="px" name ="team_number" value="{$fenzu_member_info['team_number']}" size="2">
+                                              开球时间: <input class="px" name ="start_time"  value="<!--{eval echo date('Y-m-d H:i:s',$fenzu_member_info['start_time']);}-->" onclick="showcalendar(event, this,1)" >
+                                            </span>                                         
+                                            <button type="submit" class="pn" name="member_allot" value="true"><strong>提 交</strong></button>
+                                            <input name="ac" value="fenzu" type="hidden">
+                                            <input name="op" value="member_allot" type="hidden">
+                                            <input name="fz_m_id" type="hidden" value="{$fenzu_member_info['fz_m_id']}">
+                                        </td>
+                                    </tr>
+                                  </table>
+                                   
+                              </div>
+                    </form>
+                </p>
+			</div>
+			
+		<!--{/if}-->
+
+		</div>
+	</div>
+	<div class="appl">
+		<!--{subtemplate home/spacecp_footer}-->
+	</div>
+</div>
+<!--{subtemplate common/footer}-->

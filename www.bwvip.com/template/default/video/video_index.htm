@@ -1,0 +1,55 @@
+<!--{subtemplate common/header}-->
+<div id='pt' class='bm cl'>
+	<div class='z'>
+		<a href='./' class='nvhm' title='{lang homepage}'>$_G[setting][bbname]</a><em>&raquo;</em><a href='video.php'>视频</a>$navigation
+	</div>
+</div>
+<style id='diy_style' type='text/css'></style>
+<div class='wp'>
+</div>
+<div id='ct' class='ct2 wp cl'>
+	<div class='mn' style='width:100%'>
+		<div class='bm bmw'>
+			<div class='bm_h cl'>
+				<span class='y xw1'><a href='video.php?mod=list&ac=list&op=new'>{lang more} &rsaquo;</a></span>
+				<h2>{lang new_video}</h2>
+			</div>
+			<div class='bm_c'>
+			<!--{if $newvideo}-->
+				<!--{loop $newvideo $k $v}-->
+				<div class='video'>
+					<a href= 'video.php?mod=list&ac=play&op=new&vid=<!--{$v[vid]}-->' style='text-decoration:none'><img src='<!--{$v[images]}-->'   onerror="javascript:this.src='/uploadfile/common/videoimg.gif';"  alt="<!--{$v[title]}-->"  width='110' height='75' />&nbsp&nbsp;<br /></a>
+					<a href= 'video.php?mod=list&ac=play&op=new&vid=<!--{$v[vid]}-->' style='text-decoration:none'><span><!--{$v[title]}--></span></a>
+				</div>
+				<!--{/loop}-->
+			<!--{else}-->
+				暂无视频
+			<!--{/if}-->
+			</div>
+		</div>
+		<div style='clear:both'></div>
+		<div class='bm'>
+			<div class='bm_h cl'>
+				<span class='y xw1'><a href='video.php?mod=list&ac=list&op=hot'>{lang more} &rsaquo;</a></span>
+				<h2>{lang hot_video}</h2>
+			</div>
+			<div class='bm_c'>
+			<!--{if $hotvideo}-->
+				<!--{loop $hotvideo $k $v}-->
+				<div class='video'>
+					<a href= 'video.php?mod=list&ac=play&op=hot&vid=<!--{$v[vid]}-->' style='text-decoration:none'><img src='<!--{$v[images]}-->'    onerror="javascript:this.src='/uploadfile/common/videoimg.gif';"  alt="<!--{$v[title]}-->"  width='110' height='75' />&nbsp&nbsp;<br /></a>
+					<a href= 'video.php?mod=list&ac=play&op=hot&vid=<!--{$v[vid]}-->' style='text-decoration:none'><span><!--{$v[title]}--></span></a>
+				</div>
+				<!--{/loop}-->
+			<!--{else}-->
+				暂无视频
+			<!--{/if}-->
+			</div>
+		</div>
+	</div>
+<!--{subtemplate common/footer}-->
+<style type='text/css'>
+	.bm_c .video {
+		float:left
+	}
+</style>

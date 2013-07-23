@@ -1,0 +1,60 @@
+              <div class="bd_4">
+                          <div class="bd_6">
+                                  <div style="float:left"><img src="static/space/index/images/bt_1.gif" width="140" height="32"></div>
+                                  <!-- 滑动按钮按钮内容开始部分-->
+                                  <div style="float:left;">
+
+											<ul class="codeDemoUL" id="ulMenu">
+												<li  class="codeDemomouseOnMenu"onMouseOver="showDiv('index_wb_mxs');this.className='codeDemomouseOnMenu'">美巡赛</li>
+												<li class="codeDemomouseOutMenu" onMouseOver="showDiv('index_wb_axs');this.className='codeDemomouseOnMenu'">欧巡赛</li>
+												<li class="codeDemomouseOutMenu" onMouseOver="showDiv('index_wb_lpga');this.className='codeDemomouseOnMenu'">LPGA</li>
+												<li class="codeDemomouseOutMenu" onMouseOver="showDiv('index_wb_cstzs');this.className='codeDemomouseOnMenu'">城市挑战赛</li>
+												<li class="codeDemomouseOutMenu" onMouseOver="showDiv('index_wb_httj');this.className='codeDemomouseOnMenu'">话题推荐</li>
+											</ul>
+                                  </div>
+                                 <!-- 滑动按钮按钮内容结束部分-->
+                          </div>
+
+
+
+
+
+                        <!--{loop $$weib_rm_info $key $value}-->
+							<div class="codeDemoDiv" id="{$key}" <!--{if $key=="index_wb_mxs"}--> style=" height:208px;" <!--{else}-->  style="display:none;height:208px;" <!--{/if}-->   >
+									 <div class="tj_1">
+										   <div>
+												  <div class="tj_2">
+														   <a href="/home.php?mod=space&uid=1000399" target="_blank"><img src="static/space/index/images/dzevent.jpg" width="48" height="48" border="0" class="tj_img"></a> </div>
+												  <div class="tj_3">
+														   <span class="tj_7"><a href="/home.php?mod=space&uid=1000399" target="_blank" class="tj_7">大正赛事{$key}</a>：</span><a href="/home.php?mod=space&uid=1000399" target="_blank">#美巡赛#唐纳德夺冠重回世界第一....</a>                                                      </div>
+										   </div>
+										   <div style="line-height:28px;">&nbsp;09-05 10:44<span class="tj_4">来自网站</span><a href="#" class="tj_5">转发</a>|<a href="#" class="tj_5">收藏</a>
+										   </div>
+									 </div>
+							</div>
+					    <!--{/loop}-->
+
+
+
+
+
+                   </div>
+
+<SCRIPT LANGUAGE="JavaScript">
+	<!--
+	var $ = function(o) {return document.getElementById(o);}
+	function showDiv(parm)
+	{
+		$('divDemo').style.display='none';
+		$('divCode').style.display='none';
+		$('divCodeb').style.display='none';
+		$('divCodec').style.display='none';
+		$('divCodee').style.display='none';
+		$('divCodeee').style.display='none';
+		$(parm).style.display = '';
+		for(var i in $('ulMenu').getElementsByTagName('LI')){
+		$('ulMenu').getElementsByTagName('LI')[i].className = 'codeDemomouseOutMenu';
+	}
+	}
+	//-->
+</SCRIPT>

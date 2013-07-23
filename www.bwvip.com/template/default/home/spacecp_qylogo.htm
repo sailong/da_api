@@ -1,0 +1,50 @@
+<!--{template home/space_header_comm}-->
+<script src="static/js/jbqc.js"></script>
+<div id="wtcontent">
+	<!-- 左侧 -->
+	<!--{template home/spacecp_00_left}-->
+	<!-- 右侧 -->
+	<div class="rightw">
+	<a name="qyqylogo"><div class="rightlm"><span class="title_1">logo管理</span></div></a>
+    <div class="rcontent"  style="border:1px solid #DBDBDB; margin-top:10px;">
+                     <div class="sapce_view_content"> 
+                        <div class="sapce_view_content_div" style="padding:15px;">
+<!--中间内容开始-->
+<div style="margin-bottom: 20px;padding-left:20px;">
+<!--{if $listpath}-->
+<img src="$listpath" /><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<a href="javascript:void(0)" onclick="change()">修改</a>
+<script>
+function change(){
+    if(document.getElementById("ttty").style.display==""){
+        document.getElementById("ttty").style.display="none";
+    }else{
+        document.getElementById("ttty").style.display="";
+    }
+    
+}
+
+</script>
+<!--{/if}-->
+</div>
+<!--{if $listpath}-->
+<div style="display: none;" id="ttty">
+<!--{else}-->
+<div id="ttty">
+<!--{/if}-->
+<form action="" method="post" name="form1" enctype="multipart/form-data">
+                上传logo:<input type="file" name="fileimg" />
+                <input type="submit" value="提交" name="sub" />
+                </form>
+
+</div>
+        <!--中间内容结束-->
+</div>
+  </div>
+ </div>
+</div>
+	<div class="clear"></div>
+</div>
+<!--{template home/spacecp_foot_comm}-->

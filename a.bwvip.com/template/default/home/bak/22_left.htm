@@ -1,0 +1,106 @@
+<div class="zname"><h1>$field1</h1></div>
+		<div class="zxinxi">
+			<div class="zxinxi2">
+				<div class="xlogo_duan">
+                <!--{if $field3}-->
+          <img src="data/attachment/profile/$field3" />
+
+          <!--{else}-->
+          <img src="uc_server/avatar.php?uid=$_GET[uid]&size=middle"  />
+          <!--{/if}-->
+                </div>
+				<div class="xinx">粉丝：<a href="$fansurl" id="fensiadd">$fans_count</a> 关注：<a href="$followurl">$follow_count</a></div>
+				<div class="xinx_2">人气：$space[views] 微博：<a href="$wbsurl">$topic_count</a></div>
+				<!--{if $_G['uid'] != $uid}-->
+                <ul class="sq">
+					<li class="hysq z"><a onclick="showWindow(this.id, this.href, 'get', 0);doane(event);" id="qiye" href="home.php?mod=spacecp&ac=hygl&op=shenqing&compid=$_GET[uid]&userid=$_G[uid]">会员申请</a></li>
+					<li class="fssq y"> 
+                    <!--{if !$space['self'] && empty($_G['uid'])}-->
+                    <a id="share_space" href="home.php?mod=spacecp&ac=share&type=space&id=<!--{$uid}-->" onclick="showWindow(this.id, this.href, 'get', 0);">粉丝申请</a>
+                    <!--{else}-->
+                    <a id="share_space" href="javascript:void(0)" onclick="applyfensi($_GET[uid])">粉丝申请</a>
+                    <!--{/if}-->
+                    </li>
+                         
+				</ul>
+                <!--{/if}-->
+
+
+
+
+
+                <script src="static/js/jquery.js" type="text/javascript"></script>
+                <script src="static/js/fensi.js" type="text/javascript"></script> 
+				<div class="clear"></div>
+
+
+                
+            <!--{eval $goods = get_best_goods(); }-->
+                <!--{if !empty($goods['goods_info'])}-->                
+                 <div class="club_rm_goods_" style="padding-left:10px;width:214px;" >
+                    <div class="club_img">
+                      <a href="home.php?mod=space&uid={$_G['gp_uid']}&do=shop&goods_id={$goods['goods_info']['goods_id']}">
+                        <img  style="width:230px;height:auto;" alt="{$goods['goods_info']['goods_name']}" src = "http://www.bwvip.com/shop/{$goods['goods_info']['goods_thumb']}"><br>
+                        <center><!--{$goods['goods_info']['goods_name']}--></center>
+                      </a>
+                     </div>
+                    <div>
+                       <!--{loop $goods['goods_comment'] $value}-->
+                        <!--第一条评论-->
+                        <ul>
+                            <li><img src="{$goods['goods_comment'][0]['avatar']}"></li>
+                            <li>
+                               <dt><span>用户评论：<span><img src="http://www.bwvip.com/shop/themes/68ecshopcom_wysp/images/stars{$value['comment_rank']}.gif"><dt>
+                               <dt><!--{eval echo cutstr($value['content'],15); }--></dt>
+                            </li>
+                            <div class="clear"></div>
+                        </ul>
+                       <!--{/loop}-->
+                    </div>
+                 </div>
+               <!--{else}-->
+
+                <div class="clear"></div>                
+                <!--{eval $ads_27 = get_vip_ads(27); $ads_28 = get_vip_ads(28); }--><!--广告-->
+				<div class="leftad">
+				  <p class="center"> <a href="{$ads_27['adverturl']}"> <img src="{$ads_27['imglogo']}" border="0" alt="{$ads_27['content']}"></a></p>
+				  <p class="center"> <a href="{$ads_28['adverturl']}"> <img src="{$ads_28['imglogo']}" border="0" alt="{$ads_28['content']}"></a></p>
+				</div>
+            <!--{/if}-->
+
+             
+			</div>
+		</div>
+		<div class="leftlm"><h1>博客精选</h1> <span><a href="home.php?mod=space&uid=$uid&do=blog&view=me&from=space">更多</a></span></div>
+		<div class="bjjx2">
+			<div class="bkc">
+            <ul>
+            <!--{loop $ubloglst $value}--> 		
+      		  <li><img src="{STATICURL}space/20/images/new.jpg" width="24" height="16"> <a href="home.php?mod=space&uid=$value[uid]&do=blog&id=$value[blogid]">$value[subject]</a></li>
+ 		   <!--{/loop}-->
+           </ul>
+           </div>
+		</div>
+		<div class="leftlm"><h1>最新相册</h1> <span><a href="home.php?mod=space&uid=$uid&do=album&view=me&from=space">更多</a></span></div>
+		<div class="bjjx3">
+			<!--{loop $albumre $key $value}-->
+            <div class="xcimg z left10">
+                <p><a href="home.php?mod=space&uid=$uid&do=album&id=$value["albumid"]" ><img src="data/attachment/album/$value[pic]" width="63" height="57" alt="文件数$value["picnum"] $value["albumname"]" ></a></p>
+                <p>$value["dname"]</p>
+			</div>
+			<!--{/loop}-->
+			<div class="clear"></div>
+		</div>
+		<div class="leftlm"><h1>精彩视频</h1> <span><a href="home.php?mod=space&uid=$uid&do=video&act=list">更多</a></span></div>
+		<div class="bjjx3">
+        	<!--{loop $videolft $key $value}-->
+            <div class="videoimg z left10">
+                <p><a href="home.php?mod=space&uid=$uid&do=video&id=$value["vpid"]"><img src="$value[images]" width="63" height="57" alt="$value["title"]"></a></p>
+                <p>$value["sname"]</p>
+			</div>
+             
+			<!--{/loop}-->
+			
+			 
+		  <div class="clear"></div>
+		</div>

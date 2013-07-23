@@ -1,0 +1,236 @@
+<!--{subtemplate join/10_header}-->
+<body class="claro">
+
+		
+
+		<script type="text/javascript">
+			dojo.addOnLoad(init);
+			dojo.addOnLoad(
+				function(){
+					dojo.connect(dojo.byId('submitting_data_link'),'onclick','send_submitting_data');
+				}
+			);
+		</script>
+
+		<div id="jls_header">
+                           <div class="sc">
+                                           <a href="#">加入收藏</a>&nbsp;|&nbsp;
+                                           <a href="#">设为首页</a>&nbsp;|&nbsp;
+                                           <a href="www.bwvip.com" target="_blank">大正网</a>
+                           </div>
+                           <div><img src="static/join/images/zyz_flash.jpg"></div>
+                           <div class="dh">
+                                                <ul>
+                                                                <li><a href="#">首页</a></li>
+                                                                <li><a href="#">赛事介绍</a></li>
+                                                                <li><a href="http://www.bwvip.com/join.php?mod=player">参赛报名</a></li>
+                                                                <li><a href="http://www.bwvip.com/join.php?mod=volunteer">志愿裁判报名</a></li>
+                                                                <li><a href="http://www.bwvip.com/home.php?mod=space&uid=1899467">教练俱乐部</a></li>
+                                                                <li><a href="http://www.bwvip.com/home.php?mod=space&uid=1899466">规则俱乐部</a></li>
+                                                                <li><a href="http://www.bwvip.com/index.php">大正网</a></li>
+                                                </ul>
+                                                <div class="clear"></div>
+                           </div>
+</div>
+
+			<div id="content">
+                                     <div><img src="static/join/images/zyz_top.jpg"></div>
+                                                 <div class="zyz_bg">
+                                                           <div class="zyz_title ">
+                                                                            <dt><a href="#"><img src="static/join/images/zyz_1.jpg"></a></dt>
+                                                                                        <dt><a href="#"><img src="static/join/images/zyz_6.jpg"></a></dt>
+                                                                                        <dt><a href="#"><img src="static/join/images/zyz_7.jpg"></a></dt>
+                                                                                        <dt><a href="#"><img src="static/join/images/zyz_8.jpg"></a></dt>
+                                                                                        <div class="clear"></div>
+                                                                   </div>
+                                                                   <div class="zyz_content">
+                                                                             <div class="biao">
+
+							<!--
+							<div>
+								基本信息
+							</div>
+							-->
+			
+							<br/>
+							<div>
+								*真实姓名：<input id='realname' type="text" value="<!--{$row['realname']}-->"/>
+
+								<!--{if $row['gender'] == 0 }-->
+								&nbsp;&nbsp;*性别：<input id="male" type="radio"  name="gender"/>男<input id="female" type="radio" name="gender"/>女
+								<!--{/if}-->
+
+								<!--{if $row['gender'] == 1 }-->
+								&nbsp;&nbsp;*性别：<input id="male" type="radio" checked="checked" name="gender"/>男<input id="female" type="radio" name="gender"/>女				
+								<!--{/if}-->
+								<!--{if $row['gender'] == 2 }-->
+								&nbsp;&nbsp;*性别：<input id="male" type="radio" name="gender"/>男<input id="female" type="radio" checked="checked" name="gender"/>女				
+								<!--{/if}-->
+							</div>
+
+							<br/>
+							<div>
+								<label for="date1">出生日期：</label>
+								<input id='birth_date' type="text" data-dojo-type="dijit.form.DateTextBox"/>&nbsp;&nbsp;国籍：<input id="nationality" value="<!--{$row['nationality']}-->" type="text"/>
+							</div>
+			
+							<br/>
+							<div>
+								<form id="upload_avatar" enctype="multipart/form-data" action="join.php?mod=upload_avatar&uid=<!--{$uid}-->" method="POST">
+									上传头像：<input name="avatar" type="file" onchange="dojo.addOnLoad(upload_avatar);"/>
+									<!--{if $avatar_filename != ''}-->
+									<span id="span"><img src="join.php?mod=read_avatar&uid=<!--{$uid}-->"/></span><span id="span2"><input type="button" value="删除头像" onclick="dojo.addOnLoad(remove_avatar);" /></span>
+									<!--{else}-->
+									<span id="span"></span><span id="span2"></span>
+									<!--{/if}-->
+								</form>
+			
+							</div>
+			
+							<br/>
+							<div>
+								*手机：<input id="mobile" type="text" value="<!--{$row['mobile']}-->"/>&nbsp;&nbsp;*电子邮箱：<input id="email" type="text" value="<!--{$supplement_row['email']}-->"/>
+							</div>
+
+							<br/>
+							<div>
+								固定电话：<input id="telephone" type="text" value="<!--{$row['telephone']}-->"/>&nbsp;&nbsp;传真：<input id="fax_num" type="text" value="<!--{$supplement_row['fax_num']}-->"/>
+							</div>
+
+							<br/>
+							<div>
+								*证件类型：<input id="idcardtype" type="text" value="<!--{$row['idcardtype']}-->"/>&nbsp;&nbsp;*证件号码：<input id="idcard" type="text" value="<!--{$row['idcard']}-->"/>
+							</div>
+
+							<br/>
+							<div>
+								*通讯地址：<input id="address" type="text" value="<!--{$row['address']}-->"/>&nbsp;&nbsp;邮编：<input id="zipcode" type="text" value="<!--{$row['zipcode']}-->"/>
+							</div>
+
+							<br/>
+							<div>
+								*赛事获取途径：
+
+								<!--{if $supplement_row['getting_game_info_by_website'] == 1}-->
+								<input id="getting_game_info_by_website" type="checkbox" value="大正网" checked="checked"/>大正网&nbsp;&nbsp;
+								<!--{else}-->
+								<input id="getting_game_info_by_website" type="checkbox" value="大正网"/>大正网&nbsp;&nbsp;
+								<!--{/if}-->
+				
+								<!--{if $supplement_row['getting_game_info_by_inews'] == 1}-->
+								<input id="getting_game_info_by_inews" type="checkbox" value="手机报" checked="checked"/>手机报&nbsp;&nbsp;
+								<!--{else}-->
+								<input id="getting_game_info_by_inews" type="checkbox" value="手机报"/>手机报&nbsp;&nbsp;
+								<!--{/if}-->
+
+								<!--{if $supplement_row['getting_game_info_by_microblog'] == 1}-->
+								<input id="getting_game_info_by_microblog" type="checkbox" value="微博" checked="checked"/>微博&nbsp;&nbsp;
+								<!--{else}-->
+								<input id="getting_game_info_by_microblog" type="checkbox" value="微博"/>微博&nbsp;&nbsp;
+								<!--{/if}-->
+
+								<!--{if $supplement_row['getting_game_info_by_tmk'] == 1}-->
+								<input id="getting_game_info_by_tmk" type="checkbox" value="电话邀约" checked="checked"/>电话邀约&nbsp;&nbsp;
+								<!--{else}-->
+								<input id="getting_game_info_by_tmk" type="checkbox" value="电话邀约"/>电话邀约&nbsp;&nbsp;
+								<!--{/if}-->
+
+								<!--{if $supplement_row['getting_game_info_by_short_message'] == 1}-->
+								<input id="getting_game_info_by_short_message" type="checkbox" value="短信" checked="checked"/>短信&nbsp;&nbsp;
+								<!--{else}-->
+								<input id="getting_game_info_by_short_message" type="checkbox" value="短信"/>短信&nbsp;&nbsp;
+								<!--{/if}-->
+
+								<!--{if $supplement_row['getting_game_info_by_friend'] == 1}-->
+								<input id="getting_game_info_by_friend" type="checkbox" value="亲友" checked="checked"/>亲友&nbsp;&nbsp;
+								<!--{else}-->
+								<input id="getting_game_info_by_friend" type="checkbox" value="亲友"/>亲友&nbsp;&nbsp;
+								<!--{/if}-->
+
+								<!--{if $supplement_row['getting_game_info_by_other_way'] == 1}-->
+								<input id="getting_game_info_by_other_way" type="checkbox" value="其他途径" checked="checked"/>其他途径
+								<!--{else}-->
+								<input id="getting_game_info_by_other_way" type="checkbox" value="其他途径"/>其他途径
+								<!--{/if}-->
+
+							</div>
+						<div>
+
+							<input id="stored_birth_year" type="hidden" value="<!--{$row['birthyear']}-->"/>
+							<input id="stored_birth_month" type="hidden" value="<!--{$row['birthmonth']}-->"/>
+							<input id="stored_birth_day" type="hidden" value="<!--{$row['birthday']}-->"/>
+							<!--
+							<br/>
+							<input type="button" value="下一步" onclick="dojo.addOnLoad(send_submitting_data);"/>
+							-->
+							<form id="remove_avatar" action="join.php?mod=remove_avatar&uid=<!--{$uid}-->" method="POST">
+							</form>
+
+							<form id="submitting_data" action="join.php?mod=store_volunteer_page1_info&uid=<!--{$uid}-->" method="post">
+			
+								<input id="submitting_realname" name="submitting_realname" type="hidden"/>
+
+								<input id="submitting_gender" name="submitting_gender" type="hidden"/>
+
+								<input id="submitting_birth_date" name="submitting_birth_date" type="hidden"/>
+
+								<input id="submitting_nationality" name="submitting_nationality" type="hidden"/>
+
+								<input id="submitting_mobile" name="submitting_mobile" type="hidden"/>
+
+								<input id="submitting_email" name="submitting_email" type="hidden"/>
+
+								<input id="submitting_telephone" name="submitting_telephone" type="hidden"/>
+
+								<input id="submitting_fax_num" name="submitting_fax_num" type="hidden"/>
+
+								<input id="submitting_idcardtype" name="submitting_idcardtype" type="hidden"/>
+
+								<input id="submitting_idcard" name="submitting_idcard" type="hidden"/>
+
+								<input id="submitting_address" name="submitting_address" type="hidden"/>
+
+								<input id="submitting_zipcode" name="submitting_zipcode" type="hidden"/>
+
+								<input id="submitting_getting_game_info_by_website" name="submitting_getting_game_info_by_website" type="hidden"/>
+
+								<input id="submitting_getting_game_info_by_inews" name="submitting_getting_game_info_by_inews" type="hidden"/>
+
+								<input id="submitting_getting_game_info_by_microblog" name="submitting_getting_game_info_by_microblog" type="hidden"/>
+
+								<input id="submitting_getting_game_info_by_tmk" name="submitting_getting_game_info_by_tmk" type="hidden"/>
+
+								<input id="submitting_getting_game_info_by_short_message" name="submitting_getting_game_info_by_short_message" type="hidden"/>
+
+								<input id="submitting_getting_game_info_by_friend" name="submitting_getting_game_info_by_friend" type="hidden"/>
+	
+								<input id="submitting_getting_game_info_by_other_way" name="submitting_getting_game_info_by_other_way" type="hidden"/>
+
+							</form>
+
+							<input id="hidden_uid" type="hidden" value="<!--{$uid}-->"/>
+						</div>
+						
+					
+						</div>
+                                                                                         <div class="bu"><a id="submitting_data_link"><img src="static/join/images/next.jpg"></a></div>
+											
+                                                                                         <div class="clear"></div>
+                                                                   </div>
+                                                                   <div class="clear"></div>
+                                                 </div>
+                                                 <div><img src="static/join/images/zyz_b.jpg"></div>
+                         </div>
+			
+			<div id="foot">
+                            <div class="foot">
+                                                    <dt class="foot_t">Copyright © 2010 Dazone Golf,All Rights Reserved 大正高尔夫 版权所有</dt>
+                                                                <dt class="foot_line"><img src="static/join/images/foot_line.jpg"></dt>
+                                                                <dt class="foot_logo"><img src="static/join/images/foot_logo.jpg"></dt>
+                                    </div>
+</div>
+
+</body>
+
+
+<!--{subtemplate join/10_footer}-->

@@ -1,0 +1,152 @@
+<style type="text/css">
+body{ font-size:12px;}
+a{ text-decoration:none;}
+a:hover{ text-decoration:underline;}
+#shop_content{width:704px; float:right; background:#7c7c7c url(../images/content_bg.jpg) repeat-x; padding-top:56px;}
+#shop_box{ background:#fff; width:665px; }
+#pmenu{ background:url(../images/box_men_2.jpg) repeat-y ; width:665px;padding-top:10px;}
+#pmenu a{color:#fff; text-decoration:none; margin:0 17px;white-space:nowrap;
+ }
+#pmenu a:hover{ color:#fff; text-decoration:underline; margin:0 17px;white-space:nowrap;
+ }
+#pmenu ul{ margin:0px 8px;}
+#pmenu li{color:#fff; float:left;line-height:25px;}
+#pmenu span{color:#fff; float:left;line-height:25px;}
+#pmenu li{ list-style:none; }
+
+/*内容css*/
+#shopcontent{ background:#ccc; padding:8px; width:668px; margin:8px;}
+#content_tilte{ margin-top:5px;background:none repeat scroll 0 0 #8D8D8D;padding:3px;}
+#content_tilte_1{background:#8d8d8d; padding:5px 0px 5px 10px;;text-align:left; width:655px; margin-top:5px;}
+#content_tilte .left{float:left; padding-top:3px; width:445px;height:26px;  text-align:left;background:#8d8d8d; padding-left:12px;}
+#content_tilte .right{float:right;width:68px;padding-top:6px;  height:23px; text-align:left; padding-left:140px;background:#8d8d8d; }
+#content_tilte .right a{background:#ccc; color:#000; padding-left:15px; padding-right:15px; height:18px; line-height:18px;}
+#content{width:665px; height:auto;padding-top:10px; }
+.lc{background:#FFFFFF;}
+.lc_title{background:#8d8d8d; line-height:25px; height:25px; margin-left:20px;width:645px; margin-left:10px;}
+.lc_title span,.lc_title a{color:#FFFFFF; font-weight:bold; font-size:14px;}
+.lc_title span{float:left; padding-left:20px;}
+.lc_title a{float:right; padding-right:20px;}
+.kd_content{width:635px; padding:10px 10px 10px 20px; color:#8b8b8b; line-height:20px;}
+.clear{clear:both;}
+.bmenu{width:684px;padding-top:5px; background:#ccc; margin-left:8px; }
+.bmenu ul{ float:left; list-style:none; margin:10px 33px;}
+.bmenu ul li{ float:left;}
+.bmenu ul li img { padding-right:5px;}
+.bmenu ul li span{ font-weight:bold;}
+/*#content .pimg {padding-bottom:8px; width: 157px; height:172px; border:0px;}
+#content .pimg:hover {padding-bottom:8px; width: 150px; height:164px; padding-top:8px;border:0px;}*/
+
+/*商品部分*/
+.pname{font-weight:bold;  text-align:center; color:#a02d00;}
+  </style>
+<div id="shopcontent">
+             <div id="shop_box">
+                               <!-- 商品分类开始-->
+                               <div><img src="images/box_men_1.jpg"></div>
+                               <div id="pmenu">
+                                      <ul>  	
+                                       <!--{loop $sortlist $key $value}-->
+                                     <!--{if $key>0}-->  <!--{/if}-->  <li><a href="home.php?mod=space&uid=$value[uid]&do=shop&cat_id=$value[cat_id]">$value[cat_name]</a>|</li> 
+                                       <!--{/loop}--><li>  <a href="home.php?mod=space&uid=$value[uid]&do=shop">全部</a></li>
+                                       </ul>
+                                       <div class="clear"></div>
+                               </div>
+                               <div><img src="images/box_men_3.jpg"></div>
+                               <!--商品分类结束-->
+                               <!-- 高尔夫球开始杆-->
+							   <div id="content_tilte">
+								<span style='padding-left:10px;'>当前位置：<a href="home.php?mod=space&uid=$_GET['uid']&do=shop">产品</a> >> $getloc</span>
+								<span style="float:right;padding-right:10px;"><a href="home.php?mod=space&uid=$_G['gp_uid']&do=shop&act=cart">购物车</a></span>
+							    <span style="float:right;padding-right:10px;"><a href="home.php?mod=space&uid=$_G['gp_uid']&do=shop&act=order">订单</a></span>
+                               </div>
+							   
+                                <div class="clear"></div>
+								<div id="content" class="lc" >
+								      <!-- 内容开始-->
+									    <div class="lc_title">
+										        <span>配送说明</span>
+										        <a href="javascript:scroll(0,0)" name="pssm">↑Top</a> 
+												<div class="clear"></div>
+										</div>
+										<div class="kd_content">
+										         我们的客服人员会在发货前与您核对订单，到货时间根据商品以及收货地点的差异有所不同。 
+												 <br>大正网所有商品均使用顺丰速运发货。
+												 <br>收货时请开箱检验，检查商品上大正封条是否完好。如未看到封条或封条破损请拒收。
+
+										</div>
+										 <!-- 配送说明部分结束-->
+										 <!-- 收费标准部分开始-->
+										<div class="lc_title">
+										        <span>收费标准</span>
+										        <a href="javascript:scroll(0,0)" name="sfbz">↑Top</a> 
+												<div class="clear"></div>
+										</div>
+										<div class="kd_content">
+										        体积重量是一种反映包裹密度的计算方式。低密度的包裹，比较其实际重量，占用的空间通常较大。计算出来的体积重量，会与其实际重量比较，取较重者为计费重量，用以计算运费。<br>
+根据市场惯例，体积重量(kg)的计算方法为:<br>
+长度(cm) x 宽度(cm) x 高度(cm) ÷ 6,000<br>
+(如快件一般是以陆路运输, 其体积重量会以除数 12,000计算。计算方法都是按地区及市场惯例决定, 当中可能各有差异。)
+
+										</div>
+										<!-- 收费标准部分结束-->
+										 <!-- 到货时间部分开始-->
+										<div class="lc_title">
+										        <span>到货时间</span>
+										        <a href="javascript:scroll(0,0)" name="dhsj">↑Top</a> 
+												<div class="clear"></div>
+										</div>
+										<div class="kd_content">
+										        全国主要城市7日内送达。 
+                                         </div>
+										<!-- 到货时间部分结束-->
+										
+								 </div>
+                               <div class="clear"></div> 
+                                
+                                
+                               <!--内容结束--> 
+                               
+                               
+  </div>
+ </div>
+<div class="bmenu">
+			  <ul>
+					<li><img src="images/bmenu_1.jpg"></li>
+					<li>
+						<span>购买指南</span><br>
+						<a href="home.php?mod=space&uid=$space[uid]&do=shop&ac=lc&mao=#gmzn">购物流程</a><br>
+						<a href="home.php?mod=space&uid=$space[uid]&do=shop&ac=lc&mao=#cjwt">常见问题</a><br>
+						<a href="home.php?mod=space&uid=$space[uid]&do=shop&ac=lc&mao=#lxkf">联系客服</a>
+					</li>
+			  </ul>
+			  <ul>
+					<li><img src="images/bmenu_2.jpg"></li>
+					<li>
+						<span>快递运输</span><br>
+						<a href="home.php?mod=space&uid=$space[uid]&do=shop&ac=kd&mao=#pssm">配送说明</a><br>
+						<a href="home.php?mod=space&uid=$space[uid]&do=shop&ac=kd&mao=#sfbz">收费标准</a><br>
+						<a href="home.php?mod=space&uid=$space[uid]&do=shop&ac=kd&mao=#dhsj">到货时间</a>
+					</li>
+			  </ul>
+			  <ul>
+					<li><img src="images/bmenu_3.jpg"></li>
+					<li>
+						<span>支付方式</span><br>
+						<a href="home.php?mod=space&uid=$space[uid]&do=shop&ac=zf&mao=#zxzf">在线支付</a><br>
+						<a href="home.php?mod=space&uid=$space[uid]&do=shop&ac=zf&mao=#xxhk">银行汇款</a>
+					</li>
+			  </ul>
+			  <ul>
+					<li><img src="images/bmenu_4.jpg"></li>
+					<li>
+						<span>售后服务</span><br>
+						<a href="home.php?mod=space&uid=$space[uid]&do=shop&ac=sh&mao=#thzc">退换货政策</a><br>
+						<a href="home.php?mod=space&uid=$space[uid]&do=shop&ac=sh&mao=#wxzc">维修政策</a><br>
+						<a href="home.php?mod=space&uid=$space[uid]&do=shop&ac=sh&mao=#shlx">售后服务流程</a>
+					</li>
+			  </ul>
+			  <div class="clear"></div>
+</div>
+
+	

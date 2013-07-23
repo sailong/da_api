@@ -1,0 +1,109 @@
+<div class="right_right y">
+	<div class="rightlm">
+		<span class="rlm1"><h1><!--{$visitname}-->的标签</h1></span>
+		<span class="rlm2"><a href='home.php?mod=space&do=common&op=tag&uid=<!--{$uid}-->'>更多</a></span>
+	</div>
+	<div class="biaoqian">
+		<!--{if $tags}-->
+		<!--{loop $tags $value}-->
+		<span><a href='home.php?mod=space&do=common&op=tag&tag=<!--{$value[tag_name]}-->&uid=<!--{$uid}-->'><!--{$value[tag_name]}--></a></span>
+		<!--{/loop}-->
+		<!--{else}-->
+		<span style='height:50px; line-height:50px; text-align:center'>暂无标签</span>
+		<!--{/if}-->
+	</div>
+	<div class="clear"></div>
+	<div class="rightlm">
+		<span class="rlm1"><h1><!--{$visitname}-->的群组</h1></span>
+		<span class="rlm2"><a href='home.php?mod=space&do=common&op=qun&uid=<!--{$uid}-->'>更多</a></span>
+	</div>
+	<div class="rlmcon">
+		<!--{if $grouplist}-->
+		<!--{loop $grouplist $v}-->
+		  <div class="qunzu">
+			<div class="qunztu z">
+			<p class="center"><a href='home.php?mod=space&do=common&op=qun&qid=<!--{$v[qid]}-->&uid=<!--{$uid}-->'><img src="weibo/<!--{$v[icon]}-->" width="70" height="50"></a></p>
+			<p class="font10 center"><!--{$v[foundername]}--></p>
+			</div>
+			<div class="qunzujs y">
+			  <p><a href='home.php?mod=space&do=common&op=qun&qid=<!--{$v[qid]}-->&uid=<!--{$uid}-->'><!--{$v[name]}--></a></p>
+				<p><!--{$v[member_num]}-->人</p>
+			</div>
+		  </div>
+		  <div class="clear"></div>
+		<!--{/loop}-->
+		<!--{else}-->
+		<span style='height:50px; line-height:50px; margin-left:30px'>未创建或参加任何群组</span>
+		<!--{/if}-->
+	</div>
+	<div class="clear"></div>
+	<div class="rightlm">
+		<span class="rlm1"><h1><!--{$visitname}-->参加的活动</h1></span>
+		<span class="rlm2"><a href='home.php?mod=space&do=common&op=event&uid=<!--{$uid}-->'>更多</a></span>
+	</div>
+	<div class="rlmcon">
+		<!--{if $event}-->
+		<!--{loop $event $value}-->
+		<div class="huodong">
+		<p><a href='home.php?mod=space&do=common&op=event&eid=<!--{$value[id]}-->&uid=<!--{$uid}-->'><img src="weibo/<!--{$value[image]}-->" width="62" height="53"></a></p>
+		<p><!--{$value[title]}--></p>
+		</div>
+		<!--{/loop}-->
+		<!--{else}-->
+		<span style='height:50px; line-height:50px; margin-left:30px'>未参加任何活动</span>
+		<!--{/if}-->
+	</div>
+	<div class="clear"></div>
+	<div class="rightlm">
+		<span class="rlm1"><h1><!--{$visitname}-->参加的话题</h1></span>
+		<span class="rlm2"><a href='home.php?mod=space&do=common&op=topic&uid=<!--{$uid}-->'>更多</a></span>
+	</div>
+	<div class="rlmcon pabottom10 patop10">
+		<!--{if $topic}-->
+		<!--{loop $topic $k $val}-->
+		<p style='margin-left:20px'><a href='home.php?mod=space&do=common&op=topic&tcode=<!--{$val[name]}-->&uid=<!--{$uid}-->'>#<!--{$val[name]}-->#</a></p>
+		<!--{/loop}-->
+		<!--{else}-->
+		<span style='height:50px; line-height:50px; text-align:center'>未参加任何话题</span>
+		<!--{/if}-->
+	</div>
+	<div class="rightlm">
+		<span class="rlm1"><h1><!--{$visitname}-->的关注</h1></span>
+		<span class="rlm2"><a href='home.php?mod=space&do=common&op=follow&uid=<!--{$uid}-->'>更多</a></span>
+	</div>
+	<div>
+	  <div id="circular-box" class="clearfix">
+			<!--{if $buddys}-->
+			<ul>
+				<!--{loop $buddys $k $v}-->
+				<li><a href="home.php?mod=space&uid=<!--{$v[uid]}-->">
+				<img src="uc_server/avatar.php?uid=<!--{$v[uid]}-->&size=middle" width="62" height="57">
+				<span class="cir-bg"></span></a>
+				<p class="center top5"><!--{$v[username]}--></p></li>
+				<!--{/loop}-->
+			</ul>
+			<!--{else}-->
+			<span style='height:50px; line-height:50px; text-align:center'>现在还没有关注</span>
+			<!--{/if}-->
+		</div>
+		<div class="clear"></div>
+	</div>
+	<div class="rightlm">
+		<span class="rlm1"><h1><!--{$visitname}-->的粉丝</h1></span>
+		<span class="rlm2"><a href='home.php?mod=space&do=common&op=fans&uid=<!--{$uid}-->'>更多</a></span>
+	</div>
+	<div>
+	  <div id="circular-box" class="clearfix">
+			<!--{if $fans}-->
+			<ul>
+				<!--{loop $fans $v}-->
+				<li><a href="home.php?mod=space&uid=<!--{$v[uid]}-->"><img src="uc_server/avatar.php?uid=<!--{$v[uid]}-->&size=middle" width="62" height="57"><span class="cir-bg"></span></a><p class="center top5"><!--{$v[username]}--></p></li>
+				<!--{/loop}-->
+			</ul>
+			<!--{else}-->
+			<span style='height:50px; line-height:50px; text-align:center'>现在还没有粉丝</span>
+			<!--{/if}-->
+		</div>
+		<div class="clear"></div>
+	</div>
+</div>

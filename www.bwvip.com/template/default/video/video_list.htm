@@ -1,0 +1,38 @@
+<!--{subtemplate common/header}-->
+<div id='pt' class='bm cl'>
+	<div class='z'>
+		<a href='./' class='nvhm' title='{lang homepage}'>$_G[setting][bbname]</a><em>&raquo;</em><a href='video.php'>视频</a>$navigation
+	</div>
+</div>
+<style id='diy_style' type='text/css'></style>
+<div class='wp'>
+</div>
+<div id='ct' class='ct2 wp cl'>
+	<div class='mn' style='width:100%'>
+		<div class='bm bmw'>
+			<div class='bm_h cl'>
+				<h2>
+				<!--{if $op == 'new'}-->
+				{lang new_video}
+				<!--{elseif $op == 'hot'}-->
+				{lang hot_video}
+				<!--{/if}-->
+				</h2>
+			</div>
+			<div class='bm_c'>
+				<!--{loop $videolist $k $v}-->
+				<div class='video'>
+					<a href= 'video.php?mod=list&ac=play&op=<!--{$operation}-->&vid=<!--{$v[vid]}-->' style='text-decoration:none'><img src='<!--{$v[images]}-->'   onerror="javascript:this.src='/uploadfile/common/videoimg.gif';"  alt="<!--{$v[title]}-->" width='110' height='75' />&nbsp&nbsp;<br /></a>
+					<a href= 'video.php?mod=list&ac=play&op=<!--{$operation}-->&vid=<!--{$v[vid]}-->' style='text-decoration:none'><span><!--{$v[title]}--></span></a>
+				</div>
+				<!--{/loop}-->
+			</div>
+		</div>
+	</div>
+	<div><!--{$multi}--></div>
+<!--{subtemplate common/footer}-->
+<style type='text/css'>
+	.bm_c .video {
+		float:left
+	}
+</style>

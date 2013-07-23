@@ -1,0 +1,138 @@
+<!--{subtemplate common/header}-->
+	<!--{subtemplate home/spacecp_header}-->
+
+  
+		
+        <ul class="tb cl">
+        <li {$actives['m_list']}><a href="home.php?mod=spacecp&ac=fenzu">【分站】会员列表</a></li>
+        <li {$actives['qyfenzu']}><a href="home.php?mod=spacecp&ac=fenzu&op=members_fenzu">【分站】会员分组</a></li>
+        <li {$actives['event_rule_list']}><a href="home.php?mod=spacecp&ac=fenzu&op=event_fenzu_rule_list">【赛事】分组规则列表</a></li>
+        </ul>
+
+          
+        <p class="tbmu bw0">
+                    <a hidefocus="true"> 分组管理 </a> <span class="pipe">|</span>
+                    <a hidefocus="true">【使用说明】</a>
+                    
+        </p>
+		<!--{if $operation == 'members_fenzu'}-->			
+            <script type="text/javascript" src="{$_G[setting][jspath]}calendar.js?{VERHASH}"></script>
+            <form method="post" action="home.php?mod=spacecp&ac=fenzu&op=m_fenzu_submit">
+                <div class="exfm" style="margin-top: 0;">
+                    <table cellspacing="0" cellpadding="0">
+                        <tr>
+                            <th >选择分组:</th>
+                            <td>
+                                <span class="ftid">
+                                    <select id="exttype" name="fenz" class="ps" width="168">
+                                        <option value="0">请选择分站</option>
+                                        <!--{loop $fz_rows $fz_rows}-->
+                                        <option value="$fz_rows['fz_id']">{$fz_rows[fenz_name]}</option>
+                                        <!--{/loop}-->
+                                    </select>
+                                </span>
+                            </td>
+
+
+                            <th>选择球场:</th>
+                            <td>
+                                <span class="ftid">
+                                    <select id="income" name="field" class="ps" width="168">
+                                        <option value="0">请选球场</option>
+                                        <!--{loop $qc_rows $qc_rows}-->
+                                        <option value="$qc_rows['field_id']">{$qc_rows[field_name]}</option>
+                                        <!--{/loop}-->
+                                    </select>
+                                </span>
+                            </td>
+                        </tr>
+
+
+                        <tr>
+                            <th>比赛开始时间:</th>
+                            <td>
+                                <span class="ftid">
+                                     <input  style="width:180px;" type="text" name="game_starttime" class="px"   onclick="showcalendar(event, this,1)" readonly="readonly" />
+                                </span>
+                            </td>
+
+                            <th>休息时间:</th>
+                            <td>
+                                <input type="text" name="rest_starttime" class="px" size="19"  onclick="showcalendar(event, this,1)" readonly="readonly" /> 
+                                休息结束时间 
+                                <input type="text" name="rest_endtime" class="px" size="19"  readonly="readonly" onclick="showcalendar(event, this,1)" />
+                            </td>
+                        </tr>
+
+
+
+
+                        <tr>
+                            <th>比赛间隔时间:</th>
+                            <td>
+                                <span class="ftid"><!-- <input name="game_jg_time" onkeyup="this.value=this.value.replace(/\D/g,'')"  value="10" size="3" maxlength="3"  onafterpaste="this.value=this.value.replace(/\D/g,'')"/>分钟-->
+                                
+                                   <select id="income" name="game_jg_time" class="ps" width="168">
+                                        <option value="10">十分钟</option>
+                                        <option value="15">十五分钟</option>
+                                        <option value="20">二十分钟</option>
+                                    </select>
+                                </span>
+                      </td>
+
+                            <th>分组规则:</th>
+                            <td>
+                                <select id="income" name="fenzu_rule" class="ps" width="168">
+                                        <option value="2">差点高低分组</option>
+                                        <option value="1">队籍交叉分组</option>
+                                        <option value="3">会员随机分组</option>
+                                 </select>
+
+                                 队伍人数:
+                                 <select name="team_member_num" style="width:90px;">                                    
+                                    <option value="4">四人组</option>
+                                    <option value="3">三人组</option>
+                                    <option value="2">二人组</option>
+                                 </select>
+                            <td>
+                           
+                        </tr>
+
+                        <tr>
+                             <th>选择同时开球T台:</th>
+                            <td colspan="3" rowspan="2"><span class="ftid">$html_tee</span></td>
+                        </tr>
+
+                        <tr>
+                            <th>&nbsp;</th>
+                            <td><button type="submit" class="pn" name="search" value="true"><strong>提 交</strong></button></td>
+                        </tr>
+                    </table>
+                    <script type="text/javascript">
+                        simulateSelect('exttype');
+                        simulateSelect('income');
+                        simulateSelect('optype');
+                    </script>
+                </div>
+                <table summary="{lang memcp_credits_log_payment}" cellspacing="0" cellpadding="0" class="dt">
+                    <tr>
+                        <th width="80"></th>
+                        <th width="80"></th>
+                        <th></th>
+                        <th width="100"></th>
+                    </tr>
+                 
+                </table>
+                <input type="hidden" name="op" value="m_fenzu_submit" />
+                <input type="hidden" name="ac" value="fenzu" />
+                <input type="hidden" name="mod" value="spacecp" />
+            </form>
+		<!--{/if}-->
+	
+		</div>
+	</div>
+	<div class="appl">
+		<!--{subtemplate home/spacecp_footer}-->
+	</div>
+</div>
+<!--{subtemplate common/footer}-->

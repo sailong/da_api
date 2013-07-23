@@ -1,0 +1,90 @@
+<div class="right_right y">
+	<div class="rightlm"><span class="rlm1"><h1>他的标签</h1></span>  <span class="rlm2">更多</span></div>
+	<div class="biaoqian">
+		<!--{if $tags}-->
+		<!--{loop $tags $value}-->
+		<span><!--{$value[tag_name]}--></span>
+		<!--{/loop}-->
+		<!--{else}-->
+		<span style='height:50px; line-height:50px; text-align:center'>暂无标签</span>
+		<!--{/if}-->
+	</div>
+	<div class="clear"></div>
+	<div class="rightlm"><span class="rlm1"><h1>他的群组</h1></span>  <span class="rlm2">更多</span></div>
+	<div class="rlmcon">
+		<!--{if $grouplist}-->
+		<!--{loop $grouplist $value}-->
+		  <div class="qunzu">
+			<div class="qunztu z">
+			<p class="center"><img src="<!--{$value[icon]}-->" width="78" height="47"></p>
+			<p class="font10 center">高球媒体  198人</p>
+			</div>
+			<div class="qunzujs y">
+			  <p><!--{$value[name]}--></p>
+				<p>1500人</p>
+				<p>你有10位好友加入</p>
+			</div>
+		  </div>
+		  <div class="clear"></div>
+		<!--{/loop}-->
+		<!--{else}-->
+		<span style='height:50px; line-height:50px; margin-left:30px'>现在还没有群组</span>
+		<!--{/if}-->
+	</div>
+	<div class="rightlm"><span class="rlm1"><h1>他参加的活动</h1></span>  <span class="rlm2">更多</span></div>
+	<div class="rlmcon">
+		<!--{if $event}-->
+		<!--{loop $event $value}-->
+		<div class="huodong"><img src="weibo/<!--{$value[image]}-->" width="62" height="53"></div>
+		<!--{/loop}-->
+		<!--{else}-->
+		<span style='height:50px; line-height:50px; text-align:center'>未参加活动</span>
+		<!--{/if}-->
+	</div>
+	<div class="clear"></div>
+	<div class="rightlm"><span class="rlm1"><h1>他参加的话题</h1></span>  <span class="rlm2">更多</span></div>
+	<div class="rlmcon pabottom10 patop10">
+	  <div class="huati">
+		<!--{if $topic}-->
+		<!--{loop $topic $val}-->
+		<!--{$val}--><br />
+		<!--{/loop}-->
+		<!--{else}-->
+		未参加任何话题
+		<!--{/if}-->
+	</div>
+	</div>
+	<div class="rightlm"><span class="rlm1"><h1>他的关注</h1></span>  <span class="rlm2">更多</span></div>
+	<div>
+	  <div id="circular-box" class="clearfix">
+			<!--{if $buddys}-->
+			<ul>
+				<!--{loop $buddys $k $v}-->
+				<li><a href="home.php?mod=space&uid=<!--{$v[uid]}-->">
+				<img src="uc_server/avatar.php?uid=<!--{$v[uid]}-->&size=middle" width="62" height="57">
+				<span class="cir-bg"></span></a>
+				<p class="center top5"><!--{$v[username]}--></p></li>
+				<!--{/loop}-->
+			</ul>
+			<!--{else}-->
+			<span style='height:50px; line-height:50px; text-align:center'>现在还没有群组</span>
+			<!--{/if}-->
+		</div>
+		<div class="clear"></div>
+	</div>
+	<div class="rightlm"><span class="rlm1"><h1>他的粉丝</h1></span>  <span class="rlm2">更多</span></div>
+	<div>
+	  <div id="circular-box" class="clearfix">
+			<!--{if $fans}-->
+			<ul>
+				<!--{loop $fans $v}-->
+				<li><a href="#"><img src="uc_server/avatar.php?uid=<!--{$v[uid]}-->&size=middle" width="62" height="57"><span class="cir-bg"></span></a><p class="center top5"><!--{$v[username]}--></p></li>
+				<!--{/loop}-->
+			</ul>
+			<!--{else}-->
+			<span style='height:50px; line-height:50px; text-align:center'>现在还没有粉丝</span>
+			<!--{/if}-->
+		</div>
+		<div class="clear"></div>
+	</div>
+</div>

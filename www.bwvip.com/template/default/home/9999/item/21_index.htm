@@ -1,0 +1,121 @@
+球场机构用户界面
+<!--{template home/space_header}-->
+<style type='text/css'>
+.score {
+	width:93%; font-size:12px; height:150px
+}
+.score td {
+	border-bottom:1px solid #abcdef; border-right:1px solid #abcdef; height:10%; width:2%; text-align:center; padding:0; color:#128255
+}
+#top td {
+	border-top:1px solid #abcdef
+}
+.score tr .first {
+	width:10%; color:#128128255; text-align:center; border-left:1px solid #abcdef;
+}
+.score tr #hole {
+	color:gray
+}
+.score tr .num {
+	font-weight:bold
+}
+</style>
+<div id="ct" class="wp w cl">
+	<div id="diypage" class="area">
+		<div id="frame1" class="frame cl" noedit="1">
+			<div id="frame1_left" style="width:{$widths[0]}px" class="z column">
+				<!--{if empty($leftlist)}-->
+				<div id="left_temp" class="move-span temp"></div>
+				<!--{/if}-->
+				<!--{loop $leftlist $key $value}-->
+				<!--{if !empty($key)}-->
+					<div id="$key" class="block move-span">
+						$value
+					</div>
+				<!--{/if}-->
+				<!--{/loop}-->
+			</div>
+
+			<div id="frame1_center" style="width:{$widths[1]}px" class="z column">
+				<!--{if empty($centerlist)}-->
+				<div id="center_temp" class="move-span temp"></div>
+				<!--{/if}-->
+				<!--{loop $centerlist $key $value}-->
+					<!--{if !empty($key)}-->
+						<div id="$key" class="block move-span">
+							$value
+						</div>
+					<!--{/if}-->
+				<!--{/loop}-->
+				<!--{if ($_G['groupid'] == '21')}-->
+				<div id="blog" class="block move-span">
+					<div class="blocktitle title">
+						<span>
+							<a>记分卡</a>
+						</span>
+					</div>
+					<div id="blog_content" class="dxb_bc xld">
+						<!--{if $info}-->
+						<!--{loop $info $key $val}-->
+							<table cellspacing='0' cellpadding='0' class='score'>
+								<tr id='top'>
+									<td class='first'>姓名</td>
+									<td colspan='21' style='text-align:left; width:600px'><!--{$val[username]}--></td>
+								</tr>
+								<tr>
+									<td class='first'>时间</td>
+									<td colspan='21' style='text-align:left; width:600px'><!--{$val[fieldtime]}--></td>
+								</tr>
+								<tr>
+									<td class='first'>球洞</td>
+									<!--{loop $data $k $v}-->
+									<td class='num' id='hole'><!--{$v}--></td>
+									<!--{/loop}-->
+								</tr>
+								<tr>
+									<td class='first'>标准杆</td>
+									<!--{loop $val[par] $k $v}-->
+									<td><!--{$v}--></td>
+									<!--{/loop}-->
+								</tr>
+								<tr>
+									<td class='first'>成绩</td>
+									<!--{loop $val[score] $k $v}-->
+									<td><!--{$v}--></td>
+									<!--{/loop}-->
+								</tr>
+								<tr>
+									<td class='first'>距离总标准杆</td>
+									<!--{loop $val[pars] $k $v}-->
+									<td><!--{$v}--></td>
+									<!--{/loop}-->
+								</tr>
+							</table>
+							<br />
+						<!--{/loop}-->
+						<!--{else}-->
+						<p class="emp">现在还没有记分卡</p>
+						<!--{/if}-->
+					</div>
+				</div>
+				<!--{/if}-->
+			</div>
+
+			<!--{if (strlen($userdiy['currentlayout']) > 3) }-->
+			<div id="frame1_right" style="width:{$widths[2]}px" class="z column">
+				<!--{if empty($rightlist)}-->
+				<div id="right_temp" class="move-span temp"></div>
+				<!--{/if}-->
+				<!--{loop $rightlist $key $value}-->
+				<!--{if !empty($key)}-->
+					<div id="$key" class="block move-span">
+						$value
+					</div>
+				<!--{/if}-->
+				<!--{/loop}-->
+			</div>
+			<!--{/if}-->
+		</div>
+	</div>
+</div>
+<!--{template common/footer}-->

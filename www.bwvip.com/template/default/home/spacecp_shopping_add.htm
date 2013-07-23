@@ -1,0 +1,453 @@
+<!--{template home/space_header_comm}-->
+<div id="wtcontent">
+	<!-- 左侧 -->
+	<!--{template home/spacecp_00_left}-->
+	<!-- 右侧开始 -->
+	<script src="static/js/jquery.js"></script>
+	<style>
+	.w100{width:100px;}
+	#tabbar-div {
+      background: #80BDCB;
+      padding-left: 10px;
+      height: 22px;
+      padding-top: 1px;
+    }
+    
+    #tabbar-div p {
+  margin: 2px 0 0 0;
+}
+.tab-front {
+  background: #BBDDE5;
+  line-height: 20px;
+  font-weight: bold;
+  padding: 4px 15px 4px 18px;
+  border-right: 2px solid #278296;
+  cursor: hand;
+  cursor: pointer;
+}
+
+.tab-back {
+  color: #FFF;
+  line-height: 20px;
+  padding: 4px 15px 4px 18px;
+  border-right: 1px solid #FFF;
+  cursor: hand;
+  cursor: pointer;
+}
+	</style>
+		<div class="rightw">
+		<div class="rightlm"><h1>发布商品</h1></div>
+		<br>
+		<div class="rcontent">
+			<div>
+			<!---ecshop-->
+			<div id="tabbar-div">
+      <p>
+        <span id="general" class="tab-front">通用信息</span>
+		<span id="detail" class="tab-back">详细描述</span>
+		<span id="mix" class="tab-back">其他信息</span>
+		<span id="properties" class="tab-back">商品属性</span>
+		<span id="gallery" class="tab-back">商品相册</span>
+      </p>
+</div>
+    
+
+			
+			<!---ecshop-->
+			
+	<!----------博客开始----------->
+				
+				<div id="ct">
+					<div class="mn">
+						<div class="bm bw0 cl">
+							<script type="text/javascript" src="static/image/editor/editor_function.js?{VERHASH}"></script>
+							<script type="text/javascript" src="static/js/home_blog.js?{VERHASH}"></script>
+							<form id="ttHtmlEditor" name="form1" method="post" autocomplete="off" action="home.php?mod=spacecp&ac=shopping&op=add&gid=$shop[goods_id]" enctype="multipart/form-data">
+							
+							<div>
+<div id="general-table" >
+<table cellspacing="0" cellpadding="0" class="tfm">
+									<tr>
+										<td>商品名称：<input type="text" id="subject" name="subject" size="60" class="px" style="width: 63%;" maxlength="50" value="$shop[goods_name]" /> <span style='color:#f00'>*</span></td>
+									</tr>
+									<tr>
+										<td>商品货号：<input type="text" id="goods_sn" name="goods_sn" size="60" class="txt px vm"  style="width: 15%;" maxlength=20 value="$shop[goods_sn]" /></td>
+									</tr>
+									<tr>
+										<td>商品分类：<select name="cat_id" id="cat_id" ><option value="0">请选择</option>$class</select> <span style='color:#f00'>*</span></td>
+									</tr>
+									<tr>
+										<td>商品品牌：<select name="brand_id" ><option value="0">请选择</option><!--{loop $brand_list $key $value}--><option value="$key" <!--{if $key==$shop[brand_id]}-->selected=""<!--{/if}-->>$value</option><!--{/loop}--></select></td>
+									</tr>
+									<tr>
+										<td>市场价格：<input type="text" onbeforepaste="clipboardData.setData('text',clipboardData.getData('text').replace(/[^\d]/g,''))" onkeyup="value=value.replace(/[^\d]/g,'') " id="market_price" name="market_price" size="60" class="txt px vm"  style="width: 10%;" maxlength=5 value="$shop[market_price]" /></td>
+									</tr>
+									<tr>
+										<td>本店售价：<input type="text" onbeforepaste="clipboardData.setData('text',clipboardData.getData('text').replace(/[^\d]/g,''))" onkeyup="value=value.replace(/[^\d]/g,'') " id="our_price" name="our_price" size="60" class="txt px vm" style="width: 10%;" maxlength=5 value="$shop[shop_price]" /></td>
+									</tr>
+									<tr>
+										<td>商品图片：<input type="file" id="file" name="file"> <span style='color:#f00'>*</span></td>
+									</tr>
+									<!--{if $shop["goods_thumb"]}-->
+									<tr>
+										<td>商品缩略图：<img src="$shop["goods_thumb"]" width="100" height="100" /></td>
+									</tr>
+									<!--{/if}-->
+								</table>
+</div>
+<div id="detail-table" style="display: none;">
+<table cellspacing="0" cellpadding="0" class="tfm">
+<tr>
+										<td>
+										<textarea class="pt" name="message" id="uchome-ttHtmlEditor" style="height:100%;width:100%;display:none;border:0">$shop[goods_desc]</textarea>
+										<iframe src='home.php?mod=editor&charset={CHARSET}&allowhtml=$allowhtml&doodle={if $_G['setting']['magicstatus'] && !empty($_G['setting']['magics']['doodle'])}1{/if}' name="uchome-ifrHtmlEditor" id="uchome-ifrHtmlEditor" scrolling="no" border="0" frameborder="0" style="width:580px;height:400px;border:1px solid #C5C5C5;position:relative;"></iframe>
+										</td>
+									</tr>
+</table>
+
+</div>
+<!--其他信息-->
+<div id="mix-table" style="display: none;">
+<br />
+<table cellspacing="0" cellpadding="0" class="tfm">
+<tr>
+<td>商品库存数量：</td><td><input type="text" name="goods_number" value="$shop[goods_number]" size="8" maxlength=8 onbeforepaste="clipboardData.setData('text',clipboardData.getData('text').replace(/[^\d]/g,''))" onkeyup="value=value.replace(/[^\d]/g,'') "></td>
+</tr>
+<tr>
+            <td class="label">库存警告数量：</td>
+            <td><input type="text" name="warn_number" value="$shop[warn_number]" size="8" maxlength=8 onbeforepaste="clipboardData.setData('text',clipboardData.getData('text').replace(/[^\d]/g,''))" onkeyup="value=value.replace(/[^\d]/g,'') "></td>
+          </tr>
+		  <tr>
+			<td colspan="2">上架状态：<!--{if $shop["shenhe"]=='0'}--><select name="is_on_sale" disabled='disabled'><option value="0" >下架</option></select><!--{else}--><select name="is_on_sale" ><option value="0" <!--{if $shop["is_on_sale"]=='0'}--> selected='selected'<!--{/if}-->>下架</option><option value="1" <!--{if $shop["is_on_sale"]=='1'}--> selected='selected'<!--{/if}-->>上架</option></select><!--{/if}--><span style="padding-left:10px;color:#f99;">商品需要审核通过才能上架</span></td>
+		  </tr>
+		  <tr>
+            <td class="label">加入推荐：</td>
+            <td><input type="checkbox" name="is_best" <!--{if $shop[is_best]}-->checked="checked"<!--{/if}--> value="1"> 精品 <input type="checkbox" <!--{if $shop[is_new]}-->checked="checked"<!--{/if}--> name="is_new" value="1"> 新品 <input type="checkbox" <!--{if $shop[is_hot]}-->checked="checked"<!--{/if}--> name="is_hot" value="1"> 热销</td>
+          </tr>
+
+		  <tr>
+            <td class="label">商品关键词：</td>
+            <td><input type="text" name="keywords" value="$shop[keywords]" size="40" maxlength="100"> 用空格分隔</td>
+          </tr>
+		  <tr>
+            <td class="label">商品简单描述：</td>
+            <td><textarea name="goods_brief" cols="40" rows="3" maxlength="200">$shop[goods_brief]</textarea></td>
+          </tr>
+		  <tr>
+            <td class="label">
+             商家备注： </td>
+            <td><textarea name="seller_note" cols="40" rows="3" maxlength="200" >$shop[seller_note]</textarea><br>
+            <span class="notice-span" style="display:block" id="noticeSellerNote">仅供商家自己看的信息</span></td>
+          </tr>
+</table>
+</div>
+<!--商品属性-->
+
+<div id="properties-table" style="display: none;">
+<br />
+<table cellspacing="0" cellpadding="0" class="tfm">
+<tr>
+<td class="label">商品类型：</td>
+<td>
+<select onchange="getAttrList($shop[goods_id])" name="goods_type">
+<option value="0">请选择商品类型</option>
+$goods_type
+</select>
+</td>
+</tr>
+<tr>
+<td id="tbody-goodsAttr" colspan="2" style="padding:0">$goods_attr_html</td>
+</tr>
+</table>
+</div>
+<!--商品相册-->
+<div id="gallery-table" style="display: none;">
+<br />
+<table cellspacing="0" cellpadding="0" class="tfm" id="addtr">
+<!--{if $albumarr}-->
+<tr>
+            <td>
+			<!--{loop $albumarr $vk}-->
+                            <div style="float:left; text-align:center; border: 1px solid #DADADA; margin: 4px; padding:2px;" id="gallery_$vk[img_id]">
+                <a onclick="if (confirm('您确实要删除该图片吗？')) dropImg('$vk[img_id]')" href="javascript:;">[-]</a><br>
+                <img border="0" width="100" height="100" src="$vk[thumb_url]">
+                <br>
+                <input type="text" name="old_img_desc[<!--{$vk['img_id']}-->]" size="15" value="$albumarr[$vk[img_id]][img_desc]">
+              </div>
+			  <!--{/loop}-->
+                          </td>
+          </tr>
+<!--{/if}-->
+		<tr>
+            <td>
+              <a href="javascript:;" onclick="addImg('addtr')">[+]</a>
+              图片描述 <input type="text" name="img_desc[]" size="20">
+              上传文件 <input type="file" name="img_url[]">
+            </td>
+          </tr>
+		  
+		  </table>
+</div>
+</div>
+								
+								
+								<input type="hidden" name="blogsubmit" value="true" />
+								<input type="button" id="blogbutton" name="blogbutton" value="{lang submit_release}" onclick="validate(this);" style="display: none;" />
+								<input type="hidden" name="formhash" value="{FORMHASH}" />
+							</form>
+							<input type='hidden' id="is_goods_id" value="$shop[goods_id]" />
+							<script type="text/javascript">
+								function validate(obj) {
+								var title=$("subject").value;
+								if(''==title){
+									alert("请输入商品名称");
+									$("subject").focus();
+									return false;
+								}
+								var cat_id_value=$("cat_id").value;
+								if(cat_id_value=='0'){
+									alert('请选择商品分类');
+									return false;
+								}
+								if(''==$('is_goods_id').value){
+									if(''==document.form1.file.value){
+										alert('请上传商品图片');
+										return false;
+									}
+								}
+								
+								var tyk=$("uchome-ttHtmlEditor").value;
+									<!--{if $_G['setting']['blogcategorystat'] && $_G['setting']['blogcategoryrequired']}-->
+									var catObj = $("catid");
+									if(catObj) {
+										if (catObj.value < 1) {
+											alert("{lang select_system_cat}");
+											catObj.focus();
+											return false;
+										}
+									}
+									<!--{/if}-->
+									var makefeed = $('makefeed');
+									if(makefeed) {
+										if(makefeed.checked == false) {
+											if(!confirm("{lang no_feed_notice}")) {
+												return false;
+											}
+										}
+									}
+									
+									
+										uploadEdit(obj);
+										return true;
+								
+								}
+							</script>
+							<!--这里是上传的部分-->
+							<!--{if !$_G[inajax] && (!$blog['uid'] || $blog['uid']==$_G['uid'])}-->
+							<span id="editorpicup" style="display:none;">
+							<table cellspacing="0" cellpadding="0" width="100%" class="tfm">
+								<tr>
+									<th>{lang pic}</th>
+									<td class="pns">
+										<button type="button" name="clickbutton[]" onclick="edit_album_show('pic')" class="pn"><em>{lang upload_pic}</em></button>
+										<button type="button" name="clickbutton[]" onclick="edit_album_show('album')" class="pn"><em>{lang insert_pic}</em></button>
+									</td>
+								</tr>
+							</table>
+							<!--{/if}-->
+
+							<table cellspacing="0" cellpadding="0" id="uchome-edit-pic" class="tfm" style="display:none;">
+								<tr>
+									<th>&nbsp;</th>
+									<td>
+										<strong>{lang select_pic}</strong>
+										<table summary="Upload" cellspacing="0" cellpadding="0">
+											<tbody id="attachbodyhidden" style="display:none">
+												<tr>
+													<td>
+														<form method="post" autocomplete="off" id="upload" action="home.php?mod=spacecp&ac=upload" enctype="multipart/form-data" target="uploadframe">
+															<input type="file" name="attach" />
+															<span id="localfile"></span>
+															<input type="hidden" name="uploadsubmit" id="uploadsubmit" value="true" />
+															<input type="hidden" name="albumid" id="albumid" value="0" />
+															<input type="hidden" name="formhash" value="{FORMHASH}" />
+														</form>
+													</td>
+												</tr>
+											</tbody>
+											<tbody id="attachbody"></tbody>
+										</table>
+										<strong>{lang storage_album}</strong>
+										<table cellspacing="0" cellpadding="0">
+											<tr>
+												<td>
+													<select name="albumid" id="uploadalbum" onchange="addSort(this)" class="ps">
+														<option value="-1">{lang select_album}</option>
+														<option value="-1">{lang default_album}</option>
+														<!--{loop $albums $value}-->
+														<option value="$value[albumid]">$value[albumname]</option>
+														<!--{/loop}-->
+														<option value="addoption" style="color:red;">+{lang create_new_album}</option>
+													</select>
+													<script type="text/javascript" src="static/js/home_uploadpic.js?{VERHASH}"></script>
+													<iframe id="uploadframe" name="uploadframe" width="0" height="0" marginwidth="0" frameborder="0" src="about:blank"></iframe>
+												</td>
+											</tr>
+										</table>
+									</td>
+								</tr>
+							</table>
+							<table cellspacing="0" cellpadding="0" class="tfm" id="uchome-edit-album" style="display:none;">
+								<tr>
+									<th>&nbsp;</th>
+									<td>
+										{lang select_album}: <select name="view_albumid" onchange="picView(this.value)" class="ps">
+											<option value="none">{lang select_album}</option>
+											<option value="0">{lang default_album}</option>
+											<!--{loop $albums $value}-->
+											<option value="$value[albumid]">$value[albumname]</option>
+											<!--{/loop}-->
+										</select>
+										<p class="d">{lang click_pic_insert_content}</p>
+										<div id="albumpic_body"></div>
+									</td>
+								</tr>
+							</table>
+							</span>
+							<!--编辑器图片上传结束-->
+							<table cellspacing="0" cellpadding="0" class="tfm">
+								<tr>
+									<th>&nbsp;</th>
+									<td><button type="button" id="issuance" onclick="document.getElementById('blogbutton').click();" class="pn pnc"><strong>{lang save_publish}</strong></button></td>
+								</tr>
+							</table>
+						</div>
+					</div>
+				</div>
+				<script type="text/javascript">
+				if($('subject')) {
+					$('subject').focus();
+				}
+				</script>
+				<script>
+				
+				jQuery("#tabbar-div span").click(function(){
+					jQuery(this).addClass("tab-front");
+					jQuery(this).removeClass("tab-back");
+					jQuery(this).siblings().removeClass("tab-front");
+					jQuery(this).siblings().addClass("tab-back");
+					var hitab=jQuery(this).attr('id')+'-table';
+					//alert(hitab);
+					jQuery("#"+hitab).show();
+					jQuery("#"+hitab).siblings().hide();
+					if(hitab=='detail-table'){
+						jQuery("#editorpicup").show();
+					}else{
+						jQuery("#editorpicup").hide();
+					}
+				})
+				
+				function addImg(flag){
+						var str='<tr><td><a href="javascript:;" onclick="removeImg(this)">[-]</a>&nbsp;图片描述 <input type="text" name="img_desc[]" size="20">&nbsp;上传文件 <input type="file" name="img_url[]"></td></tr>';
+						jQuery("#"+flag).append(str);
+				}
+				 function removeImg(obj){
+				  var row = rowindex(obj.parentNode.parentNode);
+				  var tbl = document.getElementById('addtr');
+				  tbl.deleteRow(row);
+				}
+				var Browser = new Object();
+
+				Browser.isMozilla = (typeof document.implementation != 'undefined') && (typeof document.implementation.createDocument != 'undefined') && (typeof HTMLDocument != 'undefined');
+				Browser.isIE = window.ActiveXObject ? true : false;
+				Browser.isFirefox = (navigator.userAgent.toLowerCase().indexOf("firefox") != - 1);
+				Browser.isSafari = (navigator.userAgent.toLowerCase().indexOf("safari") != - 1);
+				Browser.isOpera = (navigator.userAgent.toLowerCase().indexOf("opera") != - 1);
+					function rowindex(tr)
+				{
+				  if (Browser.isIE)
+				  {
+					return tr.rowIndex;
+				  }
+				  else
+				  {
+					table = tr.parentNode.parentNode;
+					for (i = 0; i < table.rows.length; i ++ )
+					{
+					  if (table.rows[i] == tr)
+					  {
+						return i;
+					  }
+					}
+				  }
+				}
+				function getAttrList(goodsId){
+					 var selGoodsType = document.forms['form1'].elements['goods_type'];
+					 //alert(selGoodsType);
+					 if (selGoodsType != undefined)
+					{
+						var goodsType = selGoodsType.options[selGoodsType.selectedIndex].value;
+						//alert(goodsId);
+						//alert(goodsType);
+						//var x = new Ajax();
+						jQuery.post('home.php?mod=spacecp&ac=shopping&op=ajax&gid=' + goodsId + "&gtype=" + goodsType,function(msg){
+							//alert(msg);
+							//var jsq=jQuery.parseJSON(msg);
+							//alert(jsq);
+							jQuery("#tbody-goodsAttr").html(msg);
+						})
+						//alert(goodsType);
+						//ajax
+						
+						
+						//tbody-goodsAttr
+					}			 
+				}
+				//添加属性
+				function addSpec(obj)
+				  {
+					  var src   = obj.parentNode.parentNode;
+					  var idx   = rowindex(src);
+					  var tbl   = document.getElementById('attrTable');
+					  var row   = tbl.insertRow(idx + 1);
+					  var cell1 = row.insertCell(-1);
+					  var cell2 = row.insertCell(-1);
+					  var regx  = /<a([^>]+)<\/a>/i;
+
+					  cell1.className = 'label';
+					  cell1.innerHTML = src.childNodes[0].innerHTML.replace(/(.*)(addSpec)(.*)(\[)(\+)/i, "$1removeSpec$3$4-");
+					  cell2.innerHTML = src.childNodes[1].innerHTML.replace(/readOnly([^\s|>]*)/i, '');
+				  }
+
+				  /**
+				   * 删除属性
+				   */
+				  function removeSpec(obj)
+				  {
+					  var row = rowindex(obj.parentNode.parentNode);
+					  var tbl = document.getElementById('attrTable');
+
+					  tbl.deleteRow(row);
+				  }
+				  
+				  /**删除图片**/
+				function dropImg(img_id){
+					jQuery.post('/home.php?mod=spacecp&ac=shopping&op=del_image&img_id='+img_id,function(msg){
+							
+					})
+					if(document.getElementById("gallery_"+img_id)){
+						document.getElementById('gallery_' + img_id).style.display = 'none';
+					}
+				}
+				
+				
+				</script>
+				<div id="append_parent"></div>
+	<!----------博客结束----------->
+
+			</div>
+		</div>
+	</div>
+	<div class="clear"></div>
+	<!--右侧结束-->
+<!--{template home/spacecp_foot_comm}-->

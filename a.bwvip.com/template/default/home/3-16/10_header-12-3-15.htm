@@ -1,0 +1,130 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>大正网 会员社区</title>
+<link href="{STATICURL}space/person/style.css" rel="stylesheet" type="text/css">
+<link href="{STATICURL}space/person/person_left.css" rel="stylesheet" type="text/css">
+<link href="{STATICURL}space/person/space_view.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="{STATICURL}space/person/js/i.js"></script>
+<script type="text/javascript" src="{STATICURL}space/person/js/iepngfix_tilebg.js"></script>
+
+
+
+<link href="{STATICURL}space/person/spaces.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="{$_G[setting][jspath]}home.js?{VERHASH}"></script>
+
+
+
+
+
+<script type="text/javascript">var STYLEID = '{STYLEID}', STATICURL = '{STATICURL}', IMGDIR = '{IMGDIR}', VERHASH = '{VERHASH}', charset = '{CHARSET}', discuz_uid = '$_G[uid]', cookiepre = '{$_G[config][cookie][cookiepre]}', cookiedomain = '{$_G[config][cookie][cookiedomain]}', cookiepath = '{$_G[config][cookie][cookiepath]}', showusercard = '{$_G[setting][showusercard]}', attackevasive = '{$_G[config][security][attackevasive]}', disallowfloat = '{$_G[setting][disallowfloat]}', creditnotice = '<!--{if $_G['setting']['creditnotice']}-->$_G['setting']['creditnames']<!--{/if}-->', defaultstyle = '$_G[style][defaultextstyle]', REPORTURL = '$_G[currenturl_encode]', SITEURL = '$_G[siteurl]', JSPATH = '$_G[setting][jspath]';</script>
+<script type="text/javascript" src="{$_G[setting][jspath]}common.js?{VERHASH}"></script>
+<script type="text/javascript" src='static/js/jquery.js'></script>
+<script type='text/javascript'>
+	function guanzhu(guid) {
+		var val = jQuery('#share_space').html();
+		var gudo = '';
+		var notic = '';
+		var str = '';
+		if(val == '已关注') {
+			gudo = '0';
+			notic = '您已经取消了对此人的关注，不需要重复取消';
+		} else {
+			gudo = '1';
+			notic = '您已经关注此人了，不需要重复关注';
+		}
+		var url = 'ajax.php?do=buddys&guid='+guid+'&gudo='+gudo+'&time='+new Date().getTime();
+		if(gudo == '0') {
+			str = "+关注";
+		} else {
+			str = "已关注";
+		}
+		jQuery.get(url, {}, function(msg) {
+			if(msg == '1') {
+				jQuery('#share_space').html(str);
+			} else if(msg == '2') {
+				alert(notic);
+				jQuery('#share_space').html(str);
+				return false;
+			}
+		});
+	}
+</script>
+</head>
+
+<body>
+<div id="append_parent"></div>
+<div class="wad">
+<!--{subtemplate home/head_gobal}-->
+	<!--{if $bm_pay_status == 1}-->
+    <div class="headad_1"></div>
+    <!--{else}-->
+    <div class="headad"></div>
+    <!--{/if}-->
+	<div class="headbgxx_duan"></div>
+	<div class="middlexx_duan">
+		<div class="biag_duan">
+			<div class="z touxiang_d">
+				<div class="touxiang">
+					<div id="circular-tou" class="clearfix">
+						<a href="home.php?mod=space&uid=$uid"><img src="uc_server/avatar.php?uid=$uid&size=middle" width="115" height="106" /><span class="cir-bg"></span></a><p class="center top5"><!--{if $getstat['usrnickname']}--><!--{$getstat['usrnickname']}--> <!--{else}--> <!--{$userinfo[username]}--><!--{/if}--></p>
+					</div>
+				</div>
+				<div class="clear"></div>
+					<ul class="xinx2_1">
+						<li class="z">
+						<!--{if $space['self']}-->
+						<a id="share_space" href="home.php?mod=spacecp&ac=weibo&op=fans" style="font-family:'微软雅黑' ">+关注</a>
+						<!--{else}-->
+						<!--{if empty($_G['uid'])}-->
+						<a id="share_space" href="home.php?mod=spacecp&ac=share&type=space&id=<!--{$uid}-->" onclick="showWindow(this.id, this.href, 'get', 0);" style="font-family:'微软雅黑' ">+关注</a>
+						<!--{elseif $guanzhu[buddy] == '1'}-->
+						<a id="share_space" href="javascript:void(0)" onclick="guanzhu(<!--{$uid}-->);" style="font-family:'微软雅黑' ">已关注</a>
+						<!--{else}-->
+						<a id="share_space" href="javascript:void(0)" onclick="guanzhu(<!--{$uid}-->);" style="font-family:'微软雅黑' ">+关注</a>
+						<!--{/if}-->
+						<!--{/if}-->
+						</li>
+						<li class="z"><!--{if $space['self']}--><a href="home.php?mod=spacecp&ac=weibo&op=refer" style="font-family:'微软雅黑' "><!--{else}--><a href="home.php?mod=space&do=common&op=refer&uid=<!--{$uid}-->" style="font-family:'微软雅黑' "><!--{/if}-->@他</a></li>
+				</ul>
+				<div class="cxzs_duan" style="color:#88898d; font-family:'微软雅黑' ">诚信指数</div>
+			</div>
+			<div class="z biaoge_d">
+				<div class="bjse_d" style="color:#88898d; font-family:'微软雅黑' ">
+					<li class="biaoti_z" style="text-indent:10px;">老鹰球：<!--{$score[total_eagle]}--></li>     <li class="btxx_y">平均开球距离：<!--{$score[total_avglength]}--></li>
+				</div>
+					<div style="color:#88898d; font-family:'微软雅黑' ">
+					<li class="biaoti_z" style="text-indent:10px;">小鸟球：<!--{$score[total_birdie]}--></li>     <li class="btxx_y">开球上球道率：<!--{$score[total_shangdaolv]}--></li>
+					</div>
+					<div class="bjse_d" style="color:#88898d; font-family:'微软雅黑' ">
+					<li class="biaoti_z" style="text-indent:10px;">平均每轮推杆数：<!--{$score[total_avepush]}-->  </li><li class="btxx_y">开球上球道：<!--{$score[total_shangdao]}--></li>
+					</div>
+					<div style="color:#88898d; font-family:'微软雅黑' ">
+					<li class="biaoti_z" style="text-indent:10px;">最远击球距离：<!--{$score[total_furthest]}--></li><li class="btxx_y">标准杆上果岭率：<!--{$score[total_greenslv]}--></li>
+					</div>
+					<div class="bjse_d" style="color:#88898d; font-family:'微软雅黑' ">
+					<li class="biaoti_z" style="text-indent:10px;">柏忌数：<!--{$score[total_bogi]}--></li>     <li class="btxx_y">标准杆上果岭后平均推球数：<!--{$score[total_avepushs]}--></li>
+					</div>
+					<div style="color:#88898d; font-family:'微软雅黑' ">
+					<li class="biaoti_z" style="text-indent:10px;">双柏忌数：<!--{$score[total_doubles]}--></li>   <li class="btxx_y">标准杆上果岭后总推杆数：<!--{$score[total_pushs]}--></li>
+					</div>
+					<div class="bjse_d" style="color:#88898d; font-family:'微软雅黑' ">
+					<li class="biaoti_z" style="text-indent:10px;">其它：<!--{$score[total_other]}--></li>       <li class="btxx_y">沙坑救球率：<!--{$score[total_bunkerlv]}--></li>
+					</div>
+					<div style="color:#88898d; font-family:'微软雅黑' ">
+					<li class="biaoti_z" style="text-indent:10px;">被罚杆：<!--{$score[total_penalty]}--></li>     <li class="btxx_y">沙坑救球：<!--{$score[total_bunker]}--></li>
+					</div>
+					<div class="bjse_d" style="color:#88898d; font-family:'微软雅黑' ">
+					<li class="biaoti_z" style="text-indent:10px;">打平标准杆：<!--{$score[total_evenpar]}--></li>  <li class="btxx_y"></li>
+				</div>
+			</div>
+			<div class="y">
+				<!--{if $space['self']}--><a href="home.php?mod=spacecp&ac=score"><!--{else}--><a href="home.php?mod=space&do=common&op=score&uid=<!--{$uid}-->"><!--{/if}--><img src="{STATICURL}space/person/images/duan_cjk.jpg" width="272" height="151" border="0"></a>
+			</div>
+		</div>
+		<div class="clear"></div>
+	</div>
+	<div class="footxx_duan"></div>
+</div>
