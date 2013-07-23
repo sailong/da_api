@@ -1,0 +1,58 @@
+<include file="../public/header_dialog" />
+<table border="0" cellspacing="0" cellpadding="0" style="width:500px;">
+<tr>
+<td>
+<!--/dialog_start-->
+
+	<table class="add_table" border="0" cellspacing="0" cellpadding="0" >
+		<tbody>
+		<tr>
+					<th>编号：</th>
+						<td>{$data.qiutong_number}</td>
+				</tr>
+				<tr>
+					<th>球童姓名：</th>
+						<td>{$data.qiutong_name}</td>
+				</tr>
+				<tr>
+					<th>球童英文名：</th>
+						<td>{$data.qiutong_name_en}</td>
+				</tr>
+				<tr>
+					<th>球童UID：</th>
+						<td>{$data.uid}</td>
+				</tr>
+				<tr>
+					<th>球童照片：</th>
+						<td>{$data.qiutong_photo}</td>
+				</tr>
+				<tr>
+					<th>所属球场：</th>
+						<td>{$data.field_uid}</td>
+				</tr>
+				<tr>
+					<th>球童介绍：</th>
+						<td>{$data.qiutong_content}</td>
+				</tr>
+				<tr>
+					<th>添加时间：</th>
+					<td>{$data.qiutong_addtime|format_to_time}</td>
+					
+				</tr>
+				
+		</tbody>
+		<tfoot>
+			<tr>
+				<th></th>
+				<td>
+					<input type="button" class="btn_w" onclick="close_dialog(this)" value="关闭" />
+				</td>
+		</tfoot>
+	</table><!--/add_table-->
+
+<!--/dialog_end-->
+</td>
+</tr>
+</table>
+
+<include file="../public/_footer" />

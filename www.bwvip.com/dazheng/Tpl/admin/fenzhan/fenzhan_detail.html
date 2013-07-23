@@ -1,0 +1,68 @@
+<include file="../public/header_dialog" />
+<table border="0" cellspacing="0" cellpadding="0" style="width:500px;">
+<tr>
+<td>
+<!--/dialog_start-->
+
+	<table class="add_table" border="0" cellspacing="0" cellpadding="0" >
+		<tbody>
+		<tr>
+					<th>所属赛事：</th>
+						<td>{$data.sid}</td>
+				</tr>
+				<tr>
+					<th>分站名称：</th>
+						<td>{$data.fenz_name}</td>
+				</tr>
+				<tr>
+					<th>所在球场：</th>
+						<td>{$data.field_id}</td>
+				</tr>
+				<tr>
+					<th>年份：</th>
+						<td>{$data.year}</td>
+				</tr>
+				<tr>
+					<th>时间表：</th>
+						<td>{$data.timepic}</td>
+				</tr>
+				<tr>
+					<th>开始时间：</th>
+					<td>{$data.starttime|format_to_time}</td>
+					
+				</tr>
+				<tr>
+					<th>结束时间：</th>
+					<td>{$data.endtime|format_to_time}</td>
+					
+				</tr>
+				<tr>
+					<th>排序：</th>
+						<td>{$data.orderby}</td>
+				</tr>
+				<tr>
+					<th>状态：</th>
+						<td>{$data.is_delete}</td>
+				</tr>
+				<tr>
+					<th>添加时间：</th>
+					<td>{$data.addtime|format_to_time}</td>
+					
+				</tr>
+				
+		</tbody>
+		<tfoot>
+			<tr>
+				<th></th>
+				<td>
+					<input type="button" class="btn_w" onclick="close_dialog(this)" value="关闭" />
+				</td>
+		</tfoot>
+	</table><!--/add_table-->
+
+<!--/dialog_end-->
+</td>
+</tr>
+</table>
+
+<include file="../public/_footer" />

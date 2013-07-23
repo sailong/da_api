@@ -1,0 +1,32 @@
+<include file="../public/header_dialog" />
+<table border="0" cellspacing="0" cellpadding="0" style="width:700px;">
+<tr>
+<td>
+<!--/dialog_start-->
+	<table class="add_table" border="0" cellspacing="0" cellpadding="0" >
+		<tbody>
+		<php>if($info){</php>
+			<tr>
+				<td>暂无数据</td>
+			</tr>
+		<php>}else{</php>
+			<tr>
+				<td><img src="{$pic}"/></td>
+			</tr>
+		<php>}</php>
+		</tbody>
+		<tfoot>
+			<tr>
+			<td>
+				<input type="button" class="btn_w" onclick="close_dialog(this)" value="关闭" />
+			</td>
+			</tr>
+		</tfoot>
+	</table><!--/add_table-->
+
+<!--/dialog_end-->
+</td>
+</tr>
+</table>
+
+<include file="../public/_footer" />

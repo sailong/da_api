@@ -1,0 +1,485 @@
+<include file="../public/header_dialog" />
+{$usejs}
+
+<div class="so_main">
+
+  <div class="page_tit">球场管理</div>
+  <div class="tit_tab">
+	<ul>
+		<li><a class=on href="#">修改球场</a></li>
+	</ul>
+  </div>
+
+<table border="0" cellspacing="0" cellpadding="0" style="width:900px;">
+<tr>
+<td>
+<!--/dialog_start-->
+
+<form method="post" id="act_form" name="act_form" action="{:U('admin/field/field_edit_action')}" enctype="multipart/form-data">
+	<table class="add_table" border="0" cellspacing="0" cellpadding="0" >
+			
+		<tbody>
+				<tr>
+				<th></th>
+				<td>
+					
+					<input type="submit" class="btn_b" value="保存" style="margin-right:10px;"/>
+					
+				</td>
+				</tr>
+
+				<tr>
+					<th>纬度_X：</th>
+					<td><input type="text" name="map_x" id="map_x" class="mod_input2" style="width:300px;"  value="{$data.map_x}"></td>
+				</tr>
+				<tr>
+					<th>经度_Y：</th>
+					<td><input type="text" name="map_y" id="map_y" class="mod_input2" style="width:300px;"  value="{$data.map_y}"></td>
+				</tr>
+				<tr>
+					<th></th>
+					<td></td>
+				</tr>
+
+				<tr>
+					<th style="width:180px;">球场id：</th>
+					<td><input type="text" name="fieldid" id="fieldid" class="mod_input2" style="width:66px;"  value="{$data.fieldid}"></td>
+				</tr>
+				<tr>
+					<th>用户id：</th>
+					<td><input type="text" name="uid" id="uid" class="mod_input2" style="width:66px;"  value="{$data.uid}"></td>
+				</tr>
+				<tr>
+					<th>球场昵称：</th>
+					<td><input type="text" name="nickname" id="nickname" class="mod_input2" style="width:300px;"  value="{$data.nickname}"></td>
+				</tr>
+				<tr>
+					<th>球场名称：</th>
+					<td><input type="text" name="fieldname" id="fieldname" class="mod_input2" style="width:300px;"  value="{$data.fieldname}"></td>
+				</tr>
+				<tr>
+					<th>供应商id：</th>
+					<td><input type="text" name="supplierid" id="supplierid" class="mod_input2" style="width:66px;"  value="{$data.supplierid}"></td>
+				</tr>
+				<tr>
+					<th>国家：</th>
+					<td><input type="text" name="countryid" id="countryid" class="mod_input2" style="width:66px;"  value="{$data.countryid}"></td>
+				</tr>
+				<tr>
+					<th>省ID：</th>
+					<td><input type="text" name="provinceid" id="provinceid" class="mod_input2" style="width:66px;"  value="{$data.provinceid}"></td>
+				</tr>
+				<tr>
+					<th>市ID：</th>
+					<td><input type="text" name="cityid" id="cityid" class="mod_input2" style="width:66px;"  value="{$data.cityid}"></td>
+				</tr>
+				<tr>
+					<th>区ID：</th>
+					<td><input type="text" name="countyid" id="countyid" class="mod_input2" style="width:66px;"  value="{$data.countyid}"></td>
+				</tr>
+				<tr>
+					<th>省：</th>
+					<td><input type="text" name="province" id="province" class="mod_input2" style="width:300px;"  value="{$data.province}"></td>
+				</tr>
+				<tr>
+					<th>市：</th>
+					<td><input type="text" name="city" id="city" class="mod_input2" style="width:300px;"  value="{$data.city}"></td>
+				</tr>
+				<tr>
+					<th>国家：</th>
+					<td><input type="text" name="county" id="county" class="mod_input2" style="width:300px;"  value="{$data.county}"></td>
+				</tr>
+				<tr>
+					<th>球场logo：</th>
+					<td><input type="text" name="logoimg" id="logoimg" class="mod_input2" style="width:500px;"  value="{$data.logoimg}"></td>
+				</tr>
+				<tr>
+					<th>球场图：</th>
+					<td><input type="text" name="fieldimg" id="fieldimg" class="mod_input2" style="width:500px;"  value="{$data.fieldimg}"></td>
+				</tr>
+				<tr>
+					<th>交通图：</th>
+					<td><input type="text" name="mapimg" id="mapimg" class="mod_input2" style="width:500px;"  value="{$data.mapimg}"></td>
+				</tr>
+				<tr>
+					<th>球场名称：</th>
+					<td><input type="text" name="seesum" id="seesum" class="mod_input2" style="width:66px;"  value="{$data.seesum}"></td>
+				</tr>
+				<tr>
+					<th>球洞数：</th>
+					<td><input type="text" name="cup" id="cup" class="mod_input2" style="width:300px;"  value="{$data.cup}"></td>
+				</tr>
+				<tr>
+					<th>球场电话：</th>
+					<td><input type="text" name="fieldphone" id="fieldphone" class="mod_input2" style="width:300px;"  value="{$data.fieldphone}"></td>
+				</tr>
+				<tr>
+					<th>订场电话：</th>
+					<td><input type="text" name="coourtphone" id="coourtphone" class="mod_input2" style="width:300px;"  value="{$data.coourtphone}"></td>
+				</tr>
+				<tr>
+					<th>传真：</th>
+					<td><input type="text" name="fax" id="fax" class="mod_input2" style="width:300px;"  value="{$data.fax}"></td>
+				</tr>
+				<tr>
+					<th>邮编：</th>
+					<td><input type="text" name="postcode" id="postcode" class="mod_input2" style="width:300px;"  value="{$data.postcode}"></td>
+				</tr>
+				<tr>
+					<th>邮箱：</th>
+					<td><input type="text" name="email" id="email" class="mod_input2" style="width:300px;"  value="{$data.email}"></td>
+				</tr>
+				<tr>
+					<th>地址：</th>
+					<td><input type="text" name="address" id="address" class="mod_input2" style="width:600px;"  value="{$data.address}"></td>
+				</tr>
+				<tr>
+					<th>合作方式：</th>
+					<td><input type="text" name="partnering" id="partnering" class="mod_input2" style="width:300px;"  value="{$data.partnering}"></td>
+				</tr>
+				<tr>
+					<th>官方网站：</th>
+					<td><input type="text" name="website" id="website" class="mod_input2" style="width:300px;"  value="{$data.website}"></td>
+				</tr>
+				<tr>
+					<th>建造时间：</th>
+					<td><input type="text" name="buildtime" id="buildtime" class="mod_input2" style="width:300px;"  value="{$data.buildtime}"></td>
+				</tr>
+				<tr>
+					<th>开场时间：</th>
+					<td><input type="text" name="teetime" id="teetime" class="mod_input2" style="width:300px;"  value="{$data.teetime}"></td>
+				</tr>
+				<tr>
+					<th>封场时间：</th>
+					<td><input type="text" name="freetime" id="freetime" class="mod_input2" style="width:300px;"  value="{$data.freetime}"></td>
+				</tr>
+				<tr>
+					<th>球场性质：</th>
+					<td><input type="text" name="properties" id="properties" class="mod_input2" style="width:300px;"  value="{$data.properties}"></td>
+				</tr>
+				<tr>
+					<th>球场类型：</th>
+					<td><input type="text" name="fieldclass" id="fieldclass" class="mod_input2" style="width:66px;"  value="{$data.fieldclass}"></td>
+				</tr>
+				<tr>
+					<th>全包价平日门市价：</th>
+					<td><input type="text" name="weekdayrackrates" id="weekdayrackrates" class="mod_input2" style="width:300px;"  value="{$data.weekdayrackrates}"></td>
+				</tr>
+				<tr>
+					<th>全包价假日门市价：</th>
+					<td><input type="text" name="holidayrackrates" id="holidayrackrates" class="mod_input2" style="width:300px;"  value="{$data.holidayrackrates}"></td>
+				</tr>
+				<tr>
+					<th>全包价平日会员价：</th>
+					<td><input type="text" name="ordinarymember" id="ordinarymember" class="mod_input2" style="width:300px;"  value="{$data.ordinarymember}"></td>
+				</tr>
+				<tr>
+					<th>全包价假日会员价：</th>
+					<td><input type="text" name="holidaymember" id="holidaymember" class="mod_input2" style="width:300px;"  value="{$data.holidaymember}"></td>
+				</tr>
+				<tr>
+					<th>价格说明：</th>
+					<td><textarea name="priceremark" id="priceremark" class="mod_input2" style="width:400px; height:100px;">{$data.priceremark}</textarea></td>
+				</tr>
+				<tr>
+					<th>果岭费平日会员价：</th>
+					<td><input type="text" name="greenordinarymember" id="greenordinarymember" class="mod_input2" style="width:300px;"  value="{$data.greenordinarymember}"></td>
+				</tr>
+				<tr>
+					<th>果岭费平日嘉宾价：</th>
+					<td><input type="text" name="greenordinaryhonored" id="greenordinaryhonored" class="mod_input2" style="width:300px;"  value="{$data.greenordinaryhonored}"></td>
+				</tr>
+				<tr>
+					<th>果岭费平日访客价：</th>
+					<td><input type="text" name="greenordinaryvisitor" id="greenordinaryvisitor" class="mod_input2" style="width:300px;"  value="{$data.greenordinaryvisitor}"></td>
+				</tr>
+				<tr>
+					<th>果岭费假日会员价：</th>
+					<td><input type="text" name="greenholidaymember" id="greenholidaymember" class="mod_input2" style="width:300px;"  value="{$data.greenholidaymember}"></td>
+				</tr>
+				<tr>
+					<th>果岭费假日嘉宾价：</th>
+					<td><input type="text" name="greenholidayhonored" id="greenholidayhonored" class="mod_input2" style="width:300px;"  value="{$data.greenholidayhonored}"></td>
+				</tr>
+				<tr>
+					<th>果岭费平日访客价：</th>
+					<td><input type="text" name="greenholidayvisitor" id="greenholidayvisitor" class="mod_input2" style="width:300px;"  value="{$data.greenholidayvisitor}"></td>
+				</tr>
+				<tr>
+					<th>球童费单包价：</th>
+					<td><input type="text" name="caddiefeeone" id="caddiefeeone" class="mod_input2" style="width:300px;"  value="{$data.caddiefeeone}"></td>
+				</tr>
+				<tr>
+					<th>球车费单人价：</th>
+					<td><input type="text" name="cartfeeone" id="cartfeeone" class="mod_input2" style="width:300px;"  value="{$data.cartfeeone}"></td>
+				</tr>
+				<tr>
+					<th>球童费双包价：</th>
+					<td><input type="text" name="caddiefeetwo" id="caddiefeetwo" class="mod_input2" style="width:300px;"  value="{$data.caddiefeetwo}"></td>
+				</tr>
+				<tr>
+					<th>球车费双人价：</th>
+					<td><input type="text" name="cartfeetwo" id="cartfeetwo" class="mod_input2" style="width:300px;"  value="{$data.cartfeetwo}"></td>
+				</tr>
+				<tr>
+					<th>设施费：</th>
+					<td><input type="text" name="facilityfee" id="facilityfee" class="mod_input2" style="width:300px;"  value="{$data.facilityfee}"></td>
+				</tr>
+				<tr>
+					<th>更衣柜：</th>
+					<td><input type="text" name="lockerfee" id="lockerfee" class="mod_input2" style="width:300px;"  value="{$data.lockerfee}"></td>
+				</tr>
+				<tr>
+					<th>保险费：</th>
+					<td><input type="text" name="insurance" id="insurance" class="mod_input2" style="width:300px;"  value="{$data.insurance}"></td>
+				</tr>
+				<tr>
+					<th>租赁费球杆：</th>
+					<td><input type="text" name="clubrentalfee" id="clubrentalfee" class="mod_input2" style="width:300px;"  value="{$data.clubrentalfee}"></td>
+				</tr>
+				<tr>
+					<th>租赁费球鞋：</th>
+					<td><input type="text" name="bootrentalfee" id="bootrentalfee" class="mod_input2" style="width:300px;"  value="{$data.bootrentalfee}"></td>
+				</tr>
+				<tr>
+					<th>租赁费球伞：</th>
+					<td><input type="text" name="umbrellafee" id="umbrellafee" class="mod_input2" style="width:300px;"  value="{$data.umbrellafee}"></td>
+				</tr>
+				<tr>
+					<th>租赁费存包：</th>
+					<td><input type="text" name="bagrentalfee" id="bagrentalfee" class="mod_input2" style="width:300px;"  value="{$data.bagrentalfee}"></td>
+				</tr>
+				<tr>
+					<th>陪走费：</th>
+					<td><input type="text" name="accompanyfee" id="accompanyfee" class="mod_input2" style="width:300px;"  value="{$data.accompanyfee}"></td>
+				</tr>
+				<tr>
+					<th>教练费：</th>
+					<td><input type="text" name="trainerfee" id="trainerfee" class="mod_input2" style="width:300px;"  value="{$data.trainerfee}"></td>
+				</tr>
+				<tr>
+					<th>贵宾休息室：</th>
+					<td><input type="text" name="visitantlounge" id="visitantlounge" class="mod_input2" style="width:300px;"  value="{$data.visitantlounge}"></td>
+				</tr>
+				<tr>
+					<th>配套设施酒店：</th>
+					<td><input type="text" name="cabaretfacility" id="cabaretfacility" class="mod_input2" style="width:300px;"  value="{$data.cabaretfacility}"></td>
+				</tr>
+				<tr>
+					<th>配套设施餐饮：</th>
+					<td><input type="text" name="diningfacility" id="diningfacility" class="mod_input2" style="width:300px;"  value="{$data.diningfacility}"></td>
+				</tr>
+				<tr>
+					<th>配套设施休闲：</th>
+					<td><input type="text" name="leisurefacility" id="leisurefacility" class="mod_input2" style="width:300px;"  value="{$data.leisurefacility}"></td>
+				</tr>
+				<tr>
+					<th>球场简介：</th>
+					<td><textarea name="fieldcontent" id="fieldcontent" class="mod_input2" style="width:400px; height:100px;">{$data.fieldcontent}</textarea></td>
+				</tr>
+				<tr>
+					<th>设计师：</th>
+					<td><input type="text" name="designer" id="designer" class="mod_input2" style="width:300px;"  value="{$data.designer}"></td>
+				</tr>
+				<tr>
+					<th>球道草种：</th>
+					<td><input type="text" name="fieldherb" id="fieldherb" class="mod_input2" style="width:300px;"  value="{$data.fieldherb}"></td>
+				</tr>
+				<tr>
+					<th>果岭草种：</th>
+					<td><input type="text" name="herb" id="herb" class="mod_input2" style="width:300px;"  value="{$data.herb}"></td>
+				</tr>
+				<tr>
+					<th>标准杆：</th>
+					<td><input type="text" name="standardpar" id="standardpar" class="mod_input2" style="width:300px;"  value="{$data.standardpar}"></td>
+				</tr>
+				<tr>
+					<th>球道长度：</th>
+					<td><input type="text" name="length" id="length" class="mod_input2" style="width:300px;"  value="{$data.length}"></td>
+				</tr>
+				<tr>
+					<th>球场面积：</th>
+					<td><input type="text" name="area" id="area" class="mod_input2" style="width:300px;"  value="{$data.area}"></td>
+				</tr>
+				<tr>
+					<th>配套设施：</th>
+					<td><input type="text" name="facility" id="facility" class="mod_input2" style="width:300px;"  value="{$data.facility}"></td>
+				</tr>
+				<tr>
+					<th>距机场距离：</th>
+					<td><input type="text" name="airport" id="airport" class="mod_input2" style="width:300px;"  value="{$data.airport}"></td>
+				</tr>
+				<tr>
+					<th>距市中心距离：</th>
+					<td><input type="text" name="citycenter" id="citycenter" class="mod_input2" style="width:300px;"  value="{$data.citycenter}"></td>
+				</tr>
+				<tr>
+					<th>行车路线：</th>
+					<td><input type="text" name="travelway" id="travelway" class="mod_input2" style="width:300px;"  value="{$data.travelway}"></td>
+				</tr>
+				<tr>
+					<th>周围景点：</th>
+					<td><input type="text" name="aroundviews" id="aroundviews" class="mod_input2" style="width:300px;"  value="{$data.aroundviews}"></td>
+				</tr>
+				<tr>
+					<th>球场评星：</th>
+					<td><input type="text" name="star" id="star" class="mod_input2" style="width:300px;"  value="{$data.star}"></td>
+				</tr>
+				<tr>
+					<th>MSN价格备注：</th>
+					<td><input type="text" name="pricein" id="pricein" class="mod_input2" style="width:300px;"  value="{$data.pricein}"></td>
+				</tr>
+				<tr>
+					<th>white：</th>
+					<td><input type="text" name="white" id="white" class="mod_input2" style="width:300px;"  value="{$data.white}"></td>
+				</tr>
+				<tr>
+					<th>gold：</th>
+					<td><input type="text" name="gold" id="gold" class="mod_input2" style="width:300px;"  value="{$data.gold}"></td>
+				</tr>
+				<tr>
+					<th>blue：</th>
+					<td><input type="text" name="blue" id="blue" class="mod_input2" style="width:300px;"  value="{$data.blue}"></td>
+				</tr>
+				<tr>
+					<th>red：</th>
+					<td><input type="text" name="red" id="red" class="mod_input2" style="width:300px;"  value="{$data.red}"></td>
+				</tr>
+				<tr>
+					<th>black：</th>
+					<td><input type="text" name="black" id="black" class="mod_input2" style="width:300px;"  value="{$data.black}"></td>
+				</tr>
+				<tr>
+					<th>handicpa：</th>
+					<td><input type="text" name="handicpa" id="handicpa" class="mod_input2" style="width:300px;"  value="{$data.handicpa}"></td>
+				</tr>
+				<tr>
+					<th>标准杆：</th>
+					<td><input type="text" name="par" id="par" class="mod_input2" style="width:300px;"  value="{$data.par}"></td>
+				</tr>
+				
+				<tr>
+					<th>录入人：</th>
+					<td><input type="text" name="adduser" id="adduser" class="mod_input2" style="width:66px;"  value="{$data.adduser}"></td>
+				</tr>
+				
+		</tbody>
+		<tfoot>
+			<tr>
+				<th></th>
+				<td>
+					<input type="hidden" name="id" value="{$data.id}">
+					<input type="submit" class="btn_b" value="保存" style="margin-right:10px;"/>
+					<input type="button" class="btn_w" onclick="close_dialog(this)" value="取消" />
+				</td>
+		</tfoot>
+	</table><!--/add_table-->
+</form>
+
+<script>
+$(document).ready(function(){
+$.formValidator.initConfig({formID:"act_form",theme:'ArrowSolidBox',mode:'AutoTip',onError:function(msg){msg_error(msg)},inIframe:true});
+
+	$("#fieldid").formValidator({empty:true,onShow:"请输入球场id",onFocus:"请输入球场id",onCorrect:"输入正确"}).inputValidator({min:1,max:11,onError:"请输入球场id"});
+		$("#uid").formValidator({empty:true,onShow:"请输入用户id",onFocus:"请输入用户id",onCorrect:"输入正确"}).inputValidator({min:1,max:11,onError:"请输入用户id"});
+		$("#nickname").formValidator({empty:true,onShow:"请输入球场昵称",onFocus:"请输入球场昵称",onCorrect:"输入正确"}).inputValidator({min:1,max:50,onError:"请输入球场昵称"});
+		$("#fieldname").formValidator({empty:true,onShow:"请输入球场名称",onFocus:"请输入球场名称",onCorrect:"输入正确"}).inputValidator({min:1,max:50,onError:"请输入球场名称"});
+		$("#supplierid").formValidator({empty:true,onShow:"请输入供应商id",onFocus:"请输入供应商id",onCorrect:"输入正确"}).inputValidator({min:1,max:11,onError:"请输入供应商id"});
+		$("#countryid").formValidator({empty:true,onShow:"请输入国家",onFocus:"请输入国家",onCorrect:"输入正确"}).inputValidator({min:1,max:11,onError:"请输入国家"});
+		$("#provinceid").formValidator({empty:true,onShow:"请输入省ID",onFocus:"请输入省ID",onCorrect:"输入正确"}).inputValidator({min:1,max:11,onError:"请输入省ID"});
+		$("#cityid").formValidator({empty:true,onShow:"请输入市ID",onFocus:"请输入市ID",onCorrect:"输入正确"}).inputValidator({min:1,max:11,onError:"请输入市ID"});
+		$("#countyid").formValidator({empty:true,onShow:"请输入区ID",onFocus:"请输入区ID",onCorrect:"输入正确"}).inputValidator({min:1,max:11,onError:"请输入区ID"});
+		$("#province").formValidator({empty:true,onShow:"请输入省",onFocus:"请输入省",onCorrect:"输入正确"}).inputValidator({min:1,max:50,onError:"请输入省"});
+		$("#city").formValidator({empty:true,onShow:"请输入市",onFocus:"请输入市",onCorrect:"输入正确"}).inputValidator({min:1,max:50,onError:"请输入市"});
+		$("#county").formValidator({empty:true,onShow:"请输入国家",onFocus:"请输入国家",onCorrect:"输入正确"}).inputValidator({min:1,max:50,onError:"请输入国家"});
+		$("#logoimg").formValidator({empty:true,onShow:"请输入球场logo",onFocus:"请输入球场logo",onCorrect:"输入正确"}).inputValidator({min:1,max:200,onError:"请输入球场logo"});
+		$("#fieldimg").formValidator({empty:true,onShow:"请输入球场图",onFocus:"请输入球场图",onCorrect:"输入正确"}).inputValidator({min:1,max:200,onError:"请输入球场图"});
+		$("#mapimg").formValidator({empty:true,onShow:"请输入交通图",onFocus:"请输入交通图",onCorrect:"输入正确"}).inputValidator({min:1,max:200,onError:"请输入交通图"});
+		$("#seesum").formValidator({empty:true,onShow:"请输入球场名称",onFocus:"请输入球场名称",onCorrect:"输入正确"}).inputValidator({min:1,max:11,onError:"请输入球场名称"});
+		$("#cup").formValidator({empty:true,onShow:"请输入球洞数",onFocus:"请输入球洞数",onCorrect:"输入正确"}).inputValidator({min:1,max:50,onError:"请输入球洞数"});
+		$("#fieldphone").formValidator({empty:true,onShow:"请输入球场电话",onFocus:"请输入球场电话",onCorrect:"输入正确"}).inputValidator({min:1,max:50,onError:"请输入球场电话"});
+		$("#coourtphone").formValidator({empty:true,onShow:"请输入订场电话",onFocus:"请输入订场电话",onCorrect:"输入正确"}).inputValidator({min:1,max:50,onError:"请输入订场电话"});
+		$("#fax").formValidator({empty:true,onShow:"请输入传真",onFocus:"请输入传真",onCorrect:"输入正确"}).inputValidator({min:1,max:50,onError:"请输入传真"});
+		$("#postcode").formValidator({empty:true,onShow:"请输入邮编",onFocus:"请输入邮编",onCorrect:"输入正确"}).inputValidator({min:1,max:50,onError:"请输入邮编"});
+		$("#email").formValidator({empty:true,onShow:"请输入邮箱",onFocus:"请输入邮箱",onCorrect:"输入正确"}).inputValidator({min:1,max:50,onError:"请输入邮箱"});
+		$("#address").formValidator({empty:true,onShow:"请输入地址",onFocus:"请输入地址",onCorrect:"输入正确"}).inputValidator({min:1,max:100,onError:"请输入地址"});
+		$("#partnering").formValidator({empty:true,onShow:"请输入合作方式",onFocus:"请输入合作方式",onCorrect:"输入正确"}).inputValidator({min:1,max:50,onError:"请输入合作方式"});
+		$("#website").formValidator({empty:true,onShow:"请输入官方网站",onFocus:"请输入官方网站",onCorrect:"输入正确"}).inputValidator({min:1,max:50,onError:"请输入官方网站"});
+		$("#buildtime").formValidator({empty:true,onShow:"请输入建造时间",onFocus:"请输入建造时间",onCorrect:"输入正确"}).inputValidator({min:1,max:50,onError:"请输入建造时间"});
+		$("#teetime").formValidator({empty:true,onShow:"请输入开场时间",onFocus:"请输入开场时间",onCorrect:"输入正确"}).inputValidator({min:1,max:50,onError:"请输入开场时间"});
+		$("#freetime").formValidator({empty:true,onShow:"请输入封场时间",onFocus:"请输入封场时间",onCorrect:"输入正确"}).inputValidator({min:1,max:50,onError:"请输入封场时间"});
+		$("#properties").formValidator({empty:true,onShow:"请输入球场性质",onFocus:"请输入球场性质",onCorrect:"输入正确"}).inputValidator({min:1,max:50,onError:"请输入球场性质"});
+		$("#fieldclass").formValidator({empty:true,onShow:"请输入球场类型",onFocus:"请输入球场类型",onCorrect:"输入正确"}).inputValidator({min:1,max:11,onError:"请输入球场类型"});
+		$("#weekdayrackrates").formValidator({empty:true,onShow:"请输入全包价平日门市价",onFocus:"请输入全包价平日门市价",onCorrect:"输入正确"}).inputValidator({min:1,max:50,onError:"请输入全包价平日门市价"});
+		$("#holidayrackrates").formValidator({empty:true,onShow:"请输入全包价假日门市价",onFocus:"请输入全包价假日门市价",onCorrect:"输入正确"}).inputValidator({min:1,max:50,onError:"请输入全包价假日门市价"});
+		$("#ordinarymember").formValidator({empty:true,onShow:"请输入全包价平日会员价",onFocus:"请输入全包价平日会员价",onCorrect:"输入正确"}).inputValidator({min:1,max:50,onError:"请输入全包价平日会员价"});
+		$("#holidaymember").formValidator({empty:true,onShow:"请输入全包价假日会员价",onFocus:"请输入全包价假日会员价",onCorrect:"输入正确"}).inputValidator({min:1,max:50,onError:"请输入全包价假日会员价"});
+		$("#priceremark").formValidator({empty:true,onShow:"请输入价格说明",onFocus:"请输入价格说明",onCorrect:"输入正确"}).inputValidator({min:1,max:250,onError:"请输入价格说明"});
+		$("#greenordinarymember").formValidator({empty:true,onShow:"请输入果岭费平日会员价",onFocus:"请输入果岭费平日会员价",onCorrect:"输入正确"}).inputValidator({min:1,max:50,onError:"请输入果岭费平日会员价"});
+		$("#greenordinaryhonored").formValidator({empty:true,onShow:"请输入果岭费平日嘉宾价",onFocus:"请输入果岭费平日嘉宾价",onCorrect:"输入正确"}).inputValidator({min:1,max:50,onError:"请输入果岭费平日嘉宾价"});
+		$("#greenordinaryvisitor").formValidator({empty:true,onShow:"请输入果岭费平日访客价",onFocus:"请输入果岭费平日访客价",onCorrect:"输入正确"}).inputValidator({min:1,max:50,onError:"请输入果岭费平日访客价"});
+		$("#greenholidaymember").formValidator({empty:true,onShow:"请输入果岭费假日会员价",onFocus:"请输入果岭费假日会员价",onCorrect:"输入正确"}).inputValidator({min:1,max:50,onError:"请输入果岭费假日会员价"});
+		$("#greenholidayhonored").formValidator({empty:true,onShow:"请输入果岭费假日嘉宾价",onFocus:"请输入果岭费假日嘉宾价",onCorrect:"输入正确"}).inputValidator({min:1,max:50,onError:"请输入果岭费假日嘉宾价"});
+		$("#greenholidayvisitor").formValidator({empty:true,onShow:"请输入果岭费平日访客价",onFocus:"请输入果岭费平日访客价",onCorrect:"输入正确"}).inputValidator({min:1,max:50,onError:"请输入果岭费平日访客价"});
+		$("#caddiefeeone").formValidator({empty:true,onShow:"请输入球童费单包价",onFocus:"请输入球童费单包价",onCorrect:"输入正确"}).inputValidator({min:1,max:50,onError:"请输入球童费单包价"});
+		$("#cartfeeone").formValidator({empty:true,onShow:"请输入球车费单人价",onFocus:"请输入球车费单人价",onCorrect:"输入正确"}).inputValidator({min:1,max:50,onError:"请输入球车费单人价"});
+		$("#caddiefeetwo").formValidator({empty:true,onShow:"请输入球童费双包价",onFocus:"请输入球童费双包价",onCorrect:"输入正确"}).inputValidator({min:1,max:50,onError:"请输入球童费双包价"});
+		$("#cartfeetwo").formValidator({empty:true,onShow:"请输入球车费双人价",onFocus:"请输入球车费双人价",onCorrect:"输入正确"}).inputValidator({min:1,max:50,onError:"请输入球车费双人价"});
+		$("#facilityfee").formValidator({empty:true,onShow:"请输入设施费",onFocus:"请输入设施费",onCorrect:"输入正确"}).inputValidator({min:1,max:50,onError:"请输入设施费"});
+		$("#lockerfee").formValidator({empty:true,onShow:"请输入更衣柜",onFocus:"请输入更衣柜",onCorrect:"输入正确"}).inputValidator({min:1,max:50,onError:"请输入更衣柜"});
+		$("#insurance").formValidator({empty:true,onShow:"请输入保险费",onFocus:"请输入保险费",onCorrect:"输入正确"}).inputValidator({min:1,max:50,onError:"请输入保险费"});
+		$("#clubrentalfee").formValidator({empty:true,onShow:"请输入租赁费球杆",onFocus:"请输入租赁费球杆",onCorrect:"输入正确"}).inputValidator({min:1,max:50,onError:"请输入租赁费球杆"});
+		$("#bootrentalfee").formValidator({empty:true,onShow:"请输入租赁费球鞋",onFocus:"请输入租赁费球鞋",onCorrect:"输入正确"}).inputValidator({min:1,max:50,onError:"请输入租赁费球鞋"});
+		$("#umbrellafee").formValidator({empty:true,onShow:"请输入租赁费球伞",onFocus:"请输入租赁费球伞",onCorrect:"输入正确"}).inputValidator({min:1,max:50,onError:"请输入租赁费球伞"});
+		$("#bagrentalfee").formValidator({empty:true,onShow:"请输入租赁费存包",onFocus:"请输入租赁费存包",onCorrect:"输入正确"}).inputValidator({min:1,max:50,onError:"请输入租赁费存包"});
+		$("#accompanyfee").formValidator({empty:true,onShow:"请输入陪走费",onFocus:"请输入陪走费",onCorrect:"输入正确"}).inputValidator({min:1,max:50,onError:"请输入陪走费"});
+		$("#trainerfee").formValidator({empty:true,onShow:"请输入教练费",onFocus:"请输入教练费",onCorrect:"输入正确"}).inputValidator({min:1,max:50,onError:"请输入教练费"});
+		$("#visitantlounge").formValidator({empty:true,onShow:"请输入贵宾休息室",onFocus:"请输入贵宾休息室",onCorrect:"输入正确"}).inputValidator({min:1,max:200,onError:"请输入贵宾休息室"});
+		$("#cabaretfacility").formValidator({empty:true,onShow:"请输入配套设施酒店",onFocus:"请输入配套设施酒店",onCorrect:"输入正确"}).inputValidator({min:1,max:200,onError:"请输入配套设施酒店"});
+		$("#diningfacility").formValidator({empty:true,onShow:"请输入配套设施餐饮",onFocus:"请输入配套设施餐饮",onCorrect:"输入正确"}).inputValidator({min:1,max:200,onError:"请输入配套设施餐饮"});
+		$("#leisurefacility").formValidator({empty:true,onShow:"请输入配套设施休闲",onFocus:"请输入配套设施休闲",onCorrect:"输入正确"}).inputValidator({min:1,max:200,onError:"请输入配套设施休闲"});
+		$("#fieldcontent").formValidator({empty:true,onShow:"请输入球场简介",onFocus:"请输入球场简介",onCorrect:"输入正确"}).inputValidator({min:1,max:3000,onError:"请输入球场简介"});
+		$("#designer").formValidator({empty:true,onShow:"请输入设计师",onFocus:"请输入设计师",onCorrect:"输入正确"}).inputValidator({min:1,max:50,onError:"请输入设计师"});
+		$("#fieldherb").formValidator({empty:true,onShow:"请输入球道草种",onFocus:"请输入球道草种",onCorrect:"输入正确"}).inputValidator({min:1,max:50,onError:"请输入球道草种"});
+		$("#herb").formValidator({empty:true,onShow:"请输入果岭草种",onFocus:"请输入果岭草种",onCorrect:"输入正确"}).inputValidator({min:1,max:50,onError:"请输入果岭草种"});
+		$("#standardpar").formValidator({empty:true,onShow:"请输入标准杆",onFocus:"请输入标准杆",onCorrect:"输入正确"}).inputValidator({min:1,max:50,onError:"请输入标准杆"});
+		$("#length").formValidator({empty:true,onShow:"请输入球道长度",onFocus:"请输入球道长度",onCorrect:"输入正确"}).inputValidator({min:1,max:50,onError:"请输入球道长度"});
+		$("#area").formValidator({empty:true,onShow:"请输入球场面积",onFocus:"请输入球场面积",onCorrect:"输入正确"}).inputValidator({min:1,max:50,onError:"请输入球场面积"});
+		$("#facility").formValidator({empty:true,onShow:"请输入配套设施",onFocus:"请输入配套设施",onCorrect:"输入正确"}).inputValidator({min:1,max:50,onError:"请输入配套设施"});
+		$("#airport").formValidator({empty:true,onShow:"请输入距机场距离",onFocus:"请输入距机场距离",onCorrect:"输入正确"}).inputValidator({min:1,max:50,onError:"请输入距机场距离"});
+		$("#citycenter").formValidator({empty:true,onShow:"请输入距市中心距离",onFocus:"请输入距市中心距离",onCorrect:"输入正确"}).inputValidator({min:1,max:50,onError:"请输入距市中心距离"});
+		$("#travelway").formValidator({empty:true,onShow:"请输入行车路线",onFocus:"请输入行车路线",onCorrect:"输入正确"}).inputValidator({min:1,max:300,onError:"请输入行车路线"});
+		$("#aroundviews").formValidator({empty:true,onShow:"请输入周围景点",onFocus:"请输入周围景点",onCorrect:"输入正确"}).inputValidator({min:1,max:50,onError:"请输入周围景点"});
+		$("#star").formValidator({empty:true,onShow:"请输入球场评星",onFocus:"请输入球场评星",onCorrect:"输入正确"}).inputValidator({min:1,max:50,onError:"请输入球场评星"});
+		$("#pricein").formValidator({empty:true,onShow:"请输入MSN价格备注",onFocus:"请输入MSN价格备注",onCorrect:"输入正确"}).inputValidator({min:1,max:50,onError:"请输入MSN价格备注"});
+		$("#white").formValidator({empty:true,onShow:"请输入white",onFocus:"请输入white",onCorrect:"输入正确"}).inputValidator({min:1,max:200,onError:"请输入white"});
+		$("#gold").formValidator({empty:true,onShow:"请输入gold",onFocus:"请输入gold",onCorrect:"输入正确"}).inputValidator({min:1,max:200,onError:"请输入gold"});
+		$("#blue").formValidator({empty:true,onShow:"请输入blue",onFocus:"请输入blue",onCorrect:"输入正确"}).inputValidator({min:1,max:200,onError:"请输入blue"});
+		$("#red").formValidator({empty:true,onShow:"请输入red",onFocus:"请输入red",onCorrect:"输入正确"}).inputValidator({min:1,max:200,onError:"请输入red"});
+		$("#black").formValidator({empty:true,onShow:"请输入black",onFocus:"请输入black",onCorrect:"输入正确"}).inputValidator({min:1,max:200,onError:"请输入black"});
+		$("#handicpa").formValidator({empty:true,onShow:"请输入handicpa",onFocus:"请输入handicpa",onCorrect:"输入正确"}).inputValidator({min:1,max:50,onError:"请输入handicpa"});
+		$("#par").formValidator({empty:true,onShow:"请输入标准杆",onFocus:"请输入标准杆",onCorrect:"输入正确"}).inputValidator({min:1,max:50,onError:"请输入标准杆"});
+		$("#map_x").formValidator({empty:true,onShow:"请输入纬度",onFocus:"请输入纬度",onCorrect:"输入正确"}).inputValidator({min:1,max:50,onError:"请输入纬度"});
+		$("#map_y").formValidator({empty:true,onShow:"请输入经度",onFocus:"请输入经度",onCorrect:"输入正确"}).inputValidator({min:1,max:50,onError:"请输入经度"});
+		$("#adduser").formValidator({empty:true,onShow:"请输入录入人",onFocus:"请输入录入人",onCorrect:"输入正确"}).inputValidator({min:1,max:11,onError:"请输入录入人"});
+		
+
+	$.formValidator.reloadAutoTip();
+});
+
+function reloadAutoTip()
+{
+	$.formValidator.reloadAutoTip();
+}
+
+</script>
+
+
+<!--/dialog_end-->
+</td>
+</tr>
+</table>
+
+</div>
+
+<include file="../public/_footer" />

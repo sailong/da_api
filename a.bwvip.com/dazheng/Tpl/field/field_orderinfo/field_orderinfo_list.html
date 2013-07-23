@@ -1,0 +1,77 @@
+<include file="../public/_header" />
+<div class="so_main">
+  <div class="page_tit">订场信息列表</div>
+  <div class="tit_tab">
+	<ul>
+		<li><a <php> if(get("language")=='cn'){ echo " class=on ";}</php> href="{:U('field/field_orderinfo/field_orderlist',array('language'=>'cn'))}">中文</a></li>
+		<li><a <php> if(get("language")=='en'){ echo " class=on ";}</php> href="{:U('field/field_orderinfo/field_orderlist',array('language'=>'en'))}">英文</a></li>
+	</ul>
+	</div>
+  <div class="Toolbar_inbox">
+	<div class="page right">{$pages}</div>
+	<a href="{:U('field/field_orderinfo/orderinfo_add')}" class="btn_a"><span>添加订场信息</span></a>
+	<div class="clear"></div>
+  </div>
+  <div class="list">
+	<php>if($total>0){</php>
+	  <table width="100%" id="mod_table" border="0" cellspacing="0" cellpadding="0">
+	  <tr>
+		<!--<th style="width:30px;">
+			<input type="checkbox" id="checkbox_handle" onclick="select_all(this,'mod_table','checkbox')" value="0">
+			<label for="checkbox"></label>
+		</th>
+		--><th class="line_l">编号</th>
+		<th class="line_l">文章主标题</th>
+		<th class="line_l">会员订场电话</th>
+		<th class="line_l">非会员订场电话</th>
+		<th class="line_l">添加时间</th>
+		<th class="line_l">操作</th>
+	</tr>
+	<volist id="vo" name="info_list" key="k">
+	<tr overstyle="on"  id=ids_{$vo.field_orderinfo_id}>
+		<!--<td><input type="checkbox" name="checkbox" onclick="select_one(this)" value="{$vo.field_orderinfo_id}" ></td>-->
+		<td width="40">{$k}</td>
+		<td><a href="javascript:void(0);" onclick="mod_dialog('查看详细','{:U('field/field_orderinfo/orderinfo_detail', array('orderinfo_id'=>$vo['field_orderinfo_id'],'language'=>$language))}');">{$vo.field_orderinfo_title|default='null'}</a></td>
+	
+		<td>{$vo.field_orderinfo_is_memberphone|default='null'}</td>
+		<td>{$vo.field_orderinfo_isnot_memberphone|default='null'}</td>
+		<td>{$vo.field_orderinfo_addtime|format_to_time}</td>
+		<td>
+			<a href="{:U('field/field_orderinfo/orderinfo_edit', array('orderinfo_id'=>$vo['field_orderinfo_id'],'language'=>$language))}">修改</a> | 
+			<!--
+			<a href="javascript:void(0);"  onclick="mod_dialog('修改文章','{:U('field/arc/arc_edit', array('arc_id'=>$vo['arc_id']))}')">修改</a> | 
+			-->
+			<a href="{:U('field/field_orderinfo/orderinfo_del_action', array('orderinfo_id'=>$vo['field_orderinfo_id']))}">删除</a>
+		</td>
+	</tr>
+	</volist>
+    </table>
+	  <php>}else{</php>
+			<div class="no_data">
+				<img src="/skin/images/no_data.gif" align="absmiddle"> <span>没有信息... </span>
+			</div>
+	 <php>}</php>
+  </div>
+  <div class="Toolbar_inbox">
+	<div class="page right">{$pages}</div>
+	<a href="{:U('field/field_orderinfo/orderinfo_add')}" class="btn_a"><span>添加订场信息</span></a>
+	<div class="clear"></div>
+  </div>
+</div>
+  
+<script>
+	$(document).ready(function(){
+		$("tr[overstyle='on']").hover(
+		  function ()
+		  {
+		    $(this).addClass("bg_hover");
+		  },
+		  function (){
+		    $(this).removeClass("bg_hover");
+		  }
+		);
+	});
+</script>
+
+
+<include file="../public/_footer" />

@@ -1,0 +1,107 @@
+<include file="../public/_header" />
+<div class="so_main">
+  
+  <include file="../event/event_manage_header" />
+
+  <div class="tit_tab">
+	<ul>
+		<li style="line-height:30px;">1> 选择分站：</li>
+		<volist id="vo" name="fenzhan">
+		<li><a <php> if(get("fenzhan_id")==$vo['fenzhan_id']){ echo " class=on ";}</php> href="{:U('field/fenzu/fenzu',array('event_id'=>$event_id,'fenzhan_id'=>$vo['fenzhan_id']))}">{$vo['fenzhan_name']}</a></li>
+		</volist>
+	</ul>
+   </div>
+<div class="tit_tab_small">
+	<ul>
+		<li style="line-height:30px;">2> 选择轮数：</li>
+		<volist id="vo" name="lun_arr">
+		<li><a <php> if(get("lun")==$vo){ echo " class=on ";}</php> href="{:U('field/fenzu/fenzu',array('event_id'=>$event_id,'fenzhan_id'=>get('fenzhan_id'),'lun'=>$vo))}">第{$vo}轮</a></li>
+		</volist>
+	</ul>
+   </div>	      
+
+  <!--------list -------->
+  <div class="Toolbar_inbox">
+  	<div class="page right">{$pages}</div>
+
+	<a href="{:U('field/fenzu/fenzu_add',array('event_id'=>$event_id,'fenzhan_id'=>get('fenzhan_id')))}" class="btn_a"><span>添加赛事分组</span></a>
+	<a href="javascript:void(0);" class="btn_a"  onclick="mod_delete_batch('{:U('field/fenzu/fenzu_delete_action')}','mod_table');"><span>批量删除</span></a>
+
+	<div class="clear"></div>
+  </div>
+  <div class="list">
+	<php>if($total>0){</php>
+	  <table width="100%" id="mod_table" border="0" cellspacing="0" cellpadding="0">
+	  <tr>
+		<th style="width:30px;">
+			<input type="checkbox" id="checkbox_handle" onclick="select_all(this,'mod_table','checkbox')" value="0">
+			<label for="checkbox"></label>
+		</th>
+		<th class="line_l">分组编号</th>
+		<th class="line_l">分组名称</th>
+		<th class="line_l">轮次</th>
+		<th class="line_l">开球Tee</th>
+		<th class="line_l">开始比赛时间</th>
+		<th class="line_l">上/下午</th>
+		
+		<th class="line_l">所属赛事</th>
+		
+		<th class="line_l">所属分站</th>
+		<th class="line_l">添加时间</th>
+		<th class="line_l">操作</th>
+	</tr>
+	<volist id="vo" name="list">
+	<tr overstyle="on"  id=ids_{$vo["fenzu_id"]}>
+		<td><input type="checkbox" name="checkbox" onclick="select_one(this)" value="{$vo.fenzu_id}" ></td>
+		<td style="color:red;">{$vo.fenzu_number}</th>
+		<td>{$vo.fenzu_name}</th>
+			<td>{$vo.lun}</td>
+			<td>{$vo.fenzu_tee}</td>
+			<td>{$vo.fenzu_start_time|format_to_time}</td>
+			<td>{$vo.fenzu_ampm}</td>
+		
+			<td>{$vo.event_id}</td>
+		
+			<td>{$vo.fenzhan_name}</td>
+			<td>{$vo.fenzu_addtime|format_to_time}</td>
+		<td>
+			<a href="{:U('field/fenzu/fenzu_edit', array('event_id'=>$vo['event_id'],'fenzu_id'=>$vo['fenzu_id']))}">修改</a> | 
+			<a href="javascript:void(0);" onclick="mod_delete_one('{:U('field/fenzu/fenzu_delete_action')}','{$vo['fenzu_id']}');">删除</a>
+		</td>
+	</tr>
+	</volist>
+    </table>
+	  <php>}else{</php>
+			<div class="no_data">
+				<img src="/skin/images/no_data.gif" align="absmiddle"> <span>没有赛事分组... </span>
+			</div>
+	 <php>}</php>
+  </div>
+
+  <div class="Toolbar_inbox">
+	<div class="page right">{$pages}</div>
+
+	<a href="{:U('field/fenzu/fenzu_add',array('event_id'=>$event_id))}" class="btn_a"><span>添加赛事分组</span></a>
+	<a href="javascript:void(0);" class="btn_a"  onclick="mod_delete_batch('{:U('field/fenzu/fenzu_delete_action')}','mod_table');"><span>批量删除</span></a>
+
+
+	<div class="clear"></div>
+  </div>
+</div>
+
+<script>
+	$(document).ready(function(){
+		$("tr[overstyle='on']").hover(
+		  function ()
+		  {
+		    $(this).addClass("bg_hover");
+		  },
+		  function (){
+		    $(this).removeClass("bg_hover");
+		  }
+		);
+	});
+</script>
+
+
+<include file="../public/_footer" />

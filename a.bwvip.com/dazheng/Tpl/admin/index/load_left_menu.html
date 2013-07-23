@@ -1,0 +1,37 @@
+<include file="Public:_header"/>
+            <h3 class="f14"><span class="switchs cu on" title="相关设置"></span>相关设置</h3>
+            <ul>
+			<volist id="sub" name="sub_menu">
+                <li id="_MP{$sub.admin_menu_id}" class="sub_menu">
+                	<a href="javascript:_MP('{$sub.admin_menu_id}','{$sub.admin_menu_url}');" hidefocus="true" style="outline:none;">{$sub.admin_menu_name}</a>
+				</li>
+			</volist>
+            </ul>
+
+<script type="text/javascript">
+$(".switchs").each(function(i){
+	var ul = $(this).parent().next();
+	$(this).click(
+	function(){
+		if(ul.is(':visible')){
+			ul.hide();
+			$(this).removeClass('on');
+				}else{
+			ul.show();
+			$(this).addClass('on');
+		}
+	})
+});
+
+function _MP(menuid,targetUrl) {
+	//alert("sub");
+	$(window.parent.document).find("#rightMain").attr('src', targetUrl);
+	$('.sub_menu').removeClass("on fb blue");
+	$('#_MP'+menuid).addClass("on fb blue");
+	$.get("current_pos_"+menuid+".html", function(data){
+		$("#current_pos").html(data+'<span id="current_pos_attr"></span>');
+	});
+	$("#current_pos").data('clicknum', 1);
+}
+</script>
+<include file="Public:_footer"/>

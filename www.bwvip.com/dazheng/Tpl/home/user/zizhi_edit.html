@@ -1,0 +1,137 @@
+<include file="../Public/header_dialog" />
+<table border="0" cellspacing="0" cellpadding="0" style="width:700px;">
+<tr>
+<td>
+<!--/dialog_start-->
+
+<form method="post" id="act_form" name="act_form" action="{:U('home/user/zizhi_edit_action')}" enctype="multipart/form-data">
+	<table class="add_table" border="0" cellspacing="0" cellpadding="0" >
+		<tbody>
+				<tr>
+					<th>资质名称：</th>
+					<td>
+						<select name="zizhi_name2" id="zizhi_name2" >
+							<option value="">请选择</option>
+							{$dict1}
+						</select>
+						<script>set_select_value(document.act_form.zizhi_name2,'{$data.zizhi_name}');</script>
+						<input type="text" name="zizhi_name" id="zizhi_name" class="mod_input2" style="width:300px;display:none;"  value="{$data.zizhi_name}">
+					</td>
+					<td style="width:200px;">
+						<input type="checkbox" name="zt_1" value="Y" onclick="select_pro(this);">自填
+					</td>
+				</tr>
+				<tr>
+					<th>大类：</th>
+					<td>
+						<select name="zizhi_big_cat2" id="zizhi_big_cat2">
+							<option value="">请选择</option>
+							{$dict2}
+						</select>
+						<script>set_select_value(document.act_form.zizhi_big_cat2,'{$data.zizhi_big_cat}');</script>
+					<input type="text" name="zizhi_big_cat" id="zizhi_big_cat" class="mod_input2" style="width:300px;display:none;"  value="{$data.zizhi_big_cat}"></td>
+					<td><input type="checkbox" name="zt_2" value="Y" onclick="select_pro(this);">自填</td>
+				</tr>
+				<tr>
+					<th>小类：</th>
+					<td>
+						<select name="zizhi_small_cat2" id="zizhi_small_cat2">
+							<option value="">请选择</option>
+							{$dict3}
+						</select>
+						<script>set_select_value(document.act_form.zizhi_small_cat2,'{$data.zizhi_small_cat}');</script>
+						<input type="text" name="zizhi_small_cat" id="zizhi_small_cat" class="mod_input2" style="width:300px;display:none;"  value="{$data.zizhi_small_cat}">
+					</td>
+					<td><input type="checkbox" name="zt_3" value="Y" onclick="select_pro(this);">自填</td>
+				</tr>
+				<tr>
+					<th>颁发机关：</th>
+					<td>
+						<select name="zizhi_org2" id="zizhi_org2">
+							<option value="">请选择</option>
+							{$dict4}
+						</select>
+						<script>set_select_value(document.act_form.zizhi_org2,'{$data.zizhi_org}');</script>
+						<input type="text" name="zizhi_org" id="zizhi_org" class="mod_input2" style="width:300px;display:none;"  value="{$data.zizhi_org}">
+					</td>
+					<td><input type="checkbox" name="zt_4" value="Y" onclick="select_pro(this);">自填</td>
+				</tr>
+				<tr>
+					<th>级别：</th>
+					<td>
+						<select name="zizhi_level2" id="zizhi_level2">
+							<option value="">请选择</option>
+							{$dict5}
+						</select>
+						<script>set_select_value(document.act_form.zizhi_level2,'{$data.zizhi_level}');</script>
+					<input type="text" name="zizhi_level" id="zizhi_level" class="mod_input2" style="width:300px;display:none;"  value="{$data.zizhi_level}"></td>
+					<td><input type="checkbox" name="zt_5" value="Y" onclick="select_pro(this);">自填</td>
+				</tr>
+				<tr>
+					<th>有效期：</th>
+					<td><input type="text" name="zizhi_endtime" id="zizhi_endtime" class="mod_input2" style="width:100px;"  value="{$data.zizhi_endtime}"> 年 </td>
+					<td></td>
+				</tr>
+				
+		</tbody>
+		<tfoot>
+			<tr>
+				<th></th>
+				<td>
+					<input type="hidden" name="zizhi_id" value="{$data.zizhi_id}">
+					<input type="submit" class="btn_b" value="保存" style="margin-right:10px;"/>
+					<input type="button" class="btn_w" onclick="close_dialog(this)" value="取消" />
+				</td>
+				<td></td>
+		</tfoot>
+	</table><!--/add_table-->
+</form>
+
+<script>
+						function select_pro(obj)
+						{
+							//alert($(obj).attr('checked'));
+							if($(obj).attr("checked"))
+							{
+								$(obj).parent().parent().find("input.mod_input2").css("display","block");
+								$(obj).parent().parent().find("select").css("display","none");
+								//alert("ok");
+							}
+							else
+							{
+								$(obj).parent().parent().find("input.mod_input2").css("display","none");
+								$(obj).parent().parent().find("select").css("display","block");
+								//alert("no");
+							}
+						}
+						</script>
+
+<script>
+$(document).ready(function(){
+$.formValidator.initConfig({formID:"act_form",theme:'ArrowSolidBox',mode:'AutoTip',onError:function(msg){msg_error(msg)},inIframe:true});
+
+	$("#zizhi_name").formValidator({empty:true,onShow:"请输入资质名称",onFocus:"请输入资质名称",onCorrect:"输入正确"}).inputValidator({min:1,max:50,onError:"请输入资质名称"});
+		$("#zizhi_big_cat").formValidator({empty:true,onShow:"请输入大类",onFocus:"请输入大类",onCorrect:"输入正确"}).inputValidator({min:1,max:50,onError:"请输入大类"});
+		$("#zizhi_small_cat").formValidator({empty:true,onShow:"请输入小类",onFocus:"请输入小类",onCorrect:"输入正确"}).inputValidator({min:1,max:50,onError:"请输入小类"});
+		$("#zizhi_org").formValidator({empty:true,onShow:"请输入颁发机关",onFocus:"请输入颁发机关",onCorrect:"输入正确"}).inputValidator({min:1,max:50,onError:"请输入颁发机关"});
+		$("#zizhi_level").formValidator({empty:true,onShow:"请输入级别",onFocus:"请输入级别",onCorrect:"输入正确"}).inputValidator({min:1,max:50,onError:"请输入级别"});
+		$("#zizhi_endtime").formValidator({empty:true,onShow:"请输入有效期",onFocus:"请输入有效期",onCorrect:"输入正确"}).inputValidator({min:1,max:50,onError:"请输入有效期"});
+		
+
+	$.formValidator.reloadAutoTip();
+});
+
+function reloadAutoTip()
+{
+	$.formValidator.reloadAutoTip();
+}
+
+</script>
+
+
+<!--/dialog_end-->
+</td>
+</tr>
+</table>
+
+<include file="../Public/_footer" />

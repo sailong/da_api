@@ -1,0 +1,140 @@
+<include file="../public/_header" />
+<div class="so_main">
+
+  <div class="page_tit">广告</div>
+  <div class="tit_tab">
+	<ul>
+		<li><a <php> if(get("ad_app")==''){ echo " class=on ";}</php> href="{:U('admin/ad/ad',array('ad_app'=>''))}">全部</a></li>
+		<li><a <php> if(get("ad_app")=='bwvip'){ echo " class=on ";}</php> href="{:U('admin/ad/ad',array('ad_app'=>'bwvip'))}">大正网</a></li>
+		<li><a <php> if(get("ad_app")=='bwvip_app'){ echo " class=on ";}</php> href="{:U('admin/ad/ad',array('ad_app'=>'bwvip_app'))}">大正手机客户端</a></li>
+		<li><a <php> if(get("ad_app")=='field_app'){ echo " class=on ";}</php> href="{:U('admin/ad/ad',array('ad_app'=>'field_app'))}">美兰湖球场客户端</a></li>
+	</ul>
+  </div>
+
+
+  <div class="search_box">
+		<form name="search_form" action="?" method="get">
+		<input type="hidden" name="g" value="admin">
+		<input type="hidden" name="m" value="ad">
+		<input type="hidden" name="a" value="ad">
+
+		<table border="0" cellspacing="0" cellpadding="0">
+			<th>名称：</th>
+			<td><input type="text" name="k" class="search_input" style="width:120px;" value="<php> echo  get('k');</php>"></td>
+			<th>开始时间：</th>
+			<td>
+				<input type="text" name="starttime" class="search_input_date" style="width:120px;" value="<php> echo  get('starttime');</php>" onFocus="WdatePicker({isShowClear:false,readOnly:true})"> 至 
+				<input type="text" name="endtime" class="search_input_date" style="width:120px;" value="<php> echo  get('endtime');</php>" onFocus="WdatePicker({isShowClear:false,readOnly:true})">
+			</td>
+
+			<th>广告类型：</th>
+			<td>
+				<select name="ad_type" style="width:120px;"  class="search_select">
+					<option value="">请选择</option>
+					<option value="pic">图片</option>
+					<option value="flash">FLASH</option>
+					<option value="video">视频</option>
+				</select>
+				<script>set_select_value(document.search_form.ad_type,"<php> echo  get("ad_type");</php>");</script>
+			</td>
+			<td class="btn">
+				<input type="submit" value="搜索" class="btn_b" style="margin-right:8px;" >
+				<input type="button" value="查看全部" class="btn_b" onclick="javascript:location='{:U('admin/ad/ad',array('state'=>get('state')))}';">
+			</td>
+		</table>
+	</form>
+  </div><!--/search_box-->
+
+  <!--------list -------->
+  <div class="Toolbar_inbox">
+  	<div class="page right">{$pages}</div>
+
+	<a href="javascript:void(0);" onclick="mod_dialog('添加广告','{:U('admin/ad/ad_add')}');" class="btn_a"><span>添加广告</span></a>
+	<a href="javascript:void(0);" class="btn_a"  onclick="mod_delete_batch('{:U('admin/ad/ad_delete_action')}','mod_table');"><span>批量删除</span></a>
+
+	<div class="clear"></div>
+  </div>
+  <div class="list">
+	<php>if($total>0){</php>
+	  <table width="100%" id="mod_table" border="0" cellspacing="0" cellpadding="0">
+	  <tr>
+		<th style="width:30px;">
+			<input type="checkbox" id="checkbox_handle" onclick="select_all(this,'mod_table','checkbox')" value="0">
+			<label for="checkbox"></label>
+		</th>
+		<th class="line_l">编号</th>
+		<th class="line_l">广告名称</th>
+		<th class="line_l">所在页面</th>
+		<!--
+		<th class="line_l">广告分类</th>
+		<th class="line_l">广告类型</th>
+		-->
+		<th class="line_l">所属球场</th>
+		<th class="line_l">文件地址</th>
+		<th class="line_l">宽度</th>
+		<th class="line_l">高度</th>
+		<th class="line_l">广告链接</th>
+		<th class="line_l">添加时间</th>
+		<th class="line_l">操作</th>
+	</tr>
+	<volist id="vo" name="list">
+	<tr overstyle="on"  id=ids_{$vo["ad_id"]}>
+			<td><input type="checkbox" name="checkbox" onclick="select_one(this)" value="{$vo.ad_id}" ></td>
+			<td>{$vo.ad_id}</th>
+			<td>{$vo.ad_name}</th>
+			<td>{$vo.ad_page}</th>
+			<!--
+			<td>{$vo.ad_app}</td>
+			<td>{$vo.ad_type}</td>
+			-->
+			<td>{$vo.field_uid}</td>
+			<td><php>if($vo['ad_type']=="pic"){ echo '<img style="max-height:60px; max-width:100px;" src="'.$vo['ad_file'].'">';}</php></td>
+			
+			<td>{$vo.ad_width}</td>
+			<td>{$vo.ad_height}</td>
+			<td>{$vo.ad_url}</td>
+			<!--
+			<td><php>if($vo['ad_state']==1){ echo "已开启";}else{ echo "已关闭";}</php></td>
+			-->
+			<td>{$vo.ad_addtime|format_to_time}</td>
+		<td>
+			<a href="javascript:void(0);"  onclick="mod_dialog('修改广告','{:U('admin/ad/ad_edit', array('ad_id'=>$vo['ad_id']))}')">修改</a> | 
+			<a href="javascript:void(0);" onclick="mod_delete_one('{:U('admin/ad/ad_delete_action')}','{$vo['ad_id']}');">删除</a>
+		</td>
+	</tr>
+	</volist>
+    </table>
+	  <php>}else{</php>
+			<div class="no_data">
+				<img src="/skin/images/no_data.gif" align="absmiddle"> <span>没有广告... </span>
+			</div>
+	 <php>}</php>
+  </div>
+
+  <div class="Toolbar_inbox">
+	<div class="page right">{$pages}</div>
+
+	<a href="javascript:void(0);" onclick="mod_dialog('添加广告','{:U('admin/ad/ad_add')}');" class="btn_a"><span>添加广告</span></a>
+	<a href="javascript:void(0);" class="btn_a"  onclick="mod_delete_batch('{:U('admin/ad/ad_delete_action')}','mod_table');"><span>批量删除</span></a>
+
+
+	<div class="clear"></div>
+  </div>
+</div>
+
+<script>
+	$(document).ready(function(){
+		$("tr[overstyle='on']").hover(
+		  function ()
+		  {
+		    $(this).addClass("bg_hover");
+		  },
+		  function (){
+		    $(this).removeClass("bg_hover");
+		  }
+		);
+	});
+</script>
+
+
+<include file="../public/_footer" />

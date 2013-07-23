@@ -1,0 +1,120 @@
+<include file="../Public/header" />
+
+<div class="unit_w">
+	<div class="unit_left">
+		<div class="left_title">探矿工程杂志/在线理事会</div>
+		<dl>
+			<dt>理事会简介</dt>
+			<dd><a href="{:U('home/index/unit_page',array('arctype_id'=>54))}">理事会邀请函</a></dd>
+			<dd><a href="{:U('home/index/unit_page',array('arctype_id'=>55))}">理事会章程</a></dd>
+			<dd><a href="{:U('home/index/unit_page',array('arctype_id'=>56))}">理事会加入流程</a></dd>
+		</dl>
+		<dl>
+			<dt>理事会组成</dt>
+			<dd>
+				<p>理事长单位</p>
+				<ul>
+					<volist name="unit_left" id="vo" >
+						<php>if($vo['unit_type']==1){</php>
+						<li><a href="{:U('home/index/unit_detail',array('unit_id'=>$vo['unit_id']))}">{$vo.unit_name|msubstr=0,15}</a></li>
+						<php>}</php>
+					</volist>
+				</ul>
+			</dd>
+			<dd>
+				<p>副理事长单位</p>
+				<ul>
+					<volist name="unit_left" id="vo" >
+						<php>if($vo['unit_type']==2){</php>
+						<li><a href="{:U('home/index/unit_detail',array('unit_id'=>$vo['unit_id']))}">{$vo.unit_name|msubstr=0,15}</a></li>
+						<php>}</php>
+					</volist>
+				</ul>
+			</dd>
+			<dd>
+				<p>理事单位</p>
+				<ul>
+					<volist name="unit_left" id="vo" >
+						<php>if($vo['unit_type']==3){</php>
+						<li><a href="{:U('home/index/unit_detail',array('unit_id'=>$vo['unit_id']))}">{$vo.unit_name|msubstr=0,15}</a></li>
+						<php>}</php>
+					</volist>
+				</ul>
+			</dd>
+		</dl>
+	</div><!--/left-->
+	<div class="unit_right">
+		<div class="right_title">{$data.unit_name}</div>
+
+		<table class="add_table" border="0" cellspacing="0" cellpadding="0" >
+		<tbody>
+				<tr>
+					<th>单位名称：</th>
+					<td>{$data.unit_name}</td>
+				</tr>
+				<tr>
+					<th>理事类别：</th>
+					<td>
+						<php>if($data['unit_type']==1){ echo "理事长单位";}</php>
+						<php>if($data['unit_type']==2){ echo "副理事长单位";}</php>
+						<php>if($data['unit_type']==3){ echo "理事单位";}</php>
+					</td>
+				</tr>
+				<tr>
+					<th>地址：</th>
+						<td>{$data.unit_address}</td>
+				</tr>
+				
+				<tr>
+					<th>邮编：</th>
+						<td>{$data.unit_post}</td>
+				</tr>
+				<tr>
+					<th>电话：</th>
+						<td>{$data.unit_tel}</td>
+				</tr>
+				<tr>
+					<th>传真：</th>
+						<td>{$data.unit_fax}</td>
+				</tr>
+				<tr>
+					<th>邮箱：</th>
+						<td>{$data.unit_email}</td>
+				</tr>
+				<tr>
+					<th>网址：</th>
+						<td>{$data.unit_website}</td>
+				</tr>
+				<tr>
+					<th>单位标志：</th>
+						<td><img src="{$data.unit_logo}"></td>
+				</tr>
+				<tr>
+					<th>姓名：</th>
+						<td>{$data.unit_realname}</td>
+				</tr>
+				<tr>
+					<th>职务：</th>
+						<td>{$data.unit_duty}</td>
+				</tr>
+				<tr>
+					<th>单位简介：</th>
+						<td>{$data.unit_content}</td>
+				</tr>
+				<tr>
+					<th>添加时间：</th>
+					<td>{$data.unit_addtime|format_to_time}</td>
+					
+				</tr>
+				
+		</tbody>
+		
+	</table><!--/add_table-->
+
+
+	</div><!--/right-->
+	<div style="clear:both;"></div>
+
+</div><!--/w-->
+
+<include file="../Public/footer" />  

@@ -1,0 +1,101 @@
+<include file="../public/header_dialog" />
+{$usejs}
+
+<div class="so_main">
+
+  <div class="page_tit">分站管理</div>
+  <div class="tit_tab">
+	<ul>
+		<li><a class=on href="{:U('admin/fenzhan/fenzhan_add')}">添加分站</a></li>
+	</ul>
+  </div>
+
+<table border="0" cellspacing="0" cellpadding="0" style="width:900px;">
+<tr>
+<td>
+<!--/dialog_start-->
+
+<form method="post" id="act_form" name="act_form" action="{:U('admin/fenzhan/fenzhan_add_action')}" enctype="multipart/form-data">
+	<table class="add_table" border="0" cellspacing="0" cellpadding="0" >
+		<tbody>
+		<tr>
+					<th>所属赛事：</th>
+					<td><input type="text" name="sid" id="sid" class="mod_input2" style="width:66px;" ></td>
+				</tr>
+				<tr>
+					<th>分站名称：</th>
+					<td><input type="text" name="fenz_name" id="fenz_name" class="mod_input2" style="width:300px;" ></td>
+				</tr>
+				<tr>
+					<th>所在球场：</th>
+					<td><input type="text" name="field_id" id="field_id" class="mod_input2" style="width:66px;" ></td>
+				</tr>
+				<tr>
+					<th>年份：</th>
+					<td><input type="text" name="year" id="year" class="mod_input2" style="width:300px;" ></td>
+				</tr>
+				<tr>
+					<th>时间表：</th>
+					<td><input type="file" name="timepic" id="timepic"  class="mod_input"></td>
+				</tr>
+				<tr>
+					<th>开始时间：</th>
+					<td><input type="text" name="starttime" id="starttime" readonly class="mod_input_date" style="width:200px;" onFocus="WdatePicker({isShowClear:false,readOnly:true})" ></td>
+				</tr>
+				<tr>
+					<th>结束时间：</th>
+					<td><input type="text" name="endtime" id="endtime" readonly class="mod_input_date" style="width:200px;" onFocus="WdatePicker({isShowClear:false,readOnly:true})" ></td>
+				</tr>
+				<tr>
+					<th>排序：</th>
+					<td><input type="text" name="orderby" id="orderby" class="mod_input2" style="width:60px;" ></td>
+				</tr>
+				<tr>
+					<th>状态：</th>
+					<td><input type="text" name="is_delete" id="is_delete" class="mod_input2" style="width:60px;" ></td>
+				</tr>
+				
+		</tbody>
+		<tfoot>
+			<tr>
+				<th></th>
+				<td>
+					<input type="submit" class="btn_b"  value="添加" style="margin-right:10px;"/>
+					<input type="button" class="btn_w" onclick="close_dialog(this)" value="取消" />
+				</td>
+		</tfoot>
+	</table><!--/add_table-->
+</form>
+
+<script>
+$(document).ready(function(){
+$.formValidator.initConfig({formID:"act_form",theme:'ArrowSolidBox',mode:'AutoTip',onError:function(msg){msg_error(msg)},inIframe:true});
+
+	$("#sid").formValidator({empty:true,onShow:"请输入所属赛事",onFocus:"请输入所属赛事",onCorrect:"输入正确"}).inputValidator({min:1,max:11,onError:"请输入所属赛事"});
+		$("#fenz_name").formValidator({empty:true,onShow:"请输入分站名称",onFocus:"请输入分站名称",onCorrect:"输入正确"}).inputValidator({min:1,max:50,onError:"请输入分站名称"});
+		$("#field_id").formValidator({empty:true,onShow:"请输入所在球场",onFocus:"请输入所在球场",onCorrect:"输入正确"}).inputValidator({min:1,max:11,onError:"请输入所在球场"});
+		$("#year").formValidator({empty:true,onShow:"请输入年份",onFocus:"请输入年份",onCorrect:"输入正确"}).inputValidator({min:1,max:50,onError:"请输入年份"});
+		$("#timepic").formValidator({empty:true,onShow:"请输入时间表",onFocus:"请输入时间表",onCorrect:"输入正确"}).inputValidator({min:1,max:300,onError:"请输入时间表"});
+		$("#starttime").formValidator({empty:true,onShow:"请输入开始时间",onFocus:"请输入开始时间",onCorrect:"输入正确"}).inputValidator({min:1,max:10,onError:"请输入开始时间"});
+		$("#endtime").formValidator({empty:true,onShow:"请输入结束时间",onFocus:"请输入结束时间",onCorrect:"输入正确"}).inputValidator({min:1,max:10,onError:"请输入结束时间"});
+		$("#orderby").formValidator({empty:true,onShow:"请输入排序",onFocus:"请输入排序",onCorrect:"输入正确"}).inputValidator({min:1,max:10,onError:"请输入排序"});
+		$("#is_delete").formValidator({empty:true,onShow:"请输入状态",onFocus:"请输入状态",onCorrect:"输入正确"}).inputValidator({min:1,max:10,onError:"请输入状态"});
+		
+
+	$.formValidator.reloadAutoTip();
+});
+
+function reloadAutoTip()
+{
+	$.formValidator.reloadAutoTip();
+}
+
+</script>
+
+<!--/dialog_end-->
+</td>
+</tr>
+</table>
+
+</div>
+<include file="../public/_footer" />

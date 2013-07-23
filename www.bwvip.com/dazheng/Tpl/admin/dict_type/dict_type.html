@@ -1,0 +1,74 @@
+<include file="../public/_header" />
+<div class="so_main">
+
+  <div class="page_tit">字典分类</div>
+  <include file="_tab" />
+
+  <!--------list -------->
+  <div class="Toolbar_inbox">
+  	<div class="page right">{$pages}</div>
+
+	<a href="javascript:void(0);" onclick="mod_dialog('添加字典分类','{:U('admin/dict_type/dict_type_add')}');" class="btn_a"><span>添加字典分类</span></a>
+	<a href="javascript:void(0);" class="btn_a"  onclick="mod_delete_batch('{:U('admin/dict_type/dict_type_delete_action')}','mod_table');"><span>批量删除</span></a>
+
+	<div class="clear"></div>
+  </div>
+  <div class="list">
+	<php>if($total>0){</php>
+	  <table width="100%" id="mod_table" border="0" cellspacing="0" cellpadding="0">
+	  <tr>
+		<th style="width:30px;">
+			<input type="checkbox" id="checkbox_handle" onclick="select_all(this,'mod_table','checkbox')" value="0">
+			<label for="checkbox"></label>
+		</th>
+		<th class="line_l">分类名称</th>
+		<th class="line_l">是否键名</th>
+		<th class="line_l">操作</th>
+	</tr>
+	<volist id="vo" name="list">
+	<tr overstyle="on"  id=ids_{$vo["dict_type_id"]}>
+		<td><input type="checkbox" name="checkbox" onclick="select_one(this)" value="{$vo.dict_type_id}" ></td>
+		<td>{$vo.dict_type_name}</td>
+		<td>{$vo.dict_type_iskey}</td>
+			
+		<td>
+			<a href="javascript:void(0);"  onclick="mod_dialog('修改字典分类','{:U('admin/dict_type/dict_type_edit', array('dict_type_id'=>$vo['dict_type_id']))}')">修改</a> | 
+			<a href="javascript:void(0);" onclick="mod_delete_one('{:U('admin/dict_type/dict_type_delete_action')}','{$vo['dict_type_id']}');">删除</a>
+		</td>
+	</tr>
+	</volist>
+    </table>
+	  <php>}else{</php>
+			<div class="no_data">
+				<img src="/skin/images/no_data.gif" align="absmiddle"> <span>没有字典分类... </span>
+			</div>
+	 <php>}</php>
+  </div>
+
+  <div class="Toolbar_inbox">
+	<div class="page right">{$pages}</div>
+
+	<a href="javascript:void(0);" onclick="mod_dialog('添加字典分类','{:U('admin/dict_type/dict_type_add')}');" class="btn_a"><span>添加字典分类</span></a>
+	<a href="javascript:void(0);" class="btn_a"  onclick="mod_delete_batch('{:U('admin/dict_type/dict_type_delete_action')}','mod_table');"><span>批量删除</span></a>
+
+
+	<div class="clear"></div>
+  </div>
+</div>
+
+<script>
+	$(document).ready(function(){
+		$("tr[overstyle='on']").hover(
+		  function ()
+		  {
+		    $(this).addClass("bg_hover");
+		  },
+		  function (){
+		    $(this).removeClass("bg_hover");
+		  }
+		);
+	});
+</script>
+
+
+<include file="../public/_footer" />

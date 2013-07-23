@@ -1,0 +1,115 @@
+<include file="../public/header_dialog" />
+<div class="so_main">
+
+
+<div class="page_tit">冠军榜</div>
+  <div class="tit_tab">
+	<ul>
+		<li><a class=on href="#">添加冠军榜</a></li>
+	</ul>
+  </div>
+
+<table border="0" cellspacing="0" cellpadding="0" style="width:900px;">
+<tr>
+<td>
+<!--/dialog_start-->
+
+<form method="post" id="act_form" name="act_form" action="{:U('field/rank/rank_add_action')}" enctype="multipart/form-data">
+	<table class="add_table" border="0" cellspacing="0" cellpadding="0" >
+		<tbody>
+		
+				<tr>
+					<th>赛事ID：</th>
+					<td><input type="text" name="field_event_id" id="field_event_id" class="mod_input2" style="width:150px;" value="{$info.field_event_id}"></td>
+				</tr>
+				<tr>
+					<th>赛事UID：</th>
+					<td>
+						<input type="text" name="field_uid" id="field_uid" class="mod_input2" style="width:150px;" value="{$info.field_uid}">
+					</td>
+				</tr>
+				<tr>
+					<th>排行名称：</th>
+					<td>
+						<input type="text" name="field_event_rank_name" id="field_event_rank_name" class="mod_input2" style="width:150px;" value="{$info.field_event_rank_name}">
+					</td>
+				</tr>
+				<tr>
+					<th>会员UID：</th>
+					<td>
+						<input type="text" name="uid" id="uid" class="mod_input2" style="width:150px;" value="{$info.uid}">
+					</td>
+				</tr>
+				<tr>
+					<th>成绩：</th>
+					<td><input type="text" name="field_event_rank_score" id="field_event_rank_score" class="mod_input2" style="width:100px;" value="{$info.field_event_rank_score}" ></td>
+				</tr>
+				<tr>
+					<th>排序：</th>
+					<td><input type="text" name="field_event_rank_sort" id="field_event_rank_sort" class="mod_input2" style="width:100px;" value="{$info.field_event_rank_sort}" > （数值越小，排序越靠前）</td>
+				</tr>
+				<tr>
+					<th>语言：</th>
+					<td><select name="language" id="language">
+							<option value="">请选择</option>
+							<option value="cn">中文</option>
+							<option value="en">英文</option>
+						</select>
+						<script>set_select_value(document.act_form.language,"{$info.language}");</script>
+					</td>
+				</tr>
+				<!--
+				<tr>
+					<th>审核时间：</th>
+					<td><input type="text" name="arc_statetime" id="arc_statetime" readonly class="mod_input_date" style="width:200px;" value="{$data.arc_statetime|format_to_time}" onFocus="WdatePicker({isShowClear:false,readOnly:true})" ></td>
+				</tr>
+				-->
+				
+		</tbody>
+		<tfoot>
+			<tr>
+				<th></th>
+				<td>
+					<input type="hidden" name="field_event_rank_id" value="{$info.field_event_rank_id}">
+					<input type="submit" class="btn_b" value="保存" style="margin-right:10px;"/>
+					<input type="button" class="btn_w" onclick="javascript:history.back(-1);" value="返回" />
+				</td>
+		</tfoot>
+	</table><!--/add_table-->
+</form>
+
+
+
+
+<script><!--
+$(document).ready(function(){
+$.formValidator.initConfig({formID:"act_form",theme:'ArrowSolidBox',mode:'AutoTip',onError:function(msg){msg_error(msg)},inIframe:true});
+
+	$("#field_event_id").formValidator({empty:false,onShow:"请输入赛事ID",onFocus:"请输入赛事ID",onCorrect:"输入正确"}).inputValidator({min:1,max:100,onError:"请输入赛事ID"});
+	$("#field_uid").formValidator({empty:false,onShow:"请输入赛事UID",onFocus:"请输入赛事UID",onCorrect:"输入正确"}).inputValidator({min:1,max:11,onError:"请输入赛事UID"});
+	//$("#arctype_id").formValidator({empty:true,onShow:"请输入所属栏目",onFocus:"请输入所属栏目",onCorrect:"输入正确"}).inputValidator({min:1,max:11,onError:"请输入所属栏目"});
+	$("#field_event_rank_name").formValidator({empty:false,onShow:"请输入排序名称",onFocus:"请输入排序名称",onCorrect:"输入正确"}).inputValidator({min:1,max:300,onError:"请输入排序名称"});
+	$("#uid").formValidator({empty:false,onShow:"请输入会员UID",onFocus:"请输入会员UID",onCorrect:"输入正确"}).inputValidator({min:1,max:300,onError:"请输入会员UID"});
+	$("#field_event_rank_score").formValidator({empty:false,onShow:"请输入成绩",onFocus:"请输入成绩",onCorrect:"输入正确"}).inputValidator({min:1,max:50,onError:"请输入成绩"});
+	$("#field_event_rank_sort").formValidator({empty:false,onShow:"请输入排序编号",onFocus:"请输入排序编号",onCorrect:"输入正确"}).inputValidator({min:1,max:50,onError:"请输入排序编号"});
+	$("#arc_content").formValidator({empty:false,onShow:"请输入文章内容",onFocus:"请输入文章内容",onCorrect:"输入正确"}).inputValidator({min:1,onError:"请输入文章内容"});
+	$("#language").formValidator({empty:false,onShow:"请选择语言",onFocus:"请选择语言",onCorrect:"输入正确"}).inputValidator({min:1,max:2,onError:"请选择语言"});
+
+	$.formValidator.reloadAutoTip();
+});
+
+function reloadAutoTip()
+{
+	$.formValidator.reloadAutoTip();
+}
+
+--></script>
+
+
+<!--/dialog_end-->
+</td>
+</tr>
+</table>
+</div>
+
+<include file="../public/_footer" />

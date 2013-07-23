@@ -1,0 +1,89 @@
+<include file="../Public/header" />
+  
+  <div class="content">
+  
+    <div class="cleft">
+    
+      <dl class="cbxt">
+        <dt>《探矿工程》稿件采编系统</dt>
+        <dd class="dd1"><a target="_blank" href="#">作者登录</a></dd>
+        <dd class="dd2"><a target="_blank" href="#">审稿登录</a></dd>
+        <dd class="dd3"><a target="_blank" href="#">编辑登录</a></dd>
+        <dd class="dd4"><a target="_blank" href="#">读者登录</a></dd>
+      </dl>
+      
+      <div class="picnew">
+      
+        <div class="w_ctr">
+		<div class="JQ-slide">
+			<ul class="JQ-slide-content">
+				<volist name="pic_arc" id="p" >
+					<li><a target="_blank" href="{:U('home/arc/arc_detail',array('arc_id'=>$p['arc_id']))}" target="_blank"><img src="{$p['arc_pic']}" width="297" height="181" alt="{$p['arc_name']}" /><span>{$p['arc_name']|msubstr=0,11}</span></a></li>
+				</volist>
+			</ul>
+			<ul class="JQ-slide-nav">
+				<li class="on">1</li>
+				<li>2</li>
+				<li>3</li>
+				<li>4</li>
+			</ul>
+		</div>
+	</div>
+        
+      </div>
+      
+      <div class="clickRanking">
+        <h2>推荐新闻</h2>
+        <table cellpadding="0" cellspacing="0" border="0">
+          <volist name="tj_arc" id="vo_side">
+		          <tr>
+		            <td class="number">{$i}</td>
+		            <td><a target="_blank" href="{:U('home/arc/arc_detail',array('arc_id'=>$vo_side['arc_id']))}">{$vo_side['arc_name']|msubstr=0,15}</a></td>
+		          </tr>
+		          <tr class="hr"><td colspan="2"></td></tr>
+		          <tr height="5"><td colspan="2"></td></tr>
+	       </volist>
+          
+          <tr><td colspan="2" align="right"><a target="_blank" href="/index.php/Remmend/Remlist/">更多>></a></td></tr>
+          <tr height="10"><td style="border-bottom:1px solid #ccc;" colspan="2"></td></tr>
+        </table>
+        
+      </div>
+
+	 
+      
+      
+    
+    </div><!--/left-->
+    
+    <div class="cright cright_lefthr">
+      
+      <div class="newscenter_nav {$nav_class}">
+         <div class="newscenter_nav_url" style="width:135px; height:30px; position:absolute; left:0; top:0; cursor:pointer"></div>
+			 <volist id="t" name="sub_arctype" >
+				<a href="{:U('home/arc/arc_list',array('arctype_id'=>$t['arctype_id']))}">{$t.arctype_name}</a><span>|</span>
+			 </volist>
+         </div>
+      
+      <div class="newscenter">
+        <div class="threepage_title"><h2>{$title}</h2></div>
+        <ul class="product_list">
+        <volist name="list" id="vo" key="k">
+ 
+                  <li><img src="{$vo['arc_pic']}" style="width:200px; height:160px;"><p><span class="stitle"><a href="{:U('home/arc/arc_detail',array('arc_id'=>$vo['arc_id']))}">{$vo['arc_name']}</a></span></p></li>
+          </volist>
+          <li class="pagenum" style="background:none;">{$pages}</li>
+        </ul>
+      </div>
+  </div>
+  </div>
+  
+  <script type="text/javascript">
+$(document).ready(function(){
+  $(".newscenter_nav_url").click(function(){
+    location.href="/index.php/Article/newslist/";
+  })						   
+})
+</script>
+ 
+ <include file="../Public/footer" />

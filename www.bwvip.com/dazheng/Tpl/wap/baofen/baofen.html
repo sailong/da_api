@@ -1,0 +1,126 @@
+<include file="../public/header"/>
+<style type="text/css">
+.ndbm {
+	width:260px;
+	list-style:none;
+}
+.ndbm ul li {
+	height:30px;
+	list-style-type:none;
+	float:left;
+}
+</style>
+
+<div id="centenr">
+  <div id="qiuc">
+    <div id="con1_s"></div>
+    <div id="con1_t2" style="height:auto;">
+      <div class="t_top">
+        <div style="width:120px; float:left"><span>您好，<php>echo $_SESSION['baofen_username'];;</php> <a href="{:U('wap/baofen/logout',array('fenzhan_id'=>$fenzhan_id,'lun'=>$lun))}">【退出】</a> </span> </div>
+        <div  style="width:100px; float:left"> 
+		<!--
+		【<a href="nd/baofen.php?ac=nlist&onlymark=" target="_blank">成绩列表</a>】
+		--></div>
+      </div>
+      <div class="nav_u" >
+        <table width="100%" border="0">
+          <tr>
+            <td>请选择分组</td>
+            <td>
+				<form name="fenzu_form" method="get" action="?">
+					<input type="hidden" name="g" value="wap">
+					<input type="hidden" name="m" value="baofen">
+					<input type="hidden" name="a" value="baofen">
+					<input type="hidden" name="fenzhan_id" value="<php> echo get('fenzhan_id');</php>">
+					<input type="hidden" name="lun" value="<php> echo get('lun');</php>">
+					<select name="fenzu_id" onchange="load_fenzu();">
+						<volist id="vo" name="fenzu_list">
+							<option value="{$vo.fenzu_id}" <php>if(get("fenzu_id")==$vo['fenzu_id']){ echo ' selected="selected" ';}</php>>{$vo['fenzu_number']}组/{$vo['fenzu_name']}</option>
+						</volist>
+					</select>
+				</form>
+				<script>
+				function load_fenzu()
+				{
+					var lobj=document.fenzu_form;
+					lobj.submit();
+				}
+				</script>
+			</td>
+            <td>
+			<!--
+			<a href="/nd/baofen.php?ac=ndupdate&fzt=&qc_id=">修改该分组</a>
+			-->
+			</td>
+          </tr>
+        </table>
+        <form action="{:U('wap/baofen/baofen_save_action')}" method="POST" name="baofen_form">
+          <DIV class="ndbm">
+            <table border="0" cellpadding="0" cellspacing="0" style="width:260px;">
+              <tr>
+                <td height="25">球洞 </td>
+                <volist id="d" name="dongs">
+                <td>{$d}</td>
+                </volist>
+              </tr>
+              <volist id="v" name="fenzu_user">
+              <tr>
+                <td height="30">{$v.realname}</td>
+                <volist id="d" name="dongs">
+				<php>
+				$cj=M()->query("select cave_".$d." from tbl_baofen where uid='".$v['uid']."' and fenzhan_id='".$fenzhan_id."' and lun='".$lun."' ");
+				$dong_cj=$cj[0]['cave_'.$d];
+				</php>
+                <td>
+					<select name="userdk[{$v['uid']}][{$d}]">
+                    <option value="0" >0</option>
+                    <volist id="c" name="chengji_arr">
+					<php>
+					if($dong_cj==$c)
+					{
+					</php>
+						<option value="{$c}" selected >{$c}</option>
+					<php>
+					}
+					else
+					{
+					</php>
+						<option value="{$c}"  >{$c}</option>
+					<php>
+					}
+					</php>
+                    </volist>
+                    <option value="-1" >DQ</option>
+                    <option value="-2" >RTD</option>
+                    </select>
+				</td>
+                </volist>
+              </tr>
+              </volist>
+            </table>
+          </DIV>
+          <table width="250" cellpadding="0" cellspacing="0">
+            <tr>
+              <td height="45" align="center"><span style="text-align:center; padding-top:20px;">
+                <input type="hidden" name='ac' id="ac" value="tjbaofen">
+                <input type="hidden" name='fenzhan_id' id="fenzhan_id" value="{$fenzhan_id}">
+                <input type="hidden" name='lun' id="fenzhan_id" value="{$lun}">
+                <input type="image" src="/skin/wap/images/submit_btn.jpg" width="109" height="27" />
+                </span></td>
+            </tr>
+          </table>
+        </form>
+      </div>
+    </div>
+    <div id="con1_p"></div>
+  </div>
+</div>
+
+<!--copyright-->
+<div id="copyright" >
+  <p style="padding-top:10px;">大正高尔夫©2011&nbsp;&nbsp;&nbsp;&nbsp;京ICP证110339号</p>
+  <p> 京公网安备110105008914号</p>
+</div>
+</div>
+</div>
+</body></html>

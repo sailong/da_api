@@ -1,0 +1,234 @@
+<include file="../Public/header" />
+<script language="javascript" type="text/javascript" src="/skin/js/dialog/artDialog.js?skin=default"></script>
+<script language="javascript" type="text/javascript" src="/skin/js/dialog/plugins/iframeTools.js"></script>
+<script language="javascript" type="text/javascript" src="/skin/js/dialog/jack_ui_v2.js"></script>
+
+  <div class="content">
+    <div class="newsLeft" style="width:937px; padding-bottom:30px;">
+        <div class="location"><a href="{$site.site_url}"><img src="__PUBLIC__/images/location.jpg" alt="{$site.site_name}" /></a> > 所属机构</div>
+<!--/dialog_start-->
+
+<form method="post" id="act_form" name="act_form" action="{:U('home/user/org_edit_action')}" enctype="multipart/form-data">
+	<table class="add_table" border="0" cellspacing="0" cellpadding="0" >
+		<tbody>
+
+				<tr>
+					<th style="width:150px;">机构代码：</th>
+					<td><input type="text" name="org_code" id="org_code" class="mod_input2" style="width:100px;" readonly  value="{$data.org_code}"></td>
+				</tr>
+				<tr>
+					<th>机构名称：</th>
+					<td><input type="text" name="org_name" id="org_name" class="mod_input2" style="width:300px;"  value="{$data.org_name}"></td>
+				</tr>
+				<tr>
+					<th>地&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;址：</th>
+					<td>
+						<select name="org_province" id="org_province" onchange="load_city(this);">
+							<option value="">所在省</option>
+							<volist id="v" name="sheng">
+							<option value="{$v.province_id}">{$v.province_name}</option>
+							</volist>
+						</select>
+						<script>set_select_value(document.act_form.org_province,"{$data.org_province}");</script>
+
+						<select name="org_city" id="org_city">
+							<option value="">所在城市</option>
+							<option value="{$data.org_city}">{$data.org_cityname}</option>
+						</select>
+						<script>set_select_value(document.act_form.org_city,"{$data.org_city}");</script>
+						<input type="text" name="org_address" id="org_address" class="mod_input2" style="width:300px;"  value="{$data.org_address}">
+					</td>
+				</tr>
+				<tr>
+					<th>邮&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;编：</th>
+					<td><input type="text" name="org_post" id="org_post" class="mod_input2" style="width:100px;"  value="{$data.org_post}"></td>
+				</tr>
+				<tr>
+					<th>电&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;话：</th>
+					<td>
+						<input type="text" name="org_tel" id="org_tel" class="mod_input2" style="width:120px;"  value="{$data.org_tel}">
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;机构传真：
+						<input type="text" name="org_fax" id="org_fax" class="mod_input2" style="width:120px;"  value="{$data.org_fax}">
+					
+					</td>
+				</tr>
+	
+				<tr>
+					<th>电子邮箱：</th>
+					<td><input type="text" name="org_email" id="org_email" class="mod_input2" style="width:300px;"  value="{$data.org_email}"></td>
+				</tr>
+				<tr>
+					<th>网&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;址：</th>
+					<td><input type="text" name="org_website" id="org_website" class="mod_input2" style="width:300px;"  value="{$data.org_website}"></td>
+				</tr>
+				<tr>
+					<th>成立时间：</th>
+					<td><input type="text" name="org_buildtime" id="org_buildtime" class="mod_input2" style="width:100px;"  value="{$data.org_buildtime}" onClick="WdatePicker({dateFmt:'yyyy',maxDate:'<php> echo date('Y',time());</php>'})"></td>
+				</tr>
+				<tr>
+					<th>机构性质：</th>
+					<td>
+						<input type="text" name="org_xingzhi" id="org_xingzhi" class="mod_input2" style="width:300px;"  value="{$data.org_xingzhi}">
+					</td>
+				</tr>
+
+				<tr>
+					<th>高新技术：</th>
+					<td>
+						<input type="radio" name="org_is_gaoxin" id="org_is_gaoxin" value="Y" <php> if($data['org_is_gaoxin']=="Y"){ echo " checked ";}</php>>是 
+						<input type="radio" name="org_is_gaoxin" id="org_is_gaoxin" value="N" <php> if($data['org_is_gaoxin']=="N"){ echo " checked ";}</php>>否
+					</td>
+				</tr>
+				<tr>
+					<th>业务范围：</th>
+					<td><input type="text" name="org_fanwei" id="org_fanwei" class="mod_input2" style="width:300px;"  value="{$data.org_fanwei}"></td>
+				</tr>
+				<tr>
+					<th>涉及领域：</th>
+					<td><input type="text" name="org_lingyu" id="org_lingyu" class="mod_input2" style="width:300px;"  value="{$data.org_lingyu}"></td>
+				</tr>
+				<tr>
+					<th>所属行业：</th>
+					<td><input type="text" name="org_hangye" id="org_hangye" class="mod_input2" style="width:300px;"  value="{$data.org_hangye}"></td>
+				</tr>
+				<tr>
+					<th>注册资金：</th>
+					<td><input type="text" name="org_zijin" id="org_zijin" class="mod_input2" style="width:100px;"  value="{$data.org_zijin}"></td>
+				</tr>
+				<tr>
+					<th>机构简介：</th>
+					<td><textarea name="org_jianjie" id="org_jianjie" class="mod_input2" style="width:400px; height:100px;">{$data.org_jianjie}</textarea></td>
+				</tr>
+				
+		</tbody>
+		<tfoot>
+			<tr>
+				<th></th>
+				<td>
+					<input type="hidden" name="org_id" value="{$data.org_id}">
+					<input type="submit" class="btn_b" value="保存" style="margin-right:10px;"/>
+		
+				</td>
+		</tfoot>
+	</table><!--/add_table-->
+</form>
+
+<script>
+$(document).ready(function(){
+$.formValidator.initConfig({formID:"act_form",theme:'ArrowSolidBox',mode:'AutoTip',onError:function(msg){msg_error(msg)},inIframe:true});
+
+	$("#user_id").formValidator({empty:true,onShow:"请输入发布人",onFocus:"请输入发布人",onCorrect:"输入正确"}).inputValidator({min:1,max:11,onError:"请输入发布人"});
+	$("#org_code").formValidator({empty:true,onShow:"请输入机构代码",onFocus:"请输入机构代码",onCorrect:"输入正确"}).inputValidator({min:1,max:50,onError:"请输入机构代码"});
+	$("#org_name").formValidator({empty:true,onShow:"请输入机构名称",onFocus:"请输入机构名称",onCorrect:"输入正确"}).inputValidator({min:1,max:50,onError:"请输入机构名称"});
+	$("#org_address").formValidator({empty:true,onShow:"请输入机构地址",onFocus:"请输入机构地址",onCorrect:"输入正确"}).inputValidator({min:1,max:200,onError:"请输入机构地址"});
+	$("#org_post").formValidator({empty:true,onShow:"请输入机构邮编",onFocus:"请输入机构邮编",onCorrect:"输入正确"}).inputValidator({min:1,max:6,onError:"请输入机构邮编"});
+	$("#org_tel").formValidator({empty:true,onShow:"请输入机构电话",onFocus:"请输入机构电话",onCorrect:"输入正确"}).inputValidator({min:1,max:12,onError:"请输入机构电话"});
+	$("#org_fax").formValidator({empty:true,onShow:"请输入机构传真",onFocus:"请输入机构传真",onCorrect:"输入正确"}).inputValidator({min:1,max:12,onError:"请输入机构传真"});
+	$("#org_email").formValidator({empty:true,onShow:"请输入机构邮箱",onFocus:"请输入机构邮箱",onCorrect:"输入正确"}).inputValidator({min:1,max:50,onError:"请输入机构邮箱"});
+	$("#org_website").formValidator({empty:true,onShow:"请输入机构网址",onFocus:"请输入机构网址",onCorrect:"输入正确"}).inputValidator({min:1,max:50,onError:"请输入机构网址"});
+	$("#org_buildtime").formValidator({empty:true,onShow:"请输入创建时间",onFocus:"请输入创建时间",onCorrect:"输入正确"}).inputValidator({min:1,max:50,onError:"请输入创建时间"});
+	$("#org_xingzhi").formValidator({empty:true,onShow:"请输入机构性质",onFocus:"请输入机构性质",onCorrect:"输入正确"}).inputValidator({min:1,max:50,onError:"请输入机构性质"});
+	$("#org_leixing").formValidator({empty:true,onShow:"请输入机构类型",onFocus:"请输入机构类型",onCorrect:"输入正确"}).inputValidator({min:1,max:50,onError:"请输入机构类型"});
+	$("#org_is_gaoxin").formValidator({empty:true,onShow:"请输入高新技术企业",onFocus:"请输入高新技术企业",onCorrect:"输入正确"}).inputValidator({min:1,max:50,onError:"请输入高新技术企业"});
+	$("#org_fanwei").formValidator({empty:true,onShow:"请输入机构范围",onFocus:"请输入机构范围",onCorrect:"输入正确"}).inputValidator({min:1,max:50,onError:"请输入机构范围"});
+	$("#org_lingyu").formValidator({empty:true,onShow:"请输入机构领域",onFocus:"请输入机构领域",onCorrect:"输入正确"}).inputValidator({min:1,max:50,onError:"请输入机构领域"});
+	$("#org_hangye").formValidator({empty:true,onShow:"请输入机构行业",onFocus:"请输入机构行业",onCorrect:"输入正确"}).inputValidator({min:1,max:50,onError:"请输入机构行业"});
+	$("#org_zijin").formValidator({empty:true,onShow:"请输入机构资质",onFocus:"请输入机构资质",onCorrect:"输入正确"}).inputValidator({min:1,max:50,onError:"请输入机构资质"});
+
+	$("#org_jianjie").formValidator({empty:true,onShow:"请输入机构简介",onFocus:"请输入机构简介",onCorrect:"输入正确"}).inputValidator({min:1,max:1000,onError:"请输入机构简介"});
+		
+
+	$.formValidator.reloadAutoTip();
+});
+
+function reloadAutoTip()
+{
+	$.formValidator.reloadAutoTip();
+}
+
+
+function load_city(obj)
+{
+	if(obj.value!="")
+	{	
+		//alert(obj.value);
+		var state_id=obj.value;
+		var action_url="{:U('admin/public/load_city_action')}";
+		var t_obj = document.getElementById("org_city");
+
+		$.post(action_url,{state_id:state_id},function(res){
+			//alert(res);
+			if(res.split('^')[0]=='succeed')
+			{
+				t_obj.options.length = 0;
+				t_obj.add(new Option("请选择城市",""));
+				var a=res.split('^')[1].split(',');
+				var i=0
+				for(i=0; i<a.length; i++)
+				{
+					//alert(a[i]);
+					if(a[i]!="")
+					{
+						t_obj.add(new Option(a[i].split('|')[0],a[i].split('|')[1]));
+						//$("#city_code").val(a[i].split('|')[2]);
+						//$("#city_code").val("555");
+					}
+
+				}
+				
+			}
+			else
+			{
+				art.dialog({
+					icon: ''+res.split('^')[0]+'',
+					time: 2,
+					content: ''+res.split('^')[1]+''
+				});
+			}
+		
+		});
+
+	}
+	else
+	{
+		msg_error("请先选择 省 ");
+	}
+
+}
+
+
+//org_xingzhi
+document.getElementById('org_xingzhi').onclick = function ()
+{
+	art.dialog.open( "{:U('home/user/zizhi_dialog',array('org_id'=>$data['org_id']))}", {
+		id: 'AAA',
+		title: '请选择企业资质',
+		close: function () {
+			var bValue = art.dialog.data('zizhi_id'); 
+			if(bValue !== undefined)
+			{
+				//document.getElementById('zizhi_id').value = bValue;
+				//location='/index/PositionSearch.aspx?zwlb='+bValue;
+			}
+
+			var cValue = art.dialog.data('zizhi_name'); 
+			if (cValue !== undefined) 
+			{
+				document.getElementById('org_xingzhi').value = cValue;
+			}
+
+		}
+	}, false);
+};
+
+
+</script>
+
+
+<!--/dialog_end-->
+
+  </div>
+
+
+
+<include file="../Public/footer" />  

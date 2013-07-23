@@ -1,0 +1,151 @@
+<include file="../public/header_dialog" />
+{$usejs}
+
+<div class="so_main">
+
+  <div class="page_tit">球场介绍管理</div>
+  <div class="tit_tab">
+	<ul>
+		<li><a class=on href="{:U('field/field_about/field_about_add')}">添加球场介绍</a></li>
+	</ul>
+  </div>
+
+<table border="0" cellspacing="0" cellpadding="0" style="width:900px;">
+<tr>
+<td>
+<!--/dialog_start-->
+
+<form method="post" id="act_form" name="act_form" action="{:U('field/field_about/field_about_add_action')}" enctype="multipart/form-data">
+	<table class="add_table" border="0" cellspacing="0" cellpadding="0" >
+		<tbody>
+		
+				<tr>
+					<th>名称：</th>
+					<td><input type="text" name="about_name" id="about_name" class="mod_input2" style="width:300px;" ></td>
+				</tr>
+				<tr>
+					<th>类型：</th>
+					<td>
+						<select name="about_type" id="about_type">
+							<option value="">请选择</option>
+							{$page_list}
+						</select>
+					</td>
+				</tr>
+				
+				<tr>
+					<th>电话：</th>
+					<td><input type="text" name="about_tel" id="about_tel" class="mod_input2" style="width:300px;" ></td>
+				</tr>
+				<tr>
+					<th>电话2：</th>
+					<td><input type="text" name="about_tel2" id="about_tel2" class="mod_input2" style="width:300px;" ></td>
+				</tr>
+				<tr>
+					<th>图片1：</th>
+					<td><input type="file" name="about_pic_0" id="about_pic1"  class="mod_input" style="width:300px;"></td>
+				</tr>
+				<tr>
+					<th>图片2：</th>
+					<td><input type="file" name="about_pic_1" id="about_pic2"  class="mod_input" style="width:300px;"></td>
+				</tr>
+				<tr>
+					<th>图片3：</th>
+					<td><input type="file" name="about_pic_2" id="about_pic3"  class="mod_input" style="width:300px;"></td>
+				</tr>
+				<tr>
+					<th>图片4：</th>
+					<td><input type="file" name="about_pic_3" id="about_pic4"  class="mod_input" style="width:300px;"></td>
+				</tr>
+				<tr>
+					<th>图片5：</th>
+					<td><input type="file" name="about_pic_4" id="about_pic5"  class="mod_input" style="width:300px;"></td>
+				</tr>
+				<tr>
+					<th>图片6：</th>
+					<td><input type="file" name="about_pic_5" id="about_pic6"  class="mod_input" style="width:300px;"></td>
+				</tr>
+				<tr>
+					<th>图片7：</th>
+					<td><input type="file" name="about_pic_6" id="about_pic7"  class="mod_input" style="width:300px;"></td>
+				</tr>
+				<tr>
+					<th>图片8：</th>
+					<td><input type="file" name="about_pic_7" id="about_pic8"  class="mod_input" style="width:300px;"></td>
+				</tr>
+				<tr>
+					<th>图片9：</th>
+					<td><input type="file" name="about_pic_8" id="about_pic9"  class="mod_input" style="width:300px;"></td>
+				</tr>
+				<tr>
+					<th>图片10：</th>
+					<td><input type="file" name="about_pic_9" id="about_pic10"  class="mod_input" style="width:300px;"></td>
+				</tr>
+				
+				<tr>
+					<th>排序：</th>
+					<td><input type="text" name="about_sort" id="about_sort" class="mod_input2" style="width:66px;" ></td>
+				</tr>
+				<tr>
+					<th>语言：</th>
+					<td><select name="language">
+							<option value="">请选择</option>
+							<option value="cn">中文</option>
+							<option value="en">英文</option>
+						</select>
+						<script>set_select_value(document.act_form.language,'<php> echo get("language");</php>');</script>
+					</td>
+				</tr>
+				<tr>
+					<th>备注：</th>
+					<td><input type="text" name="about_more" id="about_more" class="mod_input2" style="width:300px;"  value="{$data.about_more}"></td>
+				</tr>
+				
+				<tr>
+					<th>内容：</th>
+					<td>{$editor}</td>
+				</tr>
+				
+		</tbody>
+		<tfoot>
+			<tr>
+				<th></th>
+				<td>
+					<input type="submit" class="btn_b"  value="添加" style="margin-right:10px;"/>
+					<input type="button" class="btn_w" onclick="javascript:history.back(-1);" value="返回" />
+				</td>
+		</tfoot>
+	</table><!--/add_table-->
+</form>
+
+<script>
+$(document).ready(function(){
+$.formValidator.initConfig({formID:"act_form",theme:'ArrowSolidBox',mode:'AutoTip',onError:function(msg){msg_error(msg)},inIframe:true});
+
+	$("#field_uid").formValidator({empty:true,onShow:"请输入所属球场",onFocus:"请输入所属球场",onCorrect:"输入正确"}).inputValidator({min:1,max:11,onError:"请输入所属球场"});
+		$("#about_name").formValidator({empty:true,onShow:"请输入名称",onFocus:"请输入名称",onCorrect:"输入正确"}).inputValidator({min:1,max:50,onError:"请输入名称"});
+		$("#about_type").formValidator({empty:true,onShow:"请输入类型",onFocus:"请输入类型",onCorrect:"输入正确"}).inputValidator({min:1,max:50,onError:"请输入类型"});
+		$("#about_content").formValidator({empty:true,onShow:"请输入内容",onFocus:"请输入内容",onCorrect:"输入正确"}).inputValidator({min:1,max:3000,onError:"请输入内容"});
+		$("#about_tel").formValidator({empty:true,onShow:"请输入电话",onFocus:"请输入电话",onCorrect:"输入正确"}).inputValidator({min:1,max:50,onError:"请输入电话"});
+		$("#about_tel2").formValidator({empty:true,onShow:"请输入电话2",onFocus:"请输入电话2",onCorrect:"输入正确"}).inputValidator({min:1,max:50,onError:"请输入电话2"});
+		$("#about_replynum").formValidator({empty:true,onShow:"请输入回复数",onFocus:"请输入回复数",onCorrect:"输入正确"}).inputValidator({min:1,max:11,onError:"请输入回复数"});
+		$("#about_sort").formValidator({empty:true,onShow:"请输入排序",onFocus:"请输入排序",onCorrect:"输入正确"}).inputValidator({min:1,max:11,onError:"请输入排序"});
+		
+
+	$.formValidator.reloadAutoTip();
+});
+
+function reloadAutoTip()
+{
+	$.formValidator.reloadAutoTip();
+}
+
+</script>
+
+<!--/dialog_end-->
+</td>
+</tr>
+</table>
+
+</div>
+<include file="../public/_footer" />

@@ -1,0 +1,168 @@
+<include file="../public/_header" />
+<div class="so_main">
+
+  <div class="page_tit">会员服务</div>
+  <div class="tit_tab">
+	<ul>
+		<li><a <php> if(get("language")=='cn'){ echo " class=on ";}</php> href="{:U('field/user_service/user_service_list',array('language'=>'cn'))}">中文</a></li>
+		<li><a <php> if(get("language")=='en'){ echo " class=on ";}</php> href="{:U('field/user_service/user_service_list',array('language'=>'en'))}">英文</a></li>
+	</ul>
+	</div>
+<div class="search_box">
+		<form name="search_form" action="/default.php" method="get">
+		<input type="hidden" name="g" value="field">
+		<input type="hidden" name="m" value="user_service">
+		<input type="hidden" name="a" value="user_service_list">
+
+		<table border="0" cellspacing="0" cellpadding="0">
+			<th>会员UID：</th>
+			<td><input type="text" name="k" class="search_input" style="width:120px;" value="<php> echo  get('k');</php>"></td>
+			<!--<th>开始时间：</th>
+			<td>
+				<input type="text" name="starttime" class="search_input_date" style="width:120px;" value="<php> echo  get('starttime');</php>" onFocus="WdatePicker({isShowClear:false,readOnly:true})"> 至 
+				<input type="text" name="endtime" class="search_input_date" style="width:120px;" value="<php> echo  get('endtime');</php>" onFocus="WdatePicker({isShowClear:false,readOnly:true})">
+			</td>
+			
+			--><th>服务类型：</th>
+			<td>
+				<select name="servicetype_id" id="servicetype_id"   class="search_select">
+					<option value="">请选择</option>
+					<option value="1">年费明细</option>
+					<option value="2">年费反馈</option>
+					<option value="3">优惠券</option>
+					<option value="4">预存款</option>
+				</select>
+				<script>set_select_value(document.search_form.servicetype_id,'<php>echo get("servicetype_id")</php>');</script>
+			</td>
+			
+			<td class="btn">
+				
+				<input type="submit" value="搜索" class="btn_b" style="margin-right:8px;" >
+				<input type="button" value="查看全部" class="btn_b" onclick="javascript:location='{:U('field/user_service/user_service_list',array('language'=>get('language')))}';">
+			</td>
+		</table>
+	</form>
+  </div><!--/search_box-->
+ 
+  <!--------list -------->
+  <div class="Toolbar_inbox">
+  	<div class="page right">{$pages}</div>
+	<a href="{:U('field/user_service/add_user_service',array('language'=>get('language')))}" class="btn_a"><span>添加会员服务</span></a>
+	<!--<a href="{:U('field/field_menu/add_1st_menu',array('language'=>get('language')))}" class="btn_a"><span>添加菜单分类</span></a>-->
+	<!--
+	<php>if(get('arc_state')=='0'){</php>
+	<a href="javascript:void(0);" class="btn_a"  onclick="mod_post_batch('{:U('field/arc/arc_check_action')}','mod_table');"><span>审核通过</span></a>
+	<a href="javascript:void(0);" class="btn_a"  onclick="mod_post_batch('{:U('field/arc/arc_checkno_action')}','mod_table');"><span>驳回审核</span></a>
+	<php>}</php>
+	<php>if(get('arc_state')=='1'){</php>
+	<a href="javascript:void(0);" class="btn_a"  onclick="mod_post_batch('{:U('field/arc/arc_tj_action')}','mod_table');"><span>推荐</span></a>
+	<a href="javascript:void(0);" class="btn_a"  onclick="mod_post_batch('{:U('field/arc/arc_tjno_action')}','mod_table');"><span>取消推荐</span></a>
+
+	<a href="javascript:void(0);" class="btn_a"  onclick="mod_post_batch('{:U('field/arc/arc_pic_action')}','mod_table');"><span>首页图片</span></a>
+	<a href="javascript:void(0);" class="btn_a"  onclick="mod_post_batch('{:U('field/arc/arc_picno_action')}','mod_table');"><span>取消首页图片</span></a>
+	<php>}</php>
+
+	<a href="javascript:void(0);" class="btn_a"  onclick="mod_delete_batch('{:U('field/arc/arc_delete_action')}','mod_table');"><span>批量删除</span></a>
+-->
+	<div class="clear"></div>
+  </div>
+  <div class="list">
+	<php>if($list){</php>
+	  <table width="100%" id="mod_table" border="0" cellspacing="0" cellpadding="0">
+	  <tr>
+		<!--<th style="width:30px;">
+			<input type="checkbox" id="checkbox_handle" onclick="select_all(this,'mod_table','checkbox')" value="0">
+			<label for="checkbox"></label>
+		</th>
+		--><th class="line_l">编号</th>
+		<!--<th class="line_l">所属球场UID</th>-->
+		<th class="line_l">会员UID</th>
+		<th class="line_l">会员名称</th>
+		<!--
+		<th class="line_l">发布人</th>
+		<th class="line_l">所属栏目</th>
+		-->
+		
+		<th class="line_l">服务类型</th>
+		
+		<!--<th class="line_l">服务详细</th>-->
+		<!--
+		<th class="line_l">来源</th>
+		<th class="line_l">编辑</th>
+		<th class="line_l">排序</th>
+		
+		<th class="line_l">状态</th>
+		<th class="line_l">审核时间</th>
+		-->
+		<th class="line_l">添加时间</th>
+		
+		<th class="line_l">操作</th>
+	</tr>
+	<volist id="vo" name="list" key="keys">
+	<tr overstyle="on"  id=ids_{$vo["user_service_id"]}>
+		<!--<td><input type="checkbox" name="checkbox" onclick="select_one(this)" value="{$vo.arc_id}" ></td>-->
+		<td width="40">{$keys}</td>
+		<!--<td>{$vo.field_uid}</td>-->
+		<td>{$vo.uid}</td>
+		<td>{$vo.realname}</td>
+		<!--
+			<td><a href="javascript:void(0);" onclick="mod_dialog('查看详细','{:U('field/arc/arc_detail', array('arc_id'=>$vo['arc_id']))}');">{$vo.staff_id}</a></td>
+			<td>{$vo.arctype_name}</td>
+			-->
+			
+			<td>{$vo.user_service_name}</td>
+			<!--
+			<td><php>if($vo['arc_pic']){</php><img src="/{$vo.arc_pic}" style="max-width:150px; max-height:80px;"><php>}</php></td>
+
+			<td>{$vo.arc_source}</td>
+			<td>{$vo.arc_editor}</td>
+			<td>{$vo.arc_sort}</td>
+			
+			<td><php>if($vo['arc_state']==1){ echo "审核通过";}else if($vo['arc_state']==2){ echo "审核未通过";}else{ echo "待审核";}</php>{$vo.}</td>
+			<td>{$vo.arc_statetime|format_to_time}</td>
+			-->
+			<td>{$vo.user_service_addtime|format_to_time}</td>
+			
+		<td>
+			<a href="{:U('field/user_service/upd_user_service', array('language'=>$language,'user_service_id'=>$vo['user_service_id']))}">修改</a> | 
+			<a href="javascript:void(0);" onclick="mod_dialog('查看详细','{:U('field/user_service/show_service_info', array('language'=>$language,'user_service_id'=>$vo['user_service_id']))}');">详情</a> | 
+			<a href="javascript:void(0);" onclick="mod_delete_one('{:U('field/user_service/del_user_service_action')}','{$vo['user_service_id']}');">删除</a>
+		</td>
+	</tr>
+	</volist>
+    </table>
+	  <php>}else{</php>
+			<div class="no_data">
+				<img src="/skin/images/no_data.gif" align=" "> <span>没有信息了... </span>
+			</div>
+	 <php>}</php>
+  </div>
+
+  <div class="Toolbar_inbox">
+	<div class="page right">{$pages}</div>
+
+	<a href="{:U('field/user_service/add_user_service',array('language'=>get('language')))}" class="btn_a"><span>添加会员服务</span></a>
+
+	<!--<a href="javascript:void(0);" class="btn_a"  onclick="mod_delete_batch('{:U('field/arc/arc_delete_action')}','mod_table');"><span>批量删除</span></a>-->
+
+
+	<div class="clear"></div>
+  </div>
+</div>
+
+<script>
+	$(document).ready(function(){
+		$("tr[overstyle='on']").hover(
+		  function ()
+		  {
+		    $(this).addClass("bg_hover");
+		  },
+		  function (){
+		    $(this).removeClass("bg_hover");
+		  }
+		);
+	});
+</script>
+
+
+<include file="../public/_footer" />

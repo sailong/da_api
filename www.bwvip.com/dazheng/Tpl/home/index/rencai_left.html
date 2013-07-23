@@ -1,0 +1,38 @@
+
+    
+      <dl class="cbxt">
+        <dt>《探矿工程》稿件采编系统</dt>
+        <dd class="dd1"><a href="#">投稿登陆</a></dd>
+        <dd class="dd2"><a href="#">审稿登陆</a></dd>
+        <dd class="dd3"><a href="#">编辑登陆</a></dd>
+        <dd class="dd4"><a href="#">读者登陆</a></dd>
+      </dl>
+
+      <div class="hangyezhuanjia">
+        <h2>探矿工程行业专家库</h2>
+        <p>欢迎光临探矿工程行业专家库。</p>
+        <p>目前，《探矿工程（沿途钻掘工程）》杂志由国土资源部主管，中国地质调查局主板，中国地质科学勘探技术研究所承办，中国地质学会探矿工程专业委员会等多家单位协办，地质出版社出版。</p>
+        <p>探矿工程是一门实用性很强的工程技术，这一特性决定了《探矿工程》杂志必须走“先进性+实用性”的道路，事实证明这条道路是正确的，目前《探矿工程（岩土钻掘工程）》杂志是国土（地矿）资源系统中发布广告数量较多、发行量较大、在地质钻探和岩土工程技术市场中影响力较大的期刊。</p>
+      </div>
+   
+      <div class="ad_talentcenter_left">
+        <php> echo get_ad_byname("E04");</php>
+      </div>
+      
+      <dl class="vocationalcounsel">
+        <dt><h2>就业指导</h2></dt>
+        <volist name="zhidao" id="side" key="k">
+		<if condition="($k%6) eq 0">
+			<dd><a href="{:U('home/arc/arc_detail',array('arc_id'=>$side['arc_id']))}" target="_blank">{$side['arc_name']}</a></dd>
+			<dd style="background:none; padding-left:0; padding-top:10px;"><hr style="color:/Public/talentcenter_zxrc.html0a3756;" /></dd>
+        <else/>
+		    <dd><a href="{:U('home/arc/arc_detail',array('arc_id'=>$side['arc_id']))}" target="_blank">{$side['arc_name']}</a></dd>
+		</if>
+		</volist>
+      </dl>
+      
+      <div class="ad_talentcenter_left">
+        <php> echo get_ad_byname("E05");</php>
+      </div>
+
+    
