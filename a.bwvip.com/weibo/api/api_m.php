@@ -230,6 +230,17 @@ if($ac == 'upload_pic') {
     $tid = $_POST['tid'];
     $uid = $_POST['uid'];
     $user_name = $_POST['username'];
+	if(empty($tid)) 
+    {
+        api_json_result(1,1,"缺少参数tid",null);exit;
+    }
+	if(empty($uid)) {
+		$uid_info=$dsql->GetOne("select uid from jishigou_topic where tid='".$tid."' ");
+		$uid = $uid_info['uid'];
+	}
+	if(empty($uid)) {
+		api_json_result(1,1,"缺少参数uid",null);exit;
+	}
 	if(empty($user_name)) {
 		$user_info=$dsql->GetOne("select nickname from jishigou_members where uid='".$uid."' ");
 		$user_name = $user_info['nickname'];
