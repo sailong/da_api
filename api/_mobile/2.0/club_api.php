@@ -75,6 +75,7 @@ if($ac=="club_index_nologin")
 			$pic_i=0;
 			while($pic_row = DB::fetch($topic_img_rs) ){
 				$pic_list[$pic_i]['photo_big'] = $site_url."/weibo/".$pic_row['photo'];
+				$pic_list[$pic_i]['photo_mibble'] = $site_url."/weibo/".str_replace("_o","_p",$pic_row['photo']);
 				$pic_list[$pic_i]['photo_small'] = $site_url."/weibo/".str_replace("_o","_s",$pic_row['photo']);
 				$pic_i++;
 			}
@@ -88,6 +89,7 @@ if($ac=="club_index_nologin")
 			if($photo_pic)
 			{
 				$row['photo_big']=$photo_pic['photo_big'];
+				$row['photo_mibble']=$photo_pic['photo_mibble'];
 				$row['photo_small']=$photo_pic['photo_small'];
 			}
 			else
@@ -123,6 +125,7 @@ if($ac=="club_index_nologin")
 				$pic_i=0;
 				while($pic_row = DB::fetch($root_topic_img_rs) ){
 					$pic_list[$pic_i]['photo_big'] = $site_url."/weibo/".$pic_row['photo'];
+					$pic_list[$pic_i]['photo_mibble'] = $site_url."/weibo/".str_replace("_o","_p",$pic_row['photo']);
 					$pic_list[$pic_i]['photo_small'] = $site_url."/weibo/".str_replace("_o","_s",$pic_row['photo']);
 					$pic_i++;
 				}
@@ -137,6 +140,7 @@ if($ac=="club_index_nologin")
 				if($photo_pic)
 				{
 					$root_topic['photo_big']=$photo_pic['photo_big'];
+					$root_topic['photo_mibble']=$photo_pic['photo_mibble'];
 					$root_topic['photo_small']=$photo_pic['photo_small'];
 				}
 				else
@@ -209,6 +213,7 @@ if($ac=="club_index_login")
 			$pic_i=0;
 			while($pic_row = DB::fetch($topic_img_rs) ){
 				$pic_list[$pic_i]['photo_big'] = $site_url."/weibo/".$pic_row['photo'];
+				$pic_list[$pic_i]['photo_mibble'] = $site_url."/weibo/".str_replace("_o","_p",$pic_row['photo']);
 				$pic_list[$pic_i]['photo_small'] = $site_url."/weibo/".str_replace("_o","_s",$pic_row['photo']);
 				$pic_i++;
 			}
@@ -223,6 +228,7 @@ if($ac=="club_index_login")
 			if($photo_pic)
 			{
 				$row['photo_big']=$photo_pic['photo_big'];
+				$row['photo_mibble']=$photo_pic['photo_mibble'];
 				$row['photo_small']=$photo_pic['photo_small'];
 			}
 			else
@@ -261,6 +267,7 @@ if($ac=="club_index_login")
 				$pic_i=0;
 				while($pic_row = DB::fetch($root_topic_img_rs) ){
 					$pic_list[$pic_i]['photo_big'] = $site_url."/weibo/".$pic_row['photo'];
+					$pic_list[$pic_i]['photo_mibble'] = $site_url."/weibo/".str_replace("_o","_p",$pic_row['photo']);
 					$pic_list[$pic_i]['photo_small'] = $site_url."/weibo/".str_replace("_o","_s",$pic_row['photo']);
 					$pic_i++;
 				}
@@ -275,6 +282,7 @@ if($ac=="club_index_login")
 				if($photo_pic)
 				{
 					$root_topic['photo_big']=$photo_pic['photo_big'];
+					$root_topic['photo_mibble']=$photo_pic['photo_mibble'];
 					$root_topic['photo_small']=$photo_pic['photo_small'];
 				}
 				else
@@ -398,6 +406,7 @@ if($ac=="topic_detail")
 			$pic_i=0;
 			while($pic_row = DB::fetch($topic_img_rs) ){
 				$pic_list[$pic_i]['photo_big'] = $site_url."/weibo/".$pic_row['photo'];
+				$pic_list[$pic_i]['photo_mibble'] = $site_url."/weibo/".str_replace("_o","_p",$pic_row['photo']);
 				$pic_list[$pic_i]['photo_small'] = $site_url."/weibo/".str_replace("_o","_s",$pic_row['photo']);
 				$pic_i++;
 			}
@@ -411,6 +420,7 @@ if($ac=="topic_detail")
 			if($photo_pic)
 			{
 				$row2['photo_big']=$photo_pic['photo_big'];
+				$row2['photo_mibble']=$photo_pic['photo_mibble'];
 				$row2['photo_small']=$photo_pic['photo_small'];
 			}
 			else
@@ -445,6 +455,7 @@ if($ac=="topic_detail")
 			$pic_i=0;
 			while($pic_row = DB::fetch($root_topic_img_rs) ){
 				$pic_list[$pic_i]['photo_big'] = $site_url."/weibo/".$pic_row['photo'];
+				$pic_list[$pic_i]['photo_mibble'] = $site_url."/weibo/".str_replace("_o","_p",$pic_row['photo']);
 				$pic_list[$pic_i]['photo_small'] = $site_url."/weibo/".str_replace("_o","_s",$pic_row['photo']);
 				$pic_i++;
 			}
@@ -459,6 +470,7 @@ if($ac=="topic_detail")
 			if($photo_pic)
 			{
 				$root_topic['photo_big']=$photo_pic['photo_big'];
+				$root_topic['photo_mibble']=$photo_pic['photo_mibble'];
 				$root_topic['photo_small']=$photo_pic['photo_small'];
 			}
 			else
@@ -626,6 +638,7 @@ if($ac=="my_detail")
 					$pic_i=0;
 					while($pic_row = DB::fetch($topic_img_rs) ){
 						$pic_list[$pic_i]['photo_big'] = $site_url."/weibo/".$pic_row['photo'];
+						$pic_list[$pic_i]['photo_mibble'] = $site_url."/weibo/".str_replace("_o","_p",$pic_row['photo']);
 						$pic_list[$pic_i]['photo_small'] = $site_url."/weibo/".str_replace("_o","_s",$pic_row['photo']);
 						$pic_i++;
 					}
@@ -641,6 +654,7 @@ if($ac=="my_detail")
 					if($photo_pic)
 					{
 						$row['photo_big']=$photo_pic['photo_big'];
+						$row['photo_mibble']=$photo_pic['photo_mibble'];
 						$row['photo_small']=$photo_pic['photo_small'];
 					}
 					else
@@ -677,6 +691,7 @@ if($ac=="my_detail")
 						$pic_i=0;
 						while($pic_row = DB::fetch($root_topic_img_rs) ){
 							$pic_list[$pic_i]['photo_big'] = $site_url."/weibo/".$pic_row['photo'];
+							$pic_list[$pic_i]['photo_mibble'] = $site_url."/weibo/".str_replace("_o","_p",$pic_row['photo']);
 							$pic_list[$pic_i]['photo_small'] = $site_url."/weibo/".str_replace("_o","_s",$pic_row['photo']);
 							$pic_i++;
 						}
@@ -691,6 +706,7 @@ if($ac=="my_detail")
 						if($photo_pic)
 						{
 							$root_topic['photo_big']=$photo_pic['photo_big'];
+							$root_topic['photo_mibble']=$photo_pic['photo_mibble'];
 							$root_topic['photo_small']=$photo_pic['photo_small'];
 						}
 						else
@@ -819,6 +835,7 @@ if($ac=="member_detail")
 				$pic_i=0;
 				while($pic_row = DB::fetch($topic_img_rs) ){
 					$pic_list[$pic_i]['photo_big'] = $site_url."/weibo/".$pic_row['photo'];
+					$pic_list[$pic_i]['photo_mibble'] = $site_url."/weibo/".str_replace("_o","_p",$pic_row['photo']);
 					$pic_list[$pic_i]['photo_small'] = $site_url."/weibo/".str_replace("_o","_s",$pic_row['photo']);
 					$pic_i++;
 				}
@@ -832,6 +849,7 @@ if($ac=="member_detail")
 				if($photo_pic)
 				{
 					$row['photo_big']=$photo_pic['photo_big'];
+					$row['photo_mibble']=$photo_pic['photo_mibble'];
 					$row['photo_small']=$photo_pic['photo_small'];
 				}
 				else
@@ -866,6 +884,7 @@ if($ac=="member_detail")
 					$pic_i=0;
 					while($pic_row = DB::fetch($root_topic_img_rs) ){
 						$pic_list[$pic_i]['photo_big'] = $site_url."/weibo/".$pic_row['photo'];
+						$pic_list[$pic_i]['photo_mibble'] = $site_url."/weibo/".str_replace("_o","_p",$pic_row['photo']);
 						$pic_list[$pic_i]['photo_small'] = $site_url."/weibo/".str_replace("_o","_s",$pic_row['photo']);
 						$pic_i++;
 					}
@@ -878,7 +897,8 @@ if($ac=="member_detail")
 					$photo_pic = reset($pic_list);
 					if($photo_pic)
 					{
-						$root_topic['photo_big']=$photo_pic['photo_big'];
+						$root_topic['photo_big']=$photo_pic['photo_big'];			
+						$root_topic['photo_mibble']=$photo_pic['photo_mibble'];
 						$root_topic['photo_small']=$photo_pic['photo_small'];
 					}
 					else
@@ -1441,6 +1461,7 @@ if($ac=="at_me")
 					$pic_i=0;
 					while($pic_row = DB::fetch($topic_img_rs) ){
 						$pic_list[$pic_i]['photo_big'] = $site_url."/weibo/".$pic_row['photo'];
+						$pic_list[$pic_i]['photo_mibble'] = $site_url."/weibo/".str_replace("_o","_p",$pic_row['photo']);
 						$pic_list[$pic_i]['photo_small'] = $site_url."/weibo/".str_replace("_o","_s",$pic_row['photo']);
 						$pic_i++;
 					}
@@ -1454,6 +1475,7 @@ if($ac=="at_me")
 					if($photo_pic)
 					{
 						$row['photo_big']=$photo_pic['photo_big'];
+						$row['photo_mibble']=$photo_pic['photo_mibble'];
 						$row['photo_small']=$photo_pic['photo_small'];
 					}
 					else
@@ -1491,6 +1513,7 @@ if($ac=="at_me")
 						$pic_i=0;
 						while($pic_row = DB::fetch($root_topic_img_rs) ){
 							$pic_list[$pic_i]['photo_big'] = $site_url."/weibo/".$pic_row['photo'];
+							$pic_list[$pic_i]['photo_mibble'] = $site_url."/weibo/".str_replace("_o","_p",$pic_row['photo']);
 							$pic_list[$pic_i]['photo_small'] = $site_url."/weibo/".str_replace("_o","_s",$pic_row['photo']);
 							$pic_i++;
 						}
@@ -1504,6 +1527,7 @@ if($ac=="at_me")
 						if($photo_pic)
 						{
 							$root_topic['photo_big']=$photo_pic['photo_big'];
+							$root_topic['photo_mibble']=$photo_pic['photo_mibble'];
 							$root_topic['photo_small']=$photo_pic['photo_small'];
 						}
 						else
@@ -1589,6 +1613,7 @@ if($ac=="comment_me")
 						$pic_i=0;
 						while($pic_row = DB::fetch($topic_img_rs) ){
 							$pic_list[$pic_i]['photo_big'] = $site_url."/weibo/".$pic_row['photo'];
+							$pic_list[$pic_i]['photo_mibble'] = $site_url."/weibo/".str_replace("_o","_p",$pic_row['photo']);
 							$pic_list[$pic_i]['photo_small'] = $site_url."/weibo/".str_replace("_o","_s",$pic_row['photo']);
 							$pic_i++;
 						}
@@ -1602,6 +1627,7 @@ if($ac=="comment_me")
 						if($photo_pic)
 						{
 							$row['photo_big']=$photo_pic['photo_big'];
+							$row['photo_mibble']=$photo_pic['photo_mibble'];
 							$row['photo_small']=$photo_pic['photo_small'];
 						}
 						else
@@ -1639,6 +1665,7 @@ if($ac=="comment_me")
 							$pic_i=0;
 							while($pic_row = DB::fetch($root_topic_img_rs) ){
 								$pic_list[$pic_i]['photo_big'] = $site_url."/weibo/".$pic_row['photo'];
+								$pic_list[$pic_i]['photo_mibble'] = $site_url."/weibo/".str_replace("_o","_p",$pic_row['photo']);
 								$pic_list[$pic_i]['photo_small'] = $site_url."/weibo/".str_replace("_o","_s",$pic_row['photo']);
 								$pic_i++;
 							}
@@ -1653,6 +1680,7 @@ if($ac=="comment_me")
 							if($photo_pic)
 							{
 								$root_topic['photo_big']=$photo_pic['photo_big'];
+								$root_topic['photo_mibble']=$photo_pic['photo_mibble'];
 								$root_topic['photo_small']=$photo_pic['photo_small'];
 							}
 							else
