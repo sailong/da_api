@@ -462,9 +462,40 @@ if($ac=="score_detail")
 	if($tid)
 	{
 		$reply_list=DB::query("select tid,uid,
-(select realname from ".DB::table("common_member_profile")." where uid=jishigou_topic.uid) as username,(select `longtext` from jishigou_topic_longtext where tid=jishigou_topic.tid) as full_content,content,replys,forwards,dateline,type,(select photo from jishigou_topic_image where tid=jishigou_topic.tid limit 1) as photo from jishigou_topic where totid='".$tid."'  order by dateline desc limit 10 ");
+(select realname from ".DB::table("common_member_profile")." where uid=jishigou_topic.uid) as username,(select `longtext` from jishigou_topic_longtext where tid=jishigou_topic.tid) as full_content,content,replys,forwards,dateline,type,imageid from jishigou_topic where totid='".$tid."'  order by dateline desc limit 10 ");
 		while($row2 = DB::fetch($reply_list) )
 		{
+			$imageids_arr = explode(',',$row['imageid']);
+					
+			$pic_ids = implode("','",$imageids_arr);
+			unset($imageids_arr);
+			$topic_img_rs = DB::query("select id,photo from jishigou_topic_image where id in('{$pic_ids}')");
+			unset($pic_ids);
+			
+			$pic_i=0;
+			while($pic_row = DB::fetch($topic_img_rs) ){
+				$pic_list[$pic_i]['photo_big'] = $site_url."/weibo/".$pic_row['photo'];
+				$pic_list[$pic_i]['photo_small'] = $site_url."/weibo/".str_replace("_o","_s",$pic_row['photo']);
+				$pic_i++;
+			}
+			unset($topic_img_rs,$pic_i,$pic_row);
+			if(!empty($pic_list)) {
+				$row2['pic_list'] = $pic_list;
+			}else{
+				$row2['pic_list'] = '';
+			}
+			$photo_pic = reset($pic_list);
+			if($photo_pic)
+			{
+				$row2['photo_big']=$photo_pic['photo_big'];
+				$row2['photo_small']=$photo_pic['photo_small'];
+			}
+			else
+			{
+				$row2['photo_big']=null;
+				$row2['photo_small']=null;
+			}
+			unset($pic_list,$photo_pic);
 			$content_tmp = cutstr_html($row2['content']);
 			$row2['content']=cutstr_html($row2['full_content']);
 			if(empty($row2['content'])) {
