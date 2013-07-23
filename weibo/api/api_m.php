@@ -227,6 +227,10 @@ if($ac=="add_topic")
 
 //微博上传图片接口
 if($ac == 'upload_pic') {
+	if($_GET['test']) {
+		echo '<pre>';
+		var_dump($config);die;
+	}
     $tid = $_POST['tid'];
     $uid = $_POST['uid'];
     $user_name = $_POST['username'];
@@ -234,8 +238,12 @@ if($ac == 'upload_pic') {
     {
         api_json_result(1,1,"缺少参数tid",null);exit;
     }
+	
 	if(empty($uid)) {
 		$uid_info=$dsql->GetOne("select uid from jishigou_topic where tid='".$tid."' ");
+		if(empty($uid_info)) {
+			api_json_result(1,2,"此微博不存在",null);exit;
+		}
 		$uid = $uid_info['uid'];
 	}
 	if(empty($uid)) {
@@ -250,10 +258,6 @@ if($ac == 'upload_pic') {
 //    }
     //$is_end = $_REQUEST['is_end'];//0:为传完，1:传完
     //$image_ids = $_REQUEST['image_ids'];//已上传的图片id字符串 3,4,5,6...
-    if(empty($tid) || empty($uid)) 
-    {
-        api_json_result(1,1,"缺少参数tid或uid",null);exit;
-    }
   
     if(!empty($_FILES['pic'])) {
     	$now_data = date("Ymd",time());
@@ -269,6 +273,7 @@ if($ac == 'upload_pic') {
     		mkdir($full_save_path);
     	}
     	$file_val = $_FILES['pic'];
+		
     	//foreach($_FILES as $file_name=>$file_val) {
 	    $now_time = time();
 	    $t_name = mt_rand(0,100);
@@ -317,7 +322,7 @@ if($ac == 'upload_pic') {
 			//生成中图
         	$image_width_p = 0;
         	if($image_width_p < 1) {
-        		$image_width_p = 280;
+        		$image_width_p = 300;
         	}
     		if($iw > $image_width_p) {
     			$p_width = $image_width_p;
