@@ -1,0 +1,76 @@
+
+<link href="css/style1.css" rel="stylesheet" type="text/css" />
+
+<div id="wary">
+   <div class="he_one">
+    <div class="logo fl"><a href="#"><img src="images/logo.jpg" width="129" height="42" /></a></div>
+    <div class="re fr"><p>客服热线：<span class="yanse">400 810 9966</span></p>
+    <p style="float:right; padding-right:20px;"> <a href="#"></a>  <a href="#"></a> </p></div>
+ </div>
+ <!--nav-->
+ {template "daz_nav"}
+ <!--/nav-->
+  <div id="centenr">
+      <div id="cen1" style="height:auto;">
+         <div id="con1_s"></div>
+			<div id="con1_t" style="height:auto;">
+				   <div id="t_bok">{template "topic_header"}</div>
+					   <div class="nav_u">
+							   <ul>								
+									<div class="m">
+									<div class="t_list_c">
+										<!--{if is_array($message)==false}-->
+											<span>提示：{$message}</span>
+										<!--{/if}-->
+									</div>
+
+									<div class="t_list_c">
+									<!--{if MEMBER_ID}-->
+										<!--{if $returntype == 'pms'}-->
+											<span><a href="index.php?mod=pm">我的私信</a></span> |
+											<span><a href="index.php?mod=pm&amp;code=pmsend">在发一条</a></span> |
+											
+										<!--{elseif $returntype == 'follow'}-->
+											<span><a href="{$redirectto}">返回上页</a></span> |
+											
+										<!--{elseif $returntype == 'del'}-->
+											<span><a href="{$redirectto}">确认删除</a></span> |
+											<span><a href="{$return_Url}">返 回 </a></span> |
+											
+										<!--{elseif $returntype == 'addpm'}-->
+											<span><a href="{$redirectto}">继续发送</a></span> |
+											<span><a href="index.php?mod=pm">我的私信</a></span> |
+											
+										<!--{elseif $returntype == 'favorite'}-->
+										<span class="{$my_favorite}"><a href="index.php?mod=topic&amp;code=myfavorite">我收藏的</a></span> |
+										<span class="{$favoritemy}"><a href="index.php?mod=topic&amp;code=favoritemy">收藏我的</a></span> |
+										<span><a href="{$return_Url}">返回上一页 </a></span> |	
+										<!--{else}-->
+										   <span id='redirect_status'><a href="{$redirectto}">查看微博</a></span> |
+									   <!--{/if}-->
+									   
+										<span><a href="index.php?mod=topic&amp;code=myhome">我的首页</a></span> 
+									<!--{/if}-->
+									</div>
+
+									</div>
+							  </ul>
+					   </div>
+			</div>
+         <div id="con1_p"></div>
+     </div>
+ </div>
+
+
+  <!--copyright-->
+ <div id="copyright" >
+   <p style="padding-top:10px;">大正高尔夫©2011&nbsp;&nbsp;&nbsp;&nbsp;京ICP证110339号</p>
+   <p> 京公网安备110105008914号</p>
+ </div>
+     
+  </div>
+</div>
+
+
+
+{template "topic_footer"}

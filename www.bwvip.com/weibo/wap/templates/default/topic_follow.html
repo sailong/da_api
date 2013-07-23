@@ -1,0 +1,78 @@
+
+
+
+<link href="css/style1.css" rel="stylesheet" type="text/css" />
+<div id="wary">
+   <div class="he_one">
+    <div class="logo fl"><a href="#"><img src="images/logo.jpg" width="129" height="42" /></a></div>
+    <div class="re fr"><p>客服热线：<span class="yanse">400 810 9966</span></p>
+    <p style="float:right; padding-right:20px;"> <a href="#"></a>  <a href="#"></a> </p></div>
+ </div>
+ <!--nav-->
+ {template "daz_nav"}
+ <!--/nav-->
+  <div id="centenr">
+      <div id="cen1" style="height:auto;">
+         <div id="con1_s"></div>
+			<div id="con1_t" style="height:auto;">
+				   <div id="t_bok"><!--{template "topic_header"}--></div>
+					   <div class="nav_u">
+							   <ul>					
+									<div class="m">
+											<!--{if MEMBER_ID == $member[uid]}-->
+											<div style="padding:2px;">
+												<!--{eval if($this->Code == 'follow') $follow_hb = 'hb';}--> 
+												<!--{eval if($this->Code == 'fans') $fans_hb = 'hb';}--> 
+												<span class="{$follow_hb}"><a href="index.php?mod=topic&code=follow">我关注的</a></span>
+												<span class="{$fans_hb}" style="margin-left:10px;"><a href="index.php?mod=topic&code=fans">关注我的</a></span>
+											</div>
+											<!--{/if}-->
+
+											<!--{loop $member_list $val}-->
+											<div style="padding:2px;">
+												<div class="t_list_b" >
+													<span>
+														<a href="index.php?mod=getuinfo&uid={$val[uid]}">{$val[nickname]}</a>
+													</span>
+													<span style="margin-left:20px;">
+													<!--{if MEMBER_ID!=$val[uid]}-->
+														{$val[follow_html]}
+													<!--{elseif MEMBER_ID==$val[uid]}-->
+														（这是我自己）
+													<!--{/if}-->
+													</span>
+												</div>	 
+												<div class="t_list_b" style="color:#666666;">
+												 <span>关注{$val[follow_count]}人 |</span> 
+												 <span>粉丝{$val[fans_count]}人 |</span> 
+												 <span>微博{$val[topic_count]}条 |</span>
+												 <span><a href="index.php?mod=pm&code=pmsend&amp;nickname={$val[nickname]}">发私信</a></span>
+												</div>
+											 </div>
+											 <div class="lineDot"></div>
+											<!--{/loop}-->
+											<!--{if $page_arr[html]}-->
+											<span>{$page_arr[html]}</span>
+											<!--{/if}-->
+										</div>
+
+							  </ul>
+					   </div>
+			</div>
+         <div id="con1_p"></div>
+     </div>
+ </div>
+
+
+  <!--copyright-->
+ <div id="copyright" >
+   <p style="padding-top:10px;">大正高尔夫©2011&nbsp;&nbsp;&nbsp;&nbsp;京ICP证110339号</p>
+   <p> 京公网安备110105008914号</p>
+ </div>
+     
+  </div>
+</div>
+
+<!--{template "topic_footer"}-->
+
+

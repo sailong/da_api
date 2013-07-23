@@ -1,0 +1,60 @@
+
+<link href="css/style1.css" rel="stylesheet" type="text/css" />
+<div id="wary">
+   <div class="he_one">
+    <div class="logo fl"><a href="#"><img src="images/logo.jpg" width="129" height="42" /></a></div>
+    <div class="re fr"><p>客服热线：<span class="yanse">400 810 9966</span></p>
+    <p style="float:right; padding-right:20px;"> <a href="#"></a>  <a href="#"></a> </p></div>
+ </div>
+ <!--nav-->
+ {template "daz_nav"}
+ <!--/nav-->
+  <div id="centenr">
+      <div id="cen1" style="height:auto;">
+         <div id="con1_s"></div>
+			<div id="con1_t" style="height:auto;">
+				   <div id="t_bok"><!--{template "topic_header"}--></div>
+					   <div class="nav_u">
+							   <ul>																
+									<div class="m">
+									<!--{if $pm_list}-->
+										<!--{loop $pm_list $val}-->
+										<div class="u2">
+										<div style="padding:5px;">
+											<span><a href="index.php?mod={$val[msgfrom]}">{$val[msgnickname]}</a></span> 发来私信:<span style="margin-left:5px;">{$val[message]}</span>
+										</div>
+										<div style="padding:5px;">
+											<span style="color:#999999;">{$val[send_time]}</span>   
+											<span style="margin-left:4px;"><a href="index.php?mod=pm&amp;code=view&amp;pmid={$val[pmid]}">回信</a></span>
+											<span style="margin-left:4px;">
+												<!--{if {$val[new]} == 1}--><font color="#FF0000";><a href="index.php?mod=pm&amp;code=view&amp;pmid={$val[pmid]}">未读</a></font><!--{else}-->已读<!--{/if}-->
+											</span>
+											<span style="margin-left:4px;"><a href="index.php?mod=pm&amp;code=pmdel&amp;pmid={$val[pmid]}">删除</a></span>
+										</div>
+										</div>
+										<div class="lineDot"></div>
+										<!--{/loop}-->
+									<!--{else}-->
+									<div class="t_list_c">这里暂时还没有私信</div>
+									<!--{/if}-->
+
+									</div>
+							  </ul>
+					   </div>
+			</div>
+         <div id="con1_p"></div>
+     </div>
+ </div>
+
+
+  <!--copyright-->
+ <div id="copyright" >
+   <p style="padding-top:10px;">大正高尔夫©2011&nbsp;&nbsp;&nbsp;&nbsp;京ICP证110339号</p>
+   <p> 京公网安备110105008914号</p>
+ </div>
+     
+  </div>
+</div>
+
+
+<!--{template "topic_footer"}-->

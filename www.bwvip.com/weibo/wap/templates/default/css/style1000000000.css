@@ -1,0 +1,78 @@
+* {
+	PADDING-BOTTOM: 0px; BORDER-RIGHT-WIDTH: 0px; MARGIN: 0px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; BORDER-TOP-WIDTH: 0px; BORDER-BOTTOM-WIDTH: 0px; BORDER-LEFT-WIDTH: 0px; TEXT-DECORATION: none; PADDING-TOP: 0px;}
+div,ul,li,p,h1,input,img,form,font,dl,dt,dd{ margin:0;padding:0; font-size:12px;}
+img{border:none;vertical-align:middle;margin:0px;padding:0px;}
+.fl{float:left;}
+.fr{float:right;margin-top:-28px;}
+ul li{list-style:none; text-decoration:none;}
+input{vertical-align:mitouddle;}
+a{text-decoration:none;}
+/*wary*/
+#wary{width:320px; height:auto; background:#695405; clear:both;}
+.he_one{width:320px;height:42px; background:#FFF;}
+.logo{width:130px; height:42px;}
+
+.re{width:145px; height:22px;}
+.re p{ line-height:20px;}
+.re p a{ color:#000}
+.re p a:hover{ color:#F00; text-decoration:underline;}
+.yanse{ color:#F00;}
+/*nav*/
+#nav{width:320px; background:url(../images/nav_03.jpg) repeat-x; height:49px;}
+#nav_one{width:273px; height:25px; margin:0 auto;}
+#nav_one ul li{ float:left; width:54px; height:22px; line-height:22px; text-align:center; display:block; margin-top:2px;}
+#nav_one ul li a{ color:#FFF; }
+#nav_two{width:273px; height:23px; margin:0 auto;}
+#nav_two ul li{ float:left; width:54px; height:21px;line-height:21px;  text-align:center; display:block; margin-top:1px;}
+#nav_two ul li a{ color:#FFF;}
+#nav_one ul li a:hover{ color:#f6ff00;text-decoration:underline;}
+#nav_two ul li a:hover{ color:#f6ff00;text-decoration:underline;}
+
+#centenr{width:294px; height:auto; margin:0 auto;clear:both;}
+#cen1{width:294px; height:344px; margin-top:10px;}
+#con1_s{ background:url(../images/top_10.gif) no-repeat;width:294px; height:13px; overflow:hidden;}
+#con1_t{ background:url(../images/cen_14.gif) repeat-y;width:294px; height:318px;}
+#con1_p{ background:url(../images/buttom_17.gif) no-repeat;width:294px; height:13px;}
+#t_bok{width:240px; height:auto; border:1px solid #CCC; background:#FFF; margin:0 auto;padding:8px 14px 8px 14px;}
+
+.nav_u{width:260px; height:auto; margin:0 auto; margin-top:9px; clear:both;}
+.nav_u ul li{ display:block; line-height:24px; background:url(../images/ico_16.jpg) left no-repeat;}
+.nav_u ul li a{ color:#000; padding-left:5px;}
+.nav_u ul li a:hover{ color:#fff; background:#0190c2;width:260px; height:24px;}
+
+#pi_im{width:287px; height:153px; margin:0 auto;margin-top:10px;}
+#weibo{width:294px; height:42px; margin-top:10px;}
+.bo1{ background:url(../images/left-p_27.jpg) no-repeat;width:14px; height:42px; float:left;}
+.bo2{ background:url(../images/cen-p_29.jpg) repeat-x;width:266px; height:42px; float:left; line-height:42px;}
+.bo3{ background:url(../images/right-p_31.jpg) no-repeat;width:14px; height:42px; float:right;}
+.dh_le{width:60px; height:42px; padding-left:10px; line-height:42px;}
+.dh_le span{ font-weight:bold;}
+.dh_ri{width:193px; height:42px; line-height:42px;}
+.dh_ri a{ margin-left:3px; color:#F00;}
+
+#qiuc{width:294px; height:auto; margin-top:10px;}
+#con1_t2{background:url(../images/cen_14.gif) repeat-y;width:294px; height:355px;}
+.t_top{width:266px; height:27px; margin:0 auto; border-bottom:1px solid #CCC; line-height:27px;}
+.dh_le2{width:60px; height:2px; padding-left:10px; line-height:27px;}
+.dh_le2 span{ font-weight:bold;}
+.dh_ri2{width:193px; height:27px; line-height:27px;}
+.dh_ri2 a{ margin-left:3px; color:#000;}
+
+/*top*/
+.top{width:38px; height:13px; margin:0 auto;}
+#copyright{width:320px; height:70px; background:#695308; margin-top:5px;}
+#copyright p{ text-align:center; line-height:25px; color:#FFF;}
+
+#two_han{width:320px; height:51px; background:url(../images/tow-ri_03.gif) repeat-x;}
+#two_logo{width:74px; height:51px; float:left;}
+#two_ri{width:239px; height:51px; float:right;}
+#two_ri a{line-height:51px; color:#FFF; padding-left:5px;}
+#two_ri span{color:#FFF;}
+.t_top2{width:266px; height:27px; margin:0 auto; border-bottom:1px solid #CCC; line-height:27px; font-weight:bold;}
+.nav_smial{width:294px;repeat-x; height:25px; margin-top:5px;}
+.nav_smial span{ color:#000; padding-left:10px; line-height:25px; font-family:"新宋体"; font-weight:bold;}
+.nav_u2{width:267px; height:auto; margin:0 auto; margin-top:5px; border-bottom:1px solid #CCC;}
+.nav_u2 ul li{ display:block; line-height:24px;}
+.nav_u2 span{ font-weight:bold; color:#0f58a7; width:70px; display:block; float:left;}
+.zcol{ font-weight:bold; color:#0f58a7; width:70px; display:block;}
+.nav_u2 li a{ padding-left:10px; color:#F00; font-weight:bold;}

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<root>
+	<item id="Title"><![CDATA[JishiGou! Plugin]]></item>
+	<item id="Version"><![CDATA[3.0.0 alpha]]></item>
+	<item id="Data">
+		<item id="plugin">
+			<item id="available"><![CDATA[0]]></item>
+			<item id="name"><![CDATA[企业微博]]></item>
+			<item id="identifier"><![CDATA[company]]></item>
+			<item id="description"><![CDATA[通过认证后的企业微博，提供多种途径宣传企业形象，例如：可以输入企业介绍，联系人，联系方式，公司地址等。]]></item>
+			<item id="directory"><![CDATA[company/]]></item>
+			<item id="copyright"><![CDATA[]]></item>
+			<item id="version"><![CDATA[1.0]]></item>
+			<item id="__modules">
+				<item id="0">
+					<item id="modtype"><![CDATA[1]]></item>
+					<item id="mod_file"><![CDATA[company]]></item>
+					<item id="mod_name"><![CDATA[企业微博]]></item>
+					<item id="role_id"><![CDATA[all]]></item>
+				</item>
+				<item id="1">
+					<item id="modtype"><![CDATA[3]]></item>
+					<item id="mod_file"><![CDATA[memcp]]></item>
+					<item id="mod_name"><![CDATA[我的公司]]></item>
+					<item id="role_id"><![CDATA[3]]></item>
+				</item>
+				<item id="2">
+					<item id="modtype"><![CDATA[5]]></item>
+					<item id="mod_file"><![CDATA[company]]></item>
+					<item id="mod_name"><![CDATA[]]></item>
+					<item id="role_id"><![CDATA[all]]></item>
+				</item>
+				<item id="3">
+					<item id="modtype"><![CDATA[4]]></item>
+					<item id="mod_file"><![CDATA[admincp]]></item>
+					<item id="mod_name"><![CDATA[管理]]></item>
+					<item id="role_id"><![CDATA[7]]></item>
+				</item>
+			</item>
+		</item>
+		<item id="var">
+			<item id="0">
+				<item id="displayorder"><![CDATA[0]]></item>
+				<item id="title"><![CDATA[认证条件]]></item>
+				<item id="description"><![CDATA[认证时需要提供的材料]]></item>
+				<item id="variable"><![CDATA[require]]></item>
+				<item id="type"><![CDATA[checkbox]]></item>
+				<item id="extra"><![CDATA[1=营业执照
+2=法人代表证件]]></item>
+			</item>
+			<item id="1">
+				<item id="displayorder"><![CDATA[0]]></item>
+				<item id="title"><![CDATA[使用对象]]></item>
+				<item id="description"><![CDATA[设置具备什么等级的用户可以申请认证企业微博。]]></item>
+				<item id="variable"><![CDATA[condition]]></item>
+				<item id="type"><![CDATA[usergroup]]></item>
+				<item id="extra"><![CDATA[]]></item>
+			</item>
+		</item>
+	</item>
+	<item id="installfile"><![CDATA[install.php]]></item>
+	<item id="uninstallfile"><![CDATA[uninstall.php]]></item>
+</root>

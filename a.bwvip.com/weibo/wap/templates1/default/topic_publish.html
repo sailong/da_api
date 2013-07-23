@@ -1,0 +1,107 @@
+
+
+<link href="css/style1.css" rel="stylesheet" type="text/css" />
+<div id="wary">
+   <div class="he_one">
+    <div class="logo fl"><a href="#"><img src="images/logo.jpg" width="129" height="42" /></a></div>
+    <div class="re fr"><p>客服热线：<span class="yanse">400 810 9966</span></p>
+    <p style="float:right; padding-right:20px;"> <a href="#"></a>  <a href="#"></a> </p></div>
+ </div>
+ <!--nav-->
+ {template "daz_nav"}
+ <!--/nav-->
+  <div id="centenr">
+      <div id="cen1" style="height:auto;">
+         <div id="con1_s"></div>
+			<div id="con1_t" style="height:auto;">
+				   <div id="t_bok"><!--{template "topic_header"}--></div>
+					   <div class="nav_u">
+							   <ul>					
+										<!--{if in_array($this->Code,array('myhome','new','myat','do_add'))}-->
+										<div class="m">
+										<form action="index.php?mod=topic&amp;code=do_add" method="post" enctype="multipart/form-data" name="form1" id="form1">
+										<div>随便说说：({conf topic_length}字以内)
+										<!--{eval $i_already_value = $tag_value ? $tag_value : $this->Config[today_topic];}-->
+										 <input type="text" name="content" id="content" value="{$i_already_value}" class="textS"/>
+										 </div>
+										 <div>
+										 图片：<input name="topic" type="file" id="topic" size="3" />
+										 </div>
+										 <div>
+											 <span><input type="submit" name="Submit" value="发微博" /> </span>
+
+										<!--{if $this->Config[sina_enable] && sina_weibo_init()}-->
+											{eval echo array_iconv($this->Config['charset'],'utf-8',sina_weibo_syn());}
+										<!--{/if}-->
+										<!--{if $this->Config[qqwb_enable] && qqwb_init()}-->
+											{eval echo array_iconv($this->Config['charset'],'utf-8',qqwb_syn());}
+										<!--{/if}-->
+										<!--{if $this->Config[kaixin_enable] && kaixin_init()}-->
+											{eval echo array_iconv($this->Config['charset'],'utf-8',kaixin_syn_html());}
+										<!--{/if}-->
+										<!--{if $this->Config[renren_enable] && renren_init()}-->
+											{eval echo array_iconv($this->Config['charset'],'utf-8',renren_syn_html());}
+										<!--{/if}-->
+										 </div>
+										  <input name="topictype" type="hidden" id="topictype" value="first" />
+										  <input name="return_code" type="hidden" id="return_code" value="{$this->Code}" />
+										</form>
+										</div>
+										<div class="lineDot"></div>
+										<!--{/if}-->
+
+										<!--{if empty($this->Post['content']) and $this->Code == 'doreply'}-->
+										<div>
+										<form id="form1" name="form1" method="post" action="index.php?mod=topic&amp;code=doreply">
+										 <span>
+										 评论：({conf topic_length}字以内)
+										<!-- <input name="content" type="text" id="content" value="" size="22" />-->
+										 <textarea name="content" id="content" value="" style="width:99%;" rows="2" cols="" /></textarea>
+										 </span>
+										 <span>
+										 <input type="submit" name="Submit2" value="发评论" />
+										 <input name="topictype" type="checkbox" id="topictype" value="both" />
+										 同时发布微博</span>
+										 <input name="totid" type="hidden" id="totid" value="{$this->Post['totid']}" />
+										 <input name="reply" type="hidden" id="reply" value="replycontent" />
+										<input name="return_code" type="hidden" id="return_code" value="{$this->Code}" />
+										</form>
+										</div>
+										<!--{/if}-->
+							  </ul>
+					   </div>
+			</div>
+         <div id="con1_p"></div>
+     </div>
+ </div>
+
+
+  <!--copyright-->
+ <div id="copyright" >
+   <p style="padding-top:10px;">大正高尔夫©2011&nbsp;&nbsp;&nbsp;&nbsp;京ICP证110339号</p>
+   <p> 京公网安备110105008914号</p>
+ </div>
+     
+  </div>
+</div>
+
+<!--{template "topic_footer"}-->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

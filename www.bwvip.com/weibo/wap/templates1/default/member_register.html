@@ -1,0 +1,65 @@
+
+<link href="css/style1.css" rel="stylesheet" type="text/css" />
+<div id="wary">
+   <div class="he_one">
+    <div class="logo fl"><a href="#"><img src="images/logo.jpg" width="129" height="42" /></a></div>
+    <div class="re fr"><p>客服热线：<span class="yanse">400 810 9966</span></p>
+    <p style="float:right; padding-right:20px;"> <a href="#"></a>  <a href="#"></a> </p></div>
+ </div>
+ <!--nav-->
+ {template "daz_nav"}
+ <!--/nav-->
+  <div id="centenr">
+      <div id="cen1" style="height:auto;">
+         <div id="con1_s"></div>
+			<div id="con1_t" style="height:auto;">
+				   <div id="t_bok"><!--{template "topic_header"}--></div>
+					   <div class="nav_u">
+							   <ul>																
+									 <div class="tbox">
+									 <!--{if $inviter_member[username]}-->
+										<!--<div class="u">
+										<span>
+										<img src="{$inviter_member[face]}" class="facestyle"/></span>
+										<!--{eval $inviter_member[nickname]=wap_iconv($inviter_member[nickname]);}-->
+										<span style="margin-top:15px;"><span class="fontGreen">{$inviter_member[nickname]}</span> 邀您注册 （注册后你们将相互关注，并在首页看到彼此的分享）</span>
+										</div>-->
+									<!--{/if}-->
+									 <form id="form1" name="form1" method="post" action="{$action}">
+									 {if $this->_sms_register()}
+									 <input name="sms_bind_num" value="{$sms_bind_num}" type="hidden" id="sms_bind_num" />
+									 <div class="regp">请输入您接收到的手机验证码<br /><input name="sms_bind_key" type="text" id="sms_bind_key" /></div>
+									 {/if}
+									 {if !$noemail}
+									 <div class="regp">登录邮箱（请使用常用Email）<br /><input name="email" type="text" id="email"/></div>
+									 {/if}
+									 <div class="regp">用户名称（只允许字母和数字）<br /><input name="username" type="text" id="username"/></div>
+									 <div class="regp">用户昵称（请不要输入特殊符号）<br /><input name="nickname" type="text" id="nickname" /></div>
+									 <div class="regp">登录密码（至少5位字母或数字）<br /><input name="password"  type="password" id="password " /></div>
+									 <div class="regp"><input type="submit" name="Submit" value="注册" /></div>
+									 </form>
+									</div>
+							  </ul>
+					   </div>
+			</div>
+         <div id="con1_p"></div>
+     </div>
+ </div>
+
+
+  <!--copyright-->
+ <div id="copyright" >
+   <p style="padding-top:10px;">大正高尔夫©2011&nbsp;&nbsp;&nbsp;&nbsp;京ICP证110339号</p>
+   <p> 京公网安备110105008914号</p>
+ </div>
+     
+  </div>
+</div>
+
+<!--{template "topic_footer"}-->
+
+
+
+
+
+
