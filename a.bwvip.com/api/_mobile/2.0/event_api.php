@@ -88,20 +88,11 @@ if($ac=="select_event")
 		$list_data3[]=$row3;
 	}
 
-	$list=DB::query("select event_id,event_name,event_uid,event_is_zhutui,event_content,event_url,event_type from tbl_event where event_is_tj='Y' and field_uid=0 order by event_sort desc limit 100 ");
+	$list=DB::query("select event_id,event_name,event_uid,event_is_zhutui,event_content,event_url,event_type from tbl_event where event_is_tj='Y' and field_uid=0 order by event_sort desc  ");
 	while($row = DB::fetch($list))
 	{
-		$field=DB::query("select field_id,(select province from pre_common_field where uid=pre_fenzhan.field_id) as sheng from pre_fenzhan where sid='".$row['event_uid']."' ");
-		
-		$field_ids=null;
-		$shengs=null;
-		while($row_sub=DB::fetch($field))
-		{
-				$field_ids[]=$row_sub['field_id'];
-				$shengs[]=$row_sub['sheng'];
-		}
-		$row['field_ids']=$field_ids;
-		$row['shengs']=$shengs;
+		//$field=DB::query("select field_id from pre_fenzhan where sid= ");
+		//$row['field_ids']=
 		
 		$row['event_pic']=$site_url."/uc_server/avatar.php?uid=".$row['event_uid']."&size=middle";
 		$row['uid']=$row['event_uid'];
@@ -617,6 +608,7 @@ if($ac=="event_detail")
 					$pic_i=0;
 					while($pic_row = DB::fetch($topic_img_rs) ){
 						$pic_list[$pic_i]['photo_big'] = $site_url."/weibo/".$pic_row['photo'];
+						$pic_list[$pic_i]['photo_mibble'] = $site_url."/weibo/".str_replace("_o","_p",$pic_row['photo']);
 						$pic_list[$pic_i]['photo_small'] = $site_url."/weibo/".str_replace("_o","_s",$pic_row['photo']);
 						$pic_i++;
 					}
@@ -624,12 +616,13 @@ if($ac=="event_detail")
 					if(!empty($pic_list)) {
 						$row['pic_list'] = $pic_list;
 					}else{
-						$row['pic_list'] = '';
+						$row['pic_list'] = null;
 					}
 					$photo_pic = reset($pic_list);
 					if($photo_pic)
 					{
 						$row['photo_big']=$photo_pic['photo_big'];
+						$row['photo_mibble']=$photo_pic['photo_mibble'];
 						$row['photo_small']=$photo_pic['photo_small'];
 					}
 					else
@@ -664,6 +657,7 @@ if($ac=="event_detail")
 						$pic_i=0;
 						while($pic_row = DB::fetch($root_topic_img_rs) ){
 							$pic_list[$pic_i]['photo_big'] = $site_url."/weibo/".$pic_row['photo'];
+							$pic_list[$pic_i]['photo_mibble'] = $site_url."/weibo/".str_replace("_o","_p",$pic_row['photo']);
 							$pic_list[$pic_i]['photo_small'] = $site_url."/weibo/".str_replace("_o","_s",$pic_row['photo']);
 							$pic_i++;
 						}
@@ -671,12 +665,13 @@ if($ac=="event_detail")
 						if(!empty($pic_list)) {
 							$root_topic['pic_list'] = $pic_list;
 						}else{
-							$root_topic['pic_list'] = '';
+							$root_topic['pic_list'] = null;
 						}
 						$photo_pic = reset($pic_list);
 						if($photo_pic)
 						{
 							$root_topic['photo_big']=$photo_pic['photo_big'];
+							$root_topic['photo_mibble']=$photo_pic['photo_mibble'];
 							$root_topic['photo_small']=$photo_pic['photo_small'];
 						}
 						else
@@ -761,6 +756,7 @@ if($ac=="rule")
 				$pic_i=0;
 				while($pic_row = DB::fetch($topic_img_rs) ){
 					$pic_list[$pic_i]['photo_big'] = $site_url."/weibo/".$pic_row['photo'];
+					$pic_list[$pic_i]['photo_mibble'] = $site_url."/weibo/".str_replace("_o","_p",$pic_row['photo']);
 					$pic_list[$pic_i]['photo_small'] = $site_url."/weibo/".str_replace("_o","_s",$pic_row['photo']);
 					$pic_i++;
 				}
@@ -768,12 +764,13 @@ if($ac=="rule")
 				if(!empty($pic_list)) {
 					$row['pic_list'] = $pic_list;
 				}else{
-					$row['pic_list'] = '';
+					$row['pic_list'] = null;
 				}
 				$photo_pic = reset($pic_list);
 				if($photo_pic)
 				{
 					$row['photo_big']=$photo_pic['photo_big'];
+					$row['photo_mibble']=$photo_pic['photo_mibble'];
 					$row['photo_small']=$photo_pic['photo_small'];
 				}
 				else
@@ -806,6 +803,7 @@ if($ac=="rule")
 					$pic_i=0;
 					while($pic_row = DB::fetch($root_topic_img_rs) ){
 						$pic_list[$pic_i]['photo_big'] = $site_url."/weibo/".$pic_row['photo'];
+						$pic_list[$pic_i]['photo_mibble'] = $site_url."/weibo/".str_replace("_o","_p",$pic_row['photo']);
 						$pic_list[$pic_i]['photo_small'] = $site_url."/weibo/".str_replace("_o","_s",$pic_row['photo']);
 						$pic_i++;
 					}
@@ -813,12 +811,13 @@ if($ac=="rule")
 					if(!empty($pic_list)) {
 						$root_topic['pic_list'] = $pic_list;
 					}else{
-						$root_topic['pic_list'] = '';
+						$root_topic['pic_list'] = null;
 					}
 					$photo_pic = reset($pic_list);
 					if($photo_pic)
 					{
 						$root_topic['photo_big']=$photo_pic['photo_big'];
+						$root_topic['photo_mibble']=$photo_pic['photo_mibble'];
 						$root_topic['photo_small']=$photo_pic['photo_small'];
 					}
 					else

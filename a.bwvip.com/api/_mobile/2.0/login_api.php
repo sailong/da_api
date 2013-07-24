@@ -37,8 +37,6 @@ if(!defined('IN_DISCUZ'))
 		$data['data']['username']=$realname['realname'];
 		$data['data']['chadian']=$realname['chadian'];
 
-		$data['data'] = array_default_value($data['data']);
-
 
 		//print_r($data);
 

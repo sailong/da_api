@@ -231,6 +231,7 @@ if($ac=='rank')
 		$pic_i=0;
 		while($pic_row = DB::fetch($topic_img_rs) ){
 			$pic_list[$pic_i]['photo_big'] = $site_url."/weibo/".$pic_row['photo'];
+			$pic_list[$pic_i]['photo_mibble'] = $site_url."/weibo/".str_replace("_o","_p",$pic_row['photo']);
 			$pic_list[$pic_i]['photo_small'] = $site_url."/weibo/".str_replace("_o","_s",$pic_row['photo']);
 			$pic_i++;
 		}
@@ -238,12 +239,13 @@ if($ac=='rank')
 		if(!empty($pic_list)) {
 			$row['pic_list'] = $pic_list;
 		}else{
-			$row['pic_list'] = '';
+			$row['pic_list'] = null;
 		}
 		$photo_pic = reset($pic_list);
 		if($photo_pic)
 		{
 			$row['photo_big']=$photo_pic['photo_big'];
+			$row['photo_mibble']=$photo_pic['photo_mibble'];
 			$row['photo_small']=$photo_pic['photo_small'];
 		}
 		else
@@ -316,15 +318,15 @@ if($ac=='rank')
 			
 				if($fenzhan['lun']==2)
 				{
-				  $strlun="tlcave+tlcave1 as total_score";$lnorder=" avcave1+avcave,tlcave,tlcave1  ";
+				  $strlun="tlcave+tlcave1 as total_score";$lnorder=" isend desc, avcave1+avcave,tlcave,tlcave1  ";
 				}
 				if($fenzhan['lun']==3)
 				{
-				  $strlun="tlcave+tlcave1+tlcave2 as total_score";$lnorder=" avcave1+avcave2+avcave,tlcave,tlcave2,tlcave1   ";
+				  $strlun="tlcave+tlcave1+tlcave2 as total_score";$lnorder=" isend desc, avcave1+avcave2+avcave,tlcave,tlcave2,tlcave1   ";
 				}
 				if($fenzhan['lun']==4)
 				{
-				  $strlun="tlcave+tlcave1+tlcave2+tlcave3 as total_score";$lnorder=" avcave1+avcave2+avcave3+avcave,tlcave,tlcave3,tlcave2,tlcave1   ";
+				  $strlun="tlcave+tlcave1+tlcave2+tlcave3 as total_score";$lnorder=" isend desc, avcave1+avcave2+avcave3+avcave,tlcave,tlcave3,tlcave2,tlcave1   ";
 				}
 				if($fenzhan['lun']==0||$fenzhan['lun']==1)
 				{
@@ -740,8 +742,18 @@ if($ac=="fenzhan_detail")
 				$row['today_score']='-';
 			}
 			
-			$row['total_score']=Getstat($row['total_score']);
-			$row['par']=str_replace(",","|","4,4,3,5,4,4,3,5,4,36,4,4,5,4,4,4,5,3,4,36,72");
+			$row['total_score']=Getstat($row['total_score']);						
+			$field_id = DB::result_first( "select field_id  from " . DB::table ( 'fenzhan' ) . "  where fz_id='$fz_id' ");
+			if($field_id){
+			$pars = DB::result_first( "select par  from " . DB::table ( 'common_field' ) . "  where uid='$field_id' ");
+			}
+			 $par = explode ( ',', $pars );
+			$POUT = $par [0] + $par [1] + $par [2] + $par [3] + $par [4] + $par [5] + $par [6] + $par [7] + $par [8];
+			$PIN = $par [9] + $par [10] + $par [11] + $par [12] + $par [13] + $par [14] + $par [15] + $par [16] + $par [17];
+			$PTL = $POUT + $PIN;
+			$row ['par'] = $par [0] . '|' . $par [1] . '|' . $par [2] . '|' . $par [3] . '|' . $par [4] . '|' . $par [5] . '|' . $par [6] . '|' . $par [7] . '|' . $par [8] . '|' . $POUT . '|' . $par [9] . '|' . $par [10] . '|' . $par [11] . '|' . $par [12] . '|' . $par [13] . '|' . $par [14] . '|' . $par [15] . '|' . $par [16] . '|' . $par [17] . '|' . $PIN . '|' . $PTL;
+			 
+			//$row['par']=str_replace(",","|","4,4,3,5,4,4,3,5,4,36,4,4,5,4,4,4,5,3,4,36,72");
 			$row['score_status']="F";
 			$out=$row['cave_1']+$row['cave_2']+$row['cave_3']+$row['cave_4']+$row['cave_5']+$row['cave_6']+$row['cave_7']+$row['cave_8']+$row['cave_9'];
 			$in=$row['cave_10']+$row['cave_11']+$row['cave_12']+$row['cave_13']+$row['cave_14']+$row['cave_15']+$row['cave_16']+$row['cave_17']+$row['cave_18'];
@@ -923,6 +935,7 @@ if($ac=="fenzhan_detail")
 		$pic_i=0;
 		while($pic_row = DB::fetch($topic_img_rs) ){
 			$pic_list[$pic_i]['photo_big'] = $site_url."/weibo/".$pic_row['photo'];
+			$pic_list[$pic_i]['photo_mibble'] = $site_url."/weibo/".str_replace("_o","_p",$pic_row['photo']);
 			$pic_list[$pic_i]['photo_small'] = $site_url."/weibo/".str_replace("_o","_s",$pic_row['photo']);
 			$pic_i++;
 		}
@@ -930,12 +943,13 @@ if($ac=="fenzhan_detail")
 		if(!empty($pic_list)) {
 			$row['pic_list'] = $pic_list;
 		}else{
-			$row['pic_list'] = '';
+			$row['pic_list'] = null;
 		}
 		$photo_pic = reset($pic_list);
 		if($photo_pic)
 		{
 			$row['photo_big']=$photo_pic['photo_big'];
+			$row['photo_mibble']=$photo_pic['photo_mibble'];
 			$row['photo_small']=$photo_pic['photo_small'];
 		}
 		else

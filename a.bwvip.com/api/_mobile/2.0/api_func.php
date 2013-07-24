@@ -1,4 +1,56 @@
 <?php
+function array_default_value($arr,$other_arr,$default_value="")
+{
+
+	foreach($arr as $key=>$value)
+	{
+		
+		if(is_array($value))
+		{
+			/*
+			foreach($value as $key2=>$value2)
+			{
+				if(strlen($value2)==0 || $value2==null || $value2=="")
+				{
+					$value2=$default_value;
+				}
+				if(!$value2)
+				{
+					$value2=$default_value;
+				}
+				$value2=trim($value2);
+				$value2=(string)$value2;
+				$value[$key2]=$value2;
+			}
+			*/
+		}
+		else
+		{
+			if(!in_array($key,$other_arr))
+			{
+				if(strlen($value)==0 || $value==null || $value=="")
+				{
+					$value=$default_value;
+				}
+				/*
+				if(!$value)
+				{
+					$value=$default_value;
+				}
+				*/
+				$value=trim($value);
+				$value=(string)$value;
+			}
+		}
+		
+		$arr[$key]=$value;
+	}
+	
+	return $arr;
+}
+
+
+
 /*  if(data=='0#1')
 {alert('发送成功！');}
 else if(data=='10109')
@@ -72,54 +124,6 @@ foreach ($argv as $key=>$value) {
 			return $line;
 			else
 			return '0#1';
-}
-
-function array_default_value($arr,$other_arr,$default_value="")
-{
-
-	foreach($arr as $key=>$value)
-	{
-		
-		if(is_array($value))
-		{
-			/*
-			foreach($value as $key2=>$value2)
-			{
-				if(strlen($value2)==0 || $value2==null || $value2=="")
-				{
-					$value2=$default_value;
-				}
-				if(!$value2)
-				{
-					$value2=$default_value;
-				}
-				$value2=trim($value2);
-				$value2=(string)$value2;
-				$value[$key2]=$value2;
-			}
-			*/
-		}
-		else
-		{
-			if(!in_array($key,$other_arr))
-			{
-				if(strlen($value)==0 || $value==null || $value=="")
-				{
-					$value=$default_value;
-				}
-				if(!$value)
-				{
-					$value=$default_value;
-				}
-				$value=trim($value);
-				$value=(string)$value;
-			}
-		}
-		
-		$arr[$key]=$value;
-	}
-	
-	return $arr;
 }
 
 
