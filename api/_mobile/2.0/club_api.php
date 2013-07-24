@@ -1744,45 +1744,6 @@ if($ac=="system_msg")
 	api_json_result(1,0,$app_error['event']['10502'],$data);
 
 }
-// //推送消息列表
-// if($ac=="push_msg_list")
-// {
-	// $uid=$_G['gp_uid'];
-    
-	// //$list=DB::query("select message_id,message_number,message_type,uid,message_title,message_content,message_sendtime from tbl_push_message where uid='".$uid."' and uid=0 ");
-	// $list=DB::query("select message_id,message_number,message_type,uid,message_title,message_content,message_addtime,message_sendtime from tbl_push_message where uid='$uid'  order by message_addtime desc");
-    
-	// while($row=DB::fetch($list))
-	// {
-	    // if(!json_parser($row['message_content']))
-		// {
-	        // continue;
-	    // }
-	    // $msg=json_decode($row['message_content'],true);
-		
-	    // $row['message_info']=$msg;
-	    
-		// $row['message_sendtime']=date("Y-m-d",$row['message_sendtime']);
-		// $row['message_addtime']=date("Y-m-d",$row['message_addtime']);
-		// unset($row['message_content']);
-		// $list_data[]=array_default_value($row,message_content);
-		
-	// }
-	// /*
-    // if(empty($list_data))
-	// {
-        // $list_data = null;
-    // }
-	// */
-	// $data['title']		= "list_data";
-	// $data['data']		= $list_data;
-	// //print_r($data);
-	// api_json_result(1,0,$app_error['event']['10502'],$data);
-	
-	
-// }
-
-
 
 //推送消息列表
 if($ac=="push_msg_list")
