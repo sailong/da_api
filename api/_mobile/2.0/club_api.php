@@ -1764,7 +1764,11 @@ if($ac=="push_msg_list")
 	    $row['message_info']=$msg;
 		if(!empty($row['message_pic'])) {
 			$row['message_pic']=$site_url.'/'.$row['message_pic'];
+			$message_pic_info = (array)getimagesize($row['message_pic']);
+			$row['pic_width'] = $message_pic_info[0];
+			$row['pic_height'] = $message_pic_info[1];
 		}
+		
 		$row['message_sendtime']=date("Y-m-d",$row['message_sendtime']);
 		unset($row['message_content']);
 		$list_data[]=array_default_value($row,message_content);
