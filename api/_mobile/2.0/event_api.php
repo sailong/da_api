@@ -650,7 +650,7 @@ if($ac=="event_detail")
 					if($root_topic)
 					{
 						$imageids_arr = explode(',',$root_topic['imageid']);
-						$pic_ids = implode("','",imageids_arr);
+						$pic_ids = implode("','",$imageids_arr);
 						$root_topic_img_rs =  DB::query("select photo from jishigou_topic_image where id in ('{$pic_ids}')");
 						unset($imageids_arr,$pic_ids);
 						
@@ -796,7 +796,7 @@ if($ac=="rule")
 				if($root_topic)
 				{
 					$imageids_arr = explode(',',$root_topic['imageid']);
-					$pic_ids = implode("','",imageids_arr);
+					$pic_ids = implode("','",$imageids_arr);
 					$root_topic_img_rs =  DB::query("select photo from jishigou_topic_image where id in ('{$pic_ids}')");
 					unset($imageids_arr,$pic_ids);
 					

@@ -118,7 +118,7 @@ if($ac=="club_index_nologin")
 			if($root_topic)
 			{
 				$imageids_arr = explode(',',$root_topic['imageid']);
-				$pic_ids = implode("','",imageids_arr);
+				$pic_ids = implode("','",$imageids_arr);
 				$root_topic_img_rs =  DB::query("select photo from jishigou_topic_image where id in ('{$pic_ids}')");
 				unset($imageids_arr,$pic_ids);
 				
@@ -260,7 +260,7 @@ if($ac=="club_index_login")
 			if($root_topic)
 			{
 				$imageids_arr = explode(',',$root_topic['imageid']);
-				$pic_ids = implode("','",imageids_arr);
+				$pic_ids = implode("','",$imageids_arr);
 				$root_topic_img_rs =  DB::query("select photo from jishigou_topic_image where id in ('{$pic_ids}')");
 				unset($imageids_arr,$pic_ids);
 				
@@ -448,7 +448,7 @@ if($ac=="topic_detail")
 		if($root_topic)
 		{
 			$imageids_arr = explode(',',$root_topic['imageid']);
-			$pic_ids = implode("','",imageids_arr);
+			$pic_ids = implode("','",$imageids_arr);
 			$root_topic_img_rs =  DB::query("select photo from jishigou_topic_image where id in ('{$pic_ids}')");
 			unset($imageids_arr,$pic_ids);
 			
@@ -684,7 +684,7 @@ if($ac=="my_detail")
 					if($root_topic)
 					{
 						$imageids_arr = explode(',',$root_topic['imageid']);
-						$pic_ids = implode("','",imageids_arr);
+						$pic_ids = implode("','",$imageids_arr);
 						$root_topic_img_rs =  DB::query("select photo from jishigou_topic_image where id in ('{$pic_ids}')");
 						unset($imageids_arr,$pic_ids);
 						//echo "<br/>select photo from jishigou_topic_image where id in ('{$imageids}')";
@@ -877,7 +877,7 @@ if($ac=="member_detail")
 				if($root_topic)
 				{
 					$imageids_arr = explode(',',$root_topic['imageid']);
-					$pic_ids = implode("','",imageids_arr);
+					$pic_ids = implode("','",$imageids_arr);
 					$root_topic_img_rs =  DB::query("select photo from jishigou_topic_image where id in ('{$pic_ids}')");
 					unset($imageids_arr,$pic_ids);
 					
@@ -1506,7 +1506,7 @@ if($ac=="at_me")
 					if($root_topic)
 					{
 						$imageids_arr = explode(',',$root_topic['imageid']);
-						$pic_ids = implode("','",imageids_arr);
+						$pic_ids = implode("','",$imageids_arr);
 						$root_topic_img_rs =  DB::query("select photo from jishigou_topic_image where id in ('{$pic_ids}')");
 						unset($imageids_arr,$pic_ids);
 						
@@ -1658,7 +1658,7 @@ if($ac=="comment_me")
 						if($root_topic)
 						{
 							$imageids_arr = explode(',',$root_topic['imageid']);
-							$pic_ids = implode("','",imageids_arr);
+							$pic_ids = implode("','",$imageids_arr);
 							$root_topic_img_rs =  DB::query("select photo from jishigou_topic_image where id in ('{$pic_ids}')");
 							unset($imageids_arr,$pic_ids);
 							
