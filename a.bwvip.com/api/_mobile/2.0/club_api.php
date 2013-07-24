@@ -680,10 +680,15 @@ if($ac=="my_detail")
 
 					//根topic
 					$root_topic=DB::fetch_first("select tid,uid,(select realname from ".DB::table("common_member_profile")." where uid=jishigou_topic.uid) as username,content,content2,(select `longtext` from jishigou_topic_longtext where tid=jishigou_topic.tid) as full_content,imageid,replys,forwards,dateline,voice,voice_timelong from jishigou_topic where tid='".$row['roottid']."' order by dateline asc ");
+					if($_G['gp_test']) {
+						echo $row['roottid'].'<br>';
+						var_dump($root_topic).'<br>';
+					}
 					
 					if($root_topic)
 					{
 						$imageids_arr = explode(',',$root_topic['imageid']);
+						
 						$pic_ids = implode("','",imageids_arr);
 						$root_topic_img_rs =  DB::query("select photo from jishigou_topic_image where id in ('{$pic_ids}')");
 						unset($imageids_arr,$pic_ids);
@@ -763,6 +768,10 @@ if($ac=="member_detail")
 	if($get_uid)
 	{
 		$detail_data=DB::fetch_first("select uid,(select realname from ".DB::table("common_member_profile")." where uid=".DB::table('common_member').".uid) as username,(select count(id) from jishigou_buddys where uid=".DB::table("common_member").".uid ) as guanzhu_num,(select count(id) from jishigou_buddys where buddyid=".DB::table("common_member").".uid ) as fensi_num,(select count(tid) from jishigou_topic where uid=".DB::table("common_member").".uid and type='first' ) as dongtai_num,(select count(id) from jishigou_buddys where uid='".$login_uid."' and  buddyid='".$get_uid."' ) as is_guanzhu,groupid,(select bio from ".DB::table("common_member_profile")." where uid=".DB::table('common_member').".uid) as content from ".DB::table("common_member")." where uid='".$get_uid."' ");
+		
+		//echo "select uid,(select realname from ".DB::table("common_member_profile")." where uid=".DB::table('common_member').".uid) as username,(select count(id) from jishigou_buddys where uid=".DB::table("common_member").".uid ) as guanzhu_num,(select count(id) from jishigou_buddys where buddyid=".DB::table("common_member").".uid ) as fensi_num,(select count(tid) from jishigou_topic where uid=".DB::table("common_member").".uid and type='first' ) as dongtai_num,(select count(id) from jishigou_buddys where uid='".$login_uid."' and  buddyid='".$get_uid."' ) as is_guanzhu,groupid,(select bio from ".DB::table("common_member_profile")." where uid=".DB::table('common_member').".uid) as content from ".DB::table("common_member")." where uid='".$get_uid."' ";
+		//echo "<hr>";
+		
 		$detail_data['touxiang']=$site_url."/uc_server/avatar.php?uid=".$detail_data['uid']."&size=middle";
 		$detail_data['msg_num']=1;
 		if(!$detail_data['content'])
@@ -783,7 +792,8 @@ if($ac=="member_detail")
 		//成绩卡列表
 		//if($detail_data['groupid']==24)
 		//{
-			$total2=DB::result_first("select id from ".DB::table('common_score')."  where uid=$get_uid ");
+			$total2=DB::result_first("select baofen_id from tbl_baofen where uid=$get_uid ");
+			//echo "select baofen_id from tbl_baofen where uid=$get_uid ";
 			$max_page2=intval($total2/$page_size2);
 			if($max_page2<$total2/$page_size2)
 			{
@@ -792,21 +802,14 @@ if($ac=="member_detail")
 
 			if($max_page2>=$page2)
 			{
-				$query = DB::query("select id,uid,fuid,fz_id,par,score,pars,total_score,lun,onlymark,FROM_UNIXTIME(dateline, '%Y-%m-%d') as dateline,(select realname from ".DB::table("common_member_profile")." where uid=".DB::table('common_score').".sais_id) as event_name from ".DB::table('common_score')."  where addtime>'".strtotime("2013-04-01")."' and sais_id>0 and uid=$get_uid $strwhere order by addtime desc limit $page_start2,$page_size2");
-
-				//echo "select id,uid,fuid,par,score,pars,total_score,FROM_UNIXTIME(dateline, '%Y-%m-%d') as dateline,(select realname from ".DB::table("common_member_profile")." where uid=".DB::table('common_score').".uid) as event_name from ".DB::table('common_score')."  where uid=$get_uid $strwhere order by addtime desc limit $page_start2,$page_size2";
+				//$query = DB::query("select baofen_id as id,uid,field_id as fuid,fenzhan_id,par,score,pars,total_score,lun,FROM_UNIXTIME(dateline, '%Y-%m-%d') as dateline,(select realname from ".DB::table("common_member_profile")." where uid=tbl_baofen.sid) as event_name from tbl_baofen where addtime>'".strtotime("2013-04-01")."' and sid>0 and uid=$get_uid $strwhere order by addtime desc limit $page_start2,$page_size2");
+				$query = DB::query("select baofen_id as id,uid,field_id as fuid,fenzhan_id as fz_id,par,score,pars,total_score,lun,FROM_UNIXTIME(dateline, '%Y-%m-%d') as dateline,(select realname from ".DB::table("common_member_profile")." where uid=tbl_baofen.sid) as event_name from tbl_baofen where  sid>0 and uid=$get_uid $strwhere order by addtime desc limit $page_start2,$page_size2");
 				while($row = DB::fetch($query))
 				{
-					
-					$row['ndid']=DB::result_first("select nd_id from ".DB::table("golf_nd_baofen")." where uid='".$row['uid']."' and fenz_id='".$row['fz_id']."'  ");
-					if($row['ndid']==false)
-					{
-						$row['ndid']=DB::result_first("select nd_id from ".DB::table("golf_nd_baofen")." where uid='".$row['uid']."' and onlymark='".$row['onlymark']."'  ");	
-					}
-					
+					$row['ndid']=$row['id'];
 					$row['event_name']=$row['event_name']." ";
 					$row['iframe_url']=$site_url."/nd/score.php?ndid=".$row['ndid']."&size=small";
-					$score_list[] = $row; 
+					$score_list[] = array_default_value($row); 
 				}
 			}
 
@@ -1751,7 +1754,7 @@ if($ac=="push_msg_list")
 	$uid=$_G['gp_uid'];
     
 	//$list=DB::query("select message_id,message_number,message_type,uid,message_title,message_content,message_sendtime from tbl_push_message where uid='".$uid."' and uid=0 ");
-	$list=DB::query("select message_id,message_number,message_type,uid,message_title,message_content,message_sendtime from tbl_push_message where uid='$uid'");
+	$list=DB::query("select message_id,message_number,message_type,uid,message_title,message_content,message_pic,message_sendtime from tbl_push_message where uid='$uid'");
     
 	while($row=DB::fetch($list))
 	{
@@ -1762,7 +1765,9 @@ if($ac=="push_msg_list")
 	    $msg=json_decode($row['message_content'],true);
 		
 	    $row['message_info']=$msg;
-	    
+		if(!empty($row['message_pic'])) {
+			$row['message_pic']=$site_url.'/'.$row['message_pic'];
+		}
 		$row['message_sendtime']=date("Y-m-d",$row['message_sendtime']);
 		unset($row['message_content']);
 		$list_data[]=array_default_value($row,message_content);
@@ -1777,6 +1782,34 @@ if($ac=="push_msg_list")
 	$data['title']		= "list_data";
 	$data['data']		= $list_data;
 	//print_r($data);
+	api_json_result(1,0,$app_error['event']['10502'],$data);
+	
+}
+//推送消息详情
+if($ac=="msg_detail")
+{
+	$message_id=$_G['gp_message_id'];
+	
+	$message_info=DB::fetch_first("select message_id,message_number,message_type,uid,message_title,message_content,message_pic,message_sendtime from tbl_push_message where message_id='$message_id'");
+    
+
+	if(!json_parser($message_info['message_content']))
+	{
+		continue;
+	}
+	$msg=json_decode($message_info['message_content'],true);
+	
+	$message_info['message_info']=$msg;
+	if(!empty($message_info['message_pic'])) {
+		$message_info['message_pic']=$site_url.'/'.$message_info['message_pic'];
+	}
+	$message_info['message_sendtime']=date("Y-m-d",$message_info['message_sendtime']);
+	unset($message_info['message_content']);
+	$message_info =array_default_value($message_info,message_content);
+	
+	$data['title']		= "msg_detail";
+	$data['data']		= $message_info;
+	
 	api_json_result(1,0,$app_error['event']['10502'],$data);
 	
 }
