@@ -1748,8 +1748,8 @@ if($ac=="push_msg_list")
 {
 	$uid=$_G['gp_uid'];
     
-	//$list=DB::query("select message_id,message_number,message_type,uid,message_title,message_content,message_sendtime from tbl_push_message where uid='".$uid."' and uid=0 ");
-	$list=DB::query("select message_id,message_number,message_type,uid,message_title,message_content,message_pic,message_sendtime from tbl_push_message where uid='$uid'");
+	//$list=DB::query("select message_id,message_number,message_type,uid,message_title,message_content,message_addtime from tbl_push_message where uid='".$uid."' and uid=0 ");
+	$list=DB::query("select message_id,message_number,message_type,uid,message_title,message_content,message_pic,message_addtime from tbl_push_message where uid='$uid'");
     
 	while($row=DB::fetch($list))
 	{
@@ -1758,6 +1758,11 @@ if($ac=="push_msg_list")
 	        continue;
 	    }
 	    $msg=json_decode($row['message_content'],true);
+		$msg['n_title'] = urldecode($msg['n_title']);
+		$msg['n_content'] = urldecode($msg['n_content']);
+		if($msg['n_extras']['title']) {
+			$msg['n_extras']['title'] = urldecode($msg['n_extras']['title']);
+		}
 		$row['pic_width'] = '';
 		$row['pic_height'] = '';
 	    $row['message_info']=$msg;
@@ -1768,7 +1773,7 @@ if($ac=="push_msg_list")
 			$row['pic_height'] = $message_pic_info[1];
 		}
 		
-		$row['message_sendtime']=date("Y-m-d",$row['message_sendtime']);
+		$row['message_sendtime']=date("Y-m-d",$row['message_addtime']);
 		unset($row['message_content']);
 		$list_data[]=array_default_value($row,message_content);
 		
@@ -1790,7 +1795,7 @@ if($ac=="msg_detail")
 {
 	$message_id=$_G['gp_message_id'];
 	
-	$message_info=DB::fetch_first("select message_id,message_number,message_type,uid,message_title,message_content,message_pic,message_sendtime from tbl_push_message where message_id='$message_id'");
+	$message_info=DB::fetch_first("select message_id,message_number,message_type,uid,message_title,message_content,message_pic,message_addtime from tbl_push_message where message_id='$message_id'");
     
 
 	if(!json_parser($message_info['message_content']))
@@ -1799,6 +1804,11 @@ if($ac=="msg_detail")
 	}
 	$msg=json_decode($message_info['message_content'],true);
 	
+	$msg['n_title'] = urldecode($msg['n_title']);
+	$msg['n_content'] = urldecode($msg['n_content']);
+	if($msg['n_extras']['title']) {
+		$msg['n_extras']['title'] = urldecode($msg['n_extras']['title']);
+	}
 	
 	$message_info['pic_width'] = '';
 	$message_info['pic_height'] = '';
@@ -1810,7 +1820,7 @@ if($ac=="msg_detail")
 		$message_info['pic_height'] = $message_pic_info[1];
 	}
 	
-	$message_info['message_sendtime']=date("Y-m-d",$message_info['message_sendtime']);
+	$message_info['message_sendtime']=date("Y-m-d",$message_info['message_addtime']);
 	unset($message_info['message_content']);
 	$message_info =array_default_value($message_info,message_content);
 	
