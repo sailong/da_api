@@ -29,14 +29,14 @@
 		<th class="line_l">菜单名称</th>
 	</tr>
 	<volist id="vo" name="list">
-	<tr overstyle="on" id=ids_{$vo["admin_menu_id"]}>
-		<td><input type="checkbox" name="checkbox" onclick="select_sub(this)" value="{$vo.admin_menu_id}" id="up_{$vo.admin_menu_id}" class="sub_class_{$vo.admin_menu_id}" <php>if(menu_is_can($vo['admin_menu_id'],get("admin_role_id"))){ echo " checked ";}</php> ></td>
-			<td><span style="font-size:14px;">{$vo.admin_menu_name}</span> <span style="font-size:10px; color:#666;">({$vo.admin_menu_id})</span></td>
+	<tr overstyle="on" id=ids_{$vo["field_admin_menu_id"]}>
+		<td><input type="checkbox" name="checkbox" onclick="select_sub(this)" value="{$vo.field_admin_menu_id}" id="up_{$vo.field_admin_menu_id}" class="sub_class_{$vo.field_admin_menu_id}" <php>if(menu_is_can($vo['field_admin_menu_id'],get("field_admin_role_id"))){ echo " checked ";}</php> ></td>
+			<td><span style="font-size:14px;">{$vo.field_admin_menu_name}</span> <span style="font-size:10px; color:#666;">({$vo.field_admin_menu_id})</span></td>
 	</tr>
 		<volist name="vo['sub']" id="sub">
 		<tr overstyle="on"  id=ids_{$sub["admin_menu_id"]}>
 			<td><input type="checkbox" name="checkbox" onclick="select_one(this,{$vo["admin_menu_id"]})" value="{$sub.admin_menu_id}" class="sub_class_{$sub.admin_menu_parent_id}" <php>if(menu_is_can($sub['admin_menu_id'],get("admin_role_id"))){ echo " checked ";}</php ></td>
-				<td style="text-indent:20px;"> |-    {$sub.admin_menu_name} <span style="font-size:10px; color:#666;">({$sub.admin_menu_id})</span></td>
+				<td style="text-indent:20px;"> |-    {$sub.field_admin_menu_name} <span style="font-size:10px; color:#666;">({$sub.admin_menu_id})</span></td>
 		</tr>
 		</volist>
 		<tr  >

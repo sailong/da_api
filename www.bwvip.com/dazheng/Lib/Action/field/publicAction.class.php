@@ -29,35 +29,35 @@ class publicAction extends Action
 	public function login_action()
 	{
 
-		if(post("username") && post("password"))
+		if(post("username") && post("password") && post("field_uid"))
 		{
-			//print_r($_POST)."<hr>";
 			
-			$res=M()->query("select uid,username,(password),salt from pre_ucenter_members where username='".post("username")."' ");
+			$res=M()->query("select admin_id,field_uid,admin_name,admin_password from tbl_field_admin where field_uid='".post("field_uid")."' and admin_name='".post("username")."' ");
 			//print_r($res);
-			if($res[0]['password']==md5(md5(post("password")).$res[0]['salt']))
+			if($res[0]['admin_password']==md5(post("password")))
 			{
-				$realname=M()->query("select realname from pre_common_member_profile where uid='".$res[0]['uid']."'");
-				
-				$_SESSION['uid']=$res[0]['uid'];
-				$_SESSION['field_uid']=$res[0]['uid'];
-				$_SESSION['realname']=$realname[0]['realname'];
-				$_SESSION['username']=$res[0]['username'];
-				$_SESSION['email']=$res[0]['password'];
+				$_SESSION['field_admin_id']=$res[0]['admin_id'];
+				$_SESSION['uid']=$res[0]['field_uid'];
+				$_SESSION['field_uid']=$res[0]['field_uid'];
+				$_SESSION['realname']=$res[0]['admin_realname'];
+				$_SESSION['username']=$res[0]['admin_name'];
+				$_SESSION['email']=$res[0]['admin_email'];
 				
 				//print_r($_SESSION);
 				$this->success("登录成功",U('field/index/index'));
+				
 			}
 			else
 			{
-				$this->error("用户名或密码错误，请重试",U('field/public/login'));
+				//echo "用户名或密码错误，请重试";
+				$this->error("用户名或密码错误，请重试",U('field/public/login',array('field_uid'=>post('field_uid'))));
 			}
 			//echo "lsdjkfsdlfjsdlfksdf<hr>";
 		
 		}
 		else
 		{
-			$this->error("必须输入 用户名密码",U('field/public/login'));
+			$this->error("必须输入 用户名密码",U('field/public/login',array('field_uid'=>post('field_uid'))));
 		}
 	
 
@@ -65,23 +65,28 @@ class publicAction extends Action
 	}
 
 
+	
 	public function logout()
 	{
-		if(isset($_SESSION['uid']))
+		if(isset($_SESSION['field_admin_id']))
 		{
+			$field_uid=$_SESSION['field_uid'];
+			
+			unset($_SESSION['field_admin_id']);
 			unset($_SESSION['uid']);
+			unset($_SESSION['field_uid']);
 			unset($_SESSION['realname']);
-			unset($_SESSION['username']);
-			unset($_SESSION['email']);			
-			unset($_SESSION['field_uid']);			
+			unset($_SESSION['username']);			
+			unset($_SESSION['email']);
 
-			$this->success("退出成功",U('field/public/login'));
+			$this->success("退出成功",U('field/public/login',array('field_uid'=>$field_uid)));
 		}
 		else
 		{
 			$this->error("您已经退出",U('field/public/login'));
 		}
 	}
+	
 	
 	
 	public function verify() {

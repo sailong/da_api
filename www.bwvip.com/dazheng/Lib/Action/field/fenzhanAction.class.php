@@ -40,7 +40,17 @@ class fenzhanAction extends field_publicAction
 	{
 		$event=D('event')->event_select_pro(" and field_uid='".$_SESSION['field_uid']."' ");
 		$this->assign('event',$event['item']);
+		 
+		$fenzhan=D('fenzhan_tbl')->fenzhan_list_pro(" and event_id='".get("event_id")."' "); 
+		$this->assign('fenzhan',$fenzhan['item']);
 		
+		
+		$area=M()->query("select id,name from pre_common_district where  upid=0");
+		$this->assign('area',$area);
+		
+		$this->assign('fenzhan_on',1);
+		$event_info=M("event")->where("event_id=".intval(get("event_id")))->find();
+		$this->assign('event_name',$event_info['event_name']);
 		$this->assign("page_title","添加分站");
     	$this->display();
 	}
@@ -52,9 +62,16 @@ class fenzhanAction extends field_publicAction
 			$data["event_id"]=post("event_id");
 			$data["fenzhan_name"]=post("fenzhan_name");
 			$data["field_id"]=post("field_id");
-			$data["field_lun"]=post("field_lun");
+			//获取前九洞			 
+			$data["fenzhan_a"]=post("fenzhan_a"); 			 
+			//获取前九洞		 			
+			$data["fenzhan_b"]=post("fenzhan_b"); 
+			
+			$data["fenzhan_lun"]=post("fenzhan_lun");
+			$data["parent_id"]=post("parent_id");
 			$data["field_uid"]=$_SESSION['field_uid'];
 			$data["year"]=post("year");
+			
 			if($_FILES["timepic"]["error"]==0)
 			{
 				$uploadinfo=upload_file("upload/fenzhan/");
@@ -68,6 +85,7 @@ class fenzhanAction extends field_publicAction
 			{
 				$data["endtime"]=strtotime(post("endtime")." 23:59:59");
 			}
+			  
 			
 			$data["orderby"]=post("orderby");
 			$data["is_delete"]=post("is_delete");
@@ -91,10 +109,23 @@ class fenzhanAction extends field_publicAction
 		{	
 			$event=D('event')->event_select_pro(" and field_uid='".$_SESSION['field_uid']."' ");
 			$this->assign('event',$event['item']);
+			
 		
 			$data=M("fenzhan")->where("fenzhan_id=".intval(get("fenzhan_id")))->find();
-			$this->assign("data",$data);
+			$this->assign("data",$data); 
 			
+			$fenzhan=D('fenzhan_tbl')->fenzhan_list_pro(" and event_id='".$data['event_id']."' "); 
+			 
+	    	$this->assign('fenzhan',$fenzhan['item']); 		
+			 
+			
+			$area=M()->query("select id,name from pre_common_district where  upid=0");
+			$this->assign('area',$area);
+			
+			$this->assign('fenzhan_on',1);
+			$this->assign('fenzhan_on',1);
+			$event_info=M("event")->where("event_id=".intval(get("event_id")))->find();
+			$this->assign('event_name',$event_info['event_name']);
 			$this->assign("page_title","修改分站");
 			$this->display();
 		}
@@ -109,9 +140,13 @@ class fenzhanAction extends field_publicAction
 		if(M()->autoCheckToken($_POST))
 		{
 			$data["fenzhan_id"]=post("fenzhan_id");
-			$data["fenzhan_name"]=post("fenzhan_name");
-			$data["field_id"]=post("field_id");
-			$data["fenzhan_lun"]=post("fenzhan_lun");
+			$data["fenzhan_name"]=post("fenzhan_name"); 
+			$data["fenzhan_lun"]=post("fenzhan_lun");			
+			//获取前九洞			 
+			$data["fenzhan_a"]=post("fenzhan_a"); 			 
+			//获取前九洞		 			
+			$data["fenzhan_b"]=post("fenzhan_b"); 
+			
 			$data["year"]=post("year");
 			if($_FILES["timepic"]["error"]==0)
 			{
@@ -122,13 +157,30 @@ class fenzhanAction extends field_publicAction
 			{
 				$data["starttime"]=strtotime(post("starttime")." 00:00:01");
 			}
+			if(post("parent_id"))
+			{				
+			    $data["parent_id"]=post("parent_id");
+			}else
+		    {
+			   $data["parent_id"]=post("parent_id1");
+			}
+			if(post("field_id"))
+			{				
+			    $data["field_id"]=post("field_id");
+			}else
+		    {
+			   $data["field_id"]=post("field_id1");
+			}
+			
 			if(post("endtime"))
 			{
 				$data["endtime"]=strtotime(post("endtime")." 23:59:59");
 			}
 			$data["orderby"]=post("orderby");
 			$data["is_delete"]=post("is_delete");
-			
+			 
+			$data["field_uid"]=$data["field_id"];
+			 
 			$list=M("fenzhan")->save($data);
 			
 			$this->success("修改成功",U('field/fenzhan/fenzhan',array('event_id'=>post('event_id'))));
@@ -228,7 +280,7 @@ class fenzhanAction extends field_publicAction
 		$fenzu=D('fenzu')->fenzu_list_pro(" and fenzhan_id='".get("fenzhan_id")."' ");
 		$this->assign('fenzu',$fenzu['item']);
 		
-		$list=D("event_apply")->event_apply_list_pro(' and event_apply_state=1 ');
+		$list=D("event_apply")->event_apply_list_pro(' and event_apply_state=1 '); 
 
 		$this->assign("list",$list["item"]);
 		$this->assign("pages",$list["pages"]);
@@ -346,17 +398,8 @@ class fenzhanAction extends field_publicAction
 		$this->assign('fenzhan_user_on',1);
 		
 		$fenzhan_id=get("fenzhan_id");
-		if($fenzhan_id)
-		{
-			$fenzhan_info=M()->query("select fenzhan_lun from tbl_fenzhan where fenzhan_id='".$fenzhan_id."'");
-			$fenzhan_lun=$fenzhan_info[0]['fenzhan_lun'];
-		}
-		for($i=0; $i<$fenzhan_lun; $i++)
-		{
-			$lun_arr[]=$i+1;
-		}
-		$this->assign('lun_arr',$lun_arr);
-		
+		 
+		 
 		$event_info=M("event")->where("event_id=".intval(get("event_id")))->find();
 		$this->assign('event_name',$event_info['event_name']);
 		$this->assign('event_id',$event_info['event_id']);
@@ -368,11 +411,18 @@ class fenzhanAction extends field_publicAction
 		$this->assign('fenzu',$fenzu['item']);
 		
 		
-		$list=D("fenzu_mingxi")->fenzu_mingxi_list_pro(" ");
-
-		$this->assign("list",$list["item"]);
+		//$list=D("fenzu_mingxi")->fenzu_mingxi_list_pro(" ");
+		if($fenzhan_id)
+		{
+	    $list=M()->query("select * from tbl_baofen where fenzhan_id='".$fenzhan_id."' order by baofen_id desc ");
+		}else
+		{		
+	    $list=M()->query("select * from tbl_baofen where event_id='".get("event_id")."' order by baofen_id desc ");
+		}
+	  
+		$this->assign("list",$list);
 		$this->assign("pages",$list["pages"]);
-		$this->assign("total",$list["total"]);
+		$this->assign("total",count($list));
 
 		$this->assign("page_title","赛事报名");
     	$this->display();

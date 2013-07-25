@@ -43,16 +43,16 @@
 				</tr>
 				
 				<tr>
-					<th>报名人：</th>
-					<td><input type="text" name="uid" id="uid" class="mod_input2" style="width:66px;" ></td>
+					<th>报名人UID：</th>
+					<td><input name="uid" type="text" class="mod_input2" id="uid" style="width:66px;"  onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')"></td>
 				</tr>
 				<tr>
 					<th>姓名：</th>
 					<td><input type="text" name="event_apply_realname" id="event_apply_realname" class="mod_input2" style="width:300px;" ></td>
 				</tr>
 				<tr>
-					<th>姓别：</th>
-					<td><input type="text" name="event_apply_sex" id="event_apply_sex" class="mod_input2" style="width:300px;" ></td>
+					<th>性别：</th>
+					<td><input name="event_apply_sex" type="radio" value="男" checked="checked" />男 <input name="event_apply_sex" type="radio" value="女" />女</td>
 				</tr>
 				<tr>
 					<th>身份证号：</th>
