@@ -1799,10 +1799,17 @@ if($ac=="msg_detail")
 	}
 	$msg=json_decode($message_info['message_content'],true);
 	
+	
+	$message_info['pic_width'] = '';
+	$message_info['pic_height'] = '';
 	$message_info['message_info']=$msg;
 	if(!empty($message_info['message_pic'])) {
 		$message_info['message_pic']=$site_url.'/'.$message_info['message_pic'];
+		$message_pic_info = (array)getimagesize($message_info['message_pic']);
+		$message_info['pic_width'] = $message_pic_info[0];
+		$message_info['pic_height'] = $message_pic_info[1];
 	}
+	
 	$message_info['message_sendtime']=date("Y-m-d",$message_info['message_sendtime']);
 	unset($message_info['message_content']);
 	$message_info =array_default_value($message_info,message_content);

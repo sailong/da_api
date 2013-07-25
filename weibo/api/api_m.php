@@ -97,6 +97,7 @@ if($ac=="delete_topic")
 
 }
 
+
 //添加微博
 if($ac=="add_topic")
 {
@@ -104,18 +105,18 @@ if($ac=="add_topic")
 	//print_r($_POST);
 
 	$pic = null;
-	/*if($_FILES['pic'])
-	{
-		$pic = $_FILES['pic'];
-		$pic['data'] = file_get_contents($pic['tmp_name']);
-		/*
-		for($i=0; $i<count($pic); $i++)
-		{
-			$pic[$i]['data'] = file_get_contents($pic[$i]['tmp_name']);
-		}
-		*/
-		
-	}*/
+//	if($_FILES['pic'])
+//	{
+//		$pic = $_FILES['pic'];
+//		$pic['data'] = file_get_contents($pic['tmp_name']);
+//		/*
+//		for($i=0; $i<count($pic); $i++)
+//		{
+//			$pic[$i]['data'] = file_get_contents($pic[$i]['tmp_name']);
+//		}
+//		*/
+//		
+//	}
     $return_data = array();
 	$add_result = $JishiGouAPI->AddTopic($_REQUEST['text'],$_REQUEST['totid'],$_REQUEST['type'],$_REQUEST['pic_url'],$pic);
     if($add_result['error'])
@@ -145,7 +146,110 @@ if($ac=="add_topic")
 			//$dsql->ExecuteNoneQuery($sql2);
 			$sql3 = "update `jishigou_topic` set `uid`='{$uid}',`fuid`='{$fuid}',`roottid`='{$roottid}',`from`='{$client_from}',`item`='{$client_from}' where tid='".$new_tid."' ";
 			$dsql->ExecuteNoneQuery($sql3);
-			$rs_num = up_pic($new_tid);
+			$tid = $new_tid;
+			
+    		$user_info=$dsql->GetOne("select nickname from jishigou_members where uid='".$uid."' ");
+    		$user_name = $user_info['nickname'];
+    
+            if(!empty($_FILES['pic'])) {
+            	$now_data = date("Ymd",time());
+                $pre_path = '.';
+                $save_path=$pre_path."./upload/topic_image/";
+            	$full_save_path=$save_path.$now_data."/";
+            	if(!file_exists($save_path))
+            	{
+            		mkdir($save_path);
+            	}
+            	if(!file_exists($full_save_path))
+            	{
+            		mkdir($full_save_path);
+            	}
+            	$file_val = $_FILES['pic'];
+        		
+            	
+        	    $now_time = time();
+        	    $t_name = mt_rand(0,100);
+        	    $pic_name = $file_val['name'];
+            	$extname=end(explode(".",$file_val['name']));
+            	$pic_name_o = $now_time.$t_name.'_o.'.$extname;
+            	$pic_name_p = $now_time.$t_name.'_p.'.$extname;
+            	$pic_name_s = $now_time.$t_name.'_s.'.$extname;
+            	$pic_name_t = $now_time.$t_name.'_t.'.$extname;
+            	$pic_name_o_path="./upload/topic_image/".$now_data."/".$pic_name_o;
+            	$pic_name_p_path="./upload/topic_image/".$now_data."/".$pic_name_p;
+            	$pic_name_s_path="./upload/topic_image/".$now_data."/".$pic_name_s;
+        	    $pic_name_t_path= "./upload/topic_image/".$now_data."/".$pic_name_t;
+            	move_uploaded_file($file_val['tmp_name'], $pre_path.$pic_name_o_path);
+            	$image_file = $pre_path.$pic_name_o_path;
+            	$image_file_small = $pre_path.$pic_name_s_path;
+            	$image_file_photo = $pre_path.$pic_name_p_path;
+            	$image_file_temp = $pre_path.$pic_name_t_path;
+            	
+            	@copy($image_file, $image_file_temp);
+            	if(file_exists($image_file_temp)) {
+            	    list($image_width,$image_height,$image_type,$image_attr) = getimagesize($image_file);
+              	    //生成小图
+        			$iw = $image_width;
+        	        $ih = $image_height;
+        //			$image_width_s = $config['thumbwidth'];
+        //    		if($iw > $image_width_s) {
+        //    			$s_width = $image_width_s;
+        //    			$s_height = round(($ih*$image_width_s)/$iw);
+        //    		}else{
+        //				$s_width=$iw;
+        //				$s_height=$ih;
+        //			}
+        //			$result = makethumb($image_file, $image_file_small, $s_width, $s_height, 0, 0, 0, 0, 0, 0, 0, 100);
+        			
+        	        //$maxw = $config['maxthumbwidth'];
+        	        //$maxh = $config['maxthumbheight'];
+        			//if($image_width != $image_height) {
+        				/* if($maxw > 300 && $maxh > 300 && ($iw > $maxw || $ih > $maxh)) {
+        					list($iw, $ih) = array($image_width,$image_height);
+        				} */
+        
+        				$src_x = $src_y = 0;
+        				$src_w = $src_h = min($iw, $ih);
+        				if($iw > $ih) {
+        					$src_x = round(($iw - $ih) / 2);
+        				} else {
+        					$src_y = round(($ih - $iw) / 2);
+        				}
+        				$result = makethumb($image_file, $image_file_small, $config['thumbwidth'], $config['thumbheight'], 0, 0, $src_x, $src_y, $src_w, $src_h, 0, 100);
+        			//}
+        			clearstatcache();
+        			if (!$result && !is_file($image_file_small)) {
+        				@copy($image_file_temp, $image_file_small);
+        			}
+        			//生成中图
+                	$image_width_p = 300;
+            		if($iw > $image_width_p) {
+            			$p_width = $image_width_p;
+            			$p_height = round(($ih*$image_width_p)/$iw);
+            			$result = makethumb($image_file, $image_file_photo, $p_width, $p_height, 0, 0, 0, 0, 0, 0, 0, 100);
+            		}
+            		clearstatcache();
+            		if($iw <= $image_width_p || (!$result && !is_file($image_file_photo))) {
+            			@copy($image_file_temp, $image_file_photo);
+        		    }
+                	
+                	unlink($image_file_temp);
+                	
+                	$image_info = getimagesize($pre_path.$pic_name_o_path);
+                	$pic_path = $pic_name_o_path;
+                	$pic_size = $file_val['size'];
+                	$image_width = $image_info[0];
+                	$image_height = $image_info[1];
+                	$sql = "INSERT INTO `jishigou_topic_image`(tid,photo,name,filesize,width,height,uid,username,dateline) 
+                			VALUES ('{$tid}', '{$pic_path}', '{$pic_name}', '{$pic_size}', '{$image_width}', '{$image_height}', '{$uid}', '{$user_name}', '{$now_time}')";
+                    $res = $dsql->ExecuteNoneQuery($sql);
+                    if(!empty($res)) {
+                        $image_id = $dsql->GetLastID();
+                        $dsql->ExecuteNoneQuery("update jishigou_topic set imageid=CONCAT_WS(',',`imageid`,'{$image_id}') where tid={$tid}");
+                    }
+            	}
+            }
+            
 		}
 	
 
@@ -222,33 +326,139 @@ if($ac=="add_topic")
 		//print_r($add_result);
         api_json_result(1,"0","发布成功",$data);
     }
-
-	
 	
 }
+
 
 //微博上传图片接口
 if($ac == 'upload_pic') {
     $tid = $_POST['tid'];
     $uid = $_POST['uid'];
     $user_name = $_POST['username'];
-	$rs_num = up_pic($new_tid);
-	$data['title']='data';
-	$data['data']=null;
-	switch($rs_num) {
-		case 'a':
-		api_json_result(1,1,"缺少参数tid",$data);
-		break;
-		case 'b':
-		api_json_result(1,1,"此微博不存在",$data);
-		break;
-		case 'c':
-		api_json_result(1,1,"上传失败",$data);
-		break;
-		default:
-		$data['data']['image_id']=$rs_num;
-		api_json_result(1,0,"发布成功",$data);
+	if(empty($tid)) 
+    {
+        api_json_result(1,1,"缺少参数tid",null);exit;
+    }
+	
+	
+	$uid_info=$dsql->GetOne("select uid from jishigou_topic where tid='".$tid."' ");
+	if(empty($uid_info)) {
+		api_json_result(1,2,"此微博不存在",null);exit;
 	}
+	$uid = $uid_info['uid'];
+	if(empty($uid)) {
+		api_json_result(1,1,"缺少参数uid",null);exit;
+	}
+	if(empty($user_name)) {
+		$user_info=$dsql->GetOne("select nickname from jishigou_members where uid='".$uid."' ");
+		$user_name = $user_info['nickname'];
+	}
+
+    if(!empty($_FILES['pic'])) {
+    	$now_data = date("Ymd",time());
+        $pre_path = '.';
+        $save_path=$pre_path."./upload/topic_image/";
+    	$full_save_path=$save_path.$now_data."/";
+    	if(!file_exists($save_path))
+    	{
+    		mkdir($save_path);
+    	}
+    	if(!file_exists($full_save_path))
+    	{
+    		mkdir($full_save_path);
+    	}
+    	$file_val = $_FILES['pic'];
+		
+    	
+	    $now_time = time();
+	    $t_name = mt_rand(0,100);
+	    $pic_name = $file_val['name'];
+    	$extname=end(explode(".",$file_val['name']));
+    	$pic_name_o = $now_time.$t_name.'_o.'.$extname;
+    	$pic_name_p = $now_time.$t_name.'_p.'.$extname;
+    	$pic_name_s = $now_time.$t_name.'_s.'.$extname;
+    	$pic_name_t = $now_time.$t_name.'_t.'.$extname;
+    	$pic_name_o_path="./upload/topic_image/".$now_data."/".$pic_name_o;
+    	$pic_name_p_path="./upload/topic_image/".$now_data."/".$pic_name_p;
+    	$pic_name_s_path="./upload/topic_image/".$now_data."/".$pic_name_s;
+	    $pic_name_t_path= "./upload/topic_image/".$now_data."/".$pic_name_t;
+    	move_uploaded_file($file_val['tmp_name'], $pre_path.$pic_name_o_path);
+    	$image_file = $pre_path.$pic_name_o_path;
+    	$image_file_small = $pre_path.$pic_name_s_path;
+    	$image_file_photo = $pre_path.$pic_name_p_path;
+    	$image_file_temp = $pre_path.$pic_name_t_path;
+    	
+    	@copy($image_file, $image_file_temp);
+    	if(file_exists($image_file_temp)) {
+    	    list($image_width,$image_height,$image_type,$image_attr) = getimagesize($image_file);
+      	    //生成小图
+			$iw = $image_width;
+	        $ih = $image_height;
+//			$image_width_s = $config['thumbwidth'];
+//    		if($iw > $image_width_s) {
+//    			$s_width = $image_width_s;
+//    			$s_height = round(($ih*$image_width_s)/$iw);
+//    		}else{
+//				$s_width=$iw;
+//				$s_height=$ih;
+//			}
+//			$result = makethumb($image_file, $image_file_small, $s_width, $s_height, 0, 0, 0, 0, 0, 0, 0, 100);
+			
+	        //$maxw = $config['maxthumbwidth'];
+	        //$maxh = $config['maxthumbheight'];
+			//if($image_width != $image_height) {
+				/* if($maxw > 300 && $maxh > 300 && ($iw > $maxw || $ih > $maxh)) {
+					list($iw, $ih) = array($image_width,$image_height);
+				} */
+
+				$src_x = $src_y = 0;
+				$src_w = $src_h = min($iw, $ih);
+				if($iw > $ih) {
+					$src_x = round(($iw - $ih) / 2);
+				} else {
+					$src_y = round(($ih - $iw) / 2);
+				}
+				$result = makethumb($image_file, $image_file_small, $config['thumbwidth'], $config['thumbheight'], 0, 0, $src_x, $src_y, $src_w, $src_h, 0, 100);
+			//}
+			clearstatcache();
+			if (!$result && !is_file($image_file_small)) {
+				@copy($image_file_temp, $image_file_small);
+			}
+			//生成中图
+        	$image_width_p = 300;
+    		if($iw > $image_width_p) {
+    			$p_width = $image_width_p;
+    			$p_height = round(($ih*$image_width_p)/$iw);
+    			$result = makethumb($image_file, $image_file_photo, $p_width, $p_height, 0, 0, 0, 0, 0, 0, 0, 100);
+    		}
+    		clearstatcache();
+    		if($iw <= $image_width_p || (!$result && !is_file($image_file_photo))) {
+    			@copy($image_file_temp, $image_file_photo);
+		    }
+        	
+        	unlink($image_file_temp);
+        	
+        	$image_info = getimagesize($pre_path.$pic_name_o_path);
+        	$pic_path = $pic_name_o_path;
+        	$pic_size = $file_val['size'];
+        	$image_width = $image_info[0];
+        	$image_height = $image_info[1];
+        	$sql = "INSERT INTO `jishigou_topic_image`(tid,photo,name,filesize,width,height,uid,username,dateline) 
+        			VALUES ('{$tid}', '{$pic_path}', '{$pic_name}', '{$pic_size}', '{$image_width}', '{$image_height}', '{$uid}', '{$user_name}', '{$now_time}')";
+            $res = $dsql->ExecuteNoneQuery($sql);
+            $data['title']='data';
+            if(!empty($res)) {
+                $image_id = $dsql->GetLastID();
+                $dsql->ExecuteNoneQuery("update jishigou_topic set imageid=CONCAT_WS(',',`imageid`,'{$image_id}') where tid={$tid}");
+            }else{
+                $data['data'] = null;
+                api_json_result(1,1,"上传失败",$data);exit;
+            }
+        	$data['data']['image_id'] = $image_id;
+        	api_json_result(1,0,"上传成功",$data);exit;
+    	}
+    }
+    api_json_result(1,1,"上传失败",$data);
 }
 //微博上传图片接口---测试接口
 if($ac == 'upload_pic_test') {
@@ -303,7 +513,7 @@ if($ac == 'upload_pic_test') {
 			$result = makethumb($image_file, $image_file_small, $s_width, $s_height, 0, 0, 0, 0, 0, 0, 0, 100); */
 	        //$maxw = $config['maxthumbwidth'];
 	        //$maxh = $config['maxthumbheight'];
-			if($image_width != $image_height) {
+			//if($image_width != $image_height) {
 				/* if($maxw > 300 && $maxh > 300 && ($iw > $maxw || $ih > $maxh)) {
 					list($iw, $ih) = array($image_width,$image_height);
 				} */
@@ -316,7 +526,7 @@ if($ac == 'upload_pic_test') {
 					$src_y = round(($ih - $iw) / 2);
 				}
 				$result = makethumb($image_file, $image_file_small, $config['thumbwidth'], $config['thumbheight'], 0, 0, $src_x, $src_y, $src_w, $src_h, 0, 100);
-			}
+			//}
 			clearstatcache();
 			if (!$result && !is_file($image_file_small)) {
 				@copy($image_file_temp, $image_file_small);
@@ -517,136 +727,6 @@ if($ac=="add_topic_v2")
     }
 	
 }
-function up_pic($tid){
-	if(empty($tid)) 
-    {
-        return 'a';//缺少参数//api_json_result(1,1,"缺少参数tid",null);exit;
-    }
-	
-	if(empty($uid)) {
-		$uid_info=$dsql->GetOne("select uid from jishigou_topic where tid='".$tid."' ");
-		if(empty($uid_info)) {
-			return 'b';//微博不存在//api_json_result(1,2,"此微博不存在",null);exit;
-		}
-		$uid = $uid_info['uid'];
-	}
-	if(empty($uid)) {
-		return 'a';//缺少参数//api_json_result(1,1,"缺少参数uid",null);exit;
-	}
-	if(empty($user_name)) {
-		$user_info=$dsql->GetOne("select nickname from jishigou_members where uid='".$uid."' ");
-		$user_name = $user_info['nickname'];
-	}
-
-    if(!empty($_FILES['pic'])) {
-    	$now_data = date("Ymd",time());
-        $pre_path = '.';
-        $save_path=$pre_path."./upload/topic_image/";
-    	$full_save_path=$save_path.$now_data."/";
-    	if(!file_exists($save_path))
-    	{
-    		mkdir($save_path);
-    	}
-    	if(!file_exists($full_save_path))
-    	{
-    		mkdir($full_save_path);
-    	}
-    	$file_val = $_FILES['pic'];
-		
-    	
-	    $now_time = time();
-	    $t_name = mt_rand(0,100);
-	    $pic_name = $file_val['name'];
-    	$extname=end(explode(".",$file_val['name']));
-    	$pic_name_o = $now_time.$t_name.'_o.'.$extname;
-    	$pic_name_p = $now_time.$t_name.'_p.'.$extname;
-    	$pic_name_s = $now_time.$t_name.'_s.'.$extname;
-    	$pic_name_t = $now_time.$t_name.'_t.'.$extname;
-    	$pic_name_o_path="./upload/topic_image/".$now_data."/".$pic_name_o;
-    	$pic_name_p_path="./upload/topic_image/".$now_data."/".$pic_name_p;
-    	$pic_name_s_path="./upload/topic_image/".$now_data."/".$pic_name_s;
-	    $pic_name_t_path= "./upload/topic_image/".$now_data."/".$pic_name_t;
-    	move_uploaded_file($file_val['tmp_name'], $pre_path.$pic_name_o_path);
-    	$image_file = $pre_path.$pic_name_o_path;
-    	$image_file_small = $pre_path.$pic_name_s_path;
-    	$image_file_photo = $pre_path.$pic_name_p_path;
-    	$image_file_temp = $pre_path.$pic_name_t_path;
-    	
-    	@copy($image_file, $image_file_temp);
-    	if(file_exists($image_file_temp)) {
-    	    list($image_width,$image_height,$image_type,$image_attr) = getimagesize($image_file);
-      	    //生成小图
-			$iw = $image_width;
-	        $ih = $image_height;
-			/* $image_width_s = $config['thumbwidth'];
-    		if($iw > $image_width_s) {
-    			$s_width = $image_width_s;
-    			$s_height = round(($ih*$image_width_s)/$iw);
-    		}else{
-				$s_width=$iw;
-				$s_height=$ih;
-			}
-			$result = makethumb($image_file, $image_file_small, $s_width, $s_height, 0, 0, 0, 0, 0, 0, 0, 100);
-			 */
-	        //$maxw = $config['maxthumbwidth'];
-	        //$maxh = $config['maxthumbheight'];
-			if($image_width != $image_height) {
-				/* if($maxw > 300 && $maxh > 300 && ($iw > $maxw || $ih > $maxh)) {
-					list($iw, $ih) = array($image_width,$image_height);
-				} */
-
-				$src_x = $src_y = 0;
-				$src_w = $src_h = min($iw, $ih);
-				if($iw > $ih) {
-					$src_x = round(($iw - $ih) / 2);
-				} else {
-					$src_y = round(($ih - $iw) / 2);
-				}
-				$result = makethumb($image_file, $image_file_small, $config['thumbwidth'], $config['thumbheight'], 0, 0, $src_x, $src_y, $src_w, $src_h, 0, 100);
-			}
-			clearstatcache();
-			if (!$result && !is_file($image_file_small)) {
-				@copy($image_file_temp, $image_file_small);
-			}
-			//生成中图
-        	$image_width_p = 300;
-    		if($iw > $image_width_p) {
-    			$p_width = $image_width_p;
-    			$p_height = round(($ih*$image_width_p)/$iw);
-    			$result = makethumb($image_file, $image_file_photo, $p_width, $p_height, 0, 0, 0, 0, 0, 0, 0, 100);
-    		}
-    		clearstatcache();
-    		if($iw <= $image_width_p || (!$result && !is_file($image_file_photo))) {
-    			@copy($image_file_temp, $image_file_photo);
-		    }
-        	
-        	unlink($image_file_temp);
-        	
-        	$image_info = getimagesize($pre_path.$pic_name_o_path);
-        	$pic_path = $pic_name_o_path;
-        	$pic_size = $file_val['size'];
-        	$image_width = $image_info[0];
-        	$image_height = $image_info[1];
-        	$sql = "INSERT INTO `jishigou_topic_image`(tid,photo,name,filesize,width,height,uid,username,dateline) 
-        			VALUES ('{$tid}', '{$pic_path}', '{$pic_name}', '{$pic_size}', '{$image_width}', '{$image_height}', '{$uid}', '{$user_name}', '{$now_time}')";
-            $res = $dsql->ExecuteNoneQuery($sql);
-            //$data['title']='data';
-            if(!empty($res)) {
-                $image_id = $dsql->GetLastID();
-                $dsql->ExecuteNoneQuery("update jishigou_topic set imageid=CONCAT_WS(',',`imageid`,'{$image_id}') where tid={$tid}");
-            }else{
-				return 'c';//失败
-                //$data['data'] = null;
-                //api_json_result(1,1,"上传失败",$data);exit;
-            }
-			return $image_id;//成功
-        	//$data['data']['image_id'] = $image_id;
-        	//api_json_result(1,0,"上传成功",$data);exit;
-    	}
-    }
-	return 'c';//失败
-    //api_json_result(1,1,"上传失败",$data);
-}
 
 function makethumb($srcfile,$dstfile,$thumbwidth,$thumbheight,$maxthumbwidth=0,$maxthumbheight=0,$src_x=0,$src_y=0,$src_w=0,$src_h=0, $thumb_cut_type=0, $thumb_quality = 100) {
 		if (!is_file($srcfile)) {
@@ -785,12 +865,137 @@ function change2mp3($srcfile)
 
 }
 
+function upload_topic_pic($ttttid)
+{
+	if(empty($tid)) 
+    {
+        return 'a';//缺少参数//api_json_result(1,1,"缺少参数tid",null);exit;
+    }
+	
+	
+	$uid_info=$dsql->GetOne("select uid from jishigou_topic where tid='".$tid."' ");
+	if(empty($uid_info)) {
+		return 'b';//微博不存在//api_json_result(1,2,"此微博不存在",null);exit;
+	}
+	$uid = $uid_info['uid'];
+	if(empty($uid)) {
+		return 'a';//缺少参数//api_json_result(1,1,"缺少参数uid",null);exit;
+	}
+	if(empty($user_name)) {
+		$user_info=$dsql->GetOne("select nickname from jishigou_members where uid='".$uid."' ");
+		$user_name = $user_info['nickname'];
+	}
+
+    if(!empty($_FILES['pic'])) {
+    	$now_data = date("Ymd",time());
+        $pre_path = '.';
+        $save_path=$pre_path."./upload/topic_image/";
+    	$full_save_path=$save_path.$now_data."/";
+    	if(!file_exists($save_path))
+    	{
+    		mkdir($save_path);
+    	}
+    	if(!file_exists($full_save_path))
+    	{
+    		mkdir($full_save_path);
+    	}
+    	$file_val = $_FILES['pic'];
+		
+    	
+	    $now_time = time();
+	    $t_name = mt_rand(0,100);
+	    $pic_name = $file_val['name'];
+    	$extname=end(explode(".",$file_val['name']));
+    	$pic_name_o = $now_time.$t_name.'_o.'.$extname;
+    	$pic_name_p = $now_time.$t_name.'_p.'.$extname;
+    	$pic_name_s = $now_time.$t_name.'_s.'.$extname;
+    	$pic_name_t = $now_time.$t_name.'_t.'.$extname;
+    	$pic_name_o_path="./upload/topic_image/".$now_data."/".$pic_name_o;
+    	$pic_name_p_path="./upload/topic_image/".$now_data."/".$pic_name_p;
+    	$pic_name_s_path="./upload/topic_image/".$now_data."/".$pic_name_s;
+	    $pic_name_t_path= "./upload/topic_image/".$now_data."/".$pic_name_t;
+    	move_uploaded_file($file_val['tmp_name'], $pre_path.$pic_name_o_path);
+    	$image_file = $pre_path.$pic_name_o_path;
+    	$image_file_small = $pre_path.$pic_name_s_path;
+    	$image_file_photo = $pre_path.$pic_name_p_path;
+    	$image_file_temp = $pre_path.$pic_name_t_path;
+    	
+    	@copy($image_file, $image_file_temp);
+    	if(file_exists($image_file_temp)) {
+    	    list($image_width,$image_height,$image_type,$image_attr) = getimagesize($image_file);
+      	    //生成小图
+			$iw = $image_width;
+	        $ih = $image_height;
+			/* $image_width_s = $config['thumbwidth'];
+    		if($iw > $image_width_s) {
+    			$s_width = $image_width_s;
+    			$s_height = round(($ih*$image_width_s)/$iw);
+    		}else{
+				$s_width=$iw;
+				$s_height=$ih;
+			}
+			$result = makethumb($image_file, $image_file_small, $s_width, $s_height, 0, 0, 0, 0, 0, 0, 0, 100);
+			 */
+	        //$maxw = $config['maxthumbwidth'];
+	        //$maxh = $config['maxthumbheight'];
+			if($image_width != $image_height) {
+				/* if($maxw > 300 && $maxh > 300 && ($iw > $maxw || $ih > $maxh)) {
+					list($iw, $ih) = array($image_width,$image_height);
+				} */
+
+				$src_x = $src_y = 0;
+				$src_w = $src_h = min($iw, $ih);
+				if($iw > $ih) {
+					$src_x = round(($iw - $ih) / 2);
+				} else {
+					$src_y = round(($ih - $iw) / 2);
+				}
+				$result = makethumb($image_file, $image_file_small, $config['thumbwidth'], $config['thumbheight'], 0, 0, $src_x, $src_y, $src_w, $src_h, 0, 100);
+			}
+			clearstatcache();
+			if (!$result && !is_file($image_file_small)) {
+				@copy($image_file_temp, $image_file_small);
+			}
+			//生成中图
+        	$image_width_p = 300;
+    		if($iw > $image_width_p) {
+    			$p_width = $image_width_p;
+    			$p_height = round(($ih*$image_width_p)/$iw);
+    			$result = makethumb($image_file, $image_file_photo, $p_width, $p_height, 0, 0, 0, 0, 0, 0, 0, 100);
+    		}
+    		clearstatcache();
+    		if($iw <= $image_width_p || (!$result && !is_file($image_file_photo))) {
+    			@copy($image_file_temp, $image_file_photo);
+		    }
+        	
+        	unlink($image_file_temp);
+        	
+        	$image_info = getimagesize($pre_path.$pic_name_o_path);
+        	$pic_path = $pic_name_o_path;
+        	$pic_size = $file_val['size'];
+        	$image_width = $image_info[0];
+        	$image_height = $image_info[1];
+        	$sql = "INSERT INTO `jishigou_topic_image`(tid,photo,name,filesize,width,height,uid,username,dateline) 
+        			VALUES ('{$tid}', '{$pic_path}', '{$pic_name}', '{$pic_size}', '{$image_width}', '{$image_height}', '{$uid}', '{$user_name}', '{$now_time}')";
+            $res = $dsql->ExecuteNoneQuery($sql);
+            //$data['title']='data';
+            if(!empty($res)) {
+                $image_id = $dsql->GetLastID();
+                $dsql->ExecuteNoneQuery("update jishigou_topic set imageid=CONCAT_WS(',',`imageid`,'{$image_id}') where tid={$tid}");
+            }else{
+				return 'c';//失败
+                //$data['data'] = null;
+                //api_json_result(1,1,"上传失败",$data);exit;
+            }
+			return $image_id;//成功
+        	//$data['data']['image_id'] = $image_id;
+        	//api_json_result(1,0,"上传成功",$data);exit;
+    	}
+    }
+	return 'c';//失败
+    //api_json_result(1,1,"上传失败",$data);
+}
+
 //$res=change2mp3("/home/www/dzbwvip/weibo/upload/voice/20130408/1365423421RecordedFile.aac");
 
-
-
-
-
-
-?>
 
