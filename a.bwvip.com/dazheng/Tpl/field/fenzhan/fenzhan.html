@@ -53,7 +53,7 @@
 			<input type="checkbox" id="checkbox_handle" onclick="select_all(this,'mod_table','checkbox')" value="0">
 			<label for="checkbox"></label>
 		</th>
-		<th class="line_l">所属赛事</th>
+		<th class="line_l">分站ID</th>
 		<th class="line_l">分站名称</th>
 		<!-- <th class="line_l">所在球场</th> -->
 		<th class="line_l">年份</th>
@@ -70,7 +70,7 @@
 	<volist id="vo" name="list">
 	<tr overstyle="on"  id=ids_{$vo["fenzhan_id"]}>
 		<td><input type="checkbox" name="checkbox" onclick="select_one(this)" value="{$vo.fenzhan_id}" ></td>
-		<td>{$vo.event_name}</th>
+		<td>{$vo.fenzhan_id}</th>
 			<td><a href="javascript:void(0);" onclick="mod_dialog('查看详细','{:U('field/fenzhan/fenzhan_detail', array('fenzhan_id'=>$vo['fenzhan_id']))}');">{$vo.fenzhan_name}</a></td>
 			<!-- <td>{$vo.field_id}</td> -->
 			<td>{$vo.year}</td>
@@ -83,22 +83,14 @@
 			<td>{$vo.is_delete}</td>
 			<td>{$vo.addtime|format_to_time}</td>
 		<td>
-			<a href="javascript:void(0);" onclick="mod_post('{:U('field/fenzhan/baofen_to_score')}','{$vo['fenzhan_id']}','请确保报分数据完整');">生成成绩卡</a> | 
-			<a href="javascript:void(0);" onclick="mod_post_alert('{:U('field/fenzhan/fenzhan_chongxinqidongbaofen_action')}','{$vo['fenzhan_id']}','确定要重新报分吗');">重新启动报分</a> | 
 			
-			【报分入口：
-			<php>
-			$lun=$vo['fenzhan_lun'];
-			for($j=0; $j<$lun; $j++)
-			{
-				$n=$j+1;
-			</php>
-			<a href="{:U('wap/baofen/login', array('fenzhan_id'=>$vo['fenzhan_id'],'lun'=>$n))}" target="_blank"><php> echo $n;</php>轮</a>
-			<php>
-			}
-			</php>
-			】 | 
-			<a href="{:U('field/fenzhan/fenzhan_edit', array('fenzhan_id'=>$vo['fenzhan_id']))}">修改</a> | 
+			 
+			<a href="{:U('wap/baofen/login', array('fenzhan_id'=>$vo['fenzhan_id']))}" target="_blank">报分入口</a> 
+			  | 
+			 
+			<a href="{:U('field/baofen_user/baofen_user',array('event_id'=>$event_id,'fenzhan_id'=>$vo['fenzhan_id']))}">报分员管理</a> 
+			  | 
+			<a href="{:U('field/fenzhan/fenzhan_edit', array('event_id'=>$event_id,'fenzhan_id'=>$vo['fenzhan_id']))}">修改</a> | 
 			
 			<a href="javascript:void(0);" onclick="mod_delete_one('{:U('field/fenzhan/fenzhan_delete_action')}','{$vo['fenzhan_id']}');">删除</a>
 		</td>

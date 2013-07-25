@@ -118,7 +118,7 @@ if($ac=="club_index_nologin")
 			if($root_topic)
 			{
 				$imageids_arr = explode(',',$root_topic['imageid']);
-				$pic_ids = implode("','",imageids_arr);
+				$pic_ids = implode("','",$imageids_arr);
 				$root_topic_img_rs =  DB::query("select photo from jishigou_topic_image where id in ('{$pic_ids}')");
 				unset($imageids_arr,$pic_ids);
 				
@@ -260,7 +260,7 @@ if($ac=="club_index_login")
 			if($root_topic)
 			{
 				$imageids_arr = explode(',',$root_topic['imageid']);
-				$pic_ids = implode("','",imageids_arr);
+				$pic_ids = implode("','",$imageids_arr);
 				$root_topic_img_rs =  DB::query("select photo from jishigou_topic_image where id in ('{$pic_ids}')");
 				unset($imageids_arr,$pic_ids);
 				
@@ -448,7 +448,7 @@ if($ac=="topic_detail")
 		if($root_topic)
 		{
 			$imageids_arr = explode(',',$root_topic['imageid']);
-			$pic_ids = implode("','",imageids_arr);
+			$pic_ids = implode("','",$imageids_arr);
 			$root_topic_img_rs =  DB::query("select photo from jishigou_topic_image where id in ('{$pic_ids}')");
 			unset($imageids_arr,$pic_ids);
 			
@@ -680,16 +680,11 @@ if($ac=="my_detail")
 
 					//根topic
 					$root_topic=DB::fetch_first("select tid,uid,(select realname from ".DB::table("common_member_profile")." where uid=jishigou_topic.uid) as username,content,content2,(select `longtext` from jishigou_topic_longtext where tid=jishigou_topic.tid) as full_content,imageid,replys,forwards,dateline,voice,voice_timelong from jishigou_topic where tid='".$row['roottid']."' order by dateline asc ");
-					if($_G['gp_test']) {
-						echo $row['roottid'].'<br>';
-						var_dump($root_topic).'<br>';
-					}
 					
 					if($root_topic)
 					{
 						$imageids_arr = explode(',',$root_topic['imageid']);
-						
-						$pic_ids = implode("','",imageids_arr);
+						$pic_ids = implode("','",$imageids_arr);
 						$root_topic_img_rs =  DB::query("select photo from jishigou_topic_image where id in ('{$pic_ids}')");
 						unset($imageids_arr,$pic_ids);
 						//echo "<br/>select photo from jishigou_topic_image where id in ('{$imageids}')";
@@ -880,7 +875,7 @@ if($ac=="member_detail")
 				if($root_topic)
 				{
 					$imageids_arr = explode(',',$root_topic['imageid']);
-					$pic_ids = implode("','",imageids_arr);
+					$pic_ids = implode("','",$imageids_arr);
 					$root_topic_img_rs =  DB::query("select photo from jishigou_topic_image where id in ('{$pic_ids}')");
 					unset($imageids_arr,$pic_ids);
 					
@@ -1509,7 +1504,7 @@ if($ac=="at_me")
 					if($root_topic)
 					{
 						$imageids_arr = explode(',',$root_topic['imageid']);
-						$pic_ids = implode("','",imageids_arr);
+						$pic_ids = implode("','",$imageids_arr);
 						$root_topic_img_rs =  DB::query("select photo from jishigou_topic_image where id in ('{$pic_ids}')");
 						unset($imageids_arr,$pic_ids);
 						
@@ -1661,7 +1656,7 @@ if($ac=="comment_me")
 						if($root_topic)
 						{
 							$imageids_arr = explode(',',$root_topic['imageid']);
-							$pic_ids = implode("','",imageids_arr);
+							$pic_ids = implode("','",$imageids_arr);
 							$root_topic_img_rs =  DB::query("select photo from jishigou_topic_image where id in ('{$pic_ids}')");
 							unset($imageids_arr,$pic_ids);
 							
@@ -1763,11 +1758,16 @@ if($ac=="push_msg_list")
 	        continue;
 	    }
 	    $msg=json_decode($row['message_content'],true);
-		
+		$row['pic_width'] = '';
+		$row['pic_height'] = '';
 	    $row['message_info']=$msg;
 		if(!empty($row['message_pic'])) {
 			$row['message_pic']=$site_url.'/'.$row['message_pic'];
+			$message_pic_info = (array)getimagesize($row['message_pic']);
+			$row['pic_width'] = $message_pic_info[0];
+			$row['pic_height'] = $message_pic_info[1];
 		}
+		
 		$row['message_sendtime']=date("Y-m-d",$row['message_sendtime']);
 		unset($row['message_content']);
 		$list_data[]=array_default_value($row,message_content);

@@ -27,12 +27,10 @@
   	<div class="page right">{$pages}</div>
 	
 	<php>
-	/*
 	if(get('fenzhan_id'))
 	{
 		if(count($fenzu)>0)
 		{
-		*/
 		</php>
 		<a href="javascript:void(0);" class="btn_a"  onclick="mod_batch_dialog('{:U('field/fenzhan/batch_lun',array('event_id'=>get('event_id'),'fenzhan_id'=>get('fenzhan_id')))}','mod_table','批量添加到分轮');"><span>批量添加到分轮</span></a>
 		
@@ -42,8 +40,9 @@
 		<a href="javascript:void(0);" class="btn_a"  onclick="mod_batch_dialog('{:U('field/fenzhan/batch_fenzu',array('fenzhan_id'=>get('fenzhan_id')))}','mod_table','批量添加至分组');"><span>批量添加至分组</span></a>
 		
 		<a href="javascript:void(0);" class="btn_a"  onclick="mod_batch_dialog('{:U('field/fenzhan/batch_fenzu_del',array('fenzhan_id'=>get('fenzhan_id')))}','mod_table','批量添加至分组');"><span>批量移除分组</span></a>
-		<php>
-	/*		
+	
+		
+		<php>	
 		}
 		else
 		{
@@ -56,7 +55,6 @@
 	{
 		echo '<font color=green>请先选择分站</font>';
 	}
-	*/
 	</php>
 	
 	

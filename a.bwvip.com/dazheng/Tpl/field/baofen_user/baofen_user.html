@@ -50,12 +50,13 @@
 		</th>
 		<th class="line_l">用户名</th>
 		<th class="line_l">密码</th>
-		<!-- <th class="line_l">所属赛事</th> -->
+		<!--
+		<th class="line_l">所属赛事</th>
+		<th class="line_l">所在球场</th>
+		-->
 		<th class="line_l">所属分站</th>
-		<!-- <th class="line_l">所在球场</th> -->
 		<th class="line_l">负责球洞</th>
-		<th class="line_l">比赛当前ID</th>
-		<th class="line_l">onlymark</th>
+
 		<th class="line_l">添加时间</th>
 		<th class="line_l">操作</th>
 	</tr>
@@ -64,12 +65,13 @@
 		<td><input type="checkbox" name="checkbox" onclick="select_one(this)" value="{$vo.baofen_user_id}" ></td>
 		<td>{$vo.username}</th>
 			<td>{$vo.password}</td>
-			<!-- <td>{$event_name}</td> -->
+			<!--
+			<td>{$vo.event_id}</td>
+			<td>{$vo.field_id}</td>
+			-->
 			<td>{$vo.fenzhan_name}</td>
-			<!-- <td>{$vo.field_id}</td> -->
 			<td>{$vo.dongs}</td>
-			<td>{$vo.iteamid}</td>
-			<td>{$vo.onlymark}</td>
+
 			<td>{$vo.addtime|format_to_time}</td>
 		<td>
 			<a href="{:U('field/baofen_user/baofen_user_edit', array('baofen_user_id'=>$vo['baofen_user_id']))}">修改</a> | 

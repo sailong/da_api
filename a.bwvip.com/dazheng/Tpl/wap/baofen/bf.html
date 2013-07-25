@@ -19,43 +19,24 @@
         <div style="width:120px; float:left"> <span>您好，<php>echo $_SESSION['baofen_username'];</php> <a href="{:U('wap/baofen/logout',array('fenzhan_id'=>$fenzhan_id,'lun'=>$lun))}">【退出】</a> </span> </div>
         <div  style="width:100px; float:left"> 
 		 
-		【<a href="/baofen/show.php?ac=list&fenzhan_id={$fenzhan_id}" target="_blank">查看成绩</a>】 
+		【<a href="/baofen/show.php?ac=list&fenzhan_id={$fenzhan_id}" target="_blank">查看成绩</a>】
 		</div>
-        <a href="{:U('wap/baofen/bf',array('fenzhan_id'=>$fenzhan_id))}">无分组版</a>
       </div>
       <div class="nav_u" >
         <table width="100%" border="0">
           <tr>
-            <td>请选择分组</td>
+            <td></td>
             <td>
-				<form name="fenzu_form" method="get" action="?">
-					<input type="hidden" name="g" value="wap">
-					<input type="hidden" name="m" value="baofen">
-					<input type="hidden" name="a" value="baofen">
-					<input type="hidden" name="fenzhan_id" value="<php> echo get('fenzhan_id');</php>">
-					<input type="hidden" name="lun" value="<php> echo get('lun');</php>">
-					<select name="fenzu_id" onchange="load_fenzu();">
-						<volist id="vo" name="fenzu_list">
-							<option value="{$vo.fenzu_id}" <php>if(get("fenzu_id")==$vo['fenzu_id']){ echo ' selected="selected" ';}</php>>{$vo['fenzu_id']}组/{$vo['realname']}</option>
-						</volist>
-					</select>
-				</form>
-				<script>
-				function load_fenzu()
-				{
-					var lobj=document.fenzu_form;
-					lobj.submit();
-				}
-				</script>
+				 <a href="{:U('wap/baofen/baofen',array('fenzhan_id'=>$fenzhan_id,'fenzu_id'=>1))}">分组版</a>
 			</td>
             <td>
 			<!--
 			<a href="/nd/baofen.php?ac=ndupdate&fzt=&qc_id=">修改该分组</a>
 			-->
 			</td>
+            <td></td>
           </tr>
         </table>
-        <form action="{:U('wap/baofen/baofen_save_action')}" method="POST" name="baofen_form">
           <DIV class="ndbm">
             <table border="0" cellpadding="0" cellspacing="0" style="width:260px;">
               <tr>
@@ -65,8 +46,11 @@
                 </volist>
               </tr>
               <volist id="v" name="fenzu_user">
-              <tr>
-                <td height="30">{$v.realname}</td>
+              
+        <form action="{:U('wap/baofen/baofen_save_action')}" method="POST" name="baofen_form">
+              <tr onmouseover="this.style.backgroundColor='#D6D6D6';this.style.color='#ffffff';"    onmouseout="this.style.backgroundColor='#efefef';this.style.color='#000000';"   >
+
+                <td height="30">{$v.realname}{$v.username}</td>
                 <volist id="d" name="dongs">
 				<php>
 				$cj=M()->query("select cave_".$d." from tbl_baofen where baofen_id='".$v['baofen_id']."' and fenzhan_id='".$fenzhan_id."' ");
@@ -96,21 +80,19 @@
                     </select>
 				</td>
                 </volist>
+                <td>    <input type="hidden" name='ac' id="ac" value="tjbf">
+                <input type="hidden" name='fenzhan_id' id="fenzhan_id" value="<php> echo get('fenzhan_id');</php>">
+                <input type="hidden" name='fenzu_id' id="fenzu_id" value="<php> echo get('fenzu_id');</php>"><input name="提交" type="submit" value="提交"   /></td>
               </tr>
+              
+        </form>
+        
+              <tr><td height="15"></td></tr>
               </volist>
+              
             </table>
           </DIV>
-          <table width="250" cellpadding="0" cellspacing="0">
-            <tr>
-              <td height="45" align="center"><span style="text-align:center; padding-top:20px;">
-                <input type="hidden" name='ac' id="ac" value="tjbaofen">
-                <input type="hidden" name='fenzhan_id' id="fenzhan_id" value="{$fenzhan_id}">
-                <input type="hidden" name='fenzu_id' id="fenzu_id" value="<php> echo get('fenzu_id');</php>">
-                <input type="image" src="/skin/wap/images/submit_btn.jpg" width="109" height="27" />
-                </span></td>
-            </tr>
-          </table>
-        </form>
+        
       </div>
     </div>
     <div id="con1_p"></div>

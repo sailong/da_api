@@ -37,6 +37,8 @@ if(!defined('IN_DISCUZ'))
 		$data['data']['username']=$realname['realname'];
 		$data['data']['chadian']=$realname['chadian'];
 
+		
+
 
 		//print_r($data);
 

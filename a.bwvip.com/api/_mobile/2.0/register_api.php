@@ -71,10 +71,11 @@ if($uid <= 0) {
 		$mobile =$_G['gp_username'];
 		$realname =urldecode($_G['gp_realname']);
 		//$realname =iconv("gb2312","UTF-8",$realname); 
-		//$realname =iconv("gb2312","UTF-8",$realname);
+		//$realname =iconv("gb2312","UTF-8",$realname); 
 		$is_auto_guanzhu =$_G['gp_is_auto_guanzhu'];		
 
 		$sheng=get_city_bymobile($mobile);
+		
 		if($sheng=="北京" || $sheng=="上海" || $sheng=="天津" || $sheng=="重庆")
 		{
 			$sheng=$sheng."市";
@@ -83,7 +84,9 @@ if($uid <= 0) {
 		{
 			$sheng=$sheng."省";
 		}
-        /*
+		
+		/*
+
 		if($is_auto_guanzhu && $sheng)
 		{
 			$city_sql=" and resideprovince='".$sheng."' ";
@@ -105,7 +108,8 @@ if($uid <= 0) {
 
 			}
 		}
- 		*/
+		*/
+ 
 		 DB::query("UPDATE ultrax.jishigou_members SET nickname='$realname',validate=1 WHERE ucuid='$uid'"); 
 		 DB::query("UPDATE ".DB::table('common_member_profile')."  SET realname='$realname',mobile='$mobile',resideprovince='$sheng',cron_fensi_state=0  WHERE uid='$uid'"); 
 
