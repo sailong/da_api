@@ -71,7 +71,7 @@ $hot_2013district=array(
 //选择 赛事
 if($ac=="select_event")
 {
-	$list3=DB::query("select event_id,event_name,event_uid,event_is_zhutui,event_zhutui_pic,event_content,event_url,event_type from tbl_event where event_is_zhutui='Y' and field_uid=0 order by event_sort desc limit 1 ");
+	$list3=DB::query("select event_id,event_id as event_uid,event_name,event_is_zhutui,event_zhutui_pic,event_content,event_url,event_type from tbl_event where event_is_zhutui='Y' and field_uid=0 order by event_sort desc limit 1 ");
 	while($row3 = DB::fetch($list3))
 	{
 		if($row3['event_zhutui_pic'])
@@ -88,13 +88,14 @@ if($ac=="select_event")
 		$list_data3[]=$row3;
 	}
 
-	$list=DB::query("select event_id,event_name,event_uid,event_is_zhutui,event_content,event_url,event_type from tbl_event where event_is_tj='Y' and field_uid=0 order by event_sort desc  ");
+	$list=DB::query("select event_id,event_id as event_uid,event_name,event_is_zhutui,event_content,event_url,event_type,event_logo from tbl_event where event_is_tj='Y' order by event_sort desc  ");
 	while($row = DB::fetch($list))
 	{
 		//$field=DB::query("select field_id from pre_fenzhan where sid= ");
 		//$row['field_ids']=
 		
-		$row['event_pic']=$site_url."/uc_server/avatar.php?uid=".$row['event_uid']."&size=middle";
+		//$row['event_pic']=$site_url."/uc_server/avatar.php?uid=".$row['event_uid']."&size=middle";
+		$row['event_pic']=$site_url.$row['event_logo'];
 		$row['uid']=$row['event_uid'];
 		$row['event_content']=msubstr(cutstr_html($row['event_content']),0,30);
 		if(!$row['event_url'])
@@ -650,7 +651,7 @@ if($ac=="event_detail")
 					if($root_topic)
 					{
 						$imageids_arr = explode(',',$root_topic['imageid']);
-						$pic_ids = implode("','",$imageids_arr);
+						$pic_ids = implode("','",imageids_arr);
 						$root_topic_img_rs =  DB::query("select photo from jishigou_topic_image where id in ('{$pic_ids}')");
 						unset($imageids_arr,$pic_ids);
 						
