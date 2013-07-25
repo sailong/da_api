@@ -1767,7 +1767,10 @@ if($ac=="push_msg_list")
 		$row['pic_height'] = '';
 	    $row['message_info']=$msg;
 		if(!empty($row['message_pic'])) {
-			$row['message_pic']=$site_url.'/'.$row['message_pic'];
+			if(stripos($row['message_pic'],"http://") === false) {
+				$row['message_pic']=$site_url.'/'.$row['message_pic'];
+			}
+			
 			$message_pic_info = (array)getimagesize($row['message_pic']);
 			$row['pic_width'] = $message_pic_info[0];
 			$row['pic_height'] = $message_pic_info[1];
@@ -1814,7 +1817,9 @@ if($ac=="msg_detail")
 	$message_info['pic_height'] = '';
 	$message_info['message_info']=$msg;
 	if(!empty($message_info['message_pic'])) {
-		$message_info['message_pic']=$site_url.'/'.$message_info['message_pic'];
+		if(stripos($message_info['message_pic'],"http://") === false) {
+			$message_info['message_pic']=$site_url.'/'.$message_info['message_pic'];
+		}
 		$message_pic_info = (array)getimagesize($message_info['message_pic']);
 		$message_info['pic_width'] = $message_pic_info[0];
 		$message_info['pic_height'] = $message_pic_info[1];
