@@ -106,6 +106,19 @@
 					</td>
 				</tr>
 				<tr>
+					<th>赛事类型：</th>
+					<td>
+						<select name="event_type" id="event_type">
+							<option value="">请选择</option>
+							<option value="G">比杆赛</option>
+							<option value="D">比洞赛</option>
+							<option value="T">团体赛</option>
+						</select>
+						<script>set_select_value(document.act_form.event_type,'{$data.event_type}');</script>
+					</td>
+				</tr>
+
+				<tr>
 					<th>详细介绍：</th>
 					<td>{$editor}</td>
 				</tr>

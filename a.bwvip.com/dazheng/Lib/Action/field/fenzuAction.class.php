@@ -251,6 +251,8 @@ class fenzuAction extends field_publicAction
 		$bs_data[$z]['users'][$i]['uid']      = $rows['uid'];
 		$bs_data[$z]['users'][$i]['realname'] = $rows['event_apply_realname']; 
         $bs_data[$z]['users'][$i]['event_apply_chadian']     = $rows['event_apply_chadian'];
+		
+        $bs_data[$z]['users'][$i]['event_apply_id']   = $rows['event_apply_id']; 
 		 
  //$bs_data[$z]['users']= sortByCol($bs_data[$z]['users'], 'chadian', SORT_ASC);  
         $i++;
@@ -260,12 +262,16 @@ class fenzuAction extends field_publicAction
  //array_multisort($start_time, SORT_ASC,$bs_data); //对相同差点的人 从新排序   
    $insert_data['fenzhan_id']    = $data['fenzhan_id']; 
    $insert_data['event_id']   = $data['event_id']; 
+   	$fenzhan_lun_result=M()->query("select fenzhan_lun from tbl_fenzhan where fenzhan_id='".$data['fenzhan_id']."' "); 
+ 
+    $lun =$fenzhan_lun_result[0]['fenzhan_lun']; 
    $insert_data['addtime']   = time();  
    foreach($bs_data as $key=>$value){
      foreach($value['users'] as $k =>$v){
                 $v['start_time'] = $value['start_time'];
                 $v['am_pm']      = $value['am_pm'];
                 $v['tee']        = $value['kq_tee']; 
+                $v['lun']        = $lun; 
                 $v['fenzu_id']= $key;
                 $rows = array_merge($v,$insert_data); 
 			 $list=M("baofen")->add($rows);
@@ -293,7 +299,7 @@ class fenzuAction extends field_publicAction
 	public function tiaopei()
 	{
 		 
-		 $data=M()->query("SELECT baofen_id,uid,realname,fenzu_id,tee,start_time   from tbl_baofen  where baofen_id='".get("baofen_id")."'");  
+		 $data=M()->query("SELECT baofen_id, event_apply_id,uid,realname,fenzu_id,tee,start_time   from tbl_baofen  where baofen_id='".get("baofen_id")."'");  
 		 
 		$this->assign("data",$data[0]); 
 		
@@ -318,6 +324,8 @@ public function tiaopei_edit()
 			$data["realname"]=post("realname");
 			$data["start_time"]=strtotime(post("start_time"));
 			$data["tee"]=post("tee");
+			$data["event_apply_id"]=post("event_apply_id");
+			
 			$data["event_id"]=post("event_id");
 			$data["fenzhan_id"]=post("fenzhan_id");
 			$data["lun"]=post("lun");  
@@ -353,6 +361,7 @@ public function tiaopei_edit()
 			$data["realname"]=post("realname");
 			$data["start_time"]=strtotime(post("start_time"));
 			$data["tee"]=post("tee");
+			$data["event_apply_id"]=post("event_apply_id");
 			$data["event_id"]=post("event_id");
 			$data["fenzhan_id"]=post("fenzhan_id");
 			$fenzhan_info=M()->query("select fenzhan_lun,field_id from tbl_fenzhan where fenzhan_id='".$data["fenzhan_id"]."'");

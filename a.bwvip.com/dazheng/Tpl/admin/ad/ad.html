@@ -74,6 +74,7 @@
 		<th class="line_l">宽度</th>
 		<th class="line_l">高度</th>
 		<th class="line_l">广告链接</th>
+		<th class="line_l">排序</th>
 		<th class="line_l">添加时间</th>
 		<th class="line_l">操作</th>
 	</tr>
@@ -88,11 +89,12 @@
 			<td>{$vo.ad_type}</td>
 			-->
 			<td>{$vo.field_uid}</td>
-			<td><php>if($vo['ad_type']=="pic"){ echo '<img style="max-height:60px; max-width:100px;" src="'.$vo['ad_file'].'">';}</php></td>
+			<td><php>echo '<img style="max-height:60px; max-width:100px;" src="'.$vo['ad_file'].'">';</php></td>
 			
 			<td>{$vo.ad_width}</td>
 			<td>{$vo.ad_height}</td>
 			<td>{$vo.ad_url}</td>
+			<td>{$vo.ad_sort}</td>
 			<!--
 			<td><php>if($vo['ad_state']==1){ echo "已开启";}else{ echo "已关闭";}</php></td>
 			-->

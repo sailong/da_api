@@ -220,6 +220,7 @@ if($ac=='rank')
 			{
 				//当天
 				$list=DB::query("select uid,realname as username,par,total_ju_par as today_score,$strlun,cave_1,cave_2,cave_3,cave_4,cave_5,cave_6,cave_7,cave_8,cave_9,cave_10,cave_11,cave_12,cave_13,cave_14,cave_15,cave_16,cave_17,cave_18,total_ju_par,(cave_10+cave_11+cave_12+cave_13+cave_14+cave_15+cave_16+cave_17+cave_18) as lin,is_end from tbl_baofen where fenzhan_id='".$now_fz_id."' order by  $lnorder,lin,cave_18,cave_17,cave_16 ");
+				
 			}
 			while($row=DB::fetch($list))
 			{
@@ -303,21 +304,32 @@ if($ac=='rank')
 			//则显示所有成绩卡
 
 			//最大轮数
-			$lun_num = DB::result_first("select max(lun) from tbl_baofen where sid=$sid and uid >0 and total_score>60  limit 1 ");
+			$lun_num = DB::result_first("select max(lun) from tbl_baofen where event_id=$sid and total_score>60  limit 1 ");
 			//print_r($query);
 		  
-			$query = DB::query(" SELECT baofen_id,baofen_id as id,uid,sid,lun,total_score,zong_score,score,par,tianshu FROM (select baofen_id,baofen_id as id,uid,lun,sid,total_score,zong_score,score,par,to_days(FROM_UNIXTIME(dateline))-to_days(now()) as tianshu from tbl_baofen where sid=$sid and uid >0 and total_score>60 order by lun desc,zong_score asc ,tianshu asc) as t2 group by uid order by lun desc,zong_score asc ,tianshu asc  limit 0,$limit");
-			 
+			$query = DB::query(" SELECT baofen_id,baofen_id as id,realname,uid,sid,lun,event_id,total_score,zong_score,score,par,to_days(FROM_UNIXTIME(dateline))-to_days(now()) as tianshu,event_apply_id from(SELECT baofen_id,baofen_id as id,realname,uid,sid,lun,event_id,total_score,zong_score,score,par,dateline,to_days(FROM_UNIXTIME(dateline))-to_days(now()) as tianshu,event_apply_id from tbl_baofen where event_id=$sid and total_score>60) as t2 group by event_apply_id,uid order by lun desc,zong_score asc,tianshu asc limit 0,$limit");
+			
+			//$query = DB::query(" SELECT baofen_id,baofen_id as id,uid,sid,lun,total_score,zong_score,score,par,tianshu FROM (select baofen_id,baofen_id as id,uid,lun,sid,total_score,zong_score,score,par,to_days(FROM_UNIXTIME(dateline))-to_days(now()) as tianshu from tbl_baofen where event_id=$sid and total_score>60 order by lun desc,zong_score asc ,tianshu asc) as t2 group by uid order by lun desc,zong_score asc,tianshu asc  limit 0,$limit");
+
 			$i=0;
 			while($row = DB::fetch($query))
 			{
 				$zongbiaogan=0;
 				for($j=1; $j<=$lun_num; $j++)
 				{
+					if($row['uid'])
+					{
+						$lun_info = DB::fetch_first("select baofen_id,sid,uid,total_score,score,par,to_days(FROM_UNIXTIME(dateline))-to_days(now()) as tianshu from tbl_baofen where event_id=$sid and uid='".$row['uid']."' and lun='".$j."' and total_score>60 order by dateline asc limit 1 ");
+					}
+					else
+					{
+						$lun_info = DB::fetch_first("select baofen_id,sid,uid,total_score,score,par,to_days(FROM_UNIXTIME(dateline))-to_days(now()) as tianshu from tbl_baofen where event_id=$sid and event_apply_id='".$row ['event_apply_id']."' and lun='".$j."' and total_score>60 order by dateline asc limit 1 ");
+					}
 	
-					$lun_info = DB::fetch_first("select baofen_id,sid,uid,total_score,score,par,to_days(FROM_UNIXTIME(dateline))-to_days(now()) as tianshu from tbl_baofen where sid=$sid and uid='".$row['uid']."' and lun='".$j."' and total_score>60 order by dateline asc limit 1 ");
+					
+					//echo "select baofen_id,sid,uid,total_score,score,par,to_days(FROM_UNIXTIME(dateline))-to_days(now()) as tianshu from tbl_baofen where event_id=$sid and (uid='".$row['uid']."' or event_apply_id='".$row ['event_apply_id']."') and lun='".$j."' and total_score>60 order by dateline asc limit 1 ";
+					//echo "<hr>";
 					$zongbiaogan=$zongbiaogan+(end(explode("|",$lun_info['par'])));
-
 					//print_r($lun_info);
 					if($j==1)
 					{
@@ -337,11 +349,31 @@ if($ac=='rank')
 					}
 
 				}
+				
+				if($row['uid'])
+				{
+					if($row['zong_score']!=(($lun_1)+($lun_2)+($lun_3)+($lun_4)) || $row['zong_score']==0)
+					{
+						$row['zong_score']=($lun_1)+($lun_2)+($lun_3)+($lun_4);
+						$res=DB::query("update tbl_baofen set zong_score='".$row['zong_score']."' where uid='".$row ['uid']."' and event_id='".$row ['event_id']."'  ");
+					}
+				}
+				else
+				{
+					if($row['zong_score']!=(($lun_1)+($lun_2)+($lun_3)+($lun_4)) || $row['zong_score']==0)
+					{
+						$row['zong_score']=($lun_1)+($lun_2)+($lun_3)+($lun_4);
+						$res=DB::query("update tbl_baofen set zong_score='".$row['zong_score']."' where event_apply_id='".$row ['event_apply_id']."' and event_id='".$row ['event_id']."'  ");
+					}
+				}
+				
 
-				if($row['zong_score']!=(($lun_1)+($lun_2)+($lun_3)+($lun_4)))
+				if($row['zong_score']!=(($lun_1)+($lun_2)+($lun_3)+($lun_4)) || $row['zong_score']==0)
 				{
 					$row['zong_score']=($lun_1)+($lun_2)+($lun_3)+($lun_4);
-					$res=DB::query("update tbl_baofen set zong_score='".$row['zong_score']."' where uid='".$row ['uid']."' and sid='".$row ['sid']."'  ");
+					$res=DB::query("update tbl_baofen set zong_score='".$row['zong_score']."' where event_apply_id='".$row ['event_apply_id']."' and event_id='".$row ['event_id']."'  ");
+					//echo "update tbl_baofen set zong_score='".$row['zong_score']."' where event_apply_id='".$row ['event_apply_id']."' and event_id='".$row ['event_id']."'  ";
+					//echo "<hr>";
 				}
 
 				$row['lun_1']=$lun_1;
@@ -386,7 +418,7 @@ if($ac=='rank')
 				$row['username']=gettruename($row['uid']);
 				if(!$row['username'])
 				{
-					$row['username']='';
+					$row['username']=$row['realname'];
 				}
 				
 				$gscore[] = $row; 

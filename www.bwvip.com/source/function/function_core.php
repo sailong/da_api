@@ -2976,7 +2976,8 @@ function brand_star_list() {
 function scores_ranking_card($sid=1000333) {
    global $_G;
     $num = $_G['gp_more'] ? 50 : 7;
-    $query = DB::query("select uid from ".DB::table("common_score")." where sais_id='".$sid."' and fuid='".$_G['gp_uid']."' and status='2'  and ismine=0  and  total_score>50  group by uid order by total_score asc limit ".$num." ");
+ $query = DB::query("select uid from ".DB::table("common_score")." where sais_id='".$sid."' and fuid='".$_G['gp_uid']."' and status='2'  and ismine=0  and  total_score>50  group by uid order by total_score asc limit ".$num." ");
+ //$query = DB::query("select uid from ".DB::table("common_score")." where sais_id='".$sid."' and fuid='".$_G['gp_uid']."'    and (ismine=0 or source='waika')  and  total_score>50  group by uid order by total_score asc limit ".$num." ");
     while($row = DB::fetch($query)) {
         $rank[] = $row;
     }

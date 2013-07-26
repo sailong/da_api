@@ -40,7 +40,7 @@ class adAction extends AdminAuthAction
 		if(M()->autoCheckToken($_POST))
 		{
 			$data["ad_name"]=post("ad_name");
-			$data["ad_type"]=post("ad_type");
+			
 			$data["ad_app"]=post("ad_app");
 			if($_FILES["ad_file"]["error"]==0 || $_FILES["ad_file_iphone4"]["error"]==0 || $_FILES["ad_file_iphone5"]["error"]==0)
 			{
@@ -81,13 +81,15 @@ class adAction extends AdminAuthAction
 				}
 			
 			}
-			$data["ad_width"]=post("ad_width");
-			$data["ad_height"]=post("ad_height");
+			$data["ad_type"]='pic';
+			$data["ad_width"]=0;
+			$data["ad_height"]=0;
 			$data["ad_page"]=post("ad_page");
 			$data["ad_url"]=post("ad_url");
-			if($_SESSION["field_uid"])
+			$data["ad_sort"]=post("ad_sort");
+			if(post("field_uid"))
 			{
-				$data["field_uid"]=$_SESSION["field_uid"];
+				$data["field_uid"]=post("field_uid");
 			}
 			
 			$data["ad_state"]=1;
@@ -137,7 +139,6 @@ class adAction extends AdminAuthAction
 		{
 			$data["ad_id"]=post("ad_id");
 			$data["ad_name"]=post("ad_name");
-			$data["ad_type"]=post("ad_type");
 			$data["ad_app"]=post("ad_app");
 			if($_FILES["ad_file"]["error"]==0 || $_FILES["ad_file_iphone4"]["error"]==0 || $_FILES["ad_file_iphone5"]["error"]==0)
 			{
@@ -178,10 +179,10 @@ class adAction extends AdminAuthAction
 				}
 			
 			}
-			$data["ad_width"]=post("ad_width");
-			$data["ad_height"]=post("ad_height");
+
 			$data["ad_page"]=post("ad_page");
 			$data["ad_url"]=post("ad_url");
+			$data["ad_sort"]=post("ad_sort");
 			if(post("field_uid"))
 			{
 				$data["field_uid"]=post("field_uid");

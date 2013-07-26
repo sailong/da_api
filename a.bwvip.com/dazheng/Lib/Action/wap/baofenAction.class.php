@@ -209,7 +209,7 @@ class baofenAction extends wap_publicAction
 		$arra = post('userdk');
 
 		$fenzhan_id = post('fenzhan_id');
-		$lun = post('lun'); 
+		
 		if($arr_b)
 		{ 
 			$fenzhan_info=M("fenzhan")->where(" fenzhan_id='".$fenzhan_id."' ")->find();
@@ -224,8 +224,9 @@ class baofenAction extends wap_publicAction
 				if($fenzhan_id)
 				{
 				 
-					$qc_par_result=M()->query("select fenzhan_a,fenzhan_b from tbl_fenzhan where fenzhan_id='".$fenzhan_id."' "); 
+					$qc_par_result=M()->query("select fenzhan_a,fenzhan_b,fenzhan_lun from tbl_fenzhan where fenzhan_id='".$fenzhan_id."' "); 
 					$par = explode(',',$qc_par_result[0]['fenzhan_a'].','.$qc_par_result[0]['fenzhan_b'] );
+					$lun =$qc_par_result[0]['fenzhan_lun']; 
 				 $POUT = $par [0] + $par [1] + $par [2] + $par [3] + $par [4] + $par [5] + $par [6] + $par [7] + $par [8];
 				$PIN = $par [9] + $par [10] + $par [11] + $par [12] + $par [13] + $par [14] + $par [15] + $par [16] + $par [17];
 				$PTL = $POUT + $PIN; 
@@ -260,6 +261,7 @@ class baofenAction extends wap_publicAction
 						}
 					}
 					
+					$sql_sets['lun'] = "`lun`='".$lun."'";
 					//插入更新操作 18洞成绩
 					$baofen=M()->query("select * from tbl_baofen where baofen_id='".$key."' and fenzhan_id='".$fenzhan_id."'");
 					$data ['baofen_id'] = $key;
@@ -267,19 +269,18 @@ class baofenAction extends wap_publicAction
 					$data ['event_id'] = $event_id;
 					$data ['fenzhan_id'] = $fenzhan_id;
 					$data ['field_id'] = $field_id; 
-					//$data ['total_score'] = $total_score;  
-					 
+					//$data ['total_score'] = $total_score;   
 					
 					if($baofen[0]['baofen_id'])
 					{
 						$sql = "update tbl_baofen set ".(implode ( " , ",$sql_sets ))." where baofen_id='".$key."' and fenzhan_id='".$fenzhan_id."'  ";
 						 
-					} 
-					/*
+					}  
 					echo "<hr>";	
 					echo $sql;
-					echo "<hr>";
-					*/ 
+					echo "<hr>"; 
+					
+					
 					$rs = M()->query($sql);
 
 					//统计总分

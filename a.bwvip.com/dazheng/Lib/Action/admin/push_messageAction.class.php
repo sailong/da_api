@@ -67,18 +67,42 @@ class push_messageAction extends AdminAuthAction
 			$ext_id=post("ext_id");
 			$ext_title=post("ext_title");
 			
+			
 			if(post("receiver_type")==3)
 			{
 				$message_extinfo=array('action'=>"system_msg");	
 			}
 			else
 			{
-				$message_extinfo=array('action'=>$ext_action,'id'=>$ext_id,'title'=>urlencode($ext_title));
+				$message_extinfo=array('action'=>$ext_action,'id'=>$ext_id,'title'=>$ext_title);
 			}
-			$msg_content = json_encode(array('n_builder_id'=>0, 'n_title'=>urlencode($n_title), 'n_content'=>urlencode($n_content),'n_extras'=>$message_extinfo));
+			
+			//$msg_content = json_encode(array('n_builder_id'=>0, 'n_title'=>urlencode($n_title), 'n_content'=>urlencode($n_content),'n_extras'=>$message_extinfo));
+			$msg_content = json_encode(array('n_title'=>urlencode($n_title), 'n_content'=>urlencode($n_content),'n_extras'=>$message_extinfo));
 
 			$data["message_content"]=$msg_content;
 			$data["receiver_type"]=post("receiver_type");
+			$data['message_pic']='';
+			if($_FILES["message_pic"]) {
+			    $file_path="/upload/xiaoxi_pic/";
+        		$time_name = time();
+    			if(!file_exists(WEB_ROOT_PATH.$file_path))
+    			{
+    				mkdir(WEB_ROOT_PATH.$file_path);
+    			}
+    			$file_path .=date("Ymd",$time_name)."/";
+    			if(!file_exists(WEB_ROOT_PATH.$file_path))
+    			{
+    				mkdir(WEB_ROOT_PATH.$file_path);
+    			}
+    			$extname=end(explode(".",$_FILES["message_pic"]["name"]));
+    			//$file_name = iconv('utf-8','gb2312',$_FILES["qiutong_photo"]["name"]);
+    			$file_path .= $time_name.'.'.$extname;
+    			$rs = move_uploaded_file($_FILES["message_pic"]["tmp_name"], WEB_ROOT_PATH.$file_path);//将上传的文件存储到服务器
+			    if(!empty($rs)) {
+			        $data['message_pic'] = $file_path;
+			    }
+			}
 		
 			$data["message_state"]=0;
 			$data["message_totalnum"]=0;
@@ -86,7 +110,6 @@ class push_messageAction extends AdminAuthAction
 			$data["message_errorcode"]="";
 			$data["message_errormsg"]="";
 			$data["message_addtime"]=time();
-			
 			$list=M("push_message")->add($data);
 
 			if($list!=false)
@@ -226,6 +249,9 @@ class push_messageAction extends AdminAuthAction
 				$data["devices_token"]=post("devices_token");
 				$data["receiver_type"]=post("receiver_type");
 			}
+			
+			$data['message_pic']=post("message_pic");
+			
 			$data["message_state"]=post("message_state");
 			$data["message_totalnum"]=post("message_totalnum");
 			$data["message_sendnum"]=post("message_sendnum");

@@ -14,11 +14,11 @@ td.specalt {border-left: 1px solid #ffffff; border-top: 0;  font:18px; color: #2
  /*---------for IE 5.x bug*/ html>body td{ font-size:14px;}
 
 </style>
-<META   HTTP-EQUIV=REFRESH   CONTENT="60;URL=index.php?ac=ndtv&fenz_id=<!--{echo $fenz_id;}-->&page=<!--{echo $page;}-->&pg=<!--{echo $perpage;}-->&pm=<!--{$pm}-->" >
+<META   HTTP-EQUIV=REFRESH   CONTENT="60;URL=show.php?fenzhan_id={$_GET['fenzhan_id']}&ac=tv&page=<!--{echo $page;}-->&pg=<!--{echo $perpage;}-->&pm=<!--{$pm}-->" >
 <body>
  <table width="100%" align="center" cellpadding="0" cellspacing="0" style="background-attachment:#e7e7e7;">
   <tr>
-    <td colspan="28" align="center" style="background:#f1f8fe; border-top: 1px solid #ffffff; height:40px;" >{if $onlymark=='1565264560'}中国VS韩国十佳俱乐部对抗赛{else}<img src="/images/nd/nd{$_GET['fenz_id']}tv.jpg" >{/if}</td>
+    <td colspan="28" align="center" style="background:#f1f8fe; border-top: 1px solid #ffffff; height:40px;" >  <img src="/images/nd/nd{$_GET['fenzhan_id']}.jpg" onerror="this.src='/images/nd/bwvip.jpg'" ></td>
   </tr>
  <tr>
     <td width="3%" rowspan="2" style="background:url(../images/nd/shangm.jpg) top center  repeat-x #02425d;"><font color="#ffffff">排名</font></td>
@@ -79,8 +79,8 @@ td.specalt {border-left: 1px solid #ffffff; border-top: 0;  font:18px; color: #2
   <tr  bgcolor="<!--{$bgcolor}-->">
     <td  style="background:url(../images/nd/paiming.jpg) repeat-x ;"><font color="#ffffff">{$v['pm']}</font></td>
     <td  style="background:url(../images/nd/paiming.jpg) repeat-x ;"><font color="#ffffff" style="letter-spacing:10px; font-size:20px; line-height: 28px"><strong>{$v['realname']}</strong></font></td>
-    <td style="background:url(../images/nd/fenzuchengji.jpg)  repeat-x ;"><font color="#ffffff">{$v['team_num']}</td>
-    <td style="background:url(../images/nd/fenzuchengji.jpg)  repeat-x ;"><font color="#FFFFFF">{if $v['avcave']<900}{echo Getchd($v['avcave'])}{else}&nbsp;{/if} </font></td>
+    <td style="background:url(../images/nd/fenzuchengji.jpg)  repeat-x ;"><font color="#ffffff">{$v['fenzu_id']}</td>
+    <td style="background:url(../images/nd/fenzuchengji.jpg)  repeat-x ;"><font color="#FFFFFF">{if $v['total_ju_par']<900}{echo Getchd($v['total_ju_par'])}{else}&nbsp;{/if} </font></td>
    <td class="specalt" {if $v['cave_1']!=0}{echo Getcss($v['cave_1'],$par[0])}{/if}>{if $v['cave_1']<=0}&nbsp;{else}{$v['cave_1']}{/if}</td>
     <td class="specalt" {if $v['cave_2']!=0}{echo Getcss($v['cave_2'],$par[1])}{/if}>{if $v['cave_2']<=0}&nbsp;{else}{$v['cave_2']}{/if}</td>
     <td class="specalt" {if $v['cave_3']!=0}{echo Getcss($v['cave_3'],$par[2])}{/if}>{if $v['cave_3']<=0}&nbsp;{else}{$v['cave_3']}{/if}</td>
@@ -101,10 +101,10 @@ td.specalt {border-left: 1px solid #ffffff; border-top: 0;  font:18px; color: #2
     <td class="specalt" {if $v['cave_17']!=0}{echo Getcss($v['cave_17'],$par[16])}{/if}>{if $v['cave_17']<=0}&nbsp;{else}{$v['cave_17']}{/if}</td>
     <td class="specalt" {if $v['cave_18']!=0}{echo Getcss($v['cave_18'],$par[17])}{/if}>{if $v['cave_18']<=0}&nbsp;{else}{$v['cave_18']}{/if}</td>
      <td class="specalt" style="text-align:center;">{if $v['lin']<=0}&nbsp;{else}{$v['lin']}{/if}</td>
-    <td class="specalt" style="text-align:center;{if $v['tlscore']==1000}color:#FFffff;background:#089218;{/if}" >{echo Getstat($v[tlcave])}</td>
+    <td class="specalt" style="text-align:center;{if $v['tlscore']==1000}color:#FFffff;background:#089218;{/if}" >{echo Getstat($v[total_score])}</td>
      
-    <!--{eval  if($v['tlcave1']>=10000) $v['tlcave1']=0;  }-->
-    <!--{eval  if($v['tlcave2']>=10000) $v['tlcave2']=0;  }-->
+    <!--{eval  if($v['total_score1']>=10000) $v['total_score1']=0;  }-->
+    <!--{eval  if($v['total_score2']>=10000) $v['total_score2']=0;  }-->
  
   </tr>
 <!--{/loop}-->

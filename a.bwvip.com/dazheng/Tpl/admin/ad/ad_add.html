@@ -11,6 +11,7 @@
 					<th><font color="red">*</font>广告名称：</th>
 					<td><input type="text" name="ad_name" id="ad_name" class="mod_input2" style="width:300px;" ></td>
 				</tr>
+				<!--
 				<tr>
 					<th><font color="red">*</font>广告类型：</th>
 					<td>
@@ -23,6 +24,7 @@
 						<script>set_select_value(document.act_form.ad_type,"{$data.ad_type}");</script>
 					</td>
 				</tr>
+				-->
 				<tr>
 					<th><font color="red">*</font>广告分类：</th>
 					<td>
@@ -57,12 +59,14 @@
 					<th><font color="red">*</font>广告文件(IPHONE5)：</th>
 					<td><input type="file" name="ad_file_iphone5" id="ad_file_iphone5"  class="mod_input" style="width:300px;"></td>
 				</tr>
+				<!--
 				<tr>
 					<th><font color="red">*</font>广告宽度：</th>
 					<td><input type="text" name="ad_width" id="ad_width" class="mod_input2" style="width:80px;" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  &nbsp;&nbsp;&nbsp;  
 						<font color="red">*</font>高度：<input type="text" name="ad_height" id="ad_height" class="mod_input2" style="width:80px;" >
 					</td>
 				</tr>
+				-->
 				<tr>
 					<th><font color="red">*</font>广告链接：</th>
 					<td><input type="text" name="ad_url" id="ad_url" class="mod_input2" style="width:300px;" ></td>
@@ -70,6 +74,10 @@
 				<tr>
 					<th><font color="red">*</font>球场UID：</th>
 					<td><input type="text" name="field_uid" id="field_uid" class="mod_input2" style="width:300px;" ></td>
+				</tr>
+				<tr>
+					<th><font color="red">*</font>排序：</th>
+					<td><input type="text" name="ad_sort" id="ad_sort" class="mod_input2" style="width:300px;" value="{$data.ad_sort}"></td>
 				</tr>
 			
 		</tbody>
@@ -89,12 +97,10 @@ $(document).ready(function(){
 $.formValidator.initConfig({formID:"act_form",theme:'ArrowSolidBox',mode:'AutoTip',onError:function(msg){msg_error(msg)},inIframe:true});
 
 	$("#ad_name").formValidator({onShow:"请输入广告名称",onFocus:"请输入广告名称",onCorrect:"输入正确"}).inputValidator({min:1,max:50,onError:"请输入广告名称"});
-		$("#ad_app").formValidator({onShow:"请输入广告分类",onFocus:"请输入广告分类",onCorrect:"输入正确"}).inputValidator({min:1,max:50,onError:"请输入广告分类"});
-		$("#ad_type").formValidator({onShow:"请输入广告类型",onFocus:"请输入广告类型",onCorrect:"输入正确"}).inputValidator({min:1,max:50,onError:"请输入广告类型"});
-		$("#ad_file").formValidator({onShow:"请输入文件地址",onFocus:"请输入文件地址",onCorrect:"输入正确"}).inputValidator({min:1,max:300,onError:"请输入文件地址"});
-		$("#ad_width").formValidator({onShow:"请输入宽度",onFocus:"请输入宽度",onCorrect:"输入正确"}).inputValidator({min:1,max:10,onError:"请输入宽度"});
-		$("#ad_height").formValidator({onShow:"请输入高度",onFocus:"请输入高度",onCorrect:"输入正确"}).inputValidator({min:1,max:10,onError:"请输入高度"});
-		$("#ad_url").formValidator({onShow:"请输入广告链接",onFocus:"请输入广告链接",onCorrect:"输入正确"}).inputValidator({min:1,max:200,onError:"请输入广告链接"});
+	$("#ad_app").formValidator({onShow:"请输入广告分类",onFocus:"请输入广告分类",onCorrect:"输入正确"}).inputValidator({min:1,max:50,onError:"请输入广告分类"});
+	
+	$("#ad_file").formValidator({onShow:"请输入文件地址",onFocus:"请输入文件地址",onCorrect:"输入正确"}).inputValidator({min:1,max:300,onError:"请输入文件地址"});
+	$("#ad_url").formValidator({onShow:"请输入广告链接",onFocus:"请输入广告链接",onCorrect:"输入正确"}).inputValidator({min:1,max:200,onError:"请输入广告链接"});
 	
 	$.formValidator.reloadAutoTip();
 });

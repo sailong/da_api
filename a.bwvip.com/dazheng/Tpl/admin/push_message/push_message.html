@@ -49,7 +49,8 @@
 	<!--
 	<a href="{:U('admin/push_message/push_message_add')}" class="btn_a"><span>添加消息推送</span></a>
 	-->
-	<a href="{:U('admin/push_message/push_message_add_android')}" class="btn_a"><span>添加Android消息推送</span></a>
+	<a href="{:U('admin/push_message/push_message_add_android',array('message_type'=>'android'))}" class="btn_a"><span>添加Android消息推送</span></a>
+	<a href="{:U('admin/push_message/push_message_add_android',array('message_type'=>'ios'))}" class="btn_a"><span>添加IOS消息推送</span></a>
 	<a href="javascript:void(0);" class="btn_a"  onclick="mod_delete_batch('{:U('admin/push_message/push_message_delete_action')}','mod_table');"><span>批量删除</span></a>
 
 	<div class="clear"></div>
