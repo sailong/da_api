@@ -1,0 +1,104 @@
+<include file="../public/header_dialog" />
+{$usejs}
+
+<div class="so_main">
+
+  <div class="page_tit">赛事分组管理</div>
+  <div class="tit_tab">
+	<ul>
+		<li><a class=on href="{:U('field/fenzu/fenzu_add')}">添加赛事分组</a></li>
+	</ul>
+  </div>
+
+<table border="0" cellspacing="0" cellpadding="0" style="width:900px;">
+<tr>
+<td>
+<!--/dialog_start-->
+
+<form method="post" id="act_form" name="act_form" action="{:U('field/fenzu/fenzu_add_action')}" enctype="multipart/form-data">
+	<table class="add_table" border="0" cellspacing="0" cellpadding="0" >
+		<tbody>
+				<tr>
+					<th>分组编号：</th>
+					<td><input type="text" name="fenzu_number" id="fenzu_number" class="mod_input2" style="width:300px;"  value="{$data.fenzu_number}"></td>
+				</tr>
+				<tr>
+					<th>分组名称：</th>
+					<td><input type="text" name="fenzu_name" id="fenzu_name" class="mod_input2" style="width:300px;" ></td>
+				</tr>
+				<tr>
+					<th>开球Tee：</th>
+					<td><input type="text" name="fenzu_tee" id="fenzu_tee" class="mod_input2" style="width:60px;" ></td>
+				</tr>
+				<tr>
+					<th>所属轮次：</th>
+					<td><input type="text" name="lun" id="lun" class="mod_input2" style="width:60px;"  value="{$data.lun}"></td>
+				</tr>
+				<tr>
+					<th>开始比赛时间：</th>
+					<td><input type="text" name="fenzu_start_time" id="fenzu_start_time" readonly class="mod_input_date" style="width:200px;" onFocus="WdatePicker({isShowClear:false,readOnly:true})" ></td>
+				</tr>
+				<tr>
+					<th>上/下午：</th>
+					<td><select name="fenzu_ampm" id="fenzu_ampm">
+							<option value="">请选择</option>
+							<option value="1">上午</option>
+							<option value="2">下午</option>
+						</select>
+						<script>set_select_value(document.act_form.fenzu_ampm,'1');</script>
+					</td>
+				</tr>
+				<tr>
+					<th>所属分站：</th>
+					<td>
+						<select name="fenzhan_id" id="fenzhan_id">
+							<option value="">请选择</option>
+							<volist id="vo" name="fenzhan">
+							<option value="{$vo.fenzhan_id}">{$vo.fenzhan_name}</option>
+							</volist>
+						</select>
+						<script>set_select_value(document.act_form.fenzhan_id,'<php> echo get("fenzhan_id");</php>');</script>
+					</td>
+				</tr>
+				
+		</tbody>
+		<tfoot>
+			<tr>
+				<th></th>
+				<td>
+					<input type="hidden" name="event_id" id="event_id" value="<php> echo get('event_id');</php>" >
+					<input type="submit" class="btn_b"  value="添加" style="margin-right:10px;"/>
+					<input type="button" class="btn_w" onclick="javascript:history.back(-1);" value="返回" />
+				</td>
+		</tfoot>
+	</table><!--/add_table-->
+</form>
+
+<script>
+$(document).ready(function(){
+$.formValidator.initConfig({formID:"act_form",theme:'ArrowSolidBox',mode:'AutoTip',onError:function(msg){msg_error(msg)},inIframe:true});
+
+	$("#fenzu_name").formValidator({empty:false,onShow:"请输入分组名称",onFocus:"请输入分组名称",onCorrect:"输入正确"}).inputValidator({min:1,max:50,onError:"请输入分组名称"});
+		$("#fenzu_tee").formValidator({empty:false,onShow:"请输入开球Tee",onFocus:"请输入开球Tee",onCorrect:"输入正确"}).inputValidator({min:1,max:10,onError:"请输入开球Tee"});
+		$("#fenzu_start_time").formValidator({empty:false,onShow:"请输入开始比赛时间",onFocus:"请输入开始比赛时间",onCorrect:"输入正确"}).inputValidator({min:1,max:10,onError:"请输入开始比赛时间"});
+		$("#fenzu_ampm").formValidator({empty:false,onShow:"请选择上/下午",onFocus:"请选择上/下午",onCorrect:"选择正确"}).inputValidator({min:1,max:10,onError:"请选择上/下午"});//$("#event_id").formValidator({empty:false,onShow:"请输入所属赛事",onFocus:"请输入所属赛事",onCorrect:"输入正确"}).inputValidator({min:1,max:10,onError:"请输入所属赛事"});
+		$("#fenzhan_id").formValidator({empty:false,onShow:"请输入所属分站",onFocus:"请输入所属分站",onCorrect:"输入正确"}).inputValidator({min:1,max:10,onError:"请输入所属分站"});
+		
+
+	$.formValidator.reloadAutoTip();
+});
+
+function reloadAutoTip()
+{
+	$.formValidator.reloadAutoTip();
+}
+
+</script>
+
+<!--/dialog_end-->
+</td>
+</tr>
+</table>
+
+</div>
+<include file="../public/_footer" />

@@ -1,0 +1,193 @@
+<include file="../public/_header" />
+<div class="so_main">
+
+  <div class="page_tit">冠军排行榜</div>
+  <div class="tit_tab">
+	<ul>
+		<li><a <php> if(get("language")=='cn'){ echo " class=on ";}</php> href="{:U('field/rank/rank',array('language'=>'cn'))}">中文</a></li>
+		<li><a <php> if(get("language")=='en'){ echo " class=on ";}</php> href="{:U('field/rank/rank',array('language'=>'en'))}">英文</a></li>
+	</ul>
+	</div>
+<!--
+  <div class="search_box">
+		<form name="search_form" action="/default.php" method="get">
+		<input type="hidden" name="g" value="field">
+		<input type="hidden" name="m" value="arc">
+		<input type="hidden" name="a" value="arc">
+		<input type="hidden" name="arc_state" value="<php>echo get("arc_state")</php>">
+
+		<table border="0" cellspacing="0" cellpadding="0">
+			<th>名称：</th>
+			<td><input type="text" name="k" class="search_input" style="width:120px;" value="<php> echo  get('k');</php>"></td>
+			<!--
+			<th>开始时间：</th>
+			<td>
+				<input type="text" name="starttime" class="search_input_date" style="width:120px;" value="<php> echo  get('starttime');</php>" onFocus="WdatePicker({isShowClear:false,readOnly:true})"> 至 
+				<input type="text" name="endtime" class="search_input_date" style="width:120px;" value="<php> echo  get('endtime');</php>" onFocus="WdatePicker({isShowClear:false,readOnly:true})">
+			</td>
+			
+			<th>栏目：</th>
+			<td>
+				<select name="arctype_id" id="arctype_id"   class="search_select">
+					<option value="">请选择</option>
+					<volist id="vo" name="arc_type">
+					<option value="{$vo.arctype_id}" >{$vo.arctype_name}</option>
+						<volist id="vo2" name="vo['sub']">
+						<option value="{$vo2.arctype_id}">&nbsp;&nbsp;|--{$vo2.arctype_name}</option>
+						</volist>
+					</volist>
+				</select>
+				<script>set_select_value(document.search_form.arctype_id,'<php>echo get("arctype_id")</php>');</script>
+			</td>
+			-->
+			<!--<td class="btn">
+				
+				<input type="submit" value="搜索" class="btn_b" style="margin-right:8px;" >
+				<input type="button" value="查看全部" class="btn_b" onclick="javascript:location='{:U('field/arc/arc',array('state'=>get('state')))}';">
+			</td>
+		</table>
+	</form>
+  </div>--><!--/search_box-->
+
+  <!--------list -------->
+  <div class="Toolbar_inbox">
+  	<div class="page right">{$pages}</div>
+
+	<a href="{:U('field/rank/rank_add',array('language'=>get('language')))}" class="btn_a"><span>添加</span></a>
+	<!--
+	<php>if(get('arc_state')=='0'){</php>
+	<a href="javascript:void(0);" class="btn_a"  onclick="mod_post_batch('{:U('field/arc/arc_check_action')}','mod_table');"><span>审核通过</span></a>
+	<a href="javascript:void(0);" class="btn_a"  onclick="mod_post_batch('{:U('field/arc/arc_checkno_action')}','mod_table');"><span>驳回审核</span></a>
+	<php>}</php>
+	<php>if(get('arc_state')=='1'){</php>
+	<a href="javascript:void(0);" class="btn_a"  onclick="mod_post_batch('{:U('field/arc/arc_tj_action')}','mod_table');"><span>推荐</span></a>
+	<a href="javascript:void(0);" class="btn_a"  onclick="mod_post_batch('{:U('field/arc/arc_tjno_action')}','mod_table');"><span>取消推荐</span></a>
+
+	<a href="javascript:void(0);" class="btn_a"  onclick="mod_post_batch('{:U('field/arc/arc_pic_action')}','mod_table');"><span>首页图片</span></a>
+	<a href="javascript:void(0);" class="btn_a"  onclick="mod_post_batch('{:U('field/arc/arc_picno_action')}','mod_table');"><span>取消首页图片</span></a>
+	<php>}</php>
+
+	--><a href="javascript:void(0);" class="btn_a"  onclick="mod_delete_batch('{:U('field/rank/rank_delete_action')}','mod_table');"><span>批量删除</span></a>
+
+	<div class="clear"></div>
+  </div>
+  <div class="list">
+	<php>if($total>0){</php>
+	  <table width="100%" id="mod_table" border="0" cellspacing="0" cellpadding="0">
+	  <tr>
+		<th style="width:30px;">
+			<input type="checkbox" id="checkbox_handle" onclick="select_all(this,'mod_table','checkbox')" value="0">
+			<label for="checkbox"></label>
+		</th>
+		<th class="line_l">编号</th>
+		<th class="line_l">排行名称</th>
+		<th class="line_l">用户UID</th>
+		<th class="line_l">用户名称</th>
+		<!--<th class="line_l">赛事ID</th>-->
+		<!--
+		<th class="line_l">发布人</th>
+		<th class="line_l">所属栏目</th>
+		-->
+		
+		<th class="line_l">赛事名称</th>
+		<!--<th class="line_l">赛事UID 	</th>-->
+		
+		<th class="line_l">成绩</th>
+		<th class="line_l">排序</th>
+		<!--
+		<th class="line_l">状态</th>
+		<th class="line_l">审核时间</th>
+		-->
+		<th class="line_l">添加时间</th>
+		
+		<th class="line_l">操作</th>
+	</tr>
+	<volist id="vo" name="list" key="keys">
+	<tr overstyle="on"  id=ids_{$vo["field_event_rank_id"]}>
+		<td><input type="checkbox" name="checkbox" onclick="select_one(this)" value="{$vo.field_event_rank_id}" ></td>
+		<td width="40">{$keys}</td>
+		<td>{$vo.field_event_rank_name}</td>
+		<td>{$vo.uid}</td>
+		<td>{$vo.realname}</td>
+		<!--<td>{$vo.field_event_id}</td>-->
+		<td>{$vo.field_event_name}</td>
+		<!--<td>{$vo.field_uid}</td>-->
+		<td>{$vo.field_event_rank_score}</td>
+		<td>{$vo.field_event_rank_sort}</td>
+		<td>{$vo.field_event_rank_addtime|format_to_time}</td>
+		<!--<td><a href="javascript:void(0);" onclick="mod_dialog('查看详细','{:U('field/arc/arc_detail', array('arc_id'=>$vo['arc_id']))}');">{$vo.arc_name}</a> <php>if($vo['arc_is_tj']=="Y"){ echo "<font color='red'>[荐]</font>";}</php> <php>if($vo['arc_is_pic']=="Y"){ echo "<font color='green'>[首页图片]</font>";}</php></td>-->
+		<!--
+			<td><a href="javascript:void(0);" onclick="mod_dialog('查看详细','{:U('field/arc/arc_detail', array('arc_id'=>$vo['arc_id']))}');">{$vo.staff_id}</a></td>
+			<td>{$vo.arctype_name}</td>
+			
+			
+			<td>{$vo.arc_viewtype}</td>
+
+			<td><php>if($vo['arc_pic']){</php><img src="/{$vo.arc_pic}" style="max-width:150px; max-height:80px;"><php>}</php></td>
+
+			<td>{$vo.arc_source}</td>
+			<td>{$vo.arc_editor}</td>
+			<td>{$vo.arc_sort}</td>
+			
+			<td><php>if($vo['arc_state']==1){ echo "审核通过";}else if($vo['arc_state']==2){ echo "审核未通过";}else{ echo "待审核";}</php>{$vo.}</td>
+			<td>{$vo.arc_statetime|format_to_time}</td>
+			
+			<td>{$vo.arc_addtime|format_to_time}</td>
+			-->
+		<td>
+			<a href="{:U('field/rank/rank_edit', array('field_event_rank_id'=>$vo['field_event_rank_id']))}">修改</a> | 
+			<!--
+			<a href="javascript:void(0);"  onclick="mod_dialog('修改文章','{:U('field/arc/arc_edit', array('arc_id'=>$vo['arc_id']))}')">修改</a> | 
+			-->
+			<a href="javascript:void(0);" onclick="mod_delete_one('{:U('field/rank/rank_del_action')}','{$vo['field_event_rank_id']}');">删除</a>
+		</td>
+	</tr>
+	</volist>
+    </table>
+	  <php>}else{</php>
+			<div class="no_data">
+				<img src="/skin/images/no_data.gif" align="absmiddle"> <span>暂无信息... </span>
+			</div>
+	 <php>}</php>
+  </div>
+
+  <div class="Toolbar_inbox">
+	<div class="page right">{$pages}</div>
+
+	<a href="{:U('field/arc/arc_add',array('language'=>get('language')))}" class="btn_a"><span>添加</span></a>
+	
+	<!--<php>if(get('arc_state')=='0'){</php>
+	<a href="javascript:void(0);" class="btn_a"  onclick="mod_post_batch('{:U('field/arc/arc_check_action')}','mod_table');"><span>审核通过</span></a>
+	<a href="javascript:void(0);" class="btn_a"  onclick="mod_post_batch('{:U('field/arc/arc_checkno_action')}','mod_table');"><span>驳回审核</span></a>
+	<php>}</php>
+	<php>if(get('arc_state')=='1'){</php>
+	<a href="javascript:void(0);" class="btn_a"  onclick="mod_post_batch('{:U('field/arc/arc_tj_action')}','mod_table');"><span>推荐</span></a>
+	<a href="javascript:void(0);" class="btn_a"  onclick="mod_post_batch('{:U('field/arc/arc_tjno_action')}','mod_table');"><span>取消推荐</span></a>
+
+	<a href="javascript:void(0);" class="btn_a"  onclick="mod_post_batch('{:U('field/arc/arc_pic_action')}','mod_table');"><span>首页图片</span></a>
+	<a href="javascript:void(0);" class="btn_a"  onclick="mod_post_batch('{:U('field/arc/arc_picno_action')}','mod_table');"><span>取消首页图片</span></a>
+	<php>}</php>
+
+	--><a href="javascript:void(0);" class="btn_a"  onclick="mod_delete_batch('{:U('field/rank/rank_del_action')}','mod_table');"><span>批量删除</span></a>
+
+
+	<div class="clear"></div>
+  </div>
+</div>
+
+<script>
+	$(document).ready(function(){
+		$("tr[overstyle='on']").hover(
+		  function ()
+		  {
+		    $(this).addClass("bg_hover");
+		  },
+		  function (){
+		    $(this).removeClass("bg_hover");
+		  }
+		);
+	});
+</script>
+
+
+<include file="../public/_footer" />

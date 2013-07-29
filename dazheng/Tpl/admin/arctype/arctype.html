@@ -1,0 +1,100 @@
+<include file="../public/_header" />
+<div class="so_main">
+
+  <div class="page_tit">栏目管理</div>
+  <include file="_tab" />
+
+  
+
+  <!--------list -------->
+  <div class="Toolbar_inbox">
+  	<div class="page right">{$pages}</div>
+
+	<a href="{:U('admin/arctype/arctype_add')}" class="btn_a"><span>添加栏目</span></a>
+	<a href="javascript:void(0);" class="btn_a"  onclick="mod_delete_batch('{:U('admin/arctype/arctype_delete_action')}','mod_table');"><span>批量删除</span></a>
+
+	<div class="clear"></div>
+  </div>
+  <div class="list">
+	<php>if($total>0){</php>
+	  <table width="100%" id="mod_table" border="0" cellspacing="0" cellpadding="0">
+	  <tr>
+		<th style="width:30px;">
+			<input type="checkbox" id="checkbox_handle" onclick="select_all(this,'mod_table','checkbox')" value="0">
+			<label for="checkbox"></label>
+		</th>
+		<th class="line_l" width="35">ID</th>
+		<th class="line_l">栏目名称</th>
+
+		<th class="line_l">栏目地址</th>
+		<th class="line_l">排序</th>
+
+		<th class="line_l">栏目状态</th>
+		<th class="line_l">操作</th>
+	</tr>
+	<volist id="vo" name="list">
+	<tr overstyle="on"  id=ids_{$vo["arctype_id"]}>
+		<td><input type="checkbox" name="checkbox" onclick="select_one(this)" value="{$vo.arctype_id}" ></td>
+		<td>{$vo.arctype_id}</td>
+		<td>{$vo.arctype_name}</td>
+			<td>{$vo.arctype_url}</td>
+			<td>{$vo.arctype_sort}</td>
+			<td>{$vo.arctype_state}</td>
+		<td>
+			<a href="{:U('admin/arctype/arctype_add', array('arctype_parent_id'=>$vo['arctype_id']))}">添加下级</a> | 
+			<a href="{:U('admin/arctype/arctype_edit', array('arctype_id'=>$vo['arctype_id']))}">修改</a> | 
+			<a href="javascript:void(0);" onclick="mod_delete_one('{:U('admin/arctype/arctype_delete_action')}','{$vo['arctype_id']}');">删除</a>
+		</td>
+	</tr>
+		<volist id="vo2" name="vo['sub']">
+		<tr overstyle="on"  id=ids_{$vo2["arctype_id"]}>
+			<td><input type="checkbox" name="checkbox" onclick="select_one(this)" value="{$vo2.arctype_id}" ></td>
+			<td>{$vo2.arctype_id}</td>
+			<td style="padding-left:20px;">|-- {$vo2.arctype_name}</th>
+				<td>{$vo2.arctype_url}</td>
+				<td>{$vo2.arctype_sort}</td>
+				<td>{$vo2.arctype_state}</td>
+			<td>
+				<a href="javascript:void(0);"  onclick="mod_dialog('添加文章','{:U('admin/arc/arc_add', array('arctype_id'=>$vo2['arctype_id']))}')">添加文章</a> | 
+				<a href="{:U('admin/arc/arc', array('arctype_id'=>$vo2['arctype_id']))}">内容管理</a> | 
+				<a href="{:U('admin/arctype/arctype_edit', array('arctype_id'=>$vo2['arctype_id']))}">修改</a> | 
+				<a href="javascript:void(0);" onclick="mod_delete_one('{:U('admin/arctype/arctype_delete_action')}','{$vo2['arctype_id']}');">删除</a>
+			</td>
+		</tr>
+		</volist>
+	</volist>
+    </table>
+	  <php>}else{</php>
+			<div class="no_data">
+				<img src="/skin/images/no_data.gif" align="absmiddle"> <span>没有栏目... </span>
+			</div>
+	 <php>}</php>
+  </div>
+
+  <div class="Toolbar_inbox">
+	<div class="page right">{$pages}</div>
+
+	<a href="{:U('admin/arctype/arctype_add')}" class="btn_a"><span>添加栏目</span></a>
+	<a href="javascript:void(0);" class="btn_a"  onclick="mod_delete_batch('{:U('admin/arctype/arctype_delete_action')}','mod_table');"><span>批量删除</span></a>
+
+
+	<div class="clear"></div>
+  </div>
+</div>
+
+<script>
+	$(document).ready(function(){
+		$("tr[overstyle='on']").hover(
+		  function ()
+		  {
+		    $(this).addClass("bg_hover");
+		  },
+		  function (){
+		    $(this).removeClass("bg_hover");
+		  }
+		);
+	});
+</script>
+
+
+<include file="../public/_footer" />

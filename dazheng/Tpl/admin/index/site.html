@@ -1,0 +1,90 @@
+<include file="../public/_header_dialog" />
+
+<style>
+.add_dialog dt{width:160px;}
+.page_btm{padding-left:173px;}
+</style>
+<table border="0" cellspacing="0" cellpadding="0" style="width:700px;">
+<tr>
+<td>
+<!--/dialog_start-->
+
+<form method="post" id="act_form" name="act_form" action="{:U('admin/index/site_edit_action')}" enctype="multipart/form-data">
+	<div class="add_dialog" style="width:600px;" >
+		<dl class="lineD">
+						<dt><font color="red">*</font>网站名称：</dt>
+						<dd><input type="text" name="site_name" id="site_name" class="mod_input2" style="width:300px;" value="{$data.site_name}"></dd>
+						<div class="clear"></div>
+					</dl>
+					<dl class="lineD">
+						<dt><font color="red">*</font>网址：</dt>
+						<dd><input type="text" name="site_url" id="site_url" class="mod_input2" style="width:300px;" value="{$data.site_url}"></dd>
+						<div class="clear"></div>
+					</dl>
+					<dl class="lineD">
+						<dt><font color="red">*</font>关键字：</dt>
+						<dd><input type="text" name="site_keyword" id="site_keyword" class="mod_input2" style="width:300px;" value="{$data.site_keyword}"></dd>
+						<div class="clear"></div>
+					</dl>
+					<dl class="lineD">
+						<dt><font color="red">*</font>描述：</dt>
+						<dd><input type="text" name="site_description" id="site_description" class="mod_input2" style="width:300px;" value="{$data.site_description}"></dd>
+						<div class="clear"></div>
+					</dl>
+					<dl class="lineD">
+					<dt><font color="red">*</font>底部版权：</dt>
+					<dd><textarea name="site_copyright" id="site_copyright" class="mod_input2" style="width:400px; height:100px;">{$data.site_copyright}</textarea></dd>
+					<div class="clear"></div>
+				</dl>
+				
+				<dl class="lineD">
+					<dt><font color="red">*</font>新用户审核：</dt>
+					<dd>
+						<select name="site_user_state">
+							<option value="">请选择</option>
+							<option value="0">是</option>
+							<option value="1">否</option>
+						</select>
+						<script>set_select_value(document.act_form.site_user_state,'{$data.site_user_state}');</script>
+					</dd>
+					<div class="clear"></div>
+				</dl>
+				
+	</div><!--/add_dialog-->
+
+	<div class="page_btm">
+		<input type="hidden" name="site_id" value="{$data.site_id}">
+		<input type="submit" class="btn_b" onclick="Check_Pro()" value="保存" style="margin-right:10px;"/>
+		<input type="button" class="btn_w" onclick="close_dialog(this)" value="取消" />
+	</div><!--/page_btm-->
+</form>
+
+<script>
+$(document).ready(function(){
+$.formValidator.initConfig({formID:"act_form",theme:'ArrowSolidBox',mode:'AutoTip',onError:function(msg){msg_error(msg)},inIframe:true});
+
+		$("#site_name").formValidator({empty:true,onShow:"请输入网站名称",onFocus:"请输入网站名称",onCorrect:"输入正确"}).inputValidator({min:1,max:100,onError:"请输入网站名称"});
+		$("#site_url").formValidator({empty:true,onShow:"请输入网址",onFocus:"请输入网址",onCorrect:"输入正确"}).inputValidator({min:1,max:100,onError:"请输入网址"});
+		$("#site_keyword").formValidator({empty:true,onShow:"请输入关键字",onFocus:"请输入关键字",onCorrect:"输入正确"}).inputValidator({min:1,max:100,onError:"请输入关键字"});
+		$("#site_description").formValidator({empty:true,onShow:"请输入描述",onFocus:"请输入描述",onCorrect:"输入正确"}).inputValidator({min:1,max:100,onError:"请输入描述"});
+		$("#site_copyright").formValidator({empty:true,onShow:"请输入底部版权",onFocus:"请输入底部版权",onCorrect:"输入正确"}).inputValidator({min:1,max:0,onError:"请输入底部版权"});
+		
+		
+
+	$.formValidator.reloadAutoTip();
+});
+
+function reloadAutoTip()
+{
+	$.formValidator.reloadAutoTip();
+}
+
+</script>
+
+
+<!--/dialog_end-->
+</td>
+</tr>
+</table>
+
+<include file="../public/_footer" />

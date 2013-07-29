@@ -1,0 +1,86 @@
+<include file="../public/_header_dialog" />
+<table border="0" cellspacing="0" cellpadding="0" style="width:600px;">
+<tr>
+<td>
+<!--/dialog_start-->
+
+<form method="post" id="act_form" name="act_form" action="{:U('admin/dict/dict_add_action')}" enctype="multipart/form-data">
+	<div class="add_dialog" style="width:600px;">
+		<dl class="lineD">
+					<dt>名称：</dt>
+					<dd><input type="text" name="dict_name" id="dict_name" class="mod_input2" style="width:300px;" ></dd>
+					<div class="clear"></div>
+				</dl>
+				<dl class="lineD">
+					<dt>值：</dt>
+					<dd><input type="text" name="dict_value" id="dict_value" class="mod_input2" style="width:300px;"  value="{$data.dict_value}"></dd>
+					<div class="clear"></div>
+				</dl>
+				<dl class="lineD">
+					<dt>上级分类：</dt>
+					<dd>
+						<select name="dict_parent_id">
+							<option value="">请选择</option>
+							<option value="0">一级分类</option>
+							<volist id="v" name="dict_parent_list">
+								<option value="{$v.dict_id}">{$v.dict_name}</option>
+							</volist>
+
+						</select>
+						<script>set_select_value(document.act_form.dict_parent_id,'0');</script>
+					</dd>
+					<div class="clear"></div>
+				</dl>
+				<dl class="lineD">
+					<dt>类型：</dt>
+					<dd>
+						<select name="dict_type">
+							<option value="">请选择</option>
+							<volist id="t" name="dict_types">
+							<option value="{$t.dict_type_id}">{$t.dict_type_name}</option>
+							</volist>
+						</select>
+						<script>set_select_value(document.act_form.dict_type,'<php>echo get("dict_type_id");</php>');</script>
+					</dd>
+					<div class="clear"></div>
+				</dl>
+				<dl class="lineD">
+					<dt>排序：</dt>
+					<dd><input type="text" name="dict_sort" id="dict_sort" class="mod_input2" style="width:66px;" ></dd>
+					<div class="clear"></div>
+				</dl>
+				
+	</div><!--/add_dialog-->
+
+	<div class="page_btm">
+		<input type="submit" class="btn_b"  value="添加" style="margin-right:10px;"/>
+		<input type="button" class="btn_w" onclick="close_dialog(this)" value="取消" />
+	</div><!--/page_btm-->
+</form>
+
+<script>
+$(document).ready(function(){
+$.formValidator.initConfig({formID:"act_form",theme:'ArrowSolidBox',mode:'AutoTip',onError:function(msg){msg_error(msg)},inIframe:true});
+
+		$("#dict_name").formValidator({empty:true,onShow:"请输入名称",onFocus:"请输入名称",onCorrect:"输入正确"}).inputValidator({min:1,max:50,onError:"请输入名称"});
+		$("#dict_parent_id").formValidator({empty:true,onShow:"请输入上级分类",onFocus:"请输入上级分类",onCorrect:"输入正确"}).inputValidator({min:1,max:11,onError:"请输入上级分类"});
+		$("#dict_type").formValidator({empty:true,onShow:"请输入类型",onFocus:"请输入类型",onCorrect:"输入正确"}).inputValidator({min:1,max:50,onError:"请输入类型"});
+		$("#dict_sort").formValidator({empty:true,onShow:"请输入排序",onFocus:"请输入排序",onCorrect:"输入正确"}).inputValidator({min:1,max:11,onError:"请输入排序"});
+		
+
+	$.formValidator.reloadAutoTip();
+});
+
+function reloadAutoTip()
+{
+	$.formValidator.reloadAutoTip();
+}
+
+</script>
+
+<!--/dialog_end-->
+</td>
+</tr>
+</table>
+
+<include file="../public/_footer" />

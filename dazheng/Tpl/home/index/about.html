@@ -1,0 +1,22 @@
+<include file="../Public/header" />
+  <div class="content">
+  
+    <div class="cleft aboutus_nav">
+    
+		<volist name="sub_arctype" id="vo">
+		<div <php>if($vo['arctype_id']==get("arctype_id")){ echo ' class="location" ';}</php>><a href="{:U('home/index/about',array('arctype_id'=>$vo['arctype_id']))}">{$vo['arctype_name']}</a></div>
+        </volist>
+    </div>
+    
+    <div class="cright cright_lefthr">
+     
+      <div class="aboutus">
+        <h1>{$data['arctype_name']}</h1>
+		{$data['arctype_content']}
+      </div>
+
+  </div>
+  
+  </div>
+
+<include file="../Public/footer" />  

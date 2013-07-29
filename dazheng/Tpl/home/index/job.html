@@ -1,0 +1,71 @@
+<include file="../Public/header" />
+
+  <div class="content">
+  
+    <div class="cleft">
+      <include file="rencai_left" />
+    </div>
+    
+    <div class="cright cright_lefthr" style="padding-bottom:10px;">
+      
+      <div class="newscenter_nav talentcenter_nav">
+         <a href="#">行业专家</a><span>|</span>
+		 <a href="{:U('home/index/resume')}">个人求职</a><span>|</span>
+		 <a href="{:U('home/index/job')}">企业招聘</a><span>|</span>
+		 <a href="{:U('home/index/peixun')}">招生培训</a><span>|</span>
+		 <a href="{:U('home/arc/arc_list',array('arctype_id'=>38))}">就业指导</a>
+      </div>
+      
+      <div class="talentcenter_search">
+        <a href="#">搜索专家信息</a><a href="#">搜索人才信息</a><a href="#">搜索职位信息</a>搜索培训信息</a><a href="#">我要成为专家</a><a href="#">发布求职信息</a><a href="#">发布招聘信息</a><a href="#">发布招生信息</a>
+      </div>
+      
+      <div class="talentcenter_new_tittle"><h2>企业招聘</h2><span class="more"></span></div>
+      <div class="talentcenter_new">
+        <table class="talentcenter_new_table" cellpadding="0" cellspacing="0">
+          <tr class="talentcenter_new_table_title">
+            <td>企业名称</td>
+            <td>招聘职位</td>
+            <td>人数</td>
+            <td>专业要求</td>
+            <td>职位/学历要求</td>
+            <td>登记时间</td>
+          </tr>
+          <volist name="list" id="vo" key="k">
+          <tr>
+            <td><a href="{:U('home/index/job_detail',array('job_id'=>$vo['job_id']))}" target="_blank">{$vo['job_company_name']}</a></td>
+            <td>{$vo['job_name']}</td>
+            <td>{$vo['job_num']}人</td>
+            <td>{$vo['job_zhuanye']}</td>
+            <td>{$vo['job_xueli']}</td>
+            <td>{$vo['job_addtime']|format_to_time}</td>
+          </tr>
+         </volist>
+          
+        </table>
+      </div>
+      <div class="pagesite">
+        {$pages}
+      </div>
+      
+    </div>
+
+  </div>
+  
+  <div class="hotPic">
+		<div class="JQ-slide">
+			<div class="JQ-slide-nav"><a class="prev" href="javascript:void(0);">&#8249;</a><a class="next" href="javascript:void(0);">&#8250;</a></div>
+			<div class="wrap">
+				<ul class="JQ-slide-content imgList">
+					<volist name="type_4" id="vo" key="k">
+			       <li>
+						<a href="{:U('home/arc/arc_detail',array('arc_id'=>$vo['arc_id']))}" class="img" target="_blank"><img src="{$vo['arc_pic']}" width="140" height="100" alt="" /></a>
+						<a href="{:U('home/arc/arc_detail',array('arc_id'=>$vo['arc_id']))}" class="txt" target="_blank">{$vo['arc_name']}</a>
+					</li>
+	            </volist>
+				</ul>
+			</div>
+		</div>
+	</div>
+  
+  <include file="../Public/footer" />

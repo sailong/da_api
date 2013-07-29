@@ -1,0 +1,203 @@
+<include file="../public/header_dialog" />
+{$usejs}
+
+<div class="so_main">
+
+  <include file="../event/event_manage_header" />
+  <div class="page_tit">分站管理</div>
+  <div class="tit_tab">
+	<ul>
+		<li><a class=on href="#">修改分站</a></li>
+	</ul>
+  </div>
+
+<table border="0" cellspacing="0" cellpadding="0" style="width:900px;">
+<tr>
+<td>
+<!--/dialog_start-->
+
+<form method="post" id="act_form" name="act_form" action="{:U('field/fenzhan/fenzhan_edit_action')}" enctype="multipart/form-data">
+	<table class="add_table" border="0" cellspacing="0" cellpadding="0" >
+		<tbody>
+		<tr>
+					<th>所属赛事：</th>
+					<td><input type="text" name="event_id" id="event_id" class="mod_input2" style="width:66px;"  value="{$data.event_id}"></td>
+				</tr>
+                     <tr>
+					<th>所属分站：</th>
+					<td> 
+						<select name="parent_id" id="parent_id">
+							<option value="0">请选择</option>
+                     <volist id="vo" name="fenzhan">
+                       <php>
+                     
+                        if($vo['fenzhan_id']==$data['parent_id'])
+                        {
+                        </php>
+                                <option value="{$vo.fenzhan_id}" selected>{$vo.fenzhan_name}</option>
+                        <php>
+                        }
+                        else
+                        {
+                        </php>
+                            <option value="{$vo.fenzhan_id}" >{$vo.fenzhan_name}</option>
+                        <php>
+                        }
+                        </php>
+                            
+                     </volist>
+						</select> 
+						默认留空/有分轮时请选择此项<input type="hidden" name="parent_id1" value="{$data.parent_id}">
+					</td>
+				</tr>
+                 <tr>
+					<th>分站轮数：</th>
+					<td><select name='fenzhan_lun' id='fenzhan_lun' >
+                        <option value='0'>选择分站轮数</option>
+                         <option value="1" <php> if($data['fenzhan_lun']==1){echo "selected";} </php> >第一轮</option>
+                         <option value="2" <php> if($data['fenzhan_lun']==2){echo "selected";} </php> >第二轮</option>
+                         <option value="3" <php> if($data['fenzhan_lun']==3){echo "selected";} </php> >第三轮</option>
+                         <option value="4" <php> if($data['fenzhan_lun']==4){echo "selected";} </php> >第四轮</option>
+                         <option value="5" <php> if($data['fenzhan_lun']==5){echo "selected";} </php> >第五轮</option>
+                        </select></td>
+				</tr>
+				<tr>
+					<th>分站名称：</th>
+					<td><input type="text" name="fenzhan_name" id="fenzhan_name" class="mod_input2" style="width:300px;"  value="{$data.fenzhan_name}"></td>
+				</tr> 
+                
+                <tr>
+					<th>所在球场：</th>
+					<td>{$data.field_id}
+                    <php> if($_SESSION['field_uid']){}else{</php><select name='provinceid' id='province' onchange='getarea(this.value)'>
+
+                          <option value="0">请选择</option>
+                          <volist id="vo3" name="area">
+                            <option value="{$vo3.id}">{$vo3.name}</option>
+                          </volist>
+                        </select>  
+                        <php>}</php>                   
+                        <select name='field_id' id='field_id' onchange='getpar(this.value)'>
+                        <option value='0'>请选择</option>
+                        <option value='<php> echo $_SESSION['field_uid'];</php>'>本球场</option>
+                        
+                        </select>
+                        
+         <input type="hidden" name="field_id1" value="{$data.field_id}"  >  
+          </td>
+				</tr>
+                
+                 <tr>
+					<th>选择AB场：</th>
+					<td> 前九洞<select name="fenz_a" id="fenz_a" onchange="showpar('a',this.value)" >
+                        </select> 
+           后九洞    <select name="fenz_b" id="fenz_b" onchange="showpar('b',this.value)"> 
+                        </select> </td>
+				</tr>
+                        
+                 <tr>
+					<th>球场标准杆：</th>
+					<td>前九洞  <input type="text" name="fenzhan_a" id="fenzhan_a" class="mod_input2" style="width:300px;"  value="{$data.fenzhan_a}">
+           后九洞   <input type="text" name="fenzhan_b" id="fenzhan_b" class="mod_input2" style="width:300px;"  value="{$data.fenzhan_b}"></td>
+				</tr>    
+                
+          
+                      
+                        
+				<tr>
+					<th>年份：</th>
+					<td><input type="text" name="year" id="year" class="mod_input2" style="width:300px;"  value="{$data.year}"></td>
+				</tr>
+				
+				<tr>
+					<th>时间表：</th>
+					<td><input type="file" name="timepic" id="timepic"  class="mod_input"></td>
+				</tr>
+				<tr>
+					<th>开始时间：</th>
+					<td><input type="text" name="starttime" id="starttime" readonly class="mod_input_date" style="width:200px;" value="{$data.starttime|format_to_time}" onFocus="WdatePicker({isShowClear:false,readOnly:true})" ></td>
+				</tr>
+				<tr>
+					<th>结束时间：</th>
+					<td><input type="text" name="endtime" id="endtime" readonly class="mod_input_date" style="width:200px;" value="{$data.endtime|format_to_time}" onFocus="WdatePicker({isShowClear:false,readOnly:true})" ></td>
+				</tr>
+				<tr>
+					<th>排序：</th>
+					<td><input type="text" name="orderby" id="orderby" class="mod_input2" style="width:60px;"  value="{$data.orderby}"></td>
+				</tr>
+				<tr>
+					<th>状态：</th>
+					<td><input type="text" name="is_delete" id="is_delete" class="mod_input2" style="width:60px;"  value="{$data.is_delete}"></td>
+				</tr>
+				
+		</tbody>
+		<tfoot>
+			<tr>
+				<th></th>
+				<td>
+					<input type="hidden" name="fenzhan_id" value="{$data.fenzhan_id}">
+					<input type="submit" class="btn_b" value="保存" style="margin-right:10px;"/>
+					<input type="button" class="btn_w" onclick="javascript:history.go(-1);" value="返回" />
+				</td>
+		</tfoot>
+	</table><!--/add_table-->
+</form>
+
+<script>
+$(document).ready(function(){
+$.formValidator.initConfig({formID:"act_form",theme:'ArrowSolidBox',mode:'AutoTip',onError:function(msg){msg_error(msg)},inIframe:true});
+
+	$("#event_id").formValidator({empty:true,onShow:"请输入所属赛事",onFocus:"请输入所属赛事",onCorrect:"输入正确"}).inputValidator({min:1,max:11,onError:"请输入所属赛事"});
+		$("#fenzhan_name").formValidator({empty:true,onShow:"请输入分站名称",onFocus:"请输入分站名称",onCorrect:"输入正确"}).inputValidator({min:1,max:50,onError:"请输入分站名称"}); 
+		$("#year").formValidator({empty:true,onShow:"请输入年份",onFocus:"请输入年份",onCorrect:"输入正确"}).inputValidator({min:1,max:50,onError:"请输入年份"});
+		$("#timepic").formValidator({empty:true,onShow:"请输入时间表",onFocus:"请输入时间表",onCorrect:"输入正确"}).inputValidator({min:1,max:300,onError:"请输入时间表"});
+		$("#starttime").formValidator({empty:true,onShow:"请输入开始时间",onFocus:"请输入开始时间",onCorrect:"输入正确"}).inputValidator({min:1,max:10,onError:"请输入开始时间"});
+		$("#endtime").formValidator({empty:true,onShow:"请输入结束时间",onFocus:"请输入结束时间",onCorrect:"输入正确"}).inputValidator({min:1,max:10,onError:"请输入结束时间"});
+		$("#orderby").formValidator({empty:true,onShow:"请输入排序",onFocus:"请输入排序",onCorrect:"输入正确"}).inputValidator({min:1,max:10,onError:"请输入排序"});
+		$("#is_delete").formValidator({empty:true,onShow:"请输入状态",onFocus:"请输入状态",onCorrect:"输入正确"}).inputValidator({min:1,max:10,onError:"请输入状态"});
+		
+
+	$.formValidator.reloadAutoTip();
+});
+
+function reloadAutoTip()
+{
+	$.formValidator.reloadAutoTip();
+}
+
+function getarea(val) {
+
+var url = 'home.php?mod=spacecp&ac=apply&op=caddie&do=area&val='+val;
+
+ $.post(url,{},function(result){ 
+    $("#field_id").html(result);
+  });
+  
+}
+function getpar(val) {
+
+var url = 'getpar.php?val='+val;
+
+ $.post(url,{},function(result){ 
+    $("#fenz_a").html(result);
+    $("#fenz_b").html(result); 
+  });
+}
+function showpar(type,val) { 
+if(type=='a'){
+   $("#fenzhan_a").val($("#fenz_a").val());}
+if(type=='b'){
+   $("#fenzhan_b").val($("#fenz_b").val());} 
+} 
+
+</script>
+
+
+<!--/dialog_end-->
+</td>
+</tr>
+</table>
+
+</div>
+
+<include file="../public/_footer" />

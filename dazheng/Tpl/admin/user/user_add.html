@@ -1,0 +1,222 @@
+<include file="../public/header_dialog" />
+<table border="0" cellspacing="0" cellpadding="0" style="width:700px;">
+<tr>
+<td>
+<!--/dialog_start-->
+
+<form method="post" id="act_form" name="act_form" action="{:U('admin/user/user_add_action')}" enctype="multipart/form-data">
+	<table class="add_table" border="0" cellspacing="0" cellpadding="0" >
+		<tbody>
+				<tr>
+					<th><font color=red>*</font>用户名：</th>
+					<td><input type="text" name="user_name" id="user_name" class="mod_input2" style="width:300px;"  value="{$data.user_name}"></td>
+				</tr>
+				<tr>
+					<th><font color=red>*</font>密码：</th>
+					<td>
+						<input type="password" name="user_password" id="user_password" class="mod_input2" style="width:300px;"  value="" maxlength="20">
+						
+					</td>
+				</tr>
+				
+				<tr>
+					<th><font color=red>*</font>确认密码：</th>
+					<td>
+						<input type="password" name="user_password2" id="user_password2" class="mod_input2" style="width:300px;"  value="" maxlength="20">
+						
+					</td>
+				</tr>
+				
+				<tr>
+					<th><font color=red>*</font>邮箱：</th>
+					<td><input type="text" name="user_email" id="user_email" class="mod_input2" style="width:300px;"  value="{$data.user_email}"></td>
+				</tr>
+				<tr>
+					<th><font color="#ffffff">*</font>备用邮箱：</th>
+					<td><input type="text" name="user_email2" id="user_email2" class="mod_input2" style="width:300px;"  value="{$data.user_email}"></td>
+				</tr>
+				
+				<tr>
+					<th><font color=red>*</font>姓名：</th>
+					<td><input type="text" name="user_realname" id="user_realname" class="mod_input2" style="width:300px;"  value="{$data.user_realname}"></td>
+				</tr>
+				
+				<tr>
+					<th><font color=red>*</font>性别：</th>
+					<td>
+						<input type="radio" name="user_sex" id="user_sex" value="男" checked <php>if($data['user_sex']=="男"){ echo " checked ";}</php>>男
+						<input type="radio" name="user_sex" id="user_sex" value="女" <php>if($data['user_sex']=="女"){ echo " checked ";}</php>>女
+						
+					</td>
+				</tr>
+
+				<tr>
+					<th>&nbsp;</th>
+					<td></td>
+				</tr>
+
+				<tr>
+					<th>角色：</th>
+					<td>
+						<input type="radio" name="role_id" id="role_id" value="1" <php>if($data['role_id']=="1"){ echo " checked ";}</php>>普通用户
+						<input type="radio" name="role_id" id="role_id" value="2" <php>if($data['role_id']=="2"){ echo " checked ";}</php>>VIP
+						<input type="radio" name="role_id" id="role_id" value="3" <php>if($data['role_id']=="3"){ echo " checked ";}</php>>机构管理员
+						
+					</td>
+				</tr>
+				<tr>
+					<th>民族：</th>
+					<td>
+						<input type="text" name="user_nation" id="user_nation" class="mod_input2" style="width:300px;"  value="{$data.user_nation}">
+					</td>
+				</tr>
+				<tr>
+					<th>籍贯：</th>
+					<td><input type="text" name="user_jiguan" id="user_jiguan" class="mod_input2" style="width:300px;"  value="{$data.user_jiguan}"></td>
+				</tr>
+				<tr>
+					<th><font color=red>*</font>工作单位：</th>
+					<td><input type="text" name="user_company" id="user_company" class="mod_input2" style="width:300px;"  value="{$data.user_company}"></td>
+				</tr>
+				<tr>
+					<th>单位地址：</th>
+					<td><input type="text" name="user_company_address" id="user_company_address" class="mod_input2" style="width:300px;"  value="{$data.user_company_address}">（VIP必填）</td>
+				</tr>
+				<tr>
+					<th>邮编：</th>
+					<td><input type="text" name="user_company_post" id="user_company_post" class="mod_input2" style="width:100px;"  value="{$data.user_company_post}">（VIP必填）</td>
+				</tr>
+				<tr>
+					<th>通讯地址：</th>
+					<td><input type="text" name="user_address" id="user_address" class="mod_input2" style="width:300px;"  value="{$data.user_address}">（VIP必填）</td>
+				</tr>
+				<tr>
+					<th>邮编：</th>
+					<td><input type="text" name="user_post" id="user_post" class="mod_input2" style="width:100px;"  value="{$data.user_post}">（VIP必填）</td>
+				</tr>
+				<tr>
+					<th>学历：</th>
+					<td>
+						<select name="user_xueli">
+							<option value="">请选择</option>
+							{$xl}
+						</select>
+						<script>set_select_value(document.act_form.user_xueli,"{$data.user_xueli}");</script>
+					</td>
+				</tr>
+				<tr>
+					<th>学位：</th>
+					<td>
+						<select name="user_xuewei">
+							<option value="">请选择</option>
+							{$xw}
+						</select>
+						<script>set_select_value(document.act_form.user_xuewei,"{$data.user_xuewei}");</script>
+					</td>
+				</tr>
+				<tr>
+					<th>所学专业：</th>
+					<td><input type="text" name="user_zhuanye" id="user_zhuanye" class="mod_input2" style="width:300px;"  value="{$data.user_zhuanye}"></td>
+				</tr>
+				<tr>
+					<th>研究方向：</th>
+					<td><input type="text" name="user_fangxiang" id="user_fangxiang" class="mod_input2" style="width:300px;"  value="{$data.user_fangxiang}"></td>
+				</tr>
+				<tr>
+					<th>职务：</th>
+					<td>
+						<input type="text" name="user_duty" id="user_duty" class="mod_input2" style="width:100px;"  value="{$data.user_duty}">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						职称：
+						<input type="text" name="user_zhicheng" id="user_zhicheng" class="mod_input2" style="width:100px;"  value="{$data.user_zhicheng}">
+					</td>
+				</tr>
+				
+				
+				
+				<tr>
+					<th>QQ：</th>
+					<td><input type="text" name="user_qq" id="user_qq" class="mod_input2" style="width:100px;"  value="{$data.user_qq}"></td>
+				</tr>
+				<tr>
+					<th>联系电话：</th>
+					<td><input type="text" name="user_tel" id="user_tel" class="mod_input2" style="width:300px;"  value="{$data.user_tel}"></td>
+				</tr>
+				<tr>
+					<th>手机：</th>
+					<td><input type="text" name="user_mobile" id="user_mobile" class="mod_input2" style="width:100px;"  value="{$data.user_mobile}">（VIP必填）</td>
+				</tr>
+				<tr>
+					<th>传真：</th>
+					<td><input type="text" name="user_fax" id="user_fax" class="mod_input2" style="width:300px;"  value="{$data.user_fax}"></td>
+				</tr>
+				<tr>
+					<th>出生年月：</th>
+					<td><input type="text" name="user_birthday" id="user_birthday" class="mod_input2" style="width:300px;"  value="{$data.user_birthday}" onClick="WdatePicker({dateFmt:'yyyy-MM',maxDate:'<php> echo date('Y',time());</php>'})"></td>
+				</tr>
+				<tr>
+					<th>介绍：</th>
+					<td><textarea name="user_content" id="user_content" class="mod_input2" style="width:400px; height:100px;">{$data.user_content}</textarea></td>
+				</tr>
+				
+		</tbody>
+		<tfoot>
+			<tr>
+				<th></th>
+				<td>
+					<input type="hidden" name="role_id" id="role_id" value="1">
+					<input type="submit" class="btn_b"  value="添加" style="margin-right:10px;"/>
+					<input type="button" class="btn_w" onclick="close_dialog(this)" value="取消" />
+				</td>
+		</tfoot>
+	</table><!--/add_table-->
+</form>
+
+<script>
+$(document).ready(function(){
+$.formValidator.initConfig({formID:"act_form",theme:'ArrowSolidBox',mode:'AutoTip',onError:function(msg){msg_error(msg)},inIframe:true});
+
+		$("#user_password").formValidator({onShow:"请输入密码",onFocus:"密码为6位数字",onCorrect:"密码合法"}).inputValidator({min:6,max:6,empty:{leftEmpty:false,rightEmpty:false,emptyError:"密码两边不能有空符号"},onError:"密码不能为空,请确认"});
+		$("#user_password2").formValidator({onShow:"输再次输入密码",onFocus:"密码为6位数字",onCorrect:"密码一致"}).inputValidator({min:6,max:6,empty:{leftEmpty:false,rightEmpty:false,emptyError:"重复密码两边不能有空符号"},onError:"重复密码不能为空,请确认"}).compareValidator({desID:"user_password",operateor:"=",onError:"2次密码不一致,请确认"});
+		$("#user_email").formValidator({onShow:"请输入邮箱",onFocus:"请输入邮箱",onCorrect:"输入正确"}).inputValidator({min:1,max:50,onError:"请输入邮箱"});
+		$("#user_realname").formValidator({onShow:"请输入姓名",onFocus:"请输入姓名",onCorrect:"输入正确"}).inputValidator({min:1,max:50,onError:"请输入姓名"});
+		$("#user_sex").formValidator({onShow:"请输入性别",onFocus:"请输入性别",onCorrect:"输入正确"}).inputValidator({min:1,max:50,onError:"请输入性别"});
+		$("#user_nation").formValidator({empty:true,onShow:"请输入民族",onFocus:"请输入民族",onCorrect:"输入正确"}).inputValidator({min:1,max:50,onError:"请输入民族"});
+		$("#user_jiguan").formValidator({empty:true,onShow:"请输入籍贯",onFocus:"请输入籍贯",onCorrect:"输入正确"}).inputValidator({min:1,max:50,onError:"请输入籍贯"});
+		$("#user_company").formValidator({onShow:"请输入工作单位",onFocus:"请输入工作单位",onCorrect:"输入正确"}).inputValidator({min:1,max:100,onError:"请输入工作单位"});
+		
+		<php>if($_SESSION['role_id']==2){</php>
+			$("#user_company_address").formValidator({onShow:"请输入单位地址",onFocus:"请输入单位地址",onCorrect:"输入正确"}).inputValidator({min:1,max:100,onError:"请输入单位地址"});
+			$("#user_company_post").formValidator({onShow:"请输入单位邮编",onFocus:"请输入单位邮编",onCorrect:"输入正确"}).inputValidator({min:1,max:50,onError:"请输入单位邮编"});
+			$("#user_address").formValidator({onShow:"请输入联系地址",onFocus:"请输入联系地址",onCorrect:"输入正确"}).inputValidator({min:1,max:100,onError:"请输入联系地址"});
+			$("#user_post").formValidator({onShow:"请输入邮编",onFocus:"请输入邮编",onCorrect:"输入正确"}).inputValidator({min:1,max:50,onError:"请输入邮编"});
+		<php>}</php>
+
+		$("#user_xueli").formValidator({empty:true,onShow:"请输入学历",onFocus:"请输入学历",onCorrect:"输入正确"}).inputValidator({min:1,max:50,onError:"请输入学历"});
+		$("#user_xuewei").formValidator({empty:true,onShow:"请输入学位",onFocus:"请输入学位",onCorrect:"输入正确"}).inputValidator({min:1,max:50,onError:"请输入学位"});
+		$("#user_zhuanye").formValidator({empty:true,onShow:"请输入专业",onFocus:"请输入专业",onCorrect:"输入正确"}).inputValidator({min:1,max:50,onError:"请输入专业"});
+		$("#user_fangxiang").formValidator({empty:true,onShow:"请输入方向",onFocus:"请输入方向",onCorrect:"输入正确"}).inputValidator({min:1,max:50,onError:"请输入方向"});
+		$("#user_duty").formValidator({empty:true,onShow:"请输入职务",onFocus:"请输入职务",onCorrect:"输入正确"}).inputValidator({min:1,max:50,onError:"请输入职务"});
+		$("#user_zhicheng").formValidator({empty:true,onShow:"请输入职称",onFocus:"请输入职称",onCorrect:"输入正确"}).inputValidator({min:1,max:50,onError:"请输入职称"});
+		$("#user_qq").formValidator({empty:true,onShow:"请输入QQ",onFocus:"请输入QQ",onCorrect:"输入正确"}).inputValidator({min:1,max:50,onError:"请输入QQ"});
+		$("#user_tel").formValidator({empty:true,onShow:"请输入联系电话",onFocus:"请输入联系电话",onCorrect:"输入正确"}).inputValidator({min:1,max:50,onError:"请输入联系电话"});
+
+		<php>if($_SESSION['role_id']==2){</php>
+		$("#user_mobile").formValidator({empty:true,onShow:"请输入手机号",onFocus:"请输入手机号",onCorrect:"输入正确"}).inputValidator({min:1,max:11,onError:"请输入手机号"});
+		<php>}</php>
+		$("#user_content").formValidator({empty:true,onShow:"请输入介绍",onFocus:"请输入介绍",onCorrect:"输入正确"}).inputValidator({min:1,max:3000,onError:"请输入介绍"});
+	$.formValidator.reloadAutoTip();
+});
+
+function reloadAutoTip()
+{
+	$.formValidator.reloadAutoTip();
+}
+
+</script>
+
+<!--/dialog_end-->
+</td>
+</tr>
+</table>
+
+<include file="../public/_footer" />

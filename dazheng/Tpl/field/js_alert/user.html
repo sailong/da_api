@@ -1,0 +1,134 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+  <title>test</title>
+  <script language="javascript" type="text/javascript" src="/skin/js/jquery-2.0.2.min.js"></script>
+  <script language="javascript" type="text/javascript" src="/skin/js/dialog/template.js"></script>
+  <script language="javascript" type="text/javascript" src="/skin/js/dialog/artDialog.js?skin=default"></script>
+  <script>
+	function user_list() {
+		this.attachEvent();
+		this.delegateEvent();
+	};
+	user_list.prototype.attachEvent = function(){
+		var self = this;
+		$("#user_list").click(function(){
+			$.ajax({
+			    url: '/default.php?g=field&m=js_alert&a=user_list' ,
+			    data:{},    
+			    type:'post',    
+			    cache:false,    
+			    dataType:'json',    
+			    success:function(data) {
+			        var info = data.data;
+			        var clone_p = $("#clone_tab");
+			        for(var i in info){
+				        var user_info = info[i];
+				        var clone_obj = clone_p.clone();
+				        clone_obj.attr('id','').renderHtml(user_info).appendTo($("#user_list_div")).show();
+						clone_obj.data('datas',user_info);
+					}
+			        
+					art.dialog({
+				        title:'user_list',
+						//time: 2,
+						id:'user_list',
+						opacity: 0.5,	// 透明度
+						content:$("#user_list_div")[0],
+						drag: false,
+						fixed: true	//固定定位 ie 支持不好回默认转成绝对定位
+					});
+			     } 
+			});
+		});
+	};
+	
+	user_list.prototype.delegateEvent = function(){
+		var self = this;
+		$('body').on("click", '.thisclass',function() {
+			alert(self.dump($("#user_list_div").get(0),0));return false;
+			var p_obj = $(this).parents('tr:first');
+			var user_info = p_obj.data('datas') || {};
+			var clone_p = $("#clone_tab_1").clone(true);
+			    clone_p.attr('id','').renderHtml(user_info).appendTo($("#user_list_tab")).show();
+		});
+	};
+	/**
+	 * Function : dump()
+	 * Arguments: The data - array,hash(associative array),object
+	 *    The level - OPTIONAL
+	 * Returns  : The textual representation of the array.
+	 * This function was inspired by the print_r function of PHP.
+	 * This will accept some data as the argument and return a
+	 * text that will be a more readable version of the
+	 * array/hash/object that is given.
+	 * Docs: http://www.openjs.com/scripts/others/dump_function_php_print_r.php
+	 */
+	user_list.prototype.dump = function(arr, level) {
+		var dumped_text = "";
+	    if(!level) level = 0;
+	     
+	    //The padding given at the beginning of the line.
+	    var level_padding = "";
+	    for(var j=0;j<level+1;j++) level_padding += "    ";
+	     
+	    if(typeof(arr) == 'object') { //Array/Hashes/Objects 
+	        for(var item in arr) {
+	            var value = arr[item];
+	             
+	            if(typeof(value) == 'object') { //If it is an array,
+	                dumped_text += level_padding + "'" + item + "' ...\n";
+	                dumped_text += dump(value,level+1);
+	            } else {
+	                dumped_text += level_padding + "'" + item + "' => \"" + value + "\"\n";
+	            }
+	        }
+	    } else { //Stings/Chars/Numbers etc.
+	        dumped_text = "===>"+arr+"<===("+typeof(arr)+")";
+	    }
+	    return dumped_text;
+	}
+	
+	$(document).ready(function() {
+		new user_list();
+	});
+	
+  </script>
+</head>
+<body>
+<table style="display:none;" id="user_list_div">
+	<tr>
+		<td style="padding:10px;">botton</td>
+		<td style="padding:10px;">uid</td>
+		<td style="padding:10px;">username</td>
+		<td style="padding:10px;">email</td>
+	</tr>
+</table>
+<table id="user_list_tab">
+	<tr>
+		<td style="padding:10px;">uid</td>
+		<td style="padding:10px;">username</td>
+		<td style="padding:10px;">email</td>
+	</tr>
+</table>
+<table style="display:none;">
+<tr id="clone_tab_1">
+	<td style="padding:10px;">{uid}</td>
+	<td style="padding:10px;">{username}</td>
+	<td style="padding:10px;">{email}</td>
+</tr>
+</table>
+<table style="display:none;">
+<tr id="clone_tab">
+	<td style="padding:10px;"><input type="button" class="thisclass" id="{uid}" value="选择"/></td>
+	<td style="padding:10px;">{uid}</td>
+	<td style="padding:10px;">{username}</td>
+	<td style="padding:10px;">{email}</td>
+</tr>
+</table>
+
+<div><input type="button" value="选择用户" id="user_list"></div>
+
+<!--<include file="../public/user_list" />-->
+</body>
+</html>

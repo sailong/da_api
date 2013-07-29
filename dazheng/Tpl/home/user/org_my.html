@@ -1,0 +1,134 @@
+<include file="../Public/header" />
+<script language="javascript" type="text/javascript" src="/skin/js/dialog/artDialog.js?skin=default"></script>
+<script language="javascript" type="text/javascript" src="/skin/js/dialog/plugins/iframeTools.js"></script>
+<script language="javascript" type="text/javascript" src="/skin/js/dialog/jack_ui_v2.js"></script>
+
+  <div class="content">
+    <div class="newsLeft" style="width:937px; padding-bottom:30px;">
+        <div class="location"><a href="{$site.site_url}"><img src="__PUBLIC__/images/location.jpg" alt="{$site.site_name}" /></a> > 所属机构</div>
+
+
+<!--------list -------->
+  <div class="list" style="margin-top:20px;">
+	
+	  <table width="100%" id="mod_table" border="0" cellspacing="0" cellpadding="0">
+	  <tr>
+		<th style="width:30px;">
+			<input type="checkbox" id="checkbox_handle" onclick="select_all(this,'mod_table','checkbox')" value="0">
+			<label for="checkbox"></label>
+		</th>
+		<th class="line_l">机构代码</th>
+		<th class="line_l">机构名称</th>
+		<th class="line_l">所在城市</th>
+		<th class="line_l">机构电话</th>
+		<th class="line_l">机构邮箱</th>
+		<th class="line_l">操作</th>
+	</tr>
+	<php>if($total>0){</php>
+	<volist id="vo" name="list">
+	<tr overstyle="on"  id=ids_{$vo["org_id"]}>
+		<td><input type="checkbox" name="checkbox" onclick="select_one(this)" value="{$vo.org_id}" ></td>
+		<!--
+		<td>{$vo.user_id}</th>
+		-->
+			<td>{$vo.org_code}</td>
+			<td><a href="javascript:void(0);" onclick="mod_dialog('查看详细','{:U('home/user/org_detail', array('org_id'=>$vo['org_id']))}');">{$vo.org_name}</a></td>
+			<td>{$vo.org_provincename} {$vo.org_cityname}</td>
+			<td>{$vo.org_tel}</td>
+			<td>{$vo.org_email}</td>
+			<td>
+				<a href="{:U('home/user/org_edit', array('org_id'=>$vo['org_id']))}">修改</a>
+			</td>
+
+	</tr>
+	</volist>
+    </table>
+	  <php>}else{</php>
+			<div class="no_data" style="margin-top:20px; border-top:1px solid #ccc; padding-top:25px; padding-bottom:20px; text-align:center;">
+				<img src="/skin/images/no_data.gif" align="absmiddle"> <span>没有从业机构... </span>
+			</div>
+	 <php>}</php>
+  </div>
+
+  <div class="Toolbar_inbox">
+	<div class="page " style="text-align:left;">{$pages}</div>
+
+	<div class="clear"></div>
+  </div><!--/Toolbar_inbox-->
+
+<script>
+	$(document).ready(function(){
+		$("tr[overstyle='on']").hover(
+		  function ()
+		  {
+		    $(this).addClass("bg_hover");
+		  },
+		  function (){
+		    $(this).removeClass("bg_hover");
+		  }
+		);
+	});
+
+
+
+function load_city(obj)
+{
+	if(obj.value!="")
+	{	
+		//alert(obj.value);
+		var state_id=obj.value;
+		var action_url="{:U('admin/public/load_city_action')}";
+		var t_obj = document.getElementById("org_city");
+
+		$.post(action_url,{state_id:state_id},function(res){
+			//alert(res);
+			if(res.split('^')[0]=='succeed')
+			{
+				t_obj.options.length = 0;
+				t_obj.add(new Option("请选择城市",""));
+				var a=res.split('^')[1].split(',');
+				var i=0
+				for(i=0; i<a.length; i++)
+				{
+					//alert(a[i]);
+					if(a[i]!="")
+					{
+						t_obj.add(new Option(a[i].split('|')[0],a[i].split('|')[1]));
+						//$("#city_code").val(a[i].split('|')[2]);
+						//$("#city_code").val("555");
+					}
+
+				}
+				
+			}
+			else
+			{
+				art.dialog({
+					icon: ''+res.split('^')[0]+'',
+					time: 2,
+					content: ''+res.split('^')[1]+''
+				});
+			}
+		
+		});
+
+	}
+	else
+	{
+		msg_error("请先选择 省 ");
+	}
+
+}
+
+</script>
+
+
+
+
+
+ 
+  </div>
+
+
+
+<include file="../Public/footer" />  

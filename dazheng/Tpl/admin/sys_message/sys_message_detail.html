@@ -1,0 +1,102 @@
+<include file="../public/header_dialog" />
+<table border="0" cellspacing="0" cellpadding="0" style="width:500px;">
+<tr>
+<td>
+<!--/dialog_start-->
+
+	<table class="add_table" border="0" cellspacing="0" cellpadding="0" >
+		<tbody>
+				<tr>
+					<th>平台：</th>
+					<td>
+						<php>if($data['field_uid']=='0'){echo '大正';}</php>
+						<php>if($data['field_uid']=='1186'){echo '美兰湖';}</php>
+					</td>
+				</tr>
+				<tr>
+					<th>目标用户：</th>
+						<td><php>if($data['uid'] == '0'){echo '所有用户';}else{echo $data['uid'];}</php></td>
+				</tr>
+				<tr>
+					<th>消息标题：</th>
+						<td>{$data.message_title}</td>
+				</tr>
+				<tr>
+					<th>消息内容：</th>
+						<td>{$data['message_content']['n_content']}</td>
+				</tr>
+				<tr>
+					<th>消息图片：</th>
+					<td><php>if($data['message_pic']){</php><img src="{$data.message_pic}"style="max-height:100px; max-width:100px;"><php>}</php></td>
+				</tr>
+				<tr>
+					<th>发送范围：</th>
+					<td><php>if($data['receiver_type']=='3'){echo '指定用户';}elseif($data['receiver_type']=='4'){echo'所有用户';}</php></td>
+				</tr>
+				<tr>
+					<th>添加时间：</th>
+					<td>{$data.message_addtime|format_to_time}</td>
+				</tr>
+				<tr>
+					<th>目标用户：</th>
+					<td><php>if($data['uid'] == '0') {echo '所有用户';}else{echo $data['uid'];}</php></td>
+				</tr>
+				<tr>
+					<th>扩展信息：</th>
+					<td>
+						<table class="add_table" border="0" cellspacing="0" cellpadding="0">
+						<php>
+						if($data['message_content']['n_extras']['id']){
+						</php>
+							<tr>
+								<th></th>
+								<td>
+								<php>if($data['message_content']['n_extras']['action']=='mathcenter'){echo '赛事直播';}</php>
+								<php>if($data['message_content']['n_extras']['action']=='blog_detail'){echo '博客详细页';}</php>
+								<php>if($data['message_content']['n_extras']['action']=='app_store'){echo 'APP STORE';}</php>
+								</td>
+							</tr>
+							<tr>
+								<th></th>
+								<td>
+								{$data['message_content']['n_extras']['id']}（相应ID：赛事直播sid   /  博客blogid）
+								</td>
+							</tr>
+							<tr>
+								<th></th>
+								<td>
+								{$data['message_content']['n_extras']['title']}（相应TITLE）
+								</td>
+							</tr>
+						<php>
+						}else{
+						</php>
+							<tr>
+								<th></th>
+								<td>
+								暂无信息
+								</td>
+							</tr>
+						<php>
+							}
+						</php>
+							
+						</table>
+					</td>
+				</tr>
+		</tbody>
+		<tfoot>
+			<tr>
+				<th></th>
+				<td>
+					<input type="button" class="btn_w" onclick="close_dialog(this)" value="关闭" />
+				</td>
+		</tfoot>
+	</table><!--/add_table-->
+
+<!--/dialog_end-->
+</td>
+</tr>
+</table>
+
+<include file="../public/_footer" />

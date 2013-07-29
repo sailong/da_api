@@ -1,0 +1,48 @@
+<include file="../public/header" />
+
+  <div id="centenr" style="height:auto;" >  
+  	  
+	  <div id="qiuc" style="height:auto;">
+		<div id="con1_s"></div>
+			<div id="con1_t2" style="height:auto;">
+				  <div class="t_top">
+					   <div style="width:280px; float:left; text-align:center;"><span>欢迎使用【新版N洞报分系统】</span>  </div>
+					   <!--
+					   <div  style="width:100px; float:left"> 【<a href="#" target="_blank">成绩列表</a>】</div>
+					   -->
+				  </div><br>
+                  <div style="text-align:center;"><img src="/skin/wap/images/nddl.jpg" /></div>
+					<div class="nav_u" style="height:150px;; line-height:30px;">
+						<ul>
+						<form action="{:U('wap/baofen/baofen_login_action')}" method="post" name="login_form">
+						      <li style="padding-left:40px; height:35px; line-height:35px;">
+							  用户名：<input type="text" name='username' id="username" />
+                              </li>
+                              <li style="padding-left:40px; height:35px; line-height:35px;">
+                              密　码：<input type="text" name='password' id="password" />
+							  </li>
+						     <li style="text-align:center; padding-top:20px;">
+                             <!--{eval $sid = $_GET ['sid'] ? $_GET ['sid'] : 1000333;}-->
+                               <input type="hidden" name='fenzhan_id' id="fenzhan_id"  value="<php> echo get('fenzhan_id');</php>"/>
+                               <input type="hidden" name='lun' id="lun"  value="<php> echo $lun;</php>"/>
+                            <input type="image" src="/skin/wap/images/login_btn.jpg" width="109" height="27" /> 
+						   </li>
+						</form>
+						</ul>
+					</div>
+		     </div>
+		 <div id="con1_p"></div>
+	  </div>
+ </div>
+  
+
+  <!--copyright-->
+ <div id="copyright" >
+     <p style="padding-top:10px;">大正高尔夫©2011&nbsp;&nbsp;&nbsp;&nbsp;京ICP证110339号</p>
+     <p> 京公网安备110105008914号</p>
+ </div>
+     
+  </div>
+ </div>
+</body>
+</html>
