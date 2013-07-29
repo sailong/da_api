@@ -502,6 +502,8 @@ if($ac=='rank')
 						{
 							$row['lun_4']='-';
 						}
+						
+						$row['zongbiaogan']=$zongbiaogan;
 
 						$row['today_score']='"'.(end(explode("|",$row['score']))-end(explode("|",$row['par']))).'"';
 						$row['total_score']=(string)$row['zong_score'];
