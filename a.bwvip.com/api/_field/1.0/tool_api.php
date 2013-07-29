@@ -76,72 +76,82 @@ if($ac=='field_about_pic_small')
 //微博缩略图处理
 if($ac=='topic_image_small')
 {
-	$list=DB::query("select photo from jishigou_topic_image");
+	
+	$page = 1;
+	$limit = 200;
 	$i = 0;
-	while($row=DB::fetch($list))
-	{
-		$file_url=dirname(dirname(dirname(dirname(__FILE__)))).'/weibo/'.$row['photo'];
-		
-		if(file_exists($file_url)) {
-			$extname=end(explode(".",$file_url));
-			
-			$pre_pic_path = reset(explode("_o.",$file_url));
-			
-			$pic_name_o_path=$pre_pic_path.'_o.'.$extname;
-			$pic_name_p_path=$pre_pic_path.'_p.'.$extname;
-			$pic_name_s_path=$pre_pic_path.'_s.'.$extname;
-			//move_uploaded_file($file_val['tmp_name'], $pic_name_o_path);
-			$image_file = $pic_name_o_path;
-			$image_file_small = $pic_name_s_path;
-			$image_file_photo = $pic_name_p_path;
-		
-			//@copy($image_file, $image_file);
-			
-			list($image_width,$image_height,$image_type,$image_attr) = getimagesize($image_file);
-			//生成小图
-			$iw = $image_width;
-			$ih = $image_height;
-			
-			/*$image_width_s = 180;
-			if($iw > $image_width_s) {
-				$s_width = $image_width_s;
-				$s_height = round(($ih*$image_width_s)/$iw);
-			}else{
-				$s_width=$iw;
-				$s_height=$ih;
-			}
-			$result = makethumb($image_file, $image_file_small, $s_width, $s_height, 0, 0, 0, 0, 0, 0, 0, 100); */
-			if(!file_exists($image_file_small)) {
-				$src_x = $src_y = 0;
-				$src_w = $src_h = min($iw, $ih);
-				if($iw > $ih) {
-					$src_x = round(($iw - $ih) / 2);
-				} else {
-					$src_y = round(($ih - $iw) / 2);
-				}
-				$result = makethumb($image_file, $image_file_small, 180, 180, 0, 0, $src_x, $src_y, $src_w, $src_h, 0, 100);
-				clearstatcache();
-				if (!$result && !is_file($image_file_small)) {
-					@copy($image_file, $image_file_small);
-				}
-			}
-			if(!file_exists($image_file_photo)) {
-				//生成中图
-				$image_width_p = 300;
-				if($iw > $image_width_p) {
-					$p_width = $image_width_p;
-					$p_height = round(($ih*$image_width_p)/$iw);
-					$result = makethumb($image_file, $image_file_photo, $p_width, $p_height, 0, 0, 0, 0, 0, 0, 0, 100);
-				}
-				clearstatcache();
-				if($iw <= $image_width_p || (!$result && !is_file($image_file_photo))) {
-					@copy($image_file, $image_file_photo);
-				}
-			}
-			$i++;
-			echo $i.'<br/>';
+	while(true) {
+		$offset = ($page-1)*$limit;
+		$list=DB::query("select photo from jishigou_topic_image order by id asc limit {$offset},{$limit}");
+		if(!$list) {
+			break;
 		}
-	} 
+		$page++;
+		while($row=DB::fetch($list))
+		{
+			$file_url=dirname(dirname(dirname(dirname(__FILE__)))).'/weibo/'.$row['photo'];
+			
+			if(file_exists($file_url)) {
+				$extname=end(explode(".",$file_url));
+				
+				$pre_pic_path = reset(explode("_o.",$file_url));
+				
+				$pic_name_o_path=$pre_pic_path.'_o.'.$extname;
+				$pic_name_p_path=$pre_pic_path.'_p.'.$extname;
+				$pic_name_s_path=$pre_pic_path.'_s.'.$extname;
+				//move_uploaded_file($file_val['tmp_name'], $pic_name_o_path);
+				$image_file = $pic_name_o_path;
+				$image_file_small = $pic_name_s_path;
+				$image_file_photo = $pic_name_p_path;
+			
+				//@copy($image_file, $image_file);
+				
+				list($image_width,$image_height,$image_type,$image_attr) = getimagesize($image_file);
+				//生成小图
+				$iw = $image_width;
+				$ih = $image_height;
+				
+				/*$image_width_s = 180;
+				if($iw > $image_width_s) {
+					$s_width = $image_width_s;
+					$s_height = round(($ih*$image_width_s)/$iw);
+				}else{
+					$s_width=$iw;
+					$s_height=$ih;
+				}
+				$result = makethumb($image_file, $image_file_small, $s_width, $s_height, 0, 0, 0, 0, 0, 0, 0, 100); */
+				if(!file_exists($image_file_small)) {
+					$src_x = $src_y = 0;
+					$src_w = $src_h = min($iw, $ih);
+					if($iw > $ih) {
+						$src_x = round(($iw - $ih) / 2);
+					} else {
+						$src_y = round(($ih - $iw) / 2);
+					}
+					$result = makethumb($image_file, $image_file_small, 180, 180, 0, 0, $src_x, $src_y, $src_w, $src_h, 0, 100);
+					clearstatcache();
+					if (!$result && !is_file($image_file_small)) {
+						@copy($image_file, $image_file_small);
+					}
+				}
+				if(!file_exists($image_file_photo)) {
+					//生成中图
+					$image_width_p = 300;
+					if($iw > $image_width_p) {
+						$p_width = $image_width_p;
+						$p_height = round(($ih*$image_width_p)/$iw);
+						$result = makethumb($image_file, $image_file_photo, $p_width, $p_height, 0, 0, 0, 0, 0, 0, 0, 100);
+					}
+					clearstatcache();
+					if($iw <= $image_width_p || (!$result && !is_file($image_file_photo))) {
+						@copy($image_file, $image_file_photo);
+					}
+				}
+				$i++;
+				echo $i.'<br/>';
+			}
+		} 
+	}
 }
 
 function makethumb($srcfile,$dstfile,$thumbwidth,$thumbheight,$maxthumbwidth=0,$maxthumbheight=0,$src_x=0,$src_y=0,$src_w=0,$src_h=0, $thumb_cut_type=0, $thumb_quality = 100) {
