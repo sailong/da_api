@@ -23,7 +23,7 @@
 					<th>所属赛事：</th>
 					<td>
 		<input type="hidden" name="event_id" value="{$event_id}">
-						{$event_id}
+						{$event_name}
 					</td>
 				</tr>
                 <tr>
@@ -106,12 +106,12 @@
 					<th>结束时间：</th>
 					<td><input type="text" name="endtime" id="endtime" readonly class="mod_input_date" style="width:200px;" onFocus="WdatePicker({isShowClear:false,readOnly:true})" ></td>
 				</tr>
-				<!--
+				
 				<tr>
 					<th>排序：</th>
-					<td><input type="text" name="orderby" id="orderby" class="mod_input2" style="width:60px;" ></td>
+					<td><input type="text" name="orderby" id="orderby" class="mod_input2" style="width:60px;" >（数越大越靠前）</td>
 				</tr>
-				<tr>
+				<!--<tr>
 					<th>状态：</th>
 					<td><input type="text" name="is_delete" id="is_delete" class="mod_input2" style="width:60px;" ></td>
 				</tr>
@@ -141,7 +141,7 @@ $.formValidator.initConfig({formID:"act_form",theme:'ArrowSolidBox',mode:'AutoTi
 		$("#starttime").formValidator({empty:true,onShow:"请输入开始时间",onFocus:"请输入开始时间",onCorrect:"输入正确"}).inputValidator({min:1,max:10,onError:"请输入开始时间"});
 		$("#endtime").formValidator({empty:true,onShow:"请输入结束时间",onFocus:"请输入结束时间",onCorrect:"输入正确"}).inputValidator({min:1,max:10,onError:"请输入结束时间"});
 		$("#orderby").formValidator({empty:true,onShow:"请输入排序",onFocus:"请输入排序",onCorrect:"输入正确"}).inputValidator({min:1,max:10,onError:"请输入排序"});
-		$("#is_delete").formValidator({empty:true,onShow:"请输入状态",onFocus:"请输入状态",onCorrect:"输入正确"}).inputValidator({min:1,max:10,onError:"请输入状态"});
+		//$("#is_delete").formValidator({empty:true,onShow:"请输入状态",onFocus:"请输入状态",onCorrect:"输入正确"}).inputValidator({min:1,max:10,onError:"请输入状态"});
 		
 
 	$.formValidator.reloadAutoTip();

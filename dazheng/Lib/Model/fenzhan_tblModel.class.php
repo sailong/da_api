@@ -10,7 +10,7 @@
 class fenzhan_tblModel extends Model{
 
 	//list and page
-	function fenzhan_list_pro($bigwhere="", $page_size=20, $sort=" addtime desc ") 
+	function fenzhan_list_pro($bigwhere="", $page_size=20, $sort=" orderby desc,addtime desc ") 
 	{
 		$page = intval(get("p"))?get("p"):1;
 
@@ -23,11 +23,12 @@ class fenzhan_tblModel extends Model{
 
 		if(get("starttime")!="")
 		{
-			$where .=" and fenzhan_addtime>".strtotime(get("starttime"))." ";
+			$where .=" and starttime>".strtotime(get("starttime"))." ";
 		}
 		if(get("endtime")!="")
 		{
-			$where .=" and fenzhan_addtime<".strtotime(get("endtime"))." ";
+			$endtime = strtotime(get("endtime"))+86400;
+			$where .=" and starttime<".$endtime." ";
 		}
 
 		$data["item"]=M("fenzhan")->where($where.$bigwhere)->order($sort)->page($page.",".$page_size)->select();

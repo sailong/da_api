@@ -38,7 +38,8 @@ class event_applyModel extends Model{
 		}
 		if(get("endtime")!="")
 		{
-			$where .=" and event_apply_addtime<".strtotime(get("endtime"))." ";
+			$endtime = strtotime(get("endtime"))+86400;
+			$where .=" and event_apply_addtime<".$endtime." ";
 		}
 
 		$data["item"]=M("event_apply")->where($where.$bigwhere)->order($sort)->page($page.",".$page_size)->select();
