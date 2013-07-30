@@ -70,11 +70,11 @@ if($ac=="select_city")
 	if($max_page>=$page)
 	{
 
-			$list=DB::query("select id,name,(select count(id) from ".DB::table("common_field")." where province=".DB::table("common_district").".id ) as qiuchang_num  from ".DB::table("common_district")." where 1=1 ".$sql." order by id asc limit $page_start,$page_size ");
-			while($row = DB::fetch($list) )
-			{
-				$list_data[]=$row;
-			}
+		$list=DB::query("select id,name,(select count(id) from ".DB::table("common_field")." where province=".DB::table("common_district").".id ) as qiuchang_num  from ".DB::table("common_district")." where 1=1 ".$sql." order by id asc limit $page_start,$page_size ");
+		while($row = DB::fetch($list) )
+		{
+			$list_data[]=$row;
+		}
 
 	}//end page
 
@@ -373,6 +373,7 @@ if($ac=="score_detail")
 	$detail_info=DB::fetch_first("select id,uid,(select realname from ".DB::table("common_member_profile")." where uid=".DB::table("common_score").".uid) as realname,fuid,par,pars,score,dong_names,sais_id,(select realname from ".DB::table("common_member_profile")." where uid=".DB::table("common_score").".sais_id) as sais_name,fuid,(select realname from ".DB::table("common_member_profile")." where uid=".DB::table("common_score").".fuid) as field_name,dateline,uploadimg,tuigan,is_edit,source from ".DB::table("common_score")." where id='".$id."' ");
 	if($detail_info['id'])
 	{
+		
 		$detail_info['tongzu_num']=DB::result_first("select count(id) from ".DB::table("common_score")." where group_id='".$detail_info['id']."' ");
 		if($detail_info['tuigan'])
 		{
@@ -403,6 +404,66 @@ if($ac=="score_detail")
 			$detail_info['uploadimg_small']="";
 		}
 
+		
+		
+		//color
+		if($detail_info['score'])
+		{
+			$s_arr=explode("|",$detail_info['score']);
+		}
+		if($detail_info['par'])
+		{
+			$p_arr=explode("|",$detail_info['par']);
+		}
+		
+		if(!empty($s_arr))
+		{
+			$c_arr=array();
+		}
+		
+		for($i=0; $i<count($p_arr); $i++)
+		{
+			if($s_arr[$i]!="" )
+			{
+				if($s_arr[$i]-$p_arr[$i]==3)
+				{
+					$c_arr[$i]=1;
+				}
+				else if($s_arr[$i]-$p_arr[$i]==2)
+				{
+					$c_arr[$i]=2;
+				}
+				else if($s_arr[$i]-$p_arr[$i]==1)
+				{
+					$c_arr[$i]=3;
+				}
+				else if($s_arr[$i]-$p_arr[$i]==0)
+				{
+					$c_arr[$i]=4;
+				}
+				else if($s_arr[$i]-$p_arr[$i]==-1)
+				{
+					$c_arr[$i]=5;
+				}
+				else if($s_arr[$i]-$p_arr[$i]==-2)
+				{
+					$c_arr[$i]=6;
+				}
+				else if($s_arr[$i]-$p_arr[$i]==-3)
+				{
+					$c_arr[$i]=7;
+				}
+				else
+				{
+					$c_arr[$i]=0;
+					//$c_arr[$i]=$s_arr[$i]-$p_arr[$i];
+				}
+			}
+		}
+		//$detail_info['color']=array_default_value($c_arr);
+		$detail_info['color']=$c_arr;
+
+		
 		if($detail_info['score'])
 		{
 			$detail_info['score']=explode("|",$detail_info['score']);
@@ -414,6 +475,7 @@ if($ac=="score_detail")
 				}
 			}
 		}
+
 		if($detail_info['par'])
 		{
 			$detail_info['par']=explode("|",$detail_info['par']);
@@ -433,9 +495,62 @@ if($ac=="score_detail")
 
 
 	//同组成绩
-	$list=DB::query("select id,uid,(select realname from ".DB::table("common_member_profile")." where uid=".DB::table("common_score").".uid )as realname,score from ".DB::table("common_score")." where group_id='".$id."' and id<>'".$id."' order by parent_id asc ");
+	$list=DB::query("select id,uid,(select realname from ".DB::table("common_member_profile")." where uid=".DB::table("common_score").".uid )as realname,score,par from ".DB::table("common_score")." where group_id='".$id."' and id<>'".$id."' order by parent_id asc ");
 	while($row=DB::fetch($list))
 	{
+		//color
+		if($row['score'])
+		{
+			$s_arr=explode("|",$row['score']);
+		}
+		if($row['par'])
+		{
+			$p_arr=explode("|",$row['par']);
+		}
+		if(!empty($s_arr))
+		{
+			$c_arr=array();
+		}
+		for($i=0; $i<count($p_arr); $i++)
+		{
+			if($s_arr[$i]!="" )
+			{
+				if($s_arr[$i]-$p_arr[$i]==3)
+				{
+					$c_arr[$i]=1;
+				}
+				else if($s_arr[$i]-$p_arr[$i]==2)
+				{
+					$c_arr[$i]=2;
+				}
+				else if($s_arr[$i]-$p_arr[$i]==1)
+				{
+					$c_arr[$i]=3;
+				}
+				else if($s_arr[$i]-$p_arr[$i]==0)
+				{
+					$c_arr[$i]=4;
+				}
+				else if($s_arr[$i]-$p_arr[$i]==-1)
+				{
+					$c_arr[$i]=5;
+				}
+				else if($s_arr[$i]-$p_arr[$i]==-2)
+				{
+					$c_arr[$i]=6;
+				}
+				else if($s_arr[$i]-$p_arr[$i]==-3)
+				{
+					$c_arr[$i]=7;
+				}
+				else
+				{
+					$c_arr[$i]=0;
+					//$c_arr[$i]=$s_arr[$i]-$p_arr[$i];
+				}
+			}
+		}
+		$row['color']=$c_arr;
 	
 		if($row['score'])
 		{
