@@ -46,7 +46,7 @@
 				<volist id="vo" name="pic_list" key="key">
 					<tr>
 						<th>图片{$key}：</th>
-						<td><input type="file" name="about_pic_{$vo.pic_id}" id="about_pic{$vo.pic_id}"  class="mod_input" style="width:300px;"><if condition="$vo.pic_url neq ''"></if><img src="{$vo.pic_url}" style="max-height:60px; max-width:100px;"></if></td>
+						<td><input type="file" name="about_pic_{$vo.pic_id}" id="about_pic{$vo.pic_id}"  class="mod_input" style="width:300px;"><php>if($vo['pic_url']){</php><img src="{$vo.pic_url}" style="max-height:60px; max-width:100px;"><php>}</php></td>
 					</tr>
 				</volist>
 				<!--<tr>

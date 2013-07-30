@@ -282,7 +282,10 @@ class field_menuAction extends field_publicAction
 		    }
 		    $data['field_1stmenu_type'] = post('field_1stmenu_type');
 		    $menu_pic_url = $this->upd_menu_pic();
-		    $data['field_2ndmenu_pic'] = !empty($menu_pic_url) ? $menu_pic_url : false;
+			if(!empty($menu_pic_url)) {
+				$data['field_2ndmenu_pic'] = $menu_pic_url;
+			}
+		    
 		    $data['field_2ndmenu_price'] = post('field_2ndmenu_price');
 		    $data['field_2ndmenu_addtime'] = time();
 		    $list=M("field_2ndmenu")->add($data);
@@ -348,7 +351,12 @@ class field_menuAction extends field_publicAction
 		        $data['field_2ndmenu_name'] = post('field_2ndmenu_name');
 		    }
 		    $menu_pic_url = $this->upd_menu_pic();
-		    $data['field_2ndmenu_pic'] = !empty($menu_pic_url) ? $menu_pic_url : false;
+			
+			if(!empty($menu_pic_url)) {
+			
+				$data['field_2ndmenu_pic'] = $menu_pic_url;
+			}
+		   
 		    $data['field_2ndmenu_price'] = post('field_2ndmenu_price');
 		    $data['field_2ndmenu_addtime'] = time();
 		    $list=M("field_2ndmenu")->save($data);

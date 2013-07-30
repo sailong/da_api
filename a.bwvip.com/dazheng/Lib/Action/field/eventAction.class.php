@@ -35,7 +35,7 @@ class eventAction extends field_publicAction
 		$b=$editor->usejs();             //js代码
 		$this->assign('usejs',$b);     //输出到html
 		$this->assign('editor',$a);
-
+		
 		$this->assign("page_title","添加赛事");
     	$this->display();
 	}
@@ -127,6 +127,9 @@ class eventAction extends field_publicAction
 			$b=$editor->usejs();             //js代码
 			$this->assign('usejs',$b);     //输出到html
 			$this->assign('editor',$a);
+			
+			$fenzhan=D('fenzhan_tbl')->fenzhan_list_pro(" and event_id='".get("event_id")."' ");
+			$this->assign('fenzhan',$fenzhan['item']);
 			
 			$this->assign("page_title","修改赛事");
 			$this->display();
@@ -304,6 +307,9 @@ class eventAction extends field_publicAction
 			$b=$editor->usejs();             //js代码
 			$this->assign('usejs',$b);     //输出到html
 			$this->assign('editor',$a);
+			
+			$fenzhan=D('fenzhan_tbl')->fenzhan_list_pro(" and event_id='".get("event_id")."' ");
+			$this->assign('fenzhan',$fenzhan['item']);
 			
 			$this->assign('event_on',1);
 			

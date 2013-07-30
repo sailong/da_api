@@ -414,19 +414,27 @@ class fenzhanAction extends field_publicAction
 			$fenzhan_info[$val['fenzhan_id']] = $val;
 		}
 		unset($fenzhan);
+		
 		$this->assign('fenzhan',$fenzhan_info);
 		
-		$fenzu=D('fenzu')->fenzu_list_pro(" and fenzhan_id='".get("fenzhan_id")."' ",999,"lun desc,fenzhan_num asc");
-		$this->assign('fenzu',$fenzu['item']);
+		//$fenzu=D('fenzu')->fenzu_list_pro(" and fenzhan_id='".get("fenzhan_id")."' ",999,"lun desc,fenzhan_num asc");
+		//$this->assign('fenzu',$fenzu['item']);
+		//$fenzu_list=M('fenzu')->where("event_id='".get("event_id")."'")->select();
+		//var_dump($fenzu_list);
+		//foreach($fenzu_list as $key=>$val) {
+		//	$fenzu[$val['fenzhu_id']]=$val;
+		//}
+		//unset($fenzu_list);
+		//$this->assign('fenzu',$fenzu);
 		
 		
 		//$list=D("fenzu_mingxi")->fenzu_mingxi_list_pro(" ");
 		if($fenzhan_id)
 		{
-	    $list=M()->query("select * from tbl_baofen where fenzhan_id='".$fenzhan_id."' order by baofen_id desc ");
+			$list=M()->query("select * from tbl_baofen where fenzhan_id='".$fenzhan_id."' order by baofen_id desc ");
 		}else
 		{		
-	    $list=M()->query("select * from tbl_baofen where event_id='".get("event_id")."' order by baofen_id desc ");
+			$list=M()->query("select * from tbl_baofen where event_id='".get("event_id")."' order by baofen_id desc ");
 		}
 	  
 		$this->assign("list",$list);

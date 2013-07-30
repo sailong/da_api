@@ -56,8 +56,8 @@
 		<td>{$vo.baofen_id}</th>
 		<td>{$vo.uid}</th>
 		<td>{$vo.realname}</td>
-		<td>{$vo.fenzhan_id}</td>
-		<td>{$vo.fenzu_id}</td> 
+		<td>{$fenzhan[$vo['fenzhan_id']]['fenzhan_name']}（{$vo.fenzhan_id}）</td>
+		<td>第{$vo.fenzu_id}组</td> 
 		<td>{$vo.start_time|format_to_fulltime}</td>
 		<td>{$vo.tee}</td>
 		<!--
