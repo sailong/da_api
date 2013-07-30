@@ -1,5 +1,4 @@
 <?php
-
 if(!defined('IN_DISCUZ')) {
     exit('Access Denied');
 }
@@ -215,7 +214,7 @@ if($ac=='rank')
 
 	//微博列表
 	$saishi_name=gettruename($sid);
-	$list=DB::query("select tid,uid, (select realname from ".DB::table("common_member_profile")." where uid=jishigou_topic.uid)  as username,content,replys,forwards,dateline,(select photo from jishigou_topic_image where tid=jishigou_topic.tid limit 1) as photo,voice,voice_timelong from jishigou_topic where type<>'reply' and content like '%".$saishi_name."%' order by dateline desc limit 5 ");
+	$list=DB::query("select tid,uid, (select realname from ".DB::table("common_member_profile")." where uid=jishigou_topic.uid)  as username,(select longtext from jishigou_topic_longtext where tid=jishigou_topic.tid)  as longtext,content,replys,forwards,dateline,(select photo from jishigou_topic_image where tid=jishigou_topic.tid limit 1) as photo,voice,voice_timelong from jishigou_topic where type<>'reply' and content like '%".$saishi_name."%' order by dateline desc limit 5 ");
 	while($row = DB::fetch($list) )
 	{
 		if($row['photo'])
