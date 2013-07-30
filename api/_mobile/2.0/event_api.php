@@ -95,7 +95,12 @@ if($ac=="select_event")
 		//$row['field_ids']=
 		
 		//$row['event_pic']=$site_url."/uc_server/avatar.php?uid=".$row['event_uid']."&size=middle";
-		$row['event_pic']=$site_url.$row['event_logo'];
+		
+		if($row['event_logo'])
+		{
+			$row['event_logo']=$site_url."/".$row['event_logo'];
+		}
+		$row['event_pic']=$site_url.'/'.$row['event_logo'];
 		$row['uid']=$row['event_uid'];
 		$row['event_content']=msubstr(cutstr_html($row['event_content']),0,30);
 		if(!$row['event_url'])

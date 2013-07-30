@@ -458,50 +458,198 @@ if($ac=='rank')
 							$lun_info = DB::fetch_first("select id,sais_id,uid,total_score,score,par, to_days(FROM_UNIXTIME(dateline))-to_days(now()) as tianshu from ".DB::table('common_score')." where sais_id=$sid and uid='".$row['uid']."' and lun='".$j."' and total_score>60 order by dateline asc   limit 1 ");
 							$zongbiaogan=$zongbiaogan+(end(explode("|",$lun_info['par'])));
 
+							if($lun_info['score'])
+							{
+								$s_arr=explode("|",$lun_info['score']);
+								unset($s_arr[9]);
+								unset($s_arr[19]);
+								unset($s_arr[20]);
+								$str_new=implode("|",$s_arr);
+								$arr_new=explode("|",$str_new);
+								$lun_info['score']=$arr_new;
+							}
+							
+							if($lun_info['par'])
+							{
+								$p_arr=explode("|",$lun_info['par']);
+								unset($p_arr[9]);
+								unset($p_arr[19]);
+								unset($p_arr[20]);
+								$ptr_new=implode("|",$p_arr);
+								$prr_new=explode("|",$ptr_new);
+							}
+							//$lun_info['par']=$prr_new;
 							//print_r($lun_info);
+							
+							$p_arr=$prr_new;
+							$s_arr=$arr_new;
+							
+							if(!empty($s_arr) )
+							{
+								$c_arr=array();
+							}
+							
+							for($i=0; $i<count($p_arr); $i++)
+							{
+								if($s_arr[$i]!="" )
+								{
+									if($s_arr[$i]-$p_arr[$i]==3)
+									{
+										$c_arr[$i]=1;
+									}
+									else if($s_arr[$i]-$p_arr[$i]==2)
+									{
+										$c_arr[$i]=2;
+									}
+									else if($s_arr[$i]-$p_arr[$i]==1)
+									{
+										$c_arr[$i]=3;
+									}
+									else if($s_arr[$i]-$p_arr[$i]==0)
+									{
+										$c_arr[$i]=4;
+									}
+									else if($s_arr[$i]-$p_arr[$i]==-1)
+									{
+										$c_arr[$i]=5;
+									}
+									else if($s_arr[$i]-$p_arr[$i]==-2)
+									{
+										$c_arr[$i]=6;
+									}
+									else if($s_arr[$i]-$p_arr[$i]==-3)
+									{
+										$c_arr[$i]=7;
+									}
+									else
+									{
+										$c_arr[$i]=0;
+										//$c_arr[$i]=$s_arr[$i]-$p_arr[$i];
+									}
+								}
+								/*
+								unset($c_arr[9]);
+								unset($c_arr[19]);
+								unset($c_arr[20]);
+								$ctr_new=implode("|",$c_arr);
+								$c_arr=explode("|",$ctr_new);
+								*/
+								//print_r($c_arr);
+								//echo "<hr>";
+							}
+						
 							if($j==1)
 							{
+								$score_1=$lun_info['score'];
+								$color_1=$c_arr;
 								$lun_1=$lun_info['total_score'];
+								$ju_1=(end(explode("|",$row['score']))-end(explode("|",$row['par'])));
+								
+								$par_1=$lun_info['par'];
+								
 							}
 							if($j==2)
 							{
+								$score_2=$lun_info['score'];
 								$lun_2=$lun_info['total_score'];
+								$ju_2=(end(explode("|",$row['score']))-end(explode("|",$row['par'])));
+								$color_2=$c_arr;
 							}
 							if($j==3)
 							{
+								$score_3=$lun_info['score'];
 								$lun_3=$lun_info['total_score'];
+								$ju_3=(end(explode("|",$row['score']))-end(explode("|",$row['par'])));
+								$color_3=$c_arr;
 							}
 							if($j==4)
 							{
+								$score_4=$lun_info['score'];
 								$lun_4=$lun_info['total_score'];
+								$ju_4=(end(explode("|",$row['score']))-end(explode("|",$row['par'])));
+								$color_4=$c_arr;
 							}
 
 						}
 
-						
-						$row['zong_score']=($lun_1)+($lun_2)+($lun_3)+($lun_4);
-						//$res=DB::query("update ".DB::table("common_score")." set zong_score='".$row['zong_score']."' where uid='".$row ['uid']."' and sais_id='".$row ['sais_id']."'  ");
+						$row['ju_par_total']=($ju_1)+($ju_2)+($ju_3)+($ju_4);
+						if(!$row['zong_score'])
+						{
+							$row['zong_score']=($lun_1)+($lun_2)+($lun_3)+($lun_4);
+							$res=DB::query("update ".DB::table("common_score")." set zong_score='".$row['zong_score']."' where uid='".$row ['uid']."' and sais_id='".$row ['sais_id']."'  ");
+						}
 
 						$row['lun_1']=$lun_1;
 						$row['lun_2']=$lun_2;
 						$row['lun_3']=$lun_3;
 						$row['lun_4']=$lun_4;
+						$row['ju_par_1']=$ju_1;
+						$row['ju_par_2']=$ju_2;
+						$row['ju_par_3']=$ju_3;
+						$row['ju_par_4']=$ju_4;
+						
+						$row['color_1']=$color_1;
+						$row['color_2']=$color_2;
+						$row['color_3']=$color_3;
+						$row['color_4']=$color_4;
+
+						
+						$row['score_1']=$score_1;
+						$row['score_2']=$score_2;
+						$row['score_3']=$score_3;
+						$row['score_4']=$score_4;
 						if(!$lun_1)
 						{
-							$row['lun_1']='-';
+							$row['lun_1']='';
 						}
 						if(!$lun_2)
 						{
-							$row['lun_2']='-';
+							$row['lun_2']='';
 						}
 						if(!$lun_3)
 						{
-							$row['lun_3']='-';
+							$row['lun_3']='';
 						}
 						if(!$lun_4)
 						{
-							$row['lun_4']='-';
+							$row['lun_4']='';
 						}
+						if(empty($score_1))
+						{
+							$row['score_1']=null;
+						}
+						if(empty($score_2))
+						{
+							$row['score_2']=null;
+						}
+						if(empty($score_3))
+						{
+							$row['score_3']=null;
+						}
+						if(empty($score_4))
+						{
+							$row['score_4']=null;
+						}
+						
+						if(empty($color_1))
+						{
+							$row['color_1']=null;
+						}
+						if(empty($color_2))
+						{
+							$row['color_2']=null;
+						}
+						if(empty($color_3))
+						{
+							$row['color_3']=null;
+						}
+						if(empty($color_4))
+						{
+							$row['color_4']=null;
+						}
+						
+						
+						$row['zongbiaogan']=$zongbiaogan;
 
 						$row['today_score']='"'.(end(explode("|",$row['score']))-end(explode("|",$row['par']))).'"';
 						$row['total_score']=(string)$row['zong_score'];
@@ -519,11 +667,12 @@ if($ac=='rank')
 						$str_new=implode("|",$s_arr);
 						$arr_new=explode("|",$str_new);
 						
-						$row['score_sub']=$arr_new;
+						//$row['score_sub']=$arr_new;
 						
 						$row['username'] =  gettruename($row['uid']);
 						
-						$gscore[] = $row; 
+						$row['score_sub']=array_default_value($arr_new);
+						$gscore[] = array_default_value($row,array('score_1','score_2','score_3','score_4','color_4','color_1','color_2','color_3','color_4')); 
 					}
 					$i++;
 					
