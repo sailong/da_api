@@ -100,11 +100,13 @@ $news_blog = DB::fetch_first(" SELECT b.`subject`,b.`dateline`,bf.`tag`,bf.`mess
 //print_r($news_blog);
 
 $aa=str_replace("src=\"/Public/editor/attached","src=\"http://www.bwvip.com/Public/editor/attached",$news_blog['message']);
+$aa=str_replace("src=\"data/attachment/","src=\"http://www.bwvip.com/data/attachment/",$aa);
 $news_blog['message']=$aa;
 
 
 if($_GET['test'] == 1) {
     $test = 1;
+	var_dump();die;
     echo " select `blogid`,`subject` from ".DB::table('home_blog')." where 1=1 ".$where." limit ".$num;
     var_dump($new_blogs_list);
 }

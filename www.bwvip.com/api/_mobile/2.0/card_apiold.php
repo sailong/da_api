@@ -144,7 +144,41 @@ if($ac=='rank')
 			}
 			else
 			{
+				//如果没有就生成二维码
+				/*
+				include "./tool/phpqrcode/qrlib.php";
+				$save_path="./upload/erweima/";
+				$full_save_path=$save_path.date("Ymd",time())."/";
+				if(!file_exists($save_path))
+				{
+					mkdir($save_path);
+				}
+				if(!file_exists($full_save_path))
+				{
+					mkdir($full_save_path);
+				}
+
+				$data=$bm['bm_id'];
+				$filename=$full_save_path.$bm['bm_id'].".png";
+				if(file_exists($filename))
+				{
+					unlink($filename);
+				}
+
+				$errorCorrectionLevel = "L";
+				$matrixPointSize=9;
+				$margin=1;
+				QRcode::png($data, $filename, $errorCorrectionLevel, $matrixPointSize, $margin); 
+				if(file_exists($filename))
+				{
+					$event_info['event_baoming_pic']=$site_url."".$filename;	
+					$res=DB::query("update  ".DB::table("home_dazbm")." set code_pic='".$filename."' where  bm_id='".$bm['bm_id']."' ");
+				}
+				*/
 				$event_info['event_baoming_pic']="";	
+				
+				
+
 			}
 
 		}
@@ -240,8 +274,8 @@ if($ac=='rank')
 
 	if(!empty($event_info))
 	{
-			
-			$lun_num=1;
+
+
 			$sid=$event_info['event_uid'];
 			$now_fz_id=$event_info['event_fenzhan_id'];
 			
@@ -267,7 +301,7 @@ if($ac=='rank')
 
 			if($now_fz_id)
 			{
-				$fenzhan=DB::fetch_first("select timepic,starttime,fenzhan_lun as lun,fenzhan_a,fenzhan_b from tbl_fenzhan where fenzhan_id='".$now_fz_id."' limit 1 ");
+				$fenzhan=DB::fetch_first("select timepic,starttime,lun from pre_fenzhan where fz_id='".$now_fz_id."' limit 1 ");
 				if($fenzhan['timepic'])
 				{
 					$event_info['event_timepic']=$site_url."/".$fenzhan['timepic'];
@@ -282,66 +316,73 @@ if($ac=='rank')
 				//如果有分站信息
 				//xyx20130614 分站 当前是第二轮是tlcave+tlcave1 as total_score  当前是第三轮是tlcave+tlcave1+tlcave2 as total_score
 			
-			
 				if($fenzhan['lun']==2)
 				{
-				  $strlun="avcave1+avcave as total_score";
+				  $strlun="tlcave+tlcave1 as total_score";$lnorder=" isend desc, avcave1+avcave,tlcave,tlcave1  ";
 				}
 				if($fenzhan['lun']==3)
 				{
-				  $strlun="avcave1+avcave2+avcave as total_score";
+				  $strlun="tlcave+tlcave1+tlcave2 as total_score";$lnorder=" isend desc, avcave1+avcave2+avcave,tlcave,tlcave2,tlcave1   ";
 				}
 				if($fenzhan['lun']==4)
 				{
-				  $strlun="avcave1+avcave2+avcave3+avcave as total_score";
+				  $strlun="tlcave+tlcave1+tlcave2+tlcave3 as total_score";$lnorder=" isend desc, avcave1+avcave2+avcave3+avcave,tlcave,tlcave3,tlcave2,tlcave1   ";
 				}
 				if($fenzhan['lun']==0||$fenzhan['lun']==1)
 				{
-					$strlun=" avcave as total_score";
+				  $strlun="tlcave as total_score";$lnorder=" isend desc,avcave,lin,cave_18,cave_17,cave_16  ";
 				}
-				$lnorder=" total_score asc,lin,cave_18,cave_17,cave_16 ";
-				
-			
+				 
 				if($days>=1)
 				{
-					$list=DB::query("select uid,realname as username,avcave as today_score,$strlun,cave_1,cave_2,cave_3,cave_4,cave_5,cave_6,cave_7,cave_8,cave_9,cave_10,cave_11,cave_12,cave_13,cave_14,cave_15,cave_16,cave_17,cave_18,avcave,(cave_10+cave_11+cave_12+cave_13+cave_14+cave_15+cave_16+cave_17+cave_18) as lin,isend from ". DB::table('golf_nd_baofen')." where fenz_id='".$now_fz_id."' order by  $lnorder,lin,cave_18,cave_17,cave_16 ");
+					$list=DB::query("select uid,realname as username,tlcave as today_score,$strlun,cave_1,cave_2,cave_3,cave_4,cave_5,cave_6,cave_7,cave_8,cave_9,cave_10,cave_11,cave_12,cave_13,cave_14,cave_15,cave_16,cave_17,cave_18,avcave,(cave_10+cave_11+cave_12+cave_13+cave_14+cave_15+cave_16+cave_17+cave_18) as lin,isend from ". DB::table('golf_nd_baofen')." where fenz_id='".$now_fz_id."' order by  $lnorder,lin,cave_18,cave_17,cave_16 ");
 				}
 				else
 				{
-					$list=DB::query("select uid,realname as username,avcave as today_score,$strlun,cave_1,cave_2,cave_3,cave_4,cave_5,cave_6,cave_7,cave_8,cave_9,cave_10,cave_11,cave_12,cave_13,cave_14,cave_15,cave_16,cave_17,cave_18,avcave,(cave_10+cave_11+cave_12+cave_13+cave_14+cave_15+cave_16+cave_17+cave_18) as lin,isend from ". DB::table('golf_nd_baofen')." where fenz_id='".$now_fz_id."' order by  $lnorder,lin,cave_18,cave_17,cave_16 ");
+					$list=DB::query("select uid,realname as username,tlcave as today_score,$strlun,cave_1,cave_2,cave_3,cave_4,cave_5,cave_6,cave_7,cave_8,cave_9,cave_10,cave_11,cave_12,cave_13,cave_14,cave_15,cave_16,cave_17,cave_18,avcave,(cave_10+cave_11+cave_12+cave_13+cave_14+cave_15+cave_16+cave_17+cave_18) as lin,isend from ". DB::table('golf_nd_baofen')." where fenz_id='".$now_fz_id."' order by  $lnorder,lin,cave_18,cave_17,cave_16 ");
 				}
+				
+				
+				
+				/*
+				if($days>=1)
+				{
+					$list=DB::query("select uid,realname as username,tlcave as today_score,tlcave as total_score,cave_1,cave_2,cave_3,cave_4,cave_5,cave_6,cave_7,cave_8,cave_9,cave_10,cave_11,cave_12,cave_13,cave_14,cave_15,cave_16,cave_17,cave_18,avcave,(cave_10+cave_11+cave_12+cave_13+cave_14+cave_15+cave_16+cave_17+cave_18) as lin,isend from ". DB::table('golf_nd_baofen')." where fenz_id='".$fz_id."' and tlcave<999 and  cave_1>0 and cave_2>0  and cave_3>0  and cave_4>0  and cave_5>0  and cave_6>0  and cave_7>0  and cave_8>0  and cave_9>0  and cave_10>0  and cave_11>0  and cave_12>0  and cave_13>0  and cave_14>0  and cave_15>0  and cave_16>0  and cave_17>0  and cave_18>0  order by isend desc,avcave,lin,cave_18,cave_17,cave_16 ");
+				}
+				else
+				{
+					$list=DB::query("select uid,realname as username,tlcave as today_score,tlcave as total_score,cave_1,cave_2,cave_3,cave_4,cave_5,cave_6,cave_7,cave_8,cave_9,cave_10,cave_11,cave_12,cave_13,cave_14,cave_15,cave_16,cave_17,cave_18,avcave,(cave_10+cave_11+cave_12+cave_13+cave_14+cave_15+cave_16+cave_17+cave_18) as lin,isend from ". DB::table('golf_nd_baofen')." where fenz_id='".$fz_id."' order by isend desc,avcave,lin,cave_18,cave_17,cave_16 ");
+				}
+				*/
+			
 				
 				while($row=DB::fetch($list))
 				{
-	
+					//print_r($row);
+					
 					$row['id']="0";
 					$row['tianshu']="-1";
 					$row['lun_num']="1";
 
-
+					$row['today_score']=$row['avcave'];
 					if($row['today_score']==1000)
 					{
 						$row['today_score']='-';
 					}
+					$row['total_score']=Getstat($row['total_score']);
+					$row['par']=str_replace(",","|","4,4,3,5,4,4,3,5,4,36,4,4,5,4,4,4,5,3,4,36,72");
+					if($row['total_score']<1)
+					{
+						$row['score_status']="-";
+					}
 					else
 					{
-						$row['today_score']=ju_par_format($row['today_score']);
+						$row['score_status']="F";
 					}
-					
-					$par = explode ( ',',$fenzhan['fenzhan_a'].",".$fenzhan['fenzhan_b']);
-					$POUT = $par [0] + $par [1] + $par [2] + $par [3] + $par [4] + $par [5] + $par [6] + $par [7] + $par [8];
-					$PIN = $par [9] + $par [10] + $par [11] + $par [12] + $par [13] + $par [14] + $par [15] + $par [16] + $par [17];
-					$PTL = $POUT + $PIN;
-					$row ['par'] = $par [0] . '|' . $par [1] . '|' . $par [2] . '|' . $par [3] . '|' . $par [4] . '|' . $par [5] . '|' . $par [6] . '|' . $par [7] . '|' . $par [8] . '|' . $POUT . '|' . $par [9] . '|' . $par [10] . '|' . $par [11] . '|' . $par [12] . '|' . $par [13] . '|' . $par [14] . '|' . $par [15] . '|' . $par [16] . '|' . $par [17] . '|' . $PIN . '|' . $PTL;
-				
-					
-					
-					$row['total_score']=ju_par_format($row['total_score']);
 					
 					$out=$row['cave_1']+$row['cave_2']+$row['cave_3']+$row['cave_4']+$row['cave_5']+$row['cave_6']+$row['cave_7']+$row['cave_8']+$row['cave_9'];
 					$in=$row['cave_10']+$row['cave_11']+$row['cave_12']+$row['cave_13']+$row['cave_14']+$row['cave_15']+$row['cave_16']+$row['cave_17']+$row['cave_18'];
 					$total=$out+$in;
-					
 
 					if($row['cave_1']<0||$row['cave_2']<0||$row['cave_3']<0||$row['cave_4']<0||$row['cave_5']<0||$row['cave_6']<0||$row['cave_7']<0||$row['cave_8']<0||$row['cave_9']<0||$row['cave_10']<0||$row['cave_11']<0||$row['cave_12']<0||$row['cave_13']<0||$row['cave_14']<0||$row['cave_15']<0||$row['cave_16']<0||$row['cave_17']<0||$row['cave_18']<0)
 					{
@@ -353,140 +394,6 @@ if($ac=='rank')
 					}
 					$row['score_sub']=explode("|",$row['score']);
 					$row['par_sub']=explode("|",$row['par']);
-					
-					
-					if($row['score'])
-					{
-						$s_arr=explode("|",$row['score']);
-					}
-					
-					if($row['par'])
-					{
-						$p_arr=explode("|",$row['par']);
-					}
-					$p_arr=$p_arr;
-					$s_arr=$s_arr;
-					
-					if(!empty($s_arr) )
-					{
-						$c_arr=array();
-					}
-					
-					for($i=0; $i<count($p_arr); $i++)
-					{
-						if($s_arr[$i]!="" )
-						{
-							if($s_arr[$i]-$p_arr[$i]==3)
-							{
-								$c_arr[$i]=1;
-							}
-							else if($s_arr[$i]-$p_arr[$i]==2)
-							{
-								$c_arr[$i]=2;
-							}
-							else if($s_arr[$i]-$p_arr[$i]==1)
-							{
-								$c_arr[$i]=3;
-							}
-							else if($s_arr[$i]-$p_arr[$i]==0)
-							{
-								$c_arr[$i]=4;
-							}
-							else if($s_arr[$i]-$p_arr[$i]==-1)
-							{
-								$c_arr[$i]=5;
-							}
-							else if($s_arr[$i]-$p_arr[$i]==-2)
-							{
-								$c_arr[$i]=6;
-							}
-							else if($s_arr[$i]-$p_arr[$i]==-3)
-							{
-								$c_arr[$i]=7;
-							}
-							else
-							{
-								$c_arr[$i]=0;
-								//$c_arr[$i]=$s_arr[$i]-$p_arr[$i];
-							}
-						}
-
-					}
-					$color_1=array_default_value($c_arr,array(),0);
-					$row['color_1']=$color_1;
-					
-					$row['ju_par_total']=(string)$total;
-					$lun_1=(string)$total;
-					$row['lun_1']=$lun_1;
-					$row['lun_2']=$lun_2;
-					$row['lun_3']=$lun_3;
-					$row['lun_4']=$lun_4;
-					$row['ju_par_1']=$ju_1;
-					$row['ju_par_2']=$ju_2;
-					$row['ju_par_3']=$ju_3;
-					$row['ju_par_4']=$ju_4;
-					$row['color_1']=$color_1;
-
-					$row['score_1']=$row['score_sub'];
-					if($row['isend'])
-					{
-						$row['score_status']="F";
-					}
-					else
-					{
-						$row['score_status']="-";
-					}
-					
-		
-					if(!$lun_1)
-					{
-						$row['lun_1']='';
-					}
-					if(!$lun_2)
-					{
-						$row['lun_2']='';
-					}
-					if(!$lun_3)
-					{
-						$row['lun_3']='';
-					}
-					if(!$lun_4)
-					{
-						$row['lun_4']='';
-					}
-					if(empty($score_1))
-					{
-						$row['score_1']=null;
-					}
-					if(empty($score_2))
-					{
-						$row['score_2']=null;
-					}
-					if(empty($score_3))
-					{
-						$row['score_3']=null;
-					}
-					if(empty($score_4))
-					{
-						$row['score_4']=null;
-					}
-					
-					if(empty($color_1))
-					{
-						$row['color_1']=null;
-					}
-					if(empty($color_2))
-					{
-						$row['color_2']=null;
-					}
-					if(empty($color_3))
-					{
-						$row['color_3']=null;
-					}
-					if(empty($color_4))
-					{
-						$row['color_4']=null;
-					}
 
 					unset($row['cave_1']);
 					unset($row['cave_2']);
@@ -535,216 +442,70 @@ if($ac=='rank')
 					//最大轮数
 					$lun_num = DB::result_first("select max(lun) from ".DB::table('common_score')."  where sais_id=$sid and uid >0 and total_score>60  limit 1 ");
 					//print_r($query);
-		
-					$query = DB::query(" SELECT id,uid,lun,total_score,zong_score,score,par,tianshu FROM (select id,uid,lun,total_score,zong_score,score,par,to_days(FROM_UNIXTIME(dateline))-to_days(now()) as tianshu from ".DB::table('common_score')." where sais_id =$sid and uid >0 and total_score>60 order by lun desc,zong_score asc ,tianshu asc) as t2 group by uid order by lun desc,zong_score asc ,tianshu asc  limit 0,$limit");
+				  
+			
+					 $query = DB::query(" SELECT id,uid,lun,total_score,zong_score,score,par,tianshu FROM (select id,uid,lun,total_score,zong_score,score,par,to_days(FROM_UNIXTIME(dateline))-to_days(now()) as tianshu from ".DB::table('common_score')." where sais_id =$sid and uid >0 and total_score>60 order by lun desc,zong_score asc ,tianshu asc) as t2 group by uid order by lun desc,zong_score asc ,tianshu asc  limit 0,$limit");
+					 
+					 
 
 					$i=0;
 					while($row = DB::fetch($query))
 					{
 						$zongbiaogan=0;
-						
-						$j=0;
-						for($ii=0; $ii<$lun_num; $ii++)
+						for($j=1; $j<=$lun_num; $j++)
 						{
-							$j=$ii+1;
 			
-							$lun_info = DB::fetch_first("select id,sais_id,uid,total_score,score,par, to_days(FROM_UNIXTIME(dateline))-to_days(now()) as tianshu from ".DB::table('common_score')." where sais_id=$sid and uid='".$row['uid']."' and lun='".$j."' and total_score>60 order by dateline asc limit 1 ");
-		
+							$lun_info = DB::fetch_first("select id,sais_id,uid,total_score,score,par, to_days(FROM_UNIXTIME(dateline))-to_days(now()) as tianshu from ".DB::table('common_score')." where sais_id=$sid and uid='".$row['uid']."' and lun='".$j."' and total_score>60 order by dateline asc   limit 1 ");
 							$zongbiaogan=$zongbiaogan+(end(explode("|",$lun_info['par'])));
 
-							if($lun_info['score'])
-							{
-								$s_arr=explode("|",$lun_info['score']);
-								unset($s_arr[9]);
-								unset($s_arr[19]);
-								unset($s_arr[20]);
-								$str_new=implode("|",$s_arr);
-								$arr_new=explode("|",$str_new);
-								$lun_info['score']=$arr_new;
-							}
-							
-							if($lun_info['par'])
-							{
-								$p_arr=explode("|",$lun_info['par']);
-								unset($p_arr[9]);
-								unset($p_arr[19]);
-								unset($p_arr[20]);
-								$ptr_new=implode("|",$p_arr);
-								$prr_new=explode("|",$ptr_new);
-							}
-							//$lun_info['par']=$prr_new;
 							//print_r($lun_info);
-							$p_arr=$prr_new;
-							$s_arr=$arr_new;
-							
-							if(!empty($s_arr) )
-							{
-								$c_arr=array();
-							}
-							
-							for($i=0; $i<count($p_arr); $i++)
-							{
-								if($s_arr[$i]!="" )
-								{
-									if($s_arr[$i]-$p_arr[$i]==3)
-									{
-										$c_arr[$i]=1;
-									}
-									else if($s_arr[$i]-$p_arr[$i]==2)
-									{
-										$c_arr[$i]=2;
-									}
-									else if($s_arr[$i]-$p_arr[$i]==1)
-									{
-										$c_arr[$i]=3;
-									}
-									else if($s_arr[$i]-$p_arr[$i]==0)
-									{
-										$c_arr[$i]=4;
-									}
-									else if($s_arr[$i]-$p_arr[$i]==-1)
-									{
-										$c_arr[$i]=5;
-									}
-									else if($s_arr[$i]-$p_arr[$i]==-2)
-									{
-										$c_arr[$i]=6;
-									}
-									else if($s_arr[$i]-$p_arr[$i]==-3)
-									{
-										$c_arr[$i]=7;
-									}
-									else
-									{
-										$c_arr[$i]=0;
-										//$c_arr[$i]=$s_arr[$i]-$p_arr[$i];
-									}
-								}
-								/*
-								unset($c_arr[9]);
-								unset($c_arr[19]);
-								unset($c_arr[20]);
-								$ctr_new=implode("|",$c_arr);
-								$c_arr=explode("|",$ctr_new);
-								*/
-								//print_r($c_arr);
-								//echo "<hr>";
-							}
-						
 							if($j==1)
 							{
-								$score_1=$lun_info['score'];
-								$color_1=$c_arr;
 								$lun_1=$lun_info['total_score'];
-								$ju_1=(end(explode("|",$row['score']))-end(explode("|",$row['par'])));
-								$par_1=$lun_info['par'];
-								
 							}
 							if($j==2)
 							{
-								$score_2=$lun_info['score'];
 								$lun_2=$lun_info['total_score'];
-								$ju_2=(end(explode("|",$row['score']))-end(explode("|",$row['par'])));
-								$color_2=$c_arr;
 							}
 							if($j==3)
 							{
-								$score_3=$lun_info['score'];
 								$lun_3=$lun_info['total_score'];
-								$ju_3=(end(explode("|",$row['score']))-end(explode("|",$row['par'])));
-								$color_3=$c_arr;
 							}
 							if($j==4)
 							{
-								$score_4=$lun_info['score'];
 								$lun_4=$lun_info['total_score'];
-								$ju_4=(end(explode("|",$row['score']))-end(explode("|",$row['par'])));
-								$color_4=$c_arr;
 							}
 
 						}
 
-						$row['ju_par_total']=($ju_1)+($ju_2)+($ju_3)+($ju_4);
-						$row['ju_par_total']=(string)$row['ju_par_total'];
-						if(!$row['zong_score'])
-						{
-							$row['zong_score']=($lun_1)+($lun_2)+($lun_3)+($lun_4);
-							$res=DB::query("update ".DB::table("common_score")." set zong_score='".$row['zong_score']."' where uid='".$row ['uid']."' and sais_id='".$row ['sais_id']."'  ");
-						}
-						//$row['zong_score']=ju_par_format($row['zong_score']-$zongbiaogan);
+						
+						$row['zong_score']=($lun_1)+($lun_2)+($lun_3)+($lun_4);
+						//$res=DB::query("update ".DB::table("common_score")." set zong_score='".$row['zong_score']."' where uid='".$row ['uid']."' and sais_id='".$row ['sais_id']."'  ");
 
 						$row['lun_1']=$lun_1;
 						$row['lun_2']=$lun_2;
 						$row['lun_3']=$lun_3;
 						$row['lun_4']=$lun_4;
-						$row['ju_par_1']=$ju_1;
-						$row['ju_par_2']=$ju_2;
-						$row['ju_par_3']=$ju_3;
-						$row['ju_par_4']=$ju_4;
-						
-						$row['color_1']=$color_1;
-						$row['color_2']=$color_2;
-						$row['color_3']=$color_3;
-						$row['color_4']=$color_4;
-
-						$row['score_1']=$score_1;
-						$row['score_2']=$score_2;
-						$row['score_3']=$score_3;
-						$row['score_4']=$score_4;
 						if(!$lun_1)
 						{
-							$row['lun_1']='';
+							$row['lun_1']='-';
 						}
 						if(!$lun_2)
 						{
-							$row['lun_2']='';
+							$row['lun_2']='-';
 						}
 						if(!$lun_3)
 						{
-							$row['lun_3']='';
+							$row['lun_3']='-';
 						}
 						if(!$lun_4)
 						{
-							$row['lun_4']='';
+							$row['lun_4']='-';
 						}
-						if(empty($score_1))
-						{
-							$row['score_1']=null;
-						}
-						if(empty($score_2))
-						{
-							$row['score_2']=null;
-						}
-						if(empty($score_3))
-						{
-							$row['score_3']=null;
-						}
-						if(empty($score_4))
-						{
-							$row['score_4']=null;
-						}
-						
-						if(empty($color_1))
-						{
-							$row['color_1']=null;
-						}
-						if(empty($color_2))
-						{
-							$row['color_2']=null;
-						}
-						if(empty($color_3))
-						{
-							$row['color_3']=null;
-						}
-						if(empty($color_4))
-						{
-							$row['color_4']=null;
-						}
-						
 						
 						$row['zongbiaogan']=$zongbiaogan;
 
-						$row['today_score']=ju_par_format((end(explode("|",$row['score']))-end(explode("|",$row['par']))));
+						$row['today_score']='"'.(end(explode("|",$row['score']))-end(explode("|",$row['par']))).'"';
 						$row['total_score']=(string)$row['zong_score'];
 						if($row['total_score']==1000)
 						{
@@ -760,11 +521,11 @@ if($ac=='rank')
 						$str_new=implode("|",$s_arr);
 						$arr_new=explode("|",$str_new);
 						
-						//$row['score_sub']=$arr_new;
+						$row['score_sub']=$arr_new;
+						
 						$row['username'] =  gettruename($row['uid']);
 						
-						$row['score_sub']=array_default_value($arr_new);
-						$gscore[] = array_default_value($row,array('score_1','score_2','score_3','score_4','color_4','color_1','color_2','color_3','color_4')); 
+						$gscore[] = $row; 
 					}
 					$i++;
 					
@@ -776,8 +537,9 @@ if($ac=='rank')
 					$i=1;
 					foreach ($gscore as $key => $value )
 					{ 
+						
 						//$gscore [$key] ['order'] = '"'.$i++.'"';
-						if($gscore [$key] ['lun']!=$lun_num && !$now_fz_id)
+						if($gscore [$key] ['lun']!=$lun_num)
 						{
 							$gscore [$key] ['order'] = "CUT";  	
 						}
@@ -789,7 +551,8 @@ if($ac=='rank')
 					}
 				}
 						
-	
+						//重新排序
+						//$gscore=array_sort_by_field($gscore, 'zong_score',true);
 						
 				if(empty($gscore))
 				{
@@ -806,8 +569,8 @@ if($ac=='rank')
 									'realname'=>$event_info['event_name'], 
 									'event_id'=>$event_info['event_id'],
 									'event_fenzhan_id'=>$event_info['event_fenzhan_id'],
-									'lun'=>(string)$lun,
-									'lun_num'=>(string)$lun_num,
+									'lun'=>$lun,
+									'lun_num'=>$lun_num,
 									'event_pic'=>$event_info['event_timepic'],
 									'event_logo'=>$event_info['event_logo'],
 									'event_pic_width'=>$event_info['event_timepic_width'],
@@ -900,7 +663,7 @@ if($ac=="fenzhan_detail")
 		$event_info['event_is_baoming']='N';
 		//分站外卡成绩列表
 		$lun_num = DB::result_first("select max(lun) from ".DB::table('common_score')."  where fz_id='$fz_id' and source='".$source."' and uid >0 and total_score>60  limit 1 ");
-		$query = DB::query("select id,uid,username,lun,total_score,score,par,tianshu from (select id,uid,(select realname from ".DB::table("common_member_profile")." where uid=".DB::table("common_score").".uid) as username,lun,total_score,score,par,to_days(FROM_UNIXTIME(dateline))-to_days(now()) as tianshu from ".DB::table('common_score')." where fz_id='$fz_id' and source='".$source."' and uid >0 and total_score>60 order by total_score asc) as t2 group by uid order by total_score asc,tianshu asc limit 0,$limit");
+		$query = DB::query("select id,uid,(select realname from ".DB::table("common_member_profile")." where uid=".DB::table("common_score").".uid) as username,lun,total_score,score,par,to_days(FROM_UNIXTIME(dateline))-to_days(now()) as tianshu from ".DB::table('common_score')."  where fz_id='$fz_id' and source='".$source."' and uid >0 and total_score>60 group by uid order by lun desc,total_score asc,tianshu asc limit 0,$limit");
 
 		$i=0;
 		while($row = DB::fetch($query))
@@ -935,12 +698,7 @@ if($ac=="fenzhan_detail")
 			$row['lun_4']=$lun_4;
 
 			$row['today_score']='"'.(end(explode("|",$row['score']))-end(explode("|",$row['par']))).'"';
-
-			//$row['total_score']=$row['today_score'];
-			if($row['total_score']==1000)
-			{
-				$row['total_score']='-';
-			}
+			$row['total_score']=(string)$row['today_score'];
 			$row['score_status']="F";
 
 			$s_arr=explode("|",$row['score']);
@@ -980,19 +738,18 @@ if($ac=="fenzhan_detail")
 			$row['tianshu']="-1";
 			$row['lun_num']="1";
 
-			$row['today_score']=ju_par_format($row['avcave']);
+			$row['today_score']=$row['avcave'];
 			if($row['today_score']==1000)
 			{
 				$row['today_score']='-';
 			}
 			
-			
-			$field_id = DB::result_first( "select field_id from " . DB::table ( 'fenzhan' ) . " where fz_id='$fz_id' ");
-			if($field_id)
-			{
-				$pars = DB::result_first( "select par  from " . DB::table ( 'common_field' ) . "  where uid='$field_id' ");
+			$row['total_score']=Getstat($row['total_score']);						
+			$field_id = DB::result_first( "select field_id  from " . DB::table ( 'fenzhan' ) . "  where fz_id='$fz_id' ");
+			if($field_id){
+			$pars = DB::result_first( "select par  from " . DB::table ( 'common_field' ) . "  where uid='$field_id' ");
 			}
-			$par = explode ( ',', $pars );
+			 $par = explode ( ',', $pars );
 			$POUT = $par [0] + $par [1] + $par [2] + $par [3] + $par [4] + $par [5] + $par [6] + $par [7] + $par [8];
 			$PIN = $par [9] + $par [10] + $par [11] + $par [12] + $par [13] + $par [14] + $par [15] + $par [16] + $par [17];
 			$PTL = $POUT + $PIN;
@@ -1099,8 +856,6 @@ if($ac=="fenzhan_detail")
 			{
 				$row['today_score']="RTD";
 			}
-			
-			$row['total_score']=$row['today_score'];
 			
 			$row['score']=$row['cave_1']."|".$row['cave_2']."|".$row['cave_3']."|".$row['cave_4']."|".$row['cave_5']."|".$row['cave_6']."|".$row['cave_7']."|".$row['cave_8']."|".$row['cave_9']."|".$row['cave_10']."|".$row['cave_11']."|".$row['cave_12']."|".$row['cave_13']."|".$row['cave_14']."|".$row['cave_15']."|".$row['cave_16']."|".$row['cave_17']."|".$row['cave_18'];
 
@@ -1329,23 +1084,6 @@ function gettruename($uuid)
 {
 	$username = DB::result_first( "select realname  from " . DB::table ( 'common_member_profile' ) . "  where uid='$uuid' ");
 	return $username ;
-}
-
-
-//距标准杆格式
-function ju_par_format($option)
-{
-	if($option == 0)
-	{
-		$dataInfo = "E";
-	}
-	if ($option > 0) {
-		$dataInfo = "+" . $option;
-	}
-	if ($option < 0) {
-		$dataInfo = $option;
-	}
-	return (string)$dataInfo;
 }
 
 ?>

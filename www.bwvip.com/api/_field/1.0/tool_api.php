@@ -83,8 +83,8 @@ if($ac=='topic_image_small')
 	while(true) {
 		$offset = ($page-1)*$limit;
 		$list=DB::query("select photo from jishigou_topic_image order by id asc limit {$offset},{$limit}");
-		if(!$list) {
-			break;
+		if(empty($list)) {
+			break;exit;
 		}
 		$page++;
 		while($row=DB::fetch($list))
@@ -120,7 +120,7 @@ if($ac=='topic_image_small')
 					$s_height=$ih;
 				}
 				$result = makethumb($image_file, $image_file_small, $s_width, $s_height, 0, 0, 0, 0, 0, 0, 0, 100); */
-				if(!file_exists($image_file_small)) {
+				//if(!file_exists($image_file_small)) {
 					$src_x = $src_y = 0;
 					$src_w = $src_h = min($iw, $ih);
 					if($iw > $ih) {
@@ -133,8 +133,8 @@ if($ac=='topic_image_small')
 					if (!$result && !is_file($image_file_small)) {
 						@copy($image_file, $image_file_small);
 					}
-				}
-				if(!file_exists($image_file_photo)) {
+				//}
+				//if(!file_exists($image_file_photo)) {
 					//生成中图
 					$image_width_p = 300;
 					if($iw > $image_width_p) {
@@ -146,9 +146,11 @@ if($ac=='topic_image_small')
 					if($iw <= $image_width_p || (!$result && !is_file($image_file_photo))) {
 						@copy($image_file, $image_file_photo);
 					}
-				}
+				//}
 				$i++;
 				echo $i.'<br/>';
+			}else{
+				unset($row);
 			}
 		} 
 	}
