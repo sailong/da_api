@@ -38,47 +38,12 @@
 					</td>	
 				</tr>-->
 				<tr>
-					<th width="15%">赛事类型：</th>
-					<td>
-						<select name="event_type" id="event_type" onchange="change_event_type(this.value)">
-							<option value="0">请选择</option>
-							<option value="G">比杆</option>
-							<option value="D">比洞</option>
-							<option value="T">团体</option>
-						</select>
-					</td>	
-				</tr>
-				<tr>
 					<th>赛事名称：</th>
 					<td><input type="text" name="event_name" id="event_name" class="mod_input2" style="width:300px;" ></td>
 				</tr>
 				<tr>
 					<th>赛事LOGO：</th>
 					<td><input type="file" name="event_logo" id="event_logo"  class="mod_input"></td>
-				</tr>
-				<tr class="tuanti">
-					<th>左边团队：</th>
-					<td><input type="text" name="event_left" id="event_left" class="mod_input2" style="width:300px;"  value="{$data.event_left}"></td>
-				</tr>
-				<tr class="tuanti">
-					<th>左边团队介绍</th>
-					<td><textarea rows="3" cols="40" name="event_left_intro" id="event_left_intro" style="width:300px;" class="mod_input">{$data.event_left_intro}</textarea></td>
-				</tr>
-				<tr class="tuanti">
-					<th>左边团队图片：</th>
-					<td><php>if($data['event_left_pic']){</php><img src="/{$data.event_left_pic}" style="max-height:600px; max-width:300px;"><br/><php>}</php><input type="file" name="event_left_pic" id="event_left_pic"  style="width:300px;" class="mod_input">  (如需修改，请重新上传)</td>
-				</tr>
-				<tr class="tuanti">
-					<th>右边团队：</th>
-					<td><input type="text" name="event_right" id="event_right" class="mod_input" style="width:300px;" value="{$data.event_right}" value="{$data.event_right}"></td>
-				</tr>
-				<tr class="tuanti">
-					<th>右边团队介绍</th>
-					<td><textarea rows="3" cols="40" name="event_right_intro" id="event_right_intro" style="width:300px;" class="mod_input">{$data.event_right_intro}</textarea></td>
-				</tr>
-				<tr class="tuanti">
-					<th>右边团队图片：</th>
-					<td><php>if($data['event_right_pic']){</php><img src="/{$data.event_right_pic}" style="max-height:600px; max-width:300px;"><br/><php>}</php><input type="file" name="event_right_pic" id="event_right_pic"  style="width:300px;" class="mod_input">  (如需修改，请重新上传)</td>
 				</tr>
 				<tr>
 					<th>时间表图片：</th>
@@ -170,7 +135,6 @@
 
 <script>
 $(document).ready(function(){
-$(".tuanti").hide();
 $.formValidator.initConfig({formID:"act_form",theme:'ArrowSolidBox',mode:'AutoTip',onError:function(msg){msg_error(msg)},inIframe:true});
 
 	$("#event_uid").formValidator({empty:true,onShow:"请输入赛事UID",onFocus:"请输入赛事UID",onCorrect:"输入正确"}).inputValidator({min:1,max:11,onError:"请输入赛事UID"});
@@ -190,13 +154,6 @@ $.formValidator.initConfig({formID:"act_form",theme:'ArrowSolidBox',mode:'AutoTi
 function reloadAutoTip()
 {
 	$.formValidator.reloadAutoTip();
-}
-function change_event_type(event_type){
-	if(event_type == 'T') {
-		$(".tuanti").show();
-	}else{
-		$(".tuanti").hide();
-	}
 }
 
 </script>

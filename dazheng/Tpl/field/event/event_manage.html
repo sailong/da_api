@@ -35,12 +35,51 @@
 					</td>	
 				</tr>
 				<tr>
+					<th width="15%">赛事类型：</th>
+					<td>
+						<php>if($data['event_type'] == 'G'){echo '比杆';}</php>
+						<php>if($data['event_type'] == 'D'){echo '比洞';}</php>
+						<php>if($data['event_type'] == 'T'){echo '团体';}</php>
+						<!-- <select name="event_type" id="event_type" onchange="change_event_type(this.value)">
+							<option value="0">请选择</option>
+							<option value="G">比杆</option>
+							<option value="D">比洞</option>
+							<option value="T">团体</option>
+						</select>
+						<script>set_select_value(document.act_form.event_type,'{$data.event_type}');</script> -->
+					</td>	
+				</tr>
+				<tr>
 					<th>赛事名称：</th>
 					<td><input type="text" name="event_name" id="event_name" class="mod_input2" style="width:300px;"  value="{$data.event_name}"></td>
 				</tr>
 				<tr>
 					<th>赛事LOGO：</th>
 					<td><php>if($data['event_logo']){</php><img src="/{$data.event_logo}" style="max-height:60px; max-width:100px;"><br/><php>}</php><input type="file" name="event_logo" id="event_logo"  class="mod_input"> (如需修改，请重新上传)</td>
+				</tr>
+				<tr class="tuanti">
+					<th>左边团队：</th>
+					<td><input type="text" name="event_left" id="event_left" class="mod_input2" style="width:300px;"  value="{$data.event_left}"></td>
+				</tr>
+				<tr class="tuanti">
+					<th>左边团队介绍</th>
+					<td><textarea rows="3" cols="40" name="event_left_intro" id="event_left_intro" style="width:300px;" class="mod_input">{$data.event_left_intro}</textarea></td>
+				</tr>
+				<tr class="tuanti">
+					<th>左边团队图片：</th>
+					<td><php>if($data['event_left_pic']){</php><img src="/{$data.event_left_pic}" style="max-height:100px; max-width:200px;"><br/><php>}</php><input type="file" name="event_left_pic" id="event_left_pic"  style="width:300px;" class="mod_input">  (如需修改，请重新上传)</td>
+				</tr>
+				<tr class="tuanti">
+					<th>右边团队：</th>
+					<td><input type="text" name="event_right" id="event_right" class="mod_input" style="width:300px;" value="{$data.event_right}" value="{$data.event_right}"></td>
+				</tr>
+				<tr class="tuanti">
+					<th>右边团队介绍</th>
+					<td><textarea rows="3" cols="40" name="event_right_intro" id="event_right_intro" style="width:300px;" class="mod_input">{$data.event_right_intro}</textarea></td>
+				</tr>
+				<tr class="tuanti">
+					<th>右边团队图片：</th>
+					<td><php>if($data['event_right_pic']){</php><img src="/{$data.event_right_pic}" style="max-height:100px; max-width:200px;"><br/><php>}</php><input type="file" name="event_right_pic" id="event_right_pic"  style="width:300px;" class="mod_input">  (如需修改，请重新上传)</td>
 				</tr>
 				<tr>
 					<th>时间表图片：</th>
@@ -106,6 +145,7 @@
 			<tr>
 				<th></th>
 				<td>
+					<input type="hidden" name="event_type" id="event_type" value="{$data.event_type}">
 					<input type="hidden" name="event_id" value="{$data.event_id}">
 					<input type="submit" class="btn_b" value="保存" style="margin-right:10px;"/>
 					<input type="button" class="btn_w" onclick="javascript:history.back(-1);" value="返回" />
@@ -116,6 +156,11 @@
 
 <script>
 $(document).ready(function(){
+if($("#event_type").val() == 'T'){
+	$(".tuanti").show();
+}else{
+	$(".tuanti").hide();
+}
 $.formValidator.initConfig({formID:"act_form",theme:'ArrowSolidBox',mode:'AutoTip',onError:function(msg){msg_error(msg)},inIframe:true});
 
 	$("#event_uid").formValidator({empty:true,onShow:"请输入赛事UID",onFocus:"请输入赛事UID",onCorrect:"输入正确"}).inputValidator({min:1,max:11,onError:"请输入赛事UID"});
