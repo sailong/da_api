@@ -144,41 +144,7 @@ if($ac=='rank')
 			}
 			else
 			{
-				//如果没有就生成二维码
-				/*
-				include "./tool/phpqrcode/qrlib.php";
-				$save_path="./upload/erweima/";
-				$full_save_path=$save_path.date("Ymd",time())."/";
-				if(!file_exists($save_path))
-				{
-					mkdir($save_path);
-				}
-				if(!file_exists($full_save_path))
-				{
-					mkdir($full_save_path);
-				}
-
-				$data=$bm['bm_id'];
-				$filename=$full_save_path.$bm['bm_id'].".png";
-				if(file_exists($filename))
-				{
-					unlink($filename);
-				}
-
-				$errorCorrectionLevel = "L";
-				$matrixPointSize=9;
-				$margin=1;
-				QRcode::png($data, $filename, $errorCorrectionLevel, $matrixPointSize, $margin); 
-				if(file_exists($filename))
-				{
-					$event_info['event_baoming_pic']=$site_url."".$filename;	
-					$res=DB::query("update  ".DB::table("home_dazbm")." set code_pic='".$filename."' where  bm_id='".$bm['bm_id']."' ");
-				}
-				*/
 				$event_info['event_baoming_pic']="";	
-				
-				
-
 			}
 
 		}
@@ -394,6 +360,74 @@ if($ac=='rank')
 					}
 					$row['score_sub']=explode("|",$row['score']);
 					$row['par_sub']=explode("|",$row['par']);
+					
+					
+					$row['ju_par_total']=(string)0;
+					$row['lun_1']=$lun_1;
+					$row['lun_2']=$lun_2;
+					$row['lun_3']=$lun_3;
+					$row['lun_4']=$lun_4;
+					$row['ju_par_1']=$ju_1;
+					$row['ju_par_2']=$ju_2;
+					$row['ju_par_3']=$ju_3;
+					$row['ju_par_4']=$ju_4;
+					$row['color_1']=$color_1;
+					$row['color_2']=$color_2;
+					$row['color_3']=$color_3;
+					$row['color_4']=$color_4;
+					$row['score_1']=$score_1;
+					$row['score_2']=$score_2;
+					$row['score_3']=$score_3;
+					$row['score_4']=$score_4;
+					if(!$lun_1)
+					{
+						$row['lun_1']='';
+					}
+					if(!$lun_2)
+					{
+						$row['lun_2']='';
+					}
+					if(!$lun_3)
+					{
+						$row['lun_3']='';
+					}
+					if(!$lun_4)
+					{
+						$row['lun_4']='';
+					}
+					if(empty($score_1))
+					{
+						$row['score_1']=null;
+					}
+					if(empty($score_2))
+					{
+						$row['score_2']=null;
+					}
+					if(empty($score_3))
+					{
+						$row['score_3']=null;
+					}
+					if(empty($score_4))
+					{
+						$row['score_4']=null;
+					}
+					
+					if(empty($color_1))
+					{
+						$row['color_1']=null;
+					}
+					if(empty($color_2))
+					{
+						$row['color_2']=null;
+					}
+					if(empty($color_3))
+					{
+						$row['color_3']=null;
+					}
+					if(empty($color_4))
+					{
+						$row['color_4']=null;
+					}
 
 					unset($row['cave_1']);
 					unset($row['cave_2']);
@@ -444,9 +478,8 @@ if($ac=='rank')
 					//print_r($query);
 				  
 			
-					 $query = DB::query(" SELECT id,uid,lun,total_score,zong_score,score,par,tianshu FROM (select id,uid,lun,total_score,zong_score,score,par,to_days(FROM_UNIXTIME(dateline))-to_days(now()) as tianshu from ".DB::table('common_score')." where sais_id =$sid and uid >0 and total_score>60 order by lun desc,zong_score asc ,tianshu asc) as t2 group by uid order by lun desc,zong_score asc ,tianshu asc  limit 0,$limit");
-					 
-					 
+					$query = DB::query(" SELECT id,uid,lun,total_score,zong_score,score,par,tianshu FROM (select id,uid,lun,total_score,zong_score,score,par,to_days(FROM_UNIXTIME(dateline))-to_days(now()) as tianshu from ".DB::table('common_score')." where sais_id =$sid and uid >0 and total_score>60 order by lun desc,zong_score asc ,tianshu asc) as t2 group by uid order by lun desc,zong_score asc ,tianshu asc  limit 0,$limit");
+
 
 					$i=0;
 					while($row = DB::fetch($query))
@@ -455,7 +488,10 @@ if($ac=='rank')
 						for($j=1; $j<=$lun_num; $j++)
 						{
 			
-							$lun_info = DB::fetch_first("select id,sais_id,uid,total_score,score,par, to_days(FROM_UNIXTIME(dateline))-to_days(now()) as tianshu from ".DB::table('common_score')." where sais_id=$sid and uid='".$row['uid']."' and lun='".$j."' and total_score>60 order by dateline asc   limit 1 ");
+							$lun_info = DB::fetch_first("select id,sais_id,uid,total_score,score,par, to_days(FROM_UNIXTIME(dateline))-to_days(now()) as tianshu from ".DB::table('common_score')." where sais_id=$sid and uid='".$row['uid']."' and lun='".$j."' and total_score>60 order by dateline asc limit 1 ");
+							
+							echo "select id,sais_id,uid,total_score,score,par, to_days(FROM_UNIXTIME(dateline))-to_days(now()) as tianshu from ".DB::table('common_score')." where sais_id=$sid and uid='".$row['uid']."' and lun='".$j."' and total_score>60 order by dateline asc limit 1 ";
+							echo "<hr>";
 							$zongbiaogan=$zongbiaogan+(end(explode("|",$lun_info['par'])));
 
 							if($lun_info['score'])
@@ -480,7 +516,6 @@ if($ac=='rank')
 							}
 							//$lun_info['par']=$prr_new;
 							//print_r($lun_info);
-							
 							$p_arr=$prr_new;
 							$s_arr=$arr_new;
 							
@@ -573,6 +608,7 @@ if($ac=='rank')
 						}
 
 						$row['ju_par_total']=($ju_1)+($ju_2)+($ju_3)+($ju_4);
+						$row['ju_par_total']=(string)$row['ju_par_total'];
 						if(!$row['zong_score'])
 						{
 							$row['zong_score']=($lun_1)+($lun_2)+($lun_3)+($lun_4);
@@ -593,7 +629,6 @@ if($ac=='rank')
 						$row['color_3']=$color_3;
 						$row['color_4']=$color_4;
 
-						
 						$row['score_1']=$score_1;
 						$row['score_2']=$score_2;
 						$row['score_3']=$score_3;
@@ -810,7 +845,7 @@ if($ac=="fenzhan_detail")
 		$event_info['event_is_baoming']='N';
 		//分站外卡成绩列表
 		$lun_num = DB::result_first("select max(lun) from ".DB::table('common_score')."  where fz_id='$fz_id' and source='".$source."' and uid >0 and total_score>60  limit 1 ");
-		$query = DB::query("select id,uid,(select realname from ".DB::table("common_member_profile")." where uid=".DB::table("common_score").".uid) as username,lun,total_score,score,par,to_days(FROM_UNIXTIME(dateline))-to_days(now()) as tianshu from ".DB::table('common_score')."  where fz_id='$fz_id' and source='".$source."' and uid >0 and total_score>60 group by uid order by lun desc,total_score asc,tianshu asc limit 0,$limit");
+		$query = DB::query("select id,uid,(select realname from ".DB::table("common_member_profile")." where uid=".DB::table("common_score").".uid) as username,lun,total_score,score,par,to_days(FROM_UNIXTIME(dateline))-to_days(now()) as tianshu from ".DB::table('common_score')." where fz_id='$fz_id' and source='".$source."' and uid >0 and total_score>60 group by uid order by total_score asc,tianshu asc limit 0,$limit");
 
 		$i=0;
 		while($row = DB::fetch($query))
