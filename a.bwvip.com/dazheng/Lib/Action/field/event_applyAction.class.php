@@ -38,7 +38,8 @@ class event_applyAction extends field_publicAction
 	    $event_id = get('event_id');
 		$event=D('event')->event_select_pro(" and field_uid='".$_SESSION['field_uid']."' and event_id='{$event_id}' ");
 		$this->assign('event',reset($event['item']));
-		
+		//echo '<pre>';
+		//var_dump(reset($event['item']));
 		$fenzhan=D('fenzhan_tbl')->fenzhan_list_pro(" and field_uid='".$_SESSION['field_uid']."' and event_id='{$event_id}' ");
 		$this->assign('fenzhan',$fenzhan['item']);
 		
@@ -50,20 +51,41 @@ class event_applyAction extends field_publicAction
 	public function event_apply_add_action()
 	{
 		if(M()->autoCheckToken($_POST))
-		{
+		{	
+			$event_type = post("event_type");
+			if($event_type == "T"){
+				$data["parent_id"] = 0;
+			}
+			$real_name_arr = $_POST["event_apply_realname"];
+			$event_apply_sex_arr = $_POST["event_apply_sex"];
+			$event_apply_card_arr = $_POST["event_apply_card"];
+			$event_apply_chadian_arr = $_POST["event_apply_chadian"];
+			
 			$data["event_id"]=post("event_id");
 			$data["uid"]=post("uid");
 			$data["field_uid"]=$_SESSION['field_uid'];
 			$data["field_id"]=$_SESSION['field_uid'];
 			$data["fenzhan_id"]=post("fenzhan_id");
-			$data["event_apply_realname"]=post("event_apply_realname");
-			$data["event_apply_sex"]=post("event_apply_sex");
-			$data["event_apply_card"]=post("event_apply_card");
-			$data["event_apply_chadian"]=post("event_apply_chadian");
 			$data["event_apply_state"]=post("event_apply_state");
 			$data["event_apply_addtime"]=time();
 			
-			$list=M("event_apply")->add($data);
+			$data["event_apply_realname"]=$real_name_arr[0];
+			$data["event_apply_sex"]=post("event_apply_sex_0");
+			$data["event_apply_card"]=$event_apply_card_arr[0];
+			$data["event_apply_chadian"]=$event_apply_chadian_arr[0];
+			
+			$parent_id=M("event_apply")->add($data);
+			//if($event_type == "T"){
+				foreach($real_name_arr as $key=>$val){
+					$data["event_apply_realname"]=$real_name_arr[$key];
+					$data["event_apply_sex"]=post("event_apply_sex_".$key);
+					$data["event_apply_card"]=$event_apply_card_arr[$key];
+					$data["event_apply_chadian"]=$event_apply_chadian_arr[$key];
+					$data["parent_id"]=$parent_id;
+					M("event_apply")->add($data);
+				}
+			//}
+			//$list=M("event_apply")->add($data);
 		
 			$this->success("添加成功",U('field/event_apply/event_apply',array('event_id'=>$data['event_id'])));
 			
