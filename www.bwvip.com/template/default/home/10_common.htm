@@ -215,17 +215,17 @@
 								<td bgcolor="#6BBECC" align="center">缩略图</td>
 								<td colspan='3' bgcolor="#6BBECC">
 									<span class="table_miao">
-										<!--{if $list[uploadimg]}--><img src='<!--{$list[uploadimg]}-->' width='400' height='200' /><!--{else}--><img src='uploadfile/common/scoreimg.jpg' width='400' height='200' /><!--{/if}-->
+										<!--{if $list[uploadimg]}--><a href="<!--{$list[uploadimg]}-->" target=_blank><img src='<!--{$list[uploadimg]}-->' width='400' height='200' /></a><!--{else}--><img src='uploadfile/common/scoreimg.jpg' width='400' height='200' /><!--{/if}-->
 									</span>
 								</td>
 							</tr>
 						</table>
-						<!--{elseif ($_GET[c] == 'edit') && empty($flag) && empty($_GET['cp']) && $list[par]}-->
+						<!--{elseif ($_GET[c] == 'edit')   && empty($_GET['cp']) && $list[par]}-->
 						<form action='home.php?mod=space&do=common&op=score&c=save' method='post' enctype='multipart/form-data'>
-							<input type='hidden' name='id' value='<!--{$list[id]}-->' />
+							<input type='hidden' name='id' value='<!--{$list[baofen_id]}-->' />
 							<input type='hidden' name='uid' value='<!--{$list[uid]}-->' />
-                            <input type='hidden' name='sais_id' value='<!--{$list[sais_id]}-->' />
-                            <input type="hidden" name="fuid" value="<!--{$list['fuid']}-->">
+                            <input type='hidden' name='sid' value='<!--{$list[sid]}-->' />
+                            <input type="hidden" name="field_id" value="<!--{$list['field_id']}-->">
 							<input type='hidden' name='scoreimg' value='<!--{$list[uploadimg]}-->' id='scoreimg' />
 							<table cellspacing='1' cellpadding='2' bgcolor="#CCCCCC" class='score' width="95%" align="center" >
 								<tr bgcolor="#FFFFFF">
@@ -284,6 +284,7 @@
 									<!--{/loop}-->
 									<!--{/if}-->
 								</tr>
+                                
 							</table>
 							<table align="center" cellpadding='2' cellspacing='1' id='more' bgcolor="#FFFFFF" style='display:none; width:640px'>
 								<tr>
@@ -367,7 +368,7 @@
 									<td bgcolor="#6BBECC" align="center">缩略图</td>
 									<td colspan='3' bgcolor="#6BBECC">
 										<span class="table_miao">
-											<!--{if $list[uploadimg]}--><img src='<!--{$list[uploadimg]}-->' width='400' height='200' /><!--{else}--><img src='uploadfile/common/scoreimg.jpg' width='400' height='200' /><!--{/if}-->
+											<!--{if $list[uploadimg]}--><a href="<!--{$list[uploadimg]}-->" target=_balnk><img src='<!--{$list[uploadimg]}-->' width='400' height='200' /></a><!--{else}--><img src='uploadfile/common/scoreimg.jpg' width='400' height='200' /><!--{/if}-->
 										</span>
 									</td>
 								</tr>
@@ -498,7 +499,7 @@
 								<td style='text-align:right' id='base' height="25"><span onclick='getmore()' id='getmore' style='cursor:hand'><strong>更多资料 >></strong></span></td>
 							</tr>
 						</table>
-						<!--{elseif empty($flag) && $list[id] && $childuid && ($_GET['c'] == 'edit')}-->
+						<!--{elseif  $list[baofen_id]  && ($_GET['c'] == 'edit')}-->
 						<table cellspacing='1' cellpadding='2' align="center" width="95%">
 							<tr>
 								<td style='text-align:right' id='base' height="25"><span onclick='getmore()' id='getmore' style='cursor:hand'><strong>更多资料 >></strong></span></td>
@@ -547,7 +548,7 @@
 							<tr>
                                 <td height="25" align="center" bgcolor="#67859F" class="first"><!--{$val[dateline]}--></td>
                                 <td height="25" colspan='21' align="center" bgcolor="#B5C5D2">
-									<a href='home.php?mod=space&do=common&op=score&uid=<!--{$uid}-->&id=<!--{$val[id]}-->'>查看详细</a>
+									<a href='home.php?mod=space&do=common&op=score&uid=<!--{$uid}-->&id=<!--{$val[baofen_id]}-->'>查看详细</a>
 								</td>
 							</tr>
 							<tr>

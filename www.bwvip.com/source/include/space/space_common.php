@@ -72,31 +72,66 @@ if($option == 'score') {
 		} else {
 			$arr['uploadimg'] = $_POST['scoreimg'];
 		}
-        $arr['sais_id'] =$_G['gp_sais_id'];
+        $arr['sais_id'] =$_G['gp_sid'];
+        $baofen_id =$_G['gp_id'];
+        $id =$_G['gp_id'];
 		unset($arr['scoreimg']);
 		unset($arr['profilesubmitbtn']);
 
-		$row = DB::update('common_score', $arr, array('id'=>$arr['id'], 'uid'=>$arr['uid']));
-
-
+$caves = explode('|',$arr['score'] );
+ 
+		//$row = DB::update('common_score', $arr, array('baofen_id'=>$arr['id'], 'uid'=>$arr['uid'])); 
+			$cave_1=$caves[0];
+			$cave_2=$caves[1];
+			$cave_3=$caves[2];
+			$cave_4=$caves[3];
+			$cave_5=$caves[4];
+			$cave_6=$caves[5];
+			$cave_7=$caves[6];
+			$cave_8=$caves[7];
+			$cave_9=$caves[8];
+			
+			$cave_10=$caves[10];
+			$cave_11=$caves[11];
+			$cave_12=$caves[12];
+			$cave_13=$caves[13];
+			$cave_14=$caves[14];
+			$cave_15=$caves[15];
+			$cave_16=$caves[16];
+			$cave_17=$caves[17];
+			$cave_18=$caves[18];
+			$uploadimg=$arr['uploadimg'];
+            $total_score=$arr['total_score'];
+            $score=$arr['score'];
+            $pars=$arr['pars'];
+            $status=$arr['status'];
+            $flag=$arr['flag']; 
+            $sid=$arr['sid']; 
+            $total_eagle=$arr['total_eagle']; 
+            $total_birdie=$arr['total_birdie']; 
+            $total_bogi=$arr['total_bogi']; 
+            $total_doubles=$arr['total_doubles'];     
+ 	$sql = "update tbl_baofen set  cave_1=$cave_1,  cave_2=$cave_2,  cave_3=$cave_3,  cave_4=$cave_4,  cave_5=$cave_5,  cave_6=$cave_6,  cave_7=$cave_7,  cave_8=$cave_8,  cave_9=$cave_9,  cave_10=$cave_10,  cave_11=$cave_11,  cave_12=$cave_12,  cave_13=$cave_13,  cave_14=$cave_14,  cave_15=$cave_15,  cave_16=$cave_16,  cave_17=$cave_17,  cave_18=$cave_18,uploadimg='$uploadimg',total_score='$total_score',score='$score',pars='$pars',
+	status='$status',flag='$flag',sid='$sid',total_eagle='$total_eagle',total_birdie='$total_birdie',total_bogi='$total_bogi',total_doubles='$total_doubles' where uid=$uid and baofen_id=$baofen_id ";
+	$row = DB::query ( $sql );
 
 
 
 
         /*新成绩卡 生成新的微博 功能 angf Do it 2012/8/16*/
-        if(!$result = DB::result_first(" select tid from ultrax.jishigou_topic where uid=".$_G['gp_uid']." and score_id=".$_G['gp_id']))
+        if(!$result = DB::result_first(" select tid from ultrax.jishigou_topic where uid=".$_G['gp_uid']." and score_id=".$baofen_id))
         {
-              $score_info = DB::fetch_first(" select cs.sais_id,cs.uid,cs.fuid,cs.id,cs.addtime,cmp.realname as sai_name ,cmp2.realname as qc_name from ".DB::table("common_score")." as cs LEFT JOIN ".DB::table("common_member_profile")." as cmp ON cmp.uid = cs.sais_id LEFT JOIN ".DB::table("common_member_profile")." as cmp2 ON cmp2.uid=cs.fuid where cs.id=".$_G['gp_id']);
+              $score_info = DB::fetch_first(" select cs.sid,cs.uid,cs.field_id,cs.baofen_id,cs.addtime,cs.dateline,cmp.realname as sai_name ,cmp2.realname as qc_name from tbl_baofen as cs LEFT JOIN ".DB::table("common_member_profile")." as cmp ON cmp.uid = cs.sid LEFT JOIN ".DB::table("common_member_profile")." as cmp2 ON cmp2.uid=cs.field_id where cs.baofen_id=".$baofen_id);
 
               $weibdata['uid']     = $score_info['uid'];
-              $weibdata['fuid']    = $score_info['fuid'];
-              $sais_username = DB::result_first(" select username from ".DB::table('common_member')." where uid=".$score_info['sais_id']);
-              $qc_username   = DB::result_first(" select username from ".DB::table('common_member')." where uid=".$score_info['fuid']);
+              $weibdata['field_id']    = $score_info['field_id'];
+              $sais_username = DB::result_first(" select username from ".DB::table('common_member')." where uid=".$score_info['sid']);
+              $qc_username   = DB::result_first(" select username from ".DB::table('common_member')." where uid=".$score_info['field_id']);
               $username      = DB::result_first(" select username from ".DB::table('common_member')." where uid=".$score_info['uid']);
 
-              $weibdata['content'] ='我在'.date('Y-m-d',$score_info['addtime']).' 参加的 <M '.$qc_username.'>@'.$score_info['qc_name'].'<\/M> <M '.$sais_username.'>@'.$score_info['sai_name'].'<\/M> 比赛 成绩卡已经上传大正微博 <iframe src="/home.php?mod=space&do=common&op=score&uid='.$score_info['uid'].'&id='.$score_info['id'].'&weibo_tmp=1" width="353"  scrolling="no" frameborder="0" ><\/iframe>';
+              $weibdata['content'] ='我在'.date('Y-m-d',$score_info['dateline']).' 参加的 <M '.$qc_username.'>@'.$score_info['qc_name'].'<\/M> <M '.$sais_username.'>@'.$score_info['sai_name'].'<\/M> 比赛 成绩卡已经上传大正微博 <iframe src="/home.php?mod=space&do=common&op=score&uid='.$score_info['uid'].'&id='.$score_info['baofen_id'].'&weibo_tmp=1" width="353"  scrolling="no" frameborder="0" ><\/iframe>';
 
-              DB::query(" insert into ultrax.jishigou_topic (uid,username,fuid,content,score_id,dateline,type) values ('".$weibdata['uid']."','".$username ."','".$weibdata['fuid']."','".$weibdata['content']."','".$score_info['id']."','".time()."' ,'first')  ");
+              DB::query(" insert into ultrax.jishigou_topic (uid,username,fuid,content,score_id,dateline,type) values ('".$weibdata['uid']."','".$username ."','".$weibdata['field_id']."','".$weibdata['content']."','".$score_info['baofen_id']."','".time()."' ,'first')  ");
         }
 
 
@@ -106,19 +141,19 @@ if($option == 'score') {
 		if($row) {
 			showmessage('操作成功', 'home.php?mod=space&do=common&op=score&uid='.$arr['uid']."&angf=".$is_exist_weib);
 		} else {
-			showmessage('操作失败', 'home.php?mod=space&do=common&op=score&uid='.$arr['uid'].'&id='.$arr['id'].'&c=edit');
+			showmessage('操作失败', 'home.php?mod=space&do=common&op=score&uid='.$arr['uid'].'&id='.$arr['baofen_id'].'&c=edit');
 		}
 	} else {
 		if($_GET['c'] == 'del') { 
 	$uid1=$_GET['uid'];
 	$tid=$_GET['id'];
-	   DB::query(" delete from  ".DB::table('common_score')."  where uid='$uid1' and  id='$tid' ");
+	   DB::query(" delete from  tbl_baofen where uid='$uid1' and  baofen_id='$tid' ");
 	   showmessage('操作成功');
 		}
 		if($id) {
 
 			$child = DB::fetch_first("select uid from ".DB::table('home_apply')." where uid='".$_G['uid']."' and applytype='0'");
-			$list = DB::fetch_first("select cs.*, cf.fieldname, cd.name from ".DB::table('common_score')." as cs left join ".DB::table('common_field')." as cf on cf.uid=cs.fuid left join ".DB::table('common_district')." as cd on cd.id=cs.province where cs.id=$id and cs.uid=$uid");
+			$list = DB::fetch_first("select cs.*, cf.fieldname, cd.name from tbl_baofen as cs left join ".DB::table('common_field')." as cf on cf.uid=cs.field_id left join ".DB::table('common_district')." as cd on cd.id=cs.province where cs.baofen_id=$id and cs.uid=$uid");
 			if(!empty($list)) {
 				$list['dateline'] = date('Y-m-d H:i:s', $list['dateline']);
 				foreach($list as $key=>$val) {
@@ -129,39 +164,12 @@ if($option == 'score') {
 				}
 				$flag = ($_G['uid'] == 1) ? 0 : $list['flag'];
 				$childuid = ($_G['uid'] == 1) ? 1 : $child['uid'];
-				$groupfield = DB::fetch_first("select id from ".DB::table('common_score')." where uid='".$_G['uid']."' and fuid='".$list['fuid']."'");
+				$groupfield = DB::fetch_first("select baofen_id from tbl_baofen where uid='".$_G['uid']."' and field_id='".$list['field_id']."'");
 
 			}
 		} else {
 
-			/*
-			$theurl = 'home626.php?mod=space&do=common&op=score&uid='.$uid;
-
-			#echo 'select count(*) from '.DB::table('common_score')." as cs left join ".DB::table('common_field')." as cf on cf.uid=cs.fuid left join ".DB::table('common_district')." as cd on cd.id=cs.province where cs.uid='$uid' and (cs.status='2' or cs.ismine='1')";
-
-			$count = DB::result(DB::query('select count(*) from '.DB::table('common_score')." as cs left join ".DB::table('common_field')." as cf on cf.uid=cs.fuid left join ".DB::table('common_district')." as cd on cd.id=cs.province where cs.uid='$uid' and (cs.status='2' or cs.ismine='1')"));
-			if($count) {
-				#echo 'select cs.*, cf.fieldname, cd.name from '.DB::table('common_score')." as cs left join ".DB::table('common_field')." as cf on cf.uid=cs.fuid left join ".DB::table('common_district')." as cd on cd.id=cs.province where cs.uid='$uid' and (cs.status='2' or cs.ismine='1') order by cs.dateline desc limit $start, $pagesize";
-				$query = DB::query('select cs.*, cf.fieldname, cd.name from '.DB::table('common_score')." as cs left join ".DB::table('common_field')." as cf on cf.uid=cs.fuid left join ".DB::table('common_district')." as cd on cd.id=cs.province where cs.uid='$uid' and (cs.status='2' or cs.ismine='1') order by cs.dateline desc limit $start, $pagesize");
-				while($row = mysql_fetch_assoc($query)) {
-					$row['dateline'] = date('Y-m-d H:i:s', $row['dateline']);
-					$scorelist[] = $row;
-				}
-			}
-
-			foreach($scorelist as $key=>$val) {
-				foreach($val as $k=>$v) {
-					if(!empty($val[$k])) {
-						if(in_array($k, $array)) {
-							$scorelist[$key][$k] = explode('|', $v);
-						}
-					}
-				}
-			}
-			$multi = multi($count, $pagesize, $page, $theurl);
-			*/
-
-			#$pagesize = 1;
+		 
 
 			$mod = $_GET['mod'];
 			$do = $_GET['do'];
@@ -170,8 +178,8 @@ if($option == 'score') {
 
 			if($game_type=='individual'){
 				$theurl = 'home.php?mod=space&do=common&op=score&uid='.$uid.'&gtt=individual';
-				//$sql = "SELECT COUNT(*) FROM ".DB::table('common_score')." WHERE ismine = '1' AND uid = '".$uid."'";
-				$sql = "SELECT COUNT(*) FROM ".DB::table('common_score')." WHERE  uid = '".$uid."'";
+				//$sql = "SELECT COUNT(*) FROM tbl_baofen WHERE ismine = '1' AND uid = '".$uid."'";
+				$sql = "SELECT COUNT(*) FROM tbl_baofen WHERE  uid = '".$uid."'";
 				$tmp = DB::query($sql);
 				$result = DB::fetch($tmp);
 				$record_amount = $result["COUNT(*)"];
@@ -181,44 +189,34 @@ if($option == 'score') {
 
 
 				$sql ="SELECT
-					cs.id,
+					cs.baofen_id,
 					cs.uid,
-					cs.sais_id,
+					cs.sid,
 					cs.tee,
-					cs.rtype,
-					cs.name,
+					cs.rtype, 
+					cs.realname,
 					cs.province,
-					cs.fuid,
+					cs.field_id,
 					cs.par,
 					cs.score,
 					cs.pars,
-					cs.total_score,
-					cs.total_avglength,
-					cs.total_shangdao,
-					cs.total_aveshangdao,
-					cs.total_pushs,
-					cs.total_avepushs,
+					cs.total_score,   
 					cs.total_eagle,
-					cs.total_birdie,
-					cs.total_furthest,
+					cs.total_birdie, 
 					cs.total_bogi,
-					cs.total_doubles,
-					cs.total_penalty,
-					cs.total_evenpar,
-					cs.total_other,
-					cs.dateline,
-					cs.member,
+					cs.total_doubles, 
+					cs.total_evenpar, 
+					cs.dateline, 
 					cs.content,
 					cs.uploadimg,
 					cs.status,
 					cs.flag,
-					cs.group,
-					cs.ismine,
+					cs.group_id,
 					cs.addtime,
 					cf.fieldname,
 					cd.name
-					FROM ".DB::table('common_score')." AS cs
-					LEFT JOIN ".DB::table('common_field')." AS cf ON cf.uid = cs.fuid
+					FROM tbl_baofen AS cs
+					LEFT JOIN ".DB::table('common_field')." AS cf ON cf.uid = cs.field_id
 					LEFT JOIN ".DB::table('common_district')." AS cd ON cd.id = cs.province
 					WHERE    cs.uid = '".$uid."'
 					ORDER BY cs.dateline DESC
@@ -251,7 +249,7 @@ if($option == 'score') {
 			if($game_type=='elite'){
 
 				$theurl = 'home.php?mod=space&do=common&op=score&uid='.$uid.'&gt=elite';
-				$sql = "SELECT COUNT(*) FROM ".DB::table('common_score')." WHERE status = '2' AND ismine = '0' AND uid = '".$uid."'";
+				$sql = "SELECT COUNT(*) FROM tbl_baofen WHERE status = '2'  AND uid = '".$uid."'";
 				$tmp = DB::query($sql);
 				$result = DB::fetch($tmp);
 				$record_amount = $result["COUNT(*)"];
@@ -259,44 +257,34 @@ if($option == 'score') {
 				$start = ($page-1)*$pagesize;
 
 				$sql ="SELECT
-					cs.id,
+					cs.baofen_id,
 					cs.uid,
-					cs.sais_id,
+					cs.sid,
 					cs.tee,
 					cs.rtype,
-					cs.name,
+					cs.realname,
 					cs.province,
-					cs.fuid,
+					cs.field_id,
 					cs.par,
 					cs.score,
 					cs.pars,
-					cs.total_score,
-					cs.total_avglength,
-					cs.total_shangdao,
-					cs.total_aveshangdao,
-					cs.total_pushs,
-					cs.total_avepushs,
+					cs.total_score,  
 					cs.total_eagle,
-					cs.total_birdie,
-					cs.total_furthest,
+					cs.total_birdie, 
 					cs.total_bogi,
-					cs.total_doubles,
-					cs.total_penalty,
-					cs.total_evenpar,
-					cs.total_other,
-					cs.dateline,
-					cs.member,
+					cs.total_doubles, 
+					cs.total_evenpar, 
+					cs.dateline, 
 					cs.content,
 					cs.uploadimg,
 					cs.status,
 					cs.flag,
-					cs.group,
-					cs.ismine,
+					cs.group_id,
 					cs.addtime,
 					cf.fieldname,
 					cd.name
-					FROM ".DB::table('common_score')." AS cs
-					LEFT JOIN ".DB::table('common_field')." AS cf ON cf.uid = cs.fuid
+					FROM tbl_baofen AS cs
+					LEFT JOIN ".DB::table('common_field')." AS cf ON cf.uid = cs.field_id
 					LEFT JOIN ".DB::table('common_district')." AS cd ON cd.id = cs.province
 					WHERE status = '2' AND ismine = '0' AND cs.uid = '".$uid."'
 					ORDER BY cs.dateline DESC

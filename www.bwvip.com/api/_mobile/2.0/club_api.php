@@ -783,7 +783,7 @@ if($ac=="member_detail")
 		//成绩卡列表
 		//if($detail_data['groupid']==24)
 		//{
-			$total2=DB::result_first("select id from ".DB::table('common_score')."  where uid=$get_uid ");
+			$total2=DB::result_first("select baofen_id from tbl_baofen where uid=$get_uid ");
 			$max_page2=intval($total2/$page_size2);
 			if($max_page2<$total2/$page_size2)
 			{
@@ -792,6 +792,17 @@ if($ac=="member_detail")
 
 			if($max_page2>=$page2)
 			{
+			
+				$query = DB::query("select baofen_id as id,uid,fuid,fz_id,par,score,pars,total_score,lun,dateline,event_name from (select baofen_id,field_id,baofen_id as id,uid,field_id as fuid,fenzhan_id as fz_id,sid,par,score,pars,total_score,lun,FROM_UNIXTIME(dateline, '%Y-%m-%d') as dateline,addtime,(select realname from ".DB::table("common_member_profile")." where uid=tbl_baofen.sid) as event_name from tbl_baofen where addtime>'".strtotime("2013-04-01")."' and uid=$get_uid $strwhere ) as t2 group by sid order by total_score asc,addtime desc limit $page_start2,$page_size2");
+				while($row = DB::fetch($query))
+				{
+					$row['ndid']=$row['id'];
+					$row['event_name']=$row['event_name']." ";
+					$row['iframe_url']=$site_url."/nd/score.php?ndid=".$row['ndid']."&size=small";
+					$score_list[] = array_default_value($row); 
+				}
+				/*
+				
 				$query = DB::query("select id,uid,fuid,fz_id,par,score,pars,total_score,lun,onlymark,dateline,event_name,addtime from (select id,uid,fuid,fz_id,par,score,sais_id,pars,total_score,lun,onlymark,FROM_UNIXTIME(dateline, '%Y-%m-%d') as dateline,addtime,(select realname from ".DB::table("common_member_profile")." where uid=".DB::table('common_score').".sais_id) as event_name from ".DB::table('common_score')."  where addtime>'".strtotime("2013-04-01")."' and uid=$get_uid $strwhere order by total_score asc) as t2 group by sais_id order by total_score asc,addtime desc limit $page_start2,$page_size2");
 
 				//echo "select id,uid,fuid,par,score,pars,total_score,FROM_UNIXTIME(dateline, '%Y-%m-%d') as dateline,(select realname from ".DB::table("common_member_profile")." where uid=".DB::table('common_score').".uid) as event_name from ".DB::table('common_score')."  where uid=$get_uid $strwhere order by addtime desc limit $page_start2,$page_size2";
@@ -808,6 +819,7 @@ if($ac=="member_detail")
 					$row['iframe_url']=$site_url."/nd/score.php?ndid=".$row['ndid']."&size=small";
 					$score_list[] = $row; 
 				}
+				*/
 			}
 
 		//}

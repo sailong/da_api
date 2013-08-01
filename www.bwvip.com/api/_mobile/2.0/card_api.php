@@ -416,7 +416,8 @@ if($ac=='rank')
 					$row['color_1']=$color_1;
 					
 					$row['ju_par_total']=(string)$total;
-					$lun_1=(string)$total;
+					$lun_1=$row['total_score'];
+					
 					$row['lun_1']=$lun_1;
 					$row['lun_2']=$lun_2;
 					$row['lun_3']=$lun_3;
@@ -671,16 +672,18 @@ if($ac=='rank')
 							$row['zong_score']=($lun_1)+($lun_2)+($lun_3)+($lun_4);
 							$res=DB::query("update ".DB::table("common_score")." set zong_score='".$row['zong_score']."' where uid='".$row ['uid']."' and sais_id='".$row ['sais_id']."'  ");
 						}
-						//$row['zong_score']=ju_par_format($row['zong_score']-$zongbiaogan);
+						$row['zong_score']=ju_par_format($row['zong_score']-$zongbiaogan);
 
-						$row['lun_1']=$lun_1;
-						$row['lun_2']=$lun_2;
-						$row['lun_3']=$lun_3;
-						$row['lun_4']=$lun_4;
-						$row['ju_par_1']=$ju_1;
-						$row['ju_par_2']=$ju_2;
-						$row['ju_par_3']=$ju_3;
-						$row['ju_par_4']=$ju_4;
+						
+						$row['lun_1']=ju_par_format($ju_1);
+						$row['lun_2']=ju_par_format($ju_2);
+						$row['lun_3']=ju_par_format($ju_3);
+						$row['lun_4']=ju_par_format($ju_4);
+						
+						$row['ju_par_1']=ju_par_format($ju_1);
+						$row['ju_par_2']=ju_par_format($ju_2);
+						$row['ju_par_3']=ju_par_format($ju_3);
+						$row['ju_par_4']=ju_par_format($ju_4);
 						
 						$row['color_1']=$color_1;
 						$row['color_2']=$color_2;
@@ -1252,13 +1255,12 @@ if($ac=="fenzhan_detail")
 }
 
 
-
 //分站列表
 if($ac=="fenzhan_list")
 {
 	$sid=$_G['gp_sid'];
 	$year=$_G['gp_year'];
-	$list=DB::query("select fz_id,sid,fenz_name,starttime,endtime,field_id,(select fieldname from ".DB::table("common_field")." where uid=".DB::table("fenzhan").".field_id ) as field_name from ".DB::table("fenzhan")." where sid='".$sid."' and year='".$year."' ");
+	$list=DB::query("select fenzhan_id,fenzhan_id as fz_id,sid,fenzhan_name as fenz_name,starttime,endtime,field_id,(select fieldname from ".DB::table("common_field")." where uid=tbl_fenzhan.field_id ) as field_name from tbl_fenzhan where sid='".$sid."' and year='".$year."' ");
 	$i=0;
 	while($row=DB::fetch($list))
 	{
@@ -1293,6 +1295,8 @@ if($ac=="fenzhan_list")
 	}
 
 }
+
+
 
 //显示DQ RTD
 function Getstat($tlcave)
