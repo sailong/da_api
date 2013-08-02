@@ -95,7 +95,7 @@ if($ac=="select_event")
 		$list_data3[]=array_default_value($row3);
 	}
 
-	$list=DB::query("select event_id,event_name,event_uid,event_is_zhutui,event_content,event_starttime,event_go_action,event_go_value from tbl_event where event_is_tj='Y' and field_uid='".$field_uid."' order by event_sort desc limit 100 ");
+	$list=DB::query("select event_id,event_name,event_uid,event_is_zhutui,event_content,event_starttime,event_go_action,event_go_value from tbl_event where event_is_tj='Y' order by event_sort desc limit 100 ");
 	while($row = DB::fetch($list))
 	{
 		$row['event_pic']=$site_url."/uc_server/avatar.php?uid=".$row['event_uid']."&size=big";
