@@ -23,7 +23,7 @@ class event_applyAction extends field_publicAction
 		$this->assign('event_name',$event_info['event_name']);
 		$this->assign('event_id',$event_info['event_id']);
 		
-		$list=D("event_apply")->event_apply_list_pro();
+		$list=D("event_apply")->event_apply_list_pro(" and parent_id='0'");
 
 		$this->assign("list",$list["item"]);
 		$this->assign("pages",$list["pages"]);
@@ -36,9 +36,10 @@ class event_applyAction extends field_publicAction
 	public function event_apply_add()
 	{
 	    $event_id = get('event_id');
-		$event=D('event')->event_select_pro(" and field_uid='".$_SESSION['field_uid']."' and event_id='{$event_id}' ");
+		$event=D('event')->event_select_pro(" and field_uid='".$_SESSION['field_uid']."' and event_id='{$event_id}'");
 		$this->assign('event',reset($event['item']));
-		
+		//echo '<pre>';
+		//var_dump(reset($event['item']));
 		$fenzhan=D('fenzhan_tbl')->fenzhan_list_pro(" and field_uid='".$_SESSION['field_uid']."' and event_id='{$event_id}' ");
 		$this->assign('fenzhan',$fenzhan['item']);
 		
@@ -50,20 +51,42 @@ class event_applyAction extends field_publicAction
 	public function event_apply_add_action()
 	{
 		if(M()->autoCheckToken($_POST))
-		{
+		{	
+			$event_type = post("event_type");
+			
+			$real_name_arr = $_POST["event_apply_realname"];
+			$event_apply_sex_arr = $_POST["event_apply_sex"];
+			$event_apply_card_arr = $_POST["event_apply_card"];
+			$event_apply_chadian_arr = $_POST["event_apply_chadian"];
+			
 			$data["event_id"]=post("event_id");
+			$data["parent_id"] = 0;
 			$data["uid"]=post("uid");
 			$data["field_uid"]=$_SESSION['field_uid'];
 			$data["field_id"]=$_SESSION['field_uid'];
 			$data["fenzhan_id"]=post("fenzhan_id");
-			$data["event_apply_realname"]=post("event_apply_realname");
-			$data["event_apply_sex"]=post("event_apply_sex");
-			$data["event_apply_card"]=post("event_apply_card");
-			$data["event_apply_chadian"]=post("event_apply_chadian");
 			$data["event_apply_state"]=post("event_apply_state");
 			$data["event_apply_addtime"]=time();
-			
-			$list=M("event_apply")->add($data);
+			if($event_type == "T"){
+				$data["event_apply_realname"]=post("tuanti_name");
+			}else{
+				$data["event_apply_realname"]=$real_name_arr[0];
+				$data["event_apply_sex"]=post("event_apply_sex_0");
+				$data["event_apply_card"]=$event_apply_card_arr[0];
+				$data["event_apply_chadian"]=$event_apply_chadian_arr[0];
+			}
+			$parent_id=M("event_apply")->add($data);
+			if($event_type == "T"){
+				foreach($real_name_arr as $key=>$val){
+					$data["event_apply_realname"]=$real_name_arr[$key];
+					$data["event_apply_sex"]=post("event_apply_sex_".$key);
+					$data["event_apply_card"]=$event_apply_card_arr[$key];
+					$data["event_apply_chadian"]=$event_apply_chadian_arr[$key];
+					$data["parent_id"]=$parent_id;
+					M("event_apply")->add($data);
+				}
+			}
+			//$list=M("event_apply")->add($data);
 		
 			$this->success("添加成功",U('field/event_apply/event_apply',array('event_id'=>$data['event_id'])));
 			
@@ -80,15 +103,26 @@ class event_applyAction extends field_publicAction
 	{
 		if(intval(get("event_apply_id"))>0)
 		{
-			$event=D('event')->event_select_pro(" and field_uid='".$_SESSION['field_uid']."' ");
-			$this->assign('event',$event['item']);
-			
-			$fenzhan=D('fenzhan_tbl')->fenzhan_list_pro(" and field_uid='".$_SESSION['field_uid']."'  ");
+			$event_id = get('event_id');
+			$event_info=D('event')->event_select_pro(" and field_uid='".$_SESSION['field_uid']."' and event_id='{$event_id}'");
+			//$this->assign('event',$event['item']);
+			$event_info = reset($event_info['item']);
+			//echo '<pre>';
+			//var_dump($event['item']);
+			$fenzhan=D('fenzhan_tbl')->fenzhan_list_pro(" and field_uid='".$_SESSION['field_uid']."'");
 			$this->assign('fenzhan',$fenzhan['item']);
 			
 			$data=M("event_apply")->where("event_apply_id=".intval(get("event_apply_id")))->find();
+			$event_apply_list = array();
+			if($event_info['event_type'] == 'T'){
+				$event_apply_list=M("event_apply")->where("parent_id=".intval(get("event_apply_id")))->select();
+			}else{
+				$event_apply_list = $data;
+			}
+			$this->assign('people_num',count(event_apply_list));
 			$this->assign("data",$data);
-			
+			$this->assign("event_apply_list",$event_apply_list);
+			$this->assign("event_type",$event_info['event_type']);
 			$this->assign("page_title","修改赛事报名");
 			$this->display();
 		}

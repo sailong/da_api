@@ -6,7 +6,7 @@
   <div class="page_tit">赛事报名管理</div>
   <div class="tit_tab">
 	<ul>
-		<li><a class=on href="{:U('field/event_apply/event_apply_add')}">添加赛事报名</a></li>
+		<li><a class=on href="{:U('field/event_apply/event_apply_add',array('event_id'=>get('event_id')))}">添加赛事报名</a></li>
 	</ul>
   </div>
 
@@ -32,37 +32,50 @@
 					</td>
 				</tr>
 				
-				<tr>
+				<!-- <tr>
 					<th>报名人UID：</th>
 					<td><input name="uid" type="text" class="mod_input2" id="uid" style="width:66px;"  onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')"></td>
+				</tr> -->
+				<tr id="tuanti_name_id" style="display:none;">
+					<th>团体名称：</th>
+					<td><input type="text" name="tuanti_name" id="tuanti_name" class="mod_input2" style="width:300px;"></td>
 				</tr>
 				<tr>
 					<th>姓名：</th>
-					<td><input type="text" name="event_apply_realname" id="event_apply_realname" class="mod_input2" style="width:300px;" ></td>
+					<td><input type="text" name="event_apply_realname[]" id="event_apply_realname" class="mod_input2" style="width:300px;"></td>
 				</tr>
 				<tr>
 					<th>性别：</th>
-					<td><input name="event_apply_sex" type="radio" value="男" checked="checked" />男 <input name="event_apply_sex" type="radio" value="女" />女</td>
+					<td><input name="event_apply_sex_0" type="radio" value="男" checked="checked" />男 <input name="event_apply_sex_0" type="radio" value="女" />女</td>
 				</tr>
 				<tr>
 					<th>身份证号：</th>
-					<td><input type="text" name="event_apply_card" id="event_apply_card" class="mod_input2" style="width:300px;" ></td>
+					<td><input type="text" name="event_apply_card[]" id="event_apply_card" class="mod_input2" style="width:300px;" ></td>
 				</tr>
 				<tr>
 					<th>差点：</th>
-					<td><input type="text" name="event_apply_chadian" id="event_apply_chadian" class="mod_input2" style="width:300px;" ></td>
+					<td><input type="text" name="event_apply_chadian[]" id="event_apply_chadian" class="mod_input2" style="width:300px;" ></td>
 				</tr>
-		
-				
+				<tr>
+					<th>&nbsp;&nbsp;</th>
+					<td>&nbsp;&nbsp;</td>
+				</tr>
+				<tr id="tr_end">
+					<th>&nbsp;&nbsp;</th>
+					<td>&nbsp;&nbsp;</td>
+				</tr>
 		</tbody>
 		<tfoot>
 			<tr>
 				<th></th>
 				<td>
+					<input type="hidden" id="uid" value="0"/>
+					<input type="hidden" name="event_type" id="event_type" value="{$event.event_type}"/>
 					<input type="hidden" name="event_apply_state" id="event_apply_state" class="mod_input2" style="width:300px;" value="1" >
 					<input type="hidden" name="event_id" id="event_id" class="mod_input2" style="width:300px;" value="<php> echo get('event_id');</php>" >
 					<input type="submit" class="btn_b"  value="添加" style="margin-right:10px;"/>
-					<input type="button" class="btn_w" onclick="javascript:history.back(-1);" value="返回" />
+					<input type="button" class="btn_w" onclick="javascript:history.back(-1);" value="返回" style="margin-right:10px;" />
+					<input type="button" class="btn_b" id="add_one_people" value="添加队员" />
 				</td>
 		</tfoot>
 	</table><!--/add_table-->
@@ -70,6 +83,15 @@
 
 <script>
 $(document).ready(function(){
+var people_num = 0;
+var enent_type = $("#event_type").val();
+$("#add_one_people").click(function(){
+	people_num = people_num+1;
+	add_one_people(people_num);
+});
+if(enent_type == 'T') {
+	$("#tuanti_name_id").show();
+};
 $.formValidator.initConfig({formID:"act_form",theme:'ArrowSolidBox',mode:'AutoTip',onError:function(msg){msg_error(msg)},inIframe:true});
 
 	$("#event_id").formValidator({empty:true,onShow:"请输入所属赛事",onFocus:"请输入所属赛事",onCorrect:"输入正确"}).inputValidator({min:1,max:11,onError:"请输入所属赛事"});
@@ -83,7 +105,31 @@ $.formValidator.initConfig({formID:"act_form",theme:'ArrowSolidBox',mode:'AutoTi
 
 	$.formValidator.reloadAutoTip();
 });
-
+function add_one_people(people_num){
+	var str = '<tr>';
+		str +='			<th>姓名：</th>';
+		str +='				<td><input type="text" name="event_apply_realname[]" id="event_apply_realname" class="mod_input2" style="width:300px;"></td>';
+		str +='			</tr>';
+		str +='			<tr>';
+		str +='				<th>性别：</th>';
+		str +='				<td><input name="event_apply_sex_'+people_num+'" type="radio" value="男" checked="checked" />男 <input name="event_apply_sex_'+people_num+'" type="radio" value="女" />女</td>';
+		str +='			</tr>';
+		str +='			<tr>';
+		str +='				<th>身份证号：</th>';
+		str +='				<td><input type="text" name="event_apply_card[]" id="event_apply_card" class="mod_input2" style="width:300px;" ></td>';
+		str +='			</tr>';
+		str +='			<tr>';
+		str +='				<th>差点：</th>';
+		str +='				<td><input type="text" name="event_apply_chadian[]" id="event_apply_chadian" class="mod_input2" style="width:300px;" ></td>';
+		str +='			</tr>';
+		str +='         <tr>';
+		str +='				<th>&nbsp;&nbsp;</th>';
+		str +='				<td>&nbsp;&nbsp;</td>';
+		str +='			</tr>';
+		
+		
+		$("#tr_end").before($(str));
+}
 function reloadAutoTip()
 {
 	$.formValidator.reloadAutoTip();

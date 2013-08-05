@@ -38,6 +38,14 @@
 					</td>	
 				</tr>-->
 				<tr>
+					<th>赛事名称：</th>
+					<td><input type="text" name="event_name" id="event_name" class="mod_input2" style="width:300px;" ></td>
+				</tr>
+				<tr>
+					<th>赛事LOGO：</th>
+					<td><input type="file" name="event_logo" id="event_logo"  class="mod_input"></td>
+				</tr>
+				<tr>
 					<th width="15%">赛事类型：</th>
 					<td>
 						<select name="event_type" id="event_type" onchange="change_event_type(this.value)">
@@ -48,13 +56,9 @@
 						</select>
 					</td>	
 				</tr>
-				<tr>
-					<th>赛事名称：</th>
-					<td><input type="text" name="event_name" id="event_name" class="mod_input2" style="width:300px;" ></td>
-				</tr>
-				<tr>
-					<th>赛事LOGO：</th>
-					<td><input type="file" name="event_logo" id="event_logo"  class="mod_input"></td>
+				<tr class="tuanti">
+					<th>左边团队标识：</th>
+					<td><input type="text" name="event_left_flag" id="event_left_flag" class="mod_input2" style="width:300px;"  value="{$data.event_left_flag}"></td>
 				</tr>
 				<tr class="tuanti">
 					<th>左边团队：</th>
@@ -67,6 +71,10 @@
 				<tr class="tuanti">
 					<th>左边团队图片：</th>
 					<td><php>if($data['event_left_pic']){</php><img src="/{$data.event_left_pic}" style="max-height:600px; max-width:300px;"><br/><php>}</php><input type="file" name="event_left_pic" id="event_left_pic"  style="width:300px;" class="mod_input">  (如需修改，请重新上传)</td>
+				</tr>
+				<tr class="tuanti">
+					<th>右边团队标识：</th>
+					<td><input type="text" name="event_right_flag" id="event_right_flag" class="mod_input2" style="width:300px;"  value="{$data.event_right_flag}"></td>
 				</tr>
 				<tr class="tuanti">
 					<th>右边团队：</th>
@@ -182,7 +190,6 @@ $.formValidator.initConfig({formID:"act_form",theme:'ArrowSolidBox',mode:'AutoTi
 		$("#event_content").formValidator({empty:true,onShow:"请输入详细介绍",onFocus:"请输入详细介绍",onCorrect:"输入正确"}).inputValidator({min:1,max:3000,onError:"请输入详细介绍"});
 		$("#event_state").formValidator({empty:true,onShow:"请输入赛事状态",onFocus:"请输入赛事状态",onCorrect:"输入正确"}).inputValidator({min:1,max:1,onError:"请输入赛事状态"});
 		$("#event_is_tj").formValidator({empty:true,onShow:"请输入赛事推荐",onFocus:"请输入赛事推荐",onCorrect:"输入正确"}).inputValidator({min:1,max:50,onError:"请输入赛事推荐"});
-		
 
 	$.formValidator.reloadAutoTip();
 });

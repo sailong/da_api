@@ -90,7 +90,7 @@
 		<td>{$vo.event_addtime|format_to_time}</td>
 		<td>
 			<a href="{:U('field/event/event_manage', array('event_id'=>$vo['event_id']))})">赛事管理</a> | 
-			<a href="{:U('field/team_event/team_event_manage', array('event_id'=>$vo['event_id']))})">团体赛管理</a> |
+			<!-- <a href="{:U('field/team_event/team_event_manage', array('event_id'=>$vo['event_id']))})">团体赛管理</a> | -->
 			<a href="{:U('field/event/event_edit', array('event_id'=>$vo['event_id']))})">修改</a> | 
 			<a href="javascript:void(0);" onclick="mod_delete_one('{:U('field/event/event_delete_action')}','{$vo['event_id']}');">删除</a>
 		</td>
