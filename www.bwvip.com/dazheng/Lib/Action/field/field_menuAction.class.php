@@ -9,7 +9,6 @@
 class field_menuAction extends field_publicAction
 {
 
-    private $http_url = '';
 	public function _basic()	
 	{
 		parent::_basic();
@@ -57,7 +56,7 @@ class field_menuAction extends field_publicAction
         if(empty($language)) {
             $language = 'cn';
         }
-	    $field_uid = 1186;
+	    $field_uid = $_SESSION["field_uid"];
 	    $field_menu_model = new field_menuModel();
 	    $list = $field_menu_model->get_1stmenu_list($field_uid,$page,20);
 	    foreach($list['item'] as $key=>&$val) {
@@ -101,7 +100,7 @@ class field_menuAction extends field_publicAction
     	        $language = 'cn';
     	    }
 		    $data['uid'] = 'minilong';//post('uid');
-		    $data['field_uid'] = 1186;//post('field_uid');
+		    $data['field_uid'] = $_SESSION["field_uid"];//post('field_uid');
 		    $data['field_1stmenu_type'] = post('field_1stmenu_type');
 		    if(!empty($language) && $language=='en')
 		    {
@@ -255,7 +254,6 @@ class field_menuAction extends field_publicAction
 		$this->assign("total",$list["total"]);
         $this->assign('language',$language);
 		$this->assign("first_list",$first_list);
-		$this->assign("web_url",$this->http_url);
 		
 		$this->display('second_menu_list');
 	}
@@ -275,8 +273,8 @@ class field_menuAction extends field_publicAction
 		{
 		    $language = post('language');
 		    $data['field_1stmenu_id'] = post('field_1stmenu_id');
-		    $data['uid'] = 111;//post('uid');
-		    $data['field_uid'] = 1186;//post('field_uid');
+		    $data['uid'] = $_SESSION["uid"];//post('uid');
+		    $data['field_uid'] = $_SESSION["field_uid"];//post('field_uid');
 		    if($language == 'en') {
 		        $data['field_2ndmenu_name_en'] = post('field_2ndmenu_name');
 		    }else{
@@ -284,7 +282,10 @@ class field_menuAction extends field_publicAction
 		    }
 		    $data['field_1stmenu_type'] = post('field_1stmenu_type');
 		    $menu_pic_url = $this->upd_menu_pic();
-		    $data['field_2ndmenu_pic'] = !empty($menu_pic_url) ? $menu_pic_url : false;
+			if(!empty($menu_pic_url)) {
+				$data['field_2ndmenu_pic'] = $menu_pic_url;
+			}
+		    
 		    $data['field_2ndmenu_price'] = post('field_2ndmenu_price');
 		    $data['field_2ndmenu_addtime'] = time();
 		    $list=M("field_2ndmenu")->add($data);
@@ -350,7 +351,12 @@ class field_menuAction extends field_publicAction
 		        $data['field_2ndmenu_name'] = post('field_2ndmenu_name');
 		    }
 		    $menu_pic_url = $this->upd_menu_pic();
-		    $data['field_2ndmenu_pic'] = !empty($menu_pic_url) ? $menu_pic_url : false;
+			
+			if(!empty($menu_pic_url)) {
+			
+				$data['field_2ndmenu_pic'] = $menu_pic_url;
+			}
+		   
 		    $data['field_2ndmenu_price'] = post('field_2ndmenu_price');
 		    $data['field_2ndmenu_addtime'] = time();
 		    $list=M("field_2ndmenu")->save($data);

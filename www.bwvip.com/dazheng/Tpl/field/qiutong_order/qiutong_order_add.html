@@ -23,14 +23,14 @@
 					<td><input type="text" name="uid" id="uid" class="mod_input2" style="width:66px;" ></td>
 				</tr>
 				<tr>
-					<th>球童：</th>
+					<th>球童ID：</th>
 					<td><input type="text" name="qiutong_id" id="qiutong_id" class="mod_input2" style="width:66px;" ></td>
 				</tr>
-				<tr>
+				<!--<tr>
 					<th>球场UID：</th>
 					<td><input type="text" name="field_uid" id="field_uid" class="mod_input2" style="width:66px;" ></td>
 				</tr>
-				<tr>
+				--><tr>
 					<th>预约日期：</th>
 					<td><input type="text" name="qiutong_order_date" id="qiutong_order_date" readonly class="mod_input_date" style="width:200px;" onFocus="WdatePicker({isShowClear:false,readOnly:true})" ></td>
 				</tr>
@@ -48,6 +48,7 @@
 			<tr>
 				<th></th>
 				<td>
+					<input type="hidden" name="field_uid" value="1186"/>
 					<input type="submit" class="btn_b"  value="添加" style="margin-right:10px;"/>
 					<input type="button" class="btn_w" onclick="close_dialog(this)" value="取消" />
 				</td>
@@ -61,7 +62,7 @@ $.formValidator.initConfig({formID:"act_form",theme:'ArrowSolidBox',mode:'AutoTi
 
 	$("#uid").formValidator({empty:true,onShow:"请输入用户UID",onFocus:"请输入用户UID",onCorrect:"输入正确"}).inputValidator({min:1,max:11,onError:"请输入用户UID"});
 		$("#qiutong_id").formValidator({empty:true,onShow:"请输入球童",onFocus:"请输入球童",onCorrect:"输入正确"}).inputValidator({min:1,max:11,onError:"请输入球童"});
-		$("#field_uid").formValidator({empty:true,onShow:"请输入球场UID",onFocus:"请输入球场UID",onCorrect:"输入正确"}).inputValidator({min:1,max:11,onError:"请输入球场UID"});
+		//$("#field_uid").formValidator({empty:true,onShow:"请输入球场UID",onFocus:"请输入球场UID",onCorrect:"输入正确"}).inputValidator({min:1,max:11,onError:"请输入球场UID"});
 		$("#qiutong_order_date").formValidator({empty:true,onShow:"请输入预约日期",onFocus:"请输入预约日期",onCorrect:"输入正确"}).inputValidator({min:1,max:10,onError:"请输入预约日期"});
 		$("#qiutong_order_teetime").formValidator({empty:true,onShow:"请输入打球时间",onFocus:"请输入打球时间",onCorrect:"输入正确"}).inputValidator({min:1,max:50,onError:"请输入打球时间"});
 		$("#qiutong_order_state").formValidator({empty:true,onShow:"请输入预约状态",onFocus:"请输入预约状态",onCorrect:"输入正确"}).inputValidator({min:1,max:11,onError:"请输入预约状态"});

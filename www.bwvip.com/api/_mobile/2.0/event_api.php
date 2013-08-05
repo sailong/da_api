@@ -7,7 +7,6 @@ if(!defined("IN_DISCUZ"))
 $ac=$_G['gp_ac'];
 
 
-
 //page 1
 $page=$_G['gp_page'];
 if(!$page)
@@ -71,7 +70,7 @@ $hot_2013district=array(
 //选择 赛事
 if($ac=="select_event")
 {
-	$list3=DB::query("select event_id,event_name,event_uid,event_is_zhutui,event_zhutui_pic,event_content,event_url,event_type from tbl_event where event_is_zhutui='Y' and field_uid=0 order by event_sort desc limit 1 ");
+	$list3=DB::query("select event_id,event_name,event_uid,event_is_zhutui,event_zhutui_pic,event_content,event_url,event_type,event_logo from tbl_event where event_is_zhutui='Y' and field_uid=0 order by event_sort desc limit 1 ");
 	while($row3 = DB::fetch($list3))
 	{
 		if($row3['event_zhutui_pic'])
@@ -88,13 +87,15 @@ if($ac=="select_event")
 		$list_data3[]=$row3;
 	}
 
-	$list=DB::query("select event_id,event_name,event_uid,event_is_zhutui,event_content,event_url,event_type from tbl_event where event_is_tj='Y' and field_uid=0 order by event_sort desc  ");
+	$list=DB::query("select event_id,event_name,event_id as event_uid,event_is_zhutui,event_content,event_url,event_type,event_logo from tbl_event where event_is_tj='Y' and field_uid=0 order by event_sort desc  ");
 	while($row = DB::fetch($list))
 	{
-		//$field=DB::query("select field_id from pre_fenzhan where sid= ");
-		//$row['field_ids']=
 		
-		$row['event_pic']=$site_url."/uc_server/avatar.php?uid=".$row['event_uid']."&size=middle";
+		if($row['event_logo'])
+		{
+			$row['event_logo']=$site_url."/".$row['event_logo'];
+		}
+		$row['event_pic']=$row['event_logo'];
 		$row['uid']=$row['event_uid'];
 		$row['event_content']=msubstr(cutstr_html($row['event_content']),0,30);
 		if(!$row['event_url'])
@@ -133,7 +134,7 @@ if($ac=="apply_ing")
 {
 	$login_uid=$_G['gp_login_uid'];
 
-	$list=DB::query("select event_id,event_name,event_uid,event_is_zhutui,event_content,event_url,event_type from tbl_event where event_baoming_starttime<=".time()." and event_baoming_endtime>=".time()." and field_uid=0 and event_is_baoming='Y' order by event_baoming_starttime desc  limit 100 ");
+	$list=DB::query("select event_id,event_name,event_uid,event_is_zhutui,event_content,event_url,event_type,event_logo from tbl_event where event_baoming_starttime<=".time()." and event_baoming_endtime>=".time()." and field_uid=0 and event_is_baoming='Y' order by event_baoming_starttime desc  limit 100 ");
 	while($row = DB::fetch($list))
 	{
 		if($login_uid)

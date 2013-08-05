@@ -9,7 +9,6 @@
 class rankAction extends field_publicAction
 {
 
-    private $http_url = '';
 	public function _basic()	
 	{
 		parent::_basic();
@@ -25,28 +24,29 @@ class rankAction extends field_publicAction
         if(empty($language)) {
             $language = 'cn';
         }
-        $field_uid = 1186;
-        $where = "b.field_uid='{$field_uid}'";
+        $field_uid = $_SESSION["field_uid"];
+        $where = "a.field_uid='{$field_uid}' and a.field_event_id=b.field_event_id and a.uid=c.uid";
 	    if(!empty($event_id)) {
 	        $where .= " and b.field_event_id='{$event_id}'";
 	    }
 	    if(!empty($uid)) {
-	        $where .= " and b.field_uid='{$field_uid}'";
+	        $where .= " a.uid='{$uid}'";
 	    }
-        
-	    $where .= " and a.field_event_id=b.field_event_id";
-	    $list = M()->table('tbl_field_event a,tbl_field_event_rank b')->where($where)->field('b.field_event_rank_id,b.field_event_rank_name,b.field_event_rank_name_en,uid,b.field_uid,b.field_event_rank_score,b.field_event_rank_sort,b.field_event_rank_addtime,b.field_event_id,a.field_event_name')->page($page.",".$page_size)->order('b.field_event_rank_sort asc' )->select();
-//	    echo '<pre>';
-//	    var_dump($list);
-	    foreach($list as $key=>&$val) {
+	    $offset = ($page-1)*$page_size;
+        $sql = "select a.field_event_rank_id,a.field_event_rank_name,a.field_event_rank_name_en,a.uid,a.field_uid,a.field_event_rank_score,a.field_event_rank_sort,a.field_event_rank_addtime,b.field_event_id,b.field_event_name,c.realname from tbl_field_event_rank a,tbl_field_event b,pre_common_member_profile c where $where order by a.field_event_rank_sort asc limit $offset,$page_size";
+		//echo $sql;
+	    $list = M()->query($sql);
+	    foreach($list as $key=>&$val)
+		{
 	        if($language == 'en') {
 	            $val['field_event_rank_name'] = $val['field_event_rank_name_en'];
 	        }
 	        unset($val['field_event_rank_name_en']);
 	    }
-	    $total =  M()->table('tbl_field_event a,tbl_field_event_rank b')->where($where)->field('b.field_event_rank_id,b.field_event_rank_name,b.field_event_rank_name_en,uid,b.field_uid,b.field_event_rank_score,b.field_event_rank_sort,b.field_event_rank_addtime,b.field_event_id,a.field_event_name')->count();
+	    $total =  M()->query("select count(a.field_event_rank_id) as total from tbl_field_event_rank a,tbl_field_event b,pre_common_member_profile c where $where");
+		
 	    import ("@.ORG.Page");
-		$page = new page ($total, $page_size );
+		$page = new page ($total[0]['total'], $page_size );
 		
 	    $this->assign('list',$list);
 		$this->assign("pages",$page->show());
@@ -73,7 +73,7 @@ class rankAction extends field_publicAction
 	    $this->display('rank_detail');
 	}
 	
-	//添加会员服务
+	//添加冠军排行榜
 	public function rank_add() {
 	    
 //	    import("@.ORG.editor");  //导入类
@@ -89,7 +89,7 @@ class rankAction extends field_publicAction
 	    $language = post('language');
 	    $data['uid'] = post('uid');
 	    $data['field_event_id'] = post('field_event_id');
-	    $data['field_uid'] = post('field_uid');
+	    $data['field_uid'] = $_SESSION["field_uid"];
 	    $data['field_event_rank_score'] = post('field_event_rank_score');
 	    $data['field_event_rank_sort'] = post('field_event_rank_sort');
 	    $field_event_rank_name = post('field_event_rank_name');
@@ -109,7 +109,6 @@ class rankAction extends field_publicAction
 	    $this->error("添加失败",U('field/rank/rank',array('p'=>get('p'),'language'=>$language,'field_event_rank_id'=>$field_event_rank_id)));exit;
 	}
 	
-	//修改会员服务
 	public function rank_edit() {
 	    $field_event_rank_id = get('field_event_rank_id');
 	    $language = get('language');
@@ -147,7 +146,7 @@ class rankAction extends field_publicAction
 	    $language = get('language');
 	    $data['uid'] = post('uid');
 	    $data['field_event_id'] = post('field_event_id');
-	    $data['field_uid'] = post('field_uid');
+	    $data['field_uid'] = $_SESSION["field_uid"];
 	    $data['field_event_rank_score'] = post('field_event_rank_score');
 	    $data['field_event_rank_sort'] = post('field_event_rank_sort');
 	    $field_event_rank_name = post('field_event_rank_name');
@@ -167,7 +166,7 @@ class rankAction extends field_publicAction
 	    $this->error("修改失败",U('field/rank/rank',array('p'=>get('p'),'language'=>$language,'field_event_rank_id'=>$field_event_rank_id)));exit;
 	}
 	
-	//删除会员服务
+	//删除冠军排行榜
 	public function rank_del_action() {
 	    $ids = post('ids');
 	    if(empty($ids)) {

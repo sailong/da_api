@@ -9,7 +9,6 @@
 class user_serviceAction extends field_publicAction
 {
 
-    private $http_url = '';
 	public function _basic()	
 	{
 		parent::_basic();
@@ -25,15 +24,16 @@ class user_serviceAction extends field_publicAction
         if(empty($language)) {
             $language = 'cn';
         }
-        $field_uid = 1186;
-        $where = "field_uid='{$field_uid}'";
+        $field_uid = $_SESSION["field_uid"];
+        $where = "a.field_uid='{$field_uid}'";
 	    if(!empty($service_type)) {
-	        $where .= " and user_service_type='{$service_type}'";
+	        $where .= " and a.user_service_type='{$service_type}'";
 	    }
 	    if(!empty($uid)) {
-	        $where .= " and uid='{$uid}'";
+	        $where .= " and a.uid='{$uid}'";
 	    }
-	    $list = M('field_user_service')->where($where)->page($page.",".$page_size)->select();
+	    $where .= " and a.uid=b.uid";
+	    $list = M('field_user_service a,pre_common_member_profile b')->field('a.user_service_id,a.uid,a.field_uid,a.user_service_type,a.user_service_detail,a.user_service_detail_en,a.user_service_addtime,b.realname')->where($where)->page($page.",".$page_size)->select();
 	    foreach($list as $key=>&$val) {
 	        if($language == 'en') {
 	            $val['user_service_detail'] = $val['user_service_detail_en'];
@@ -137,7 +137,7 @@ class user_serviceAction extends field_publicAction
 	public function add_user_service_action() {
 	    $language = post('language');
 	    $data['uid'] = post('uid');
-	    $data['field_uid'] = 1186;//post('field_uid');
+	    $data['field_uid'] = $_SESSION["field_uid"];//post('field_uid');
 	    $data['user_service_type'] = post('user_service_type');
 	    $user_service_detail = stripslashes($_POST["user_service_detail"]);
 	    //检查是否该会员UID已经有该服务
@@ -198,7 +198,7 @@ class user_serviceAction extends field_publicAction
 	    $user_service_id = post('user_service_id');
 	    $language = get('language');
 	    $data['uid'] = post('uid');
-	    $data['field_uid'] = 1186;//post('field_uid');
+	    $data['field_uid'] = $_SESSION["field_uid"];//post('field_uid');
 	    $user_service_detail = stripslashes($_POST["user_service_detail"]);
 	    if($language == 'en') {
 	        $data['user_service_detail_en'] = $user_service_detail;

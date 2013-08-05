@@ -1,7 +1,7 @@
 <include file="../public/_header" />
 <div class="so_main">
 
-  <div class="page_tit">文章</div>
+  <div class="page_tit">新闻管理</div>
   <div class="tit_tab">
 	<ul>
 		<li><a <php> if(get("language")=='cn'){ echo " class=on ";}</php> href="{:U('field/arc/arc',array('language'=>'cn'))}">中文</a></li>
@@ -11,10 +11,11 @@
 
   <div class="search_box">
 		<form name="search_form" action="/default.php" method="get">
-		<input type="hidden" name="g" value="admin">
+		<input type="hidden" name="g" value="field">
 		<input type="hidden" name="m" value="arc">
 		<input type="hidden" name="a" value="arc">
-		<input type="hidden" name="arc_state" value="<php>echo get("arc_state")</php>">
+		<input type="hidden" name="language" value="<php>echo get("language")</php>"/>
+		<!--<input type="hidden" name="arc_state" value="<php>echo get("arc_state")</php>"/>-->
 
 		<table border="0" cellspacing="0" cellpadding="0">
 			<th>名称：</th>
@@ -43,7 +44,7 @@
 			<td class="btn">
 				
 				<input type="submit" value="搜索" class="btn_b" style="margin-right:8px;" >
-				<input type="button" value="查看全部" class="btn_b" onclick="javascript:location='{:U('field/arc/arc',array('state'=>get('state')))}';">
+				<input type="button" value="查看全部" class="btn_b" onclick="javascript:location='{:U('field/arc/arc',array('language'=>get('language')))}';">
 			</td>
 		</table>
 	</form>
@@ -53,7 +54,7 @@
   <div class="Toolbar_inbox">
   	<div class="page right">{$pages}</div>
 
-	<a href="{:U('field/arc/arc_add',array('language'=>get('language')))}" class="btn_a"><span>添加文章</span></a>
+	<a href="{:U('field/arc/arc_add',array('language'=>get('language')))}" class="btn_a"><span>添加新闻</span></a>
 	
 	<php>if(get('arc_state')=='0'){</php>
 	<a href="javascript:void(0);" class="btn_a"  onclick="mod_post_batch('{:U('field/arc/arc_check_action')}','mod_table');"><span>审核通过</span></a>
@@ -103,7 +104,7 @@
 	<tr overstyle="on"  id=ids_{$vo["arc_id"]}>
 		<td><input type="checkbox" name="checkbox" onclick="select_one(this)" value="{$vo.arc_id}" ></td>
 		<td width="40">{$vo.arc_id}</td>
-		<td><a href="javascript:void(0);" onclick="mod_dialog('查看详细','{:U('field/arc/arc_detail', array('arc_id'=>$vo['arc_id']))}');">{$vo.arc_name}</a> <php>if($vo['arc_is_tj']=="Y"){ echo "<font color='red'>[荐]</font>";}</php> <php>if($vo['arc_is_pic']=="Y"){ echo "<font color='green'>[首页图片]</font>";}</php></th>
+		<td>{$vo.arc_name} <php>if($vo['arc_is_tj']=="Y"){ echo "<font color='red'>[荐]</font>";}</php> <php>if($vo['arc_is_pic']=="Y"){ echo "<font color='green'>[首页图片]</font>";}</php></th>
 		<!--
 			<td><a href="javascript:void(0);" onclick="mod_dialog('查看详细','{:U('field/arc/arc_detail', array('arc_id'=>$vo['arc_id']))}');">{$vo.staff_id}</a></td>
 			<td>{$vo.arctype_name}</td>
@@ -123,13 +124,14 @@
 			<td>{$vo.arc_addtime|format_to_time}</td>
 			
 		<td>
+			<a href="{:U('field/arc/arc_detail', array('arc_id'=>$vo['arc_id']))}">详情</a> | 
 			<a href="{:U('field/arc/arc_edit', array('arc_id'=>$vo['arc_id']))}">修改</a> | 
 			<!--
 			<a href="javascript:void(0);"  onclick="mod_dialog('修改文章','{:U('field/arc/arc_edit', array('arc_id'=>$vo['arc_id']))}')">修改</a> | 
 			-->
 			<a href="javascript:void(0);" onclick="mod_delete_one('{:U('field/arc/arc_delete_action')}','{$vo['arc_id']}');">删除</a>
-			<br />
-			<a href="{:U('field/arc/tongbu', array('arc_id'=>$vo['arc_id']))}">同步</a> | 
+			<!--<br />
+			<a href="{:U('field/arc/tongbu', array('arc_id'=>$vo['arc_id']))}">同步</a> |-->  
 		</td>
 	</tr>
 	</volist>
@@ -144,7 +146,7 @@
   <div class="Toolbar_inbox">
 	<div class="page right">{$pages}</div>
 
-	<a href="{:U('field/arc/arc_add',array('language'=>get('language')))}" class="btn_a"><span>添加文章</span></a>
+	<a href="{:U('field/arc/arc_add',array('language'=>get('language')))}" class="btn_a"><span>添加新闻</span></a>
 	
 	<php>if(get('arc_state')=='0'){</php>
 	<a href="javascript:void(0);" class="btn_a"  onclick="mod_post_batch('{:U('field/arc/arc_check_action')}','mod_table');"><span>审核通过</span></a>

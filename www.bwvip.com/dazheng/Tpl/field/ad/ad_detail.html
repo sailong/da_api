@@ -12,11 +12,16 @@
 				</tr>
 				<tr>
 					<th>广告类型：</th>
-						<td>{$data.ad_type}</td>
+						<td><switch name="data.ad_type">
+							<case value="pic">图片</case>
+							<case value="flash">FLASH</case>
+							<case value="video">视频</case>
+							<default />无分类
+						</switch></td>
 				</tr>
 				<tr>
-					<th>文件地址：</th>
-						<td>{$data.ad_file}</td>
+					<th>广告文件：</th>
+						<td><img src="/{$data.ad_file}" style="max-height:60px; max-width:100px;"></td>
 				</tr>
 				<tr>
 					<th>宽度：</th>
@@ -34,11 +39,11 @@
 					<th>广告状态：</th>
 						<td>{$data.ad_state}</td>
 				</tr>
-				<tr>
+				<!--<tr>
 					<th><font color="red">*</font>球场UID：</th>
 					<td>{$data.field_uid}</td>
 				</tr>
-				<tr>
+				--><tr>
 					<th>添加时间：</th>
 					<td>{$data.ad_addtime|format_to_time}</td>
 					

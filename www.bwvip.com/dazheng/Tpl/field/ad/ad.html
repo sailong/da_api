@@ -2,19 +2,17 @@
 <div class="so_main">
 
   <div class="page_tit">广告</div>
-  <!--
-  <div class="tit_tab">
+  <!--<div class="tit_tab">
 	<ul>
 		<li><a <php> if(get("ad_app")==''){ echo " class=on ";}</php> href="{:U('field/ad/ad',array('ad_app'=>''))}">全部</a></li>
 		<li><a <php> if(get("ad_app")=='bwvip'){ echo " class=on ";}</php> href="{:U('field/ad/ad',array('ad_app'=>'bwvip'))}">大正网</a></li>
 		<li><a <php> if(get("ad_app")=='bwvip_app'){ echo " class=on ";}</php> href="{:U('field/ad/ad',array('ad_app'=>'bwvip_app'))}">大正手机客户端</a></li>
 		<li><a <php> if(get("ad_app")=='field_app'){ echo " class=on ";}</php> href="{:U('field/ad/ad',array('ad_app'=>'field_app'))}">美兰湖球场客户端</a></li>
 	</ul>
-  </div>
-  -->
+  </div>-->
   <div class="search_box">
 		<form name="search_form" action="?" method="get">
-		<input type="hidden" name="g" value="admin">
+		<input type="hidden" name="g" value="field">
 		<input type="hidden" name="m" value="ad">
 		<input type="hidden" name="a" value="ad">
 
@@ -82,15 +80,16 @@
 	<volist id="vo" name="list">
 	<tr overstyle="on"  id=ids_{$vo["ad_id"]}>
 			<td><input type="checkbox" name="checkbox" onclick="select_one(this)" value="{$vo.ad_id}" ></td>
-			<td>{$vo.ad_id}</th>
-			<td>{$vo.ad_name}</th>
-			<td>{$vo.ad_page}</th>
+			<td>{$vo.ad_id}</td>
+			<td>{$vo.ad_name}</td>
+			<td>{$ad_page_arr[$vo['ad_page']]}</td>
 			<!--
 			<td>{$vo.ad_app}</td>
 			<td>{$vo.ad_type}</td>
 			<td>{$vo.field_uid}</td>
 			-->
 			<td><php>if($vo['ad_type']=="pic"){ echo '<img style="max-height:60px; max-width:100px;" src="'.$vo['ad_file'].'">';}</php></td>
+			
 			<td>{$vo.ad_width}</td>
 			<td>{$vo.ad_height}</td>
 			<td>{$vo.ad_url}</td>
@@ -100,6 +99,7 @@
 			-->
 			<td>{$vo.ad_addtime|format_to_time}</td>
 		<td>
+			<a href="javascript:void(0);"  onclick="mod_dialog('广告详情','{:U('field/ad/ad_detail', array('ad_id'=>$vo['ad_id']))}')">详情</a> | 
 			<a href="javascript:void(0);"  onclick="mod_dialog('修改广告','{:U('field/ad/ad_edit', array('ad_id'=>$vo['ad_id']))}')">修改</a> | 
 			<a href="javascript:void(0);" onclick="mod_delete_one('{:U('field/ad/ad_delete_action')}','{$vo['ad_id']}');">删除</a>
 		</td>

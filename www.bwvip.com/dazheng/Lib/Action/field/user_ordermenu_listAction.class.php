@@ -9,7 +9,6 @@
 class user_ordermenu_listAction extends field_publicAction
 {
 
-    private $http_url = '';
 	public function _basic()	
 	{
 		parent::_basic();
@@ -24,7 +23,7 @@ class user_ordermenu_listAction extends field_publicAction
         }
         $uid = get('k');
         $realname = get('realname');
-	    $field_uid = 1186;
+	    $field_uid = $_SESSION["field_uid"];
 	    $field_user_order_menu_model = new field_user_order_menuModel();
 	    $list = $field_user_order_menu_model->get_user_order_list($realname,$uid,$field_uid,$page,20);
 	    foreach($list['item'] as $key=>&$val) {
@@ -78,7 +77,7 @@ class user_ordermenu_listAction extends field_publicAction
 		{
 		    $rel_id = post('rel_id');
 		    $data['uid'] = post('uid');
-	        $data['field_uid'] = post('field_uid');
+	        $data['field_uid'] = $_SESSION["field_uid"];
 		    $data['field_1stmenu_type_nums'] = post('field_1stmenu_type_nums');
 		    $data['field_user_menu_phone'] = post('field_user_menu_phone');
 		    $data['field_user_menu_is_finished'] = post('field_user_menu_is_finished');

@@ -82,14 +82,15 @@
 		<th class="line_l">编号</th>
 		<th class="line_l">排行名称</th>
 		<th class="line_l">用户UID</th>
-		<th class="line_l">赛事ID</th>
+		<th class="line_l">用户名称</th>
+		<!--<th class="line_l">赛事ID</th>-->
 		<!--
 		<th class="line_l">发布人</th>
 		<th class="line_l">所属栏目</th>
 		-->
 		
 		<th class="line_l">赛事名称</th>
-		<th class="line_l">赛事UID 	</th>
+		<!--<th class="line_l">赛事UID 	</th>-->
 		
 		<th class="line_l">成绩</th>
 		<th class="line_l">排序</th>
@@ -107,9 +108,10 @@
 		<td width="40">{$keys}</td>
 		<td>{$vo.field_event_rank_name}</td>
 		<td>{$vo.uid}</td>
-		<td>{$vo.field_event_id}</td>
+		<td>{$vo.realname}</td>
+		<!--<td>{$vo.field_event_id}</td>-->
 		<td>{$vo.field_event_name}</td>
-		<td>{$vo.field_uid}</td>
+		<!--<td>{$vo.field_uid}</td>-->
 		<td>{$vo.field_event_rank_score}</td>
 		<td>{$vo.field_event_rank_sort}</td>
 		<td>{$vo.field_event_rank_addtime|format_to_time}</td>

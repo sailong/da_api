@@ -15,7 +15,8 @@ class qiutong_orderModel extends Model{
 		$starttime = strtotime(get("starttime"));
         $endtime = strtotime(get("endtime"));
         $endtime = intval($endtime)+86400;
-		$where = " a.qiutong_id=b.qiutong_id";
+        $where = " 1=1 ";
+		$where .= " and a.qiutong_id=b.qiutong_id";
 		if(get("starttime")!="")
 		{
 			$where .=" and a.qiutong_order_addtime>=".$starttime." ";
@@ -24,10 +25,13 @@ class qiutong_orderModel extends Model{
 		{
 			$where .=" and a.qiutong_order_addtime<".$endtime." ";
 		}
+		if($bigwhere) {
+		    $where .=" and ";
+		}
 
 		$data["item"]=M("qiutong_order a,tbl_qiutong b")->field('a.uid as user_uid,a.qiutong_order_id,a.field_uid,a.qiutong_order_date,a.qiutong_order_teetime,a.qiutong_order_state,b.uid as qiutong_uid,b.qiutong_number,b.qiutong_name,b.qiutong_name_en,b.qiutong_photo,b.qiutong_content,a.qiutong_order_addtime')->where($where.$bigwhere)->order($sort)->page($page.",".$page_size)->select();
 		//field('a.uid as user_uid,a.qiutong_order_id,a.field_uid,a.qiutong_order_date,a.qiutong_order_teetime,a.qiutong_order_state,b.uid as qiutong_uid,b.qiutong_number,b.qiutong_name,b.qiutong_name_en,b.qiutong_photo,b.qiutong_content');
-		
+		//echo M()->getLastSql();die;
 		for($i=0; $i<count($data["item"]); $i++)
 		{
 			if($data["item"][$i]["user_uid"]!="")

@@ -24,13 +24,13 @@
 					<th>会员UID：</th>
 					<td><input type="text" name="uid" id="uid" class="mod_input2" style="width:500px;" ></td>
 				</tr>
-				<tr>
+				<!--<tr>
 					<th>球场UID：</th>
 					<td><input type="text" name="field_uid" id="field_uid" class="mod_input2" style="width:500px;" value="1186"></td>
 				</tr>
 				
 				 
-				<tr>
+				--><tr>
 					<th>服务类型：</th>
 					<td>
 						<select name="user_service_type" id="user_service_type">
@@ -119,6 +119,7 @@
 			<tr>
 				<th></th>
 				<td>
+					<input type="hidden" name="field_uid" id="field_uid" class="mod_input2" value="1186">
 					<input type="hidden" name="field_1stmenu_id" value="{$data.field_1stmenu_id}">
 					<input type="hidden" name="field_1stmenu_type" value="{$data.field_1stmenu_type}">
 					<input type="submit" class="btn_b" value="保存" style="margin-right:10px;"/>
@@ -136,7 +137,7 @@ $(document).ready(function(){
 $.formValidator.initConfig({formID:"act_form",theme:'ArrowSolidBox',mode:'AutoTip',onError:function(msg){msg_error(msg)},inIframe:true});
 
 	$("#uid").formValidator({empty:true,onShow:"请输入会员UID",onFocus:"请输入会员UID",onCorrect:"输入正确"}).inputValidator({min:1,max:20,onError:"请输入会员UID"});
-	$("#field_uid").formValidator({empty:false,onShow:"请输入球场UID",onFocus:"请输入球场UID",onCorrect:"输入正确"}).inputValidator({min:1,max:100,onError:"请输入球场UID"});
+	//$("#field_uid").formValidator({empty:false,onShow:"请输入球场UID",onFocus:"请输入球场UID",onCorrect:"输入正确"}).inputValidator({min:1,max:100,onError:"请输入球场UID"});
 	$("#user_service_type").formValidator({empty:false,onShow:"请选择服务类型",onFocus:"请选择服务类型",onCorrect:"输入正确"}).inputValidator({min:1,max:4,onError:"请选择服务类型"});
 	$("#language").formValidator({empty:false,onShow:"请选择语言",onFocus:"请选择语言",onCorrect:"输入正确"}).inputValidator({min:1,max:2,onError:"请选择语言"});	
 

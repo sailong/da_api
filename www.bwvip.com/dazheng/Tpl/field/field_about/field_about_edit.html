@@ -3,10 +3,10 @@
 
 <div class="so_main">
 
-  <div class="page_tit">球场介绍管理</div>
+  <div class="page_tit">{$dict_name}管理</div>
   <div class="tit_tab">
 	<ul>
-		<li><a class=on href="#">修改球场介绍</a></li>
+		<li><a class=on href="#">修改{$dict_name}</a></li>
 	</ul>
   </div>
 
@@ -26,11 +26,12 @@
 				<tr>
 					<th>类型：</th>
 					<td>
-						<select name="about_type">
+					{$dict_info.dict_name}
+						<!--<select name="about_type">
 							<option value="">请选择</option>
 							{$page_list}
 						</select>
-						<script>set_select_value(document.act_form.about_type,"{$data.about_type}");</script>
+						<script>set_select_value(document.act_form.about_type,"{$data.about_type}");--></script>
 					</td>
 				</tr>
 				
@@ -45,14 +46,14 @@
 				<volist id="vo" name="pic_list" key="key">
 					<tr>
 						<th>图片{$key}：</th>
-						<td><input type="file" name="about_pic_{$vo.pic_id}" id="about_pic{$vo.pic_id}"  class="mod_input" style="width:300px;"><if condition="$vo.pic_url neq ''"></if><img src="{$vo.pic_url}" style="max-height:60px; max-width:100px;"></if></td>
+						<td><input type="file" name="about_pic_{$vo.pic_id}" id="about_pic{$vo.pic_id}"  class="mod_input" style="width:300px;"><php>if($vo['pic_url']){</php><img src="{$vo.pic_url}" style="max-height:60px; max-width:100px;"><php>}</php></td>
 					</tr>
 				</volist>
-				<tr>
+				<!--<tr>
 					<th>回复数：</th>
 					<td><input type="text" name="about_replynum" id="about_replynum" class="mod_input2" style="width:66px;" value="{$data.about_replynum}"></td>
 				</tr>
-				<tr>
+				--><tr>
 					<th>排序：</th>
 					<td><input type="text" name="about_sort" id="about_sort" class="mod_input2" style="width:66px;"  value="{$data.about_sort}"></td>
 				</tr>
@@ -80,6 +81,7 @@
 			<tr>
 				<th></th>
 				<td>
+					<input type="hidden" value="{$dict_info.dict_value}" name="about_type"/>
 					<input type="hidden" name="about_id" value="{$data.about_id}">
 					<input type="submit" class="btn_b" value="保存" style="margin-right:10px;"/>
 					<input type="button" class="btn_w" onclick="javascript:history.back(-1);" value="返回" />
@@ -94,11 +96,11 @@ $.formValidator.initConfig({formID:"act_form",theme:'ArrowSolidBox',mode:'AutoTi
 
 	$("#field_uid").formValidator({empty:true,onShow:"请输入所属球场",onFocus:"请输入所属球场",onCorrect:"输入正确"}).inputValidator({min:1,max:11,onError:"请输入所属球场"});
 		$("#about_name").formValidator({empty:true,onShow:"请输入名称",onFocus:"请输入名称",onCorrect:"输入正确"}).inputValidator({min:1,max:50,onError:"请输入名称"});
-		$("#about_type").formValidator({empty:true,onShow:"请输入类型",onFocus:"请输入类型",onCorrect:"输入正确"}).inputValidator({min:1,max:50,onError:"请输入类型"});
+		//$("#about_type").formValidator({empty:true,onShow:"请输入类型",onFocus:"请输入类型",onCorrect:"输入正确"}).inputValidator({min:1,max:50,onError:"请输入类型"});
 		$("#about_content").formValidator({empty:true,onShow:"请输入内容",onFocus:"请输入内容",onCorrect:"输入正确"}).inputValidator({min:1,max:3000,onError:"请输入内容"});
 		$("#about_tel").formValidator({empty:true,onShow:"请输入电话",onFocus:"请输入电话",onCorrect:"输入正确"}).inputValidator({min:1,max:50,onError:"请输入电话"});
 		$("#about_tel2").formValidator({empty:true,onShow:"请输入电话2",onFocus:"请输入电话2",onCorrect:"输入正确"}).inputValidator({min:1,max:50,onError:"请输入电话2"});
-		$("#about_replynum").formValidator({empty:true,onShow:"请输入回复数",onFocus:"请输入回复数",onCorrect:"输入正确"}).inputValidator({min:1,max:11,onError:"请输入回复数"});
+		//$("#about_replynum").formValidator({empty:true,onShow:"请输入回复数",onFocus:"请输入回复数",onCorrect:"输入正确"}).inputValidator({min:1,max:11,onError:"请输入回复数"});
 		$("#about_sort").formValidator({empty:true,onShow:"请输入排序",onFocus:"请输入排序",onCorrect:"输入正确"}).inputValidator({min:1,max:11,onError:"请输入排序"});
 		
 

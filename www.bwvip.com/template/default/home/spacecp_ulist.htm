@@ -212,7 +212,7 @@ function getCheckboxItem()
     分站：<select name="fz_id" id="fz_id">                             
      <option value=""  >请选择分站</option>
     <!--{loop $tlist $k $v}-->
-    <option value="<!--{$v[fz_id]}-->"  <!--{if $fz_id==$v[fz_id]}-->selected="selected"<!--{/if}-->  ><!--{$v[fenz_name]}-->分站</option>
+    <option value="<!--{$v[fenzhan_id]}-->"  <!--{if $fz_id==$v[fenzhan_id]}-->selected="selected"<!--{/if}-->  ><!--{$v[fenzhan_name]}-->分站</option>
      <!--{/loop}-->
     </select>
     
@@ -358,10 +358,10 @@ function getCheckboxItem()
     <form action="home.php?mod=spacecp&ac=ulist&op=fzdj&do=fz&ge=update" method="post" name="form1">
 
     <!--{loop $fzlist $k $v}-->
-  <div style="width:450px; float:left;">分站名称：<input  name="fenz_name" id="fenz_name" value="$v['fenz_name']" type="text"/>
+  <div style="width:450px; float:left;">分站名称：<input  name="fenz_name" id="fenz_name" value="$v['fenzhan_name']" type="text"/>
 <input  name="fz_id" id="fz_id" value="$_GET['fz_id']" type="hidden"/></div> 
 <div style="width:450px; float:left;">排序：<input  name="orderby" type="text" id="orderby" onkeyup="this.value=this.value.replace(/\D/g,'')" value="$v['orderby']" size="2" maxlength="2"  onafterpaste="this.value=this.value.replace(/\D/g,'')"/>
-轮次：<input  name="lun" type="text" id="lun" onkeyup="this.value=this.value.replace(/\D/g,'')" value="$v['lun']" size="2" maxlength="2"  onafterpaste="this.value=this.value.replace(/\D/g,'')"/></div>
+轮次：<input  name="lun" type="text" id="lun" onkeyup="this.value=this.value.replace(/\D/g,'')" value="$v['fenzhan_lun']" size="2" maxlength="2"  onafterpaste="this.value=this.value.replace(/\D/g,'')"/></div>
 
  <div style="width:450px; float:left;">开始时间：<input  style="width:100px;" type="text" name="starttime" class="px"   onclick="showcalendar(event, this,1)" readonly="readonly"  value="<!--{eval echo date('Y-m-d h:i:s',$v['starttime'])}-->"/></div>
 <div style="width:450px; float:left;">结束时间：<input  style="width:100px;" type="text" name="endtime" class="px"   onclick="showcalendar(event, this,1)" readonly="readonly" value="<!--{eval echo date('Y-m-d h:i:s',$v['endtime'])}-->"/></div>    
@@ -380,10 +380,10 @@ function getCheckboxItem()
                     <li  id='title_<!--{$v[uid]}-->' style="float:left;width:505px; text-align:left; <!--{if $k%2==1}--> background:#D5E6F6;
                     <!--{else}-->background:#efefef;<!--{/if}-->"   onmouseover="this.style.backgroundColor='#D6D6D6';this.style.color='#ffffff';"    onmouseout="this.style.backgroundColor='<!--{$bgcolor}-->';this.style.color='#000000';">
                 
-        <!--{$v[fenz_name]}-->
-                    <span style="float:right">ID:{$v[fz_id]}
-    <a href="/home.php?mod=spacecp&ac=ulist&op=fzdj&do=fz&ge=edit&fz_id=<!--{$v[fz_id]}-->" id='edit_<!--{$v[fz_id]}-->'>编辑</a>&nbsp;&nbsp;&nbsp;&nbsp;
-                    <a href='/home.php?mod=spacecp&ac=ulist&op=fzdj&do=fz&ge=del&fz_id=<!--{$v[fz_id]}-->' onclick="if(!confirm('确定要删除？')) return false">删除</a></span>
+        <!--{$v[fenzhan_name]}-->
+                    <span style="float:right">ID:{$v[fenzhan_id]}
+    <a href="/home.php?mod=spacecp&ac=ulist&op=fzdj&do=fz&ge=edit&fz_id=<!--{$v[fenzhan_id]}-->" id='edit_<!--{$v[fenzhan_id]}-->'>编辑</a>&nbsp;&nbsp;&nbsp;&nbsp;
+                    <a href='/home.php?mod=spacecp&ac=ulist&op=fzdj&do=fz&ge=del&fz_id=<!--{$v[fenzhan_id]}-->' onclick="if(!confirm('确定要删除？')) return false">删除</a></span>
      
                     </li>
         <!--{/loop}-->
@@ -735,7 +735,7 @@ UID：<input  name="ggid" id="ggid" value="" type="text"  onkeyup="this.value=th
         <td>
         <select name="fz_id" id="fz_id" >                  
             <!--{loop $flist $k $v}-->
-            <option value="<!--{$v[fz_id]}-->" ><!--{$v[fenz_name]}-->分站</option>
+            <option value="<!--{$v[fenzhan_id]}-->" ><!--{$v[fenzhan_name]}-->分站</option>
              <!--{/loop}-->
             </select>
         

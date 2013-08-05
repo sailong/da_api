@@ -36,7 +36,7 @@
                                       <th align="left" ><select id="exttype" name="fenz" class="ps" width="168">
                                                     <option value="0" >请选择分站</option>
                                                     <!--{loop $fz_rows $fz_rows}-->
-                                                    <option value="$fz_rows['fz_id']"   {if $_G['gp_fenz']== $fz_rows['fz_id']} selected {/if}>{$fz_rows[fenz_name]}</option>
+                                                    <option value="$fz_rows['fenzhan_id']"   {if $_G['gp_fenz']== $fz_rows['fenzhan_id']} selected {/if}>{$fz_rows[fenzhan_name]}</option>
                                                     <!--{/loop}-->
                                                 </select>
                                                 <select id="income" name="field" class="ps" width="168">
@@ -95,7 +95,7 @@
                                                 <select id="exttype" name="fenz" class="ps" width="168">
                                                     <option value="0" >请选择分站</option>
                                                     <!--{loop $fz_rows $fz_rows}-->
-                                                    <option value="$fz_rows['fz_id']"   {if $_G['gp_fenz']== $fz_rows['fz_id']} selected {/if}>{$fz_rows[fenz_name]}</option>
+                                                    <option value="$fz_rows['fenzhan_id']"   {if $_G['gp_fenz']== $fz_rows['fenzhan_id']} selected {/if}>{$fz_rows[fenzhan_name]}</option>
                                                     <!--{/loop}-->
                                                 </select>
                                             </span>
@@ -131,9 +131,9 @@
                         <td><a href="dazbm.php?bm_page=1&member_id={$value['uid']}" target="_blank">{$value['realname']}</a></td>
                         <td>{$value['start_time']}</td>
                         <td>{if $value['tee'] == 0}<font color="red"  >【停赛】</font>{else}{$value['tee']}Tee{/if}</td>
-                        <td>{if $value['tee'] == 0}<font color="red"  >【停赛】</font>{else}{$value['team_num']}-组{/if}</td>
+                        <td>{if $value['tee'] == 0}<font color="red"  >【停赛】</font>{else}{$value['fenzu_id']}-组{/if}</td>
                         <td><!--{if $value['am_pm'] > 1}-->下午<!--{else}-->上午<!--{/if}--></td>
-                        <td> <a href="home.php?mod=spacecp&ac=fenzu&op=member_get&nd_id={$value['nd_id']}" target="_blank">[调 配]</a> </td>					
+                        <td> <a href="home.php?mod=spacecp&ac=fenzu&op=member_get&nd_id={$value['baofen_id']}" target="_blank">[调 配]</a> </td>					
                     </tr>
                     <!--{/loop}-->
               <!--{else}-->

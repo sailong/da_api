@@ -18,11 +18,12 @@ class qiutong_orderAction extends field_publicAction
 	{
 	    $where = '';
 	    $k = get('k');
-	    $where = " a.field_uid='1186'";
+	    $where = " a.field_uid='{$_SESSION["field_uid"]}'";
 	    if(!empty($k)) {
 	        $where .= " and (b.qiutong_name like '%{$k}%' or b.qiutong_name_en like '%{$k}%') ";
 	    }
 		$list=D("qiutong_order")->qiutong_order_list_pro($where);
+		
         //echo D()->getLastSql();
 		$this->assign("list",$list["item"]);
 		$this->assign("pages",$list["pages"]);
@@ -44,7 +45,7 @@ class qiutong_orderAction extends field_publicAction
 		{
 			$data["uid"]=post("uid");
 			$data["qiutong_id"]=post("qiutong_id");
-			$data["field_uid"]=1186;//post("field_uid");
+			$data["field_uid"]=$_SESSION["field_uid"];//post("field_uid");
 			$data["qiutong_order_date"]=strtotime(post("qiutong_order_date"));
 			$data["qiutong_order_teetime"]=post("qiutong_order_teetime");
 			$data["qiutong_order_state"]=post("qiutong_order_state");
@@ -91,7 +92,7 @@ class qiutong_orderAction extends field_publicAction
 			$data["qiutong_order_id"]=post("qiutong_order_id");
 			$data["uid"]=post("uid");
 			$data["qiutong_id"]=post("qiutong_id");
-			$data["field_uid"]=1186;//post("field_uid");
+			$data["field_uid"]=$_SESSION["field_uid"];//post("field_uid");
 			$data["qiutong_order_date"]=strtotime(post("qiutong_order_date"));
 			$data["qiutong_order_teetime"]=post("qiutong_order_teetime");
 			$data["qiutong_order_state"]=post("qiutong_order_state")=='on' ? 1 : 0;

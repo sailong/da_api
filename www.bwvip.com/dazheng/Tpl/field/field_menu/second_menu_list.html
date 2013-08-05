@@ -61,7 +61,7 @@
 		<span>&nbsp;&nbsp;&nbsp;&nbsp;菜单分类：</span>
 		<select name="field_1stmenu_id" id="field_1stmenu_id">
 			<volist id="vo" name="first_list" key="keys">
-				<option value="{$vo.field_1stmenu_id}">{$vo.field_1stmenu_name}(<php>if($vo['field_1stmenu_type'] == 1){echo "餐厅用餐";}if($vo['field_1stmenu_type'] == 2){echo "场下用餐";}</php>)</option>
+				<option value="{$vo.field_1stmenu_id}">{$vo.field_1stmenu_name|default='暂无'}(<php>if($vo['field_1stmenu_type'] == 1){echo "餐厅用餐";}if($vo['field_1stmenu_type'] == 2){echo "场下用餐";}</php>)</option>
 			</volist>
 		</select>
 		<script>set_select_value(document.first_menu.field_1stmenu_id,"{$field_1stmenu_id}");</script>
@@ -119,14 +119,13 @@
 	<tr overstyle="on"  id=ids_{$vo["field_2ndmenu_id"]}>
 		<!--<td><input type="checkbox" name="checkbox" onclick="select_one(this)" value="{$vo.arc_id}" ></td>-->
 		<td width="40">{$keys}</td>
-		<td>{$vo.field_2ndmenu_name}</td>
+		<td>{$vo.field_2ndmenu_name|default='暂无'}</td>
 		<!--
 		<td><a href="javascript:void(0);" onclick="mod_dialog('查看详细','{:U('field/arc/arc_detail', array('arc_id'=>$vo['arc_id']))}');">{$vo.staff_id}</a></td>
 		<td>{$vo.arctype_name}</td>
 		-->
 		
-		<td><a href="{$web_url}{$vo.field_2ndmenu_pic}" target="_blank">{$vo.field_2ndmenu_pic}</a></td>
-		<td>{$vo.field_2ndmenu_price}</td>
+		<td><img src="{$vo.field_2ndmenu_pic}" style="max-height:60px; max-width:100px;"/></td><!--<a href="{$vo.field_2ndmenu_pic}" target="_blank">{$vo.field_2ndmenu_pic}</a>--><td>{$vo.field_2ndmenu_price}</td>
 		<!--
 		<td><php>if($vo['arc_pic']){</php><img src="/{$vo.arc_pic}" style="max-width:150px; max-height:80px;"><php>}</php></td>
 

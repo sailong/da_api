@@ -28,7 +28,7 @@ if($operation=='base'){
     $actives = array('m_list' =>' class="a"');
 
     $fz_rows = $qc_rows = array();
-    $query  =DB::query(" SELECT `fz_id`,`fenz_name` from ".DB::table('fenzhan')." where sid= ".$_G['uid']."");
+    $query  =DB::query(" SELECT `fenzhan_id`,`fenzhan_name` from tbl_fenzhan where sid= ".$_G['uid']."");
 	while($result = DB::fetch( $query )) {
         $fz_rows[] = $result;
     }
@@ -38,9 +38,9 @@ if($operation=='base'){
         $qc_rows[] = $result;
     }
 	   $where="where sid= ".$_G['uid'];
-	    $fenz_id  = $_G['gp_fenz'];
-	   if($fenz_id){
-		 	$where.=" and  fenz_id= ".$fenz_id;
+	    $fenzhan_id  = $_G['gp_fenz'];
+	   if($fenzhan_id){
+		 	$where.=" and  fenzhan_id= ".$fenzhan_id;
 	   }
 	   
         $field_id = $_G['gp_field'];   
@@ -57,7 +57,7 @@ if($operation=='base'){
 			  while($result_list = DB::fetch($query)){
 				  $result_list['start_time']=date('Y-m-d H:i:s',$result_list['start_time']);
 				  
-				   $result_list['fenz_id']= DB::result_first("select fenz_name from ".DB::table('fenzhan')."  where fz_id='".$result_list['fenz_id']."' ");
+				   $result_list['fenzhan_name']= DB::result_first("select fenzhan_name from tbl_fenzhan  where fenzhan_id='".$result_list['fenzhan_id']."' ");
 				
 				  $result_list['field_id']= DB::result_first("select fieldname from ".DB::table('common_field')."  where uid='".$result_list['field_id']."' ");   
 				  
@@ -71,17 +71,18 @@ if($operation=='base'){
     /*搜索动作*/
     if(submitcheck('searchsubmit')) {
 
-        $fenz_id  = $_G['gp_fenz'];
+        $fenzhan_id  = $_G['gp_fenz'];
         $field_id = $_G['gp_field'];
         $fenzhan_members= array();
         /*查看规则是否被删除*/
-        $event_rule_query = DB::result_first("SELECT * FROM ".DB::table('event_fenzu_rule_list')." where fenz_id=".$fenz_id." and field_id=".$field_id." and is_delete=0 ");
+        $event_rule_query = DB::result_first("SELECT * FROM ".DB::table('event_fenzu_rule_list')." where fenz_id=".$fenzhan_id." and field_id=".$field_id." and is_delete=0 ");
+		
         if($event_rule_query){
 
-            if(empty($fenz_id) || empty($field_id)){
+            if(empty($fenzhan_id) || empty($field_id)){
                 showmessage("请选择 搜索的条件");
             }
-            $query = DB::query(" select * from ".DB::table('fenzu_members')." where sid = ".$_G['uid']." and fenz_id = ".$fenz_id." and field_id =".$field_id." ORDER BY tee asc,team_number asc ");
+            $query = DB::query(" select * from ".DB::table('fenzu_members')." where sid = ".$_G['uid']." and fenz_id = ".$fenzhan_id." and field_id =".$field_id." ORDER BY tee asc,team_number asc ");
 
             while($result = DB::fetch($query)) {
                 $result['start_time'] =  date('Y-m-d H:i:s',$result['start_time']);
@@ -98,7 +99,7 @@ if($operation=='base'){
 
 
     $fz_rows = $qc_rows = array();
-    $query  =DB::query(" SELECT `fz_id`,`fenz_name` from ".DB::table('fenzhan')." where sid= ".$_G['uid']."");
+    $query  =DB::query(" SELECT `fenzhan_id`,`fenzhan_name` from tbl_fenzhan where sid= ".$_G['uid']."");
 	while($result = DB::fetch( $query )) {
         $fz_rows[] = $result;
     }
@@ -125,6 +126,7 @@ if($operation=='base'){
 
     /*判断是否 分站 已经分组*/
     $is_fenzu = DB::result_first("select * from ".DB::table('fenzu_members')." where fenz_id=".$_G['gp_fenz']." and field_id = ".$_G['gp_field'] );
+	echo "select * from ".DB::table('fenzu_members')." where fenz_id=".$_G['gp_fenz']." and field_id = ".$_G['gp_field'] ;
     if($is_fenzu) showmessage("该分站下 已经分组 你可以删除 从新分组");
 
     $data['fenz_id']        = $_G['gp_fenz'];
@@ -355,6 +357,13 @@ if($operation=='base'){
 	}
   
 	   $team_number =DB::result_first("SELECT team_number FROM ".DB::table("fenzu_members")." where  tee=1 and  team_number>1 and sid=".$_G['uid']." and fenz_id = ".$insert_data['fenz_id']." and field_id=".$insert_data['field_id']." order by team_number desc"); 
+	   if($team_number){
+		   $team_number=$team_number;
+	   }else{
+	   
+	   $team_number=1;
+	   }
+	   
 	   $cc =DB::result_first("SELECT uid FROM ".DB::table("fenzu_members")." where  tee=10 and  team_number>1 and sid=".$_G['uid']." and fenz_id = ".$insert_data['fenz_id']." and field_id=".$insert_data['field_id']); 
 	 if($cc)DB::query("update ".DB::table("fenzu_members")." set team_number=team_number/2+$team_number   where tee=10 and  team_number>1 and sid=".$_G['uid']." and fenz_id = ".$insert_data['fenz_id']." and field_id=".$insert_data['field_id']); 
 
@@ -386,7 +395,7 @@ if($operation=='base'){
      $id =  getgpc('id');
      $result = DB::fetch_first(" select * from ".DB::table('event_fenzu_rule_list')." where e_r_id=".$id);
      DB::delete("fenzu_members",array('sid'=>$_G['uid'],'fenz_id'=>$result['fenz_id'],'field_id'=>$result['field_id']));
-     DB::delete("golf_nd_baofen",array('sid'=>$_G['uid'],'fenz_id'=>$result['fenz_id'],'field_id'=>$result['field_id']));
+    //DB::delete("golf_nd_baofen",array('sid'=>$_G['uid'],'fenzhan_id'=>$result['fenz_id'],'field_id'=>$result['field_id']));
      DB::delete('event_fenzu_rule_list',array('e_r_id'=>$id));
 
     $event_fenzu_rule_list = event_fenzu_rule_list($_G['uid']);
@@ -397,7 +406,7 @@ if($operation=='base'){
              $i++; $class="";
              if($i%2==0){ $class = 'classs="alt"';}
              echo "<tr ".$class." id=\"rule\">".
-                  "<td>".$value['fenz_name']."</td>".
+                  "<td>".$value['fenzhan_name']."</td>".
                   "<td>".$value['field_name']."</td>".
                   "<td>".$fenzu_rule[$value['fenzu_rule']]."</td>".
                   "<td>".$value['team_member_num']."人组</td>".
@@ -405,6 +414,7 @@ if($operation=='base'){
                 "<td><a  href=\"javascript:;\" onclick=\"showDialog('你确定删除此规则？','confirm','信息提示：','del_rule(".$value['e_r_id'].")')\">【删除规则】".
                 "</a> |".
                 "<a href=\"javascript:;\" onclick=\"showDialog('确定正式分组球员没有问题？','confirm','信息提示：','start_nd(".$value['e_r_id'].")')\">【启动报分】</a></td>".
+				 "<a href=\"home.php?mod=spacecp&ac=fenzu&op=start_nd&id=".$value['e_r_id']."\" >【启动报分】</a></td>".
             "</tr>";
            }
     }else{
@@ -438,8 +448,10 @@ if($operation=='base'){
             $data['team_num']     =  $data['team_number'];
             unset($data['team_number']);
             unset($data['chadian']);
-            DB::update("golf_nd_baofen",$data,array('sid'=>$result['sid'],'fenz_id'=>$result['fenz_id'],'field_id'=>$result['field_id'],'uid'=>$result['uid']));
-//" update  ".DB::table('golf_nd_baofen')." set tee='".$data['tee']."',realname='".$data['realname']."',uid='".$data['uid']."',start_time='".$data['start_time']."',team_num='".$data['team_num']."' where sid= ".$result['sid']." and fenz_id= ".$result['fenz_id']." and field_id= ".$result['field_id']." and uid=".$data['uid']."";
+           // DB::update("golf_nd_baofen",$data,array('sid'=>$result['sid'],'fenz_id'=>$result['fenz_id'],'field_id'=>$result['field_id'],'uid'=>$result['uid']));
+    $sql=" update  tbl_baofen set tee='".$data['tee']."',realname='".$data['realname']."',uid='".$data['uid']."',start_time='".$data['start_time']."',team_num='".$data['team_num']."' where sid= ".$result['sid']." and fenz_id= ".$result['fenz_id']." and field_id= ".$result['field_id']." and uid=".$data['uid']."";
+  DB::query($sql);
+ 
             showmessage("调拨成功","home.php?mod=spacecp&ac=fenzu&op=member_allot&fz_m_id=".$_G['gp_fz_m_id']);
 
       }
@@ -459,7 +471,7 @@ if($operation=='base'){
          DB::update("fenzu_members",array('team_number'=>0,'tee'=>0),array('fz_m_id'=>$id));
     /*徐玉枭 更新成绩表*/
     $usid =DB::result_first("SELECT uid FROM ".DB::table("fenzu_members")." where fz_m_id=$id");
-	DB::update("golf_nd_baofen",array('g_team_id'=>0,'g_team_name'=>'','cave_18'=>-2,'tlcave'=>1001),array('uid'=>$usid,'fenz_id'=>$fenz_id,'field_id'=>$field_id));
+	//DB::update("golf_nd_baofen",array('g_team_id'=>0,'g_team_name'=>'','cave_18'=>-2,'tlcave'=>1001),array('uid'=>$usid,'fenz_id'=>$fenz_id,'field_id'=>$field_id));
     /*end*/
 
 showmessage("操作成功","home.php?mod=spacecp&ac=fenzu&op=base&fenz=".$fenz_id."&field=".$field_id);
@@ -467,25 +479,29 @@ showmessage("操作成功","home.php?mod=spacecp&ac=fenzu&op=base&fenz=".$fenz_i
 
 }elseif($operation == 'start_nd'){
 
-    include template('common/header_ajax');
+    //include template('common/header_ajax');
     $e_r_id = getgpc('id');
     $result  = DB::fetch_first(" SELECT `sid`,`fenz_id`,`field_id` FROM ".DB::table("event_fenzu_rule_list")." where e_r_id = ".$e_r_id." and sid =".$_G['uid']);
         mt_srand(mktime());
         $bf_rand = mt_rand();
 
-  //检查是否启动nd报分
-    $check_nd_is_exist = DB::fetch_first(" SELECT * FROM ".DB::table("golf_nd_baofen")." where sid=".$_G['uid']." and fenz_id=".$result['fenz_id']." and field_id=".$result['field_id']." and onlymark=".$bf_rand);
+ //检查是否启动nd报分
+  
+    $check_nd_is_exist = DB::fetch_first(" SELECT * FROM tbl_baofen where sid=".$_G['uid']." and fenzhan_id=".$result['fenz_id']." and field_id=".$result['field_id']);
 
     if($check_nd_is_exist){
-        echo '<input id="nd_status" value="1" type="hidden">';
+		
+   showmessage("已经生成");
     }else{
-        DB::query(" insert into ".DB::table("golf_nd_baofen")."(fenz_id,field_id,uid,sid,realname,g_team_id,g_team_name,team_num,tee,start_time,onlymark) select fenz_id,field_id,uid,sid,realname,golf_team_id,golf_team_name,team_number,tee,start_time,".$bf_rand." from ".DB::table("fenzu_members")." where sid=".$_G['uid']." and fenz_id = ".$result['fenz_id']." and field_id=".$result['field_id']);
+        DB::query(" insert into tbl_baofen(fenzhan_id,field_id,uid,sid,realname,fenzu_id,tee,start_time,chadian) select fenz_id,field_id,uid,sid,realname,team_number,tee,start_time,chadian from ".DB::table("fenzu_members")." where sid=".$_G['uid']." and fenz_id = ".$result['fenz_id']." and field_id=".$result['field_id']);
+      echo "<input id=\"nd_status\" value=\"0\">";
+	  
 
-        /*更新报分员 的 唯一标示*/
-        DB::update("nd_baofen_users",array('onlymark'=>$bf_rand),array('sid'=>$_G['uid'],'fz_id'=>$result['fenz_id'],'fieldid'=>$result['field_id']));
-        echo "<input id=\"nd_status\" value=\"0\">";
+   showmessage("启动成功");
     }
-    include template('common/footer_ajax');
+   // include template('common/footer_ajax'); 
+	
+	
 
 }elseif($operation == 'baofen'){
 	 $aa  = $_G['gp_aa']; 
@@ -513,11 +529,15 @@ if($aa=='addd'){
 	$tt['tee']        = $tee; 
 	$tt['team_num']= $team_num;
 	  $sid   = $_G['uid'];
-	$tt['onlymark'] = DB::result_first("select onlymark from ".DB::table('nd_baofen_users')."  where sid='$sid' and fz_id='$fenz' ");
+	//$tt['onlymark'] = DB::result_first("select onlymark from ".DB::table('nd_baofen_users')."  where sid='$sid' and fenzhan_id='$fenz' ");
 				  
-				 // echo "select onlymark from ".DB::table('nd_baofen_users')."  where sid='$sid' and fz_id='$fenz'" ;exit;
-                DB::insert('golf_nd_baofen',$tt);
-	   unset($tt['team_num']);
+				 // echo "select onlymark from ".DB::table('nd_baofen_users')."  where sid='$sid' and fenzhan_id='$fenz'" ;exit;
+               // DB::insert('golf_nd_baofen',$tt); 
+
+        DB::query(" insert into tbl_baofen(fenzhan_id,field_id,uid,sid,realname,fenzu_id,tee,start_time) value('$fenz','$field','$uid','$sid','$realname','$team_num','$tee','$start_time')");
+		
+		
+	  unset($tt['team_num']);
 	$tt['team_number']= $team_num;			
 				
                 DB::insert('fenzu_members',$tt);
@@ -525,7 +545,7 @@ if($aa=='addd'){
             showmessage("添加成功","home.php?mod=spacecp&ac=fenzu&op=baofen&aa=add");
 }
  $fz_rows = $qc_rows = array();
-    $query  =DB::query(" SELECT `fz_id`,`fenz_name` from ".DB::table('fenzhan')." where sid= ".$_G['uid']."");
+    $query  =DB::query(" SELECT `fenzhan_id`,`fenzhan_name` from tbl_fenzhan where sid= ".$_G['uid']."");
 	while($result = DB::fetch( $query )) {
         $fz_rows[] = $result;
     }
@@ -538,14 +558,14 @@ if($aa=='addd'){
  /*搜索动作*/
     if(submitcheck('searchsubmit')) {
 
-        $fenz_id  = $_G['gp_fenz']; 
+        $fenzhan_id  = $_G['gp_fenz']; 
         $fenzhan_members= array();
         /*查看规则是否被删除*/ 
 
-            if(empty($fenz_id)){
+            if(empty($fenzhan_id)){
                 showmessage("请选择 搜索的条件");
             }
-            $query = DB::query(" select * from ".DB::table('golf_nd_baofen')." where sid = ".$_G['uid']." and fenz_id = ".$fenz_id." ORDER BY tee asc,team_num asc ");
+            $query = DB::query(" select * from tbl_baofen where sid = ".$_G['uid']." and fenzhan_id = ".$fenzhan_id." ORDER BY tee asc,fenzu_id asc ");
  
             while($result = DB::fetch($query)) {
                 $result['start_time'] =  date('Y-m-d H:i:s',$result['start_time']);
@@ -561,27 +581,32 @@ if($aa=='addd'){
 }elseif($operation == "member_get"){ 
 
       if(submitcheck('member_getsubmit')){
-            $data['tee']          = getgpc('tee');
-            $data['team_num']  = getgpc('team_num'); 
-            $data['uid']  = getgpc('uid');
-			if($data['uid']>0){
+            $tee         = getgpc('tee');
+            $fenzu_id  = getgpc('team_num'); 
+            $uid  = getgpc('uid');
+			if($uid>0){
 				
-			$data['realname'] = DB::result_first("select realname from ".DB::table('common_member_profile')."  where uid='".$data['uid']."' ");
+			$realname = DB::result_first("select realname from ".DB::table('common_member_profile')."  where uid='".$uid."' ");
+			$update=",realname='$realname'";
 			}
-			$data['chadian'] = DB::result_first("select cahdian from ".DB::table('home_dazbm')."  where uid='".$data['uid']."' ");
+			$data['chadian'] = DB::result_first("select cahdian from ".DB::table('home_dazbm')."  where uid='".$uid."' ");
             $data['start_time']   = strtotime(getgpc("start_time"));
             $nd_id= getgpc('nd_id');
             //unset($data['team_number']);
             unset($data['chadian']); 
 			//print_r($data);exit;
-            DB::update("golf_nd_baofen",$data,array('nd_id'=>$_G['gp_nd_id']));
+           // DB::update("golf_nd_baofen",$data,array('nd_id'=>$_G['gp_nd_id']));
+		 $row = DB::query(" update  tbl_baofen set tee='$tee',fenzu_id='$fenzu_id',uid='$uid' ".$update."  where  baofen_id = ".$_G['gp_nd_id']);
+ 
+			
+			
             showmessage("调拨成功","home.php?mod=spacecp&ac=fenzu&op=member_get&nd_id=".$_G['gp_nd_id']);
 
       }
 
 
       $nd_id = getgpc('nd_id');
-      $fenzu_member_info = DB::fetch_first("SELECT * FROM ".DB::table("golf_nd_baofen")." where nd_id=".$nd_id);
+      $fenzu_member_info = DB::fetch_first("SELECT * FROM tbl_baofen where baofen_id=".$nd_id);
 
       include template("home/spacecp_fenzu_member_get");
 
@@ -608,7 +633,7 @@ function dz2excel($new_data,$type='') {
             'start_time'=>'比赛开始时间',
             'am_pm'=>'半场',
             'team_number'=>'分组',
-            'fenz_id'=> '分站',
+            'fenzhan_id'=> '分站',
             'field_id' => '球场', 
     							);
     							
@@ -648,7 +673,7 @@ function dz2excel($new_data,$type='') {
 
 /*获取 规则列表*/
 function event_fenzu_rule_list($uid) {
-    $query = DB::query(" select sq.field_name,e.*,fz.fenz_name from ".DB::table("event_fenzu_rule_list")." as e LEFT JOIN ".DB::table('fenzhan')." as fz ON fz.fz_id=e.fenz_id  LEFT JOIN ".DB::table('saishi_qiuc')." as sq ON sq.field_id = e.field_id and sq.sid=e.sid where e.sid=".$uid." and e.is_delete =0");
+    $query = DB::query(" select sq.field_name,e.*,fz.fenzhan_name from ".DB::table("event_fenzu_rule_list")." as e LEFT JOIN tbl_fenzhan as fz ON fz.fenzhan_id=e.fenz_id  LEFT JOIN ".DB::table('saishi_qiuc')." as sq ON sq.field_id = e.field_id and sq.sid=e.sid where e.sid=".$uid." and e.is_delete =0");
     while($result = DB::fetch($query)){
         $rows[] = $result;
     }

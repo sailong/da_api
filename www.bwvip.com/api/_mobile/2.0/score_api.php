@@ -1197,7 +1197,7 @@ if($ac=="waika_list")
 	}
 	if($max_page>=$page)
 	{
-		$list=DB::query("select baofen_id,baofen_id as id,uid,event_id,event_id as sais_id,(select event_name from tbl_event where event_id=tbl_baofen.event_id) as sais_name,field_id,field_id as fuid,(select realname from ".DB::table("common_member_profile")." where uid=tbl_field.field_id) as field_name,addtime from tbl_baofen where uid='".$uid."' and source='waika' and score='' order by addtime desc limit $page_start,$page_size  ");
+		$list=DB::query("select baofen_id,baofen_id as id,uid,event_id,event_id as sais_id,(select event_name from tbl_event where event_id=tbl_baofen.event_id) as sais_name,field_id,field_id as fuid,(select realname from ".DB::table("common_member_profile")." where uid=tbl_field.field_id) as field_name,dateline as addtime from tbl_baofen where uid='".$uid."' and source='waika' and score='' order by addtime desc limit $page_start,$page_size  ");
 		while($row =DB::fetch($list))
 		{
 			if($row['sais_name']==null)
@@ -1217,7 +1217,7 @@ if($ac=="waika_list")
 	}
 
 	//	
-	$list=DB::query("select baofen_id,baofen_id as id,uid,event_id,event_id as sais_id,(select event_name from tbl_event where event_id=tbl_baofen.event_id) as sais_name,field_id,field_id as fuid,(select realname from ".DB::table("common_member_profile")." where uid=tbl_baofen.field_id) as field_name,addtime from tbl_baofen where source='waika' and score<>'' and event_id='27' order by addtime desc limit $page_start,$page_size  ");
+	$list=DB::query("select baofen_id,baofen_id as id,uid,event_id,event_id as sais_id,(select event_name from tbl_event where event_id=tbl_baofen.event_id) as sais_name,field_id,field_id as fuid,(select realname from ".DB::table("common_member_profile")." where uid=tbl_baofen.field_id) as field_name,dateline as addtime from tbl_baofen where source='waika' and score<>'' and event_id='27' order by addtime desc limit $page_start,$page_size  ");
 	//$list=DB::query("select id,uid,sais_id,(select realname from ".DB::table("common_member_profile")." where uid=".DB::table("common_score").".sais_id) as sais_name,fuid,(select realname from ".DB::table("common_member_profile")." where uid=".DB::table("common_score").".fuid) as field_name,par,score,pars,total_score,addtime,dong_names,uploadimg,is_edit from ".DB::table("common_score")." where source='waika' and score<>'' and sais_id='1000333' order by addtime desc limit $page_start,$page_size  ");
 	while($row =DB::fetch($list))
 	{

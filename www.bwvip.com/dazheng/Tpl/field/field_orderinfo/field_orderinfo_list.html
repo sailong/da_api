@@ -1,6 +1,5 @@
 <include file="../public/_header" />
 <div class="so_main">
-
   <div class="page_tit">订场信息列表</div>
   <div class="tit_tab">
 	<ul>
@@ -8,6 +7,11 @@
 		<li><a <php> if(get("language")=='en'){ echo " class=on ";}</php> href="{:U('field/field_orderinfo/field_orderlist',array('language'=>'en'))}">英文</a></li>
 	</ul>
 	</div>
+  <div class="Toolbar_inbox">
+	<div class="page right">{$pages}</div>
+	<a href="{:U('field/field_orderinfo/orderinfo_add')}" class="btn_a"><span>添加订场信息</span></a>
+	<div class="clear"></div>
+  </div>
   <div class="list">
 	<php>if($total>0){</php>
 	  <table width="100%" id="mod_table" border="0" cellspacing="0" cellpadding="0">
@@ -48,12 +52,13 @@
 			</div>
 	 <php>}</php>
   </div>
-</div>
   <div class="Toolbar_inbox">
 	<div class="page right">{$pages}</div>
 	<a href="{:U('field/field_orderinfo/orderinfo_add')}" class="btn_a"><span>添加订场信息</span></a>
 	<div class="clear"></div>
   </div>
+</div>
+  
 <script>
 	$(document).ready(function(){
 		$("tr[overstyle='on']").hover(

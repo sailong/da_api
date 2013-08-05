@@ -9,7 +9,7 @@
 class field_aboutModel extends Model{
 
 	//list and page
-	function field_about_list_pro($bigwhere="", $page_size=20, $sort=" about_addtime desc ") 
+	function field_about_list_pro($bigwhere="", $page_size=20, $sort=" about_sort asc,about_addtime desc ") 
 	{
 		$page = intval(get("p"))?get("p"):1;
 
@@ -27,14 +27,19 @@ class field_aboutModel extends Model{
 
 		if(get("starttime")!="")
 		{
-			$where .=" and field_about_addtime>".strtotime(get("starttime"))." ";
+			$where .=" and about_addtime>".strtotime(get("starttime"))." ";
 		}
 		if(get("endtime")!="")
 		{
-			$where .=" and field_about_addtime<".strtotime(get("endtime"))." ";
+			$where .=" and about_addtime<".strtotime(get("endtime"))." ";
+		}
+	    if(get('k'))
+		{
+			$where .=" and about_name like '%".get('k')."%' ";
 		}
 
 		$data["item"]=M("field_about")->where($where.$bigwhere)->field("about_id,field_uid,about_name,about_type,about_content,about_tel,about_tel2,about_replynum,about_sort,about_addtime,about_pic,about_more")->order($sort)->page($page.",".$page_size)->select();
+		//echo M('field_about')->getLastSql();
 		for($i=0; $i<count($data["item"]); $i++)
 		{
 			if($data["item"][$i]["user_id"]!="")
@@ -45,7 +50,7 @@ class field_aboutModel extends Model{
 			if($data['item'][$i]['about_pic'])
 			{
 				$extname=end(explode(".",$data['item'][$i]['about_pic']));
-				$data['item'][$i]['about_pic_small']=$data['item'][$i]['about_pic']."_small.".$extname;
+				$data['item'][$i]['about_pic_small']=$data['item'][$i]['about_pic'].'_small.'.$extname;
 			}
 		}
 		$data["total"] = M("field_about")->where($where.$bigwhere)->count();

@@ -21,7 +21,7 @@ class field_orderinfoAction extends field_publicAction
             $language = 'cn';
         }
         $page_size = 10;
-        $field_uid = 1186;
+        $field_uid = $_SESSION["field_uid"];
         $field_orderinfo_model =new field_orderinfoModel();
         $list = $field_orderinfo_model->get_orderinfo_list($field_uid,$page,$page_size);
         if(!empty($list['item'])) {
@@ -51,9 +51,9 @@ class field_orderinfoAction extends field_publicAction
 	{
 	    if(M()->autoCheckToken($_POST))
 		{
-		    $data['uid'] = 1;//post('uid');
+		    $data['uid'] = $_SESSION["uid"];//post('uid');
 		    $language = post('language');
-		    $data['field_uid'] = 1186;//post('field_uid');
+		    $data['field_uid'] = $_SESSION["field_uid"];//post('field_uid');
 		    if($language == 'en') {
 		        $data['field_orderinfo_title_en'] = post('field_orderinfo_title');
 		        $data['field_orderinfo_content_en'] = post('content');

@@ -1,10 +1,10 @@
 <include file="../public/header_dialog" />
 <div class="so_main">
 
-  <div class="page_tit">文章管理</div>
+  <div class="page_tit">新闻管理</div>
   <div class="tit_tab">
 	<ul>
-		<li><a class=on href="{:U('field/arc/arc_add')}">添加文章</a></li>
+		<li><a class=on href="{:U('field/arc/arc_add')}">添加新闻</a></li>
 	</ul>
   </div>
 
@@ -19,7 +19,7 @@
 	<table class="add_table" border="0" cellspacing="0" cellpadding="0" >
 		<tbody>
 				<tr>
-					<th>文章标题：</th>
+					<th>新闻标题：</th>
 					<td><input type="text" name="arc_name" id="arc_name" class="mod_input2" style="width:500px;" ></td>
 				</tr>
 	
@@ -31,7 +31,7 @@
 					<td><input type="file" name="arc_pic" id="arc_pic"  class="mod_input" style="width:300px;"></td>
 				</tr>
 				<tr>
-					<th>文章来源：</th>
+					<th>新闻来源：</th>
 					<td>
 						<input type="text" name="arc_source" id="arc_source" class="mod_input2" style="width:200px;"  value="{$data.arc_source}">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 						<b>责任编辑：</b>
@@ -66,13 +66,13 @@
 					</td>
 				</tr>
 				<tr>
-					<th>文章简介：</th>
+					<th>新闻简介：</th>
 					<td>
 						<textarea name="arc_note" id="arc_note" class="mod_input2" style="width:500px; height:80px;"></textarea>
 					</td>
 				</tr>
 				<tr>
-					<th>文章内容：</th>
+					<th>新闻内容：</th>
 					<td>{$editor}</td>
 				</tr>
 		</tbody>

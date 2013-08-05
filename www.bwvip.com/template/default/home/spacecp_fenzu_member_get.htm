@@ -26,13 +26,13 @@
                                             <span class="ftid"> 
                                              UID：<input class="px" value="{$fenzu_member_info['uid']}" name ="uid"  size="10" onkeyup="this.value=this.value.replace(/\D/g,'')"  onafterpaste="this.value=this.value.replace(/\D/g,'')"/>
                                               开球Tee台：<input class="px" value="{$fenzu_member_info['tee']}" name ="tee"  size="2"/>
-                                              分组号：<input  class="px" name ="team_num" value="{$fenzu_member_info['team_num']}" size="2">
+                                              分组号：<input  class="px" name ="team_num" value="{$fenzu_member_info['fenzu_id']}" size="2">
                                               开球时间: <input class="px" name ="start_time"  value="<!--{eval echo date('Y-m-d H:i:s',$fenzu_member_info['start_time']);}-->" onclick="showcalendar(event, this,1)" >
                                             </span>                                         
                                             <button type="submit" class="pn" name="member_get" value="true"><strong>提 交</strong></button>
                                             <input name="ac" value="fenzu" type="hidden">
                                             <input name="op" value="member_get" type="hidden">
-                                            <input name="nd_id" type="hidden" value="{$fenzu_member_info['nd_id']}">
+                                            <input name="nd_id" type="hidden" value="{$fenzu_member_info['baofen_id']}">
                                         </td>
                                     </tr>
                                   </table>

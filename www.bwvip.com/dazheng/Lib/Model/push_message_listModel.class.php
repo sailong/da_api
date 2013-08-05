@@ -16,6 +16,11 @@ class push_message_listModel extends Model{
 
 		$where = " 1 ";
 
+		if(get('k')!="")
+		{
+			$where .=" and uid='".get('k')."' ";
+		}
+
 
 
 		if(get("starttime")!="")

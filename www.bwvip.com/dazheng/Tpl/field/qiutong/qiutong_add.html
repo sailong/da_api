@@ -38,11 +38,11 @@
 					<th>球童照片：</th>
 					<td><input type="file" name="qiutong_photo" id="qiutong_photo"  class="mod_input"></td>
 				</tr>
-				<tr>
+				<!--<tr>
 					<th>所属球场：</th>
 					<td><input type="text" name="field_uid" id="field_uid" class="mod_input2" style="width:66px;" ></td>
 				</tr>
-				<tr>
+				--><tr>
 					<th>球童介绍：</th>
 					<td><textarea name="qiutong_content" id="qiutong_content" class="mod_input2" style="width:400px; height:100px;"></textarea></td>
 				</tr>
@@ -52,6 +52,7 @@
 			<tr>
 				<th></th>
 				<td>
+					<input type="hidden" name="field_uid"  value="1186"/>
 					<input type="submit" class="btn_b"  value="添加" style="margin-right:10px;"/>
 					<input type="button" class="btn_w" onclick="close_dialog(this)" value="取消" />
 				</td>
@@ -67,7 +68,7 @@ $.formValidator.initConfig({formID:"act_form",theme:'ArrowSolidBox',mode:'AutoTi
 		$("#qiutong_name").formValidator({empty:true,onShow:"请输入球童姓名",onFocus:"请输入球童姓名",onCorrect:"输入正确"}).inputValidator({min:1,max:50,onError:"请输入球童姓名"});
 		$("#qiutong_name_en").formValidator({empty:true,onShow:"请输入球童英文名",onFocus:"请输入球童英文名",onCorrect:"输入正确"}).inputValidator({min:1,max:50,onError:"请输入球童英文名"});
 		$("#qiutong_photo").formValidator({empty:true,onShow:"请输入球童照片",onFocus:"请输入球童照片",onCorrect:"输入正确"}).inputValidator({min:1,max:300,onError:"请输入球童照片"});
-		$("#field_uid").formValidator({empty:true,onShow:"请输入所属球场",onFocus:"请输入所属球场",onCorrect:"输入正确"}).inputValidator({min:1,max:11,onError:"请输入所属球场"});
+		//$("#field_uid").formValidator({empty:true,onShow:"请输入所属球场",onFocus:"请输入所属球场",onCorrect:"输入正确"}).inputValidator({min:1,max:11,onError:"请输入所属球场"});
 		$("#qiutong_content").formValidator({empty:true,onShow:"请输入球童介绍",onFocus:"请输入球童介绍",onCorrect:"输入正确"}).inputValidator({min:1,max:3000,onError:"请输入球童介绍"});
 		
 

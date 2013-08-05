@@ -1,4 +1,67 @@
 <?php
+function dong_color($s_arr,$p_arr)
+{
+	/*
+	print_r($s_arr);
+	echo "<hr>";
+	print_r($p_arr);
+	echo "<hr>";
+	echo "------------------------------------------------";
+	echo "<hr>";
+	*/
+	
+	if(count($s_arr) == count($p_arr))
+	{
+		for($i=0; $i<count($s_arr); $i++)
+		{
+			if($p_arr[$i]!="" )
+			{
+				if($s_arr[$i]-$p_arr[$i]==3)
+				{
+					$c_arr[$i]=1;
+				}
+				else if($s_arr[$i]-$p_arr[$i]==2)
+				{
+					$c_arr[$i]=2;
+				}
+				else if($s_arr[$i]-$p_arr[$i]==1)
+				{
+					$c_arr[$i]=3;
+				}
+				else if($s_arr[$i]-$p_arr[$i]==0)
+				{
+					$c_arr[$i]=4;
+				}
+				else if($s_arr[$i]-$p_arr[$i]==-1)
+				{
+					$c_arr[$i]=5;
+				}
+				else if($s_arr[$i]-$p_arr[$i]==-2)
+				{
+					$c_arr[$i]=6;
+				}
+				else if($s_arr[$i]-$p_arr[$i]==-3)
+				{
+					$c_arr[$i]=7;
+				}
+				else
+				{
+					$c_arr[$i]=0;
+					//$c_arr[$i]=$s_arr[$i]-$p_arr[$i];
+				}
+			}
+			
+			
+		}
+	
+	}
+	else
+	{
+		$c_arr=null;
+	}
+	return $c_arr;
+}
+
 function array_default_value($arr,$other_arr,$default_value="")
 {
 

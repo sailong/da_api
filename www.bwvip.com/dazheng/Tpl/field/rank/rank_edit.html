@@ -21,13 +21,13 @@
 					<th>赛事ID：</th>
 					<td><input type="text" name="field_event_id" id="field_event_id" class="mod_input2" style="width:150px;" value="{$info.field_event_id}"></td>
 				</tr>
-				<tr>
+				<!--<tr>
 					<th>赛事UID：</th>
 					<td>
 						<input type="text" name="field_uid" id="field_uid" class="mod_input2" style="width:150px;" value="{$info.field_uid}">
 					</td>
 				</tr>
-				<tr>
+				--><tr>
 					<th>排行名称：</th>
 					<td>
 						<input type="text" name="field_event_rank_name" id="field_event_rank_name" class="mod_input2" style="width:150px;" value="{$info.field_event_rank_name}">
@@ -69,6 +69,7 @@
 			<tr>
 				<th></th>
 				<td>
+					<input type="hidden" name="field_uid" value="{$info.field_uid}">
 					<input type="hidden" name="field_event_rank_id" value="{$info.field_event_rank_id}">
 					<input type="submit" class="btn_b" value="保存" style="margin-right:10px;"/>
 					<input type="button" class="btn_w" onclick="javascript:history.back(-1);" value="返回" />
@@ -85,7 +86,7 @@ $(document).ready(function(){
 $.formValidator.initConfig({formID:"act_form",theme:'ArrowSolidBox',mode:'AutoTip',onError:function(msg){msg_error(msg)},inIframe:true});
 
 	$("#field_event_id").formValidator({empty:false,onShow:"请输入赛事ID",onFocus:"请输入赛事ID",onCorrect:"输入正确"}).inputValidator({min:1,max:100,onError:"请输入赛事ID"});
-	$("#field_uid").formValidator({empty:false,onShow:"请输入赛事UID",onFocus:"请输入赛事UID",onCorrect:"输入正确"}).inputValidator({min:1,max:11,onError:"请输入赛事UID"});
+	//$("#field_uid").formValidator({empty:false,onShow:"请输入赛事UID",onFocus:"请输入赛事UID",onCorrect:"输入正确"}).inputValidator({min:1,max:11,onError:"请输入赛事UID"});
 	//$("#arctype_id").formValidator({empty:true,onShow:"请输入所属栏目",onFocus:"请输入所属栏目",onCorrect:"输入正确"}).inputValidator({min:1,max:11,onError:"请输入所属栏目"});
 	$("#field_event_rank_name").formValidator({empty:false,onShow:"请输入排序名称",onFocus:"请输入排序名称",onCorrect:"输入正确"}).inputValidator({min:1,max:300,onError:"请输入排序名称"});
 	$("#uid").formValidator({empty:false,onShow:"请输入会员UID",onFocus:"请输入会员UID",onCorrect:"输入正确"}).inputValidator({min:1,max:300,onError:"请输入会员UID"});

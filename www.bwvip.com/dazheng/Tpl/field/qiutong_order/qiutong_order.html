@@ -52,9 +52,10 @@
 			<input type="checkbox" id="checkbox_handle" onclick="select_all(this,'mod_table','checkbox')" value="0">
 			<label for="checkbox"></label>
 		</th>
-		<th class="line_l">用户UID</th>
+		<th class="line_l">球童UID</th>
 		<th class="line_l">球童</th>
-		<th class="line_l">球场UID</th>
+		<th class="line_1">球童照片</th>
+		<!--<th class="line_l">球场UID</th>-->
 		<th class="line_l">预约日期</th>
 		<th class="line_l">打球时间</th>
 		<th class="line_l">预约状态</th>
@@ -64,13 +65,15 @@
 	<volist id="vo" name="list">
 	<tr overstyle="on"  id=ids_{$vo["qiutong_order_id"]}>
 		<td><input type="checkbox" name="checkbox" onclick="select_one(this)" value="{$vo.qiutong_order_id}" ></td>
-		<td>{$vo.user_uid}</th>
-			<td><a href="javascript:void(0);" onclick="mod_dialog('查看详细','{:U('field/qiutong_order/qiutong_order_detail', array('qiutong_order_id'=>$vo['qiutong_order_id']))}');">{$vo.qiutong_name}</a></td>
-			<td>{$vo.field_uid}</td>
-			<td>{$vo.qiutong_order_date|format_to_time}</td>
-			<td>{$vo.qiutong_order_teetime}</td>
-			<td>{$vo.qiutong_order_state}</td>
-			<td>{$vo.qiutong_order_addtime|format_to_time}</td>
+		<td>{$vo.user_uid}</td>
+		<td>{$vo.qiutong_name}</td>
+		<td><img src="{$vo.qiutong_photo}"  style="max-height:60px; max-width:100px;"></td>
+		<!--<a href="javascript:void(0);" onclick="mod_dialog('查看详细','{:U('field/qiutong_order/qiutong_order_detail', array('qiutong_order_id'=>$vo['qiutong_order_id']))}');">{$vo.qiutong_name}</a>-->
+		<!--<td>{$vo.field_uid}</td>-->
+		<td>{$vo.qiutong_order_date|format_to_time}</td>
+		<td>{$vo.qiutong_order_teetime}</td>
+		<td>{$vo.qiutong_order_state}</td>
+		<td>{$vo.qiutong_order_addtime|format_to_time}</td>
 			
 		<td>
 			<a href="{:U('field/qiutong_order/qiutong_order_edit', array('qiutong_order_id'=>$vo['qiutong_order_id']))})">修改</a> | 

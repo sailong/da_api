@@ -36,9 +36,12 @@ class publicAction extends Action
 			//print_r($res);
 			if($res[0]['admin_password']==md5(post("password")))
 			{
+				$field_info=M()->query("select realname from pre_common_member_profile where uid='".$res[0]['field_uid']."' ");
+				
 				$_SESSION['field_admin_id']=$res[0]['admin_id'];
 				$_SESSION['uid']=$res[0]['field_uid'];
 				$_SESSION['field_uid']=$res[0]['field_uid'];
+				$_SESSION['field_name']=$field_info[0]['realname'];
 				$_SESSION['realname']=$res[0]['admin_realname'];
 				$_SESSION['username']=$res[0]['admin_name'];
 				$_SESSION['email']=$res[0]['admin_email'];

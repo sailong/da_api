@@ -1,5 +1,5 @@
 <include file="../public/header_dialog" />
-<table border="0" cellspacing="0" cellpadding="0" style="width:700px;">
+<table border="0" cellspacing="0" cellpadding="0" style="width:900px;">
 <tr>
 <td>
 <!--/dialog_start-->
@@ -7,7 +7,7 @@
 	<table class="add_table" border="0" cellspacing="0" cellpadding="0" >
 		<tbody>
 				<tr>
-					<th>文章主标题：</th>
+					<th style="width:100px;">文章主标题：</th>
 						<td>{$data.arc_name}</td>
 				</tr>
 				
@@ -22,7 +22,7 @@
 				
 				<tr>
 					<th>缩略图：</th>
-						<td>{$data.arc_pic}</td>
+						<td><img src="/{$data.arc_pic}" style="max-width:150px; max-height:80px;"></td>
 				</tr>
 				<tr>
 					<th>来源：</th>
@@ -57,7 +57,7 @@
 			<tr>
 				<th></th>
 				<td>
-					<input type="button" class="btn_w" onclick="close_dialog(this)" value="关闭" />
+					<input type="button" class="btn_w"  onclick="javascript:history.back(-1);" value="返回" />
 				</td>
 		</tfoot>
 	</table><!--/add_table-->

@@ -103,13 +103,13 @@
 	<tr overstyle="on"  id=ids_{$vo["field_1stmenu_id"]}>
 		<!--<td><input type="checkbox" name="checkbox" onclick="select_one(this)" value="{$vo.arc_id}" ></td>-->
 		<td width="40">{$keys}</td>
-		<td><a href="{:U('field/field_menu/field_2ndmenu_list',array('field_1stmenu_id'=>$vo['field_1stmenu_id']))}">{$vo.field_1stmenu_name}</a></td>
-		<!--
+		<td>{$vo.field_1stmenu_name|default='暂无'}</td><!--<a href="{:U('field/field_menu/field_2ndmenu_list',array('field_1stmenu_id'=>$vo['field_1stmenu_id']))}"></a>
+		--><!--
 			<td><a href="javascript:void(0);" onclick="mod_dialog('查看详细','{:U('field/arc/arc_detail', array('arc_id'=>$vo['arc_id']))}');">{$vo.staff_id}</a></td>
 			<td>{$vo.arctype_name}</td>
 			-->
 			
-			<td>{$vo.type_name|default='null'}</td>
+			<td>{$vo.type_name|default='暂无'}</td>
 			<!--
 			<td><php>if($vo['arc_pic']){</php><img src="/{$vo.arc_pic}" style="max-width:150px; max-height:80px;"><php>}</php></td>
 

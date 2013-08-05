@@ -19,6 +19,14 @@ class adAction extends field_publicAction
 	{
 		$list=D("ad")->ad_list_pro();
 
+		$page_list=select_dict(14);
+		$ad_page_arr = array();
+		foreach($page_list as $key=>&$val) {
+		    $ad_page_arr[$val['dict_value']] = $val['dict_name'];
+		    $ad_page_arr[$val['dict_id']] = $val['dict_name'];
+		    unset($page_list[$key]);
+		}
+		$this->assign("ad_page_arr",$ad_page_arr);
 		$this->assign("list",$list["item"]);
 		$this->assign("pages",$list["pages"]);
 		$this->assign("total",$list["total"]);

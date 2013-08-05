@@ -17,11 +17,21 @@ class field_aboutAction extends field_publicAction
 
 	public function field_about()
 	{
-		$list=D("field_about")->field_about_list_pro();
+	    $page_list=select_dict(13);
+	    $dict_type = 13;
+        $dict_value = get('about_type');
+        foreach($page_list as $key=>$val) {
+            if($val['dict_value'] == $dict_value) {
+                $this->assign('dict_name',$val['dict_name']);
+            }
+        }
+	    
+		$list=D("field_about")->field_about_list_pro(" and field_uid='".$_SESSION['field_uid']."' ");
 
 		$this->assign("list",$list["item"]);
 		$this->assign("pages",$list["pages"]);
 		$this->assign("total",$list["total"]);
+		$this->assign("about_type",get('about_type'));
 
 		$this->assign("page_title","球场介绍");
     	$this->display();
@@ -29,9 +39,18 @@ class field_aboutAction extends field_publicAction
 
 	public function field_about_add()
 	{
-		$page_list=select_dict(13,"select");
-		$this->assign("page_list",$page_list);
-
+//		$page_list=select_dict(13,"select");
+//		$this->assign("page_list",$page_list);
+	    $dict_value = get('about_type');
+		$page_list=select_dict(13);
+        foreach($page_list as $key=>$val) {
+            if($val['dict_value'] == $dict_value) {
+                $this->assign('dict_name',$val['dict_name']);
+            }
+        }
+		$about_type = get('about_type');
+		$dict_info = M('dict')->where("dict_type='13' and dict_value='{$about_type}'")->find();
+		$this->assign('dict_info',$dict_info);
 		import("@.ORG.editor");  //导入类
 		$editor=new editor("400px","700px",$data["about_content"],"about_content");     //创建一个对象
 		$a=$editor->createEditor();   //返回编辑器
@@ -86,16 +105,16 @@ class field_aboutAction extends field_publicAction
     			    
 			    }
 			    
-				$this->success("添加成功",U('field/field_about/field_about',array('language'=>post("language"))));
+				$this->success("添加成功",U('field/field_about/field_about',array('language'=>post("language"),'about_type'=>post("about_type"))));
 			}
 			else
 			{				
-				$this->error("添加失败",U('field/field_about/field_about_add',array('language'=>post("language"))));
+				$this->error("添加失败",U('field/field_about/field_about_add',array('language'=>post("language"),'about_type'=>post("about_type"))));
 			}
 		}
 		else
 		{
-			$this->error("不能重复提交",U('field/field_about/field_about_add',array('language'=>post("language"))));
+			$this->error("不能重复提交",U('field/field_about/field_about_add',array('language'=>post("language"),'about_type'=>post("about_type"))));
 		}
 
 	}
@@ -105,10 +124,19 @@ class field_aboutAction extends field_publicAction
 	{
 		if(intval(get("about_id"))>0)
 		{
-		    $about_id = intval(get("about_id"));
-			$page_list=select_dict(13,"select");
-			$this->assign("page_list",$page_list);
-
+		    $about_type = get('about_type');
+    		$dict_info = M('dict')->where("dict_type='13' and dict_value='{$about_type}'")->find();
+    		$this->assign('dict_info',$dict_info);
+		    $dict_value = get('about_type');
+    		$page_list=select_dict(13);
+            foreach($page_list as $key=>$val) {
+                if($val['dict_value'] == $dict_value) {
+                    $this->assign('dict_name',$val['dict_name']);
+                }
+            }
+			/*$page_list=select_dict(13,"select");
+			$this->assign("page_list",$page_list);*/
+            $about_id = intval(get("about_id"));
 			$data=M("field_about")->where("about_id=".$about_id)->find();
 			
 			$pic_list = M('field_about_pic')->where("about_id='{$about_id}'")->order('pic_id desc')->limit('10')->select();
@@ -145,7 +173,7 @@ class field_aboutAction extends field_publicAction
 			$data["about_content"]=stripslashes($_POST["about_content"]);;
 			$data["about_tel"]=post("about_tel");
 			$data["about_tel2"]=post("about_tel2");
-			$data["about_replynum"]=post("about_replynum");
+			//$data["about_replynum"]=post("about_replynum");
 			$data["language"]=post("language");
 			$data["about_sort"]=post("about_sort");
 			$data["about_more"]=post("about_more");
@@ -191,11 +219,11 @@ class field_aboutAction extends field_publicAction
 			}
 			
 			$list=M("field_about")->save($data);
-			$this->success("修改成功",U('field/field_about/field_about',array('language'=>post("language"))));
+			$this->success("修改成功",U('field/field_about/field_about',array('language'=>post("language"),'about_type'=>post("about_type"))));
 		}
 		else
 		{
-			$this->error("不能重复提交",U('field/field_about/field_about',array('language'=>post("language"))));
+			$this->error("不能重复提交",U('field/field_about/field_about',array('language'=>post("language"),'about_type'=>post("about_type"))));
 		}
 
 	}
@@ -240,11 +268,21 @@ class field_aboutAction extends field_publicAction
 		if(intval(get("about_id"))>0)
 		{
 			$data=M("field_about")->where("about_id=".intval(get("about_id")))->find();
+			$pic_list=M("field_about_pic")->where("about_id=".intval(get("about_id")))->select();
+    		
 			if(!empty($data))
 			{
+    			$dict_value = get('about_type');
+        		$page_list=select_dict(13);
+                foreach($page_list as $key=>$val) {
+                    if($val['dict_value'] == $dict_value) {
+                        $this->assign('dict_name',$val['dict_name']);
+                    }
+                }
 				$this->assign("data",$data);
+				$this->assign("pic_list",$pic_list);
 
-				$this->assign("page_title",$data["field_about_name"]."球场介绍");
+				$this->assign("page_title",$data["about_name"]."球场介绍");
 				$this->display();
 			}
 			else

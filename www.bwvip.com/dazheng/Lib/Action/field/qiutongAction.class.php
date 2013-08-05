@@ -18,11 +18,17 @@ class qiutongAction extends field_publicAction
 	{
 	    $where = '';
 	    $k = get('k');
-	    $where = " field_uid='1186'";
+	    $where = " field_uid='{$_SESSION["field_uid"]}'";
 	    if(!empty($k)) {
 	        $where .= " and qiutong_name like '%{$k}%'";
 	    }
+	    
 		$list=D("qiutong")->qiutong_list_pro($where);
+		foreach($list["item"] as $key=>&$val) {
+		    if(strlen($val['qiutong_content'])>20) {
+		        $val['qiutong_content'] = mb_substr($val['qiutong_content'],0,20,'utf8').'...';
+		    }
+		}
 		$this->assign("list",$list["item"]);
 		$this->assign("pages",$list["pages"]);
 		$this->assign("total",$list["total"]);
@@ -61,11 +67,10 @@ class qiutongAction extends field_publicAction
 				$uploadinfo=$this->upd_qiutong_photo();//upload_file("upload/qiutong/");
 				$data["qiutong_photo"]=$uploadinfo;
 			}
-			$data["field_uid"]=1186;//post("field_uid");
+			$data["field_uid"]=$_SESSION["field_uid"];//post("field_uid");
 			$data["uid"]=$uid;
 			$data["qiutong_content"]=post("qiutong_content");
 			$data["qiutong_addtime"]=time();
-			
 			$list=M("qiutong")->add($data);
 			if($list!=false)
 			{
@@ -114,7 +119,7 @@ class qiutongAction extends field_publicAction
 				$uploadinfo=$this->upd_qiutong_photo();//upload_file("upload/qiutong/");
 				$data["qiutong_photo"]=$uploadinfo;
 			}
-			$data["field_uid"]=1186;//post("field_uid");
+			$data["field_uid"]=$_SESSION["field_uid"];//post("field_uid");
 			$data["qiutong_content"]=post("qiutong_content");
 			
 			$list=M("qiutong")->save($data);
@@ -379,7 +384,7 @@ class qiutongAction extends field_publicAction
             return false;
         }
         
-        $info = M("qiutong")->where("qiutong_number='$qiutong_number' and field_uid='1186'")->find();
+        $info = M("qiutong")->where("qiutong_number='$qiutong_number' and field_uid='{$_SESSION["field_uid"]}'")->find();
         if(empty($info)) {
             return true;
         }
