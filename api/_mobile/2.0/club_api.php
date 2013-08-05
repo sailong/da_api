@@ -763,10 +763,6 @@ if($ac=="member_detail")
 	if($get_uid)
 	{
 		$detail_data=DB::fetch_first("select uid,(select realname from ".DB::table("common_member_profile")." where uid=".DB::table('common_member').".uid) as username,(select count(id) from jishigou_buddys where uid=".DB::table("common_member").".uid ) as guanzhu_num,(select count(id) from jishigou_buddys where buddyid=".DB::table("common_member").".uid ) as fensi_num,(select count(tid) from jishigou_topic where uid=".DB::table("common_member").".uid and type='first' ) as dongtai_num,(select count(id) from jishigou_buddys where uid='".$login_uid."' and  buddyid='".$get_uid."' ) as is_guanzhu,groupid,(select bio from ".DB::table("common_member_profile")." where uid=".DB::table('common_member').".uid) as content from ".DB::table("common_member")." where uid='".$get_uid."' ");
-		
-		//echo "select uid,(select realname from ".DB::table("common_member_profile")." where uid=".DB::table('common_member').".uid) as username,(select count(id) from jishigou_buddys where uid=".DB::table("common_member").".uid ) as guanzhu_num,(select count(id) from jishigou_buddys where buddyid=".DB::table("common_member").".uid ) as fensi_num,(select count(tid) from jishigou_topic where uid=".DB::table("common_member").".uid and type='first' ) as dongtai_num,(select count(id) from jishigou_buddys where uid='".$login_uid."' and  buddyid='".$get_uid."' ) as is_guanzhu,groupid,(select bio from ".DB::table("common_member_profile")." where uid=".DB::table('common_member').".uid) as content from ".DB::table("common_member")." where uid='".$get_uid."' ";
-		//echo "<hr>";
-		
 		$detail_data['touxiang']=$site_url."/uc_server/avatar.php?uid=".$detail_data['uid']."&size=middle";
 		$detail_data['msg_num']=1;
 		if(!$detail_data['content'])
@@ -788,7 +784,6 @@ if($ac=="member_detail")
 		//if($detail_data['groupid']==24)
 		//{
 			$total2=DB::result_first("select baofen_id from tbl_baofen where uid=$get_uid ");
-			//echo "select baofen_id from tbl_baofen where uid=$get_uid ";
 			$max_page2=intval($total2/$page_size2);
 			if($max_page2<$total2/$page_size2)
 			{
@@ -797,8 +792,9 @@ if($ac=="member_detail")
 
 			if($max_page2>=$page2)
 			{
-				//$query = DB::query("select baofen_id as id,uid,field_id as fuid,fenzhan_id,par,score,pars,total_score,lun,FROM_UNIXTIME(dateline, '%Y-%m-%d') as dateline,(select realname from ".DB::table("common_member_profile")." where uid=tbl_baofen.sid) as event_name from tbl_baofen where addtime>'".strtotime("2013-04-01")."' and sid>0 and uid=$get_uid $strwhere order by addtime desc limit $page_start2,$page_size2");
-				$query = DB::query("select baofen_id as id,uid,field_id as fuid,fenzhan_id as fz_id,par,score,pars,total_score,lun,FROM_UNIXTIME(dateline, '%Y-%m-%d') as dateline,(select realname from ".DB::table("common_member_profile")." where uid=tbl_baofen.sid) as event_name from tbl_baofen where  sid>0 and uid=$get_uid $strwhere order by addtime desc limit $page_start2,$page_size2");
+			
+				$query = DB::query("select baofen_id as id,event_id,uid,fuid,fz_id,par,score,pars,total_score,lun,dateline,event_name from (select baofen_id,field_id,baofen_id as id,uid,field_id as fuid,event_id,fenzhan_id as fz_id,sid,par,score,pars,total_score,lun,FROM_UNIXTIME(dateline, '%Y-%m-%d') as dateline,addtime,(select event_name from tbl_event where event_id=tbl_baofen.event_id) as event_name from tbl_baofen where addtime>'".strtotime("2013-04-01")."' and uid=$get_uid $strwhere ) as t2 group by event_id order by total_score asc,addtime desc limit $page_start2,$page_size2");
+
 				while($row = DB::fetch($query))
 				{
 					$row['ndid']=$row['id'];
@@ -806,6 +802,24 @@ if($ac=="member_detail")
 					$row['iframe_url']=$site_url."/nd/score.php?ndid=".$row['ndid']."&size=small";
 					$score_list[] = array_default_value($row); 
 				}
+				/*
+				$query = DB::query("select id,uid,fuid,fz_id,par,score,pars,total_score,lun,onlymark,dateline,event_name,addtime from (select id,uid,fuid,fz_id,par,score,sais_id,pars,total_score,lun,onlymark,FROM_UNIXTIME(dateline, '%Y-%m-%d') as dateline,addtime,(select realname from ".DB::table("common_member_profile")." where uid=".DB::table('common_score').".sais_id) as event_name from ".DB::table('common_score')."  where addtime>'".strtotime("2013-04-01")."' and uid=$get_uid $strwhere order by total_score asc) as t2 group by sais_id order by total_score asc,addtime desc limit $page_start2,$page_size2");
+
+				//echo "select id,uid,fuid,par,score,pars,total_score,FROM_UNIXTIME(dateline, '%Y-%m-%d') as dateline,(select realname from ".DB::table("common_member_profile")." where uid=".DB::table('common_score').".uid) as event_name from ".DB::table('common_score')."  where uid=$get_uid $strwhere order by addtime desc limit $page_start2,$page_size2";
+				while($row = DB::fetch($query))
+				{
+					
+					$row['ndid']=DB::result_first("select nd_id from ".DB::table("golf_nd_baofen")." where uid='".$row['uid']."' and fenz_id='".$row['fz_id']."'  ");
+					if($row['ndid']==false)
+					{
+						$row['ndid']=DB::result_first("select nd_id from ".DB::table("golf_nd_baofen")." where uid='".$row['uid']."' and onlymark='".$row['onlymark']."'  ");	
+					}
+					
+					$row['event_name']=$row['event_name']." ";
+					$row['iframe_url']=$site_url."/nd/score.php?ndid=".$row['ndid']."&size=small";
+					$score_list[] = $row; 
+				}
+				*/
 			}
 
 		//}

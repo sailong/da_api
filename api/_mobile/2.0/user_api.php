@@ -101,6 +101,7 @@ if($ac=="get_password_by_message")
 	if($mobile)
 	{
 		$uid=DB::result_first("select uid from ".DB::table("common_member_profile")." where mobile='".$mobile."' ");
+		$uid = $uid['uid'];
 		if($uid)
 		{
 			$if_send=send_mobile_msg($mobile,"您在大正网的密码已被重置为：123456，请尽快登录并修改密码。");
