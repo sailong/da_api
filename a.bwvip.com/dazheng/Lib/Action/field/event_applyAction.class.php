@@ -24,7 +24,27 @@ class event_applyAction extends field_publicAction
 		$this->assign('event_id',$event_info['event_id']);
 		
 		$list=D("event_apply")->event_apply_list_pro(" and parent_id='0'");
-
+		
+		$baofen_list = M('baofen')->where("event_id='".intval(get("event_id"))."' and parent_id='0'")->select();
+		//echo '<pre>';
+		//var_dump($baofen_list);die;
+		$baofen_apply_list = array();
+		$baofen_apply_ids = array();
+		foreach($baofen_list as $key=>$val){
+			$baofen_apply_list[$val['event_apply_id']] = $val;
+			$baofen_apply_ids[$val['event_apply_id']] = $val['event_apply_id'];
+		}
+		//var_dump($baofen_list);die;
+		foreach($list["item"] as $key1=>&$val1){
+			if(in_array($val1['event_apply_id'],$baofen_apply_ids)){
+				$list["item"][$key1]['nofenzu'] = 'false';
+				$list["item"][$key1]['fenzu_id'] = "第".$baofen_apply_list[$val1['event_apply_id']]['fenzu_id']."组";
+			}else{
+				$list["item"][$key1]['nofenzu'] = 'true';
+				$list["item"][$key1]['fenzu_id'] = '暂无分组';
+			}
+		}
+		
 		$this->assign("list",$list["item"]);
 		$this->assign("pages",$list["pages"]);
 		$this->assign("total",$list["total"]);
@@ -53,7 +73,6 @@ class event_applyAction extends field_publicAction
 		if(M()->autoCheckToken($_POST))
 		{	
 			$event_type = post("event_type");
-			
 			$real_name_arr = $_POST["event_apply_realname"];
 			$event_apply_sex_arr = $_POST["event_apply_sex"];
 			$event_apply_card_arr = $_POST["event_apply_card"];
@@ -68,13 +87,17 @@ class event_applyAction extends field_publicAction
 			$data["event_apply_state"]=post("event_apply_state");
 			$data["event_apply_addtime"]=time();
 			if($event_type == "T"){
-				$data["event_apply_realname"]=post("tuanti_name");
+				$tuanti_flag = post("tuanti_name");
+				$tuanti_flag = explode('_|_',$tuanti_flag);
+				$data["tuanti_flag"]=$tuanti_flag[0];
+				$data["event_apply_realname"]=$tuanti_flag[1];
 			}else{
 				$data["event_apply_realname"]=$real_name_arr[0];
 				$data["event_apply_sex"]=post("event_apply_sex_0");
 				$data["event_apply_card"]=$event_apply_card_arr[0];
 				$data["event_apply_chadian"]=$event_apply_chadian_arr[0];
 			}
+			
 			$parent_id=M("event_apply")->add($data);
 			if($event_type == "T"){
 				foreach($real_name_arr as $key=>$val){
@@ -103,6 +126,7 @@ class event_applyAction extends field_publicAction
 	{
 		if(intval(get("event_apply_id"))>0)
 		{
+			
 			$event_id = get('event_id');
 			$event_info=D('event')->event_select_pro(" and field_uid='".$_SESSION['field_uid']."' and event_id='{$event_id}'");
 			//$this->assign('event',$event['item']);
@@ -136,6 +160,13 @@ class event_applyAction extends field_publicAction
 	{
 		if(M()->autoCheckToken($_POST))
 		{
+			//echo '<pre>';
+			//var_dump($_POST);die;
+			$event_apply_ids = $_POST['event_apply_id'];
+			$event_apply_realnames = $_POST['event_apply_realname'];
+			$event_apply_cards = $_POST['event_apply_card'];
+			$event_apply_chadians = $_POST['event_apply_chadian'];
+			$event_apply_ids = $_POST['event_apply_id'];
 			$data["event_apply_id"]=post("event_apply_id");
 			$data["event_id"]=post("event_id");
 			$data["fenzhan_id"]=post("fenzhan_id");

@@ -58,6 +58,7 @@
 		<th class="line_l">编号</th>
 		<!-- <th class="line_l">赛事</th> -->
 		<th class="line_l">分站</th>
+		<th class="line_l">所在分组</th>
 		<th class="line_l">报名人</th>
 		<th class="line_l">姓名</th>
 		<th class="line_l">姓别</th>
@@ -70,9 +71,10 @@
 	<volist id="vo" name="list">
 	<tr overstyle="on"  id=ids_{$vo["event_apply_id"]}>
 			<td><input type="checkbox" name="checkbox" onclick="select_one(this)" value="{$vo.event_apply_id}" ></td>
-			<td>{$vo.event_apply_id}</th>
+			<td>{$vo.event_apply_id}</td>
 			<!-- <td>{$vo.event_name}({$vo.event_id})</th> -->
-			<td>{$vo.fenzhan_name}</th><!--({$vo.fenzhan_id})-->
+			<td>{$vo.fenzhan_name}</td><!--({$vo.fenzhan_id})-->
+			<td>{$vo.fenzu_id}</td><!--({$vo.fenzhan_id})-->
 			<td>{$vo.uid}</td>
 			<td>{$vo.event_apply_realname}</td>
 			<td>{$vo.event_apply_sex}</td>
@@ -81,6 +83,7 @@
 			<!-- <td><php>if($vo['event_apply_state']==0){ echo '待审核';}if($vo['event_apply_state']==1){ echo '审核通过';}if($vo['event_apply_state']==2){ echo '审核未通过';}</php></td> -->
 			<td>{$vo.event_apply_addtime|format_to_time}</td>
 		<td>
+			<php>if($vo['nofenzu'] == 'true'){</php><a href="{:U('field/fenzu/tiaopei_add', array('event_id'=>$vo['event_id'],'fenzhan_id'=>$vo['fenzhan_id'],'event_apply_id'=>$vo['event_apply_id']))})">分组</a> | <php>}</php>
 			<a href="{:U('field/event_apply/event_apply_edit', array('event_id'=>$vo['event_id'],'event_apply_id'=>$vo['event_apply_id']))})">修改</a> | 
 			<a href="javascript:void(0);" onclick="mod_delete_one('{:U('field/event_apply/event_apply_delete_action')}','{$vo['event_apply_id']}');">删除</a>
 		</td>
