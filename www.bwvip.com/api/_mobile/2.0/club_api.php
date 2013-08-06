@@ -1763,7 +1763,7 @@ if($ac=="push_msg_list")
 	$uid=$_G['gp_uid'];
     
 	//$list=DB::query("select message_id,message_number,message_type,uid,message_title,message_content,message_addtime from tbl_push_message where uid='".$uid."' and uid=0 ");
-	$list=DB::query("select message_id,message_number,message_type,uid,message_title,message_content,message_pic,message_addtime from tbl_push_message where uid='$uid'");
+	$list=DB::query("select message_id,message_number,message_type,uid,message_title,message_content,message_pic,message_addtime from tbl_push_message where uid='{$uid}'");
     
 	while($row=DB::fetch($list))
 	{

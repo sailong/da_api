@@ -17,7 +17,7 @@ class adAction extends field_publicAction
 
 	public function ad()
 	{
-		$list=D("ad")->ad_list_pro();
+		$list=D("ad")->ad_list_pro(" and field_uid='".$_SESSION['field_uid']."' ");
 
 		$page_list=select_dict(14);
 		$ad_page_arr = array();

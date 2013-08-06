@@ -126,13 +126,14 @@ class push_messageAction extends AdminAuthAction
 					}
 					else
 					{
+						$sql_group=" group by devices_token ";
 						$sql .=" and field_uid='0' ";
 					}
 					
 					
 					$aaa=M()->query("delete from tbl_push_message_list where message_id='".$list."' ".$sql." ");
 
-					$row=M()->query("select uid,devices_token from tbl_push_devices where 1=1  $sql ");
+					$row=M()->query("select uid,devices_token from tbl_push_devices where 1=1  $sql $sql_group");
 					for($i=0; $i<count($row); $i++)
 					{
 						if($row[$i]['devices_token'])

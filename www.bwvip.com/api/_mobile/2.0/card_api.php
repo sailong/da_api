@@ -243,6 +243,10 @@ if($ac=='rank')
 			$lun_num=1;
 			
 			$now_fz_id=$event_info['event_fenzhan_id'];
+			if($_G['gp_now_fz_id'])
+			{
+				$now_fz_id=$_G['gp_now_fz_id'];
+			}
 
 			//分站信息
 			/*

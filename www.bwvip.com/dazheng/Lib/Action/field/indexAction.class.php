@@ -26,7 +26,7 @@ class indexAction extends field_publicAction
 		$this->assign("menu",$menu['item']);
 			
 		$this->display();
-		//print_r($_SESSION);
+		
 	}
 	
 	public function load_left_menu()

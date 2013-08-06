@@ -788,7 +788,7 @@ if($ac=="score_save")
 				$uid=$info['uid'];
 				if($source=="waika")
 				{
-					$res=DB::query("update tbl_baofen set score='".$score_row."',pars='".$pars."',tuigan='".$tuigan."',is_edit='N'  where baofen_id='".$arr[$i]['id']."' ");
+					$res=DB::query("update tbl_baofen set score='".$score_row."',pars='".$pars."',tuigan='".$tuigan."',is_edit='N',flag='app'  where baofen_id='".$arr[$i]['id']."' ");
 				}
 				else
 				{

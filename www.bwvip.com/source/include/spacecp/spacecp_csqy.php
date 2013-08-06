@@ -15,7 +15,7 @@ $gid=$_G['groupid'];
 
 
 //这里面也需要判断用户的组id
-$op = in_array($_GET['op'], array('list','search','del','edit','searchsub','slist')) ? $_GET['op'] : 'list';
+$op = in_array($_GET['op'], array('list','search','del','edit','searchsub','slist','joinin')) ? $_GET['op'] : 'list';
 $space=getspace($_G['uid']);
 
 if($op=='list'){
@@ -127,6 +127,23 @@ if($op=='list'){
 		while($value = DB::fetch($re)) {
 			$earr[]=$value;
 		}
+}elseif($op=='joinin'){
+	//var_dump($_POST);
+	
+	$ids=$_GET["ids"];
+		$ids = explode(',',$ids );  
+	if(empty($ids) || count($ids)<=0){
+		showmessage("没有选择用户","/home.php?mod=spacecp&ac=csqy&op=list");
+	}else{
+		foreach ($ids as $did){
+			if(empty($did)){
+				continue;
+			}
+			DB::update("common_member_profile",array("sid"=>$_G['uid']),array("uid"=>$did));
+		}
+	 showmessage("添加成功","/home.php?mod=spacecp&ac=ulist");
+
+	}
 }
 
 $navtitle="参赛球星-大正高尔夫";
