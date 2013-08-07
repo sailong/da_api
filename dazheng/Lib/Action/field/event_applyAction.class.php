@@ -24,7 +24,27 @@ class event_applyAction extends field_publicAction
 		$this->assign('event_id',$event_info['event_id']);
 		
 		$list=D("event_apply")->event_apply_list_pro(" and parent_id='0'");
-
+		
+		$baofen_list = M('baofen')->where("event_id='".intval(get("event_id"))."' and parent_id='0'")->select();
+		//echo '<pre>';
+		//var_dump($baofen_list);die;
+		$baofen_apply_list = array();
+		$baofen_apply_ids = array();
+		foreach($baofen_list as $key=>$val){
+			$baofen_apply_list[$val['event_apply_id']] = $val;
+			$baofen_apply_ids[$val['event_apply_id']] = $val['event_apply_id'];
+		}
+		//var_dump($baofen_list);die;
+		foreach($list["item"] as $key1=>&$val1){
+			if(in_array($val1['event_apply_id'],$baofen_apply_ids)){
+				$list["item"][$key1]['nofenzu'] = 'false';
+				$list["item"][$key1]['fenzu_id'] = "第".$baofen_apply_list[$val1['event_apply_id']]['fenzu_id']."组";
+			}else{
+				$list["item"][$key1]['nofenzu'] = 'true';
+				$list["item"][$key1]['fenzu_id'] = '暂无分组';
+			}
+		}
+		
 		$this->assign("list",$list["item"]);
 		$this->assign("pages",$list["pages"]);
 		$this->assign("total",$list["total"]);
@@ -53,7 +73,7 @@ class event_applyAction extends field_publicAction
 		if(M()->autoCheckToken($_POST))
 		{	
 			$event_type = post("event_type");
-			
+			$event_apply_uid_arr = $_POST['uid'];
 			$real_name_arr = $_POST["event_apply_realname"];
 			$event_apply_sex_arr = $_POST["event_apply_sex"];
 			$event_apply_card_arr = $_POST["event_apply_card"];
@@ -61,25 +81,31 @@ class event_applyAction extends field_publicAction
 			
 			$data["event_id"]=post("event_id");
 			$data["parent_id"] = 0;
-			$data["uid"]=post("uid");
+			$data["uid"]=$event_apply_uid_arr[0];
 			$data["field_uid"]=$_SESSION['field_uid'];
 			$data["field_id"]=$_SESSION['field_uid'];
 			$data["fenzhan_id"]=post("fenzhan_id");
 			$data["event_apply_state"]=post("event_apply_state");
 			$data["event_apply_addtime"]=time();
 			if($event_type == "T"){
-				$data["event_apply_realname"]=post("tuanti_name");
+				$tuanti_flag = post("tuanti_name");
+				$tuanti_flag = explode('_|_',$tuanti_flag);
+				$data["tuanti_flag"]=$tuanti_flag[0];
+				$data["event_apply_realname"]=$tuanti_flag[1];
 			}else{
+				
 				$data["event_apply_realname"]=$real_name_arr[0];
-				$data["event_apply_sex"]=post("event_apply_sex_0");
+				$data["event_apply_sex"]=$event_apply_sex_arr[0];
 				$data["event_apply_card"]=$event_apply_card_arr[0];
 				$data["event_apply_chadian"]=$event_apply_chadian_arr[0];
 			}
+			
 			$parent_id=M("event_apply")->add($data);
 			if($event_type == "T"){
 				foreach($real_name_arr as $key=>$val){
+					$data["uid"]=$event_apply_uid_arr[$key];
 					$data["event_apply_realname"]=$real_name_arr[$key];
-					$data["event_apply_sex"]=post("event_apply_sex_".$key);
+					$data["event_apply_sex"]=$event_apply_sex_arr[$key];
 					$data["event_apply_card"]=$event_apply_card_arr[$key];
 					$data["event_apply_chadian"]=$event_apply_chadian_arr[$key];
 					$data["parent_id"]=$parent_id;
@@ -103,25 +129,36 @@ class event_applyAction extends field_publicAction
 	{
 		if(intval(get("event_apply_id"))>0)
 		{
+			
 			$event_id = get('event_id');
 			$event_info=D('event')->event_select_pro(" and field_uid='".$_SESSION['field_uid']."' and event_id='{$event_id}'");
-			//$this->assign('event',$event['item']);
+			
 			$event_info = reset($event_info['item']);
-			//echo '<pre>';
-			//var_dump($event['item']);
+			
 			$fenzhan=D('fenzhan_tbl')->fenzhan_list_pro(" and field_uid='".$_SESSION['field_uid']."'");
-			$this->assign('fenzhan',$fenzhan['item']);
 			
 			$data=M("event_apply")->where("event_apply_id=".intval(get("event_apply_id")))->find();
 			$event_apply_list = array();
+			
 			if($event_info['event_type'] == 'T'){
 				$event_apply_list=M("event_apply")->where("parent_id=".intval(get("event_apply_id")))->select();
+				$num = 0;
+				foreach($event_apply_list as $key=>$val){
+					$event_apply_list[$key]['list_num']=$num;
+					$num++;
+				}
 			}else{
 				$event_apply_list = $data;
 			}
-			$this->assign('people_num',count(event_apply_list));
+			//echo '<pre>';
+			//var_dump($event_apply_list);
+			$this->assign('num',$num);
 			$this->assign("data",$data);
+			$this->assign("event_id",$event_id);
+			$this->assign("tuanti_flag",$data["tuanti_flag"]);
+			$this->assign("tuanti_event_apply_id",get("event_apply_id"));
 			$this->assign("event_apply_list",$event_apply_list);
+			$this->assign('fenzhan',$fenzhan['item']);
 			$this->assign("event_type",$event_info['event_type']);
 			$this->assign("page_title","修改赛事报名");
 			$this->display();
@@ -136,6 +173,68 @@ class event_applyAction extends field_publicAction
 	{
 		if(M()->autoCheckToken($_POST))
 		{
+			$event_type = post("event_type");
+			$event_apply_ids = $_POST['event_apply_id'];
+			$real_name_arr = $_POST["event_apply_realname"];
+			$event_apply_sex_arr =$_POST["event_apply_sex"];
+			$event_apply_uid_arr = $_POST['uid'];
+			$event_apply_card_arr = $_POST["event_apply_card"];
+			$event_apply_chadian_arr = $_POST["event_apply_chadian"];
+			
+			$data["fenzhan_id"]=post("fenzhan_id");
+			
+			$tuanti_event_apply_id = post("tuanti_event_apply_id");
+			if($event_type != "T"){
+				$data['uid'] = $event_apply_uid_arr[0];
+				$data["event_apply_realname"]=$real_name_arr[0];
+				$data["event_apply_sex"]=$event_apply_sex_arr[0];
+				$data["event_apply_card"]=$event_apply_card_arr[0];
+				$data["event_apply_chadian"]=$event_apply_chadian_arr[0];
+			}
+			//echo '<pre>';
+			//var_dump($data);die;
+			M("event_apply")->where("event_apply_id='{$tuanti_event_apply_id}'")->save($data);
+			if($event_type == "T"){
+				foreach($real_name_arr as $key=>$val){
+					$event_apply_id = $event_apply_ids[$key];
+					
+					$data["event_apply_realname"]=$real_name_arr[$key];
+					$data["event_apply_sex"]=$event_apply_sex_arr[$key];
+					$data["event_apply_card"]=$event_apply_card_arr[$key];
+					$data["event_apply_chadian"]=$event_apply_chadian_arr[$key];
+					if($event_apply_id == 0){
+						$data["event_id"]=post("event_id");
+						$data["field_uid"]=$_SESSION['field_uid'];
+						//$data["field_id"]=$_SESSION['field_uid'];
+						$data["event_apply_state"]=post("event_apply_state");
+						$data['uid'] = $event_apply_uid_arr[$key];
+						$data["parent_id"]=$tuanti_event_apply_id;
+						$data["tuanti_flag"]=post("tuanti_flag");
+						$data["event_apply_addtime"]=time();
+						M("event_apply")->add($data);
+						unset($data);
+						$data["fenzhan_id"]=post("fenzhan_id");
+					}else{
+						$data["event_apply_id"]=$event_apply_id;
+						M("event_apply")->where("event_apply_id='{$event_apply_id}'")->save($data);
+						unset($data["event_apply_id"]);
+					}
+				}
+			}
+		
+		    $this->success("修改成功",U('field/event_apply/event_apply',array('event_id'=>post("event_id"))));
+		/* 
+		
+		
+		
+			echo '<pre>';
+			var_dump($_POST);die;
+			$event_apply_ids = $_POST['event_apply_id'];
+			$event_apply_uids = $_POST['uid'];
+			$event_apply_realnames = $_POST['event_apply_realname'];
+			$event_apply_cards = $_POST['event_apply_card'];
+			$event_apply_chadians = $_POST['event_apply_chadian'];
+			
 			$data["event_apply_id"]=post("event_apply_id");
 			$data["event_id"]=post("event_id");
 			$data["fenzhan_id"]=post("fenzhan_id");
@@ -147,7 +246,7 @@ class event_applyAction extends field_publicAction
 			$data["event_apply_state"]=post("event_apply_state");
 			
 			$list=M("event_apply")->save($data);
-			$this->success("修改成功",U('field/event_apply/event_apply',array('event_id'=>$data['event_id'])));
+			 */
 		
 		}
 		else
@@ -164,8 +263,16 @@ class event_applyAction extends field_publicAction
 			$ids_arr=explode(",",post("ids"));
 			for($i=0; $i<count($ids_arr); $i++)
 			{
-				$res=M("event_apply")->where("event_apply_id=".$ids_arr[$i])->delete();
+				$res=M("event_apply")->where("event_apply_id=".$ids_arr[$i]." or parent_id=".$ids_arr[$i])->delete();
 			}
+			echo "succeed^删除成功";
+		}
+	}
+	public function event_apply_delete()
+	{
+		if(get("event_apply_id"))
+		{
+			$res=M("event_apply")->where("event_apply_id=".get("event_apply_id"))->delete();
 			echo "succeed^删除成功";
 		}
 	}

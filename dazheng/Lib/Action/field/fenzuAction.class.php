@@ -193,7 +193,7 @@ class fenzuAction extends field_publicAction
 
     /*分站会员列表*/ 
 	
-	$members_list=M()->query("select * from tbl_event_apply where event_id='".$data["event_id"]."' and  fenzhan_id='".$data["fenzhan_id"]."' $orderby");
+	$members_list=M()->query("select * from tbl_event_apply where parent_id='0' and event_id='".$data["event_id"]."' and  fenzhan_id='".$data["fenzhan_id"]."' $orderby");
 	 
     if(empty($members_list)){
         error("sorry！你的分站暂时还没有会员 请为分组添加相应的会员");
@@ -341,9 +341,12 @@ public function tiaopei_edit()
 	
 	public function tiaopei_add()
 	{ 
-       $data=M()->query("SELECT baofen_id,uid,realname,fenzu_id,tee,start_time   from tbl_baofen  where baofen_id='".get("baofen_id")."'");  
-		 
-		$this->assign("data",$data[0]); 
+       $data=M()->query("SELECT baofen_id,uid,realname,fenzu_id,tee,start_time   from tbl_baofen  where baofen_id='".get("baofen_id")."'"); 
+	   $event_apply_info = M('event_apply')->where(" event_id='".get('event_id')."' and fenzhan_id='".get('fenzhan_id')."' and event_apply_id='".get('event_apply_id')."'")->find();
+		
+		$this->assign("data",$data[0]);
+		
+		$this->assign("event_apply_info",$event_apply_info);
 		
 		$this->assign('fenzhan_user_on',1); 
 		
