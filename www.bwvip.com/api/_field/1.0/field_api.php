@@ -580,7 +580,7 @@ if($ac=="news_detail")
 		}
 		
 		//$list=DB::query("select arc_id as blogid,arc_name as subject,arc_addtime as dateline from tbl_arc where arc_id<>'".$blogid."' order by arc_addtime desc limit 2");
-		$list=DB::query("select arc_id as blogid,arc_name as subject,arc_addtime as dateline from tbl_arc where arc_state=1 and arc_type='".$detail_data['arc_type']."'  order by arc_addtime desc limit 2");
+		$list=DB::query("select arc_id as blogid,arc_name as subject,arc_addtime as dateline from tbl_arc where arc_state=1 and arc_type='".$detail_data['arc_type']."' and arc_id<>'".$blogid."'  order by arc_addtime desc limit 2");
 		while($row = DB::fetch($list))
 		{
 			if($row['dateline'])

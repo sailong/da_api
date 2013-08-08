@@ -104,11 +104,12 @@ if($ac=="get_password_by_message")
 		$uid = $uid['uid'];
 		if($uid)
 		{
-			$if_send=send_mobile_msg($mobile,"您在大正网的密码已被重置为：123456，请尽快登录并修改密码。");
+			$new_password=mt_rand(100000,999999);
+			$if_send=send_mobile_msg($mobile,"您在大正网的密码已被重置为：".$new_password."，请尽快登录并修改密码。");
 			if($if_send=="0#1")
 			{
 				$uc_res = DB::fetch_first("select password,salt from pre_ucenter_members where uid='{$uid}'");
-				$newpwd1 = md5(md5("123456").$uc_res['salt']);
+				$newpwd1 = md5(md5($new_password).$uc_res['salt']);
 				$jsg_res = DB::query("update jishigou_members set password='{$newpwd1}' where uid='{$uid}'");
 				$discuz_res = DB::query("update pre_common_member set password='{$newpwd1}' where uid='{$uid}'");
 				$uc_res = DB::query("update pre_ucenter_members set password='{$newpwd1}' where uid='{$uid}'");

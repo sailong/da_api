@@ -295,17 +295,8 @@ if($ac=="event_blog_detail")
 		$detail_data['username']="";
 		$detail_data['uid']="0";
 		
-		$detail_data['content']=strip_tags($detail_data['content'],"<p><img><br><div><a>");
-		
-		$detail_data['content']=str_replace("<img ","<div style=\"text-align:center; width:100%; \"><img ",$detail_data['content']);
-		$detail_data['content']=str_replace("jpg\">","jpg\"></div>",$detail_data['content']);
-		$detail_data['content']=str_replace("jpg\" />","jpg\" /></div>",$detail_data['content']);
-		
-		
-		
+		$detail_data['content']=strip_tags($detail_data['content'],"<p><img><br><div>");
 		$detail_data['content']=str_replace("<img ","<div style=\"text-align:center; width:100%; \"><a href=\"http://www.bwvip.com/news_detail_pic\"><changsailong><img ",$detail_data['content']);
-		$detail_data['content']=str_replace("jpg\">","jpg\"></a></div>",$detail_data['content']);
-		$detail_data['content']=str_replace("jpg\" />","jpg\" /></a></div>",$detail_data['content']);
 		
 		/**
 		 * 添加图片编号
@@ -321,23 +312,33 @@ if($ac=="event_blog_detail")
 		    $i++;
 		}
 		$detail_data['content']=$str;
+		if($_G['gp_test'] == 1) {
+			echo '<pre>';
+			var_dump($content_arr);
+			var_dump($str);die;
+			//var_dump($find_str);
+		}
 		unset($str,$content_arr,$find_str);
+		
 		/**
 		 * 添加图片编号
 		 * end
 		 */
-		 
+		
+		$detail_data['content']=str_replace("jpg\">","jpg\"></a></div>",$detail_data['content']);
+		$detail_data['content']=str_replace("jpg\" />","jpg\" /></a></div>",$detail_data['content']);
+		$detail_data['content']=str_replace("jpg\" alt=\"\" />","jpg\" /></a></div>",$detail_data['content']);
 
 		if($detail_data['content'])
 		{
 			$detail_data['content']=str_replace(".=\"uchome-message-pic\"","",$detail_data['content']);
 			$detail_data['content']=str_replace("src=\"data/attachment/","src=\"".$site_url."/data/attachment/",$detail_data['content']);
+			$detail_data['content']=str_replace("src=\"/Public/editor/attached/image","src=\"".$site_url."/Public/editor/attached/image",$detail_data['content']);
 			
 			
-			$detail_data['content'] = "<div style='font-size:18px; line-height:150%; width:100%; bakcground:red; '>".$detail_data['content'];
+			$detail_data['content'] = "<div style='font-size:18px; line-height:180%; width:100%; bakcground:red; '>".$detail_data['content'];
 			$detail_data['content'] = $detail_data['content']."</div>";
 		}
-		
 
 		if($pic_width)
 		{
@@ -939,7 +940,7 @@ if($ac=="blog_comment_me")
 				$row['message']=cutstr_html($row['message']);
 			}
 
-			$row['touxiang']=$site_url."/uc_server/avatar.php?uid=".$row['uid']."&size=small";
+			$row['touxiang']=$site_url."/uc_server/avatar.php?uid=".$row['authorid']."&size=small";
 
 			$row['dateline']=date("Y-m-d G:i:s",$row['dateline']);
 			$list_data[]=$row;

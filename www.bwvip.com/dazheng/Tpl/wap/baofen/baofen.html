@@ -17,10 +17,9 @@
     <div id="con1_t2" style="height:auto;">
       <div class="t_top">
         <div style="width:120px; float:left"><span>您好，<php>echo $_SESSION['baofen_username'];;</php> <a href="{:U('wap/baofen/logout',array('fenzhan_id'=>$fenzhan_id,'lun'=>$lun))}">【退出】</a> </span> </div>
-        <div  style="width:100px; float:left"> 
-		<!--
-		【<a href="nd/baofen.php?ac=nlist&onlymark=" target="_blank">成绩列表</a>】
-		--></div>
+        <div  style="width:100px; float:left">  
+		【<a href="/baofen/show.php?ac=list&fenzhan_id={$fenzhan_id}" target="_blank">成绩列表</a>】
+		 </div>
       </div>
       <div class="nav_u" >
         <table width="100%" border="0">
@@ -35,7 +34,7 @@
 					<input type="hidden" name="lun" value="<php> echo get('lun');</php>">
 					<select name="fenzu_id" onchange="load_fenzu();">
 						<volist id="vo" name="fenzu_list">
-							<option value="{$vo.fenzu_id}" <php>if(get("fenzu_id")==$vo['fenzu_id']){ echo ' selected="selected" ';}</php>>{$vo['fenzu_number']}组/{$vo['fenzu_name']}</option>
+							<option value="{$vo.fenzu_id}" <php>if(get("fenzu_id")==$vo['fenzu_id']){ echo ' selected="selected" ';}</php>>{$vo['fenzu_id']}组/{$vo['realname']}</option>
 						</volist>
 					</select>
 				</form>
@@ -68,11 +67,11 @@
                 <td height="30">{$v.realname}</td>
                 <volist id="d" name="dongs">
 				<php>
-				$cj=M()->query("select cave_".$d." from tbl_baofen where uid='".$v['uid']."' and fenzhan_id='".$fenzhan_id."' and lun='".$lun."' ");
+				$cj=M()->query("select cave_".$d." from tbl_baofen where baofen_id='".$v['baofen_id']."' and fenzhan_id='".$fenzhan_id."' ");
 				$dong_cj=$cj[0]['cave_'.$d];
 				</php>
                 <td>
-					<select name="userdk[{$v['uid']}][{$d}]">
+					<select name="userdk[{$v['baofen_id']}][{$d}]">
                     <option value="0" >0</option>
                     <volist id="c" name="chengji_arr">
 					<php>
@@ -104,6 +103,7 @@
               <td height="45" align="center"><span style="text-align:center; padding-top:20px;">
                 <input type="hidden" name='ac' id="ac" value="tjbaofen">
                 <input type="hidden" name='fenzhan_id' id="fenzhan_id" value="{$fenzhan_id}">
+                <input type="hidden" name='fenzu_id' id="fenzu_id" value="{$fenzu_id}">
                 <input type="hidden" name='lun' id="fenzhan_id" value="{$lun}">
                 <input type="image" src="/skin/wap/images/submit_btn.jpg" width="109" height="27" />
                 </span></td>

@@ -10,7 +10,7 @@
 		<div id="con1_s"></div>
 			<div id="con1_t2" style="height:auto;">
 				  <div class="t_top">
-			     <div style="width:290px; float:left">  【<a href="/baofen/index.php?ac=nlist&fenz_id=35" target="_blank">成绩列表</a>】</div>
+			     <div style="width:290px; float:left">  【<a href="show.php?ac=list&fenzhan_id=$_GET['fenzhan_id']" target="_blank">成绩列表</a>】</div>
 				  </div>
 					<div class="nav_u" >  
 						       <DIV class="ndbm">
@@ -40,10 +40,10 @@
                               
                               <!--{loop $arr $v}-->
                               
-                               <!--{eval $se=getscore($value['nd_id'],$v);}-->
+                               <!--{eval $se=getscore($value['baofen_id'],$v);}-->
 							  <td>   
 			
-                              <input name="userdk[{$value['nd_id']}][$v]"  value="{$se}"  style="width:20px; border:#fef000 solid 1px; text-align:center" />                         
+                              <input name="userdk[{$value['baofen_id']}][$v]"  value="{$se}"  style="width:20px; border:#fef000 solid 1px; text-align:center" />                         
                                
                                </td> 
                                <!--{/loop}-->
@@ -63,7 +63,7 @@
 										  <!--{else}-->
 										     <!--{eval $selected3= "  ";}-->
 										  <!--{/if}--> 
-                               <select name="userdk[{$value['nd_id']}][0]">  
+                               <select name="userdk[{$value['baofen_id']}][0]">  
                                         
                                          <option value="0"  >Normal</option>
                                          <option value="-1" {$selected1}>DQ</option>

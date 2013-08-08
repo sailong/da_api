@@ -376,8 +376,22 @@ if($ac=='rank')
 					$color_1=array_default_value($c_arr);
 					$row['color_1']=$c_arr;
 					
-					$row['ju_par_total']=ju_par_format($row['total_ju_par']);
+					
+					
+					
+					if($row['total_ju_par']==1000)
+					{
+						$row['total_ju_par']="-";
+					}
+					
+					if($row['total_score']==1000)
+					{
+						$row['total_score']="-";
+					}
 					$lun_1=$row['total_score'];
+					$row['ju_par_total']=ju_par_format($row['total_ju_par']);
+					
+					
 					
 					$row['lun_1']=$lun_1;
 					$row['lun_2']=$lun_2;

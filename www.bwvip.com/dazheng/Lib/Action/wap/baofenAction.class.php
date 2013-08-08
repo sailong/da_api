@@ -85,6 +85,7 @@ class baofenAction extends wap_publicAction
 	public function baofen()
 	{
 		$fenzhan_id=get("fenzhan_id");
+		$fenzu_id=get("fenzu_id");
 		if(!$fenzhan_id)
 		{
 			$fenzhan_id=$_SESSION['fenzhan_id'];
@@ -109,6 +110,7 @@ class baofenAction extends wap_publicAction
 		
 		
 		$this->assign('fenzhan_id',$fenzhan_id);
+		$this->assign('fenzu_id',$fenzu_id);
 		$this->assign('lun',$lun); 
 		if($fenzhan_id)
 		{
@@ -148,15 +150,12 @@ class baofenAction extends wap_publicAction
 	
 	
 	public function baofen_save_action()
-	{
-		$arra = $_POST['userdk'];
-		$arr_b=$arra;
-		$arra = post('userdk');
+	{ 
+		$arr_b =  $_POST['userdk'];;
 
 		$fenzhan_id = post('fenzhan_id');
 		$lun = post('lun');
-
-		
+ 
 		
 		if($arr_b)
 		{ 
@@ -208,7 +207,7 @@ class baofenAction extends wap_publicAction
 					}
 					
 					//插入更新操作 18洞成绩
-					$baofen=M()->query("select * from tbl_baofen where baofen_id='".$key."' and fenzhan_id='".$fenzhan_id."'");
+					$baofen=M()->query("select * from tbl_baofen where baofen_id='".$key."'");
 					$data ['baofen_id'] = $key;
 					$data ['lun'] = $lun; 
 					$data ['event_id'] = $event_id;
@@ -217,7 +216,7 @@ class baofenAction extends wap_publicAction
 					//$data ['total_score'] = $total_score;  
 					if($baofen[0]['baofen_id'])
 					{
-						$sql = "update tbl_baofen set ".(implode ( " , ",$sql_sets ))." where baofen_id='".$key."' and fenzhan_id='".$fenzhan_id."'  ";
+						$sql = "update tbl_baofen set ".(implode ( " , ",$sql_sets ))." where baofen_id='".$key."' ";
 					} 
 					/*
 					echo "<hr>";	
@@ -227,7 +226,7 @@ class baofenAction extends wap_publicAction
 					$rs = M()->query($sql);
 
 					//统计总分
-					$baofen=M()->query("select * from tbl_baofen where baofen_id='".$key."' and fenzhan_id='".$fenzhan_id."'");
+					$baofen=M()->query("select * from tbl_baofen where baofen_id='".$key."'");
 					$avcave=0;
 					for($i = 1; $i <= 18; $i ++)
 					{ 
@@ -236,29 +235,27 @@ class baofenAction extends wap_publicAction
 							$avcave+=Gpar($baofen[0]['cave_'.$i],$par[$i-1]);
 						}
 					}
-					$sql="update tbl_baofen set total_ju_par=$avcave where baofen_id='".$key."' and fenzhan_id='".$fenzhan_id."'"; 
+					$sql="update tbl_baofen set total_ju_par=$avcave where baofen_id='".$key."'"; 
 					$res=M()->query($sql);
-					
+			
 			$arrypar = $par [0] . '|' . $par [1] . '|' . $par [2] . '|' . $par [3] . '|' . $par [4] . '|' . $par [5] . '|' . $par [6] . '|' . $par [7] . '|' . $par [8] . '|' . $POUT . '|' . $par [9] . '|' . $par [10] . '|' . $par [11] . '|' . $par [12] . '|' . $par [13] . '|' . $par [14] . '|' . $par [15] . '|' . $par [16] . '|' . $par [17] . '|' . $PIN . '|' . $PTL;
-		$i=0;
-					
+		$i=0; 
 					
 			$row=M()->query("select *,(cave_1+cave_2+cave_3+cave_4+cave_5+cave_6+cave_7+cave_8+cave_9) as lout,(cave_10+cave_11+cave_12+cave_13+cave_14+cave_15+cave_16+cave_17 +cave_18) as lin   from tbl_baofen where baofen_id='".$key."' ");
 					for($i = 1; $i <= 21; $i ++) {
 					if ($i == '10') {
-						$data [$i] = $row[0]['lout'];
+						$sdata [$i] = $row[0]['lout'];
 					} elseif ($i == '20') {
-						$data [$i] = $row[0]['lin'];
+						$sdata [$i] = $row[0]['lin'];
 					} elseif ($i == '21') {
-						$data [$i] = $total_score;
+						$sdata [$i] = $total_score;
 					} elseif ($i > 9) {
-						$data [$i] = $row[0]['cave_' . ($i - 1)];
+						$sdata [$i] = $row[0]['cave_' . ($i - 1)];
 					} else {
-						$data [$i] = $row[0]['cave_' . $i];
+						$sdata [$i] = $row[0]['cave_' . $i];
 					}
 				
-				}
-				$par = explode ( '|', $arry ['par'] );
+				} 
 				//初始化
 				$total_eagle = 0;
 				//birdie  
@@ -271,21 +268,25 @@ class baofenAction extends wap_publicAction
 				$total_doubles = 0;
 				
 				for($i = 1; $i <= 21; $i ++) {
-					$data1 [$i] = Getpar ( $data [$i] - $par [$i - 1] );
 					if ($i != '10' && $i != '20' && $i != '21') {
 						//eagle
-						Getpar ( $data [$i] - $par [$i - 1] ) == '-2' ? $total_eagle ++ : '';
+						Getpar ( $sdata [$i] - $par [$i - 1] ) == '-2' ? $total_eagle ++ : '';
 						//birdie 
-						Getpar ( $data [$i] - $par [$i - 1] ) == '-1' ? $total_birdie ++ : '';
+						Getpar ( $sdata [$i] - $par [$i - 1] ) == '-1' ? $total_birdie ++ : '';
 						//E 
-						Getpar ( $data [$i] - $par [$i - 1] ) == 'E' ? $total_evenpar ++ : '';
+						Getpar ( $sdata [$i] - $par [$i - 1] ) == 'E' ? $total_evenpar ++ : '';
 						//bogi 
-						Getpar ( $data [$i] - $par [$i - 1] ) == '+1' ? $total_bogi ++ : '';
+						Getpar ( $sdata [$i] - $par [$i - 1] ) == '+1' ? $total_bogi ++ : '';
 						//doubles
-						Getpar ( $data [$i] - $par [$i - 1] ) == '+2' ? $total_doubles ++ : '';
+						Getpar ( $sdata [$i] - $par [$i - 1] ) == '+2' ? $total_doubles ++ : '';
 					}
-				} 
-				 $str = implode ( '|', $data );
+					
+					$data1 [$i] = Getpar ( $sdata [$i] - $par [$i - 1] );
+					
+				}   
+				
+				
+				 $str = implode ( '|', $sdata );
 				$str1 = implode ( '|', $data1 ); 
 				$total_avepushs = floor ( $total_score / 18 ); 
 				
@@ -308,14 +309,14 @@ class baofenAction extends wap_publicAction
 						$sql_sets ['total_score'] = "`total_score`='".$ttt."'";	
 						$sql_sets ['is_end'] = "`is_end`='0'";	
 						$sql_sets ['total_ju_par'] = "`total_ju_par`='1000'";	
-						$res=M()->query("update tbl_baofen set ".(implode(",",$sql_sets))." where baofen_id='".$key."' and fenzhan_id='".$fenzhan_id."'");
-						//echo "update tbl_baofen set ".(implode(",",$sql_sets))." where uid='".$key."' and fenzhan_id='".$fenzhan_id."' ";
+						$res=M()->query("update tbl_baofen set ".(implode(",",$sql_sets))." where baofen_id='".$key."'");
+						//echo "update tbl_baofen set ".(implode(",",$sql_sets))." where uid='".$key."' ";
 						//echo "<hr>";
 					}
 					else
 					{ 
-						$res=M()->query("update tbl_baofen set total_score=cave_1+cave_2+cave_3+cave_4+cave_5+cave_6+cave_7+cave_8+cave_9+cave_10+cave_11+cave_12+cave_13+cave_14+cave_15+cave_16+cave_17+cave_18 where baofen_id='".$key."' and fenzhan_id='".$fenzhan_id."'");
-						//echo "update tbl_baofen set total_score=cave_1+cave_2+cave_3+cave_4+cave_5+cave_6+cave_7+cave_8+cave_9+cave_10+cave_11+cave_12+cave_13+cave_14+cave_15+cave_16+cave_17+cave_18 where uid='".$key."' and fenzhan_id='".$fenzhan_id."' ";
+						$res=M()->query("update tbl_baofen set total_score=cave_1+cave_2+cave_3+cave_4+cave_5+cave_6+cave_7+cave_8+cave_9+cave_10+cave_11+cave_12+cave_13+cave_14+cave_15+cave_16+cave_17+cave_18 where baofen_id='".$key."'");
+						//echo "update tbl_baofen set total_score=cave_1+cave_2+cave_3+cave_4+cave_5+cave_6+cave_7+cave_8+cave_9+cave_10+cave_11+cave_12+cave_13+cave_14+cave_15+cave_16+cave_17+cave_18 where uid='".$key."' ";
 					}
 				
 				} 	
@@ -327,10 +328,10 @@ class baofenAction extends wap_publicAction
 			$res=M()->query($sql); 
 			//更新比赛状态 	
 			$res=M()->query("update tbl_baofen set is_end=1 where cave_1>0 and cave_2>0  and cave_3>0  and cave_4>0  and cave_5>0  and cave_6>0  and cave_7>0  and cave_8>0  and cave_9>0  and cave_10>0  and cave_11>0  and cave_12>0  and cave_13>0  and cave_14>0  and cave_15>0  and cave_16>0  and cave_17>0  and cave_18>0  and total_score<999  and fenzhan_id='".$fenzhan_id."' "); 	
-
-			$fzt1 = $_POST['fenzu_id'];
-			$fzt1 = $fzt1+1;
-		 
+			
+ 
+			$fzt=post('fenzu_id');
+			$fzt1 = $fzt+1; 
 			//$this->success("保存成功",U('field/public/login'));
 			//echo "<hr>ok";
 			//header ( "Location: baofen.php?ac=ndupdate&fzt=$fzt1&qc_id=".$_POST['qc_id']."&field_id=".$_POST['qc_id']." " );
@@ -346,6 +347,7 @@ function Gpar($cave, $par) {
 
 			//距标准杆
 			function Getpar($cave, $par) {
+				if($cave){
 				$option = $cave - $par;
 				if ($option == 0) {
 					$dataInfo = "E";
@@ -355,6 +357,10 @@ function Gpar($cave, $par) {
 				}
 				if ($option < 0) {
 					$dataInfo = $option;
+				}
+				}else
+				{
+					$dataInfo = 0;
 				}
 				return $dataInfo;
 			}

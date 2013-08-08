@@ -40,7 +40,7 @@ if($operation=='base'){
 	   $where="where sid= ".$_G['uid'];
 	    $fenzhan_id  = $_G['gp_fenz'];
 	   if($fenzhan_id){
-		 	$where.=" and  fenzhan_id= ".$fenzhan_id;
+		 	$where.=" and  fenz_id= ".$fenzhan_id;
 	   }
 	   
         $field_id = $_G['gp_field'];   
@@ -282,6 +282,8 @@ if($operation=='base'){
    $insert_data['sid']        = $_G['uid'];
    $insert_data['fenz_id']    = $data['fenz_id'];
    $insert_data['field_id']   = $data['field'];
+   $event_id =DB::result_first("SELECT event_id FROM tbl_event where event_uid=".$_G['uid']." ");   
+   $insert_data['event_id']   = $event_id;
   
  //print_r($bs_data); exit;
  
@@ -448,9 +450,9 @@ if($operation=='base'){
             $data['team_num']     =  $data['team_number'];
             unset($data['team_number']);
             unset($data['chadian']);
-           // DB::update("golf_nd_baofen",$data,array('sid'=>$result['sid'],'fenz_id'=>$result['fenz_id'],'field_id'=>$result['field_id'],'uid'=>$result['uid']));
-    $sql=" update  tbl_baofen set tee='".$data['tee']."',realname='".$data['realname']."',uid='".$data['uid']."',start_time='".$data['start_time']."',team_num='".$data['team_num']."' where sid= ".$result['sid']." and fenz_id= ".$result['fenz_id']." and field_id= ".$result['field_id']." and uid=".$data['uid']."";
-  DB::query($sql);
+        // DB::update("fenzu_members",$data,array('sid'=>$result['sid'],'fenz_id'=>$result['fenz_id'],'field_id'=>$result['field_id'],'uid'=>$result['uid']));
+    //$sql=" update  tbl_baofen set tee='".$data['tee']."',realname='".$data['realname']."',uid='".$data['uid']."',start_time='".$data['start_time']."',fenzu_id='".$data['team_num']."' where   fenzhan_id= ".$result['fenz_id']." and field_id= ".$result['field_id']." and uid=".$data['uid']."";
+ // DB::query($sql);
  
             showmessage("调拨成功","home.php?mod=spacecp&ac=fenzu&op=member_allot&fz_m_id=".$_G['gp_fz_m_id']);
 
@@ -493,7 +495,7 @@ showmessage("操作成功","home.php?mod=spacecp&ac=fenzu&op=base&fenz=".$fenz_i
 		
    showmessage("已经生成");
     }else{
-        DB::query(" insert into tbl_baofen(fenzhan_id,field_id,uid,sid,realname,fenzu_id,tee,start_time,chadian) select fenz_id,field_id,uid,sid,realname,team_number,tee,start_time,chadian from ".DB::table("fenzu_members")." where sid=".$_G['uid']." and fenz_id = ".$result['fenz_id']." and field_id=".$result['field_id']);
+        DB::query(" insert into tbl_baofen(fenzhan_id,event_id,field_id,uid,sid,realname,fenzu_id,tee,start_time,chadian) select fenz_id,event_id,field_id,uid,sid,realname,team_number,tee,start_time,chadian from ".DB::table("fenzu_members")." where sid=".$_G['uid']." and fenz_id = ".$result['fenz_id']." and field_id=".$result['field_id']);
       echo "<input id=\"nd_status\" value=\"0\">";
 	  
 

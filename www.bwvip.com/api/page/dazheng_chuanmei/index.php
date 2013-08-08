@@ -27,6 +27,7 @@ $android_url=DB::result_first("select app_version_file from tbl_app_version wher
 body{margin:0;padding:0;width:100%;}
 p{margin:0;padding:0;text-indent:2em;width:80%;line-height:150%; text-align:left;font-size:1.1em;font-family:"微软雅黑";color:#5c5c5c;margin-bottom:20px;}
 img{width:100%; margin:0;padding:0;border:0;}
+.btn{width:50%; margin:0 auto;}
 </style>
 </head>
 
@@ -40,9 +41,9 @@ img{width:100%; margin:0;padding:0;border:0;}
     <table width="100%" border="0" cellspacing="0" cellpadding="0">
   <tr><td><img src="images/top.png" width="<?php echo $width;?>" /></td></tr>
   <tr>
-    <td><p></p><a href="https://itunes.apple.com/us/app/da-zheng-gao-er-fu-golf/id642016024?ls=1&mt=8" target="_blank"><img src="images/iphone.gif" alt="" width="<?php echo ($width/2)+90;?>"  /></a><p></p></td>
+    <td align="center"><p></p><a href="https://itunes.apple.com/us/app/da-zheng-gao-er-fu-golf/id642016024?ls=1&mt=8" target="_blank"><img  class="btn" src="images/iphone.gif" alt="" width="<?php echo ($width/2)+90;?>"  /></a><p></p></td>
  </tr> <tr>
-    <td><p></p><a href="<? echo $android_url;?>" target="_blank"><img src="images/android.gif" width="<?php echo ($width/2)+90;?>" /></a><p></p></td>
+    <td align="center"><a href="<? echo $android_url;?>" target="_blank"><img class="btn" src="images/android.gif" width="<?php echo ($width/2)+90;?>" /></a><p></p></td>
   </tr>
     </table>
 
