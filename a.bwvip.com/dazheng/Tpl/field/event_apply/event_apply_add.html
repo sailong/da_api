@@ -47,7 +47,7 @@
 				<tr overstyle="on">
 					<td colspan="2">
 						<table class="add_table" border="0" cellspacing="0" cellpadding="0">
-							<tr style="display:none;">
+							<tr>
 								<th>报名人UID：</th>
 								<td><input type="text" name="uid[]" id="uid" class="mod_input2" style="width:66px;"  value="0" onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')"></td>
 							</tr>
@@ -142,7 +142,7 @@ $.formValidator.initConfig({formID:"act_form",theme:'ArrowSolidBox',mode:'AutoTi
 
 function add_one_people(people_num){
 	var str = '<tr overstyle="on"><td colspan="2"><table class="add_table" border="0" cellspacing="0" cellpadding="0">';
-		str +='		<tr style="display:none;">';
+		str +='		<tr>';
 		str +='			<th>报名人UID：</th>';
 		str +='			<td><input type="text" name="uid[]" id="uid" class="mod_input2" style="width:66px;" value="0"></td>';
 		str +='		</tr>';

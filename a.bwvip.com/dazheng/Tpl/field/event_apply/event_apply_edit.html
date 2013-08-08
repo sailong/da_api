@@ -59,7 +59,7 @@
 								<th width="15%">event_apply_id：</th>
 								<td><input type="hidden" name="event_apply_id[]" id="event_apply_id" class="mod_input2" value="{$event_apply.event_apply_id}"></td>
 							</tr>
-							<tr style="display:none;">
+							<tr>
 								<th width="15%">报名人UID：</th>
 								<td><input type="text" name="uid[]" id="uid" class="mod_input2" value="0" onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')"></td>
 							</tr>
@@ -208,7 +208,7 @@ function add_one_people(num){
 		str +='<input type="hidden" name="event_apply_id[]" id="event_apply_id" class="mod_input2" style="width:66px;"  value="0">';
 		str +='		    </td>';	
 		str +='</tr>';
-		str +='<tr style="display:none;">';
+		str +='<tr>';
 		str +='			<th>报名人UID：</th>';
 		str +='			<td><input type="text" name="uid[]" id="uid" class="mod_input2" style="width:66px;"  value="0"></td>';
 		str +='		</tr>';
