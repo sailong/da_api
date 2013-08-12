@@ -265,13 +265,18 @@ if($ac=="event_ticket_list"){
 		api_json_result(1,1,"缺少参数event_id",$data);exit;
 	}
 	//,ticket_price,ticket_ren_num,ticket_num,ticket_pic,ticket_starttime,ticket_endtime,ticket_type,ticket_times,ticket_content,ticket_addtime
-	$list=DB::query("select ticket_id,ticket_name from tbl_ticket where event_id='".$event_id."' order by ticket_id desc limit 100 ");
+	$list=DB::query("select ticket_id,ticket_name,ticket_type from tbl_ticket where event_id='".$event_id."' order by ticket_id desc limit 100 ");
 	while($row = DB::fetch($list))
 	{
 		/* $row['ticket_pic']=$site_url."/".$row['ticket_pic'];
 		$row['ticket_starttime']=date("Y年m月d日",$row['ticket_starttime']);
 		$row['ticket_endtime']=date("Y年m月d日",$row['ticket_endtime']);
 		$row['ticket_content']=msubstr(cutstr_html($row['ticket_content']),0,30); */
+		if(in_array($row['ticket_type'],array('VIP'))){
+			$row['company_flag']='Y';
+		}else{
+			$row['company_flag']='N';
+		}
 		$list_data[]=array_default_value($row);
 	}
 	unset($list); 
@@ -295,7 +300,7 @@ if($ac=="my_ticket_list")
 	if(empty($uid)){
 		api_json_result(1,1,"缺少参数uid",$data);
 	}
-	$list=DB::query("select ticket_id,user_ticket_code,user_ticket_codepic,user_ticket_realname,user_ticket_cardtype,user_ticket_card,user_ticket_mobile,user_ticket_status,user_ticket_addtime from tbl_user_ticket where uid='".$uid."' order by user_ticket_addtime desc limit 100 ");
+	$list=DB::query("select ticket_id,ticket_type,user_ticket_code,user_ticket_codepic,user_ticket_nums,user_ticket_realname,user_ticket_sex,user_ticket_age,user_ticket_address,user_ticket_cardtype,user_ticket_card,user_ticket_mobile,user_ticket_imei,user_ticket_company,user_ticket_company_post,user_ticket_status,user_ticket_addtime from tbl_user_ticket where uid='".$uid."' order by user_ticket_addtime desc limit 100 ");
 	while($row = DB::fetch($list))
 	{
 		$row['user_ticket_codepic']=$site_url."/".$row['user_ticket_codepic'];
