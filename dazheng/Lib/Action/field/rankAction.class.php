@@ -25,28 +25,31 @@ class rankAction extends field_publicAction
             $language = 'cn';
         }
         $field_uid = $_SESSION["field_uid"];
-        $where = "a.field_uid='{$field_uid}' and a.field_event_id=b.field_event_id and a.uid=c.uid";
+        $where = "a.field_uid='{$field_uid}' and a.field_event_id=b.event_id and a.uid=c.uid";
 	    if(!empty($event_id)) {
-	        $where .= " and b.field_event_id='{$event_id}'";
+	        $where .= " and b.event_id='{$event_id}'";
 	    }
 	    if(!empty($uid)) {
 	        $where .= " a.uid='{$uid}'";
 	    }
 	    $offset = ($page-1)*$page_size;
-        $sql = "select a.field_event_rank_id,a.field_event_rank_name,a.field_event_rank_name_en,a.uid,a.field_uid,a.field_event_rank_score,a.field_event_rank_sort,a.field_event_rank_addtime,b.field_event_id,b.field_event_name,c.realname from tbl_field_event_rank a,tbl_field_event b,pre_common_member_profile c where $where order by a.field_event_rank_sort asc limit $offset,$page_size";
+		
+        $sql = "select a.field_event_rank_id,a.field_event_rank_name,a.field_event_rank_name_en,a.uid,a.field_uid,a.field_event_rank_score,a.field_event_rank_sort,a.field_event_rank_addtime,b.event_id,b.event_name,c.realname from tbl_field_event_rank a,tbl_event b,pre_common_member_profile c where $where order by a.field_event_rank_sort asc limit $offset,$page_size";
 	    $list = M()->query($sql);//D('field_event_rank a,tbl_field_event b,pre_common_member_profile c')->where($where)->field('a.field_event_rank_id,a.field_event_rank_name,a.field_event_rank_name_en,a.uid,a.field_uid,a.field_event_rank_score,a.field_event_rank_sort,a.field_event_rank_addtime,b.field_event_id,b.field_event_name,c.realname')->page($page.",".$page_size)->order('a.field_event_rank_sort asc' )->select();
 
 //	    	    echo '<pre>';
 //	    var_dump($list);
-//echo M()->getLastSql();die;
+//echo M()->getLastSql();
+		
 	    foreach($list as $key=>&$val) {
 	        if($language == 'en') {
 	            $val['field_event_rank_name'] = $val['field_event_rank_name_en'];
 	        }
 	        unset($val['field_event_rank_name_en']);
 	    }
-	    $total =  M()->query("select count(a.field_event_rank_id) as total from tbl_field_event_rank a,tbl_field_event b,pre_common_member_profile c where $where");//M('field_event a,tbl_field_event_rank b,pre_common_member_profile c')->where($where)->count();
-	    //echo M()->getLastSql();die;
+	    $total =  M()->query("select count(a.field_event_rank_id) as total from tbl_field_event_rank a,tbl_event b,pre_common_member_profile c where $where");//M('field_event a,tbl_field_event_rank b,pre_common_member_profile c')->where($where)->count();
+	    //echo M()->getLastSql();
+		//var_dump($total);
 	    import ("@.ORG.Page");
 		$page = new page ($total[0]['total'], $page_size );
 		

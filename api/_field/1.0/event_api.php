@@ -264,22 +264,21 @@ if($ac=="event_ticket_list"){
 	{
 		api_json_result(1,1,"缺少参数event_id",$data);exit;
 	}
-	$list=DB::query("select ticket_id,ticket_name,ticket_price,ticket_ren_num,ticket_num,ticket_pic,ticket_starttime,ticket_endtime,ticket_type,ticket_times,ticket_content,ticket_addtime from tbl_ticket where event_id='".$event_id."' order by ticket_id desc limit 100 ");
+	//,ticket_price,ticket_ren_num,ticket_num,ticket_pic,ticket_starttime,ticket_endtime,ticket_type,ticket_times,ticket_content,ticket_addtime
+	$list=DB::query("select ticket_id,ticket_name from tbl_ticket where event_id='".$event_id."' order by ticket_id desc limit 100 ");
 	while($row = DB::fetch($list))
 	{
-		$row['ticket_pic']=$site_url."/".$row['ticket_pic'];
+		/* $row['ticket_pic']=$site_url."/".$row['ticket_pic'];
 		$row['ticket_starttime']=date("Y年m月d日",$row['ticket_starttime']);
 		$row['ticket_endtime']=date("Y年m月d日",$row['ticket_endtime']);
-		$row['ticket_content']=msubstr(cutstr_html($row['ticket_content']),0,30);
+		$row['ticket_content']=msubstr(cutstr_html($row['ticket_content']),0,30); */
 		$list_data[]=array_default_value($row);
 	}
-	unset($list);
+	unset($list); 
 	if($list_data)
 	{
-		$data['title'] = "list_data";
-		$data['data']=array(
-		  'all_list'=>$list_data,
-		);
+		$data['title'] = "ticket_list";
+		$data['data']=$list_data;
 		//print_r($data);
 		api_json_result(1,0,'门票列表',$data);
 	}
