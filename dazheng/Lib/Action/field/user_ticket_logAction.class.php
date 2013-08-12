@@ -46,11 +46,11 @@ class user_ticket_logAction extends field_publicAction
 			$data["user_ticket_log_addtime"]=time();
 			
 			$list=M("user_ticket_log")->add($data);
-			$this->success("添加成功",U('admin/user_ticket_log/user_ticket_log'));
+			$this->success("添加成功",U('field/user_ticket_log/user_ticket_log'));
 		}
 		else
 		{
-			$this->error("不能重复提交",U('admin/user_ticket_log/user_ticket_log_add'));
+			$this->error("不能重复提交",U('field/user_ticket_log/user_ticket_log_add'));
 		}
 
 	}
@@ -86,11 +86,11 @@ class user_ticket_logAction extends field_publicAction
 			$data["user_ticket_log_status"]=post("user_ticket_log_status");
 			
 			$list=M("user_ticket_log")->save($data);
-			$this->success("修改成功",U('admin/user_ticket_log/user_ticket_log'));			
+			$this->success("修改成功",U('field/user_ticket_log/user_ticket_log'));			
 		}
 		else
 		{
-			$this->error("不能重复提交",U('admin/user_ticket_log/user_ticket_log'));
+			$this->error("不能重复提交",U('field/user_ticket_log/user_ticket_log'));
 		}
 
 	}

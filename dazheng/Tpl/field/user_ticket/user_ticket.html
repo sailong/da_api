@@ -55,13 +55,16 @@
 			<label for="checkbox"></label>
 		</th>
 		<th class="line_l">所属用户</th>
-		<th class="line_l">门票</th>
+		<th class="line_l">门票ID</th>
+		<th class="line_l">门票类型</th>
 		<th class="line_l">领取码</th>
 		<th class="line_l">二维码图片</th>
+		<th class="line_l">订票张数</th>
 		<th class="line_l">姓名</th>
-		<th class="line_l">证件类型</th>
-		<th class="line_l">证件号码</th>
+		<!-- <th class="line_l">证件类型</th>
+		<th class="line_l">证件号码</th> -->
 		<th class="line_l">手机号</th>
+		<th class="line_l">手机串号</th>
 		<th class="line_l">状态</th>
 		<th class="line_l">添加时间</th>
 		<th class="line_l">操作</th>
@@ -71,12 +74,15 @@
 		<td><input type="checkbox" name="checkbox" onclick="select_one(this)" value="{$vo.user_ticket_id}" ></td>
 		<td>{$vo.uid}</th>
 			<td><a href="{:U('field/user_ticket/user_ticket_detail', array('user_ticket_id'=>$vo['user_ticket_id']))}'">{$vo.ticket_id}</a></td>
+			<td>{$vo.ticket_type}</td>
 			<td>{$vo.user_ticket_code}</td>
 			<td><img src="/{$vo.user_ticket_codepic}" style="max-width:100px;max-height:100px;"></td>
+			<td>{$vo.user_ticket_nums}</td>
 			<td>{$vo.user_ticket_realname}</td>
-			<td><php>if($vo['user_ticket_cardtype'] == 0){echo '身份证';}</php></td>
-			<td>{$vo.user_ticket_card}</td>
+			<!-- <td><php>if($vo['user_ticket_cardtype'] == 0){echo '身份证';}</php></td>
+			<td>{$vo.user_ticket_card}</td> -->
 			<td>{$vo.user_ticket_mobile}</td>
+			<td>{$vo.user_ticket_imei}</td>
 			<td><php>switch($vo['user_ticket_status']){case 0: echo '待审核';break;case 1: echo '审核通过';break;case 2: echo '审核不通过';break;}</php></td>
 			<td>{$vo.user_ticket_addtime|format_to_time}</td>
 			

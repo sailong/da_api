@@ -84,11 +84,11 @@ class ticketAction extends field_publicAction
 			$data["ticket_addtime"]=time();
 			
 			$list=M("ticket")->add($data);
-			$this->success("添加成功",U('admin/ticket/ticket'));
+			$this->success("添加成功",U('field/ticket/ticket'));
 		}
 		else
 		{
-			$this->error("不能重复提交",U('admin/ticket/ticket_add'));
+			$this->error("不能重复提交",U('field/ticket/ticket_add'));
 		}
 
 	}
@@ -144,11 +144,12 @@ class ticketAction extends field_publicAction
 			$data["ticket_content"]=stripslashes($_POST["ticket_content"]);;
 			
 			$list=M("ticket")->save($data);
-			$this->success("修改成功",U('admin/ticket/ticket'));			
+			
+			$this->success("修改成功",U('field/ticket/ticket'));			
 		}
 		else
 		{
-			$this->error("不能重复提交",U('admin/ticket/ticket'));
+			$this->error("不能重复提交",U('field/ticket/ticket'));
 		}
 
 	}
