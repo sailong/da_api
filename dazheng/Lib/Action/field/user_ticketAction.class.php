@@ -52,7 +52,7 @@ class user_ticketAction extends field_publicAction
 	   $serial = strtoupper(substr(md5($serial.time()),10,10));
 	   if($s)
 	   {
-		  $serial = strtoupper(substr(md5($serial),rand(0,22),10));
+		  $serial = strtoupper(substr(md5($serial),10,10));
 	   }
 	   
 	   return $serial;
@@ -60,8 +60,10 @@ class user_ticketAction extends field_publicAction
 
 	public function user_ticket_add_action()
 	{
+	echo $this->get_randmod_str();die;
 		if(M()->autoCheckToken($_POST))
 		{
+			
 			$data["uid"]=post("uid");
 			$data["ticket_id"]=post("ticket_id");
 			$data["user_ticket_code"]=$this->get_randmod_str();
