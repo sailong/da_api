@@ -1,4 +1,96 @@
 <?php
+function get_thru($event_id,$uid)
+{
+	$thru = DB::result_first("select thru from tbl_baofen where event_id=$event_id and uid='".$uid."' and source='ndong' order by lun desc limit 1 ");
+	if(!$thru)
+	{
+		$thru="-";
+	}
+	
+	return $thru;
+}
+
+function get_ju_par_total_sort($ju_1,$ju_2,$ju_3,$ju_4,$ju_5=0)
+{
+
+	$total=$ju_1+$ju_2+$ju_3+$ju_4+$ju_5;
+	return $total;
+}
+
+
+function get_ju_par_total_view($ju_1,$ju_2,$ju_3,$ju_4,$ju_5=0)
+{
+
+	if($ju_1>900)
+	{
+		$ju_1=0;
+	}
+	if($ju_2>900)
+	{
+		$ju_2=0;
+	}
+	if($ju_3>900)
+	{
+		$ju_3=0;
+	}
+	if($ju_4>900)
+	{
+		$ju_4=0;
+	}
+	if($ju_5>900)
+	{
+		$ju_5=0;
+	}
+
+	$total=$ju_1+$ju_2+$ju_3+$ju_4+$ju_5;
+	return $total;
+
+}
+
+function get_zong_score_sort($lun_1,$lun_2,$lun_3,$lun_4,$lun_5=0)
+{
+	$total=$lun_1+$lun_2+$lun_3+$lun_4+$lun_5;
+	return $total;
+}
+
+
+function get_zong_score_view($lun_1,$lun_2,$lun_3,$lun_4,$lun_5=0)
+{
+	if($lun_1>900)
+	{
+		$lun_1=0;
+	}
+	if($lun_2>900)
+	{
+		$lun_2=0;
+	}
+	if($lun_3>900)
+	{
+		$lun_3=0;
+	}
+	if($lun_4>900)
+	{
+		$lun_4=0;
+	}
+	if($lun_5>900)
+	{
+		$lun_5=0;
+	}
+
+	$total=$lun_1+$lun_2+$lun_3+$lun_4+$lun_5;
+	return $total;
+
+}
+
+
+function get_small_pic($url)
+{
+	$arr=end(explode("/",$url));
+	$file_name="s_".$arr;
+	$str=str_replace($arr,$file_name,$url);
+	return $str;
+}
+
 function dong_color($s_arr,$p_arr)
 {
 	/*
@@ -14,7 +106,7 @@ function dong_color($s_arr,$p_arr)
 	{
 		for($i=0; $i<count($s_arr); $i++)
 		{
-			if($p_arr[$i]!="" )
+			if(intval($p_arr[$i])>=0 && intval($s_arr[$i])>=0)
 			{
 				if($s_arr[$i]-$p_arr[$i]==3)
 				{
@@ -40,10 +132,12 @@ function dong_color($s_arr,$p_arr)
 				{
 					$c_arr[$i]=6;
 				}
+				/*
 				else if($s_arr[$i]-$p_arr[$i]==-3)
 				{
 					$c_arr[$i]=7;
 				}
+				*/
 				else
 				{
 					$c_arr[$i]=0;

@@ -69,7 +69,9 @@
                                          <option value="-1" {$selected1}>DQ</option>
                                          <option value="-2" {$selected2}>RTD</option>
                                         <option value="-3" {$selected3}>Quit</option>
-			                    </select><input name="提交" type="submit" value="提交"   />
+			                    </select> 
+                              	thru:<input type="text" name='userdk[{$value['baofen_id']}][30]' id="userdk[{$value['baofen_id']}][30]" value="{$value['thru']}" style="width:20px; border:#fef000 solid 1px; text-align:center"> 
+                                <input name="提交" type="submit" value="提交"   />
 									<input type="hidden" name='ac' id="ac" value="tjbaofen"> 
 									<input type="hidden" name='qc_id' id="qc_id" value="$_GET['qc_id']"></td> 
                             </tr>  

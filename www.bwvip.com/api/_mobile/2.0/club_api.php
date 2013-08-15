@@ -793,7 +793,7 @@ if($ac=="member_detail")
 			if($max_page2>=$page2)
 			{
 			
-				$query = DB::query("select baofen_id as id,event_id,uid,fuid,fz_id,par,score,pars,total_score,lun,dateline,event_name from (select baofen_id,field_id,baofen_id as id,uid,field_id as fuid,event_id,fenzhan_id as fz_id,sid,par,score,pars,total_score,lun,FROM_UNIXTIME(dateline, '%Y-%m-%d') as dateline,addtime,(select event_name from tbl_event where event_id=tbl_baofen.event_id) as event_name from tbl_baofen where addtime>'".strtotime("2013-04-01")."' and uid=$get_uid $strwhere ) as t2 group by event_id order by total_score asc,addtime desc limit $page_start2,$page_size2");
+				$query = DB::query("select baofen_id as id,event_id,uid,fuid,fz_id,par,score,pars,total_score,lun,dateline,event_name,start_time from (select baofen_id,field_id,baofen_id as id,uid,field_id as fuid,event_id,fenzhan_id as fz_id,sid,par,score,pars,total_score,lun,FROM_UNIXTIME(dateline, '%Y-%m-%d') as dateline,addtime,(select event_name from tbl_event where event_id=tbl_baofen.event_id) as event_name,start_time from tbl_baofen where start_time>'".strtotime("2013-04-01")."' and uid=$get_uid $strwhere ) as t2 group by event_id order by total_score asc,start_time desc limit $page_start2,$page_size2");
 
 				while($row = DB::fetch($query))
 				{
@@ -1761,9 +1761,19 @@ if($ac=="system_msg")
 if($ac=="push_msg_list")
 {
 	$uid=$_G['gp_uid'];
+	$field_uid=$_G['gp_field_uid'];
+	$type=$_G['gp_type'];
+	if($field_uid!="")
+	{
+		$sql .=" and field_uid='".$field_uid."' ";
+	}
+	
+	if($type!="")
+	{
+		$sql .=" and message_type='".$type."' ";
+	}
     
-	//$list=DB::query("select message_id,message_number,message_type,uid,message_title,message_content,message_addtime from tbl_push_message where uid='".$uid."' and uid=0 ");
-	$list=DB::query("select message_id,message_number,message_type,uid,message_title,message_content,message_pic,message_addtime from tbl_push_message where uid='{$uid}'");
+	$list=DB::query("select message_id,message_number,message_type,uid,message_title,message_content,message_pic,message_addtime from tbl_push_message where uid='{$uid}' ".$sql." ");
     
 	while($row=DB::fetch($list))
 	{

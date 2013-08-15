@@ -69,8 +69,8 @@
                 <tr>
 					<th>所在球场：</th>
 					<td>{$data.field_id}
-                    <php> if($_SESSION['field_uid']){}else{</php><select name='provinceid' id='province' onchange='getarea(this.value)'>
-
+                    <php> if($_SESSION['field_uid']){}else{</php>
+						<select name='provinceid' id='province' onchange='getarea(this.value)'>
                           <option value="0">请选择</option>
                           <volist id="vo3" name="area">
                             <option value="{$vo3.id}">{$vo3.name}</option>
@@ -106,7 +106,23 @@
                         
 				<tr>
 					<th>年份：</th>
-					<td><input type="text" name="year" id="year" class="mod_input2" style="width:300px;"  value="{$data.year}"></td>
+					<td>
+						<select name='year' id='year'  >
+							<option value="0">请选择年份</option>
+							<option value="2010">2010</option>
+							<option value="2011">2011</option>
+							<option value="2012">2012</option>
+							<option value="2013">2013</option>
+							<option value="2014">2014</option>
+							<option value="2015">2015</option>
+							<option value="2016">2016</option>
+							<option value="2017">2017</option>
+							<option value="2018">2018</option>
+							<option value="2019">2019</option>
+							<option value="2020">2020</option>
+                        </select>
+						<script>set_select_value(document.act_form.year,'{$data.year}');</script>
+					</td>
 				</tr>
 				
 				<tr>

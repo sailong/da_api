@@ -141,19 +141,25 @@ function yanzheng_token($token)
 	echo $code;
 	echo "<hr>";
 	*/
-	if($code<>md5(date("Ymd",time())."bwvip.com"))
+	$time=time()-strtotime(date("Y-m-d",time()));
+	if($time>1800 && $time<84600)
 	{
-		return false;
-	}
-	else
-	{
-		if($uid)
+		if($code<>md5(date("Ymd",time())."bwvip.com"))
 		{
-			define("TOKEN_UID",$uid);
-			//echo $uid;
+			return false;
 		}
-		return true;
+		else
+		{
+			if($uid)
+			{
+				define("TOKEN_UID",$uid);
+				//echo $uid;
+			}
+			return true;
+		}
 	}
+
+	return true;
 
 }
 

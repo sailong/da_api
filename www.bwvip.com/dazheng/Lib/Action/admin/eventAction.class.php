@@ -145,6 +145,8 @@ class eventAction extends AdminAuthAction
 		}
 	}
 
+	
+	
 	public function event_edit_action()
 	{
 		if(M()->autoCheckToken($_POST))
@@ -218,15 +220,11 @@ class eventAction extends AdminAuthAction
 			$data["event_url"]=post("event_url");
 			$data["event_go_action"]=post("event_go_action");
 			$data["event_go_value"]=post("event_go_value");
+			$data["event_type"]=post("event_type");
 			$list=M("event")->save($data);
-			if($list!=false)
-			{
-				$this->success("修改成功",U('admin/event/event'));
-			}
-			else
-			{
-				$this->error("修改失败",U('admin/event/event'));
-			}
+			
+			$this->success("修改成功",U('admin/event/event'));
+			
 		}
 		else
 		{

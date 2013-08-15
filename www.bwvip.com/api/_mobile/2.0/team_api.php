@@ -171,7 +171,7 @@ if($nblist)
 //竖版
 if($ac=="shuban")
 {
-	$event_info=DB::fetch_first("select event_id,event_name,event_uid,event_fenzhan_id,event_logo,event_timepic,event_starttime,event_endtime,event_content,event_state,event_is_tj,event_is_baoming,event_addtime from tbl_event where 1=1 and event_uid='".$sid."' order by event_addtime desc limit 1 ");
+	$event_info=DB::fetch_first("select event_id,event_name,event_uid,event_fenzhan_id,event_logo,event_timepic,event_starttime,event_endtime,event_content,event_state,event_is_tj,event_is_baoming,event_addtime from tbl_event where 1=1 and event_id='".$sid."' order by event_addtime desc limit 1 ");
 	$list_info['event_name']=$event_info['event_name'];
 	$list_info['event_left']='中国';
 	$list_info['event_left_intro']='CHINA';
@@ -217,7 +217,7 @@ if($ac=="shuban")
 if($ac=="small")
 {
 
-	$event_info=DB::fetch_first("select event_id,event_name,event_uid,event_fenzhan_id,event_logo,event_timepic,event_starttime,event_endtime,event_content,event_state,event_is_tj,event_is_baoming,event_addtime from tbl_event where 1=1 and event_uid='".$sid."' order by event_addtime desc limit 1 ");
+	$event_info=DB::fetch_first("select event_id,event_name,event_uid,event_fenzhan_id,event_logo,event_timepic,event_starttime,event_endtime,event_content,event_state,event_is_tj,event_is_baoming,event_addtime from tbl_event where 1=1 and event_id='".$sid."' order by event_addtime desc limit 1 ");
 	$list_info['event_name']=$event_info['event_name'];
 	$list_info['event_left']='中国';
 	$list_info['event_left_intro']='CHINA';
@@ -314,7 +314,7 @@ if($ac=="small")
 if($ac=="heng")
 {
 	//$strwh=$strwh." and isend=1 ";
-	$event_info=DB::fetch_first("select event_id,event_name,event_uid,event_fenzhan_id,event_logo,event_timepic,event_starttime,event_endtime,event_content,event_state,event_is_tj,event_is_baoming,event_addtime from tbl_event where 1=1 and event_uid='".$sid."' order by event_addtime desc limit 1 ");
+	$event_info=DB::fetch_first("select event_id,event_name,event_uid,event_fenzhan_id,event_logo,event_timepic,event_starttime,event_endtime,event_content,event_state,event_is_tj,event_is_baoming,event_addtime from tbl_event where 1=1 and event_id='".$sid."' order by event_addtime desc limit 1 ");
 	
 	$list_info['event_name']=$event_info['event_name'];
 	$list_info['event_left']='中国';

@@ -24,7 +24,7 @@ $android_url=DB::result_first("select app_version_file from tbl_app_version wher
 <meta http-equiv="Cache-Control" content="no-cache"/>
 <title>大正传媒</title>
 <style type="text/css">
-body{margin:0;padding:0;width:100%;}
+body{margin:0;padding:0;width:100%;background-color:#FFFFFF}
 p{margin:0;padding:0;text-indent:2em;width:80%;line-height:150%; text-align:left;font-size:1.1em;font-family:"微软雅黑";color:#5c5c5c;margin-bottom:20px;}
 img{width:100%; margin:0;padding:0;border:0;}
 .btn{width:50%; margin:0 auto;}
@@ -35,7 +35,7 @@ img{width:100%; margin:0;padding:0;border:0;}
 
 
 
-<table width="100%" border="0" cellspacing="0" cellpadding="0" >
+<table width="100%" border="0" cellspacing="0" cellpadding="0" style="padding-bottom:30px;">
   <tr>
     <td >
     <table width="100%" border="0" cellspacing="0" cellpadding="0">
