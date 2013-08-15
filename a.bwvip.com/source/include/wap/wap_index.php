@@ -41,17 +41,24 @@ if($_G['gp_ac']=='group_list')
 	}
 	$num =100;
 }
-
-
+$uid = getgpc('uid');
+if($_GET['test'] == 1) {
+    echo $uid.'<br>';
+}
 /*最新博客*/
 
-$new_blogs_query = DB::query(" select `blogid`,`subject` from ".DB::table('home_blog').$where."  order by dateline desc limit ".$num);
+$new_blogs_query = DB::query(" select `blogid`,`uid`,`subject` from ".DB::table('home_blog').$where."  order by dateline desc limit ".$num);
 
 
 while($new_blogs_result = DB::fetch($new_blogs_query)){
-	$new_blogs[$new_blogs_result['blogid']]= $new_blogs_result['subject'];
+    $new_blogs[$new_blogs_result['blogid']]['subject']= $new_blogs_result['subject'];
+    $new_blogs[$new_blogs_result['blogid']]['uid']= $new_blogs_result['uid'];
+	//$new_blogs[$new_blogs_result['blogid']]= $new_blogs_result['subject'];
 }
-
+if($_GET['test'] == 1) {
+    var_dump($a);
+    echo template("diy:wap/news_index_list");
+}
 if($_G['gp_ac']=='group_list') { include_once template("diy:wap/group_news_list");exit;}
 
 

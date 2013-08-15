@@ -252,8 +252,7 @@ if (isset ( $_G ['gp_do'] ) && ($_G ['gp_do'] == 'bm_apply' || $_G ['gp_do'] == 
 
 	 /*获取 当前 用户 是否报名*/
 	 $bm_info=array();
-     $bm_info = DB::fetch_first("SELECT * FROM ".DB::table('home_dazbm')." WHERE uid='".$uid."' and game_s_type='".$game_name."'");
-
+     $bm_info = DB::fetch_first("SELECT * FROM ".DB::table('home_dazbm')." WHERE uid='".$uid."' and game_s_type='".$game_name."' order by bm_id desc"); 
 	 if($_G['gp_member_id'] && empty($bm_info)) showmessage('该用户 暂时还没有报名');
 
 	 $background = "/static/space/comm/images/123.jpg";  //默认的报名 背景

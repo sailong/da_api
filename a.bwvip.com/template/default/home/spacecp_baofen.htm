@@ -18,15 +18,25 @@
                     <input type="hidden" name="formhash" value="{FORMHASH}" />
                     <input type="hidden" name="member_getsubmit" value="true" />
                           <div class="exfm" style="margin-top: 0;">
-                                <table cellspacing="0" cellpadding="0">
+                                <table width="600" cellpadding="0" cellspacing="0" class="ftid" bgcolor="#FFFFFF">
                                     <tr>
-                                        <th >添加球员</th>
-                                        <td>                                       
-                                            <span class="ftid"> 
-                                             UID：<input class="px" value="{$fenzu_member_info['uid']}" name ="uid"  size="10" onkeyup="this.value=this.value.replace(/\D/g,'')"  onafterpaste="this.value=this.value.replace(/\D/g,'')"/><select id="exttype" name="fenz" class="ps" width="168">
+                                      <th align="left" >&nbsp;</th>
+                                        <th align="left" >添加球员</th>
+                                        <th align="left" >&nbsp;</th>
+                                    </tr>
+                                    <tr>
+                                      <th align="left" >&nbsp;</th>
+                                      <th align="left" >UID：<input class="px" value="{$fenzu_member_info['uid']}" name ="uid"  size="10" onkeyup="this.value=this.value.replace(/\D/g,'')"  onafterpaste="this.value=this.value.replace(/\D/g,'')"/>
+                                              姓名：
+                                              <input class="px" value="" name ="realname"  size="10"/></th>
+                                      <th align="left" >&nbsp;</th>
+                                    </tr>
+                                    <tr>
+                                      <th align="left" >&nbsp;</th>
+                                      <th align="left" ><select id="exttype" name="fenz" class="ps" width="168">
                                                     <option value="0" >请选择分站</option>
                                                     <!--{loop $fz_rows $fz_rows}-->
-                                                    <option value="$fz_rows['fz_id']"   {if $_G['gp_fenz']== $fz_rows['fz_id']} selected {/if}>{$fz_rows[fenz_name]}</option>
+                                                    <option value="$fz_rows['fenzhan_id']"   {if $_G['gp_fenz']== $fz_rows['fenzhan_id']} selected {/if}>{$fz_rows[fenzhan_name]}</option>
                                                     <!--{/loop}-->
                                                 </select>
                                                 <select id="income" name="field" class="ps" width="168">
@@ -34,15 +44,33 @@
                                                     <!--{loop $qc_rows $qc_rows}-->
                                                     <option value="$qc_rows['field_id']"  {if $_G['gp_field']== $qc_rows['field_id']} selected {/if}>{$qc_rows[field_name]}</option>
                                                     <!--{/loop}-->
-                                                </select>
-                                              开球Tee台：<input class="px" value="{$fenzu_member_info['tee']}" name ="tee"  size="2" onkeyup="this.value=this.value.replace(/\D/g,'')"  onafterpaste="this.value=this.value.replace(/\D/g,'')"/>
-                                              分组号：<input  class="px" name ="team_num" value="{$fenzu_member_info['team_num']}" size="2" onkeyup="this.value=this.value.replace(/\D/g,'')"  onafterpaste="this.value=this.value.replace(/\D/g,'')">
-                                              开球时间: <input class="px" name ="start_time"  value="<!--{eval echo date('Y-m-d H:i:s');}-->" onclick="showcalendar(event, this,1)" >
-                                            </span>                                         
-                                            <button type="submit" class="pn" name="member_get" value="true"><strong>提 交</strong></button>
+                                                </select></th>
+                                      <th align="left" >&nbsp;</th>
+                                    </tr>
+                                    <tr>
+                                      <th align="left" >&nbsp;</th>
+                                      <th align="left" > 开球Tee台：<input class="px" value="{$fenzu_member_info['tee']}" name ="tee"  size="2" onkeyup="this.value=this.value.replace(/\D/g,'')"  onafterpaste="this.value=this.value.replace(/\D/g,'')"/>
+                                              </th>
+                                      <th align="left" >&nbsp;</th>
+                                    </tr>
+                                    <tr>
+                                      <th align="left" >&nbsp;</th>
+                                      <th align="left" >
+                                              开球时间: <input class="px" name ="start_time"  value="<!--{eval echo date('Y-m-d H:i:s');}-->" onclick="showcalendar(event, this,1)" >                                        
+                                            </th>
+                                      <th align="left" >&nbsp;</th>
+                                    </tr>
+                                    <tr>
+                                      <th align="left" >&nbsp;</th>
+                                      <th align="left" >分组号：<input  class="px" name ="team_num" value="{$fenzu_member_info['team_num']}" size="2" onkeyup="this.value=this.value.replace(/\D/g,'')"  onafterpaste="this.value=this.value.replace(/\D/g,'')"></th>
+                                      <th align="left" >&nbsp;</th>
+                                    </tr>
+                                    <tr>
+                                      <th >&nbsp;</th>
+                                      <th ><button type="submit" class="pn" name="member_get" value="true"><strong>提 交</strong></button>
                                             <input name="ac" value="fenzu" type="hidden">
-                                            <input name="op" value="baofen" type="hidden"> 
-                                        </td>
+                                            <input name="op" value="baofen" type="hidden"></th>
+                                      <th >&nbsp;</th>
                                     </tr>
                                   </table>
                                    
@@ -67,7 +95,7 @@
                                                 <select id="exttype" name="fenz" class="ps" width="168">
                                                     <option value="0" >请选择分站</option>
                                                     <!--{loop $fz_rows $fz_rows}-->
-                                                    <option value="$fz_rows['fz_id']"   {if $_G['gp_fenz']== $fz_rows['fz_id']} selected {/if}>{$fz_rows[fenz_name]}</option>
+                                                    <option value="$fz_rows['fenzhan_id']"   {if $_G['gp_fenz']== $fz_rows['fenzhan_id']} selected {/if}>{$fz_rows[fenzhan_name]}</option>
                                                     <!--{/loop}-->
                                                 </select>
                                             </span>
@@ -103,9 +131,9 @@
                         <td><a href="dazbm.php?bm_page=1&member_id={$value['uid']}" target="_blank">{$value['realname']}</a></td>
                         <td>{$value['start_time']}</td>
                         <td>{if $value['tee'] == 0}<font color="red"  >【停赛】</font>{else}{$value['tee']}Tee{/if}</td>
-                        <td>{if $value['tee'] == 0}<font color="red"  >【停赛】</font>{else}{$value['team_num']}-组{/if}</td>
+                        <td>{if $value['tee'] == 0}<font color="red"  >【停赛】</font>{else}{$value['fenzu_id']}-组{/if}</td>
                         <td><!--{if $value['am_pm'] > 1}-->下午<!--{else}-->上午<!--{/if}--></td>
-                        <td> <a href="home.php?mod=spacecp&ac=fenzu&op=member_get&nd_id={$value['nd_id']}" target="_blank">[调 配]</a> </td>					
+                        <td> <a href="home.php?mod=spacecp&ac=fenzu&op=member_get&nd_id={$value['baofen_id']}" target="_blank">[调 配]</a> </td>					
                     </tr>
                     <!--{/loop}-->
               <!--{else}-->

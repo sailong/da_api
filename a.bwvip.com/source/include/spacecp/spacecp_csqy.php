@@ -15,13 +15,14 @@ $gid=$_G['groupid'];
 
 
 //这里面也需要判断用户的组id
-$op = in_array($_GET['op'], array('list','search','del','edit','searchsub','slist')) ? $_GET['op'] : 'list';
+$op = in_array($_GET['op'], array('list','search','del','edit','searchsub','slist','joinin')) ? $_GET['op'] : 'list';
 $space=getspace($_G['uid']);
 
 if($op=='list'){
     $user_type  = isset($_G['gp_user_type']) ? $_G['gp_user_type'] : 0;
 	//查看已经添加的球星
 	$listqiuxing="select a.userid,a.seq,b.username,c.realname from pre_home_saishi_csqy a left join pre_ucenter_members b on a.userid=b.uid left join pre_common_member_profile c on a.userid=c.uid where a.groupid=".$_G['uid']." and a.user_type='".$user_type."' order by a.seq asc";
+	
 	$listre=DB::query($listqiuxing);
 	while ($row=DB::fetch($listre)){
 		$earr[]=$row;
@@ -126,6 +127,23 @@ if($op=='list'){
 		while($value = DB::fetch($re)) {
 			$earr[]=$value;
 		}
+}elseif($op=='joinin'){
+	//var_dump($_POST);
+	
+	$ids=$_GET["ids"];
+		$ids = explode(',',$ids );  
+	if(empty($ids) || count($ids)<=0){
+		showmessage("没有选择用户","/home.php?mod=spacecp&ac=csqy&op=list");
+	}else{
+		foreach ($ids as $did){
+			if(empty($did)){
+				continue;
+			}
+			DB::update("common_member_profile",array("sid"=>$_G['uid']),array("uid"=>$did));
+		}
+	 showmessage("添加成功","/home.php?mod=spacecp&ac=ulist");
+
+	}
 }
 
 $navtitle="参赛球星-大正高尔夫";

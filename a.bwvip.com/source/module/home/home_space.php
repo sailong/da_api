@@ -19,7 +19,8 @@ $userinfo = DB::fetch_first("select m.username, m.credits, mp.realname, mp.resid
 if($_GET['username']) {
 	$member = DB::fetch_first("SELECT uid FROM ".DB::table('common_member')." WHERE username='$_GET[username]' LIMIT 1");
 	if(empty($member)) {
-		showmessage('space_does_not_exist');
+		//showmessage('space_does_not_exist');
+	 header ( "Location: /errore.php " );
 	}
 	$uid = $member['uid'];
 }
@@ -44,7 +45,12 @@ if(empty($uid) || in_array($do, array('notice', 'pm'))) $uid = $_G['uid'];
 if($uid) {
 	$space = getspace($uid);
 	if(empty($space)) {
-		showmessage('space_does_not_exist');
+		//showmessage('space_does_not_exist');
+		//server_transfer("404.html");
+header('HTTP/1.1 404 Not Found'); 
+header("status: 404 Not Found"); 
+server_transfer("404.html");
+	 
 	}
 }
 
@@ -722,6 +728,19 @@ if($badge_id_related_to_page != ''){
 
 }
 
+function server_transfer($dest)
+
+{
+
+   // global ...; // 把希望在新页面中用到的本页变量或者自定义的全局变量列在这里
+
+    include $dest; // 运行新脚本
+
+    exit; // 退出本脚本
+
+}
+
+ 
 require_once($_SERVER["DOCUMENT_ROOT"].'/source/class/apply_badge/class_common_member_profile_getter.php');
 $cmpg = new common_member_profile_getter();
 $realname = $cmpg->get_realname_by_uid($uid);

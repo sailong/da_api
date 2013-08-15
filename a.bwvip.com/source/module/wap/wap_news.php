@@ -25,7 +25,23 @@ $dos = array('index','details');
 
 $do = (!empty($_GET['do']) && in_array($_GET['do'], $dos))?$_GET['do']:'index';
 
-
+$is_exist_amp = is_int(strpos($url_this,'&amp;'));
+if($is_exist_amp) {
+	$url_this =  "http://".$_SERVER ['HTTP_HOST'].$_SERVER['REQUEST_URI'];
+	$url_this = str_replace("&amp;","&",$url_this);
+	header("Location:{$url_this}");exit;
+}
+if($_GET['test'] == 1) {
+	echo 55555555555555;die;
+	echo '<pre>'; 
+	$url_this =  "http://".$_SERVER ['HTTP_HOST'].$_SERVER['REQUEST_URI'];
+	$is_exist = is_int(strpos($url_this,'&&'));
+	var_dump($is_exist);
+	$url_this=str_replace("","&amp;",$news_blog['message']);
+	var_dump($_SERVER);
+	echo $url_this;die;
+    var_dump(libfile('wap/'.$do, 'include'));
+}
 require_once libfile('wap/'.$do, 'include');
 
 ?>

@@ -5,7 +5,7 @@
 <title> 大正高尔夫赛事成绩表</title>
 </head>
 <style type="text/css">
-body { font: normal 20px auto "Trebuchet MS", Verdana, Arial, Helvetica, sans-serif; color: #4f6b72; background: #ffffff;margin:0 auto ; }
+body { font: normal 20px auto "Trebuchet MS", Verdana, Arial, Helvetica, sans-serif; color: #4f6b72; background: #dae7f0;margin:0 auto ; }
 a { color: #c75f3e; }
 td {line-height:15px; border-right: 1px solid #ffffff; border-bottom: 1px solid #ffffff;  font-size:18px; padding: 2px 0; color: #4f6b72;  text-align:center; font-weight:600; }
 td.alt { border-left: 1px solid #ffffff; border-top: 0; background:#d5e6f6; color: #797268; width:3%;height:20px;font:  16px;   font-weight:600; }
@@ -14,11 +14,11 @@ td.specalt {border-left: 1px solid #ffffff; border-top: 0;  font:18px; color: #2
  /*---------for IE 5.x bug*/ html>body td{ font-size:14px;}
 
 </style>
-<META   HTTP-EQUIV=REFRESH   CONTENT="60;URL=baofen.php?ac=ndtv&onlymark=<!--{echo $onlymark;}-->&page=<!--{echo $page;}-->&pg=<!--{echo $perpage;}-->&pm=<!--{$pm}-->" >
+<META   HTTP-EQUIV=REFRESH   CONTENT="30;URL=baofen.php?ac=ndtv&fenz_id=<!--{echo $fenz_id;}-->&page=<!--{echo $page;}-->&pg=<!--{echo $perpage;}-->&pm=<!--{$pm}-->" >
 <body>
  <table width="100%" align="center" cellpadding="0" cellspacing="0" style="background-attachment:#e7e7e7;">
   <tr>
-    <td colspan="28" align="center" style="background:#f1f8fe; border-top: 1px solid #ffffff; height:40px;" ><img src="/images/nd/{$onlymark}tv.jpg" ></td>
+    <td colspan="28" align="center" style="background:#f1f8fe; border-top: 1px solid #ffffff; height:40px;" >{if $onlymark=='1565264560'}中国VS韩国十佳俱乐部对抗赛{else}<img src="/images/nd/nd{$_GET['fenz_id']}tv.jpg" >{/if}</td>
   </tr>
  <tr>
     <td width="3%" rowspan="2" style="background:url(../images/nd/shangm.jpg) top center  repeat-x #02425d;"><font color="#ffffff">排名</font></td>

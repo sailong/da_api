@@ -23,13 +23,13 @@ $_G['setting']['guess_perpage'] = isset($_G['gp_want_search_num']) ? (intval($_G
 $page = max(1, $_G['page']);
 $start_limit = ($page - 1) * $_G['setting']['guess_perpage'];
 
-$where =" where id>0  ";
+$where =" where cs.baofen_id>0  and cs.source='waika' and cs.dateline>". strtotime('2013-04-01'); ;
 
 if(isset($_G['gp_card_status'])){
    $where  .= " and cs.status ='".getgpc('card_status')."' ";
 }
 if(isset($_G['gp_realname'])){
-   $where1 =  $where  ." and cmp.realname like'%".getgpc('realname')."' ";
+   $where =  $where  ." and cmp.realname like'%".getgpc('realname')."' ";
 }
 
 
@@ -37,22 +37,19 @@ if($operation == 'manage') {
 
 	   if(submitcheck('del_card_submit')){
 	     cpmsg('暂未开放出来 研发中.....');
-	   }
-
-	   $query = DB::query("SELECT cs.id, cs.uid,cs.dateline,cs.status,cs.total_score,cmp.realname,cmp.mobile FROM ". DB::table('common_score')." as cs LEFT JOIN ".DB::table('common_member_profile')." as cmp ON cmp.uid=cs.uid  " .$where1. "  ORDER BY cmp.uid desc limit ".$start_limit."," .$_G['setting']['guess_perpage']." " );
-	   
-	   	$query_num = DB::query("SELECT id FROM ". DB::table('common_score')." as cs " .$where. " " );
+	   } 
+	   $query = DB::query("SELECT cs.baofen_id, cs.uid,cs.dateline,cs.status,cs.total_score,cs.realname,cmp.mobile FROM tbl_baofen as cs LEFT JOIN ".DB::table('common_member_profile')." as cmp ON cmp.uid=cs.uid  " .$where. "   ORDER BY cs.baofen_id desc limit ".$start_limit."," .$_G['setting']['guess_perpage']." " ); 
+	   	$query_num = DB::query("SELECT cs.baofen_id FROM tbl_baofen as cs LEFT JOIN ".DB::table('common_member_profile')." as cmp ON cmp.uid=cs.uid  " .$where. " " );
 		$guess_num = DB::num_rows($query_num);
-
 		while($resultcard = DB::fetch($query)) {
 			$card_rows.=showtablerow('', array('class="td25"', 'class="td28"'), array(
-				"<input type=\"checkbox\" class=\"checkbox\" name=\"delete_card[]\" value=\"$resultcard[id]\" />",
+				"<input type=\"checkbox\" class=\"checkbox\" name=\"delete_card[]\" value=\"$resultcard[baofen_id]\" />",
 				"<a href=\"home.php?mod=space&uid=$resultcard[uid]\" target=\"_blank\"> $resultcard[realname]</a>",
 				date('Y-m-d H:i:s',$resultcard['dateline']),
 				$card_status[$resultcard['status']],
-                "<a href=\"home.php?mod=space&do=common&op=score&uid=".$resultcard['uid']."&id=".$resultcard['id']."&c=edit\" target=\"__blank\"/>编辑 |</a>".
-				"<a href=\"home.php?mod=space&do=common&op=score&uid=".$resultcard['uid']."&id=".$resultcard['id']."&cp=aa\" target=\"__blank\" />查看 |</a>".
-				"<a href=\"".ADMINSCRIPT."?action=resultcard&operation=delete_card&card_id=".$resultcard['id']."\" />删除</a>"
+                "<a href=\"home.php?mod=space&do=common&op=score&uid=".$resultcard['uid']."&id=".$resultcard['baofen_id']."&c=edit\" target=\"__blank\"/>编辑 |</a>".
+				"<a href=\"home.php?mod=space&do=common&op=score&uid=".$resultcard['uid']."&id=".$resultcard['baofen_id']."\" target=\"__blank\" />查看 |</a>".
+				"<a href=\"".ADMINSCRIPT."?action=resultcard&operation=delete_card&baofen_id=".$resultcard['baofen_id']."\" />删除</a>"
 				),TRUE);
 		}
 
@@ -64,12 +61,12 @@ if($operation == 'manage') {
 		<a class="btn" href="admin.php?action=resultcard&operation=manage&card_status=0">未填写</a>
 		<a class="btn" href="admin.php?action=resultcard&operation=manage&card_status=1" >等审核</a>
 		<a class="btn" href="admin.php?action=resultcard&operation=manage&card_status=2" >已审核</a>');
-		showsubtitle(array('', 'card_realname','card_dateline','card_status', 'groups_type_operation'));
+		showsubtitle(array('', 'card_realname','card_dateline','card_status', 'groups_type_operation')); 
 		echo $card_rows;
 		showsubmit('del_card_submit', 'submit', '<input type="checkbox" name="chkall" onclick="checkAll(\'prefix\', this.form,\'delete_card\')" class="checkbox">'.cplang('del'), '', $multipage);
 		showtablefooter();
 		showformfooter();
-//echo "SELECT cs.id, cs.uid,cs.dateline,cs.status,cs.total_score,cmp.realname,cmp.mobile FROM ". DB::table('common_score')." as cs LEFT JOIN ".DB::table('common_member_profile')." as cmp ON cmp.uid=cs.uid  " .$where1. "  ORDER BY cmp.uid desc limit ".$start_limit."," .$_G['setting']['guess_perpage']." ";
+//echo "SELECT cs.baofen_id, cs.uid,cs.dateline,cs.status,cs.total_score,cmp.realname,cmp.mobile FROM tbl_baofen as cs LEFT JOIN ".DB::table('common_member_profile')." as cmp ON cmp.uid=cs.uid  " .$where1. "  ORDER BY cmp.uid desc limit ".$start_limit."," .$_G['setting']['guess_perpage']." ";
 
 }
 
@@ -79,7 +76,7 @@ elseif($operation == 'add_card') {
 
 	/*赛事列表*/
 	$sql_query=  DB::query(" SELECT cm.uid , cmp.field1 FROM  ".DB::table('common_member')." as cm LEFT JOIN ".DB::table('common_member_profile')." as cmp ON cmp.uid = cm.uid  where cm.groupid= '".$saishi_id."' ");
-	$sais_select  = " 选择赛事：<select name=\"sais_id\">";
+	$sais_select  = " 选择赛事：<select name=\"sid\">";
 	$sais_select  .=" <option vlaue=''>请选择</option>";
 	while($sais_result = DB::fetch($sql_query)){
 		if($sais_result['uid']){
@@ -145,7 +142,7 @@ elseif($operation == 'add_card') {
 	<script>
 	function load_select(obj,to_obj)
 	{
-		$(\"#\"+to_obj).val($(obj).find(\"option:selected\").text());
+		$(\"#\"+to_obj).val($(obj).find(\"option:selected\").text()); 
 	}
 	function load_ab(obj)
 	{
@@ -250,10 +247,9 @@ elseif($operation == 'add') {
 		$out=getgpc('out');
 		$out_par=getgpc('out_par');
 		$in=getgpc('in');
-		$in_par=getgpc('in_par');
-
-	
+		$in_par=getgpc('in_par'); 
 		$a=explode("|",$out_par);
+         
 		$n=0;
 		for($i=0; $i<count($a); $i++)
 		{
@@ -280,34 +276,54 @@ elseif($operation == 'add') {
         /*循环添加对应的成绩卡*/
 		foreach($mobiles as $mob){
 			if($mob){
+            $guid=getgpc($mob);
 				/*查询是否已经存在*/
-				$result = DB::fetch_first( " SELECT * FROM ".DB::table('common_score')." where uid='".getgpc($mob)."' and fuid='".getgpc('fuid')."' and sais_id='".getgpc('sais_id')."' and tee = '".getgpc('dongk')."' and dateline = '".$dateline."' ");
+				$result = DB::fetch_first( " SELECT * FROM tbl_baofen where uid='".$guid."' and field_id='".getgpc('fuid')."' and sid='".getgpc('sid')."' and tee = '".getgpc('dongk')."' and dateline = '".$dateline."' ");
                 if($result) cpmsg('已经有重复记录 请从新填写');
-
-				$card_add_info = array(
-					'fuid'=>getgpc('fuid'),
-					'uid'=>getgpc($mob),
-					'ismine'=>0,
-					'tee'=>'Tee '.getgpc('dongk'),
-					'sais_id'=>getgpc('sais_id'),
-					'dateline'=>$dateline,
-					'addtime'=>time(),
-					'par'=>$par,
-					'dong_names'=>$dong_names,
-					'source'=>'waika',
-					'is_edit'=>'Y'
-					);
-
-				//print_r($card_add_info);
-
-				DB::insert('common_score',$card_add_info);
-			}
+    if($guid){
+                   // $card_add_info = array(
+//                        'fuid'=>getgpc('fuid'),
+//                        'uid'=>$guid,
+//                        'ismine'=>0,
+//                        'tee'=>'Tee '.getgpc('dongk'),
+//                        'sid'=>getgpc('sid'),
+//                        'dateline'=>$dateline,
+//                        'addtime'=>time(),
+//                        'par'=>$par,
+//                        'dong_names'=>$dong_names,
+//                        'source'=>'waika',
+//                        'is_edit'=>'Y'
+//                        );
+ 
+    $uid=$guid;
+    $ismine=0;
+    $field_id=getgpc('fuid');
+    $tee='Tee '.getgpc('dongk');
+    $sid=getgpc('sid');
+    $dateline=$dateline;
+    $addtime=time();
+    $par=$par;
+    $dong_names=$dong_names;
+    $source='waika';
+    $is_edit='Y';
+    $realname = DB::result_first("SELECT realname FROM ".DB::table('common_member_profile')." WHERE uid='$uid'"); 
+    $fenzhan_id = DB::result_first("SELECT fenzhan_id FROM tbl_fenzhan WHERE field_id='$field_id'"); 
+                    //DB::insert('common_score',$card_add_info);
+                    
+      
+		$status    = 0;              
+	$sql_query = DB::query("
+INSERT into tbl_baofen (`uid` ,  `realname`,  `sid`,`event_id`,  `fenzhan_id` ,  `field_id`, dong_names,source, is_edit,status,  `tee`,`par`, `start_time`,  `dateline`  ,`addtime`
+)values($uid ,  '$realname',  '1000333','1000333','$fenzhan_id','$field_id','$dong_names','$source','$is_edit','$status','$tee','$par','$start_time','$dateline','$addtime')");
+                    
+                }
+            }
 		}
 		 cpmsg('添加成功','action=resultcard&operation=manage');
 	}
 
 
-	$datainfo['sais_id']   = getgpc('sais_id');
+	$datainfo['sid']   = getgpc('sid');
 	$datainfo['fuid']      = getgpc('qiuc');
     $datainfo['dateline']  =strtotime( getgpc('start_time'));
 
@@ -343,7 +359,7 @@ elseif($operation == 'add') {
 	}
 	$user_radio.='</div>';
 
-	$hidden_sais_input = "<input type=\"hidden\" name=\"sais_id\" value=\"".$datainfo['sais_id'] ."\">";
+	$hidden_sais_input = "<input type=\"hidden\" name=\"sid\" value=\"".$datainfo['sid'] ."\">";
 	$hidden_fuid_input = "<input type=\"hidden\" name=\"fuid\" value=\"".$datainfo['fuid'] ."\">";
 	$hidden_mobile_num = "<input type=\"hidden\" name=\"mobile_num\" value=\"".$mobile_num_str."\">";
 	$hidden_dateline   = "<input type=\"hidden\" name=\"dateline\" value=\"". $datainfo['dateline']."\">";
@@ -364,7 +380,7 @@ elseif($operation == 'add') {
 
 /*删除 成绩卡 提示*/
 elseif($operation == 'delete_card') {
-  cpmsg('attr_delete_sure',"action=resultcard&operation=delete",'form','',"<input name=\"card_id\" value=\"".getgpc('card_id')."\" type=\"hidden\"/>");
+  cpmsg('attr_delete_sure',"action=resultcard&operation=delete",'form','',"<input name=\"baofen_id\" value=\"".getgpc('baofen_id')."\" type=\"hidden\"/>");
 
 }
 
@@ -372,8 +388,8 @@ elseif($operation == 'delete_card') {
 
 /*删除 成绩卡*/
 elseif($operation == 'delete') {
-   if($_G['gp_card_id'])   DB::delete('common_score',"id='".getgpc('card_id')."'");
-   DB::query(" delete from  ultrax.jishigou_topic where score_id='".getgpc('card_id')."' limit 1");
+   if($_G['gp_baofen_id'])  DB::query(" delete from  tbl_baofen where baofen_id='".getgpc('baofen_id')."' limit 1");
+   DB::query(" delete from  ultrax.jishigou_topic where score_id='".getgpc('baofen_id')."' limit 1");
    cpmsg('删除成功','action=resultcard&operation=manage');
 }
 

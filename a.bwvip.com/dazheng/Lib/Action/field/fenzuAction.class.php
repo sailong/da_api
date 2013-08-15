@@ -18,17 +18,6 @@ class fenzuAction extends field_publicAction
 	public function fenzu()
 	{
 		$fenzhan_id=get("fenzhan_id");
-		
-		$fenzhan=M('fenzhan')->where("event_id='".get("event_id")."'")->select();
-		$this->assign('fenzhan',$fenzhan);
-		
-		if(empty($fenzhan_id) && $fenzhan_id!='false') {
-			$fenzhan_info = reset($fenzhan);
-			$fenzhan_id = empty($fenzhan_info['fenzhan_id']) ? 'false' : $fenzhan_info['fenzhan_id'];
-			$current_url = "http://{$_SERVER['HTTP_HOST']}{$_SERVER["REQUEST_URI"]}&fenzhan_id={$fenzhan_id}";
-			header("location:{$current_url}");exit;
-		}
-		
 		if($fenzhan_id)
 		{
 			$fenzhan_info=M()->query("select fenzhan_lun from tbl_fenzhan where fenzhan_id='".$fenzhan_id."'");
@@ -44,7 +33,8 @@ class fenzuAction extends field_publicAction
 		$this->assign('event_name',$event_info['event_name']);
 		$this->assign('event_id',$event_info['event_id']);
 		
-		
+		$fenzhan=D('fenzhan_tbl')->fenzhan_list_pro(" and event_id='".get("event_id")."' ");
+		$this->assign('fenzhan',$fenzhan['item']);
 		
 		$list=D("fenzu")->fenzu_list_pro();
 
@@ -157,7 +147,11 @@ class fenzuAction extends field_publicAction
 	public function rule_add_action()
 	{
 		if(M()->autoCheckToken($_POST))
-		{ 
+		{
+			
+
+		
+					
 			$data["event_id"]=post("event_id"); 
 			$data["fenzhan_id"]=post("fenzhan_id"); 
 			$fenzhan_info=M()->query("select fenzhan_lun,field_id from tbl_fenzhan where fenzhan_id='".$data["fenzhan_id"]."'");
@@ -193,7 +187,7 @@ class fenzuAction extends field_publicAction
 
     /*分站会员列表*/ 
 	
-	$members_list=M()->query("select * from tbl_event_apply where parent_id='0' and event_id='".$data["event_id"]."' and  fenzhan_id='".$data["fenzhan_id"]."' $orderby");
+	$members_list=M()->query("select * from tbl_event_apply where event_id='".$data["event_id"]."' and  fenzhan_id='".$data["fenzhan_id"]."' $orderby");
 	 
     if(empty($members_list)){
         error("sorry！你的分站暂时还没有会员 请为分组添加相应的会员");
@@ -246,13 +240,14 @@ class fenzuAction extends field_publicAction
 
     $i=0; $z=0; 
 
-	foreach($members_list as $rows){
+	foreach($members_list as $rows)
+	{
 		if($i%$data['team_member_num']==0) $z++;
 		$bs_data[$z]['users'][$i]['uid']      = $rows['uid'];
+		$bs_data[$z]['users'][$i]['event_user_id']      = $rows['event_user_id'];
+		$bs_data[$z]['users'][$i]['lun']      = $fenzhan_lun;
 		$bs_data[$z]['users'][$i]['realname'] = $rows['event_apply_realname']; 
         $bs_data[$z]['users'][$i]['event_apply_chadian']     = $rows['event_apply_chadian'];
-		
-        $bs_data[$z]['users'][$i]['event_apply_id']   = $rows['event_apply_id']; 
 		 
  //$bs_data[$z]['users']= sortByCol($bs_data[$z]['users'], 'chadian', SORT_ASC);  
         $i++;
@@ -262,27 +257,54 @@ class fenzuAction extends field_publicAction
  //array_multisort($start_time, SORT_ASC,$bs_data); //对相同差点的人 从新排序   
    $insert_data['fenzhan_id']    = $data['fenzhan_id']; 
    $insert_data['event_id']   = $data['event_id']; 
-   	$fenzhan_lun_result=M()->query("select fenzhan_lun from tbl_fenzhan where fenzhan_id='".$data['fenzhan_id']."' "); 
- 
-    $lun =$fenzhan_lun_result[0]['fenzhan_lun']; 
    $insert_data['addtime']   = time();  
    foreach($bs_data as $key=>$value){
      foreach($value['users'] as $k =>$v){
                 $v['start_time'] = $value['start_time'];
                 $v['am_pm']      = $value['am_pm'];
                 $v['tee']        = $value['kq_tee']; 
-                $v['lun']        = $lun; 
                 $v['fenzu_id']= $key;
                 $rows = array_merge($v,$insert_data); 
 			 $list=M("baofen")->add($rows);
             }
    } 
  $members_list=M()->query("select * from tbl_event_apply where event_id='".$data['event_id']."' and  fenzhan_id='".$data['fenzhan_id']."' $orderby");
+ 
+ 
+		
+		
+		
+			
+			
 	
   
 		 
 		// print_r($data);exit;
 			$list=M("fenzu_rule")->add($data);
+			
+	
+			//多轮成绩更新
+			$s_lun=$fenzhan_lun-1;
+			if(post("fenzhan_id") && post("event_id") && $s_lun)
+			{
+				$baofen=M()->query("select baofen_id,uid,event_user_id,event_id from tbl_baofen where fenzhan_id='".post("fenzhan_id")."' ");
+				for($ii=0; $ii<count($baofen); $ii++)
+				{
+					$last=M()->query("select baofen_id,status,zong_score,total_sum_ju from tbl_baofen where event_id='".post("event_id")."' and event_user_id='".$baofen[$ii]['event_user_id']."' and lun='".$s_lun."' order by lun desc,addtime desc limit 1 ");
+					//print_r($last);
+					
+					$data_b['baofen_id']=$baofen[$ii]['baofen_id'];
+					$data_b['status']=$last[0]['status'];
+					$data_b['zong_score']=$last[0]['zong_score'];
+					$data_b['total_sum_ju']=$last[0]['total_sum_ju'];
+					$res=M('baofen')->save($data_b);
+					//print_r($data_b);
+					//echo "<hr>";
+
+				}
+			}
+			
+			
 			$this->success("添加成功",U('field/fenzu/rule',array('event_id'=>$data['event_id'],'fenzhan_id'=>$data['fenzhan_id'])));
 		}
 		else
@@ -299,7 +321,7 @@ class fenzuAction extends field_publicAction
 	public function tiaopei()
 	{
 		 
-		 $data=M()->query("SELECT baofen_id, event_apply_id,uid,realname,fenzu_id,tee,start_time   from tbl_baofen  where baofen_id='".get("baofen_id")."'");  
+		 $data=M()->query("SELECT baofen_id,uid,realname,fenzu_id,tee,start_time   from tbl_baofen  where baofen_id='".get("baofen_id")."'");  
 		 
 		$this->assign("data",$data[0]); 
 		
@@ -324,8 +346,6 @@ public function tiaopei_edit()
 			$data["realname"]=post("realname");
 			$data["start_time"]=strtotime(post("start_time"));
 			$data["tee"]=post("tee");
-			$data["event_apply_id"]=post("event_apply_id");
-			
 			$data["event_id"]=post("event_id");
 			$data["fenzhan_id"]=post("fenzhan_id");
 			$data["lun"]=post("lun");  
@@ -341,12 +361,9 @@ public function tiaopei_edit()
 	
 	public function tiaopei_add()
 	{ 
-       $data=M()->query("SELECT baofen_id,uid,realname,fenzu_id,tee,start_time   from tbl_baofen  where baofen_id='".get("baofen_id")."'"); 
-	   $event_apply_info = M('event_apply')->where(" event_id='".get('event_id')."' and fenzhan_id='".get('fenzhan_id')."' and event_apply_id='".get('event_apply_id')."'")->find();
-		
-		$this->assign("data",$data[0]);
-		
-		$this->assign("event_apply_info",$event_apply_info);
+       $data=M()->query("SELECT baofen_id,uid,realname,fenzu_id,tee,start_time   from tbl_baofen  where baofen_id='".get("baofen_id")."'");  
+		 
+		$this->assign("data",$data[0]); 
 		
 		$this->assign('fenzhan_user_on',1); 
 		
@@ -364,7 +381,6 @@ public function tiaopei_edit()
 			$data["realname"]=post("realname");
 			$data["start_time"]=strtotime(post("start_time"));
 			$data["tee"]=post("tee");
-			$data["event_apply_id"]=post("event_apply_id");
 			$data["event_id"]=post("event_id");
 			$data["fenzhan_id"]=post("fenzhan_id");
 			$fenzhan_info=M()->query("select fenzhan_lun,field_id from tbl_fenzhan where fenzhan_id='".$data["fenzhan_id"]."'");

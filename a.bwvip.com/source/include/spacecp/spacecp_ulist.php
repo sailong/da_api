@@ -23,10 +23,10 @@ $op= !empty($_GET['op']) ? $_GET['op'] : 'list';
 $do=$_GET['do'];
 $gid=$_GET['gid'];
 $team=$_POST['team'];
-$fz_id= $_POST['fz_id'] ;
+$fenzhan_id= $_POST['fz_id'] ;
 
  $flist = array();
-     $query = DB::query("SELECT * FROM ".DB::table('fenzhan')." where  sid=$uid and is_delete=0");
+     $query = DB::query("SELECT * FROM tbl_fenzhan where  sid=$uid and is_delete=0");
 		while ($value = DB::fetch($query)) {
 			$flist[] = $value;
 	}
@@ -68,13 +68,13 @@ if($op=='list'){
 	 $uids = $_POST['uids'];
 	 
 	 $team = $_POST['team'];
-	 $fz_id = $_POST['fz_id'];
+	 $fenzhan_id = $_POST['fz_id'];
 	 $li=explode("`", $uids);  
 	 foreach ( $li as $key => $value ) { 
 		
 		//弹出框 添加分站
-		if($fz_id){	
-		$count = DB::result_first("SELECT count(1) FROM ".DB::table('fenzhan_members')." WHERE  uid=$value and sid=$uid and fz_id=$fz_id"); 
+		if($fenzhan_id){	
+		$count = DB::result_first("SELECT count(1) FROM ".DB::table('fenzhan_members')." WHERE  uid=$value and sid=$uid and fz_id=$fenzhan_id"); 
 		
 			$realname = DB::result_first("SELECT realname FROM ".DB::table('common_member_profile')." WHERE uid='$value'");
 			if($count) 
@@ -94,7 +94,7 @@ if($op=='list'){
 		   
 		   $chadian =DB::result_first("SELECT cahdian FROM ".DB::table("home_dazbm")." where uid=".$value." order by bm_id desc limit 1");
 		   $cha = $chadian ? $chadian : 20; 
-			$sql='insert into  '.DB::table('fenzhan_members')." (fz_id,uid,realname,sid,team_id,team_name,chadian)values($fz_id,$value,'$realname',$uid,$team,'".$team_name."',$cha)";
+			$sql='insert into  '.DB::table('fenzhan_members')." (fz_id,uid,realname,sid,team_id,team_name,chadian)values($fenzhan_id,$value,'$realname',$uid,$team,'".$team_name."',$cha)";
 			$row = DB::query($sql);
 			}
 		}
@@ -129,7 +129,8 @@ if($op=='list'){
 	/*分站的条件 增加2013年search*/
 	if($uid==1000333){
 		
-				$strwhere= " where remark_type=12 or remark_type=23  ";
+		 //$strwhere= " where (remark_type=12 or remark_type=22  or remark_type=23)  ";
+	    $strwhere= " where pay_status=1 and gameover=0  ";
 		/*分站的条件 search*/
 		if(isset($_G['gp_fenz']) && $_G['gp_fenz']!='0'){ 
 		$strwhere.= " and hot_district like '%".getgpc('fenz')."%' ";
@@ -180,7 +181,7 @@ if($op=='list'){
 				} 
 				
 				
-				$perpage = 150;
+				$perpage = 160;
 				$page = empty($_GET['page'])?0:intval($_GET['page']);
 				if($page<1) $page = 1;
 				$start = ($page-1)*$perpage;
@@ -189,9 +190,9 @@ if($op=='list'){
 				{$wh="&team=".$team;
 				 $strwhere=$strwhere." and team=".$team;
 				}
-				if($fz_id)
+				if($fenzhan_id)
 				{$wh=$wh."&team=".$team;
-				 //$strwhere=$strwhere." and fz_id=".$team;
+				 //$strwhere=$strwhere." and fenzhan_id=".$team;
 				}
 				
 				$count = DB::result(DB::query("SELECT count(*) FROM ".DB::table('common_member_profile')."  WHERE sid='$uid' and is_delete=0 $strwhere ORDER BY uid DESC"), 0);
@@ -230,9 +231,9 @@ if($op=='jlist'){
 	{$wh="&team=".$team;
 	 $strwhere=$strwhere." and team=".$team;
 	}
-	if($fz_id)
+	if($fenzhan_id)
 	{$wh=$wh."&team=".$team;
-	 //$strwhere=$strwhere." and fz_id=".$team;
+	 //$strwhere=$strwhere." and fenzhan_id=".$team;
 	}
 	
 	$count = DB::result(DB::query("SELECT count(*) FROM ".DB::table('common_member_profile')."  WHERE sid='$uid' and is_delete=0 $strwhere ORDER BY jifen DESC"), 0);
@@ -306,7 +307,7 @@ if($op=='fzhy'){
 	 
 	
    $tlist = array();
-     $query = DB::query("SELECT * FROM ".DB::table('fenzhan')." where  sid=".$_G['uid']." and is_delete=0");
+     $query = DB::query("SELECT * FROM tbl_fenzhan where  sid=".$_G['uid']." and is_delete=0");
 		while ($value = DB::fetch($query)) {
 			$tlist[] = $value;
 	} 
@@ -317,11 +318,11 @@ if($op=='fzhy'){
 	ckstart($start, $perpage);
 	if($_GET['gid'])
 	{
-		$fz_id=$_GET['gid'];
+		$fenzhan_id=$_GET['gid'];
 	}
-	if($fz_id)
-	{$wh="&fz_id=".$fz_id;
-	 $strwhere=$strwhere." and fz_id=".$fz_id;
+	if($fenzhan_id)
+	{$wh="&fz_id=".$fenzhan_id;
+	 $strwhere=$strwhere." and fz_id=".$fenzhan_id;
 	}
 	 
 	$sql="SELECT count(*) FROM ".DB::table('fenzhan_members')."  WHERE sid='$uid'  $strwhere ";
@@ -345,16 +346,20 @@ if($op=='fzhy'){
 
 /*分站队籍管理*/
 if($op=='fzdj'){   
-	$fz_id = $_GET['fz_id']; 
+	$fenzhan_id = $_GET['fz_id']; 
 	$team_id = $_GET['team_id'];  	
 	$ge = $_GET['ge'];  
 	$sid=$uid;
 //添加分站
    if($do=='addfz')
-	{	
-		$fenz_name=$_POST['fenz_name'];	
-		if($fenz_name){			
-		$row = DB::query('insert into '.DB::table('fenzhan')." (fenz_name,sid) values ('$fenz_name','$sid')");
+	{	$fenzhan_name=$_POST['fenz_name'];
+		$orderby=$_POST['orderby'];		
+		$lun=$_POST['lun'];		
+		$starttime=strtotime($_POST['starttime']);		
+		$endtime=strtotime($_POST['endtime']);	
+		$fenzhan_name=$_POST['fenz_name'];	
+		if($fenzhan_name){			
+		$row = DB::query("insert into tbl_fenzhan (fenzhan_name,sid,orderby,fenzhan_lun,starttime,endtime) values ('$fenzhan_name','$sid','$orderby','$lun','$starttime','$endtime')");
 		showmessage('已添加成功', "home.php?mod=spacecp&ac=ulist&op=fzdj&do=fz", array(), array('showdialog' => 1, 'closetime' => true));
 		}
 	}
@@ -370,10 +375,10 @@ if($op=='fzdj'){
    //修改分站
 	if($do=='fz'&&$ge=='edit')
 	{		
-		if($fz_id){
+		if($fenzhan_id){
 			
 		$fzlist = array();
-		 $query = DB::query("SELECT * FROM ".DB::table('fenzhan')." where  fz_id=$fz_id");
+		 $query = DB::query("SELECT * FROM tbl_fenzhan where  fenzhan_id=$fenzhan_id");
 			while ($value = DB::fetch($query)) {
 				$fzlist[] = $value;
 			}
@@ -396,12 +401,13 @@ if($op=='fzdj'){
 	if($do=='fz'&&$ge=='update')
 	{		
 	
-		$fenz_name=$_POST['fenz_name'];
+		$fenzhan_name=$_POST['fenz_name'];
 		$orderby=$_POST['orderby'];		
-		$starttime=$_POST['starttime'];		
-		$endtime=$_POST['endtime'];		
-		$fz_id=$_POST['fz_id'];
-		if($fz_id){DB::query("update ".DB::table('fenzhan')." set fenz_name='$fenz_name',orderby='$orderby',starttime='$starttime',endtime='$endtime'  WHERE fz_id=$fz_id"); 
+		$lun=$_POST['lun'];		
+		$starttime=strtotime($_POST['starttime']);		
+		$endtime=strtotime($_POST['endtime']);		
+		$fenzhan_id=$_POST['fz_id'];
+		if($fenzhan_id){DB::query("update tbl_fenzhan set fenzhan_name='$fenzhan_name',fenzhan_lun='$lun',orderby='$orderby',starttime='$starttime',endtime='$endtime'  WHERE fenzhan_id=$fenzhan_id"); 
 		 
 		showmessage('已修改成功', 'home.php?mod=spacecp&ac=ulist&op=fzdj&do=fz', array(), array('showdialog' => 1, 'closetime' => true));
 		}
@@ -421,7 +427,7 @@ if($op=='fzdj'){
 	//删除分站
 	if($do=='fz'&&$ge=='del')
 	{		
-		if($fz_id){DB::query("delete  from ".DB::table('fenzhan')." WHERE fz_id=$fz_id"); 
+		if($fenzhan_id){DB::query("delete  from tbl_fenzhan WHERE fenzhan_id=$fenzhan_id"); 
 		 
 		showmessage('已删除成功', dreferer(), array(), array('showdialog' => 1, 'closetime' => true));
 		}
@@ -448,7 +454,7 @@ if($op=='fzdj'){
 	
 	if($do=='fz'){
 	   $tlist = array();
-		 $query = DB::query("SELECT * FROM ".DB::table('fenzhan')." where  sid=$uid  and is_delete=0");
+		 $query = DB::query("SELECT * FROM tbl_fenzhan where  sid=$uid  and is_delete=0");
 			while ($value = DB::fetch($query)) {
 				$tlist[] = $value;
 		} 
@@ -626,7 +632,7 @@ if($op=='bfgl'){
 		 $bid = $_GET['bid']; 
 			//分站	  
 			 $tlist = array();
-				 $query = DB::query("SELECT * FROM ".DB::table('fenzhan')." where  sid=$uid  and is_delete=0");
+				 $query = DB::query("SELECT * FROM tbl_fenzhan where  sid=$uid  and is_delete=0");
 					while ($value = DB::fetch($query)) {
 						$tlist[] = $value;
 				} 
@@ -643,7 +649,7 @@ if($op=='bfgl'){
 			$sid=$uid;   //赛事id
 			$qcid=getgpc("field_id");     //球场id
 			$qd=getgpc("qd");		//球洞
-			$fz_id=getgpc("fz_id");    //分站
+			$fenzhan_id=getgpc("fz_id");    //分站
 			$bid=getgpc("bid");   //报分员id
 			if(empty($bid)){
 			   showmessage("参数失败",$url);
@@ -658,7 +664,7 @@ if($op=='bfgl'){
 				}
 			} 
 	
-			$flag=DB::update("nd_baofen_users",array("sid"=>$sid,"fieldid"=>$qcid,"fz_id"=>$fz_id,"hole"=>$hole),array("id"=>$bid));
+			$flag=DB::update("nd_baofen_users",array("sid"=>$sid,"fieldid"=>$qcid,"fz_id"=>$fenzhan_id,"hole"=>$hole),array("id"=>$bid));
 			if($flag){ 
 		        showmessage('球洞分配成功', "home.php?mod=spacecp&ac=ulist&op=bfgl", array(), array('showdialog' => 1, 'closetime' => true));
 			}else{
@@ -692,9 +698,9 @@ function getteamname($team_id) {
 		$teame_name = DB::result_first("SELECT team_name FROM ".DB::table('golf_team')." WHERE team_id='$team_id' "); 
 	return $teame_name;
 }//获取分站名字
-function getfzname($fz_id) {
-		$fenz_name = DB::result_first("SELECT fenz_name FROM ".DB::table('fenzhan')." WHERE fz_id='$fz_id' "); 
-	return $fenz_name;
+function getfzname($fenzhan_id) {
+		$fenzhan_name = DB::result_first("SELECT fenzhan_name FROM tbl_fenzhan WHERE fenzhan_id='$fenzhan_id' "); 
+	return $fenzhan_name;
 }
 
 /*分站html 标记生成*/

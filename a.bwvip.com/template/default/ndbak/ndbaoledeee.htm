@@ -1,0 +1,225 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title> 大正高尔夫赛事成绩表</title>
+<link rel="stylesheet" type="text/css" href="/static/space/index/css/main.css">
+<link rel="stylesheet" type="text/css" href="/static/space/index/css/lrtk.css" >
+</head>
+<style type="text/css">
+body { font: normal 14px auto "Trebuchet MS", Verdana, Arial, Helvetica, sans-serif; color: #4f6b72; background: #dae7f0;margin:0 auto ; }
+a { color: #c75f3e; }
+td {line-height:15px; border-right: 1px solid #ffffff; border-bottom: 1px solid #ffffff;  font-size:14px; padding: 2px 0; color: #4f6b72;  text-align:center; font-weight:600; }
+td.alt { border-left: 1px solid #ffffff; border-top: 0; background:#d5e6f6; color: #797268; width:3%;height:20px;font:  16px;   font-weight:600; }
+td.spec { border-left: 1px solid #ffffff; border-top: 0; background: #bdd3e8; font:  16px;  font-weight:600; }
+td.specalt {border-left: 1px solid #ffffff; border-top: 0;  font:16px; color: #272727; text-align:center; font-weight:600; }
+ /*---------for IE 5.x bug*/ html>body td{ font-size:14px;}
+
+</style>
+<META   HTTP-EQUIV=REFRESH   CONTENT="60;URL=baofen.php?ac=ndled&onlymark=<!--{echo $onlymark;}-->&page=<!--{echo $page;}-->&pg=<!--{echo $perpage;}-->&pm=<!--{$pm}-->" >
+<body>
+ <table width="100%" align="center" cellpadding="0" cellspacing="0" style="background-attachment:#e7e7e7;">
+  <tr>
+    <td colspan="29" align="center" style="background:#f1f8fe; border-top: 1px solid #ffffff; height:40px; line-height:40px;" ><img src="/images/nd/{$onlymark}tv.jpg" ></td>
+  </tr>
+  <tr>
+    <td colspan="29" align="center"    style="background:url(../images/nd/duijipmbg1.jpg) top center no-repeat #144371;color:#ffffff;font-size:18px; height:80px;">
+<table width="870" border="0" align="center" cellpadding="0" cellspacing="0"  style="border:0;"><tr><td  style="border:0; width:80px;" align="right"><img src="/images/nd/duijiqizi.png"></td>
+<td align="left" valign="middle" style="border:0;color:#ffffff;font-size:18px; text-align:left;"><table width="820" border="0" cellpadding="0" cellspacing="0"  style="border:0;">
+  <tr>
+    <td align="left" style="border:0;color:#ffffff;font-size:18px; text-align:left; "><table width="820" border="0" cellpadding="0" cellspacing="0"  style="border:0; margin-top:5px;">
+      <tr>
+        <td width="140" align="left" style="border:0;color:#ffffff;font-size:20px; text-align:left; height:40px; line-height:40px;">队际成绩排名</td>
+        <td align="center" style="border:0;color:#ffffff;font-size:12px; text-align:left; height:25px; line-height:25px;">
+          <div id="show0" style="display:;">
+                                             <a style=" margin-right:20px">
+                   <span style="color:#e9f6cb; font-weight:600;font-size:16px;">
+                     第1名 天津</span> <span style="color:#ffffff; font-weight:600;font-size:12px;">
+                     总成绩: 1146杆
+                    </span>
+                </a>
+                                                        <a style=" margin-right:20px">
+                   <span style="color:#e9f6cb; font-weight:600;font-size:16px;">
+                     第2名 长沙</span> <span style="color:#ffffff; font-weight:600;font-size:12px;">
+                     总成绩: 1148杆
+                    </span>
+                </a>
+                                                        <a style=" margin-right:20px">
+                   <span style="color:#e9f6cb; font-weight:600;font-size:16px;">
+                     第3名 成都</span> <span style="color:#ffffff; font-weight:600;font-size:12px;">
+                     总成绩: 1164杆
+                    </span>
+                </a>
+                                                                                                                                                                                                                                                                                 	</div>
+          <div id="xT2">
+            <script>
+var marqueeContent=new Array();
+
+<!--{eval $a = "" ;}-->
+<!--{eval $i=0;}-->
+<!--{if $new_cg_team}-->
+<!--{loop $new_cg_team $n  $v}-->
+	 marqueeContent[{$i}]=' 第<!--{eval $a =$i+1;}-->{$a}名 <span style="font-size:16px; ">{$user_team_order[$n][0]['g_team_name']}</span> ';
+	 <!--{loop $user_team_order[$n]  $k $vt}-->
+	 marqueeContent[{$i}]+=' <span style="font-size:12px; ">'+"{$vt['realname']}:{if $vt['avcave'] >= 0}+{$vt['avcave']}杆{else}{$vt['avcave']}杆{/if} ";
+	 <!--{/loop}-->
+	 marqueeContent[{$i}]+=" 当前总成绩： {echo Getchd($v); }</span>";
+	 <!--{eval  $i++;}-->
+<!--{/loop}-->
+ <!--{else}-->
+  marqueeContent[0]=' <span style="font-size:16px; ">比赛即将开始，尽请期待</span> ';
+  marqueeContent[1]=' <span style="font-size:16px; ">比赛即将开始，尽请期待</span> ';
+ <!--{/if}-->
+
+var marqueeInterval=new Array();  //定义一些常用而且要经常用到的变量
+var marqueeId=0;
+var marqueeDelay=3000;
+var marqueeHeight=25;
+//接下来的是定义一些要使用到的函数
+function initMarquee() {
+var str=marqueeContent[0];
+document.write('<div id=marqueeBox style="overflow:hidden;height:'+marqueeHeight+'px" onmouseover="clearInterval(marqueeInterval[0])" onmouseout="marqueeInterval[0]=setInterval(\'startMarquee()\',marqueeDelay)"><div>'+str+'</div></div>');
+marqueeId++;
+marqueeInterval[0]=setInterval("startMarquee()",marqueeDelay);
+}
+function startMarquee() {
+var str=marqueeContent[marqueeId];
+marqueeId++;
+if(marqueeId>=marqueeContent.length) marqueeId=0;
+if(marqueeBox.childNodes.length==1) {
+var nextLine=document.createElement('DIV');
+nextLine.innerHTML=str;
+marqueeBox.appendChild(nextLine);
+}
+else {
+marqueeBox.childNodes[0].innerHTML=str;
+marqueeBox.appendChild(marqueeBox.childNodes[0]);
+marqueeBox.scrollTop=0;
+}
+clearInterval(marqueeInterval[1]);
+marqueeInterval[1]=setInterval("scrollMarquee()",20);
+}
+function scrollMarquee() {
+marqueeBox.scrollTop++;
+if(marqueeBox.scrollTop%marqueeHeight==(marqueeHeight-1)){
+clearInterval(marqueeInterval[1]);
+}
+}
+initMarquee();
+</script>
+  </div>
+        </td>
+      </tr>
+      </table></td>
+  </tr>
+
+</table></td></tr></table>
+    </td>
+  </tr>
+ <tr>
+  <td width="3%" rowspan="2" style="background:url(../images/nd/shangm.jpg) top center repeat-x #02425d;"><font color="#ffffff">排名</font></td>
+    <td width="10%" rowspan="2" style="background:url(../images/nd/shangm.jpg) top center repeat-x #02425d;"><font color="#ffffff">姓名</font></td>
+    <td width="3%" rowspan="2" style="background:url(../images/nd/shangm.jpg) top center repeat-x #02425d;"><font color="#ffffff">分组</font></td>
+    <td width="3%" rowspan="2" style="background:url(../images/nd/shangm.jpg) top center repeat-x #02425d;"><font color="#ffffff">成绩</font></td>
+    <td  class="alt">1</td>
+    <td  class="alt">2</td>
+    <td  class="alt">3</td>
+    <td  class="alt">4</td>
+    <td  class="alt">5</td>
+    <td  class="alt">6</td>
+    <td  class="alt">7</td>
+    <td  class="alt">8</td>
+    <td  class="alt">9</td>
+    <td  class="alt">OUT</td>
+    <td  class="alt">10</td>
+    <td  class="alt">11</td>
+    <td  class="alt">12</td>
+    <td  class="alt">13</td>
+    <td  class="alt">14</td>
+    <td  class="alt">15</td>
+    <td  class="alt">16</td>
+    <td  class="alt">17</td>
+    <td  class="alt">18</td>
+    <td  class="alt">IN</td>
+    <td  class="alt">ALL</td>
+    <td  class="alt">R1</td> 
+    <td  class="alt">R2</td> 
+    <td  class="alt">总计</td>   
+  </tr>
+   <tr>
+    <td class="spec">$par[0]</td>
+    <td class="spec">$par[1]</td>
+    <td class="spec">$par[2]</td>
+    <td class="spec">$par[3]</td>
+    <td class="spec">$par[4]</td>
+    <td class="spec">$par[5]</td>
+    <td class="spec">$par[6]</td>
+    <td class="spec">$par[7]</td>
+    <td class="spec">$par[8]</td>
+    <td class="spec">$POUT</td>
+   <td class="spec">$par[9]</td>
+    <td class="spec">$par[10]</td>
+    <td class="spec">$par[11]</td>
+    <td class="spec">$par[12]</td>
+    <td class="spec">$par[13]</td>
+    <td class="spec">$par[14]</td>
+    <td class="spec">$par[15]</td>
+    <td class="spec">$par[16]</td>
+    <td class="spec">$par[17]</td>
+    <td class="spec">$PIN</td>
+    <td class="spec">$PTL</td>
+    <td class="spec">$PTL</td>
+    <td class="spec">$PTL</td>
+    <td class="spec">总计</td>   
+  </tr>
+<!--{loop $nbtvlist $n  $v}-->
+ <!--{if $n%2==1}-->
+  <!--{eval $bgcolor = "#D5E6F6";}-->
+<!--{else}-->
+  <!--{eval $bgcolor = "#C3CED4";}-->
+<!--{/if}-->
+  <tr  bgcolor="<!--{$bgcolor}-->">
+    <td  style="background:url(../images/nd/paiming.jpg) repeat-x;"><font color="#ffffff">{$v['pm']}</font></td>
+    <td  style="background:url(../images/nd/paiming.jpg) repeat-x;"><font color="#ffffff" style="letter-spacing:10px; font-size:20px; line-height: 28px"><strong>{$v['realname']}</strong></font></td>
+    <td style="background:url(../images/nd/fenzuchengji.jpg) repeat-x;"><font color="#ffffff">{$v['team_num']}</td>
+    <td style="background:url(../images/nd/fenzuchengji.jpg) repeat-x;"><font color="#FFFFFF">{if $v['avcave']<900}{echo Getchd($v['avcave'])}{else}&nbsp;{/if} </font></td>
+    <td class="specalt" {if $v['cave_1']!=0}{echo Getcss($v['cave_1'],$par[0])}{/if}>{if $v['cave_1']<=0}&nbsp;{else}{$v['cave_1']}{/if}</td>
+    <td class="specalt" {if $v['cave_2']!=0}{echo Getcss($v['cave_2'],$par[1])}{/if}>{if $v['cave_2']<=0}&nbsp;{else}{$v['cave_2']}{/if}</td>
+    <td class="specalt" {if $v['cave_3']!=0}{echo Getcss($v['cave_3'],$par[2])}{/if}>{if $v['cave_3']<=0}&nbsp;{else}{$v['cave_3']}{/if}</td>
+    <td class="specalt" {if $v['cave_4']!=0}{echo Getcss($v['cave_4'],$par[3])}{/if}>{if $v['cave_4']<=0}&nbsp;{else}{$v['cave_4']}{/if}</td>
+    <td class="specalt" {if $v['cave_5']!=0}{echo Getcss($v['cave_5'],$par[4])}{/if}>{if $v['cave_5']<=0}&nbsp;{else}{$v['cave_5']}{/if}</td>
+    <td class="specalt" {if $v['cave_6']!=0}{echo Getcss($v['cave_6'],$par[5])}{/if}>{if $v['cave_6']<=0}&nbsp;{else}{$v['cave_6']}{/if}</td>
+    <td class="specalt" {if $v['cave_7']!=0}{echo Getcss($v['cave_7'],$par[6])}{/if}>{if $v['cave_7']<=0}&nbsp;{else}{$v['cave_7']}{/if}</td>
+    <td class="specalt" {if $v['cave_8']!=0}{echo Getcss($v['cave_8'],$par[7])}{/if}>{if $v['cave_8']<=0}&nbsp;{else}{$v['cave_8']}{/if}</td>
+    <td class="specalt" {if $v['cave_9']!=0}{echo Getcss($v['cave_9'],$par[8])}{/if}>{if $v['cave_9']<=0}&nbsp;{else}{$v['cave_9']}{/if}</td>
+    <td class="specalt" style="text-align:center;">{if $v['lout']<=0}&nbsp;{else}{$v['lout']}{/if}</td>
+    <td class="specalt" {if $v['cave_10']!=0}{echo Getcss($v['cave_10'],$par[9])}{/if}>{if $v['cave_10']<=0}&nbsp;{else}{$v['cave_10']}{/if}</td>
+    <td class="specalt" {if $v['cave_11']!=0}{echo Getcss($v['cave_11'],$par[10])}{/if}>{if $v['cave_11']<=0}&nbsp;{else}{$v['cave_11']}{/if}</td>
+    <td class="specalt" {if $v['cave_12']!=0}{echo Getcss($v['cave_12'],$par[11])}{/if}>{if $v['cave_12']<=0}&nbsp;{else}{$v['cave_12']}{/if}</td>
+    <td class="specalt" {if $v['cave_13']!=0}{echo Getcss($v['cave_13'],$par[12])}{/if}>{if $v['cave_13']<=0}&nbsp;{else}{$v['cave_13']}{/if}</td>
+    <td class="specalt" {if $v['cave_14']!=0}{echo Getcss($v['cave_14'],$par[13])}{/if}>{if $v['cave_14']<=0}&nbsp;{else}{$v['cave_14']}{/if}</td>
+    <td class="specalt" {if $v['cave_15']!=0}{echo Getcss($v['cave_15'],$par[14])}{/if}>{if $v['cave_15']<=0}&nbsp;{else}{$v['cave_15']}{/if}</td>
+    <td class="specalt" {if $v['cave_16']!=0}{echo Getcss($v['cave_16'],$par[15])}{/if}>{if $v['cave_16']<=0}&nbsp;{else}{$v['cave_16']}{/if}</td>
+    <td class="specalt" {if $v['cave_17']!=0}{echo Getcss($v['cave_17'],$par[16])}{/if}>{if $v['cave_17']<=0}&nbsp;{else}{$v['cave_17']}{/if}</td>
+    <td class="specalt" {if $v['cave_18']!=0}{echo Getcss($v['cave_18'],$par[17])}{/if}>{if $v['cave_18']<=0}&nbsp;{else}{$v['cave_18']}{/if}</td>
+    <td class="specalt" style="text-align:center;">{if $v['lin']<=0}&nbsp;{else}{$v['lin']}{/if}</td>
+    <td class="specalt" style="text-align:center;{if $v['tlscore']==1000}color:#FFffff;background:#089218;{/if}" >{echo Getstat($v[tlcave])}</td>
+    
+      <td class="specalt">{echo Getstat($v['tlcave1'])}</td>
+    <td class="specalt">{echo Getstat($v['tlcave2'])}</td>
+    <!--{eval  if($v['tlcave1']>=10000) $v['tlcave1']=0;  }-->
+    <!--{eval  if($v['tlcave2']>=10000) $v['tlcave2']=0;  }-->
+
+    <td class="specalt">{echo Getstat( $v['tlcave']+$v['tlcave1']+$v[tlcave2])}</td>
+  </tr>
+<!--{/loop}-->
+
+  <tr>
+    <td colspan="29" align="right" style="background:#dae7f0; border-left: 1px solid #ffffff; color:#ffffff;" >
+<img src="/images/nd/ndbt.jpg" ></td>
+  </tr>
+
+</table>
+</body>
+</html>
+

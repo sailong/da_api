@@ -6,21 +6,21 @@
 <script src="js/dojo-release-1.7.2/dojo/dojo.js" type="text/javascript" djConfig="isDebug: true, parseOnLoad: true"></script>
 <title>
 <!--{if $album[albumname]}-->
-$album[albumname]&ndash;$getstat['spnickname']的空间_大正网_高尔夫主题社区_www.bwvip.com_高尔夫网
+$album[albumname]&ndash;$getstat['spnickname']的空间_<!--{if empty($nobbname)}--> $_G['setting']['bbname']<!--{else}-->大正传媒<!--{/if}-->_高尔夫主题社区_www.bwvip.com_高尔夫网
 <!--{elseif $blog[subject]}-->
-$blog[subject]&ndash;$getstat['spnickname']的空间_大正网_高尔夫主题社区_www.bwvip.com_高尔夫网
+$blog[subject]&ndash;$getstat['spnickname']的空间_<!--{if empty($nobbname)}--> $_G['setting']['bbname']<!--{else}-->大正传媒<!--{/if}-->_高尔夫主题社区_www.bwvip.com_高尔夫网
 <!--{elseif $video[0][title]}-->
-$video[0][title]&ndash;$getstat['spnickname']_大正网_高尔夫主题社区_www.bwvip.com_高尔夫网
+$video[0][title]&ndash;$getstat['spnickname']_<!--{if empty($nobbname)}--> $_G['setting']['bbname']<!--{else}-->大正传媒<!--{/if}-->_高尔夫主题社区_www.bwvip.com_高尔夫网
 <!--{elseif $_GET[tcode]}-->
-<!--{echo $tcode}-->&ndash;$getstat['spnickname']_大正网_高尔夫主题社区_www.bwvip.com_高尔夫网
+<!--{echo $tcode}-->&ndash;$getstat['spnickname']_<!--{if empty($nobbname)}--> $_G['setting']['bbname']<!--{else}-->大正传媒<!--{/if}-->_高尔夫主题社区_www.bwvip.com_高尔夫网
 <!--{elseif $_GET[op]=='weibo'}-->
-微博&ndash;$getstat['spnickname']_大正网_高尔夫主题社区_www.bwvip.com_高尔夫网
+微博&ndash;$getstat['spnickname']_<!--{if empty($nobbname)}--> $_G['setting']['bbname']<!--{else}-->大正传媒<!--{/if}-->_高尔夫主题社区_www.bwvip.com_高尔夫网
 <!--{else}-->
-$getstat['spnickname'] 的空间_大正网_高尔夫主题社区_www.bwvip.com_高尔夫网
+$getstat['spnickname'] 的空间_<!--{if empty($nobbname)}--> $_G['setting']['bbname']<!--{else}-->大正传媒<!--{/if}-->_高尔夫主题社区_www.bwvip.com_高尔夫网
 <!--{/if}-->
 </title>
 
-<meta name="keywords" content="大正网，高尔夫网站，高尔夫用品，高尔夫论坛，高尔夫球星，高尔夫比赛，高尔夫球场，高尔夫教程，高尔夫新闻" />
+<meta name="keywords" content="<!--{if empty($nobbname)}--> $_G['setting']['bbname']<!--{else}-->大正传媒<!--{/if}-->，高尔夫网站，高尔夫用品，高尔夫论坛，高尔夫球星，高尔夫比赛，高尔夫球场，高尔夫教程，高尔夫新闻" />
 <meta name="description" content="专业高尔夫球无广告纯净高尔夫主题互动社区，实名认证，远离广告骚扰。提供最优惠的高尔夫订场信息、高尔夫球具订购服务，承办高尔夫比赛，提供最全面的高尔夫用品，球具、高尔夫新闻、高尔夫教程。大正高尔夫网让您更好的享受高尔夫,享受生活。" />
 <script type="text/javascript">var STYLEID = '{STYLEID}', STATICURL = '{STATICURL}', IMGDIR = '{IMGDIR}', VERHASH = '{VERHASH}', charset = '{CHARSET}', discuz_uid = '$_G[uid]', cookiepre = '{$_G[config][cookie][cookiepre]}', cookiedomain = '{$_G[config][cookie][cookiedomain]}', cookiepath = '{$_G[config][cookie][cookiepath]}', showusercard = '{$_G[setting][showusercard]}', attackevasive = '{$_G[config][security][attackevasive]}', disallowfloat = '{$_G[setting][disallowfloat]}', creditnotice = '<!--{if $_G['setting']['creditnotice']}-->$_G['setting']['creditnames']<!--{/if}-->', defaultstyle = '$_G[style][defaultextstyle]', REPORTURL = '$_G[currenturl_encode]', SITEURL = '$_G[siteurl]', JSPATH = '$_G[setting][jspath]';</script>
 <link href="http://www.bwvip.com/static/space/person/style.css" rel="stylesheet" type="text/css">

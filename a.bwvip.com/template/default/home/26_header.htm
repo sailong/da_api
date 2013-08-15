@@ -5,17 +5,17 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <title>
 <!--{if $album[albumname]}-->
-$album[albumname]&ndash;$getstat['spnickname']的空间_大正网_高尔夫主题社区_www.bwvip.com
+$album[albumname]&ndash;$getstat['spnickname']的空间_<!--{if empty($nobbname)}--> $_G['setting']['bbname']<!--{else}-->大正传媒<!--{/if}-->_高尔夫主题社区_www.bwvip.com
 <!--{elseif $blog[subject]}-->
-$blog[subject]&ndash;$getstat['spnickname']的空间_大正网_高尔夫主题社区_www.bwvip.com
+$blog[subject]&ndash;$getstat['spnickname']的空间_<!--{if empty($nobbname)}--> $_G['setting']['bbname']<!--{else}-->大正传媒<!--{/if}-->_高尔夫主题社区_www.bwvip.com
 <!--{elseif $video[0][title]}-->
-$video[0][title]&ndash;$getstat['spnickname']_大正网_高尔夫主题社区_www.bwvip.com
+$video[0][title]&ndash;$getstat['spnickname']_<!--{if empty($nobbname)}--> $_G['setting']['bbname']<!--{else}-->大正传媒<!--{/if}-->_高尔夫主题社区_www.bwvip.com
 <!--{elseif $_GET[tcode]}-->
-<!--{echo $tcode}-->&ndash;$getstat['spnickname']_大正网_高尔夫主题社区_www.bwvip.com
+<!--{echo $tcode}-->&ndash;$getstat['spnickname']_<!--{if empty($nobbname)}--> $_G['setting']['bbname']<!--{else}-->大正传媒<!--{/if}-->_高尔夫主题社区_www.bwvip.com
 <!--{elseif $_GET[op]=='weibo'}-->
-微博&ndash;$getstat['spnickname']_大正网_高尔夫主题社区_www.bwvip.com
+微博&ndash;$getstat['spnickname']_<!--{if empty($nobbname)}--> $_G['setting']['bbname']<!--{else}-->大正传媒<!--{/if}-->_高尔夫主题社区_www.bwvip.com
 <!--{else}-->
-$qiyename 的空间_大正网_高尔夫主题社区_www.bwvip.com
+$qiyename 的空间_<!--{if empty($nobbname)}--> $_G['setting']['bbname']<!--{else}-->大正传媒<!--{/if}-->_高尔夫主题社区_www.bwvip.com
 <!--{/if}-->
 </title>
 <meta name="keywords" content="{if !empty($metakeywords)}{echo htmlspecialchars($metakeywords)}{/if}" />

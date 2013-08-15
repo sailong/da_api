@@ -32,6 +32,8 @@ function userlogin($username, $password, $questionid, $answer, $loginfield = 'us
 			$return['ucresult'] = uc_user_login($username, $password, 1, 1, $questionid, $answer);
 		} elseif(isemail($username)) {
 			$return['ucresult'] = uc_user_login($username, $password, 2, 1, $questionid, $answer);
+		} elseif(preg_match("/^((\(\d{3}\))|(\d{3}\-))?13\d{9}$/", $username)) {
+			$return['ucresult'] = uc_user_login($username, $password, 3, 1, $questionid, $answer);
 		}
 		if($return['ucresult'][0] <= 0 && $return['ucresult'][0] != -3) {
 			$return['ucresult'] = uc_user_login($username, $password, 0, 1, $questionid, $answer);

@@ -95,10 +95,14 @@ if($ac=="select_event")
 		$list_data3[]=array_default_value($row3);
 	}
 
-	$list=DB::query("select event_id,event_name,event_uid,event_is_zhutui,event_content,event_starttime,event_go_action,event_go_value from tbl_event where event_is_tj='Y' order by event_sort desc limit 100 ");
+	$list=DB::query("select event_id,event_name,event_uid,event_is_zhutui,event_content,event_starttime,event_go_action,event_go_value,event_logo from tbl_event where event_is_tj='Y' and field_uid='".$field_uid."' order by event_sort desc limit 100 ");
 	while($row = DB::fetch($list))
 	{
 		$row['event_pic']=$site_url."/uc_server/avatar.php?uid=".$row['event_uid']."&size=big";
+		if($row['event_logo'])
+		{
+			$row['event_logo']=$site_url."/".$row['event_logo'];
+		}
 		$row['uid']=$row['event_uid'];
 		$row['event_starttime']=date("Y年m月d日",$row['event_starttime']);
 		$row['event_content']=msubstr(cutstr_html($row['event_content']),0,30);
@@ -133,7 +137,7 @@ if($ac=="apply_ing")
 	$login_uid=$_G['gp_login_uid'];
 	$field_uid=$_G['gp_field_uid'];
 	
-	$list=DB::query("select event_id,event_name,event_uid,event_is_zhutui,event_content,event_starttime,event_go_action,event_go_value from tbl_event where event_baoming_starttime<=".time()." and event_baoming_endtime>=".time()." and field_uid='".$field_uid."' order by event_baoming_starttime desc  limit 100 ");
+	$list=DB::query("select event_id,event_name,event_uid,event_is_zhutui,event_content,event_starttime,event_go_action,event_go_value,event_logo from tbl_event where event_baoming_starttime<=".time()." and event_baoming_endtime>=".time()." and field_uid='".$field_uid."' order by event_baoming_starttime desc  limit 100 ");
 	while($row = DB::fetch($list))
 	{
 		if($login_uid)
@@ -194,7 +198,11 @@ if($ac=="apply_ing")
 
 		}
 	
-		$row['event_pic']=$site_url."/uc_server/avatar.php?uid=".$row['event_uid']."&size=middle";
+		$row['event_pic']=$site_url."/uc_server/avatar.php?uid=".$row['event_uid']."&size=big";
+		if($row['event_logo'])
+		{
+			$row['event_logo']=$site_url."/".$row['event_logo'];
+		}
 		$row['uid']=$row['event_uid'];
 		$row['event_starttime']=date("Y年m月d日",$row['event_starttime']);
 		$row['event_content']=msubstr(cutstr_html($row['event_content']),0,30);
@@ -249,6 +257,96 @@ if($ac=="select_event_all")
 	
 }
 
+//相关赛事的门票列表
+if($ac=="event_ticket_list"){
+	$event_id = $_G['gp_event_id'];
+	if(empty($event_id))
+	{
+		api_json_result(1,1,"缺少参数event_id",$data);exit;
+	}
+	//,ticket_price,ticket_ren_num,ticket_num,ticket_pic,ticket_starttime,ticket_endtime,ticket_type,ticket_times,ticket_content,ticket_addtime
+	$list=DB::query("select ticket_id,ticket_name,ticket_type from tbl_ticket where event_id='".$event_id."' order by ticket_id desc limit 100 ");
+	while($row = DB::fetch($list))
+	{
+		/* $row['ticket_pic']=$site_url."/".$row['ticket_pic'];
+		$row['ticket_starttime']=date("Y年m月d日",$row['ticket_starttime']);
+		$row['ticket_endtime']=date("Y年m月d日",$row['ticket_endtime']);
+		$row['ticket_content']=msubstr(cutstr_html($row['ticket_content']),0,30); */
+		if(in_array($row['ticket_type'],array('VIP'))){
+			$row['company_flag']='Y';
+		}else{
+			$row['company_flag']='N';
+		}
+		$list_data[]=array_default_value($row);
+	}
+	unset($list); 
+	if($list_data)
+	{
+		$data['title'] = "ticket_list";
+		$data['data']=$list_data;
+		//print_r($data);
+		api_json_result(1,0,'门票列表',$data);
+	}
+	else
+	{
+		api_json_result(1,0,"no data",$data);
+	}
+}
+
+//我的门票列表
+if($ac=="my_ticket_list")
+{
+	$uid = $_G['gp_uid'];
+	if(empty($uid)){
+		api_json_result(1,1,"缺少参数uid",$data);
+	}
+	$list=DB::query("select ticket_id,ticket_type,user_ticket_code,user_ticket_codepic,user_ticket_nums,user_ticket_realname,user_ticket_sex,user_ticket_age,user_ticket_address,user_ticket_cardtype,user_ticket_card,user_ticket_mobile,user_ticket_imei,user_ticket_company,user_ticket_company_post,user_ticket_status,user_ticket_addtime from tbl_user_ticket where uid='".$uid."' order by user_ticket_addtime desc limit 100 ");
+	while($row = DB::fetch($list))
+	{
+		$row['user_ticket_codepic']=$site_url."/".$row['user_ticket_codepic'];
+		$row['user_ticket_addtime']=date("Y年m月d日",$row['user_ticket_addtime']);
+		$list_data[]=array_default_value($row);
+	}
+	unset($list);
+	if($list_data)
+	{
+		$data['title'] = "list_data";
+		$data['data']=array(
+		  'all_list'=>$list_data,
+		);
+		//print_r($data);
+		api_json_result(1,0,'我的门票列表',$data);
+	}
+	else
+	{
+		api_json_result(1,0,"no data",$data);
+	}
+}
+
+//查看门票信息
+if($ac=="ticket_detail")
+{
+	$ticket = $_G['gp_ticket_id'];
+	if(empty($ticket)){
+		api_json_result(1,1,"缺少参赛ticket_id",$data);exit;
+	}
+	$detail_data=DB::fetch_first("select ticket_id,ticket_name,ticket_price,ticket_ren_num,ticket_num,ticket_pic,ticket_starttime,ticket_endtime,ticket_type,ticket_times,ticket_content,ticket_addtime from tbl_ticket where ticket_id='".$ticket."'");
+	$detail_data['ticket_pic']=$site_url."/".$detail_data['ticket_pic'];
+	$detail_data['ticket_starttime']=date("Y年m月d日",$detail_data['ticket_starttime']);
+	$detail_data['ticket_endtime']=date("Y年m月d日",$detail_data['ticket_endtime']);
+	$detail_data['ticket_content']=msubstr(cutstr_html($detail_data['ticket_content']),0,30);
+	if($detail_data)
+	{
+		$data['title'] = "data_detail";
+		$data['data']=$detail_data;
+		//print_r($data);
+		api_json_result(1,0,'门票详情',$data);
+	}
+	else
+	{
+		api_json_result(1,0,"no data",$data);
+	}
+}
 
 
 //赛事具体信息
