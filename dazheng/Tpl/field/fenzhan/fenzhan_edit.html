@@ -19,10 +19,10 @@
 <form method="post" id="act_form" name="act_form" action="{:U('field/fenzhan/fenzhan_edit_action')}" enctype="multipart/form-data">
 	<table class="add_table" border="0" cellspacing="0" cellpadding="0" >
 		<tbody>
-				<!-- <tr>
+		<tr>
 					<th>所属赛事：</th>
 					<td><input type="text" name="event_id" id="event_id" class="mod_input2" style="width:66px;"  value="{$data.event_id}"></td>
-				</tr> -->
+				</tr>
                      <tr>
 					<th>所属分站：</th>
 					<td> 
@@ -69,8 +69,8 @@
                 <tr>
 					<th>所在球场：</th>
 					<td>{$data.field_id}
-                    <php> if($_SESSION['field_uid']){}else{</php><select name='provinceid' id='province' onchange='getarea(this.value)'>
-
+                    <php> if($_SESSION['field_uid']){}else{</php>
+						<select name='provinceid' id='province' onchange='getarea(this.value)'>
                           <option value="0">请选择</option>
                           <volist id="vo3" name="area">
                             <option value="{$vo3.id}">{$vo3.name}</option>
@@ -106,7 +106,23 @@
                         
 				<tr>
 					<th>年份：</th>
-					<td><input type="text" name="year" id="year" class="mod_input2" style="width:300px;"  value="{$data.year}"></td>
+					<td>
+						<select name='year' id='year'  >
+							<option value="0">请选择年份</option>
+							<option value="2010">2010</option>
+							<option value="2011">2011</option>
+							<option value="2012">2012</option>
+							<option value="2013">2013</option>
+							<option value="2014">2014</option>
+							<option value="2015">2015</option>
+							<option value="2016">2016</option>
+							<option value="2017">2017</option>
+							<option value="2018">2018</option>
+							<option value="2019">2019</option>
+							<option value="2020">2020</option>
+                        </select>
+						<script>set_select_value(document.act_form.year,'{$data.year}');</script>
+					</td>
 				</tr>
 				
 				<tr>
@@ -123,19 +139,18 @@
 				</tr>
 				<tr>
 					<th>排序：</th>
-					<td><input type="text" name="orderby" id="orderby" class="mod_input2" style="width:60px;"  value="{$data.orderby}">（数越大越靠前）</td>
+					<td><input type="text" name="orderby" id="orderby" class="mod_input2" style="width:60px;"  value="{$data.orderby}"></td>
 				</tr>
-				<!-- <tr>
+				<tr>
 					<th>状态：</th>
 					<td><input type="text" name="is_delete" id="is_delete" class="mod_input2" style="width:60px;"  value="{$data.is_delete}"></td>
-				</tr> -->
+				</tr>
 				
 		</tbody>
 		<tfoot>
 			<tr>
 				<th></th>
 				<td>
-					<input type="hidden" name="event_id" id="event_id" value="{$data.event_id}">
 					<input type="hidden" name="fenzhan_id" value="{$data.fenzhan_id}">
 					<input type="submit" class="btn_b" value="保存" style="margin-right:10px;"/>
 					<input type="button" class="btn_w" onclick="javascript:history.go(-1);" value="返回" />
@@ -155,7 +170,7 @@ $.formValidator.initConfig({formID:"act_form",theme:'ArrowSolidBox',mode:'AutoTi
 		$("#starttime").formValidator({empty:true,onShow:"请输入开始时间",onFocus:"请输入开始时间",onCorrect:"输入正确"}).inputValidator({min:1,max:10,onError:"请输入开始时间"});
 		$("#endtime").formValidator({empty:true,onShow:"请输入结束时间",onFocus:"请输入结束时间",onCorrect:"输入正确"}).inputValidator({min:1,max:10,onError:"请输入结束时间"});
 		$("#orderby").formValidator({empty:true,onShow:"请输入排序",onFocus:"请输入排序",onCorrect:"输入正确"}).inputValidator({min:1,max:10,onError:"请输入排序"});
-		//$("#is_delete").formValidator({empty:true,onShow:"请输入状态",onFocus:"请输入状态",onCorrect:"输入正确"}).inputValidator({min:1,max:10,onError:"请输入状态"});
+		$("#is_delete").formValidator({empty:true,onShow:"请输入状态",onFocus:"请输入状态",onCorrect:"输入正确"}).inputValidator({min:1,max:10,onError:"请输入状态"});
 		
 
 	$.formValidator.reloadAutoTip();

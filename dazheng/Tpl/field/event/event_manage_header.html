@@ -6,12 +6,13 @@
         
 		<li><a <php>if($fenzhan_on){ echo ' class=on ';}</php> href="{:U('field/fenzhan/fenzhan',array('event_id'=>$event_id))}"><b>2、</b>分站管理</a></li>
 		
-        
-		<li><a <php>if($event_apply_on){ echo ' class=on ';}</php> href="{:U('field/event_apply/event_apply',array('event_id'=>$event_id))}"><b>3、</b>报名管理</a></li>
+		<li><a <php>if($event_user_on){ echo ' class=on ';}</php> href="{:U('field/event_user/event_user',array('event_id'=>$event_id))}"><b>3、</b>赛事会员</a></li>
+		
+		<li><a <php>if($event_apply_on){ echo ' class=on ';}</php> href="{:U('field/event_apply/event_apply',array('event_id'=>$event_id,'event_apply_state'=>1))}"><b>4、</b>报名管理</a></li>
        <!-- <li><a <php>if($fenzhan_lun_on){ echo ' class=on ';}</php> href="{:U('field/fenzhan/fenzhan_lun',array('event_id'=>$event_id))}"><b>4、</b>分站选手管理</a></li>
 		<!--<li><a <php>if($fenzu_on){ echo ' class=on ';}</php> href="{:U('field/fenzu/fenzu',array('event_id'=>$event_id))}"><b>4、</b>分组管理</a></li>-->
-        <li><a <php>if($fenzu_on){ echo ' class=on ';}</php> href="{:U('field/fenzu/rule',array('event_id'=>$event_id))}"><b>4、</b>自动分组</a></li>
-		<li><a <php>if($fenzhan_user_on){ echo ' class=on ';}</php> href="{:U('field/fenzhan/fenzhan_user',array('event_id'=>$event_id))}"><b>5、</b>手工分组</a></li>
-		<li><a <php>if($baofen_user_on){ echo ' class=on ';}</php> href="{:U('field/baofen_user/baofen_user',array('event_id'=>$event_id))}"><b>6、</b>报分员管理</a></li>
+        <li><a <php>if($fenzu_on){ echo ' class=on ';}</php> href="{:U('field/fenzu/rule',array('event_id'=>$event_id))}"><b>5、</b>自动分组</a></li>
+		<li><a <php>if($fenzhan_user_on){ echo ' class=on ';}</php> href="{:U('field/fenzhan/fenzhan_user',array('event_id'=>$event_id))}"><b>6、</b>手工分组</a></li>
+		<li><a <php>if($baofen_user_on){ echo ' class=on ';}</php> href="{:U('field/baofen_user/baofen_user',array('event_id'=>$event_id))}"><b>7、</b>报分员管理</a></li>
 	</ul>
   </div>

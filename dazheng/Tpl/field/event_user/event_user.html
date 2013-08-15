@@ -1,0 +1,116 @@
+<include file="../public/_header" />
+<div class="so_main">
+
+  <include file="../event/event_manage_header" />
+
+  <div class="search_box">
+		<form name="search_form" action="/default.php" method="get">
+		<input type="hidden" name="g" value="field">
+		<input type="hidden" name="m" value="event_user">
+		<input type="hidden" name="a" value="event_user">
+		<input type="hidden" name="event_id" id="event_id" value="<php> echo get('event_id');</php>" >
+
+		<table border="0" cellspacing="0" cellpadding="0">
+			<th>姓名：</th>
+			<td><input type="text" name="k" class="search_input" style="width:120px;" value="<php> echo  get('k');</php>"></td>
+			<!--
+			<th>开始时间：</th>
+			<td>
+				<input type="text" name="starttime" class="search_input_date" style="width:120px;" value="<php> echo  get('starttime');</php>" onFocus="WdatePicker({isShowClear:false,readOnly:true})"> 至 
+				<input type="text" name="endtime" class="search_input_date" style="width:120px;" value="<php> echo  get('endtime');</php>" onFocus="WdatePicker({isShowClear:false,readOnly:true})">
+			</td>
+			-->
+			<td class="btn">
+				
+				
+				<input type="submit" value="搜索" class="btn_b" style="margin-right:8px;" >
+				<input type="button" value="查看全部" class="btn_b" onclick="javascript:location='{:U('field/event_user/event_user',array('state'=>get('state')))}';">
+			</td>
+		</table>
+	</form>
+  </div><!--/search_box-->
+
+  <!--------list -------->
+  <div class="Toolbar_inbox">
+  	<div class="page right">{$pages}</div>
+
+	<a href="{:U('field/event_user/event_user_add',array('event_id'=>get('event_id')))}" class="btn_a"><span>添加赛事用户</span></a>
+	<a href="javascript:void(0);" class="btn_a"  onclick="mod_delete_batch('{:U('field/event_user/event_user_delete_action')}','mod_table');"><span>批量删除</span></a>
+	<a href="javascript:void(0);" class="btn_a"  onclick="mod_batch_dialog('{:U('field/event_user/batch_apply',array('event_id'=>get('event_id')))}','mod_table','批量添加报名');"><span>批量添加报名</span></a>
+	
+
+	<div class="clear"></div>
+  </div>
+  <div class="list">
+	<php>if($total>0){</php>
+	  <table width="100%" id="mod_table" border="0" cellspacing="0" cellpadding="0">
+	  <tr>
+		<th style="width:30px;">
+			<input type="checkbox" id="checkbox_handle" onclick="select_all(this,'mod_table','checkbox')" value="0">
+			<label for="checkbox"></label>
+		</th>
+		<th class="line_l">所属赛事</th>
+		<th class="line_l">所属用户</th>
+		<th class="line_l">姓名</th>
+		<th class="line_l">姓别</th>
+		<th class="line_l">证件类型</th>
+		<th class="line_l">证件号码</th>
+		<th class="line_l">差点</th>
+		<th class="line_l">状态</th>
+		<th class="line_l">添加时间</th>
+		<th class="line_l">操作</th>
+	</tr>
+	<volist id="vo" name="list">
+	<tr overstyle="on"  id=ids_{$vo["event_user_id"]}>
+		<td><input type="checkbox" name="checkbox" onclick="select_one(this)" value="{$vo.event_user_id}" ></td>
+		<td>{$vo.event_id}</th>
+			<td><a href="{:U('field/event_user/event_user_detail', array('event_user_id'=>$vo['event_user_id']))}">{$vo.uid}</a></td>
+			<td>{$vo.event_user_realname}</td>
+			<td>{$vo.event_user_sex}</td>
+			<td>{$vo.event_user_card_type}</td>
+			<td>{$vo.event_user_card}</td>
+			<td>{$vo.event_user_chadian}</td>
+			<td>{$vo.event_user_state}</td>
+			<td>{$vo.event_user_addtime|format_to_time}</td>
+			
+		<td>
+			<a href="{:U('field/event_user/event_user_edit', array('event_user_id'=>$vo['event_user_id']))}">修改</a> | 
+			<a href="javascript:void(0);" onclick="mod_delete_one('{:U('field/event_user/event_user_delete_action')}','{$vo['event_user_id']}');">删除</a>
+		</td>
+	</tr>
+	</volist>
+    </table>
+	  <php>}else{</php>
+			<div class="no_data">
+				<img src="/skin/images/no_data.gif" align="absmiddle"> <span>没有赛事用户... </span>
+			</div>
+	 <php>}</php>
+  </div>
+
+  <div class="Toolbar_inbox">
+	<div class="page right">{$pages}</div>
+
+	<a href="{:U('field/event_user/event_user_add',array('event_id'=>get('event_id')))}" class="btn_a"><span>添加赛事用户</span></a>
+	<a href="javascript:void(0);" class="btn_a"  onclick="mod_delete_batch('{:U('field/event_user/event_user_delete_action')}','mod_table');"><span>批量删除</span></a>
+
+
+	<div class="clear"></div>
+  </div>
+</div>
+
+<script>
+	$(document).ready(function(){
+		$("tr[overstyle='on']").hover(
+		  function ()
+		  {
+		    $(this).addClass("bg_hover");
+		  },
+		  function (){
+		    $(this).removeClass("bg_hover");
+		  }
+		);
+	});
+</script>
+
+
+<include file="../public/_footer" />
