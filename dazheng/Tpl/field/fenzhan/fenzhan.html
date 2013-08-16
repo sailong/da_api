@@ -78,11 +78,11 @@
 			
 			 
 			<a href="{:U('wap/baofen/login', array('fenzhan_id'=>$vo['fenzhan_id']))}" target="_blank">报分入口</a> 
-			  | 
-
+			|
+			<a href="{:U('field/fenzhan/jinji', array('event_id'=>$event_id,'fenzhan_id'=>$vo['fenzhan_id']))}" >自动晋级</a> 
+			|
 			<a href="{:U('field/baofen_user/baofen_user',array('event_id'=>$event_id,'fenzhan_id'=>$vo['fenzhan_id']))}">报分员管理</a> 
-			  | 
-			
+			| 
 			<a href="{:U('field/fenzhan/fenzhan_edit', array('event_id'=>$event_id,'fenzhan_id'=>$vo['fenzhan_id']))}">修改</a> | 
 			
 			<a href="javascript:void(0);" onclick="mod_delete_one('{:U('field/fenzhan/fenzhan_delete_action')}','{$vo['fenzhan_id']}');">删除</a>

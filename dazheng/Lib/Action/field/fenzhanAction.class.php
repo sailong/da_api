@@ -776,6 +776,83 @@ class fenzhanAction extends field_publicAction
 		
 	}
 	
+	
+	public function jinji()
+	{
+		$this->assign('fenzhan_on',1);
+		
+		$fenzhan=D('fenzhan_tbl')->fenzhan_list_pro(" and event_id='".get("event_id")."' "); 
+		$this->assign('fenzhan',$fenzhan['item']);
+		
+		
+		$this->display();
+	}
+	
+	
+	
+	public function jinji_action()
+	{
+		
+		if(post('next_fenzhan_id') && post('fenzhan_id') && post('jinji_par'))
+		{
+			print_r($_POST);
+			echo "<hr>";
+			//del old
+			$ress=M()->query("delete from tbl_event_apply where fenzhan_id='".post('next_fenzhan_id')."' ");
+			$sql="insert tbl_event_apply(parent_id,event_id,fenzhan_id,field_uid,uid,event_user_id,event_apply_realname,event_apply_sex,event_apply_card,event_apply_chadian,event_apply_state,event_apply_addtime) select parent_id,event_id,".post('next_fenzhan_id').",field_uid,uid,event_user_id,event_apply_realname,event_apply_sex,event_apply_card,event_apply_chadian,event_apply_state,event_apply_addtime from tbl_event_apply where fenzhan_id ='".post('fenzhan_id')."' ";
+			$res=M()->query($sql);
+			//echo $sql;
+			
+			
+			$list=M()->query("select event_apply_id,event_user_id from tbl_event_apply where fenzhan_id='".post('next_fenzhan_id')."'  ");
+			for($i=0; $i<count($list); $i++)
+			{
+				$ju_par=M()->query("select baofen_id,total_sum_ju from tbl_baofen where event_user_id='".$list[$i]['event_user_id']."' and fenzhan_id='".post('fenzhan_id')."' and total_sum_ju<='".post('jinji_par')."' and status>=0 order by lun desc limit 1  ");
+				if($ju_par[0]['baofen_id'])
+				{
+					$up=M()->query("update tbl_event_apply set total_sum_ju='".$ju_par[0]['total_sum_ju']."' where event_apply_id='".$list[$i]['event_apply_id']."' ");
+					echo "update tbl_event_apply set total_sum_ju='".$ju_par[0]['total_sum_ju']."' where event_apply_id='".$list[$i]['event_apply_id']."' ";
+					echo "<hr>";
+				}
+				else
+				{
+					$up=M()->query("delete from tbl_event_apply where event_apply_id='".$list[$i]['event_apply_id']."' ");
+					echo "delete from tbl_event_apply where event_apply_id='".$list[$i]['event_apply_id']."' ";
+					echo "<hr>";
+				}
+				
+			}
+			
+			/*
+			$fenzhan_info=M()->query("select fenzhan_id,fenzhan_lun from tbl_fenzhan where fenzhan_id='".post('next_fenzhan_id')."' ");
+			$sql="insert tbl_event_apply(parent_id,event_id,fenzhan_id,field_uid,uid,event_user_id,event_apply_realname,event_apply_sex,event_apply_card,zong_score,total_sum_ju,addtime,dateline,source,lun,status ) select uid,event_user_id,realname,event_id,sid,par,".post('next_fenzhan_id').",field_id,fenzu_id,zong_score,total_sum_ju,addtime,dateline,source,".$fenzhan_info[0]['fenzhan_lun'].",0 from tbl_baofen where total_sum_ju<='".post('jinji_par')."' and fenzhan_id='".post('fenzhan_id')."' and status>=0 ;";
+			*/
+			$ress=M()->query("update tbl_baofen set status='-4' where total_sum_ju>'".post('jinji_par')."' and fenzhan_id='".post('fenzhan_id')."' and status>=0 ");
+			
+			$this->success("处理成功",U('field/fenzhan/fenzhan',array('event_id'=>post('event_id'))));
+			
+		}
+		else
+		{
+			$this->error("参数不完整");
+		}
+		
+	}
+	
+	
+	public function baofen_delete_action()
+	{
+		if(post("ids"))
+		{
+			$ids_arr=explode(",",post("ids"));
+			for($i=0; $i<count($ids_arr); $i++)
+			{
+				$res=M("baofen")->where("baofen_id=".$ids_arr[$i])->delete();
+			}
+			echo "succeed^删除成功";
+		}
+	}
+	
 
 	
 
