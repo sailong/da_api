@@ -330,7 +330,7 @@ if($ac=="ticket_detail")
 	if(empty($ticket)){
 		api_json_result(1,1,"缺少参赛ticket_id",$data);exit;
 	}
-	$detail_data=DB::fetch_first("select ticket_id,ticket_name,ticket_price,ticket_ren_num,ticket_num,ticket_pic,ticket_starttime,ticket_endtime,ticket_type,ticket_times,ticket_content,ticket_addtime from tbl_ticket where ticket='".$ticket."'");
+	$detail_data=DB::fetch_first("select ticket_id,ticket_name,ticket_price,ticket_ren_num,ticket_num,ticket_pic,ticket_starttime,ticket_endtime,ticket_type,ticket_times,ticket_content,ticket_addtime from tbl_ticket where ticket_id='".$ticket."'");
 	$detail_data['ticket_pic']=$site_url."/".$detail_data['ticket_pic'];
 	$detail_data['ticket_starttime']=date("Y年m月d日",$detail_data['ticket_starttime']);
 	$detail_data['ticket_endtime']=date("Y年m月d日",$detail_data['ticket_endtime']);
@@ -338,9 +338,7 @@ if($ac=="ticket_detail")
 	if($detail_data)
 	{
 		$data['title'] = "data_detail";
-		$data['data']=array(
-		  'data_detail'=>$detail_data,
-		);
+		$data['data']=$detail_data;
 		//print_r($data);
 		api_json_result(1,0,'门票详情',$data);
 	}
