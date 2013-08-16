@@ -147,11 +147,12 @@ class eventAction extends AdminAuthAction
 
 	public function event_edit_action()
 	{
-		if(M()->autoCheckToken($_POST))
-		{
+		//if(M()->autoCheckToken($_POST))
+		//{
 			$data["event_id"]=post("event_id");
 			$data["event_uid"]=post("event_uid");
 			$data["event_name"]=post("event_name");
+			
 
 			if($_FILES["event_logo"]["error"]==0 || $_FILES["event_timepic"]["error"]==0 || $_FILES["event_zhutui_pic"]["error"]==0)
 			{
@@ -218,6 +219,11 @@ class eventAction extends AdminAuthAction
 			$data["event_url"]=post("event_url");
 			$data["event_go_action"]=post("event_go_action");
 			$data["event_go_value"]=post("event_go_value");
+
+			print_r($_FIELS);
+			echo "<hr>";
+			print_r($data);
+			/*
 			$list=M("event")->save($data);
 			if($list!=false)
 			{
@@ -232,6 +238,7 @@ class eventAction extends AdminAuthAction
 		{
 			$this->error("参数错误或来路非法","/");
 		}
+		*/
 
 	}
 

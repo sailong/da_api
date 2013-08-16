@@ -521,7 +521,7 @@ if($ac=='rank')
 					{
 						$fzid = DB::result_first("select fenzhan_id from tbl_baofen where event_id='$sid' and lun=$lun_num ");
 					
-						$query = DB::query(" SELECT id,uid,lun,event_id,total_score,zong_score,score,par,tianshu,total_sum_ju,event_apply_id,username,event_user_id ,status,dateline,jiadong_status FROM (select event_id,baofen_id as id,uid,lun,total_score,zong_score,score,par,to_days(FROM_UNIXTIME(dateline))-to_days(now()) as tianshu,total_sum_ju ,total_ju_par,total_ju_par1,total_ju_par2,total_ju_par3,event_apply_id,realname,realname as username,event_user_id,status ,dateline,jiadong_status from tbl_baofen where event_id=$sid and source='ndong' order by status asc,total_sum_ju asc,total_score asc,tianshu asc) as t2 group by event_user_id order by status desc,total_sum_ju asc,total_score asc,tianshu asc limit  0,$limit");
+						$query = DB::query(" SELECT id,uid,lun,event_id,total_score,zong_score,score,par,tianshu,total_sum_ju,event_apply_id,username,event_user_id ,status,dateline,jiadong_status FROM (select event_id,baofen_id as id,uid,lun,total_score,zong_score,score,par,to_days(FROM_UNIXTIME(dateline))-to_days(now()) as tianshu,total_sum_ju ,total_ju_par,total_ju_par1,total_ju_par2,total_ju_par3,event_apply_id,realname,realname as username,event_user_id,status ,dateline,jiadong_status from tbl_baofen where event_id=$sid and source='ndong' order by status asc,total_sum_ju asc,jiadong_status desc,total_score asc,tianshu asc) as t2 group by event_user_id order by status desc,total_sum_ju asc,jiadong_status desc,total_score asc,tianshu asc limit  0,$limit");
 
 					}
 					$i=0;

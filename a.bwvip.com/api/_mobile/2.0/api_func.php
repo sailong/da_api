@@ -157,7 +157,7 @@ function dong_color($s_arr,$p_arr)
 				{
 					$c_arr[$i]=5;
 				}
-				else if($s_arr[$i]-$p_arr[$i]==-2)
+				else if($s_arr[$i]-$p_arr[$i]==-2 || $s_arr[$i]-$p_arr[$i]==-3)
 				{
 					$c_arr[$i]=6;
 				}
