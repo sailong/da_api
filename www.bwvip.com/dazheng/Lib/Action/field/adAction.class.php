@@ -39,6 +39,9 @@ class adAction extends field_publicAction
 	{
 		$page_list=select_dict(14,"select");
 		$this->assign("page_list",$page_list);
+		
+		$event=D('event')->event_select_pro(" and field_uid='".$_SESSION['field_uid']."' ");
+		$this->assign('event',$event['item']);
 
 		$this->assign("page_title","添加广告");
     	$this->display();
@@ -95,8 +98,8 @@ class adAction extends field_publicAction
 			$data["ad_page"]=post("ad_page");
 			$data["ad_url"]=post("ad_url");
 			$data["ad_sort"]=post("ad_sort");
+			$data["event_id"]=post("event_id");
 			$data["field_uid"]=$_SESSION['field_uid'];
-			
 			
 			$data["ad_state"]=1;
 			$data["ad_addtime"]=time();
@@ -125,6 +128,9 @@ class adAction extends field_publicAction
 		{
 			$data=M("ad")->where("ad_id=".intval(get("ad_id")))->find();
 			$this->assign("data",$data);
+			
+			$event=D('event')->event_select_pro(" and field_uid='".$_SESSION['field_uid']."' ");
+			$this->assign('event',$event['item']);
 
 			$page_list=select_dict(14,"select");
 			$this->assign("page_list",$page_list);
@@ -191,6 +197,7 @@ class adAction extends field_publicAction
 			$data["ad_page"]=post("ad_page");
 			$data["ad_url"]=post("ad_url");
 			$data["ad_sort"]=post("ad_sort");
+			$data["event_id"]=post("event_id");
 			
 			$list=M("ad")->save($data);
 			if($list!=false)

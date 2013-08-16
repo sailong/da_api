@@ -49,8 +49,8 @@ class field_aboutModel extends Model{
 			}
 			if($data['item'][$i]['about_pic'])
 			{
-				$extname=end(explode(".",$data['item'][$i]['about_pic']));
-				$data['item'][$i]['about_pic_small']=$data['item'][$i]['about_pic'].'_small.'.$extname;
+				//$extname=end(explode(".",$data['item'][$i]['about_pic']));
+				$data['item'][$i]['about_pic_small']=$data['item'][$i]['about_pic'];//$data['item'][$i]['about_pic'].'_small.'.$extname;
 			}
 		}
 		$data["total"] = M("field_about")->where($where.$bigwhere)->count();

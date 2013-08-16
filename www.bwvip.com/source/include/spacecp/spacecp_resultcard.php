@@ -25,17 +25,15 @@ if($operation == 'save') {
 $array = array('par', 'score', 'pars');
 	$arr = $_POST;
 	$arr['total_score'] = $arr['score']['20'];
+	$arr['total_ju_par'] = $arr['pars']['20'];
 	foreach($arr as $key=>$val) {
 		if(in_array($key, $array)) {
 			$arr[$key] = implode('|', $val);
 		}
 	}
+	 
 	$arr['dateline'] = strtotime($arr['dateline']);
-	//$arr['uid'] = $_G['uid'];
-	$arr['source'] = 'waika';
-	$arr['addtime'] = time();
-	unset($arr['profilesubmitbtn']);
-
+	//$arr['uid'] = $_G['uid'];  
 	$dir = 'uploadfile/myscore/'.date('Ym');
 	if(!is_dir($dir)) {
 		mkdir($dir, 0777);
@@ -52,8 +50,38 @@ $array = array('par', 'score', 'pars');
 	$info = move_uploaded_file($tmp, $file);
 	$arr['uploadimg'] = $info ? $file : ($_POST['scoreimg'] ? $_POST['scoreimg'] : '');
 	unset($arr['scoreimg']);
+  
+	$cave =  explode('|', $arr['score']);
+  
+	$uid=$arr['uid'];
+    $ismine=0;
+    $field_id=$arr['fuid'];
+    $tee=$arr['tee'];
+    $sid=$arr['sais_id'];
+    $score=$arr['score']; 
+    $par=$arr['par']; 
+    $pars=$arr['pars']; 
+    $dateline=$arr['dateline'];
+    $addtime=time();
+	$total_score=$arr['total_score'];
+	$total_ju_par=$arr['total_ju_par']; 
+    $par=$par;
+	$status=1;
+	$uploadimg=$arr['uploadimg'];
+    $dong_names=$dong_names;
+    $source='waika';
+    $is_edit='Y';
+    $realname = DB::result_first("SELECT realname FROM ".DB::table('common_member_profile')." WHERE uid='$uid'"); 
+    $fenzhan_id = DB::result_first("SELECT fenzhan_id FROM tbl_fenzhan WHERE field_id='$field_id'"); 
 	if($do == 'scoreadd') {
-		$row = DB::insert('common_score', $arr);
+		//$row = DB::insert('common_score', $arr);
+		
+		$row = DB::query("
+INSERT into tbl_baofen (`uid` ,  `realname`,  `sid`,`event_id`,  `fenzhan_id` ,  `field_id`, dong_names,source, is_edit,status,  `tee`,`score`, `start_time`,  `dateline`  ,`addtime`,`total_score`,`par`,`pars`,`uploadimg`,`cave_1`,`cave_2`,`cave_3`,`cave_4`,`cave_5`,`cave_6`,`cave_7`,`cave_8`,`cave_9`,`cave_10`,`cave_11`,`cave_12`,`cave_13`,`cave_14`,`cave_15`,`cave_16`,`cave_17`,`cave_18`,total_ju_par
+
+)values($uid ,  '$realname',  '$sid','$sid','$fenzhan_id','$field_id','$dong_names','$source','$is_edit','$status','$tee','$score','$start_time','$dateline','$addtime','$total_score','$par','$pars','$uploadimg','cave[0]','cave[1]','$cave[2]','$cave[3]','$cave[4]','$cave[5]','$cave[6]','$cave[7]','$cave[8]','$cave[10]','$cave[11]','$cave[12]','$cave[13]','$cave[14]','$cave[15]','$cave[16]','$cave[17]','$cave[18]','$total_ju_par'
+)");
+           	
 		$url = '/home.php?mod=spacecp&uid=1889777&ac=resultcard';
 	}   else {
 		showmessage('非法操作', '/home.php?mod=spacecp&uid=1889777&ac=resultcard');
@@ -75,20 +103,12 @@ $start = ($page-1)*$perpage;
 $guess_num = 0;
 $where ="";
 
-
+$fuid =DB::fetch_first("select fuid from ".DB::table('home_apply')." where uid='".$_G['uid']."' ");
 
 /*成绩卡的状态*/
 $card_status = array('0'=>'未填写','1'=>'待审核','2'=>'已审核');
 
 /*查询球童所在的球场 和 球场下有成绩卡的球星 2012/4/4 angf */
-
-if($_G['uid']==1899890){
-	//地区
-$query = DB::query('select * from '.DB::table('common_district')." where upid=0");
-while($value = DB::fetch($query)) {
-	$area[] = $value;
-}
-
  
 foreach($array as $key=>$val) {
 	$par[] = $val;
@@ -117,26 +137,45 @@ for($i = 1; $i <= 21; $i++) {
 	$num[] = $i;
 }
 
-	$where =" where cs.fuid=1186  and cs.source='waika' "; 
-$qiut_form_qiuc = DB::query("SELECT cs.id, cs.uid,cs.fuid,cs.dateline,cs.status,cs.total_score,cmp.realname,cmp.mobile FROM ". DB::table('common_score')." as cs LEFT JOIN ".DB::table('common_member_profile')." as cmp ON cmp.uid=cs.uid  " .$where. "   ORDER BY cs.id desc limit ".$start.",".$perpage." "); 
+if($_G['uid']==1899890){
+	//地区
+$query = DB::query('select * from '.DB::table('common_district')." where upid=0");
+			while($value = DB::fetch($query)) {
+				$area[] = $value;
+			  }
+
+
+/*	$where =" where cs.fuid=1186  and cs.source='waika' "; 
+$sql = "SELECT cs.id, cs.uid,cs.fuid,cs.dateline,cs.status,cs.total_score,cmp.realname,cmp.mobile FROM ". DB::table('common_score')." as cs LEFT JOIN ".DB::table('common_member_profile')." as cmp ON cmp.uid=cs.uid  " .$where. "   ORDER BY cs.id desc limit ".$start.",".$perpage." "; 
 }
 else
 {	
-$qiut_form_qiuc = DB::query("SELECT sc.id,qc.realname as qc_name ,ap.fuid,cmp.realname,cmp.uid,sc.dateline,sc.id,sc.tee,sc.status FROM ".DB::table('common_score')." sc  LEFT JOIN ".DB::table('home_apply')." ap  ON ap.fuid=sc.fuid LEFT JOIN ".DB::table('common_member_profile')." as cmp ON cmp.uid=sc.uid LEFT JOIN ".DB::table('common_member_profile')." as qc ON qc.uid=sc.fuid where ap.uid='".$_G['uid']."' and sc.ismine=0 order by sc.id desc limit ".$start.",".$perpage." "); 	
-}  
+$sql = "SELECT sc.id,qc.realname as qc_name ,ap.fuid,cmp.realname,cmp.uid,sc.dateline,sc.id,sc.tee,sc.status FROM ".DB::table('common_score')." sc  LEFT JOIN ".DB::table('home_apply')." ap  ON ap.fuid=sc.fuid LEFT JOIN ".DB::table('common_member_profile')." as cmp ON cmp.uid=sc.uid LEFT JOIN ".DB::table('common_member_profile')." as qc ON qc.uid=sc.fuid where ap.uid='".$_G['uid']."' and sc.ismine=0 order by sc.id desc limit ".$start.",".$perpage." "; 	
+} */ 
+
+$where =" where cs.field_id=1186  and cs.source='waika' "; 
+$sql="SELECT cs.baofen_id, cs.uid,cs.field_id,cs.dateline,cs.status,cs.total_score,cmp.realname,cmp.mobile FROM tbl_baofen as cs LEFT JOIN ".DB::table('common_member_profile')." as cmp ON cmp.uid=cs.uid  " .$where. "   ORDER BY cs.baofen_id desc limit ".$start.",".$perpage." ";
+
+}
+else
+{	
+$sql="SELECT sc.baofen_id,qc.realname as qc_name ,ap.fuid,cmp.realname,cmp.uid,sc.dateline,sc.tee,sc.status FROM tbl_baofen as sc  LEFT JOIN ".DB::table('home_apply')." ap  ON ap.fuid=sc.field_id LEFT JOIN ".DB::table('common_member_profile')." as cmp ON cmp.uid=sc.uid LEFT JOIN ".DB::table('common_member_profile')." as qc ON qc.uid=sc.field_id where ap.uid='".$_G['uid']."'   order by sc.baofen_id desc limit ".$start.",".$perpage." ";
+ 
+}   
+$qiut_form_qiuc = DB::query($sql); 	 
 while($result = DB::fetch($qiut_form_qiuc)){
-    $card_info[$result['id']]=$result;
-	$card_info[$result['id']]['image'] =avatar($result['uid'], 'middle', true, false,false);
-	$card_info[$result['id']]['status'] = $card_status[$result['status']];
-	$card_info[$result['id']]['dateline'] =date('Y-m-d H:i:s',$result['dateline']); 	
-	$result['qc_name']=getrname($result['fuid']);
+    $card_info[$result['baofen_id']]=$result;
+	$card_info[$result['baofen_id']]['image'] =avatar($result['uid'], 'middle', true, false,false);
+	$card_info[$result['baofen_id']]['status'] = $card_status[$result['status']];
+	$card_info[$result['baofen_id']]['dateline'] =date('Y-m-d H:i:s',$result['dateline']); 	
+	$result['qc_name']=getrname($result['field_id']);
 	$fuid = $result['fuid'];
 }
 if($_G['uid']==1899890){
-	$where =" where cs.id>0  and cs.source='waika' "; 
-	$sql="SELECT cs.id, cs.uid,cs.dateline,cs.status,cs.total_score,cmp.realname,cmp.mobile FROM ". DB::table('common_score')." as cs LEFT JOIN ".DB::table('common_member_profile')." as cmp ON cmp.uid=cs.uid  " .$where. "   ORDER BY cs.id desc";
+	$where =" where cs.baofen_id>0  and cs.source='waika' "; 
+	$sql="SELECT cs.baofen_id, cs.uid,cs.dateline,cs.status,cs.total_score,cmp.realname,cmp.mobile FROM ". DB::table('common_score')." as cs LEFT JOIN ".DB::table('common_member_profile')." as cmp ON cmp.uid=cs.uid  " .$where. "   ORDER BY cs.baofen_id desc";
 }else{
-	$sql="select count(*) as num from ".DB::table('common_score')." where fuid='".$fuid."'";}
+	$sql="select count(*) as num from tbl_baofen where field_id='".$fuid."' and source='waika'";}
 
 
 $qc_sql =DB::fetch_first($sql);

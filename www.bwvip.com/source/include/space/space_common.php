@@ -100,6 +100,8 @@ $caves = explode('|',$arr['score'] );
 			$cave_16=$caves[16];
 			$cave_17=$caves[17];
 			$cave_18=$caves[18];
+			
+	        $total_ju_par = $arr['pars']['20'];
 			$uploadimg=$arr['uploadimg'];
             $total_score=$arr['total_score'];
             $score=$arr['score'];
@@ -111,7 +113,7 @@ $caves = explode('|',$arr['score'] );
             $total_birdie=$arr['total_birdie']; 
             $total_bogi=$arr['total_bogi']; 
             $total_doubles=$arr['total_doubles'];     
- 	$sql = "update tbl_baofen set  cave_1=$cave_1,  cave_2=$cave_2,  cave_3=$cave_3,  cave_4=$cave_4,  cave_5=$cave_5,  cave_6=$cave_6,  cave_7=$cave_7,  cave_8=$cave_8,  cave_9=$cave_9,  cave_10=$cave_10,  cave_11=$cave_11,  cave_12=$cave_12,  cave_13=$cave_13,  cave_14=$cave_14,  cave_15=$cave_15,  cave_16=$cave_16,  cave_17=$cave_17,  cave_18=$cave_18,uploadimg='$uploadimg',total_score='$total_score',score='$score',pars='$pars',
+ 	$sql = "update tbl_baofen set  cave_1=$cave_1,  cave_2=$cave_2,  cave_3=$cave_3,  cave_4=$cave_4,  cave_5=$cave_5,  cave_6=$cave_6,  cave_7=$cave_7,  cave_8=$cave_8,  cave_9=$cave_9,  cave_10=$cave_10,  cave_11=$cave_11,  cave_12=$cave_12,  cave_13=$cave_13,  cave_14=$cave_14,  cave_15=$cave_15,  cave_16=$cave_16,  cave_17=$cave_17,  cave_18=$cave_18,uploadimg='$uploadimg',total_score='$total_score',total_ju_par='$total_ju_par',score='$score',pars='$pars',
 	status='$status',flag='$flag',sid='$sid',total_eagle='$total_eagle',total_birdie='$total_birdie',total_bogi='$total_bogi',total_doubles='$total_doubles' where uid=$uid and baofen_id=$baofen_id ";
 	$row = DB::query ( $sql );
 

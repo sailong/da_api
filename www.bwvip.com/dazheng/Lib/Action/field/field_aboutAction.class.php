@@ -27,7 +27,9 @@ class field_aboutAction extends field_publicAction
         }
 	    
 		$list=D("field_about")->field_about_list_pro(" and field_uid='".$_SESSION['field_uid']."' ");
-
+		
+		//echo '<pre>';
+		//var_dump($list);
 		$this->assign("list",$list["item"]);
 		$this->assign("pages",$list["pages"]);
 		$this->assign("total",$list["total"]);
@@ -76,12 +78,12 @@ class field_aboutAction extends field_publicAction
 			$data["language"]=post("language");
 			$data["about_more"]=post("about_more");
 			$data["about_addtime"]=$now_time;
-			if(!empty($_FILES))
+			$pic_arr = array();
+			$uploadinfo=upload_file("upload/about","png,jpg,jpeg,gif,bmp,tiff,psd");
+			if(!empty($uploadinfo))
 			{
-			    $pic_arr = array();
-		        $uploadinfo=upload_file("upload/about","png,jpg,jpeg,gif,bmp,tiff,psd");
 		        foreach($uploadinfo as $key=>$val) {
-		            $key_name_arr = explode('_',$val['key']);
+		            $key_name_arr = explode('_',$val['up_name']);
 		            $key_id = end($key_name_arr);
 		            $pic_arr[$key_id]['pic_url']=$val["savepath"].$val["savename"];
 		            $pic_arr[$key_id]['iphone4_pic_url']=$val["savepath"].$val["savename"];
@@ -91,8 +93,8 @@ class field_aboutAction extends field_publicAction
 			    unset($uploadinfo);
 				
 			}
-			
-			$data["about_pic"] = !empty($pic_arr[0]['pic_url']) ? $pic_arr[0]['pic_url'] : '';
+			$first_pic = reset($pic_arr);
+			$data["about_pic"] = !empty($first_pic['pic_url']) ? $first_pic['pic_url'] : '';
 			$list=M("field_about")->add($data);
 			if($list!=false)
 			{
@@ -177,13 +179,15 @@ class field_aboutAction extends field_publicAction
 			$data["language"]=post("language");
 			$data["about_sort"]=post("about_sort");
 			$data["about_more"]=post("about_more");
-			if(!empty($_FILES))
+			
+			$uploadinfo=upload_file("upload/about","png,jpg,jpeg,gif,bmp,tiff,psd");
+			
+			$pic_arr = array();
+			$add_pic_arr = array();
+			if(!empty($uploadinfo))
 			{
-		        $uploadinfo=upload_file("upload/about","png,jpg,jpeg,gif,bmp,tiff,psd");
-		        $pic_arr = array();
-		        $add_pic_arr = array();
 		        foreach($uploadinfo as $key=>$val) {
-		            $key_name_arr = explode('_',$val['key']);
+		            $key_name_arr = explode('_',$val['up_name']);
 		            $pic_id = end($key_name_arr);
 		            if($pic_id == 'addpic'){
 		                $add_pic_arr[$key_name_arr[2]]['about_id']=$about_id;
@@ -205,6 +209,7 @@ class field_aboutAction extends field_publicAction
 			    unset($uploadinfo);
 				
 			}
+			
 			if(!empty($add_pic_arr)) {
 			    foreach($add_pic_arr as $key2=>$val2) {
 			        $res = M('field_about_pic')->add($val2);

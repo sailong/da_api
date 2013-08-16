@@ -81,6 +81,18 @@
 					<th><font color="red">*</font>排序：</th>
 					<td><input type="text" name="ad_sort" id="ad_sort" class="mod_input2" style="width:300px;" value="{$data.ad_sort}"></td>
 				</tr>
+				<tr>
+					<th><font color="red">*</font>所属赛事：</th>
+					<td>
+						<select name="event_id">
+							<option value="">请选择</option>
+							<volist id="vo" name="event">
+							<option value="{$vo.event_id}">{$vo.event_name}</option>
+							</volist>
+						</select>
+						<script>set_select_value(document.act_form.event_id,'{$data.event_id}');</script>
+					</td>
+				</tr>
 				
 		</tbody>
 		<tfoot>

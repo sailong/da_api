@@ -35,7 +35,6 @@ if($ac=="list")
 	$list=uc_pm_list($uid,$page,$page_size,$folder,$filter,0);
 	foreach($list['data'] as $pm)
 	{
-		
 		//print_r($pm);
 		//echo "<hr>";
 		$row['pmid']=$pm['pmid'];
@@ -179,5 +178,63 @@ if($ac=="delete_huihua")
 	}
 }
 
+
+
+//总经理信箱  /api/field.php?mod=message&ac=ceo_message&uid=1&touid=3802649&field_uid=1186
+if($ac=="ceo_message")
+{
+	$uid=$_G['gp_uid'];
+	$to_uid=$_G['gp_field_uid'];
+	
+	$photo=$site_url."/uc_server/avatar.php?uid=".$to_uid."&size=big";
+
+	//消息内容
+	//print_r($list);
+	$list = uc_pm_view($to_uid,0,$uid,5, $page, $page_size, $type, 0);
+	foreach($list as $pm)
+	{
+		//print_r($pm);
+		//echo "<hr>";
+		$row['pmid']=$pm['pmid'];
+		$row['uid']=$pm['authorid'];
+		$row['to_uid']=$pm['touid'];
+		$row['touxiang']=$site_url."/uc_server/avatar.php?uid=".$pm['authorid']."&size=small";
+		$row['title']=$pm['subject'];
+		$row['content']=$pm['message'];
+		$row['date']=date('Y年m月d日', $pm['dateline']);
+		$row['time']=date('H:i', $pm['dateline']);
+		
+		$list_data[]=array_default_value($row);
+	}
+    if(empty($list_data))
+	{
+        $list_data = null;
+    }
+	$data['title']		= "data";
+	$data['data']		= array(
+		'photo'=>$photo,
+		'list_data'=>$list_data,
+	);
+	//print_r($data);
+	api_json_result(1,0,$app_error['event']['10502'],$data);
+
+	
+}
+
+
+function get_plid($uid,$to_uid)
+{
+	$plid=0;
+	$list=uc_pm_list($uid,1,500,'outbox',$filter,0);
+	foreach($list['data'] as $pm)
+	{
+		if($pm['uid']==$uid && $pm['touid']==$to_uid)
+		{
+			$plid=$pm['pmid'];
+			break;
+		}
+	}
+	return $plid;
+}
 
 ?>

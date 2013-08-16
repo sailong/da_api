@@ -66,8 +66,9 @@ class push_messageAction extends AdminAuthAction
 			$ext_action=post("ext_action");
 			$ext_id=post("ext_id");
 			$ext_title=post("ext_title");
+			$message_extinfo=array('action'=>$ext_action,'id'=>$ext_id,'title'=>$ext_title);
 			
-			
+			/*
 			if(post("receiver_type")==3)
 			{
 				$message_extinfo=array('action'=>"system_msg");	
@@ -76,6 +77,7 @@ class push_messageAction extends AdminAuthAction
 			{
 				$message_extinfo=array('action'=>$ext_action,'id'=>$ext_id,'title'=>$ext_title);
 			}
+			*/
 			
 			//$msg_content = json_encode(array('n_builder_id'=>0, 'n_title'=>urlencode($n_title), 'n_content'=>urlencode($n_content),'n_extras'=>$message_extinfo));
 			$msg_content = json_encode(array('n_title'=>urlencode($n_title), 'n_content'=>urlencode($n_content),'n_extras'=>$message_extinfo));
@@ -83,7 +85,8 @@ class push_messageAction extends AdminAuthAction
 			$data["message_content"]=$msg_content;
 			$data["receiver_type"]=post("receiver_type");
 			$data['message_pic']='';
-			if($_FILES["message_pic"]['error'] < 0) {
+			if($_FILES["message_pic"]['error'] < 0) 
+			{
 			    $file_path="/upload/xiaoxi_pic/";
         		$time_name = time();
     			if(!file_exists(WEB_ROOT_PATH.$file_path))
@@ -110,6 +113,7 @@ class push_messageAction extends AdminAuthAction
 			$data["message_errorcode"]="";
 			$data["message_errormsg"]="";
 			$data["message_addtime"]=time();
+			//print_r($data);
 			$list=M("push_message")->add($data);
 
 			if($list!=false)

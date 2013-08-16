@@ -39,7 +39,6 @@ class UploadFile {//类定义开始
 
     // 使用对上传图片进行缩略图处理
     public $thumb   =  false;
-    public $if_resize   =  false;
     // 图库类包路径
     public $imageClassPath = 'ORG.Util.Image';
     // 缩略图最大宽度
@@ -157,25 +156,12 @@ class UploadFile {//类定义开始
                 $thumbSuffix = explode(',',$this->thumbSuffix);
                 $thumbFile			=	explode(',',$this->thumbFile);
                 $thumbPath    =  $this->thumbPath?$this->thumbPath:$file['savepath'];
-				$if_resize			=	$this->if_resize;
                 // 生成图像缩略图
                 import($this->imageClassPath);
                 $realFilename  =  $this->autoSub?basename($file['savename']):$file['savename'];
-                for($i=0,$len=count($thumbWidth); $i<$len; $i++)
-				{
-                    $thumbname=$thumbPath.$thumbPrefix[$i].substr($realFilename,0,strrpos($realFilename, '.')).$thumbSuffix[$i].'.'.$file['extension'];
-					
-					if($if_resize)
-					{
-						Image::thumb($filename,$thumbname,'',$thumbWidth[$i],$thumbHeight[$i],true,true);
-						//echo " if_resize true  <hr>";
-					}
-					else
-					{
-						Image::thumb($filename,$thumbname,'',$thumbWidth[$i],$thumbHeight[$i],true);
-						//echo " if_resize false  <hr>";
-					}
-                    
+                for($i=0,$len=count($thumbWidth); $i<$len; $i++) {
+                    $thumbname	=	$thumbPath.$thumbPrefix[$i].substr($realFilename,0,strrpos($realFilename, '.')).$thumbSuffix[$i].'.'.$file['extension'];
+                    Image::thumb($filename,$thumbname,'',$thumbWidth[$i],$thumbHeight[$i],true);
                 }
                 if($this->thumbRemoveOrigin) {
                     // 生成缩略图之后删除原图
@@ -231,11 +217,13 @@ class UploadFile {//类定义开始
         // 获取上传的文件信息
         // 对$_FILES数组信息处理
         $files	 =	 $this->dealFiles($_FILES);
+        
         foreach($files as $key => $file) {
             //过滤无效的上传
             if(!empty($file['name'])) {
                 //登记上传文件的扩展信息
-                $file['key']          =  $key;
+				$file['up_name']    =  $file['up_name'];
+                $file['key']        =  $key;
                 $file['extension']  = $this->getExt($file['name']);
                 $file['savepath']   = $savePath;
                 $file['savename']   = $this->getSaveName($file);
@@ -383,7 +371,7 @@ class UploadFile {//类定义开始
     private function dealFiles($files) {
        $fileArray = array();
        $n = 0;
-       foreach ($files as $file){
+       foreach ($files as $key=>$file){
            if(is_array($file['name'])) {
                $keys = array_keys($file);
                $count	 =	 count($file['name']);
@@ -393,6 +381,7 @@ class UploadFile {//类定义开始
                    $n++;
                }
            }else{
+			   $file['up_name'] = $key;
                $fileArray[$n] = $file;
                $n++;
            }
