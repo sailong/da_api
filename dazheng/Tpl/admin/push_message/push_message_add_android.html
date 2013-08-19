@@ -49,7 +49,20 @@
 							<option value="">请选择</option>
 							<option value="4">所有用户</option>
 							<option value="3"  selected>指定用户</option>
+							<option value="5">指定赛事</option>
 						</select>
+						
+					</td>
+				</tr>
+				<tr class="select_event" style="display:none;">
+					<th>赛事列表：</th>
+					<td>
+						
+					</td>
+				</tr>
+				<tr class="select_fenzhan" style="display:none;">
+					<th>分站列表：</th>
+					<td>
 						
 					</td>
 				</tr>
@@ -87,6 +100,7 @@
 							<option value="mathcenter">赛事直播</option>
 							<option value="blog_detail">博客详细页</option>
 							<option value="app_store">APP STORE</option>
+							<option value="system_msg">系统消息</option>
 						</select>
 					</td>
 				</tr>
@@ -152,14 +166,73 @@ function load_type_info(obj)
 {
 	//alert(obj);
 	$("#type_4").css("display","block");
+	$(".select_event").hide();
+	$(".select_fenzhan").hide();
+	$(".select_event td").html('');
+	$(".select_fenzhan td").html('');
 	if(obj==4)
 	{
 		$("#type_3").css("display","none");
+	}else if(obj==5){
+		$("#type_3").css("display","none");
+		var field_uid = $("#field_uid").val();
+		if(field_uid == ''){
+			alert('请选择球场');
+			return false;
+		}
+		$.ajax({
+			 type: 'GET',
+			 url: '/default.php?g=admin&m=push_message&a=get_event_list_ajax&field_uid='+field_uid,
+			 dataType: 'json',
+			 success: function(json){
+				if(json.status == 0){
+					//alert(json.info);return false;
+				}
+				var event_list_str = '<select name="event_id" id="evnet_id" style="width:100px;" onchange="load_fenzhan_list(this.value);"><option value="">请选择</option>';
+				var event_list = json.data;
+				for(var i in event_list){
+					event_list_str+= '<option value="'+event_list[i]['event_id']+'">'+event_list[i]['event_name']+'</option>';
+				}
+				event_list_str += '</select>';
+				$(".select_event td").append($(event_list_str));
+			 }
+		});
+		$(".select_event").show();
 	}
 	else
 	{
 		$("#type_3").css("display","block");
 		//$("#type_4").css("display","none");
+	}
+	
+}
+function load_fenzhan_list(event_id)
+{
+	if(event_id!='')
+	{
+		$.ajax({
+			 type: 'GET',
+			 url: '/default.php?g=admin&m=push_message&a=get_fenzhan_list_ajax&evnet_id='+event_id,
+			 dataType: 'json',
+			 success: function(json){
+				if(json.status == 0){
+					//alert(json.info);
+					return false;
+				}
+				var fenzhan_list_str = '<select name="fenzhan_id" id="fenzhan_id" style="width:100px;"><option value="">请选择</option>';
+				var fenzhan_list = json.data;
+				for(var i in fenzhan_list){
+					fenzhan_list_str+= '<option value="'+event_list[i]['event_id']+'">'+event_list[i]['event_name']+'</option>';
+				}
+				fenzhan_list_str += '</select>';
+				$(".select_fenzhan td").append($(fenzhan_list_str));
+				$(".select_fenzhan").show();
+			 }
+		});
+	}
+	else
+	{
+		$(".select_fenzhan").hide();
 	}
 	
 }
