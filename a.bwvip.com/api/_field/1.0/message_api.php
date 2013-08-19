@@ -121,7 +121,7 @@ if($ac=="view")
 		$row['pmid']=$pm['pmid'];
 		$row['uid']=$pm['authorid'];
 		$row['to_uid']=$pm['touid'];
-		$row['touxiang']=$site_url."/uc_server/avatar.php?uid=".$pm['uid']."&size=small";
+		$row['touxiang']=$site_url."/uc_server/avatar.php?uid=".$pm['authorid']."&size=small";
 		$row['title']=$pm['subject'];
 		$row['content']=$pm['message'];
 		$row['date']=date('Y年m月d日', $pm['dateline']);

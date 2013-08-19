@@ -803,7 +803,7 @@ if($ac == 'uidtomobile')
 //生成二维码成功返回路径，失败返回 false
 function erweima($phone)
 {
-	$phone = time().mt_rand(0,100);
+	$phone = mt_rand(1000000000,9999999999);
     //如果没有就生成二维码
 	include "../tool/phpqrcode/qrlib.php";
 	$prefix = "..";
@@ -833,14 +833,13 @@ function erweima($phone)
 		return false;
 	}
 }
-
 //获取随机字符串
 function get_randmod_str(){
 	$str = 'abcdABCefgD69EFhigkGHI7nm8JKpqMNrs3PQRtuS5vw4TxyU1VWzXYZ20';
     $len = strlen($str); //得到字串的长度;
 
     //获得随即生成的积分卡号
-    $s =rand(0,1);
+    $s = rand(0, 1);
     $serial = '';
 
     for($s=1;$s<=10;$s++)
@@ -853,13 +852,17 @@ function get_randmod_str(){
    $serial = strtoupper(substr(md5($serial.time()),10,10));
    if($s)
    {
-      $serial = strtoupper(substr(md5($serial),10,10));
+      $serial = strtoupper(substr(md5($serial),mt_rand(0,22),10));
    }
    
    return $serial;
+
 }
+
+
 //用户预定门票信息
-if($ac == 'free_ticket2'){
+if($ac == 'free_ticket2')
+{
 	//post: user_ticket_mobile *user_ticket_imei* ticket_id ticket_type user_ticket_realname user_ticket_sex user_ticket_age  user_ticket_address *user_ticket_company user_ticket_company_post*
 	//api生成: user_ticket_code user_ticket_codepic user_ticket_status
 	if(empty($_G['gp_phone']))
@@ -879,21 +882,34 @@ if($ac == 'free_ticket2'){
 	$user_ticket_imei = $_G['gp_phone_imei'];//手机窜号
 	$ticket_id = $_G['gp_ticket_id'];//门票ID
 	$ticket_type = $_G['gp_ticket_type'];//门票类型
-	$ticket_nums = $_G['gp_ticket_nums'];//门票数量
-	$user_ticket_realname = $_G['gp_realname'];//订票人真实姓名
-	$user_ticket_sex = $_G['gp_sex'];//性别
+	$ticket_nums = empty($_G['gp_ticket_nums']) ? 1 : $_G['gp_ticket_nums'];//门票数量
+	$user_ticket_realname = urldecode($_G['gp_realname']);//订票人真实姓名
+	$user_ticket_sex = urldecode($_G['gp_sex']);//性别
 	$user_ticket_age = $_G['gp_age'];//年龄
-	$user_ticket_address = $_G['gp_address'];//所在区域
-	$user_ticket_company = $_G['gp_company'];//所在公司
-	$user_ticket_company_post = $_G['gp_company_post'];//公司职位
+	$user_ticket_address = urldecode($_G['gp_address']);//所在区域
+	$user_ticket_company = urldecode($_G['gp_company']);//所在公司
+	$user_ticket_company_post = urldecode($_G['gp_company_post']);//公司职位
 	$user_ticket_code = get_randmod_str();//$_G['company_post'];//随机唯一窜
 	$user_ticket_addtime = time();//$_G['company_post'];//随机唯一窜
+	
+	if($ticket_id)
+	{
+		//$event_id=DB::result_first("select event_id from tbl_ticket where ticket_id='".$ticket_id."' limit 1 ");		
+		$row=DB::fetch_first("select event_id,ticket_times,ticket_starttime,ticket_endtime from tbl_ticket where ticket_id='".$ticket_id."' limit 1 ");
+		$event_id=$row['event_id'];
+		$ticket_times=$row['ticket_times'];
+		$ticket_starttime=$row['ticket_starttime'];
+		$ticket_endtime=$row['ticket_endtime']; 		
+		
+	}
+	
 	
 	//检查用户是否已提交申请
     $sql = "select user_ticket_id,ticket_id,user_ticket_codepic,user_ticket_status from tbl_user_ticket where ticket_id='{$ticket_id}' and ticket_type='{$ticket_type}' and (user_ticket_mobile='{$user_ticket_mobile}' or user_ticket_imei='{$user_ticket_imei}')";
     $list = DB::fetch_first($sql);
 	//已经索取过
-	if($list){
+	if($list)
+	{
 		$data['title'] = 'erweima';
 		$erweima_path = erweima($user_ticket_mobile);
 		if(empty($erweima_path)) {
@@ -901,7 +917,8 @@ if($ac == 'free_ticket2'){
 		}
 		$sql = "update tbl_user_ticket set user_ticket_codepic='{$erweima_path}' where user_ticket_id='{$list['user_ticket_id']}'";
 		$res = DB::query($sql);
-		if(empty($res)) {
+		if(empty($res))
+		{
 			api_json_result(1,1,"索取二维码失败",null);
 		}
 		if($ticket_type == 'BASE'){
@@ -932,33 +949,41 @@ if($ac == 'free_ticket2'){
 	//生成二维码
 	$erweima_path = erweima($user_ticket_mobile);
 	$user_ticket_codepic = $erweima_path;
+	
+	$row=explode("/",$user_ticket_codepic);
+    $user_ticket_code=str_replace(".png","",$row[4]);
 	//普通票
-	if($ticket_type=='BASE'){
+	if($ticket_type=='BASE')
+	{
 		$user_ticket_status = 1;
-		$sql = "insert into tbl_user_ticket(ticket_id,ticket_type,user_ticket_code,user_ticket_codepic,user_ticket_realname,user_ticket_sex,user_ticket_age,user_ticket_address,user_ticket_mobile,user_ticket_imei,user_ticket_company,user_ticket_company_post,user_ticket_status,user_ticket_addtime) values('{$ticket_id}','{$ticket_type}','{$user_ticket_code}','{$user_ticket_codepic}','{$user_ticket_realname}','{$user_ticket_sex}','{$user_ticket_age}','{$user_ticket_address}','{$user_ticket_mobile}','{$user_ticket_imei}','{$user_ticket_company}','{$user_ticket_company_post}','{$user_ticket_status}','{$user_ticket_addtime}')";
+		$sql = "insert into tbl_user_ticket(ticket_id,event_id,ticket_type,user_ticket_code,user_ticket_codepic,user_ticket_realname,user_ticket_sex,user_ticket_age,user_ticket_address,user_ticket_mobile,user_ticket_imei,user_ticket_company,user_ticket_company_post,user_ticket_status,user_ticket_addtime,ticket_times,ticket_starttime,ticket_endtime) values('{$ticket_id}','{$event_id}','{$ticket_type}','{$user_ticket_code}','{$user_ticket_codepic}','{$user_ticket_realname}','{$user_ticket_sex}','{$user_ticket_age}','{$user_ticket_address}','{$user_ticket_mobile}','{$user_ticket_imei}','{$user_ticket_company}','{$user_ticket_company_post}','{$user_ticket_status}','{$user_ticket_addtime}','{$ticket_times}','{$ticket_starttime}','{$ticket_endtime}')";
 		$res = DB::query($sql);
-		if($res){
-			$data['title'] = 'erweima';
+		if($res)
+		{
+			
 			$ticket_detail = DB::fetch_first("select ticket_name,ticket_price,ticket_ren_num,ticket_num,ticket_pic,ticket_starttime,ticket_endtime,ticket_times,ticket_content from tbl_ticket where ticket_id='{$ticket_id}' limit 1");
-			$ticket_detail['ticket_pic'] = $site_url.'/'.$ticket_detail['ticket_pic'];
-			$ticket_detail['ticket_starttime'] = date('Y年m月d日',$ticket_detail['ticket_starttime']);
-			$ticket_detail['ticket_endtime'] = date('Y年m月d日',$ticket_detail['ticket_endtime']);
-			$data['data'] = $site_url.$erweima_path;
-			/* array(
-						'erweima_path' => $site_url.$erweima_path;
-						'ticket_detail'=>$ticket_detail
-					); */
+			$ticket_detail['ticket_name'] = $ticket_detail['ticket_name'];
+			$ticket_detail['ticket_pic'] = $site_url.$erweima_path;
+			//$ticket_detail['ticket_starttime'] = date('Y年m月d日',$ticket_detail['ticket_starttime']);
+			//$ticket_detail['ticket_endtime'] = date('Y年m月d日',$ticket_detail['ticket_endtime']);
+			
+			$data['title'] = 'erweima';
+			$data['data'] =$ticket_detail;
 			api_json_result(1,0,"门票索取成功",$data);
 		}
 		api_json_result(1,1,"门票索取失败",null);
 	}
+	
 	//VIP票
-	if($ticket_type=='VIP'){
+	if($ticket_type=='VIP')
+	{
 		$user_ticket_status = 0;
 		
-		$sql = "insert into tbl_user_ticket(ticket_id,ticket_type,user_ticket_code,user_ticket_codepic,user_ticket_realname,user_ticket_sex,user_ticket_age,user_ticket_address,user_ticket_mobile,user_ticket_imei,user_ticket_company,user_ticket_company_post,user_ticket_status,user_ticket_addtime) values('{$ticket_id}','{$ticket_type}','{$user_ticket_code}','{$user_ticket_codepic}','{$user_ticket_realname}','{$user_ticket_sex}','{$user_ticket_age}','{$user_ticket_address}','{$user_ticket_mobile}','{$user_ticket_imei}','{$user_ticket_company}','{$user_ticket_company_post}','{$user_ticket_status}','{$user_ticket_addtime}')";
+		$sql = "insert into tbl_user_ticket(ticket_id,event_id,ticket_type,user_ticket_code,user_ticket_codepic,user_ticket_realname,user_ticket_sex,user_ticket_age,user_ticket_address,user_ticket_mobile,user_ticket_imei,user_ticket_company,user_ticket_company_post,user_ticket_status,user_ticket_addtime,ticket_times,ticket_starttime,ticket_endtime) values('{$ticket_id}','{$event_id}','{$ticket_type}','{$user_ticket_code}','{$user_ticket_codepic}','{$user_ticket_realname}','{$user_ticket_sex}','{$user_ticket_age}','{$user_ticket_address}','{$user_ticket_mobile}','{$user_ticket_imei}','{$user_ticket_company}','{$user_ticket_company_post}','{$user_ticket_status}','{$user_ticket_addtime}','{$ticket_times}','{$ticket_starttime}','{$ticket_endtime}')";
+		
 		$res = DB::query($sql);
-		if($res){
+		if($res)
+		{
 			/* $data['title'] = 'data_list';
 			$ticket_detail = DB::fetch_first("select ticket_name,ticket_price,ticket_ren_num,ticket_num,ticket_pic,ticket_starttime,ticket_endtime,ticket_times,ticket_content from tbl_ticket where ticket_id='{$ticket_id}' limit 1");
 			$ticket_detail['ticket_pic'] = $site_url.'/'.$ticket_detail['ticket_pic'];
@@ -994,7 +1019,8 @@ if($ac == 'free_ticket')
     $sql = "select free_tickets_id,user_name,user_phone,erweima_path from tbl_field_free_tickets where event_id='{$event_id}' and fenzhan_id='{$fenzhan_id}' order by free_tickets_id desc";
     $list = DB::query($sql);
     $free_tickets_id = 0;
-    while($row=DB::fetch($list)) {
+    while($row=DB::fetch($list))
+	{
         if(($row['user_name'] == $user_name) || $row['user_phone'] == $user_phone) {
             //返回二维码
             $user_ticket = array_default_value($row);
