@@ -419,63 +419,6 @@ if($ac=="score_detail")
 			$detail_info['uploadimg']='';
 			$detail_info['uploadimg_small']="";
 		}
-		
-		//color
-		if($detail_info['score'])
-		{
-			$s_arr=explode("|",$detail_info['score']);
-		}
-		if($detail_info['par'])
-		{
-			$p_arr=explode("|",$detail_info['par']);
-		}
-		
-		if(!empty($s_arr))
-		{
-			$c_arr=array();
-		}
-		
-		for($i=0; $i<count($p_arr); $i++)
-		{
-			if($s_arr[$i]!="" )
-			{
-				if($s_arr[$i]-$p_arr[$i]==3)
-				{
-					$c_arr[$i]=1;
-				}
-				else if($s_arr[$i]-$p_arr[$i]==2)
-				{
-					$c_arr[$i]=2;
-				}
-				else if($s_arr[$i]-$p_arr[$i]==1)
-				{
-					$c_arr[$i]=3;
-				}
-				else if($s_arr[$i]-$p_arr[$i]==0)
-				{
-					$c_arr[$i]=4;
-				}
-				else if($s_arr[$i]-$p_arr[$i]==-1)
-				{
-					$c_arr[$i]=5;
-				}
-				else if($s_arr[$i]-$p_arr[$i]==-2)
-				{
-					$c_arr[$i]=6;
-				}
-				else if($s_arr[$i]-$p_arr[$i]==-3)
-				{
-					$c_arr[$i]=7;
-				}
-				else
-				{
-					$c_arr[$i]=0;
-					//$c_arr[$i]=$s_arr[$i]-$p_arr[$i];
-				}
-			}
-		}
-		//$detail_info['color']=array_default_value($c_arr);
-		$detail_info['color']=$c_arr;
 
 		if($detail_info['score'])
 		{
@@ -513,60 +456,7 @@ if($ac=="score_detail")
 	//同组成绩
 	$list=DB::query("select baofen_id as id,baofen_id,uid,(select realname from ".DB::table("common_member_profile")." where uid=tbl_baofen.uid )as realname,score from tbl_baofen where group_id='".$id."' and baofen_id<>'".$id."' order by parent_id asc ");
 	while($row=DB::fetch($list))
-	{	
-		//color
-		if($row['score'])
-		{
-			$s_arr=explode("|",$row['score']);
-		}
-		if($row['par'])
-		{
-			$p_arr=explode("|",$row['par']);
-		}
-		if(!empty($s_arr))
-		{
-			$c_arr=array();
-		}
-		for($i=0; $i<count($p_arr); $i++)
-		{
-			if($s_arr[$i]!="" )
-			{
-				if($s_arr[$i]-$p_arr[$i]==3)
-				{
-					$c_arr[$i]=1;
-				}
-				else if($s_arr[$i]-$p_arr[$i]==2)
-				{
-					$c_arr[$i]=2;
-				}
-				else if($s_arr[$i]-$p_arr[$i]==1)
-				{
-					$c_arr[$i]=3;
-				}
-				else if($s_arr[$i]-$p_arr[$i]==0)
-				{
-					$c_arr[$i]=4;
-				}
-				else if($s_arr[$i]-$p_arr[$i]==-1)
-				{
-					$c_arr[$i]=5;
-				}
-				else if($s_arr[$i]-$p_arr[$i]==-2)
-				{
-					$c_arr[$i]=6;
-				}
-				else if($s_arr[$i]-$p_arr[$i]==-3)
-				{
-					$c_arr[$i]=7;
-				}
-				else
-				{
-					$c_arr[$i]=0;
-					//$c_arr[$i]=$s_arr[$i]-$p_arr[$i];
-				}
-			}
-		}
-		$row['color']=$c_arr;
+	{
 	
 		if($row['score'])
 		{
@@ -595,56 +485,19 @@ if($ac=="score_detail")
 	if($tid)
 	{
 		$reply_list=DB::query("select tid,uid,
-(select realname from ".DB::table("common_member_profile")." where uid=jishigou_topic.uid) as username,(select `longtext` from jishigou_topic_longtext where tid=jishigou_topic.tid) as full_content,content,replys,forwards,dateline,type,imageid from jishigou_topic where totid='".$tid."'  order by dateline desc limit 10 ");
+(select realname from ".DB::table("common_member_profile")." where uid=jishigou_topic.uid) as username,content,replys,forwards,dateline,type,(select photo from jishigou_topic_image where tid=jishigou_topic.tid limit 1) as photo from jishigou_topic where totid='".$detail_data['tid']."'  order by dateline desc limit 10 ");
 		while($row2 = DB::fetch($reply_list) )
 		{
-			$imageids_arr = explode(',',$row['imageid']);
-					
-			$pic_ids = implode("','",$imageids_arr);
-			unset($imageids_arr);
-			$topic_img_rs = DB::query("select id,photo from jishigou_topic_image where id in('{$pic_ids}')");
-			unset($pic_ids);
-			
-			$pic_i=0;
-			while($pic_row = DB::fetch($topic_img_rs) ){
-				$pic_list[$pic_i]['photo_big'] = $site_url."/weibo/".$pic_row['photo'];
-				$pic_list[$pic_i]['photo_mibble'] = $site_url."/weibo/".str_replace("_o","_p",$pic_row['photo']);
-				$pic_list[$pic_i]['photo_small'] = $site_url."/weibo/".str_replace("_o","_s",$pic_row['photo']);
-				$pic_i++;
-			}
-			unset($topic_img_rs,$pic_i,$pic_row);
-			if(!empty($pic_list)) {
-				$row2['pic_list'] = $pic_list;
-			}else{
-				$row2['pic_list'] = null;
-			}
-			$photo_pic = reset($pic_list);
-			if($photo_pic)
-			{
-				$row2['photo_big']=$photo_pic['photo_big'];
-				$row2['photo_mibble']=$photo_pic['photo_mibble'];
-				$row2['photo_small']=$photo_pic['photo_small'];
-			}
-			else
-			{
-				$row2['photo_big']=null;
-				$row2['photo_small']=null;
-			}
-			unset($pic_list,$photo_pic);
-			$content_tmp = cutstr_html($row2['content']);
-			$row2['content']=cutstr_html($row2['full_content']);
-			if(empty($row2['content'])) {
-				$row2['content'] = $content_tmp;
-			}
+			$row2['content']=cutstr_html($row2['content']);
 			$row2['dateline']=date("Y-m-d G:i",$row2['dateline']);
-			$row2['roottid']=$tid;
+			$row2['roottid']=$detail_data['tid'];
 			$row2['photo_big']="";
 			$row2['photo_small']="";
 			$row2['voice']="";
 			$row2['voice_timelong']=0;
 			$row2['touxiang']=$site_url."/uc_server/avatar.php?uid=".$row2['uid']."&size=middle";
 			$row2['root_topic']=null;
-			$reply_data[]=$row2;
+			$reply_data[]=array_default_value($row2);
 		}
 	}
 	
@@ -788,7 +641,7 @@ if($ac=="score_save")
 				$uid=$info['uid'];
 				if($source=="waika")
 				{
-					$res=DB::query("update tbl_baofen set score='".$score_row."',pars='".$pars."',tuigan='".$tuigan."',is_edit='N',flag='app'  where baofen_id='".$arr[$i]['id']."' ");
+					$res=DB::query("update tbl_baofen set score='".$score_row."',pars='".$pars."',tuigan='".$tuigan."',is_edit='N'  where baofen_id='".$arr[$i]['id']."' ");
 				}
 				else
 				{
@@ -1197,7 +1050,7 @@ if($ac=="waika_list")
 	}
 	if($max_page>=$page)
 	{
-		$list=DB::query("select baofen_id,baofen_id as id,uid,event_id,event_id as sais_id,(select event_name from tbl_event where event_id=tbl_baofen.event_id) as sais_name,field_id,field_id as fuid,(select realname from ".DB::table("common_member_profile")." where uid=tbl_field.field_id) as field_name,dateline as addtime from tbl_baofen where uid='".$uid."' and source='waika' and score='' order by addtime desc limit $page_start,$page_size  ");
+		$list=DB::query("select baofen_id,baofen_id as id,uid,event_id,event_id as sais_id,(select event_name from tbl_event where event_id=tbl_baofen.event_id) as sais_name,field_id,field_id as fuid,(select realname from ".DB::table("common_member_profile")." where uid=tbl_field.field_id) as field_name,addtime from tbl_baofen where uid='".$uid."' and source='waika' and score='' order by addtime desc limit $page_start,$page_size  ");
 		while($row =DB::fetch($list))
 		{
 			if($row['sais_name']==null)
@@ -1217,7 +1070,7 @@ if($ac=="waika_list")
 	}
 
 	//	
-	$list=DB::query("select baofen_id,baofen_id as id,uid,event_id,event_id as sais_id,(select event_name from tbl_event where event_id=tbl_baofen.event_id) as sais_name,field_id,field_id as fuid,(select realname from ".DB::table("common_member_profile")." where uid=tbl_baofen.field_id) as field_name,dateline as addtime from tbl_baofen where source='waika' and score<>'' and event_id='27' order by addtime desc limit $page_start,$page_size  ");
+	$list=DB::query("select baofen_id,baofen_id as id,uid,event_id,event_id as sais_id,(select event_name from tbl_event where event_id=tbl_baofen.event_id) as sais_name,field_id,field_id as fuid,(select realname from ".DB::table("common_member_profile")." where uid=tbl_baofen.field_id) as field_name,addtime from tbl_baofen where source='waika' and score<>'' and event_id='27' order by addtime desc limit $page_start,$page_size  ");
 	//$list=DB::query("select id,uid,sais_id,(select realname from ".DB::table("common_member_profile")." where uid=".DB::table("common_score").".sais_id) as sais_name,fuid,(select realname from ".DB::table("common_member_profile")." where uid=".DB::table("common_score").".fuid) as field_name,par,score,pars,total_score,addtime,dong_names,uploadimg,is_edit from ".DB::table("common_score")." where source='waika' and score<>'' and sais_id='1000333' order by addtime desc limit $page_start,$page_size  ");
 	while($row =DB::fetch($list))
 	{

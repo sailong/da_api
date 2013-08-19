@@ -793,8 +793,7 @@ if($ac=="member_detail")
 			if($max_page2>=$page2)
 			{
 			
-				$query = DB::query("select baofen_id as id,event_id,uid,fuid,fz_id,par,score,pars,total_score,lun,dateline,event_name,start_time from (select baofen_id,field_id,baofen_id as id,uid,field_id as fuid,event_id,fenzhan_id as fz_id,sid,par,score,pars,total_score,lun,FROM_UNIXTIME(dateline, '%Y-%m-%d') as dateline,addtime,(select event_name from tbl_event where event_id=tbl_baofen.event_id) as event_name,start_time from tbl_baofen where start_time>'".strtotime("2013-04-01")."' and uid=$get_uid $strwhere ) as t2 group by event_id order by total_score asc,start_time desc limit $page_start2,$page_size2");
-
+				$query = DB::query("select baofen_id as id,uid,fuid,fz_id,par,score,pars,total_score,lun,dateline,event_name from (select baofen_id,field_id,baofen_id as id,uid,field_id as fuid,fenzhan_id as fz_id,sid,par,score,pars,total_score,lun,FROM_UNIXTIME(dateline, '%Y-%m-%d') as dateline,addtime,(select realname from ".DB::table("common_member_profile")." where uid=tbl_baofen.sid) as event_name from tbl_baofen where addtime>'".strtotime("2013-04-01")."' and uid=$get_uid $strwhere ) as t2 group by sid order by total_score asc,addtime desc limit $page_start2,$page_size2");
 				while($row = DB::fetch($query))
 				{
 					$row['ndid']=$row['id'];
@@ -803,6 +802,7 @@ if($ac=="member_detail")
 					$score_list[] = array_default_value($row); 
 				}
 				/*
+				
 				$query = DB::query("select id,uid,fuid,fz_id,par,score,pars,total_score,lun,onlymark,dateline,event_name,addtime from (select id,uid,fuid,fz_id,par,score,sais_id,pars,total_score,lun,onlymark,FROM_UNIXTIME(dateline, '%Y-%m-%d') as dateline,addtime,(select realname from ".DB::table("common_member_profile")." where uid=".DB::table('common_score').".sais_id) as event_name from ".DB::table('common_score')."  where addtime>'".strtotime("2013-04-01")."' and uid=$get_uid $strwhere order by total_score asc) as t2 group by sais_id order by total_score asc,addtime desc limit $page_start2,$page_size2");
 
 				//echo "select id,uid,fuid,par,score,pars,total_score,FROM_UNIXTIME(dateline, '%Y-%m-%d') as dateline,(select realname from ".DB::table("common_member_profile")." where uid=".DB::table('common_score').".uid) as event_name from ".DB::table('common_score')."  where uid=$get_uid $strwhere order by addtime desc limit $page_start2,$page_size2";
@@ -1761,43 +1761,26 @@ if($ac=="system_msg")
 if($ac=="push_msg_list")
 {
 	$uid=$_G['gp_uid'];
-	$field_uid=$_G['gp_field_uid'];
-	$type=$_G['gp_type'];
-	if($field_uid!="")
-	{
-		$sql .=" and field_uid='".$field_uid."' ";
-	}
-	
-	if($type!="")
-	{
-		$sql .=" and message_type='".$type."' ";
-	}
     
-	$list=DB::query("select message_id,message_number,message_type,uid,message_title,message_content,message_pic,message_addtime from tbl_push_message where (uid='{$uid}' or uid=0) ".$sql." ");
-	
-	//echo "select message_id,message_number,message_type,uid,message_title,message_content,message_pic,message_addtime from tbl_push_message where uid='{$uid}' ".$sql." ";
+	//$list=DB::query("select message_id,message_number,message_type,uid,message_title,message_content,message_addtime from tbl_push_message where uid='".$uid."' and uid=0 ");
+	$list=DB::query("select message_id,message_number,message_type,uid,message_title,message_content,message_pic,message_addtime from tbl_push_message where uid='$uid'");
     
 	while($row=DB::fetch($list))
 	{
-		/*
 	    if(!json_parser($row['message_content']))
 		{
 	        continue;
 	    }
-		*/
 	    $msg=json_decode($row['message_content'],true);
-		//print_r($msg);
 		$msg['n_title'] = urldecode($msg['n_title']);
 		$msg['n_content'] = urldecode($msg['n_content']);
-		if($msg['n_extras']['title'])
-		{
+		if($msg['n_extras']['title']) {
 			$msg['n_extras']['title'] = urldecode($msg['n_extras']['title']);
 		}
 		$row['pic_width'] = '';
 		$row['pic_height'] = '';
 	    $row['message_info']=$msg;
-		if(!empty($row['message_pic']))
-		{
+		if(!empty($row['message_pic'])) {
 			if(stripos($row['message_pic'],"http://") === false) {
 				$row['message_pic']=$site_url.'/'.$row['message_pic'];
 			}
@@ -1808,7 +1791,7 @@ if($ac=="push_msg_list")
 		}
 		
 		$row['message_sendtime']=date("Y-m-d",$row['message_addtime']);
-		//unset($row['message_content']);
+		unset($row['message_content']);
 		$list_data[]=array_default_value($row,message_content);
 		
 	}
@@ -1866,104 +1849,6 @@ if($ac=="msg_detail")
 	api_json_result(1,0,$app_error['event']['10502'],$data);
 	
 }
-
-/*系统消息start*/
-//推送消息列表
-if($ac=="sys_msg_list")
-{
-	$uid=$_G['gp_uid'];
-	//$list=DB::query("select message_id,message_number,message_type,uid,message_title,message_content,message_addtime from tbl_push_message where uid='".$uid."' and uid=0 ");
-	$list=DB::query("select message_id,uid,message_title,message_content,message_pic,message_addtime from tbl_sys_message where uid in('$uid','0')");
-    
-	while($row=DB::fetch($list))
-	{
-	    if(!json_parser($row['message_content']))
-		{
-	        continue;
-	    }
-	    $msg=json_decode($row['message_content'],true);
-		$msg['n_title'] = urldecode($msg['n_title']);
-		$msg['n_content'] = urldecode($msg['n_content']);
-		if($msg['n_extras']['title']) {
-			$msg['n_extras']['title'] = urldecode($msg['n_extras']['title']);
-		}
-		$row['pic_width'] = '';
-		$row['pic_height'] = '';
-	    $row['message_info']=$msg;
-		if(!empty($row['message_pic'])) {
-			if(stripos($row['message_pic'],"http://") === false) {
-				$row['message_pic']=$site_url.'/'.$row['message_pic'];
-			}
-			
-			$message_pic_info = (array)getimagesize($row['message_pic']);
-			$row['pic_width'] = $message_pic_info[0];
-			$row['pic_height'] = $message_pic_info[1];
-		}
-		
-		$row['message_sendtime']=date("Y-m-d",$row['message_addtime']);
-		unset($row['message_content']);
-		$list_data[]=array_default_value($row,message_content);
-		
-	}
-	/*
-    if(empty($list_data))
-	{
-        $list_data = null;
-    }
-	*/
-	$data['title']		= "list_data";
-	$data['data']		= $list_data;
-	//print_r($data);
-	api_json_result(1,0,$app_error['event']['10502'],$data);
-	
-}
-//推送消息详情
-if($ac=="sys_msg_detail")
-{
-	$message_id=$_G['gp_message_id'];
-	
-	$message_info=DB::fetch_first("select message_id,uid,message_title,message_content,message_pic,message_addtime from tbl_sys_message where message_id='$message_id'");
-    if(empty($message_info)){
-		api_json_result(1,1,$app_error['event']['10502'],$data);exit;
-	}
-
-	if(!json_parser($message_info['message_content']))
-	{
-		continue;
-	}
-	$msg=json_decode($message_info['message_content'],true);
-	
-	$msg['n_title'] = urldecode($msg['n_title']);
-	$msg['n_content'] = urldecode($msg['n_content']);
-	if($msg['n_extras']['title']) {
-		$msg['n_extras']['title'] = urldecode($msg['n_extras']['title']);
-	}
-	
-	$message_info['pic_width'] = '';
-	$message_info['pic_height'] = '';
-	$message_info['message_info']=$msg;
-	if(!empty($message_info['message_pic'])) {
-		if(stripos($message_info['message_pic'],"http://") === false) {
-			$message_info['message_pic']=$site_url.'/'.$message_info['message_pic'];
-		}
-		$message_pic_info = (array)getimagesize($message_info['message_pic']);
-		$message_info['pic_width'] = $message_pic_info[0];
-		$message_info['pic_height'] = $message_pic_info[1];
-	}
-	
-	$message_info['message_sendtime']=date("Y-m-d",$message_info['message_addtime']);
-	unset($message_info['message_content']);
-	$message_info =array_default_value($message_info,message_content);
-	
-	$data['title']		= "msg_detail";
-	$data['data']		= $message_info;
-	
-	api_json_result(1,0,$app_error['event']['10502'],$data);
-	
-}
-
-/*系统消息end*/
-
 
 //我的首页 动态展示  当前登录人
 if($ac=="my_index")

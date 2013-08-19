@@ -7,6 +7,7 @@ if(!defined("IN_DISCUZ"))
 $ac=$_G['gp_ac'];
 
 
+
 //page 1
 $page=$_G['gp_page'];
 if(!$page)
@@ -70,7 +71,7 @@ $hot_2013district=array(
 //选择 赛事
 if($ac=="select_event")
 {
-	$list3=DB::query("select event_id,event_name,event_uid,event_is_zhutui,event_zhutui_pic,event_content,event_url,event_type,event_logo from tbl_event where event_is_zhutui='Y' and field_uid=0 order by event_sort desc limit 1 ");
+	$list3=DB::query("select event_id,event_name,event_uid,event_is_zhutui,event_zhutui_pic,event_content,event_url,event_type from tbl_event where event_is_zhutui='Y' and field_uid=0 order by event_sort desc limit 1 ");
 	while($row3 = DB::fetch($list3))
 	{
 		if($row3['event_zhutui_pic'])
@@ -87,15 +88,13 @@ if($ac=="select_event")
 		$list_data3[]=$row3;
 	}
 
-	$list=DB::query("select event_id,event_name,event_id as event_uid,event_is_zhutui,event_content,event_url,event_type,event_logo from tbl_event where event_is_tj='Y' and field_uid=0 order by event_sort desc  ");
+	$list=DB::query("select event_id,event_name,event_uid,event_is_zhutui,event_content,event_url,event_type from tbl_event where event_is_tj='Y' and field_uid=0 order by event_sort desc  ");
 	while($row = DB::fetch($list))
 	{
+		//$field=DB::query("select field_id from pre_fenzhan where sid= ");
+		//$row['field_ids']=
 		
-		if($row['event_logo'])
-		{
-			$row['event_logo']=$site_url."/".$row['event_logo'];
-		}
-		$row['event_pic']=$row['event_logo'];
+		$row['event_pic']=$site_url."/uc_server/avatar.php?uid=".$row['event_uid']."&size=middle";
 		$row['uid']=$row['event_uid'];
 		$row['event_content']=msubstr(cutstr_html($row['event_content']),0,30);
 		if(!$row['event_url'])
@@ -134,7 +133,7 @@ if($ac=="apply_ing")
 {
 	$login_uid=$_G['gp_login_uid'];
 
-	$list=DB::query("select event_id,event_name,event_uid,event_is_zhutui,event_content,event_url,event_type,event_logo from tbl_event where event_baoming_starttime<=".time()." and event_baoming_endtime>=".time()." and field_uid=0 and event_is_baoming='Y' order by event_baoming_starttime desc  limit 100 ");
+	$list=DB::query("select event_id,event_name,event_uid,event_is_zhutui,event_content,event_url,event_type from tbl_event where event_baoming_starttime<=".time()." and event_baoming_endtime>=".time()." and field_uid=0 and event_is_baoming='Y' order by event_baoming_starttime desc  limit 100 ");
 	while($row = DB::fetch($list))
 	{
 		if($login_uid)
@@ -295,8 +294,17 @@ if($ac=="event_blog_detail")
 		$detail_data['username']="";
 		$detail_data['uid']="0";
 		
-		$detail_data['content']=strip_tags($detail_data['content'],"<p><img><br><div>");
+		$detail_data['content']=strip_tags($detail_data['content'],"<p><img><br><div><a>");
+		
+		$detail_data['content']=str_replace("<img ","<div style=\"text-align:center; width:100%; \"><img ",$detail_data['content']);
+		$detail_data['content']=str_replace("jpg\">","jpg\"></div>",$detail_data['content']);
+		$detail_data['content']=str_replace("jpg\" />","jpg\" /></div>",$detail_data['content']);
+		
+		
+		
 		$detail_data['content']=str_replace("<img ","<div style=\"text-align:center; width:100%; \"><a href=\"http://www.bwvip.com/news_detail_pic\"><changsailong><img ",$detail_data['content']);
+		$detail_data['content']=str_replace("jpg\">","jpg\"></a></div>",$detail_data['content']);
+		$detail_data['content']=str_replace("jpg\" />","jpg\" /></a></div>",$detail_data['content']);
 		
 		/**
 		 * 添加图片编号
@@ -312,33 +320,23 @@ if($ac=="event_blog_detail")
 		    $i++;
 		}
 		$detail_data['content']=$str;
-		if($_G['gp_test'] == 1) {
-			echo '<pre>';
-			var_dump($content_arr);
-			var_dump($str);die;
-			//var_dump($find_str);
-		}
 		unset($str,$content_arr,$find_str);
-		
 		/**
 		 * 添加图片编号
 		 * end
 		 */
-		
-		$detail_data['content']=str_replace("jpg\">","jpg\"></a></div>",$detail_data['content']);
-		$detail_data['content']=str_replace("jpg\" />","jpg\" /></a></div>",$detail_data['content']);
-		$detail_data['content']=str_replace("jpg\" alt=\"\" />","jpg\" /></a></div>",$detail_data['content']);
+		 
 
 		if($detail_data['content'])
 		{
 			$detail_data['content']=str_replace(".=\"uchome-message-pic\"","",$detail_data['content']);
 			$detail_data['content']=str_replace("src=\"data/attachment/","src=\"".$site_url."/data/attachment/",$detail_data['content']);
-			$detail_data['content']=str_replace("src=\"/Public/editor/attached/image","src=\"".$site_url."/Public/editor/attached/image",$detail_data['content']);
 			
 			
-			$detail_data['content'] = "<div style='font-size:18px; line-height:180%; width:100%; bakcground:red; '>".$detail_data['content'];
+			$detail_data['content'] = "<div style='font-size:18px; line-height:150%; width:100%; bakcground:red; '>".$detail_data['content'];
 			$detail_data['content'] = $detail_data['content']."</div>";
 		}
+		
 
 		if($pic_width)
 		{
@@ -798,8 +796,7 @@ if($ac=="rule")
 				if($root_topic)
 				{
 					$imageids_arr = explode(',',$root_topic['imageid']);
-					$pic_ids = implode("','",$imageids_arr);
-					
+					$pic_ids = implode("','",imageids_arr);
 					$root_topic_img_rs =  DB::query("select photo from jishigou_topic_image where id in ('{$pic_ids}')");
 					unset($imageids_arr,$pic_ids);
 					
@@ -941,7 +938,7 @@ if($ac=="blog_comment_me")
 				$row['message']=cutstr_html($row['message']);
 			}
 
-			$row['touxiang']=$site_url."/uc_server/avatar.php?uid=".$row['authorid']."&size=small";
+			$row['touxiang']=$site_url."/uc_server/avatar.php?uid=".$row['uid']."&size=small";
 
 			$row['dateline']=date("Y-m-d G:i:s",$row['dateline']);
 			$list_data[]=$row;

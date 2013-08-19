@@ -215,8 +215,7 @@ if($ac=='rank')
 
 	//微博列表
 	$saishi_name=gettruename($sid);
-	$list=DB::query("select tid,uid, (select realname from ".DB::table("common_member_profile")." where uid=jishigou_topic.uid)  as username,(select longtext from jishigou_topic_longtext where tid=jishigou_topic.tid)  as longtext,content,replys,forwards,dateline,(select photo from jishigou_topic_image where tid=jishigou_topic.tid limit 1) as photo,voice,voice_timelong from jishigou_topic where type<>'reply' and content like '%".$saishi_name."%' order by dateline desc limit 5 ");
-	//$list=DB::query("select tid,uid, (select realname from ".DB::table("common_member_profile")." where uid=jishigou_topic.uid)  as username,content,replys,forwards,dateline,(select photo from jishigou_topic_image where tid=jishigou_topic.tid limit 1) as photo,voice,voice_timelong from jishigou_topic where type<>'reply' and content like '%".$saishi_name."%' order by dateline desc limit 5 ");
+	$list=DB::query("select tid,uid, (select realname from ".DB::table("common_member_profile")." where uid=jishigou_topic.uid)  as username,content,replys,forwards,dateline,(select photo from jishigou_topic_image where tid=jishigou_topic.tid limit 1) as photo,voice,voice_timelong from jishigou_topic where type<>'reply' and content like '%".$saishi_name."%' order by dateline desc limit 5 ");
 	while($row = DB::fetch($list) )
 	{
 		if($row['photo'])
@@ -271,7 +270,7 @@ if($ac=='rank')
 
 			if($now_fz_id)
 			{
-				$fenzhan=DB::fetch_first("select timepic,lun from pre_fenzhan where fz_id='".$now_fz_id."' limit 1 ");
+				$fenzhan=DB::fetch_first("select timepic from pre_fenzhan where fz_id='".$now_fz_id."' limit 1 ");
 				if($fenzhan['timepic'])
 				{
 					$event_info['event_timepic']=$site_url."/".$fenzhan['timepic'];
@@ -282,35 +281,17 @@ if($ac=='rank')
 				
 				//比赛时间
 				$days=(time()-$fenzhan['starttime'])/(24*3600);
- 
-				//xyx20130614 分站 当前是第二轮是tlcave+tlcave1 as total_score  当前是第三轮是tlcave+tlcave1+tlcave2 as total_score
-				if($fenzhan['lun']==2)
-				{
-				  $strlun="tlcave+tlcave1 as total_score";$lnorder=" avcave1+avcave  ";
-				}
-				if($fenzhan['lun']==3)
-				{
-				  $strlun="tlcave+tlcave1+tlcave2 as total_score";$lnorder=" avcave1+avcave2+avcave  ";
-				}
-				if($fenzhan['lun']==4)
-				{
-				  $strlun="tlcave+tlcave1+tlcave2+tlcave3 as total_score";$lnorder=" avcave1+avcave2+avcave3+avcave  ";
-				}
-				if($fenzhan['lun']==0||$fenzhan['lun']==1)
-				{
-				  $strlun="tlcave as total_score";$lnorder=" avcave  ";
-				}
-				 
+
 				//如果有分站信息
 				if($days>=1)
 				{
 					//$list=DB::query("select uid,realname as username,tlcave as today_score,tlcave as total_score,cave_1,cave_2,cave_3,cave_4,cave_5,cave_6,cave_7,cave_8,cave_9,cave_10,cave_11,cave_12,cave_13,cave_14,cave_15,cave_16,cave_17,cave_18,avcave,(cave_10+cave_11+cave_12+cave_13+cave_14+cave_15+cave_16+cave_17+cave_18) as lin,isend from ". DB::table('golf_nd_baofen')." where fenz_id='".$now_fz_id."' and tlcave<999 and  cave_1>0 and cave_2>0  and cave_3>0  and cave_4>0  and cave_5>0  and cave_6>0  and cave_7>0  and cave_8>0  and cave_9>0  and cave_10>0  and cave_11>0  and cave_12>0  and cave_13>0  and cave_14>0  and cave_15>0  and cave_16>0  and cave_17>0  and cave_18>0  order by isend desc,avcave,lin,cave_18,cave_17,cave_16 ");
 					
-					$list=DB::query("select uid,realname as username,tlcave as today_score,tlcave as total_score,cave_1,cave_2,cave_3,cave_4,cave_5,cave_6,cave_7,cave_8,cave_9,cave_10,cave_11,cave_12,cave_13,cave_14,cave_15,cave_16,cave_17,cave_18,avcave,(cave_10+cave_11+cave_12+cave_13+cave_14+cave_15+cave_16+cave_17+cave_18) as lin,isend from ". DB::table('golf_nd_baofen')." where fenz_id='".$now_fz_id."' order by $lnorder,lin,cave_18,cave_17,cave_16 ");
+					$list=DB::query("select uid,realname as username,tlcave as today_score,tlcave as total_score,cave_1,cave_2,cave_3,cave_4,cave_5,cave_6,cave_7,cave_8,cave_9,cave_10,cave_11,cave_12,cave_13,cave_14,cave_15,cave_16,cave_17,cave_18,avcave,(cave_10+cave_11+cave_12+cave_13+cave_14+cave_15+cave_16+cave_17+cave_18) as lin,isend from ". DB::table('golf_nd_baofen')." where fenz_id='".$now_fz_id."' order by isend desc,avcave,lin,cave_18,cave_17,cave_16 ");
 				}
 				else
 				{
-					$list=DB::query("select uid,realname as username,tlcave as today_score,tlcave as total_score,cave_1,cave_2,cave_3,cave_4,cave_5,cave_6,cave_7,cave_8,cave_9,cave_10,cave_11,cave_12,cave_13,cave_14,cave_15,cave_16,cave_17,cave_18,avcave,(cave_10+cave_11+cave_12+cave_13+cave_14+cave_15+cave_16+cave_17+cave_18) as lin,isend from ". DB::table('golf_nd_baofen')." where fenz_id='".$now_fz_id."' order by $lnorder,lin,cave_18,cave_17,cave_16 ");
+					$list=DB::query("select uid,realname as username,tlcave as today_score,tlcave as total_score,cave_1,cave_2,cave_3,cave_4,cave_5,cave_6,cave_7,cave_8,cave_9,cave_10,cave_11,cave_12,cave_13,cave_14,cave_15,cave_16,cave_17,cave_18,avcave,(cave_10+cave_11+cave_12+cave_13+cave_14+cave_15+cave_16+cave_17+cave_18) as lin,isend from ". DB::table('golf_nd_baofen')." where fenz_id='".$now_fz_id."' order by isend desc,avcave,lin,cave_18,cave_17,cave_16 ");
 				}
 				
 				while($row=DB::fetch($list))

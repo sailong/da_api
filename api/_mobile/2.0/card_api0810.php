@@ -81,8 +81,7 @@ if($ac==='show')
 			$gscore[] = $row; 
 		}
 		 
-	if($gscore)
-	{
+	if($gscore){
 	
 	/*接口返回的参数*/
 		$response         = 0;
@@ -516,59 +515,36 @@ if($ac=='rank')
 
 					//最大轮数
 					//$lun_num = DB::result_first("select max(lun) from tbl_baofen where event_id='$sid' and total_score>60  and event_id<>0 limit 1 ");
-					$lun_num = DB::result_first("select max(lun) from tbl_baofen where event_id='$sid' and event_id<>0 limit 1 ");
-					if($lun_num)
-					{
-						$fzid = DB::result_first("select fenzhan_id from tbl_baofen where event_id='$sid' and lun=$lun_num ");
-					
-						$query = DB::query(" SELECT id,uid,lun,event_id,total_score,zong_score,score,par,tianshu,total_sum_ju,event_apply_id,username,event_user_id ,status,dateline,jiadong_status FROM (select event_id,baofen_id as id,uid,lun,total_score,zong_score,score,par,to_days(FROM_UNIXTIME(dateline))-to_days(now()) as tianshu,total_sum_ju ,total_ju_par,total_ju_par1,total_ju_par2,total_ju_par3,event_apply_id,realname,realname as username,event_user_id,status ,dateline,jiadong_status from tbl_baofen where event_id=$sid and source='ndong' order by status asc,total_sum_ju asc,jiadong_status desc,total_score asc,tianshu asc) as t2 group by event_user_id order by status desc,total_sum_ju asc,jiadong_status desc,total_score asc,tianshu asc limit  0,$limit");
+					$lun_num = DB::result_first("select max(lun) from tbl_baofen where event_id='$sid'  and event_id<>0 limit 1 ");
+					$query = DB::query(" SELECT id,uid,lun,event_id,total_score,zong_score,score,par,tianshu,total_sum_ju FROM (select event_id,baofen_id as id,uid,lun,total_score,zong_score,score,par,to_days(FROM_UNIXTIME(dateline))-to_days(now()) as tianshu,total_sum_ju from tbl_baofen where event_id =$sid and total_score>60 and source='ndong' order by total_sum_ju asc ,total_score asc,tianshu asc) as t2 group by uid order by total_sum_ju asc,total_score asc,tianshu asc limit 0,$limit");
 
-					}
 					$i=0;
 					while($row = DB::fetch($query))
 					{
-					
-						
 						//print_r($row);
 						//echo "<br />";
-						
-						//jiadong_status
-						if($row['uid'])
-						{
-							$row['jiadong_status'] = DB::result_first("select max(jiadong_status) from tbl_baofen where event_id=$sid and uid='".$row['uid']."' limit 1 ");
-						}
-						else
-						{
-							$row['jiadong_status'] = DB::result_first("select max(jiadong_status) from tbl_baofen where event_id=$sid and event_user_id='".$row ['event_user_id']."' limit 1 ");
-						}
-						
 						$zongbiaogan=0;
 						$j=0;
-						$row['true_sort']=0;
 						for($ii=0; $ii<$lun_num; $ii++)
 						{
 							$j=$ii+1;
 							$lun_info=array();
 							if($row['uid'])
 							{
-								
-								$lun_info = DB::fetch_first("select baofen_id,sid,uid,total_score,score,par,total_ju_par,to_days(FROM_UNIXTIME(dateline))-to_days(now()) as tianshu,status from tbl_baofen where event_id=$sid and uid='".$row['uid']."' and lun='".$j."' and source='ndong' order by dateline asc  ");
+								//$lun_info = DB::fetch_first("select baofen_id,sid,uid,total_score,score,par,total_ju_par,to_days(FROM_UNIXTIME(dateline))-to_days(now()) as tianshu from tbl_baofen where event_id=$sid and uid='".$row['uid']."' and lun='".$j."' and total_score>60 and source='ndong' ".$year_sql." order by dateline asc limit 1 ");
+								$lun_info = DB::fetch_first("select baofen_id,sid,uid,total_score,score,par,total_ju_par,to_days(FROM_UNIXTIME(dateline))-to_days(now()) as tianshu from tbl_baofen where event_id=$sid and uid='".$row['uid']."' and lun='".$j."' and source='ndong' order by dateline asc limit 1 ");
 						
 							}
 							else
 							{
-								$lun_info = DB::fetch_first("select baofen_id,sid,uid,total_score,score,total_ju_par,par,to_days(FROM_UNIXTIME(dateline))-to_days(now()) as tianshu,status from tbl_baofen where event_id=$sid and event_user_id='".$row ['event_user_id']."' and lun='".$j."'  and source='ndong'  order by dateline asc  ");
+								//$lun_info = DB::fetch_first("select baofen_id,sid,uid,total_score,score,total_ju_par,par,to_days(FROM_UNIXTIME(dateline))-to_days(now()) as tianshu from tbl_baofen where event_id=$sid and event_apply_id='".$row ['event_apply_id']."' and lun='".$j."' and total_score>60 and source='ndong' ".$year_sql." order by dateline asc limit 1 ");
+								$lun_info = DB::fetch_first("select baofen_id,sid,uid,total_score,score,total_ju_par,par,to_days(FROM_UNIXTIME(dateline))-to_days(now()) as tianshu from tbl_baofen where event_id=$sid and event_apply_id='".$row ['event_apply_id']."' and lun='".$j."'  and source='ndong' ".$year_sql." order by dateline asc limit 1 ");
+							
+								
 							}
 							//print_r($lun_info);
 							//echo "<hr>";
 							$zongbiaogan=$zongbiaogan+(end(explode("|",$lun_info['par'])));
-							/*
-							if($lun_inf['status']<0)
-							{
-								$row['true_sort']=2000;
-							}
-							*/
-		
 
 							if($lun_info['score'])
 							{
@@ -580,8 +556,6 @@ if($ac=='rank')
 								$arr_new=explode("|",$str_new);
 								$lun_info['score']=$arr_new;
 							}
-							
-
 							
 							if($lun_info['par'])
 							{
@@ -609,7 +583,10 @@ if($ac=='rank')
 								$color_1=$c_arr;
 								$lun_1=$lun_info['total_score'];
 								$ju_1=$lun_info['total_ju_par'];
-								
+								if($ju_1==1000)
+								{
+									$ju_1="";
+								}
 								$par_1=$lun_info['par'];
 								
 							}
@@ -618,8 +595,10 @@ if($ac=='rank')
 								$score_2=$lun_info['score'];
 								$lun_2=$lun_info['total_score'];
 								$ju_2=$lun_info['total_ju_par'];
-					
-							
+								if($ju_2==1000)
+								{
+									$ju_2="";
+								}
 								$color_2=$c_arr;
 							}
 							if($j==3)
@@ -627,8 +606,10 @@ if($ac=='rank')
 								$score_3=$lun_info['score'];
 								$lun_3=$lun_info['total_score'];
 								$ju_3=$lun_info['total_ju_par'];
-					
-							
+								if($ju_3==1000)
+								{
+									$ju_3="";
+								}
 								$color_3=$c_arr;
 							}
 							if($j==4)
@@ -636,14 +617,17 @@ if($ac=='rank')
 								$score_4=$lun_info['score'];
 								$lun_4=$lun_info['total_score'];
 								$ju_4=$lun_info['total_ju_par'];
-								
+								if($ju_4==1000)
+								{
+									$ju_4="";
+								}
 								$color_4=$c_arr;
 							}
 
 						}
 
 						$row['ju_par_total']=get_ju_par_total_sort($ju_1,$ju_2,$ju_3,$ju_4);
-						/*
+						
 						if($row['uid'])
 						{
 							$row['zong_score']=get_zong_score_view($lun_1,$lun_2,$lun_3,$lun_4);
@@ -652,19 +636,12 @@ if($ac=='rank')
 						else
 						{
 							$row['zong_score']=get_zong_score_view($lun_1,$lun_2,$lun_3,$lun_4);
-							$res=DB::query("update tbl_baofen set zong_score='".$row['zong_score']."',total_sum_ju='".$row['ju_par_total']."' where event_user_id='".$row ['event_user_id']."' and event_id='".$row ['event_id']."' ");
+							$res=DB::query("update tbl_baofen set zong_score='".$row['zong_score']."',total_sum_ju='".$row['ju_par_total']."' where event_apply_id='".$row ['event_apply_id']."' and event_id='".$row ['event_id']."' ");
 						}
-						*/
+						$row['zong_score']=(string)$row['zong_score'];
 
-						if($row['zong_score']>0)
-						{
-							$row['ju_par_total']=ju_par_format(get_ju_par_total_view($ju_1,$ju_2,$ju_3,$ju_4));
-						}
-						else
-						{
-							$row['ju_par_total']="-";
-						}
-						
+						$row['ju_par_total']=ju_par_format(get_ju_par_total_view($ju_1,$ju_2,$ju_3,$ju_4));
+
 						
 						if($lun_1>0)
 						{
@@ -710,6 +687,9 @@ if($ac=='rank')
 							$row['ju_par_4']="-";	
 						}
 						
+
+						
+						
 						$row['color_1']=$color_1;
 						$row['color_2']=$color_2;
 						$row['color_3']=$color_3;
@@ -722,22 +702,18 @@ if($ac=='rank')
 						if(!$score_4)
 						{
 							$row['color_4']=null;
-							$row['score_4']=null;
 						}
 						if(!$score_3)
 						{
 							$row['color_3']=null;
-							$row['score_3']=null;
 						}
 						if(!$score_2)
 						{
 							$row['color_2']=null;
-							$row['score_2']=null;
 						}
 						if(!$score_1)
 						{
 							$row['color_1']=null;
-							$row['score_1']=null;
 						}
 				
 						$row['zongbiaogan']=$zongbiaogan;
@@ -749,7 +725,14 @@ if($ac=='rank')
 							$row['total_score']='-';
 						}
 						//$row['score_status']="F/".$row['lun'];
-						$row['score_status']=get_thru($sid,$row['uid'],$row['event_user_id']);
+						if($sid==30)
+						{
+							$row['score_status']="-";
+						}
+						else
+						{
+							$row['score_status']="F";
+						}
 						
 
 						$s_arr=explode("|",$row['score']);
@@ -760,17 +743,7 @@ if($ac=='rank')
 						$arr_new=explode("|",$str_new);
 						
 						//$row['score_sub']=$arr_new;
-						/*
-						if($row['uid'])
-						{
-							$row['username'] = gettruename($row['uid']);
-						}
-						else
-						{
-							$row['username'] = DB::result_first("select event_apply_realname from tbl_event_apply where event_apply_id='".$row['event_apply_id']."' ");
-						}
-						*/
-						
+						$row['username'] =  gettruename($row['uid']);
 						
 						$row['score_sub']=array_default_value($arr_new);
 						$gscore[] = array_default_value($row,array('score_1','score_2','score_3','score_4','color_4','color_1','color_2','color_3','color_4')); 
@@ -782,7 +755,6 @@ if($ac=='rank')
 				//print_r($gscore);
 				if($gscore)
 				{
-					/*
 					$i=1;
 					foreach ($gscore as $key => $value )
 					{ 
@@ -804,61 +776,6 @@ if($ac=='rank')
 							$gscore [$key] ['order'] = "".$i++."";  
 						}
 						
-					}
-					*/
-					for($i=0; $i<count($gscore); $i++)
-					{
-						
-						
-						if($gscore[$i]['status']==-4)
-						{
-							$gscore[$i]['order']="CUT";
-						}
-						else if(intval($gscore[$i]['zong_score'])>0)
-						{
-						
-							$true_order=$i+1;
-							$t_str="";
-							if($i==0)
-							{
-								if($gscore[$i]['total_sum_ju']==$gscore[$i+1]['total_sum_ju'])
-								{
-									$gscore[$i]['true_order']=1;
-									$view_order="T".$gscore[$i]['true_order'];
-								}
-								else
-								{
-									$gscore[$i]['true_order']=$true_order;
-									$view_order=$true_order;
-								}
-							}
-							else
-							{
-								//从第2个开始
-								if($gscore[$i]['total_sum_ju']==$gscore[$i-1]['total_sum_ju'])
-								{
-									$gscore[$i]['true_order']=$gscore[$i-1]['true_order'];
-									$view_order="T".$gscore[$i]['true_order'];
-									$gscore[$i-1]['order']=$view_order;
-								}
-								else
-								{
-									$gscore[$i]['true_order']=$true_order;
-									$view_order=$true_order;
-								}
-								
-							}
-							
-							$gscore[$i]['order']=$view_order;
-						
-						
-						}
-						else
-						{
-							$gscore[$i]['order']="-";
-						}
-						
-						$gscore[$i]['order']=(string)$gscore[$i]['order'];
 					}
 				}
 						
@@ -1417,15 +1334,6 @@ function ju_par_format($option)
 	}
 	else if ($option > 0)
 	{
-		if($option<900)
-		{
-			$dataInfo = "+" . $option;
-		}
-		else
-		{
-			$dataInfo = "-";
-		}
-		
 		$dataInfo = "+" . $option;
 	}
 	else if ($option < 0)
