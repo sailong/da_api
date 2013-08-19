@@ -1773,24 +1773,31 @@ if($ac=="push_msg_list")
 		$sql .=" and message_type='".$type."' ";
 	}
     
-	$list=DB::query("select message_id,message_number,message_type,uid,message_title,message_content,message_pic,message_addtime from tbl_push_message where uid='{$uid}' ".$sql." ");
+	$list=DB::query("select message_id,message_number,message_type,uid,message_title,message_content,message_pic,message_addtime from tbl_push_message where (uid='{$uid}' or uid=0) ".$sql." ");
+	
+	//echo "select message_id,message_number,message_type,uid,message_title,message_content,message_pic,message_addtime from tbl_push_message where uid='{$uid}' ".$sql." ";
     
 	while($row=DB::fetch($list))
 	{
+		/*
 	    if(!json_parser($row['message_content']))
 		{
 	        continue;
 	    }
+		*/
 	    $msg=json_decode($row['message_content'],true);
+		//print_r($msg);
 		$msg['n_title'] = urldecode($msg['n_title']);
 		$msg['n_content'] = urldecode($msg['n_content']);
-		if($msg['n_extras']['title']) {
+		if($msg['n_extras']['title'])
+		{
 			$msg['n_extras']['title'] = urldecode($msg['n_extras']['title']);
 		}
 		$row['pic_width'] = '';
 		$row['pic_height'] = '';
 	    $row['message_info']=$msg;
-		if(!empty($row['message_pic'])) {
+		if(!empty($row['message_pic']))
+		{
 			if(stripos($row['message_pic'],"http://") === false) {
 				$row['message_pic']=$site_url.'/'.$row['message_pic'];
 			}
@@ -1801,7 +1808,7 @@ if($ac=="push_msg_list")
 		}
 		
 		$row['message_sendtime']=date("Y-m-d",$row['message_addtime']);
-		unset($row['message_content']);
+		//unset($row['message_content']);
 		$list_data[]=array_default_value($row,message_content);
 		
 	}

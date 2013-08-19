@@ -163,4 +163,108 @@ function yanzheng_token($token)
 
 }
 
+
+
+
+
+//获取所在城市
+function get_real_ip()
+{
+	$ip=false;
+	if(!empty($_SERVER["HTTP_CLIENT_IP"])){
+	$ip = $_SERVER["HTTP_CLIENT_IP"];
+	}
+	if (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
+	$ips = explode (", ", $_SERVER['HTTP_X_FORWARDED_FOR']);
+	if ($ip) { array_unshift($ips, $ip); $ip = FALSE; }
+	for ($i = 0; $i < count($ips); $i++) {
+	if (!eregi ("^(10|172\.16|192\.168)\.", $ips[$i])) {
+	$ip = $ips[$i];
+	break;
+	}
+	}
+	}
+	return ($ip ? $ip : $_SERVER['REMOTE_ADDR']);
+}
+ 
+function getCity($ip)
+{
+	$url="http://ip.taobao.com/service/getIpInfo.php?ip=".$ip;
+	$ip=json_decode(file_get_contents($url));
+	if((string)$ip->code=='1'){
+	  return false;
+	  }
+	  $data = (array)$ip->data;
+	return $data;
+}
+
+//tj_start
+if(strpos($_SERVER['HTTP_USER_AGENT'],"iPhone"))
+{
+	$userAgent="iPhone";
+}
+else if(strpos($_SERVER['HTTP_USER_AGENT'],"iPad"))
+{
+	$userAgent="iPad";
+}
+else if(strpos($_SERVER['HTTP_USER_AGENT'],"iPod"))
+{
+	$userAgent="iPod";
+}
+else if(strpos($_SERVER['HTTP_USER_AGENT'],"iOS"))
+{
+	$userAgent="iOS";
+}
+else if(strpos($_SERVER['HTTP_USER_AGENT'],"Android"))
+{
+	$userAgent="Android";
+}
+else
+{
+	$userAgent='other';
+}
+
+if($_G['gp_uid'])
+{
+	$log_uid=$_G['gp_uid'];
+}
+else
+{
+	$log_uid=0;
+}
+if($_G['gp_field_uid'])
+{
+	$log_field_uid=$_G['gp_field_uid'];
+}
+else
+{
+	$log_field_uid=0;
+}
+
+$tj_sql .=" insert into tbl_app_log ( ";
+$tj_sql .=" uid, ";
+$tj_sql .=" field_uid, ";
+$tj_sql .=" app_log_mod, ";
+$tj_sql .=" ac, ";
+$tj_sql .=" ip, ";
+$tj_sql .=" province, ";
+$tj_sql .=" user_agent, ";
+$tj_sql .=" url, ";
+$tj_sql .=" app_log_addtime ";
+$tj_sql .=" ) values( ";
+$tj_sql .=" '".$log_uid."', ";
+$tj_sql .=" '".$log_field_uid."', ";
+$tj_sql .=" '".$mod."', ";
+$tj_sql .=" '".$ac."', ";
+$tj_sql .=" '".get_real_ip()."', ";
+$tj_sql .=" '".$province."', ";
+$tj_sql .=" '".$userAgent."', ";
+$tj_sql .=" '".$_SERVER['REQUEST_URI']."', ";
+$tj_sql .=" '".time()."' ";
+$tj_sql .=" ) ";
+$tj_up=DB::query($tj_sql);
+//tj_end
+
+
+
 ?>

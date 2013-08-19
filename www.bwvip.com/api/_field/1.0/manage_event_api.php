@@ -9,14 +9,13 @@ $field_uid = $_G['gp_field_uid'];//球场编号
 $language=$_G['gp_language'];
 $now_time = time();
 //是否检查field_uid
-/*
-if(!in_array($ac,array('free_ticket'))) {
+if(!in_array($ac,array('free_ticket','free_ticket2'))) {
     if(empty($ac) || empty($field_uid)) 
     {
         api_json_result(1,1,"参数不完整",'');
     }
 }
-*/
+
 //赛事列表
 if($ac == 'filedevent') 
 {
@@ -853,7 +852,7 @@ function get_randmod_str(){
    $serial = strtoupper(substr(md5($serial.time()),10,10));
    if($s)
    {
-      $serial = strtoupper(substr(md5($serial),rand(0,22),10));
+      $serial = strtoupper(substr(md5($serial),mt_rand(0,22),10));
    }
    
    return $serial;
@@ -883,7 +882,7 @@ if($ac == 'free_ticket2')
 	$user_ticket_imei = $_G['gp_phone_imei'];//手机窜号
 	$ticket_id = $_G['gp_ticket_id'];//门票ID
 	$ticket_type = $_G['gp_ticket_type'];//门票类型
-	$ticket_nums = $_G['gp_ticket_nums'];//门票数量
+	$ticket_nums = empty($_G['gp_ticket_nums']) ? 1 : $_G['gp_ticket_nums'];//门票数量
 	$user_ticket_realname = urldecode($_G['gp_realname']);//订票人真实姓名
 	$user_ticket_sex = urldecode($_G['gp_sex']);//性别
 	$user_ticket_age = $_G['gp_age'];//年龄

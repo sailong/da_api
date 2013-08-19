@@ -1,0 +1,99 @@
+<include file="../public/header_dialog" />
+{$usejs}
+
+<div class="so_main">
+
+  <div class="page_tit">推送设备管理</div>
+  <div class="tit_tab">
+	<ul>
+		<li><a class=on href="#">修改推送设备</a></li>
+	</ul>
+  </div>
+
+<table border="0" cellspacing="0" cellpadding="0" style="width:900px;">
+<tr>
+<td>
+<!--/dialog_start-->
+
+<form method="post" id="act_form" name="act_form" action="{:U('field/push_devices/push_devices_edit_action')}" enctype="multipart/form-data">
+	<table class="add_table" border="0" cellspacing="0" cellpadding="0" >
+		<tbody>
+		<tr>
+					<th>所属用户：</th>
+					<td><input type="text" name="uid" id="uid" class="mod_input2" style="width:66px;"  value="{$data.uid}"></td>
+				</tr>
+				<tr>
+					<th>设备名称：</th>
+					<td><input type="text" name="devices_name" id="devices_name" class="mod_input2" style="width:300px;"  value="{$data.devices_name}"></td>
+				</tr>
+				<tr>
+					<th>设备版本：</th>
+					<td><input type="text" name="devices_version" id="devices_version" class="mod_input2" style="width:300px;"  value="{$data.devices_version}"></td>
+				</tr>
+				<tr>
+					<th>设备TOKEN：</th>
+					<td><input type="text" name="devices_token" id="devices_token" class="mod_input2" style="width:600px;"  value="{$data.devices_token}"></td>
+				</tr>
+				<tr>
+					<th>类型：</th>
+					<td><input type="text" name="devices_type" id="devices_type" class="mod_input2" style="width:300px;"  value="{$data.devices_type}"></td>
+				</tr>
+				<tr>
+					<th>模式：</th>
+					<td><input type="text" name="mode" id="mode" class="mod_input2" style="width:300px;"  value="{$data.mode}"></td>
+				</tr>
+				<tr>
+					<th>提醒数：</th>
+					<td><input type="text" name="badge_number" id="badge_number" class="mod_input2" style="width:300px;"  value="{$data.badge_number}"></td>
+				</tr>
+				<tr>
+					<th>状态：</th>
+					<td><input type="text" name="status" id="status" class="mod_input2" style="width:300px;"  value="{$data.status}"></td>
+				</tr>
+				
+		</tbody>
+		<tfoot>
+			<tr>
+				<th></th>
+				<td>
+					<input type="hidden" name="id" value="{$data.id}">
+					<input type="submit" class="btn_b" value="保存" style="margin-right:10px;"/>
+					<input type="button" class="btn_w" onclick="javascript:history.back(-1);" value="返回" />
+				</td>
+		</tfoot>
+	</table><!--/add_table-->
+</form>
+
+<script>
+$(document).ready(function(){
+$.formValidator.initConfig({formID:"act_form",theme:'ArrowSolidBox',mode:'AutoTip',onError:function(msg){msg_error(msg)},inIframe:true});
+
+	$("#uid").formValidator({empty:true,onShow:"请输入所属用户",onFocus:"请输入所属用户",onCorrect:"输入正确"}).inputValidator({min:1,max:11,onError:"请输入所属用户"});
+		$("#devices_name").formValidator({empty:true,onShow:"请输入设备名称",onFocus:"请输入设备名称",onCorrect:"输入正确"}).inputValidator({min:1,max:50,onError:"请输入设备名称"});
+		$("#devices_version").formValidator({empty:true,onShow:"请输入设备版本",onFocus:"请输入设备版本",onCorrect:"输入正确"}).inputValidator({min:1,max:50,onError:"请输入设备版本"});
+		$("#devices_token").formValidator({empty:true,onShow:"请输入设备TOKEN",onFocus:"请输入设备TOKEN",onCorrect:"输入正确"}).inputValidator({min:1,max:100,onError:"请输入设备TOKEN"});
+		$("#devices_type").formValidator({empty:true,onShow:"请输入类型",onFocus:"请输入类型",onCorrect:"输入正确"}).inputValidator({min:1,max:50,onError:"请输入类型"});
+		$("#mode").formValidator({empty:true,onShow:"请输入模式",onFocus:"请输入模式",onCorrect:"输入正确"}).inputValidator({min:1,max:50,onError:"请输入模式"});
+		$("#badge_number").formValidator({empty:true,onShow:"请输入提醒数",onFocus:"请输入提醒数",onCorrect:"输入正确"}).inputValidator({min:1,max:50,onError:"请输入提醒数"});
+		$("#status").formValidator({empty:true,onShow:"请输入状态",onFocus:"请输入状态",onCorrect:"输入正确"}).inputValidator({min:1,max:50,onError:"请输入状态"});
+		
+
+	$.formValidator.reloadAutoTip();
+});
+
+function reloadAutoTip()
+{
+	$.formValidator.reloadAutoTip();
+}
+
+</script>
+
+
+<!--/dialog_end-->
+</td>
+</tr>
+</table>
+
+</div>
+
+<include file="../Public/_footer" />

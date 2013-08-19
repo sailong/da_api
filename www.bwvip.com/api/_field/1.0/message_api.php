@@ -185,6 +185,16 @@ if($ac=="ceo_message")
 {
 	$uid=$_G['gp_uid'];
 	$to_uid=$_G['gp_field_uid'];
+	$page=$_G['gp_page'];
+	if(!$page)
+	{
+		$page=1;
+	}
+	$page_size=$_G['gp_page_size'];
+	if(!$page_size)
+	{
+		$page_size=10;
+	}
 	
 	$photo=$site_url."/uc_server/avatar.php?uid=".$to_uid."&size=big";
 

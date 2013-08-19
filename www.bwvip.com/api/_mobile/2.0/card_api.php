@@ -533,7 +533,7 @@ $query = DB::query(" SELECT id,uid,lun,event_id,total_score,zong_score,score,par
 (select event_id,baofen_id as id,uid,lun,total_score,zong_score,score,par,to_days(FROM_UNIXTIME(dateline))-to_days(now()) as tianshu,
 total_sum_ju ,total_ju_par,total_ju_par1,total_ju_par2,total_ju_par3,event_apply_id,realname,realname as username,event_user_id from tbl_baofen where fenzhan_id=$fzid and source='ndong' order by total_sum_ju asc ,total_score asc,tianshu asc) as t2 
 
-group by event_user_id order by total_sum_ju asc,total_score asc,tianshu asc limit  0,$limit");
+group by uid order by total_sum_ju asc,total_score asc,tianshu asc limit  0,$limit");
 
 
 					}
