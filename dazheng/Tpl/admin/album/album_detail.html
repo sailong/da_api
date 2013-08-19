@@ -1,0 +1,55 @@
+<include file="../public/header_dialog" />
+{$usejs}
+
+<div class="so_main">
+
+  <div class="page_tit">相册管理</div>
+  <div class="tit_tab">
+	<ul>
+		<li><a class=on href="#">查看详细相册</a></li>
+	</ul>
+  </div>
+
+<table border="0" cellspacing="0" cellpadding="0" style="width:900px;">
+<tr>
+<td>
+<!--/dialog_start-->
+
+	<table class="add_table" border="0" cellspacing="0" cellpadding="0" >
+		<tbody>
+		<tr>
+					<th>所属用户：</th>
+						<td>{$data.uid}</td>
+				</tr>
+				<tr>
+					<th>相册名称：</th>
+						<td>{$data.album_name}</td>
+				</tr>
+				<tr>
+					<th>排序：</th>
+						<td>{$data.album_sort}</td>
+				</tr>
+				<tr>
+					<th>添加时间：</th>
+					<td>{$data.album_addtime|format_to_time}</td>
+					
+				</tr>
+				
+		</tbody>
+		<tfoot>
+			<tr>
+				<th></th>
+				<td>
+					<input type="button" class="btn_w" onclick="javascript:history.back(-1);" value="返回" />
+				</td>
+		</tfoot>
+	</table><!--/add_table-->
+
+
+<!--/dialog_end-->
+</td>
+</tr>
+</table>
+
+</div>
+<include file="../public/_footer" />
