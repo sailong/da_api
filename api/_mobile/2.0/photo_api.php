@@ -28,12 +28,12 @@ else
 }
 
 //page 2
-$page2=$_G['gp_page2'];
+$page2=$_G['gp_page'];
 if(!$page2)
 {
 	$page2=1;
 }
-$page_size2=$_G['gp_page_size2'];
+$page_size2=$_G['gp_page_size'];
 if(!$page_size2)
 {
 	$page_size2=9;
@@ -110,7 +110,7 @@ if($ac=="photo_list")
 	{
 		$max_page=$max_page+1;
 	}
-	if($max_page>=$page)
+	if($max_page>=$page2)
 	{
 		$list=DB::query("select photo_id,photo_name,photo_url,photo_addtime from tbl_photo where 1 ".$sql." order by photo_addtime asc limit $page_start2,$page_size2  ");
 		while($row = DB::fetch($list))
