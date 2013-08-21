@@ -47,13 +47,12 @@ else
 	$page_start2=($page2-1)*($page_size2);
 }
 
-
+$root_path = dirname(dirname(dirname(dirname(__FILE__))));
 
 
 
 if($ac=="album_list")
 {
-
 	$total=DB::result_first("select count(album_id) from tbl_album  ");
 	
 	$max_page=intval($total/$page_size);
@@ -63,15 +62,18 @@ if($ac=="album_list")
 	}
 	if($max_page>=$page)
 	{
-		$list=DB::query("select album_id,album_name,album_sort,album_addtime from tbl_album where 1 order by album_addtime desc limit $page_start,$page_size  ");
+		$list=DB::query("select album_id,album_name,album_sort,album_addtime from tbl_album where 1 order by album_id desc limit $page_start,$page_size  ");
 		
 		while($row = DB::fetch($list))
 		{
-			$photo=DB::result_first("select photo_url from tbl_photo where album_id='".$row['album_id']."' order by photo_addtime desc limit 1 ");
+			
+			$photo=DB::result_first("select photo_url_small from tbl_photo where album_id='".$row['album_id']."' order by photo_addtime desc limit 1 ");
+			
 			if($photo)
 			{
-				$row['album_fenmian']=get_small_pic($site_url."/".$photo);
+				$row['album_fenmian']=$site_url.'/'.$photo;//get_small_pic($site_url."/".$photo);
 				$row['album_fenmian_info']=getimagesize($row['album_fenmian']);
+				
 			}
 			else
 			{
@@ -112,19 +114,17 @@ if($ac=="photo_list")
 	}
 	if($max_page>=$page2)
 	{
-		$list=DB::query("select photo_id,photo_name,photo_url,photo_addtime from tbl_photo where 1 ".$sql." order by photo_addtime asc limit $page_start2,$page_size2  ");
+		$list=DB::query("select photo_id,photo_name,photo_url,photo_url_small,photo_addtime from tbl_photo where 1 ".$sql." order by photo_addtime asc limit $page_start2,$page_size2  ");
 		while($row = DB::fetch($list))
 		{
-			
 			if($row['photo_url'])
 			{
 				$row['photo_url']=$site_url."/".$row['photo_url'];
 				$row['photo_url_info']=getimagesize($row['photo_url']);
-				
-				$row['photo_url_small']=get_small_pic($row['photo_url']);
-				if(getimagesize($row['photo_url_small']))
+				//$row['photo_url_small']=$site_url.'/'.$row['photo_url'].'_small.jpg';//get_small_pic($row['photo_url']);
+				if(getimagesize($root_path.'/'.$row['photo_url_small']))
 				{	
-					$row['photo_url_small']=get_small_pic($row['photo_url']);
+					$row['photo_url_small']=$site_url.'/'.$row['photo_url_small'];//get_small_pic($row['photo_url']);
 					$row['photo_url_small_info']=getimagesize($row['photo_url_small']);
 				}
 				else
