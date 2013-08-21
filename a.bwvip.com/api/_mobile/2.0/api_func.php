@@ -114,9 +114,17 @@ function get_zong_score_view($lun_1,$lun_2,$lun_3,$lun_4,$lun_5=0)
 
 function get_small_pic($url)
 {
-	$arr=end(explode("/",$url));
-	$file_name="s_".$arr;
-	$str=str_replace($arr,$file_name,$url);
+	if(strpos($url,"data/attachment"))
+	{
+		$str=$url.".thumb.jpg";
+	}
+	else
+	{
+		$arr=end(explode("/",$url));
+		$file_name="s_".$arr;
+		$str=str_replace($arr,$file_name,$url);
+	}
+	
 	return $str;
 }
 
