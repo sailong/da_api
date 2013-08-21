@@ -1,7 +1,16 @@
 <?php
-function get_thru($event_id,$uid)
+function get_thru($event_id,$uid,$event_user_id)
 {
-	$thru = DB::result_first("select thru from tbl_baofen where event_id=$event_id and uid='".$uid."' and source='ndong' order by lun desc limit 1 ");
+	if($uid)
+	{
+		$sql=" and uid='".$uid."' ";
+	}
+	else
+	{
+		$sql=" and event_user_id='".$event_user_id."' ";
+	}
+	
+	$thru = DB::result_first("select thru from tbl_baofen where event_id=$event_id and source='ndong' ".$sql." order by lun desc limit 1 ");
 	if(!$thru)
 	{
 		$thru="-";
@@ -12,7 +21,27 @@ function get_thru($event_id,$uid)
 
 function get_ju_par_total_sort($ju_1,$ju_2,$ju_3,$ju_4,$ju_5=0)
 {
-
+	if($ju_1>900)
+	{
+		$ju_1=0;
+	}
+	if($ju_2>900)
+	{
+		$ju_2=0;
+	}
+	if($ju_3>900)
+	{
+		$ju_3=0;
+	}
+	if($ju_4>900)
+	{
+		$ju_4=0;
+	}
+	if($ju_5>900)
+	{
+		$ju_5=0;
+	}
+	
 	$total=$ju_1+$ju_2+$ju_3+$ju_4+$ju_5;
 	return $total;
 }
@@ -85,9 +114,17 @@ function get_zong_score_view($lun_1,$lun_2,$lun_3,$lun_4,$lun_5=0)
 
 function get_small_pic($url)
 {
-	$arr=end(explode("/",$url));
-	$file_name="s_".$arr;
-	$str=str_replace($arr,$file_name,$url);
+	if(strpos($url,"data/attachment"))
+	{
+		$str=$url.".thumb.jpg";
+	}
+	else
+	{
+		$arr=end(explode("/",$url));
+		$file_name="s_".$arr;
+		$str=str_replace($arr,$file_name,$url);
+	}
+	
 	return $str;
 }
 
@@ -108,7 +145,7 @@ function dong_color($s_arr,$p_arr)
 		{
 			if(intval($p_arr[$i])>=0 && intval($s_arr[$i])>=0)
 			{
-				if($s_arr[$i]-$p_arr[$i]==3)
+				if($s_arr[$i]-$p_arr[$i]>=3)
 				{
 					$c_arr[$i]=1;
 				}
@@ -128,7 +165,7 @@ function dong_color($s_arr,$p_arr)
 				{
 					$c_arr[$i]=5;
 				}
-				else if($s_arr[$i]-$p_arr[$i]==-2)
+				else if($s_arr[$i]-$p_arr[$i]==-2 || $s_arr[$i]-$p_arr[$i]==-3)
 				{
 					$c_arr[$i]=6;
 				}

@@ -52,7 +52,7 @@ class user_ticketAction extends field_publicAction
 	   $serial = strtoupper(substr(md5($serial.time()),10,10));
 	   if($s)
 	   {
-		  $serial = strtoupper(substr(md5($serial),rand(0,22),10));
+		  $serial = strtoupper(substr(md5($serial),mt_rand(0,22),10));
 	   }
 	   
 	   return $serial;
@@ -62,8 +62,16 @@ class user_ticketAction extends field_publicAction
 	{
 		if(M()->autoCheckToken($_POST))
 		{
+			
 			$data["uid"]=post("uid");
-			$data["ticket_id"]=post("ticket_id");
+			$ticket_id = $data["ticket_id"]=post("ticket_id");
+			
+			$ticket_info = M('ticket')->where("ticket_id='{$ticket_id}'")->find();
+			
+			$data["event_id"]=$ticket_info['event_id'];
+			$data["ticket_starttime"]=$ticket_info['ticket_starttime'];
+			$data["ticket_endtime"]=$ticket_info['ticket_endtime'];
+			$data["ticket_times"]=$ticket_info['ticket_times'];
 			$data["user_ticket_code"]=$this->get_randmod_str();
 			$data["ticket_type"]=post('ticket_type');
 			if($_FILES["user_ticket_codepic"]["error"]==0)
@@ -87,11 +95,11 @@ class user_ticketAction extends field_publicAction
 			$data["user_ticket_addtime"]=time();
 			
 			$list=M("user_ticket")->add($data);
-			$this->success("添加成功",U('admin/user_ticket/user_ticket'));
+			$this->success("添加成功",U('field/user_ticket/user_ticket'));
 		}
 		else
 		{
-			$this->error("不能重复提交",U('admin/user_ticket/user_ticket_add'));
+			$this->error("不能重复提交",U('field/user_ticket/user_ticket_add'));
 		}
 
 	}
@@ -121,7 +129,12 @@ class user_ticketAction extends field_publicAction
 		{
 			$data["user_ticket_id"]=post("user_ticket_id");
 			$data["uid"]=post("uid");
-			$data["ticket_id"]=post("ticket_id");
+			$ticket_id = $data["ticket_id"]=post("ticket_id");
+			$ticket_info = M('ticket')->where("ticket_id='{$ticket_id}'")->find();
+			$data["event_id"]=$ticket_info['event_id'];
+			$data["ticket_starttime"]=$ticket_info['ticket_starttime'];
+			$data["ticket_endtime"]=$ticket_info['ticket_endtime'];
+			$data["ticket_times"]=$ticket_info['ticket_times'];
 			//$data["user_ticket_code"]=post("user_ticket_code");
 			if($_FILES["user_ticket_codepic"]["error"]==0)
 			{

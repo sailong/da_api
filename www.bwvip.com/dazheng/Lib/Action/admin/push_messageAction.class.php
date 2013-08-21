@@ -106,14 +106,16 @@ class push_messageAction extends AdminAuthAction
 			        $data['message_pic'] = $file_path;
 			    }
 			}
-		
+			$event_id = post("event_id");
+			$fenzhan_id = post("fenzhan_id");
+			$data["event_id"]=!empty($event_id) ? $event_id : null;
+			$data["fenzhan_id"]=!empty($fenzhan_id) ? $fenzhan_id : null;
 			$data["message_state"]=0;
 			$data["message_totalnum"]=0;
 			$data["message_sendnum"]=0;
 			$data["message_errorcode"]="";
 			$data["message_errormsg"]="";
 			$data["message_addtime"]=time();
-			//print_r($data);
 			$list=M("push_message")->add($data);
 
 			if($list!=false)
@@ -133,16 +135,22 @@ class push_messageAction extends AdminAuthAction
 						$sql_group=" group by devices_token ";
 						$sql .=" and field_uid='0' ";
 					}
+					if($event_id){
+						$sql .=" and event_id='".$event_id."' ";
+					}
+					if($fenzhan_id){
+						$sql .=" and fenzhan_id='".$fenzhan_id."' ";
+					}
 					
 					
 					$aaa=M()->query("delete from tbl_push_message_list where message_id='".$list."' ".$sql." ");
 
-					$row=M()->query("select uid,devices_token from tbl_push_devices where 1=1  $sql $sql_group");
+					$row=M()->query("select uid,devices_token from tbl_push_devices where 1=1  $sql ");
 					for($i=0; $i<count($row); $i++)
 					{
 						if($row[$i]['devices_token'])
 						{
-							$res=M()->query("insert into tbl_push_message_list (message_id,uid,field_uid,message_type,message_content,devices_token,message_state,message_addtime) values ('".$list."','".$row[$i]['uid']."','".$field_uid."','".post("message_type")."','".$msg_content."','".$row[$i]['devices_token']."',0,'".time()."') ");
+							$res=M()->query("insert into tbl_push_message_list (message_id,uid,field_uid,event_id,fenzhan_id,message_type,message_content,devices_token,message_state,message_addtime) values ('".$list."','".$row[$i]['uid']."','".$field_uid."','".$event_id."','".$fenzhan_id."','".post("message_type")."','".$msg_content."','".$row[$i]['devices_token']."',0,'".time()."') ");
 						}
 					}
 					
@@ -340,7 +348,36 @@ class push_messageAction extends AdminAuthAction
 		}
 
 	}
-
+	
+	public function get_event_list_ajax()
+	{
+		$field_uid = get('field_uid');
+		if($field_uid == ''){
+			 $this->ajaxReturn($result,"参数无效！",0);
+		}
+		
+		$data=M("event")->where("field_uid=".$field_uid)->select();
+		if(empty($data))
+		{
+			$this->ajaxReturn($result,"暂无赛事！",0);
+		}
+		$this->ajaxReturn($data,"赛事列表！",1);
+	}
+	
+	public function get_fenzhan_list_ajax()
+	{
+		$evnet_id = get('evnet_id');
+		if($evnet_id == ''){
+			 $this->ajaxReturn($result,"参数无效！",0);
+		}
+		
+		$data=M("fenzhan")->where("evnet_id=".$evnet_id)->select();
+		if(empty($data))
+		{
+			$this->ajaxReturn($result,"暂无分站！",0);
+		}
+		$this->ajaxReturn($data,"分站列表！",1);
+	}
 
 	
 

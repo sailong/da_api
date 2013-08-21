@@ -80,11 +80,11 @@ if($ac=="send")
 		$new_pm2=$msg_num2['newprivatepm'];
 		$res=DB::query("update jishigou_members set newpm=newpm+".$new_pm." where uid='".$to_uid."' ");
 		
-		api_json_result(1,0,"短消息已发送",$data);
+		api_json_result(1,0,"消息已发送",$data);
 	}
 	else
 	{
-		api_json_result(1,1,"短消息发送失败",$data);
+		api_json_result(1,1,"消息发送失败",$data);
 	}
 }
 

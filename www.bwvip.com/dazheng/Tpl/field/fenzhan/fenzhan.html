@@ -19,15 +19,7 @@
 				<input type="text" name="starttime" class="search_input_date" style="width:120px;" value="<php> echo  get('starttime');</php>" onFocus="WdatePicker({isShowClear:false,readOnly:true})"> 至 
 				<input type="text" name="endtime" class="search_input_date" style="width:120px;" value="<php> echo  get('endtime');</php>" onFocus="WdatePicker({isShowClear:false,readOnly:true})">
 			</td>
-			<th>类型：</th>
-			<td>
-				<select name="course_type" style="width:120px;"  class="search_select">
-					<option value="">请选择</option>
-					<option value="1">课件课程</option>
-					<option value="2">辅导课程</option>
-				</select>
-				<script>set_select_value(document.search_form.course_type,"<php> echo  get("course_type");</php>");</script>
-			</td>
+			
 			<td class="btn">
 				<input type="submit" value="搜索" class="btn_b" style="margin-right:8px;" >
 				<input type="button" value="查看全部" class="btn_b" onclick="javascript:location='{:U('field/fenzhan/fenzhan',array('event_id'=>$event_id))}';">
@@ -86,10 +78,11 @@
 			
 			 
 			<a href="{:U('wap/baofen/login', array('fenzhan_id'=>$vo['fenzhan_id']))}" target="_blank">报分入口</a> 
-			  | 
-			 
+			|
+			<a href="{:U('field/fenzhan/jinji', array('event_id'=>$event_id,'fenzhan_id'=>$vo['fenzhan_id']))}" >自动晋级</a> 
+			|
 			<a href="{:U('field/baofen_user/baofen_user',array('event_id'=>$event_id,'fenzhan_id'=>$vo['fenzhan_id']))}">报分员管理</a> 
-			  | 
+			| 
 			<a href="{:U('field/fenzhan/fenzhan_edit', array('event_id'=>$event_id,'fenzhan_id'=>$vo['fenzhan_id']))}">修改</a> | 
 			
 			<a href="javascript:void(0);" onclick="mod_delete_one('{:U('field/fenzhan/fenzhan_delete_action')}','{$vo['fenzhan_id']}');">删除</a>

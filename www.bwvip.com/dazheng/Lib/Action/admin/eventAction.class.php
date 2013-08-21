@@ -3,20 +3,20 @@
  *    #Case		bwvip
  *    #Page		EventAction.class.php (赛事)
  *
- *    @author		Zhang Long
+ *    @Author		Zhang Long
  *    @E-mail		123695069@qq.com
+ *    @Date			2013-05-28
  */
 class eventAction extends AdminAuthAction
 {
-
-	public function _basic()	
+	public function _initialize()
 	{
-		parent::_basic();
+		parent::_initialize();
 	}
 
 	public function event()
 	{
-		$list=D("event")->event_list_pro();
+		$list=D("event")->event_list_pro("   ");
 
 		$this->assign("list",$list["item"]);
 		$this->assign("pages",$list["pages"]);
@@ -45,6 +45,7 @@ class eventAction extends AdminAuthAction
 		if(M()->autoCheckToken($_POST))
 		{
 			$data["event_uid"]=post("event_uid");
+			$data["field_uid"]=$_SESSION['field_uid'];
 			$data["event_name"]=post("event_name");
 		
 			if($_FILES["event_logo"]["error"]==0 || $_FILES["event_timepic"]["error"]==0 || $_FILES["event_zhutui_pic"]["error"]==0)
@@ -101,18 +102,11 @@ class eventAction extends AdminAuthAction
 			$data["event_url"]=post("event_url");
 			$data["event_go_action"]=post("event_go_action");
 			$data["event_go_value"]=post("event_go_value");
-			$data["event_url"]=post("event_url");
+			$data["event_lun_num"]=post("event_lun_num");
+			$data["event_is_viewscore"]=post("event_is_viewscore");
 			$data["event_addtime"]=time();
-			
 			$list=M("event")->add($data);
-			if($list!=false)
-			{
-				$this->success("添加成功",U('admin/event/event'));
-			}
-			else
-			{				
-				$this->error("添加失败",U('admin/event/event'));
-			}
+			$this->success("添加成功",U('admin/event/event'));
 		}
 		else
 		{
@@ -144,9 +138,9 @@ class eventAction extends AdminAuthAction
 			$this->error("您该问的信息不存在");
 		}
 	}
+	
+	
 
-	
-	
 	public function event_edit_action()
 	{
 		if(M()->autoCheckToken($_POST))
@@ -220,11 +214,11 @@ class eventAction extends AdminAuthAction
 			$data["event_url"]=post("event_url");
 			$data["event_go_action"]=post("event_go_action");
 			$data["event_go_value"]=post("event_go_value");
-			$data["event_type"]=post("event_type");
+			$data["event_lun_num"]=post("event_lun_num");
+			$data["event_is_viewscore"]=post("event_is_viewscore");
+			
 			$list=M("event")->save($data);
-			
-			$this->success("修改成功",U('admin/event/event'));
-			
+			$this->success("修改成功",U('admin/event/event_manage',array('event_id'=>$data['event_id'])));
 		}
 		else
 		{
@@ -291,6 +285,38 @@ class eventAction extends AdminAuthAction
 			$this->error("您该问的信息不存在");
 		}
 
+	}
+	
+	
+	public function event_manage()
+	{
+		if(intval(get("event_id"))>0)
+		{
+			
+			
+			$data=M("event")->where("event_id=".intval(get("event_id")))->find();
+			$this->assign("data",$data);
+			
+			
+			$this->assign('event_name',$data['event_name']);
+			$this->assign('event_id',$data['event_id']);
+
+			import("@.ORG.editor");  //导入类
+			$editor=new editor("400px","700px",$data['event_content'],"event_content");     //创建一个对象
+			$a=$editor->createEditor();   //返回编辑器
+			$b=$editor->usejs();             //js代码
+			$this->assign('usejs',$b);     //输出到html
+			$this->assign('editor',$a);
+			
+			$this->assign('event_on',1);
+			
+			$this->assign("page_title","修改赛事");
+			$this->display();
+		}
+		else
+		{
+			$this->error("您该问的信息不存在");
+		}
 	}
 
 

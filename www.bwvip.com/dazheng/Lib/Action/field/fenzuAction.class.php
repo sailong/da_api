@@ -146,8 +146,10 @@ class fenzuAction extends field_publicAction
 
 	public function rule_add_action()
 	{
+	
 		if(M()->autoCheckToken($_POST))
-		{ 
+		{
+			
 			$data["event_id"]=post("event_id"); 
 			$data["fenzhan_id"]=post("fenzhan_id"); 
 			$fenzhan_info=M()->query("select fenzhan_lun,field_id from tbl_fenzhan where fenzhan_id='".$data["fenzhan_id"]."'");
@@ -167,112 +169,162 @@ class fenzuAction extends field_publicAction
 			$data["addtime"]=time();
 			 
 		 
-	$is_fenzu=M()->query("select * from tbl_fenzu_rule where event_id='".$data["event_id"]."' and  fenzhan_id='".$data["fenzhan_id"]."'");
-	  
-    if($is_fenzu) $this->error("该分站下 已经分组 你可以删除 从新分组");
- 
- 
-	 if($data['fenzu_rule']==2){
-			$orderby="order by event_apply_chadian asc";
-		}
-	 if($data['fenzu_rule']==3){
-			$orderby="order by rand() ";
-		}
-	  
-    $members_list=array();
+			$is_fenzu=M()->query("select * from tbl_fenzu_rule where event_id='".$data["event_id"]."' and  fenzhan_id='".$data["fenzhan_id"]."'");
+			if($is_fenzu)
+			{
+				$this->error("该分站下 已经分组 你可以删除 从新分组");
+			}
+		 
+		 
+			
+			
+			if($data['fenzu_rule']==2)
+			{
+				$orderby="order by event_apply_chadian asc";
+			}
+			if($data['fenzu_rule']==3)
+			{
+				$orderby="order by rand() ";
+			}
+			if($data['fenzu_rule']==4)
+			{
+				$orderby="order by total_sum_ju asc";
+			}
+			if($data['fenzu_rule']==5)
+			{
+				$orderby="order by total_sum_ju desc";
+			}
+			
+			$members_list=array();
 
-    /*分站会员列表*/ 
-	
-	$members_list=M()->query("select * from tbl_event_apply where event_id='".$data["event_id"]."' and  fenzhan_id='".$data["fenzhan_id"]."' $orderby");
-	 
-    if(empty($members_list)){
-        error("sorry！你的分站暂时还没有会员 请为分组添加相应的会员");
-    }
+			/*分站会员列表*/ 
+			$members_list=M()->query("select * from tbl_event_apply where event_id='".$data["event_id"]."' and  fenzhan_id='".$data["fenzhan_id"]."' $orderby");
+			if(empty($members_list))
+			{
+				$this->error("sorry！你的分站暂时还没有会员 请为分组添加相应的会员");
+			}
 
-    //算出总组数   总人数/每组人数
-    $fz_num         = ceil(count($members_list)/$data['team_member_num']);
-    $tee_num        = ceil(count($data['tee']));
-    $am_game_time   = $data['rest_starttime'] -$data['game_starttime'];  //上半场开球时间
-    $am_kq_num      = ceil($am_game_time /$data['game_jg_time']);      //计算上午能分出多少组  用上午比赛的时间/间隔时间*开球tee数
+			//算出总组数   总人数/每组人数
+			$fz_num         = ceil(count($members_list)/$data['team_member_num']);
+			$tee_num        = ceil(count($data['tee']));
+			$am_game_time   = $data['rest_starttime'] -$data['game_starttime'];  //上半场开球时间
+			$am_kq_num      = ceil($am_game_time /$data['game_jg_time']);      //计算上午能分出多少组  用上午比赛的时间/间隔时间*开球tee数
  
-        /*上午分组*/
-          $k=$kk=$t=0;
-    for($j=1;$j<=$tee_num;$j++){
-      for($i=1;$i<=$am_kq_num;$i++){
-		  $k++; 
-          $bs_data[$k]['start_time'] = $data['game_starttime'] +  ($kk * $data['game_jg_time']);
-		  $bs_data[$k]['am_pm']      = 1; //上午
-		  
-		  $num=($k-1)%$tee_num; 
-		  $bs_data[$k]['kq_tee']     = $data['tee'][$num];
-		   
-		  if($k%2==0)
-		  {$kk++;} 
-      }
-	  //echo $t;
-	  $t++; //空口游标 
-    }
+			/*上午分组*/
+			$k=$kk=$t=0;
+			
+			for($j=1;$j<=$tee_num;$j++)
+			{
+				for($i=1;$i<=$am_kq_num;$i++)
+				{
+					$k++; 
+					$bs_data[$k]['start_time'] = $data['game_starttime'] +  ($kk * $data['game_jg_time']);
+					$bs_data[$k]['am_pm']      = 1; //上午
+
+					$num=($k-1)%$tee_num; 
+					$bs_data[$k]['kq_tee']     = $data['tee'][$num];
+
+					if($k%2==0)
+					{$kk++;} 
+				}
+				//echo $t;
+				$t++; //空口游标 
+			}
 /*}*/
   
-        /*下午分组*/
- $kk=0;$t=0;
-   $pm_kq_num=ceil(($fz_num -($am_kq_num*$tee_num))/$tee_num);
+			/*下午分组*/
+			$kk=0;$t=0;
+			$pm_kq_num=ceil(($fz_num -($am_kq_num*$tee_num))/$tee_num);
 
-    for($j=1;$j<=$tee_num;$j++){
-      for($i=1;$i<=$pm_kq_num;$i++){
-		  $k++;		  
-		$bs_data[$k]['start_time'] =  $data['rest_endtime'] +  ($kk * $data['game_jg_time']);
-		$bs_data[$k]['am_pm']= 2; //下午
-		  $num=($k-1)%$tee_num; 
-		  $bs_data[$k]['kq_tee']     = $data['tee'][$num];
-           if($k%2==0)
-		  {$kk++;} 
-      }
-	  //echo $t;
-	  $t++; //空口游标
-	   
-    }
+			for($j=1;$j<=$tee_num;$j++)
+			{
+				for($i=1;$i<=$pm_kq_num;$i++)
+				{
+					$k++;		  
+					$bs_data[$k]['start_time'] =  $data['rest_endtime'] +  ($kk * $data['game_jg_time']);
+					$bs_data[$k]['am_pm']= 2; //下午
+					$num=($k-1)%$tee_num; 
+					$bs_data[$k]['kq_tee']     = $data['tee'][$num];
+					if($k%2==0)
+					{
+						$kk++;
+					} 
+				}
+				//echo $t;
+				$t++; //空口游标
+			   
+			}
  
 
-    $i=0; $z=0; 
-
-	foreach($members_list as $rows){
-		if($i%$data['team_member_num']==0) $z++;
-		$bs_data[$z]['users'][$i]['uid']      = $rows['uid'];
-		$bs_data[$z]['users'][$i]['realname'] = $rows['event_apply_realname']; 
-        $bs_data[$z]['users'][$i]['event_apply_chadian']     = $rows['event_apply_chadian'];
-		 
- //$bs_data[$z]['users']= sortByCol($bs_data[$z]['users'], 'chadian', SORT_ASC);  
-        $i++;
-	} 
+			$i=0; 
+			$z=0; 
+			foreach($members_list as $rows)
+			{
+				if($i%$data['team_member_num']==0) $z++;
+				$bs_data[$z]['users'][$i]['uid']      = $rows['uid'];
+				$bs_data[$z]['users'][$i]['event_user_id']      = $rows['event_user_id'];
+				$bs_data[$z]['users'][$i]['lun']      = $fenzhan_lun;
+				$bs_data[$z]['users'][$i]['realname'] = $rows['event_apply_realname']; 
+				$bs_data[$z]['users'][$i]['event_apply_chadian']     = $rows['event_apply_chadian'];
+				 
+			//$bs_data[$z]['users']= sortByCol($bs_data[$z]['users'], 'chadian', SORT_ASC);  
+				$i++;
+			} 
   
  
- //array_multisort($start_time, SORT_ASC,$bs_data); //对相同差点的人 从新排序   
-   $insert_data['fenzhan_id']    = $data['fenzhan_id']; 
-   $insert_data['event_id']   = $data['event_id']; 
-   $insert_data['addtime']   = time();  
-   foreach($bs_data as $key=>$value){
-     foreach($value['users'] as $k =>$v){
-                $v['start_time'] = $value['start_time'];
-                $v['am_pm']      = $value['am_pm'];
-                $v['tee']        = $value['kq_tee']; 
-                $v['fenzu_id']= $key;
-                $rows = array_merge($v,$insert_data); 
-			 $list=M("baofen")->add($rows);
-            }
-   } 
- $members_list=M()->query("select * from tbl_event_apply where event_id='".$data['event_id']."' and  fenzhan_id='".$data['fenzhan_id']."' $orderby");
-	
-  
-		 
-		// print_r($data);exit;
+			//array_multisort($start_time, SORT_ASC,$bs_data); //对相同差点的人 从新排序   
+			$insert_data['fenzhan_id']    = $data['fenzhan_id']; 
+			$insert_data['event_id']   = $data['event_id']; 
+			$insert_data['addtime']   = time();  
+			foreach($bs_data as $key=>$value)
+			{
+				foreach($value['users'] as $k =>$v)
+				{
+					$v['start_time'] = $value['start_time'];
+					$v['am_pm']      = $value['am_pm'];
+					$v['tee']        = $value['kq_tee']; 
+					$v['fenzu_id']= $key;
+					$rows = array_merge($v,$insert_data); 
+					$list=M("baofen")->add($rows);
+				}
+			} 
+			$members_list=M()->query("select * from tbl_event_apply where event_id='".$data['event_id']."' and  fenzhan_id='".$data['fenzhan_id']."' $orderby");
 			$list=M("fenzu_rule")->add($data);
+			//print_r($data);
+			
+	
+			//多轮成绩更新
+			$s_lun=$fenzhan_lun-1;
+			if(post("fenzhan_id") && post("event_id") && $s_lun)
+			{
+				$baofen=M()->query("select baofen_id,uid,event_user_id,event_id from tbl_baofen where fenzhan_id='".post("fenzhan_id")."' ");
+				for($ii=0; $ii<count($baofen); $ii++)
+				{
+					$last=M()->query("select baofen_id,status,zong_score,total_sum_ju from tbl_baofen where event_id='".post("event_id")."' and event_user_id='".$baofen[$ii]['event_user_id']."' and lun='".$s_lun."' order by lun desc,addtime desc limit 1 ");
+					//print_r($last);
+					
+					$data_b['baofen_id']=$baofen[$ii]['baofen_id'];
+					$data_b['status']=$last[0]['status'];
+					$data_b['zong_score']=$last[0]['zong_score'];
+					$data_b['total_sum_ju']=$last[0]['total_sum_ju'];
+					$res=M('baofen')->save($data_b);
+					print_r($data_b);
+					echo "<hr>";
+
+				}
+			}
+		
+			
+			
 			$this->success("添加成功",U('field/fenzu/rule',array('event_id'=>$data['event_id'],'fenzhan_id'=>$data['fenzhan_id'])));
+			
+
 		}
 		else
 		{
 			$this->error("不能重复提交",U('field/fenzu/rule',array('event_id'=>$data['event_id'],'fenzhan_id'=>$data['fenzhan_id'])));
 		}
+	
 		
 		
 		

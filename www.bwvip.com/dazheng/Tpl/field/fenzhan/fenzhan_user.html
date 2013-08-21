@@ -9,7 +9,7 @@
 		<volist id="vo" name="fenzhan">
 		<li><a <php> if(get("fenzhan_id")==$vo['fenzhan_id']){ echo " class=on ";}</php> href="{:U('field/fenzhan/fenzhan_user',array('event_id'=>$event_id,'fenzhan_id'=>$vo['fenzhan_id']))}">{$vo['fenzhan_name']}</a></li>
 		</volist>
-        <a   href="{:U('field/fenzu/daochu',array('event_id'=>get('event_id'),'fenzhan_id'=>get('fenzhan_id')))}">导出Excel</a>
+        <li style="float:right;"><a style="color:red;"   href="{:U('field/fenzu/daochu',array('event_id'=>get('event_id'),'fenzhan_id'=>get('fenzhan_id')))}">导出Excel</a></li>
 	</ul>
    </div>
     
@@ -20,8 +20,11 @@
   <!--------list -------->
   <div class="Toolbar_inbox">
   	<div class="page right">{$pages}</div> 
+	<php> if(get("event_id")&&get("fenzhan_id")){</php><a href="{:U('field/fenzu/tiaopei_add',array('event_id'=>get('event_id'),'fenzhan_id'=>get('fenzhan_id')))}">添加球员</a><php>}</php>
+  <a href="javascript:void(0);" class="btn_a"  onclick="mod_delete_batch('{:U('field/fenzhan/baofen_delete_action')}','mod_table');"><span>批量删除</span></a>
+  
 	<div class="clear"></div>
-  <php> if(get("event_id")&&get("fenzhan_id")){</php><a href="{:U('field/fenzu/tiaopei_add',array('event_id'=>get('event_id'),'fenzhan_id'=>get('fenzhan_id')))}">添加球员</a><php>}</php>
+  
   </div>
   <div class="list">
 	<php>if($total>0){</php>
@@ -56,9 +59,6 @@
 		<td>{$vo.baofen_id}</th>
 		<td>{$vo.uid}</th>
 		<td>{$vo.realname}</td>
-		<!--
-		<td>{$vo.event_id}</td>
-		-->
 		<td>{$vo.fenzhan_id}</td>
 		<td>{$vo.fenzu_id}</td> 
 		<td>{$vo.start_time|format_to_fulltime}</td>

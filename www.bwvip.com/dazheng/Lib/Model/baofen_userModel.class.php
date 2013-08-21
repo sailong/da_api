@@ -40,12 +40,12 @@ class baofen_userModel extends Model{
 			$where .=" and baofen_user_addtime<".strtotime(get("endtime"))." ";
 		}
 
-		$data["item"]=M("baofen_user")->where($where.$bigwhere)->field("baofen_user_id,username,password,event_id,fenzhan_id,field_id,dongs,iteamid,onlymark,addtime")->order($sort)->page($page.",".$page_size)->select();
+		$data["item"]=M("baofen_user")->where($where.$bigwhere)->field(" * ")->order($sort)->page($page.",".$page_size)->select(); 
 		for($i=0; $i<count($data["item"]); $i++)
 		{
 			if($data["item"][$i]["fenzhan_id"]!="")
 			{
-				$fenzhan=M()->query("select fenzhan_name from ".C("db_prefix")."fenzhan where fenzhan_id='".$data["item"][$i]["fenzhan_id"]."' ");
+				$fenzhan=M()->query("select fenzhan_name from tbl_fenzhan where fenzhan_id='".$data["item"][$i]["fenzhan_id"]."' ");
 				$data["item"][$i]["fenzhan_name"]=$fenzhan[0]["fenzhan_name"];
 			}
 		}

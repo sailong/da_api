@@ -158,7 +158,7 @@ class baofenAction extends wap_publicAction
 
 		$fenzhan_id = post('fenzhan_id');
 		$lun = post('lun');
- 
+
 		
 		if($arr_b)
 		{ 
@@ -167,6 +167,35 @@ class baofenAction extends wap_publicAction
 			$field_id=$fenzhan_info['field_id'];
 			$fenzhan_a=$fenzhan_info['fenzhan_a'];
 			$fenzhan_b=$fenzhan_info['fenzhan_b'];
+			
+			//下级分站
+			if($fenzhan_info['parent_id'])
+			{
+				$parent_fenzhan_id=$fenzhan_info['parent_id'];
+			}
+			else
+			{
+				$parent_fenzhan_id=$fenzhan_id;
+			}
+			$sub_arr=array();
+			$sub_arr[]=$parent_fenzhan_id;
+			$sub_fenzhan=M()->query("select fenzhan_id from tbl_fenzhan where parent_id='".$parent_fenzhan_id."' ");
+			for($i=0; $i<count($sub_fenzhan); $i++)
+			{
+				$sub_arr[]=$sub_fenzhan[$i]['fenzhan_id'];
+			}
+			
+			
+			if(count($sub_arr)>1)
+			{
+				$sub_fenzhan_sql=" and (fenzhan_id in ('".implode(",",$sub_arr)."')) ";
+			}
+			else
+			{
+				$sub_fenzhan_sql=" and (event_id='".$sid."') ";
+			}
+			
+			
 			
 			$avs=0;
 			foreach($arr_b as $key=>$value)
@@ -392,17 +421,17 @@ class baofenAction extends wap_publicAction
 					
 					
 					//多轮成绩更新
-					$lun_num = M()->query("select max(lun) as lun_num from tbl_baofen where event_id='".$event_id."' and event_id<>0 and source='ndong' limit 1 ");
+					$lun_num = M()->query("select max(lun) as lun_num from tbl_baofen where 1=1 ".$sub_fenzhan_sql." and event_id<>0 and source='ndong' limit 1 ");
 					for($i=0; $i<$lun_num[0]['lun_num']; $i++)
 					{
 						$lun=$i+1;
 						if($baofen[0]['uid'])
 						{
-							$lun_info = M()->query("select baofen_id,sid,uid,total_score,score,par,total_ju_par,to_days(FROM_UNIXTIME(dateline))-to_days(now()) as tianshu from tbl_baofen where event_id='".$event_id."' and uid='".$baofen[0]['uid']."' and lun='".$lun."' and source='ndong' order by dateline asc ");
+							$lun_info = M()->query("select baofen_id,sid,uid,total_score,score,par,total_ju_par,to_days(FROM_UNIXTIME(dateline))-to_days(now()) as tianshu from tbl_baofen where 1=1 ".$sub_fenzhan_sql." and uid='".$baofen[0]['uid']."' and lun='".$lun."' and source='ndong' order by dateline asc ");
 						}
 						else
 						{
-							$lun_info = M()->query("select baofen_id,sid,uid,total_score,score,par,total_ju_par,to_days(FROM_UNIXTIME(dateline))-to_days(now()) as tianshu from tbl_baofen where event_id='".$event_id."' and event_user_id='".$baofen[0]['event_user_id']."' and lun='".$lun."' and source='ndong' order by dateline asc ");
+							$lun_info = M()->query("select baofen_id,sid,uid,total_score,score,par,total_ju_par,to_days(FROM_UNIXTIME(dateline))-to_days(now()) as tianshu from tbl_baofen where 1=1 ".$sub_fenzhan_sql." and event_user_id='".$baofen[0]['event_user_id']."' and lun='".$lun."' and source='ndong' order by dateline asc ");
 						}
 						
 						if($lun==1)
@@ -464,7 +493,7 @@ class baofenAction extends wap_publicAction
 					//$total_sum_ju=get_ju_par_total_sort($ju_1,$ju_2,$ju_3,$ju_4);
 					$total_sum_ju=$ju_1+$ju_2+$ju_3+$ju_4;
 					$zong_score=$lun_1+$lun_2+$lun_3+$lun_4;
-					$res=M()->query("update tbl_baofen set total_sum_ju='".$total_sum_ju."',zong_score='".$zong_score."' where event_user_id='".$baofen[0]['event_user_id']."' and event_id='".$event_id."'");
+					$res=M()->query("update tbl_baofen set total_sum_ju='".$total_sum_ju."',zong_score='".$zong_score."' where event_user_id='".$baofen[0]['event_user_id']."' ".$sub_fenzhan_sql."  ");
 					/*
 					echo "update tbl_baofen set total_sum_ju='".$total_sum_ju."',zong_score='".$zong_score."' ".$status_sql." where event_user_id='".$baofen[0]['event_user_id']."' and event_id='".$event_id."'";
 					echo "<hr>";

@@ -288,7 +288,7 @@ $caves = explode('|',$arr['score'] );
 					FROM tbl_baofen AS cs
 					LEFT JOIN ".DB::table('common_field')." AS cf ON cf.uid = cs.field_id
 					LEFT JOIN ".DB::table('common_district')." AS cd ON cd.id = cs.province
-					WHERE status = '2' AND ismine = '0' AND cs.uid = '".$uid."'
+					WHERE status = '2'  AND cs.uid = '".$uid."'
 					ORDER BY cs.dateline DESC
 					LIMIT ".$start.",".$pagesize."
 					";

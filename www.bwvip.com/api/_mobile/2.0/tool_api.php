@@ -28,60 +28,66 @@ if($ac=="import_photo_form_dz")
 		$pic_list=DB::query("select picid,albumid,uid,title,dateline,filepath from pre_home_pic where albumid='".$row['albumid']."' ");
 		while($row_pic=DB::fetch($pic_list))
 		{
-			print_r($row_pic);
+			$file_url=dirname(dirname(dirname(dirname(__FILE__)))).'/data/attachment/album/'.$row_pic['filepath'];
+			
+			$extname=end(explode(".",$file_url));
+			if(file_exists($file_url))
+			{
+				$image_file_small = $file_url.'_small.'.$extname;
+				
+				list($image_width,$image_height,$image_type,$image_attr) = getimagesize($file_url);
+				$iw = $image_width;
+				$ih = $image_height;
+				/*$src_x = $src_y = 0;
+				$src_h = $src_w = min($iw, $ih);
+				//$src_h = round($src_w * $ih / $iw);
+				
+				 if($iw > $ih) {
+					$src_x = round(($iw - $ih) / 2);
+				}else{
+					$src_y = round(($ih - $iw) / 2);
+				} 
+				//if($iw > 115) {
+					$src_x = round(($iw - 115) / 2);
+				//}else{
+					$src_y = round(($ih - 80) / 2);
+				//}
+				//echo '<pre>';
+				echo $src_x.'<br>';
+				echo $src_y.'<br>';
+				echo $src_w.'<br>';
+				echo $src_h.'<br>';
+				$result = makethumb($file_url, $image_file_small, 115, 80, 115, 80, $src_x, $src_y, $src_w, $src_h, 0, 100);
+				clearstatcache();
+				if (!$result && !is_file($image_file_small)) {
+					@copy($file_url, $image_file_small);
+				}*/
+				
+				$image_width_p = 300;//140;
+				$image_height_p = 200;//94
+				if($iw > $image_width_p || $ih > $image_height_p) {
+					$p_width = $image_width_p;
+					$p_height = round(($ih*$image_width_p)/$iw);
+					if($p_height > $image_height_p){
+						$p_height = $image_height_p;
+					} 
+					$result = makethumb($file_url, $image_file_small, $p_width, $p_height, 0, 0, 0, 0, 0, 0, 0, 100);
+				}
+				clearstatcache();
+				if($iw <= $image_width_p || (!$result && !is_file($image_file_small))) {
+					@copy($file_url, $image_file_small);
+				}
+			}
 			$filepath="/data/attachment/album/".$row_pic['filepath'];
 			$photo_info=DB::fetch_first("select photo_id,photo_url_small from tbl_photo where picid='".$row_pic['picid']."' ");
-			
-			if(!$photo_info['photo_url_small'] || !file_exists($photo_info['photo_url_small']))
-			{
-				
-				$file_url=$filepath;
-				$extname=end(explode(".",$file_url));
-				
-				$small_file_url=get_small_pic($file_url);
-				if($extname=="jpg")
-				{
-					$pic_source=imagecreatefromjpeg($file_url);
-				}
-				else if($extname=="gif")
-				{
-					$pic_source=imagecreatefromgif($file_url);
-				}
-				else if($extname=="png")
-				{
-					$pic_source=imagecreatefrompng($file_url);
-				}
-				else
-				{
-					echo "文件类型不支持";
-				}
 
-				$filename_s = $file_url."_small";
-
-				if($pic_source && $extname)
-				{
-					$aa=resizeImage($pic_source,115,80,$small_file_url);
-					if(file_exists($file_url))
-					{
-						//$result=unlink($file_url);
-					}
-				}
-			
-				if(file_exists($small_file_url))
-				{
-					$up_sql=",photo_url_small='".$small_file_url."' ";
-				}
-				
-			}
-			
-			
 			if($photo_info['photo_id'])
 			{
-				$res=DB::query("update tbl_photo set photo_url='".$filepath."' ".$up_sql." where photo_id='".$photo_info['photo_id']."' ");
+				$res=DB::query("update tbl_photo set photo_url='".$filepath."' and photo_url_small='".$filepath."_small.".$extname."' where photo_id='".$photo_info['photo_id']."' ");
 			}
 			else
 			{
-				$res=DB::query("insert into tbl_photo (uid,album_id,picid,photo_name,photo_url,photo_url_small,photo_addtime) values ('".$row_pic['uid']."','".$album_id."','".$row_pic['album_id']."','".$row_pic['title']."','".$filepath."','".$small_file_url."','".$row_pic['dateline']."') ");
+				$res=DB::query("insert into tbl_photo (uid,album_id,picid,photo_name,photo_url,photo_url_small,photo_addtime) values ('".$row_pic['uid']."','".$album_id."','".$row_pic['album_id']."','".$row_pic['title']."','".$filepath."','".$filepath."_small.".$extname."','".$row_pic['dateline']."') ");
 				
 				/*
 				echo "insert into tbl_photo (uid,album_id,picid,photo_name,photo_url,photo_url_small,photo_addtime) values ('".$row_pic['uid']."','".$album_id."','".$row_pic['album_id']."','".$row_pic['title']."','".$filepath."','".$small_file_url."','".$row_pic['dateline']."') ";
@@ -89,6 +95,7 @@ if($ac=="import_photo_form_dz")
 				*/
 			}
 		}
+			//echo $image_file_small.'<br>'.$res.'<br>';die;
 	}
 	
 	echo "处理完成";
@@ -96,6 +103,119 @@ if($ac=="import_photo_form_dz")
 }
 
 
+function makethumb($srcfile,$dstfile,$thumbwidth,$thumbheight,$maxthumbwidth=0,$maxthumbheight=0,$src_x=0,$src_y=0,$src_w=0,$src_h=0, $thumb_cut_type=0, $thumb_quality = 100) {
+		if (!is_file($srcfile)) {
+		return '';
+	}
+
+	$tow = (int) $thumbwidth;
+	$toh = (int) $thumbheight;
+	if($tow < 30) {
+		$tow = 30;
+	}
+	if($toh < 30) {
+		$toh = 30;
+	}
+
+	$make_max = 0;
+	$maxtow = (int) $maxthumbwidth;
+	$maxtoh = (int) $maxthumbheight;
+	if($maxtow >= 300 && $maxtoh >= 300)
+	{
+		$make_max = 1;
+	}
+
+	$im = '';
+	if(false != ($data = getimagesize($srcfile))) {
+		if($data[2] == 1) {
+			$make_max = 0;			if(function_exists("imagecreatefromgif")) {
+				$im = imagecreatefromgif($srcfile);
+			}
+		} elseif($data[2] == 2) {
+			if(function_exists("imagecreatefromjpeg")) {
+				$im = imagecreatefromjpeg($srcfile);
+			}
+		} elseif($data[2] == 3) {
+			if(function_exists("imagecreatefrompng")) {
+				$im = imagecreatefrompng($srcfile);
+			}
+		}
+	}
+	if(!$im) return '';
+
+	$srcw = ($src_w ? $src_w : imagesx($im));
+	$srch = ($src_h ? $src_h : imagesy($im));
+
+	$towh = $tow/$toh;
+	$srcwh = $srcw/$srch;
+	if($towh <= $srcwh) {
+		$ftow = $tow;
+		$ftoh = round($ftow*($srch/$srcw),2);
+	} else {
+		$ftoh = $toh;
+		$ftow = round($ftoh*($srcw/$srch),2);
+	}
+
+
+	if($make_max) {
+		$maxtowh = $maxtow/$maxtoh;
+		if($maxtowh <= $srcwh) {
+			$fmaxtow = $maxtow;
+			$fmaxtoh = round($fmaxtow*($srch/$srcw),2);
+		} else {
+			$fmaxtoh = $maxtoh;
+			$fmaxtow = round($fmaxtoh*($srcw/$srch),2);
+		}
+
+		if($srcw <= $maxtow && $srch <= $maxtoh) {
+			$make_max = 0;		
+		}
+	}
+
+
+	$maxni = '';
+	$thumb_quality = (int) $thumb_quality;
+	if($thumb_quality < 1 || $thumb_quality > 100) {
+		$thumb_quality = 100;
+	}
+	if($srcw >= $tow || $srch >= $toh) {
+		if(function_exists("imagecreatetruecolor") && function_exists("imagecopyresampled") && ($ni = imagecreatetruecolor($ftow, $ftoh))) {
+			imagecopyresampled($ni, $im, 0, 0, $src_x, $src_y, $ftow, $ftoh, $srcw, $srch);
+						if($make_max && ($maxni = imagecreatetruecolor($fmaxtow, $fmaxtoh))) {
+				imagecopyresampled($maxni, $im, 0, 0, $src_x, $src_y, $fmaxtow, $fmaxtoh, $srcw, $srch);
+			}
+		} elseif(function_exists("imagecreate") && function_exists("imagecopyresized") && ($ni = imagecreate($ftow, $ftoh))) {
+			imagecopyresized($ni, $im, 0, 0, $src_x, $src_y, $ftow, $ftoh, $srcw, $srch);
+						if($make_max && ($maxni = imagecreate($fmaxtow, $fmaxtoh))) {
+				imagecopyresized($maxni, $im, 0, 0, $src_x, $src_y, $fmaxtow, $fmaxtoh, $srcw, $srch);
+			}
+		} else {
+			return '';
+		}
+		if(function_exists('imagejpeg')) {
+			imagejpeg($ni, $dstfile, $thumb_quality);
+						if($make_max && $maxni) {
+				imagejpeg($maxni, $srcfile, $thumb_quality);
+			}
+		} elseif(function_exists('imagepng')) {
+			imagepng($ni, $dstfile);
+						if($make_max && $maxni) {
+				imagepng($maxni, $srcfile);
+			}
+		}
+		imagedestroy($ni);
+		if($make_max && $maxni) {
+			imagedestroy($maxni);
+		}
+	}
+	imagedestroy($im);
+
+	if(!is_file($dstfile)) {
+		return '';
+	} else {
+		return $dstfile;
+	}
+}
 
 
 

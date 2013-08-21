@@ -16,7 +16,7 @@ if(!$page)
 $page_size=$_G['gp_page_size'];
 if(!$page_size)
 {
-	$page_size=9;
+	$page_size=10;
 }
 if($page==1)
 {
@@ -28,12 +28,12 @@ else
 }
 
 //page 2
-$page2=$_G['gp_page2'];
+$page2=$_G['gp_page'];
 if(!$page2)
 {
 	$page2=1;
 }
-$page_size2=$_G['gp_page_size2'];
+$page_size2=$_G['gp_page_size'];
 if(!$page_size2)
 {
 	$page_size2=9;
@@ -63,11 +63,11 @@ if($ac=="album_list")
 	}
 	if($max_page>=$page)
 	{
-		$list=DB::query("select album_id,album_name,album_sort,album_addtime from tbl_album where 1 order by album_sort desc limit $page_start,$page_size  ");
+		$list=DB::query("select album_id,album_name,album_sort,album_addtime from tbl_album where 1 order by album_id desc limit $page_start,$page_size  ");
 		
 		while($row = DB::fetch($list))
 		{
-			$photo=DB::result_first("select photo_url from tbl_photo where album_id='".$row['album_id']."' order by photo_addtime desc limit 1 ");
+			$photo=DB::result_first("select photo_url from tbl_photo where album_id='".$row['album_id']."' order by photo_addtime asc limit 1 ");
 			if($photo)
 			{
 				$row['album_fenmian']=get_small_pic($site_url."/".$photo);
@@ -105,14 +105,14 @@ if($ac=="photo_list")
 	}
 	
 	$total=DB::result_first("select count(photo_id) from tbl_photo where 1 ".$sql." ");
-	$max_page=intval($total/$page_size);
-	if($max_page<$total/$page_size)
+	$max_page=intval($total/$page_size2);
+	if($max_page<$total/$page_size2)
 	{
 		$max_page=$max_page+1;
 	}
-	if($max_page>=$page)
+	if($max_page>=$page2)
 	{
-		$list=DB::query("select photo_id,photo_name,photo_url,photo_addtime from tbl_photo where 1 ".$sql." order by photo_addtime desc limit $page_start,$page_size  ");
+		$list=DB::query("select photo_id,photo_name,photo_url,photo_addtime from tbl_photo where 1 ".$sql." order by photo_addtime asc limit $page_start2,$page_size2  ");
 		while($row = DB::fetch($list))
 		{
 			
