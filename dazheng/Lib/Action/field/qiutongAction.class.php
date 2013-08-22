@@ -39,7 +39,10 @@ class qiutongAction extends field_publicAction
 
 	public function qiutong_add()
 	{
-
+		
+		$category_list = $this->get_category_list();
+		
+		$this->assign('category_list',$category_list);
 		$this->assign("page_title","添加球童");
     	$this->display();
 	}
@@ -391,6 +394,26 @@ class qiutongAction extends field_publicAction
         
         return false;
     }
+	//球童所属分类
+	public function get_category_list()
+	{
+		$field_uid = $_SESSION["field_uid"];
+		$category_type = 'qiutong';
+
+		$category_list = M('category')->where("field_uid='{$field_uid}' and category_type='{$category_type}'")->select();
+	
+		if(empty($category_list))
+		{
+			return false;
+		}
+		foreach($category_list as $key=>$val)
+		{
+			unset($category_list[$key]);
+			$category_list[$val['category_id']] = $val;
+		}
+		
+		return $category_list;
+	}
 
 }
 ?>
