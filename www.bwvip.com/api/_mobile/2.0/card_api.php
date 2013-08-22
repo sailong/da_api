@@ -317,12 +317,12 @@ if($ac=='rank')
 				if($days>=1)
 				{
 					//非当天
-					$list=DB::query("select baofen_id,uid,realname as username,total_ju_par as today_score,$strlun,cave_1,cave_2,cave_3,cave_4,cave_5,cave_6,cave_7,cave_8,cave_9,cave_10,cave_11,cave_12,cave_13,cave_14,cave_15,cave_16,cave_17,cave_18,total_ju_par,(cave_10+cave_11+cave_12+cave_13+cave_14+cave_15+cave_16+cave_17+cave_18) as lin,is_end from tbl_baofen where fenzhan_id='".$now_fz_id."' and source='ndong' order by $lnorder,lin,cave_18,cave_17,cave_16 ");
+					$list=DB::query("select baofen_id,uid,event_user_id,realname as username,total_ju_par as today_score,zong_score,total_sum_ju,$strlun,cave_1,cave_2,cave_3,cave_4,cave_5,cave_6,cave_7,cave_8,cave_9,cave_10,cave_11,cave_12,cave_13,cave_14,cave_15,cave_16,cave_17,cave_18,total_ju_par,(cave_10+cave_11+cave_12+cave_13+cave_14+cave_15+cave_16+cave_17+cave_18) as lin,is_end from tbl_baofen where fenzhan_id='".$now_fz_id."' and source='ndong' order by $lnorder,lin,cave_18,cave_17,cave_16 ");
 				}
 				else
 				{
 					//当天
-					$list=DB::query("select baofen_id,uid,realname as username,par,total_ju_par as today_score,$strlun,cave_1,cave_2,cave_3,cave_4,cave_5,cave_6,cave_7,cave_8,cave_9,cave_10,cave_11,cave_12,cave_13,cave_14,cave_15,cave_16,cave_17,cave_18,total_ju_par,(cave_10+cave_11+cave_12+cave_13+cave_14+cave_15+cave_16+cave_17+cave_18) as lin,is_end from tbl_baofen where fenzhan_id='".$now_fz_id."'  and source='ndong' order by  $lnorder,lin,cave_18,cave_17,cave_16 ");
+					$list=DB::query("select baofen_id,uid,event_user_id,realname as username,par,total_ju_par as today_score,zong_score,total_sum_ju,$strlun,cave_1,cave_2,cave_3,cave_4,cave_5,cave_6,cave_7,cave_8,cave_9,cave_10,cave_11,cave_12,cave_13,cave_14,cave_15,cave_16,cave_17,cave_18,total_ju_par,(cave_10+cave_11+cave_12+cave_13+cave_14+cave_15+cave_16+cave_17+cave_18) as lin,is_end from tbl_baofen where fenzhan_id='".$now_fz_id."'  and source='ndong' order by  $lnorder,lin,cave_18,cave_17,cave_16 ");
 				}
 				
 				while($row=DB::fetch($list))
@@ -364,7 +364,7 @@ if($ac=='rank')
 					{
 						$row['score']=$row['cave_1']."|".$row['cave_2']."|".$row['cave_3']."|".$row['cave_4']."|".$row['cave_5']."|".$row['cave_6']."|".$row['cave_7']."|".$row['cave_8']."|".$row['cave_9']."|".$row['cave_10']."|".$row['cave_11']."|".$row['cave_12']."|".$row['cave_13']."|".$row['cave_14']."|".$row['cave_15']."|".$row['cave_16']."|".$row['cave_17']."|".$row['cave_18'];
 					}
-					$row['score_sub']=explode("|",$row['score']);
+					$row['score_sub']=score_format(explode("|",$row['score']));
 					$row['par_sub']=explode("|",$row['par']);
 					
 					
@@ -389,6 +389,9 @@ if($ac=='rank')
 					$row['color_1']=$c_arr;
 					
 					
+					$ju_1=$row['total_ju_par'];
+					
+					
 					
 					
 					if($row['total_ju_par']>900)
@@ -401,7 +404,16 @@ if($ac=='rank')
 						$row['total_score']="-";
 					}
 					$lun_1=$row['total_score'];
-					$row['ju_par_total']=ju_par_format($row['total_ju_par']);
+					
+					if(dong_check($row['score_sub']))
+					{
+						$row['ju_par_total']=ju_par_format($row['total_ju_par']);
+					}
+					else
+					{
+						$row['ju_par_total']="-";
+					}
+					
 					//$row['ju_par_total']=ju_par_format($row['total_ju_par']);
 					
 					
@@ -410,21 +422,17 @@ if($ac=='rank')
 					$row['lun_2']=$lun_2;
 					$row['lun_3']=$lun_3;
 					$row['lun_4']=$lun_4;
-					$row['ju_par_1']=$ju_1;
+					$row['ju_par_1']=$row['total_ju_par'];
 					$row['ju_par_2']=$ju_2;
 					$row['ju_par_3']=$ju_3;
 					$row['ju_par_4']=$ju_4;
 				
 
 					$row['score_1']=$row['score_sub'];
-					if($row['is_end'])
-					{
-						$row['score_status']="F";
-					}
-					else
-					{
-						$row['score_status']="-";
-					}
+					
+					
+					$row['score_status']=get_thru($sid,$row['fenzhan_id'],$row['uid'],$row['event_user_id']);
+					
 					
 		
 					if(!$lun_1)
@@ -751,7 +759,7 @@ if($ac=='rank')
 							$row['total_score']='-';
 						}
 						//$row['score_status']="F/".$row['lun'];
-						$row['score_status']=get_thru($sid,$row['uid'],$row['event_user_id']);
+						$row['score_status']=get_thru($sid,$row['fenzhan_id'],$row['uid'],$row['event_user_id']);
 						
 
 						$s_arr=explode("|",$row['score']);
@@ -810,7 +818,6 @@ if($ac=='rank')
 					*/
 					for($i=0; $i<count($gscore); $i++)
 					{
-						
 						
 						if($gscore[$i]['status']==-4)
 						{
@@ -1411,6 +1418,35 @@ function gettruename($uuid)
 	return $username ;
 }
 
+
+function dong_check($arr)
+{
+	$n=0;
+	for($i=0; $i<count($arr); $i++)
+	{
+		if($arr[$i]>0)
+		{
+			$n=$n+1;
+		}
+	}
+	
+	return $n;
+}
+
+
+function score_format($arr)
+{
+	//$arr=explode(",",$score_arr);
+	for($i=0; $i<count($arr); $i++)
+	{
+		if($arr[$i]==0)
+		{
+			$arr[$i]="-";
+		}
+	}
+	//$str=implode(",",$arr);
+	return $arr;
+}
 
 //距标准杆格式
 function ju_par_format($option)

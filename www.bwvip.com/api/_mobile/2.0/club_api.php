@@ -1040,7 +1040,7 @@ if($ac=="golf_news")
 {
 	$field_uid=$_G['gp_field_uid'];
 	$page_size=9;
-	$total=DB::result_first("select count(arc_id) from tbl_arc where arc_model='arc' and arc_state=1 and (arctype_id=2 or arc_type='Q') and arc_viewtype='normal' $language_sql ");
+	$total=DB::result_first("select count(arc_id) from tbl_arc where arc_model='arc' and arc_state=1 and arc_viewstatus=1  and (arctype_id=2 or arc_type='Q') and arc_viewtype='normal' $language_sql ");
 	$max_page=intval($total/$page_size);
 	if($max_page<$total/$page_size)
 	{
@@ -1049,7 +1049,7 @@ if($ac=="golf_news")
 	if($max_page>=$page)
 	{
 
-		$list=DB::query("select arc_id as blogid,arc_name as subject,arc_replynum as replynum,arc_viewtype as view_type,arc_pic as pic ,arc_addtime as dateline,arc_content as content,FROM_UNIXTIME(arc_addtime,'%Y%m%d') as today from tbl_arc where  arc_model='arc' and arc_state=1 and arc_viewtype='normal' and arc_state=1 and (arctype_id=2 or arc_type='Q')  $language_sql order by today desc,arc_sort desc limit $page_start,$page_size");
+		$list=DB::query("select arc_id as blogid,arc_name as subject,arc_replynum as replynum,arc_viewtype as view_type,arc_pic as pic ,arc_addtime as dateline,arc_content as content,FROM_UNIXTIME(arc_addtime,'%Y%m%d') as today from tbl_arc where  arc_model='arc' and arc_state=1 and arc_viewtype='normal' and arc_state=1 and arc_viewstatus=1 and (arctype_id=2 or arc_type='Q')  $language_sql order by today desc,arc_sort desc limit $page_start,$page_size");
 		$i=0;
 		while($row = DB::fetch($list))
 		{
@@ -1077,7 +1077,7 @@ if($ac=="golf_news")
 
 
 	$page_size=3;
-	$total=DB::result_first("select count(arc_id) from tbl_arc where arc_model='arc' and arc_state=1 and arc_viewtype='pic' and arc_state=1 and (arctype_id=2 or arc_type='Q')  ");
+	$total=DB::result_first("select count(arc_id) from tbl_arc where arc_model='arc' and arc_state=1 and arc_viewstatus=1 and arc_viewtype='pic' and arc_state=1 and (arctype_id=2 or arc_type='Q')  ");
 	$max_page=intval($total/$page_size);
 	if($max_page<$total/$page_size)
 	{
@@ -1085,7 +1085,7 @@ if($ac=="golf_news")
 	}
 	if($max_page>=$page)
 	{
-		$list=DB::query("select arc_id as blogid,arc_name as subject,arc_replynum as replynum,arc_viewtype as view_type,arc_pic as pic ,arc_addtime as dateline,arc_content as content,FROM_UNIXTIME(arc_addtime,'%Y%m%d') as today from tbl_arc where  arc_model='arc' and arc_state=1  and arc_viewtype='pic' and (arctype_id=2 or arc_type='Q') $language_sql order by today desc,arc_sort desc limit $page_start,$page_size");
+		$list=DB::query("select arc_id as blogid,arc_name as subject,arc_replynum as replynum,arc_viewtype as view_type,arc_pic as pic ,arc_addtime as dateline,arc_content as content,FROM_UNIXTIME(arc_addtime,'%Y%m%d') as today from tbl_arc where  arc_model='arc' and arc_state=1 and arc_viewstatus=1  and arc_viewtype='pic' and (arctype_id=2 or arc_type='Q') $language_sql order by today desc,arc_sort desc limit $page_start,$page_size");
 		$i=0;
 		while($row = DB::fetch($list))
 		{

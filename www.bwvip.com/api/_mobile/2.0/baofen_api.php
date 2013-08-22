@@ -21,7 +21,7 @@ $limit = $_G['gp_limit'] ? $_G['gp_limit'] : '10';//显示条数
 //显示赛事
 if($ac=='rank')
 {
-	$limit=100;
+	$limit=300;
 	if($sid==30)
 	{
 		$limit=156;
@@ -78,7 +78,6 @@ if($ac=='rank')
 			}
 		}
 		
-			
 		if($event_info['event_logo'])
 		{
 			$event_info['event_logo']=$site_url."/".$event_info['event_logo'];
@@ -111,6 +110,8 @@ if($ac=='rank')
 			$now_fenzhan_id=$event_info['event_fenzhan_id'];
 		}
 		
+		//echo $now_fenzhan_id;
+		
 		
 		if($now_fenzhan_id)
 		{
@@ -123,16 +124,18 @@ if($ac=='rank')
 			}
 			else
 			{
-				$parent_fenzhan_id=$fenzhan_id;
+				$parent_fenzhan_id=$now_fenzhan_id;
 			}
 			
 			$sub_arr=array();
 			$sub_arr[]=$parent_fenzhan_id;
-			$sub_fenzhan=DB::query("select fenzhan_id from tbl_fenzhan where parent_id='".$parent_fenzhan_id."' ");
+			/*
+			$sub_fenzhan=DB::query("select fenzhan_id from tbl_fenzhan where parent_id='".$parent_fenzhan_id."'  and event_id='".$event_id."' ");
 			while($sub_row=DB::fetch($sub_fenzhan))
 			{
 				$sub_arr[]=$sub_row['fenzhan_id'];
 			}
+			*/
 		}
 		else
 		{
@@ -146,7 +149,7 @@ if($ac=='rank')
 		
 		
 		
-		if(count($sub_arr)>1)
+		if(count($sub_arr)>=1)
 		{
 			$baofen_sql =" and ( ";
 			for($i=0; $i<count($sub_arr); $i++)
@@ -162,7 +165,6 @@ if($ac=='rank')
 				
 			}
 			$baofen_sql .=" )";
-			
 			
 		}
 		else
@@ -181,9 +183,9 @@ if($ac=='rank')
 		$lun_num = DB::result_first("select max(lun) from tbl_baofen where 1=1 ".$baofen_sql." and event_id<>0 limit 1 ");
 		if($lun_num)
 		{
-			$query = DB::query(" SELECT id,uid,lun,event_id,total_score,zong_score,score,par,tianshu,total_sum_ju,event_apply_id,username,event_user_id ,status,dateline,jiadong_status FROM (select event_id,baofen_id as id,uid,lun,total_score,zong_score,score,par,to_days(FROM_UNIXTIME(dateline))-to_days(now()) as tianshu,total_sum_ju ,total_ju_par,total_ju_par1,total_ju_par2,total_ju_par3,event_apply_id,realname,realname as username,event_user_id,status ,dateline,jiadong_status from tbl_baofen where 1=1 ".$baofen_sql." and source='ndong' order by status asc,total_sum_ju asc,jiadong_status desc,total_score asc,tianshu asc) as t2 group by event_user_id order by status desc,total_sum_ju asc,jiadong_status desc,total_score asc,tianshu asc limit  0,$limit");
+			$query = DB::query(" SELECT id,uid,lun,event_id,total_score,zong_score,score,par,tianshu,total_sum_ju,event_apply_id,username,event_user_id ,status,dateline,jiadong_status FROM (select event_id,baofen_id as id,uid,lun,total_score,zong_score,score,par,to_days(FROM_UNIXTIME(dateline))-to_days(now()) as tianshu,total_sum_ju ,total_ju_par,total_ju_par1,total_ju_par2,total_ju_par3,event_apply_id,realname,realname as username,event_user_id,status,dateline,jiadong_status from tbl_baofen where 1=1 ".$baofen_sql." and source='ndong' order by status asc,total_sum_ju asc,jiadong_status desc) as t2 group by event_user_id order by status desc,total_sum_ju asc,jiadong_status desc limit 0,$limit");
 			
-			//echo " SELECT id,uid,lun,event_id,total_score,zong_score,score,par,tianshu,total_sum_ju,event_apply_id,username,event_user_id ,status,dateline,jiadong_status FROM (select event_id,baofen_id as id,uid,lun,total_score,zong_score,score,par,to_days(FROM_UNIXTIME(dateline))-to_days(now()) as tianshu,total_sum_ju ,total_ju_par,total_ju_par1,total_ju_par2,total_ju_par3,event_apply_id,realname,realname as username,event_user_id,status ,dateline,jiadong_status from tbl_baofen where 1=1 ".$baofen_sql." and source='ndong' order by status asc,total_sum_ju asc,jiadong_status desc,total_score asc,tianshu asc) as t2 group by event_user_id order by status desc,total_sum_ju asc,jiadong_status desc,total_score asc,tianshu asc limit  0,$limit";
+			//echo " SELECT id,uid,lun,event_id,total_score,zong_score,score,par,tianshu,total_sum_ju,event_apply_id,username,event_user_id ,status,dateline,jiadong_status FROM (select event_id,baofen_id as id,uid,lun,total_score,zong_score,score,par,to_days(FROM_UNIXTIME(dateline))-to_days(now()) as tianshu,total_sum_ju ,total_ju_par,total_ju_par1,total_ju_par2,total_ju_par3,event_apply_id,realname,realname as username,event_user_id,status,dateline,jiadong_status from tbl_baofen where 1=1 ".$baofen_sql." and source='ndong' order by status asc,total_sum_ju asc,jiadong_status desc) as t2 group by event_user_id order by status desc,total_sum_ju asc,jiadong_status desc limit 0,$limit";
 			//echo "<hr>";
 			
 			$i=0;
@@ -211,7 +213,8 @@ if($ac=='rank')
 					{
 						$lun_info = DB::fetch_first("select baofen_id,sid,uid,total_score,score,par,total_ju_par,to_days(FROM_UNIXTIME(dateline))-to_days(now()) as tianshu,status from tbl_baofen where 1=1 ".$baofen_sql." and uid='".$row['uid']."' and lun='".$j."' and source='ndong' order by dateline asc  ");
 						
-						
+						//echo "select baofen_id,sid,uid,total_score,score,par,total_ju_par,to_days(FROM_UNIXTIME(dateline))-to_days(now()) as tianshu,status from tbl_baofen where 1=1 ".$baofen_sql." and uid='".$row['uid']."' and lun='".$j."' and source='ndong' order by dateline asc  ";
+						//echo "<hr>";
 					}
 					else
 					{
@@ -231,8 +234,6 @@ if($ac=='rank')
 						$lun_info['score']=$arr_new;
 					}
 					
-
-					
 					if($lun_info['par'])
 					{
 						$p_arr=explode("|",$lun_info['par']);
@@ -246,7 +247,7 @@ if($ac=='rank')
 					$p_arr=$prr_new;
 					$s_arr=$arr_new;
 					
-					if(!empty($s_arr) )
+					if(!empty($s_arr))
 					{
 						$c_arr=array();
 					}
@@ -386,7 +387,7 @@ if($ac=='rank')
 					$row['total_score']='-';
 				}
 				
-				$row['score_status']=get_thru($sid,$row['uid'],$row['event_user_id']);
+				$row['score_status']=get_thru($sid,$row['fenzhan_id'],$row['uid'],$row['event_user_id']);
 
 				$s_arr=explode("|",$row['score']);
 				unset($s_arr[9]);
@@ -396,7 +397,7 @@ if($ac=='rank')
 				$arr_new=explode("|",$str_new);
 
 				$row['score_sub']=array_default_value($arr_new);
-				$gscore[] = array_default_value($row,array('score_1','score_2','score_3','score_4','color_4','color_1','color_2','color_3','color_4')); 
+				$gscore[] = array_default_value($row,array('status','score_1','score_2','score_3','score_4','color_4','color_1','color_2','color_3','color_4')); 
 			}
 			$i++;
 			

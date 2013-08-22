@@ -66,6 +66,8 @@ class baofenAction extends wap_publicAction
 		
 	}
 	
+	
+	
 	public function logout()
 	{
 		if(isset($_SESSION['baofen_user_id']))
@@ -81,6 +83,9 @@ class baofenAction extends wap_publicAction
 			$this->error("您已经退出，现在跳转首页",U('wap/baofen/login',array('fenzhan_id'=>get('fenzhan_id'),'lun'=>get('lun'))));
 		}
 	}
+	
+	
+	
 	
 	
 	
@@ -118,7 +123,6 @@ class baofenAction extends wap_publicAction
 		{
 			//$fenzu_list=D("fenzu")->fenzu_select_pro(" and fenzhan_id='".$fenzhan_id."'",999," fenzu_number asc ");
 			$fenzu_list=M()->query("select * from tbl_baofen where fenzhan_id='".$fenzhan_id."' group by fenzu_id order by fenzu_id   ");  
-			 
 			$this->assign('fenzu_list',$fenzu_list);
 			
 			$dong=M()->query("select dongs from tbl_baofen_user where baofen_user_id='".$_SESSION['baofen_user_id']."' ");
@@ -152,6 +156,75 @@ class baofenAction extends wap_publicAction
 	}
 	
 	
+	//电脑版，不分组
+	public function baofen_big()
+	{
+		$fenzhan_id=get("fenzhan_id");
+		$fenzu_id=get("fenzu_id");
+		if(!$fenzhan_id)
+		{
+			$fenzhan_id=$_SESSION['fenzhan_id'];
+		}
+		$lun=get("lun");
+		if(!$lun)
+		{
+			$lun=$_SESSION['lun'];
+			if(!$lun)
+			{
+				$lun=1;
+			}
+		}
+		
+		
+		if(!$_SESSION['baofen_user_id'])
+		{	
+			echo "<script>location='".U('wap/baofen/login',array('fenzhan_id'=>$fenzhan_id,'lun'=>$lun))."';</script>";
+			exit;
+			//$this->error("请登录",U('field/public/login'));
+		}
+		
+		
+		$this->assign('fenzhan_id',$fenzhan_id);
+		$this->assign('fenzu_id',$fenzu_id);
+		$this->assign('lun',$lun); 
+		if($fenzhan_id)
+		{
+			//$fenzu_list=D("fenzu")->fenzu_select_pro(" and fenzhan_id='".$fenzhan_id."'",999," fenzu_number asc ");
+			$fenzu_list=M()->query("select * from tbl_baofen where fenzhan_id='".$fenzhan_id."' group by fenzu_id order by fenzu_id   ");  
+			$this->assign('fenzu_list',$fenzu_list);
+			
+			$dong=M()->query("select dongs from tbl_baofen_user where baofen_user_id='".$_SESSION['baofen_user_id']."' ");
+			$dongs=explode(",",$dong[0]['dongs']);
+			//print_r($dongs);
+			$this->assign("dongs",$dongs);
+			
+			$chengji_arr = array(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15 );
+			$this->assign('chengji_arr',$chengji_arr);
+			
+			if(get("fenzu_id"))
+			{
+				$fenzu_id=get("fenzu_id");
+				$strwhere="and fenzu_id='".$fenzu_id."' ";
+			}
+			else
+			{
+				$fenzu_id=$fenzu_list['item'][0]['fenzu_id']; 
+			}
+			 
+			$fenzu_user=M()->query("select * from tbl_baofen where fenzhan_id='".$fenzhan_id."' $strwhere ");  
+			
+			$this->assign("fenzu_user",$fenzu_user);
+			
+			$this->display();
+		}
+		else
+		{
+			echo "分站不存在";
+		}
+	}
+	
+	
+	
 	public function baofen_save_action()
 	{ 
 		$arr_b =  $_POST['userdk'];
@@ -179,7 +252,7 @@ class baofenAction extends wap_publicAction
 			}
 			$sub_arr=array();
 			$sub_arr[]=$parent_fenzhan_id;
-			$sub_fenzhan=M()->query("select fenzhan_id from tbl_fenzhan where parent_id='".$parent_fenzhan_id."' ");
+			$sub_fenzhan=M()->query("select fenzhan_id from tbl_fenzhan where parent_id='".$parent_fenzhan_id."' and event_id='".$event_id."' ");
 			for($i=0; $i<count($sub_fenzhan); $i++)
 			{
 				$sub_arr[]=$sub_fenzhan[$i]['fenzhan_id'];
@@ -188,7 +261,20 @@ class baofenAction extends wap_publicAction
 			
 			if(count($sub_arr)>1)
 			{
-				$sub_fenzhan_sql=" and (fenzhan_id in ('".implode(",",$sub_arr)."')) ";
+				$sub_fenzhan_sql =" and ( ";
+				for($i=0; $i<count($sub_arr); $i++)
+				{
+					if(count($sub_arr)-$i==1)
+					{
+						$sub_fenzhan_sql .=" fenzhan_id='".$sub_arr[$i]."' ";
+					}
+					else
+					{
+						$sub_fenzhan_sql .=" fenzhan_id='".$sub_arr[$i]."' or ";
+					}
+					
+				}
+				$sub_fenzhan_sql .=" )";
 			}
 			else
 			{
@@ -229,7 +315,7 @@ class baofenAction extends wap_publicAction
 						{
 	
 							$sql_sets['cave_' . $k] = "`cave_".$k."`='".$var."'";
-		
+							
 						}
 
 							$data['cave_' . $k] = $var;
@@ -244,7 +330,6 @@ class baofenAction extends wap_publicAction
 						if($var ==-3)
 						{ 
 							$ttt=999;
-			
 						}
 						//DQ
 						else if($var==-1)
@@ -397,7 +482,7 @@ class baofenAction extends wap_publicAction
 					$arry ['zong_score'] = "`zong_score`='".$zong_score."'";
 				
 					 
-					$res=M()->query("update tbl_baofen set ".(implode(",",$arry))." where baofen_id='".$key."' and fenzhan_id='".$fenzhan_id."'");
+					$res=M()->query("update tbl_baofen set ".(implode(",",$arry))." where baofen_id='".$key."' ");
 					
 				
 						 
@@ -447,6 +532,7 @@ class baofenAction extends wap_publicAction
 								$lun_1=0;
 							}
 							
+							$total_ju_par1=$lun_info[0]['total_ju_par'];
 						}
 						if($lun==2)
 						{
@@ -460,7 +546,11 @@ class baofenAction extends wap_publicAction
 							{
 								$lun_2=0;
 							}
+							
+							$total_ju_par2=$lun_info[0]['total_ju_par'];
+							
 						}
+						
 						if($lun==3)
 						{
 							$ju_3=$lun_info[0]['total_ju_par'];
@@ -473,7 +563,9 @@ class baofenAction extends wap_publicAction
 							{
 								$lun_3=0;
 							}
+							$total_ju_par3=$lun_info[0]['total_ju_par'];
 						}
+						
 						if($lun==4)
 						{
 							$ju_4=$lun_info[0]['total_ju_par'];
@@ -488,14 +580,33 @@ class baofenAction extends wap_publicAction
 							}
 						}
 					
+					
 					}
+					
+					$up_sql="";
+					if($total_ju_par1)
+					{
+						$up_sql .=" ,total_ju_par1='".$total_ju_par1."' ";
+					}
+					
+					if($total_ju_par2)
+					{
+						$up_sql .=" ,total_ju_par2='".$total_ju_par2."' ";
+					}
+					
+					if($total_ju_par3)
+					{
+						$up_sql .=" ,total_ju_par3='".$total_ju_par3."' ";
+					}
+					
+					
 		
 					//$total_sum_ju=get_ju_par_total_sort($ju_1,$ju_2,$ju_3,$ju_4);
 					$total_sum_ju=$ju_1+$ju_2+$ju_3+$ju_4;
 					$zong_score=$lun_1+$lun_2+$lun_3+$lun_4;
-					$res=M()->query("update tbl_baofen set total_sum_ju='".$total_sum_ju."',zong_score='".$zong_score."' where event_user_id='".$baofen[0]['event_user_id']."' ".$sub_fenzhan_sql."  ");
+					$res=M()->query("update tbl_baofen set total_sum_ju='".$total_sum_ju."',zong_score='".$zong_score."' ".$up_sql."  where event_user_id='".$baofen[0]['event_user_id']."' ".$sub_fenzhan_sql."  ");
 					/*
-					echo "update tbl_baofen set total_sum_ju='".$total_sum_ju."',zong_score='".$zong_score."' ".$status_sql." where event_user_id='".$baofen[0]['event_user_id']."' and event_id='".$event_id."'";
+					echo "update tbl_baofen set total_sum_ju='".$total_sum_ju."',zong_score='".$zong_score."' ".$up_sql."  where event_user_id='".$baofen[0]['event_user_id']."' ".$sub_fenzhan_sql."  ";
 					echo "<hr>";
 					*/
 				} 	

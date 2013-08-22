@@ -181,7 +181,7 @@ $caves = explode('|',$arr['score'] );
 			if($game_type=='individual'){
 				$theurl = 'home.php?mod=space&do=common&op=score&uid='.$uid.'&gtt=individual';
 				//$sql = "SELECT COUNT(*) FROM tbl_baofen WHERE ismine = '1' AND uid = '".$uid."'";
-				$sql = "SELECT COUNT(*) FROM tbl_baofen WHERE  uid = '".$uid."'";
+				$sql = "SELECT COUNT(*) FROM tbl_baofen WHERE  uid = '".$uid."' and status=2";
 				$tmp = DB::query($sql);
 				$result = DB::fetch($tmp);
 				$record_amount = $result["COUNT(*)"];
@@ -221,6 +221,7 @@ $caves = explode('|',$arr['score'] );
 					LEFT JOIN ".DB::table('common_field')." AS cf ON cf.uid = cs.field_id
 					LEFT JOIN ".DB::table('common_district')." AS cd ON cd.id = cs.province
 					WHERE    cs.uid = '".$uid."'
+				     and cs.status=2 
 					ORDER BY cs.dateline DESC
 					LIMIT ".$start.",".$pagesize."
 					";

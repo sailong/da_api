@@ -247,7 +247,7 @@ if($ac=="event_blog")
 	if($max_page>=$page)
 	{
 
-		$list=DB::query("select arc_id as blogid,arc_name as subject,arc_replynum as replynum,arc_viewtype as view_type,arc_pic as pic ,arc_addtime as dateline,arc_content as content,FROM_UNIXTIME(arc_addtime, '%Y%m%d') as today from tbl_arc where arc_model='arc'  and arc_state=1 and arctype_id=3 order by today desc,arc_sort desc  limit $page_start,$page_size");
+		$list=DB::query("select arc_id as blogid,arc_name as subject,arc_replynum as replynum,arc_viewtype as view_type,arc_pic as pic ,arc_addtime as dateline,arc_content as content,FROM_UNIXTIME(arc_addtime, '%Y%m%d') as today from tbl_arc where arc_model='arc' and arc_state=1 and arc_viewstatus=1 and arctype_id=3 order by today desc,arc_sort desc  limit $page_start,$page_size");
 		$i=0;
 		while($row = DB::fetch($list))
 		{

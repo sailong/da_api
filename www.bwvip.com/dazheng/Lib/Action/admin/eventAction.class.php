@@ -16,7 +16,7 @@ class eventAction extends AdminAuthAction
 
 	public function event()
 	{
-		$list=D("event")->event_list_pro("   ");
+		$list=D("event")->event_list_pro("  ");
 
 		$this->assign("list",$list["item"]);
 		$this->assign("pages",$list["pages"]);
@@ -45,7 +45,7 @@ class eventAction extends AdminAuthAction
 		if(M()->autoCheckToken($_POST))
 		{
 			$data["event_uid"]=post("event_uid");
-			$data["field_uid"]=$_SESSION['field_uid'];
+			$data["field_uid"]=0;
 			$data["event_name"]=post("event_name");
 		
 			if($_FILES["event_logo"]["error"]==0 || $_FILES["event_timepic"]["error"]==0 || $_FILES["event_zhutui_pic"]["error"]==0)
