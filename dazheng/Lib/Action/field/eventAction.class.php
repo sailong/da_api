@@ -60,13 +60,15 @@ class eventAction extends field_publicAction
 			if($_FILES["event_logo"]["error"]==0 || $_FILES["event_timepic"]["error"]==0 || $_FILES["event_zhutui_pic"]["error"]==0 || $_FILES["event_left_pic"]["error"]==0 || $_FILES["event_right_pic"]["error"]==0)
 			{
 				$uploadinfo=upload_file("upload/event/");
+				
 				foreach($uploadinfo as $key=>$val){
-					$uploadinfo[$val['key']] = $val;
+					$uploadinfo[$val['up_name']] = $val;
 					unset($uploadinfo[$key]);
 				}
 				if(!empty($uploadinfo["event_logo"]))
 				{
 					$data["event_logo"]=$uploadinfo["event_logo"]["savepath"] . $uploadinfo["event_logo"]["savename"];
+					$data["event_logo_small"]=$data["event_logo"];
 				}
 
 				//event_timepic

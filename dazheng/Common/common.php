@@ -38,7 +38,7 @@ function resizeImage($im,$maxwidth,$maxheight,$name,$filetype)
         if(function_exists("imagecopyresampled"))
         {
             $newim = imagecreatetruecolor($newwidth,$newheight);
-           imagecopyresampled($newim,$im,0,0,0,0,$newwidth,$newheight,$pic_width,$pic_height);
+            imagecopyresampled($newim,$im,0,0,0,0,$newwidth,$newheight,$pic_width,$pic_height);
         }
         else
         {
@@ -544,13 +544,15 @@ Array
 )
 */
 
-function upload_img($save_path,$file_type="jpg,gif,png,jpeg,bmp",$shuiyin="/Examples/File/Tpl/Public/Images/logo2.png")
+
+function upload_img($save_path,$if_resize=true,$MaxWidth='150',$MaxHeight='150',$file_type="jpg,gif,png,jpeg,bmp",$shuiyin="/Examples/File/Tpl/Public/Images/logo2.png")
 {
 	$full_save_path=$save_path."/".date("Ymd",time())."/";
 	if(!file_exists($full_save_path))
 	{
 		mkdir($full_save_path);
 	}
+	
 
 	import("@.ORG.UploadFile"); 
 	//导入上传类 
@@ -562,15 +564,17 @@ function upload_img($save_path,$file_type="jpg,gif,png,jpeg,bmp",$shuiyin="/Exam
 	//设置附件上传目录 
 	$upload->savePath = $full_save_path; 
 	//设置需要生成缩略图，仅对图像文件有效 
-	$upload->thumb = true; 
+	$upload->thumb = true;
+	//是否输出固定大小
+	$upload->if_resize = $if_resize; 
 	// 设置引用图片类库包路径 
 	$upload->imageClassPath = '@.ORG.Image'; 
 	//设置需要生成缩略图的文件后缀 
 	$upload->thumbPrefix = 's_';  //生产2张缩略图 
 	//设置缩略图最大宽度 
-	$upload->thumbMaxWidth = '150'; 
+	$upload->thumbMaxWidth = $MaxWidth; 
 	//设置缩略图最大高度 
-	$upload->thumbMaxHeight = '150'; 
+	$upload->thumbMaxHeight = $MaxHeight; 
 	//设置上传文件规则 
 	$upload->saveRule = uniqid; 
 	//删除原图 
@@ -589,7 +593,8 @@ function upload_img($save_path,$file_type="jpg,gif,png,jpeg,bmp",$shuiyin="/Exam
 		$uploadList = $upload->getUploadFileInfo(); 
 		import("@.ORG.Image"); 
 		//给m_缩略图添加水印, Image::water('原文件名','水印图片地址') 
-		Image::water($uploadList[0]['savepath'] . 'm_' . $uploadList[0]['savename'],$shuiyin); 
+		//Image::water($uploadList[0]['savepath'] . 'm_' . $uploadList[0]['savename'],$shuiyin); 
+		Image::water($uploadList[0]['savepath'] . 's_' . $uploadList[0]['savename'],$shuiyin); 
 		//$_POST['image'] = $uploadList[0]['savename']; 
 		
 		return $uploadList;
