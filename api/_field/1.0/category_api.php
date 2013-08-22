@@ -12,14 +12,21 @@ if(!defined("IN_DISCUZ"))
 	exit('Access Denied');
 }
 
-
 $ac=$_G['gp_ac'];
+$type_more = array(
+	'qiutong'=>'qiutong',
+	'qiuchang'=>'field_golf',
+	'jiudian'=>'hotel_intro,hotel_room,hotel_canyin,hotel_meet,hotel_yule,hotel_spa',
+	'bieshu'=>'',
+	'canting'=>'',
+	'qiudaotu'=>'qiudaotu'
+	);
 
 //系统更新
 if($ac=="category_list")
 {
 	$field_uid = $_G['gp_field_uid'];
-	if(empty($feild_uid))
+	if(empty($field_uid))
 	{
 		api_json_result(1,1,"缺少参数field_uid",null);
 	}
@@ -27,12 +34,17 @@ if($ac=="category_list")
 	$list=DB::query("select category_id,category_name,field_uid,category_type,category_sort,category_addtime from tbl_category where 1 and field_uid='".$field_uid."' order by category_addtime desc");
 	
 	while($row = DB::fetch($list) )
-	{
-		$list_data[]=array_default_value($row);
+	{	
+		$row['category_type_more'] = $type_more[$row['category_type']];
+		$list_data[$row['category_type']][]=array_default_value($row);
 	}
-
+	$return_arr = array();
+	foreach($list_data as $val){
+		$return_arr[] = $val;
+	}
+	unset($list_data);
 	$data['title']		=   "data";
-	$data['data']		=	array_default_value($version);
+	$data['data']		=	$return_arr;
 	api_json_result(1,0,"返回成功",$data);
 	
 }
@@ -40,23 +52,24 @@ if($ac=="category_list")
 if($ac=="field_about_list")
 {
 	$field_uid = $_G['gp_field_uid'];
+	$about_type = $_G['gp_about_type'];
 	$category_id = $_G['gp_category_id'];
 	if(empty($category_id) || empty($field_uid))
 	{
 		api_json_result(1,1,"缺少参数category_id或category_type",null);
 	}
 
-	$list=DB::query("select about_id,about_name,field_uid,about_type,about_content,about_tel,about_tel2,about_pic,language,about_addtime from tbl_field_about where 1 and field_uid='".$field_uid."' and category_id='".$category_id."' order by about_addtime desc");
+	$list=DB::query("select about_id,about_name,field_uid,about_type,about_content,about_tel,about_tel2,about_pic,language,about_addtime from tbl_field_about where 1=1 and field_uid='".$field_uid."' and category_id='".$category_id."' and about_type='".$about_type ."'order by about_addtime desc");
 	
-	while($row = DB::fetch($list) )
+	while($row = DB::fetch($list))
 	{
 		$row['about_pic'] = $site_url.'/'.$row['about_pic'];
-		$row['about_addtime'] = data('Y-m-d', $row['about_addtime']);
+		$row['about_addtime'] = date('Y-m-d', $row['about_addtime']);
 		$list_data[]=array_default_value($row);
 	}
-
+	
 	$data['title']		= "data";
-	$data['data']		= array_default_value($list_data);
+	$data['data']		= $list_data;
 	api_json_result(1,0,"返回成功",$data);
 	
 }
@@ -75,7 +88,7 @@ if($ac=="qt_category")
 	while($row = DB::fetch($list) )
 	{
 		$row['qiutong_photo'] = $site_url.'/'.$row['qiutong_photo'];
-		$row['qiutong_addtime'] = data('Y-m-d', $row['qiutong_addtime']);
+		$row['qiutong_addtime'] = date('Y-m-d', $row['qiutong_addtime']);
 		$list_data[]=array_default_value($row);
 	}
 
@@ -97,7 +110,7 @@ if($ac=="ct_category")
 	
 	while($row = DB::fetch($list) )
 	{
-		$row['field_1stmenu_addtime'] = data('Y-m-d', $row['field_1stmenu_addtime']);
+		$row['field_1stmenu_addtime'] = date('Y-m-d', $row['field_1stmenu_addtime']);
 		$list_data[]=array_default_value($row);
 	}
 
