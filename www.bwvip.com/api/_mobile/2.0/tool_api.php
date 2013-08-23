@@ -11,16 +11,23 @@ $ac=$_G['gp_ac'];
 //图片处理
 if($ac=="import_photo_form_dz")
 {
-	$list=DB::query("select albumid,albumname,uid from pre_home_album where uid='1000333' ");
-	$i=0;
+	$page = $_G['gp_page'];
+	$page_size = $_G['gp_page_size'];
+	if(empty($page)){
+		$page = 1;
+		$page_size = 100;
+	}
+	$offset = ($page-1)*$page_size;
+	$list=DB::query("select albumid,albumname,uid,updatetime from pre_home_album where uid='1000333' order by albumid asc limit {$offset},{$page_size}");
+	
 	while($row=DB::fetch($list))
 	{
 		$album_id=DB::result_first("select album_id from tbl_album where albumid='".$row['albumid']."' ");
 		if(!$album_id)
 		{
 			//添加相册
-			$res=DB::query("insert into tbl_album (albumid,uid,album_name,album_addtime) values ('".$row['albumid']."','".$row['uid']."','".$row['albumname']."','".time()."') ");
-			$i++;
+			$res=DB::query("insert into tbl_album (albumid,uid,album_name,album_addtime) values ('".$row['albumid']."','".$row['uid']."','".$row['albumname']."','".$row['updatetime']."') ");
+			
 			
 			$album_id=DB::result_first("select album_id from tbl_album where albumid='".$row['albumid']."' ");
 		}
@@ -28,77 +35,62 @@ if($ac=="import_photo_form_dz")
 		$pic_list=DB::query("select picid,albumid,uid,title,dateline,filepath from pre_home_pic where albumid='".$row['albumid']."' ");
 		while($row_pic=DB::fetch($pic_list))
 		{
+			//echo "相册".$row_pic['albumid'].'---相片'.$row_pic['picid'].'<br>';
 			$file_url=dirname(dirname(dirname(dirname(__FILE__)))).'/data/attachment/album/'.$row_pic['filepath'];
 			
-			$extname=end(explode(".",$file_url));
+			$filepath_small = '';
 			if(file_exists($file_url))
 			{
+				$extname=end(explode(".",$file_url));
 				$image_file_small = $file_url.'_small.'.$extname;
-				
-				list($image_width,$image_height,$image_type,$image_attr) = getimagesize($file_url);
-				$iw = $image_width;
-				$ih = $image_height;
-				/*$src_x = $src_y = 0;
-				$src_h = $src_w = min($iw, $ih);
-				//$src_h = round($src_w * $ih / $iw);
-				
-				 if($iw > $ih) {
-					$src_x = round(($iw - $ih) / 2);
-				}else{
-					$src_y = round(($ih - $iw) / 2);
-				} 
-				//if($iw > 115) {
-					$src_x = round(($iw - 115) / 2);
-				//}else{
-					$src_y = round(($ih - 80) / 2);
-				//}
-				//echo '<pre>';
-				echo $src_x.'<br>';
-				echo $src_y.'<br>';
-				echo $src_w.'<br>';
-				echo $src_h.'<br>';
-				$result = makethumb($file_url, $image_file_small, 115, 80, 115, 80, $src_x, $src_y, $src_w, $src_h, 0, 100);
-				clearstatcache();
-				if (!$result && !is_file($image_file_small)) {
-					@copy($file_url, $image_file_small);
-				}*/
-				
-				$image_width_p = 300;//140;
-				$image_height_p = 200;//94
-				if($iw > $image_width_p || $ih > $image_height_p) {
-					$p_width = $image_width_p;
-					$p_height = round(($ih*$image_width_p)/$iw);
-					if($p_height > $image_height_p){
-						$p_height = $image_height_p;
-					} 
+				$filepath_small="/data/attachment/album/".$row_pic['filepath'].'_small.'.$extname;
+				if(!file_exists($image_file_small))
+				{
+					list($image_width,$image_height,$image_type,$image_attr) = getimagesize($file_url);
+					$iw = $image_width;
+					$ih = $image_height;
+					$image_width_p = 300;//140;
+					$image_height_p = 200;//94
+					if($iw > $image_width_p || $ih > $image_height_p) {
+						$p_width = $image_width_p;
+						$p_height = round(($ih*$image_width_p)/$iw);
+						if($p_height > $image_height_p){
+							$p_height = $image_height_p;
+						} 
+					}
 					$result = makethumb($file_url, $image_file_small, $p_width, $p_height, 0, 0, 0, 0, 0, 0, 0, 100);
+					clearstatcache();
+					if(!$result && !is_file($image_file_small)) {
+						@copy($file_url, $image_file_small);
+					}
+					clearstatcache();
+					unset($file_url,$image_file_small);
 				}
-				clearstatcache();
-				if($iw <= $image_width_p || (!$result && !is_file($image_file_small))) {
-					@copy($file_url, $image_file_small);
-				}
-			}
+			} 
 			$filepath="/data/attachment/album/".$row_pic['filepath'];
 			$photo_info=DB::fetch_first("select photo_id,photo_url_small from tbl_photo where picid='".$row_pic['picid']."' ");
 
 			if($photo_info['photo_id'])
 			{
-				$res=DB::query("update tbl_photo set photo_url='".$filepath."' and photo_url_small='".$filepath."_small.".$extname."' where photo_id='".$photo_info['photo_id']."' ");
+				$res=DB::query("update tbl_photo set photo_url='".$filepath."' and photo_url_small='".$filepath_small."' where photo_id='".$photo_info['photo_id']."' ");
 			}
 			else
 			{
-				$res=DB::query("insert into tbl_photo (uid,album_id,picid,photo_name,photo_url,photo_url_small,photo_addtime) values ('".$row_pic['uid']."','".$album_id."','".$row_pic['album_id']."','".$row_pic['title']."','".$filepath."','".$filepath."_small.".$extname."','".$row_pic['dateline']."') ");
+				$res=DB::query("insert into tbl_photo (uid,album_id,picid,photo_name,photo_url,photo_url_small,photo_addtime) values ('".$row_pic['uid']."','".$album_id."','".$row_pic['album_id']."','".$row_pic['title']."','".$filepath."','".$filepath_small."','".$row_pic['dateline']."') ");
 				
 				/*
 				echo "insert into tbl_photo (uid,album_id,picid,photo_name,photo_url,photo_url_small,photo_addtime) values ('".$row_pic['uid']."','".$album_id."','".$row_pic['album_id']."','".$row_pic['title']."','".$filepath."','".$small_file_url."','".$row_pic['dateline']."') ";
 				echo "<hr>";
 				*/
 			}
+			unset($row_pic);
 		}
+		
 			//echo $image_file_small.'<br>'.$res.'<br>';die;
+			unset($row);
 	}
-	
-	echo "处理完成";
+
+	echo "{$page}处理完成";
 
 }
 
@@ -216,9 +208,6 @@ function makethumb($srcfile,$dstfile,$thumbwidth,$thumbheight,$maxthumbwidth=0,$
 		return $dstfile;
 	}
 }
-
-
-
 
 
 ?>

@@ -54,6 +54,7 @@ class eventAction extends field_publicAction
 				if($_FILES["event_logo"]["error"]==0 && $_FILES["event_logo"]["name"])
 				{
 					$data["event_logo"]=$uploadinfo[0]["savepath"] . $uploadinfo[0]["savename"];
+					$data["event_logo_small"]=$uploadinfo[0]["savepath"] . $uploadinfo[0]["savename"];
 				}
 
 				//event_timepic
@@ -153,6 +154,7 @@ class eventAction extends field_publicAction
 				if($_FILES["event_logo"]["error"]==0 && $_FILES["event_logo"]["name"])
 				{
 					$data["event_logo"]=$uploadinfo[0]["savepath"] . $uploadinfo[0]["savename"];
+					$data["event_logo_small"]=$uploadinfo[0]["savepath"] . $uploadinfo[0]["savename"];
 				}
 
 				//event_timepic

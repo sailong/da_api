@@ -16,12 +16,7 @@ class push_messageAction extends AdminAuthAction
 
 	public function push_message()
 	{
-		/*
-		echo urlencode("Golf-Sense 高尔夫辅助训练系统产品介绍");
-		echo "<hr>";
-		echo urlencode("大正网2013全新推出Golf-Sense升级版，正火热促销中");
-		*/
-		
+
 		$list=D("push_message")->push_message_list_pro();
 
 		$this->assign("list",$list["item"]);
@@ -135,17 +130,21 @@ class push_messageAction extends AdminAuthAction
 						$sql_group=" group by devices_token ";
 						$sql .=" and field_uid='0' ";
 					}
-					if($event_id){
+					
+					if($event_id)
+					{
 						$sql .=" and event_id='".$event_id."' ";
 					}
-					if($fenzhan_id){
+					
+					if($fenzhan_id)
+					{
 						$sql .=" and fenzhan_id='".$fenzhan_id."' ";
 					}
 					
 					
 					$aaa=M()->query("delete from tbl_push_message_list where message_id='".$list."' ".$sql." ");
 
-					$row=M()->query("select uid,devices_token from tbl_push_devices where 1=1  $sql ");
+					$row=M()->query("select uid,devices_token from tbl_push_devices where 1=1  $sql ".$sql_group." ");
 					for($i=0; $i<count($row); $i++)
 					{
 						if($row[$i]['devices_token'])

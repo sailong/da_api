@@ -51,7 +51,7 @@ if($ac=='rank')
 	}
 	
 	//event_info
-	$event_info=DB::fetch_first("select event_id,event_name,event_uid,event_fenzhan_id,event_logo,event_timepic,event_starttime,event_endtime,event_content,event_state,event_is_tj,event_is_baoming,event_addtime,event_is_viewscore,event_lun_num from tbl_event where 1=1 ".$event_sql." order by event_addtime desc limit 1 ");
+	$event_info=DB::fetch_first("select event_id,event_name,event_uid,event_fenzhan_id,event_logo,event_logo_small,event_timepic,event_starttime,event_endtime,event_content,event_state,event_is_tj,event_is_baoming,event_addtime,event_is_viewscore,event_lun_num from tbl_event where 1=1 ".$event_sql." order by event_addtime desc limit 1 ");
 	if(!empty($event_info))
 	{
 		
@@ -129,13 +129,13 @@ if($ac=='rank')
 			
 			$sub_arr=array();
 			$sub_arr[]=$parent_fenzhan_id;
-			/*
-			$sub_fenzhan=DB::query("select fenzhan_id from tbl_fenzhan where parent_id='".$parent_fenzhan_id."'  and event_id='".$event_id."' ");
+			
+			$sub_fenzhan=DB::query("select fenzhan_id from tbl_fenzhan where parent_id='".$parent_fenzhan_id."'  and event_id='".$sid."' ");
 			while($sub_row=DB::fetch($sub_fenzhan))
 			{
 				$sub_arr[]=$sub_row['fenzhan_id'];
 			}
-			*/
+			
 		}
 		else
 		{
@@ -547,6 +547,7 @@ if($ac=='rank')
 			'lun_num'=>(string)$lun_num,
 			'event_pic'=>$event_info['event_timepic'],
 			'event_logo'=>$event_info['event_logo'],
+			'event_logo_small'=>$event_info['event_logo_small'],
 			'event_pic_width'=>$event_info['event_timepic_width'],
 			'event_pic_height'=>$event_info['event_timepic_height'],
 			'event_content'=>str_replace('src="','src="'.$site_url.'/',$event_info['event_content']),

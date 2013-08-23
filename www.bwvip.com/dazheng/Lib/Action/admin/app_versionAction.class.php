@@ -42,6 +42,7 @@ class app_versionAction extends AdminAuthAction
 			$data["app_version_name"]=post("app_version_name");
 			$data["app_version_content"]=post("app_version_content");
 			$data["app_version_file"]=post("app_version_file");
+			$data["app_version_url"]=post("app_version_url");
 			$data["app_version_is_important"]=post("app_version_is_important");
 			$data["field_uid"]=post("field_uid");
 			$data["app_version_addtime"]=time();
@@ -90,6 +91,7 @@ class app_versionAction extends AdminAuthAction
 			$data["app_version_name"]=post("app_version_name");
 			$data["app_version_content"]=post("app_version_content");
 			$data["app_version_file"]=post("app_version_file");
+			$data["app_version_url"]=post("app_version_url");
 			$data["field_uid"]=post("field_uid");
 			if(post("app_version_is_important"))
 			{

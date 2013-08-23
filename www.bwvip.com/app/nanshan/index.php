@@ -6,7 +6,13 @@ $discuz = & discuz_core::instance();
 
 $discuz->init();
 
-$android_url=DB::result_first("select app_version_file from tbl_app_version where app_version_type='android' and field_uid=1160 order by app_version_addtime desc limit 1 ");
+
+$android_url=DB::result_first("select app_version_url from tbl_app_version where app_version_type='android' and field_uid=1160 order by app_version_addtime desc limit 1 ");
+if(!$android_url)
+{
+	$android_url=DB::result_first("select app_version_file from tbl_app_version where app_version_type='android' and field_uid=1160 order by app_version_addtime desc limit 1 ");
+}
+
 $ios_url=DB::result_first("select app_version_file from tbl_app_version where app_version_type='ios' and field_uid=1160 order by app_version_addtime desc limit 1 ");
 
 /*
