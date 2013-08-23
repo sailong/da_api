@@ -1098,7 +1098,7 @@ if($ac=='dz_ticket_event_list')
 	{
 		$event_ids[$row['event_id']] = $row['event_id'];
 	}
-	$sql = "select event_id,event_name,event_logo,event_starttime,event_ticket_status from tbl_event where event_id in('".implode("','",$event_ids)."')";
+	$sql = "select event_id,event_name,field_uid,event_logo,event_starttime,event_ticket_status from tbl_event where event_id in('".implode("','",$event_ids)."')";
 	$list=DB::query($sql);
 	$event_list = array();
 	while($row = DB::fetch($list))
@@ -1106,7 +1106,41 @@ if($ac=='dz_ticket_event_list')
 		$row['event_logo'] = $site_url.'/'.$row['event_logo'];
 		$row['event_starttime'] = date('Y年m月d日',$row['event_starttime']);
 		if($row['event_ticket_status'] == 2){
-			$row['wab_url'] = 'http://a.bwvip.com';
+			$row['wab_url'] = 'http://www.bwvip.com/wap/bmwreg.php';
+		}
+		
+		$row2 = DB::fetch_first("select ad_url,ad_file,ad_file_iphone4,ad_file_iphone5,ad_width,ad_height from tbl_ad where field_uid='".$row['field_uid']."' and ad_page='ticket' order by ad_sort desc limit 1");
+		
+		
+		$arr=explode("|",$row2['ad_url']);
+		if(count($arr)>1)
+		{
+			$row2['ad_action']=$arr[0];
+			$row2['ad_action_id']=$arr[1];
+			$row2['ad_action_text']=$arr[2];
+			$row2['event_url']=$arr[3];
+		}
+	
+		if($row2['ad_file'])
+		{
+			$row2['ad_file']="".$site_url."/".$row2['ad_file'];
+		}
+		if($row2['ad_file_iphone4'])
+		{
+			$row2['ad_file_iphone4']="".$site_url."/".$row2['ad_file_iphone4'];
+		}
+		if($row2['ad_file_iphone5'])
+		{
+			$row2['ad_file_iphone5']="".$site_url."/".$row2['ad_file_iphone5'];
+		}
+		
+		if(!empty($row2))
+		{
+			$row['ad_list']=$row2;
+		}
+		else
+		{
+			$row['ad_list']=null;
 		}
 		$event_list[] = $row;
 	}
