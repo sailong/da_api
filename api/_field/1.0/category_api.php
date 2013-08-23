@@ -14,6 +14,8 @@ if(!defined("IN_DISCUZ"))
 
 $ac=$_G['gp_ac'];
 $type_more = category_father('type_more');
+//echo '<pre>';
+//var_dump($type_more);
 
 //系统更新
 if($ac=="category_list")
@@ -31,13 +33,13 @@ if($ac=="category_list")
 		$row['category_type_more'] = $type_more[$row['category_type']];
 		$list_data[$row['category_type']][]=array_default_value($row);
 	}
-	$return_arr = array();
-	foreach($list_data as $val){
-		$return_arr[] = $val;
-	}
-	unset($list_data);
+	//$return_arr = array();
+	//foreach($list_data as $val){
+	//	$return_arr[] = $val;
+	//}
+	//unset($list_data);
 	$data['title']		=   "data";
-	$data['data']		=	$return_arr;
+	$data['data']		=	$list_data;
 	api_json_result(1,0,"返回成功",$data);
 	
 }
@@ -156,7 +158,7 @@ function category_father($key_val)
 		}
 	}
 	
-	if($key_val == 'tyoe_more')
+	if($key_val == 'type_more')
 	{
 		foreach($list as $key=>$val)
 		{

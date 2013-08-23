@@ -27,6 +27,7 @@ else
 	$page_start=($page-1)*($page_size);
 }
 
+
 //page 2
 $page2=$_G['gp_page2'];
 if(!$page2)
@@ -247,7 +248,7 @@ if($ac=="event_blog")
 	if($max_page>=$page)
 	{
 
-		$list=DB::query("select arc_id as blogid,arc_name as subject,arc_replynum as replynum,arc_viewtype as view_type,arc_pic as pic ,arc_addtime as dateline,arc_content as content,FROM_UNIXTIME(arc_addtime, '%Y%m%d') as today from tbl_arc where arc_model='arc'  and arc_state=1 and arctype_id=3 order by today desc,arc_sort desc  limit $page_start,$page_size");
+		$list=DB::query("select arc_id as blogid,arc_name as subject,arc_replynum as replynum,arc_viewtype as view_type,arc_pic as pic ,arc_addtime as dateline,arc_content as content,FROM_UNIXTIME(arc_addtime, '%Y%m%d') as today from tbl_arc where arc_model='arc' and arc_state=1 and arc_viewstatus=1 and arctype_id=3 order by today desc,arc_sort desc  limit $page_start,$page_size");
 		$i=0;
 		while($row = DB::fetch($list))
 		{
@@ -1084,6 +1085,36 @@ if($ac=="event_baoming_action")
 	
 }
 
+if($ac=='dz_ticket_event_list')
+{
+	//大正赛事门票列表
+	$sql = "select event_id from tbl_ticket group by event_id limit $page_start,$page_size";
+	$list=DB::query($sql);
+	if(empty($list)){
+		api_json_result(1,1,"没有数据",$data);
+	}
+	$event_ids = array();
+	while($row = DB::fetch($list))
+	{
+		$event_ids[$row['event_id']] = $row['event_id'];
+	}
+	$sql = "select event_id,event_name,event_logo,event_starttime,event_ticket_status from tbl_event where event_id in('".implode("','",$event_ids)."')";
+	$list=DB::query($sql);
+	$event_list = array();
+	while($row = DB::fetch($list))
+	{
+		$row['event_logo'] = $site_url.'/'.$row['event_logo'];
+		$row['event_starttime'] = date('Y年m月d日',$row['event_starttime']);
+		if($row['event_ticket_status'] == 2){
+			$row['wab_url'] = 'http://a.bwvip.com';
+		}
+		$event_list[] = $row;
+	}
+	$data['title'] = 'event_list';
+	$data['data'] = $event_list;
+	
+	api_json_result(1,0,"成功",$data);
+}
 
 
 
