@@ -35,7 +35,7 @@ class eventAction extends field_publicAction
 		$b=$editor->usejs();             //js代码
 		$this->assign('usejs',$b);     //输出到html
 		$this->assign('editor',$a);
-		
+
 		$this->assign("page_title","添加赛事");
     	$this->display();
 	}

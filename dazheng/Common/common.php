@@ -1,5 +1,57 @@
 <?php
-
+function category_father($key_val)
+{
+	$list = array(
+		array(
+			'id'   => 'julebu',
+			'name' => '俱乐部介绍',//field_golf,field_hotel,field_huisuo,field_meet
+			'type_more'=> 'field_golf,field_hotel,field_huisuo,field_meet'
+		),
+		array(
+			'id'   => 'qiudaotu',
+			'name' => '球道图',//qiudaotu
+			'type_more'=> 'qiudaotu'
+		),
+		array(
+			'id'   => 'qiutong',
+			'name' => '球童介绍',//qiutong
+			'type_more'=> 'qiutong'
+		),
+		array(
+			'id'   => 'canyin',
+			'name' => '餐饮介绍',//canyin
+			'type_more'=> 'canyin'
+		),
+		array(
+			'id'   => 'bieshu',
+			'name' => '别墅项目',//mingren_photo,mingren_intro,mingren_room,mingren_yuyue
+			'type_more'=> 'mingren_photo,mingren_intro,mingren_room,mingren_yuyue'
+		),
+		array(
+			'id'   => 'jiudian',
+			'name' => '酒店项目',//hotel_intro,hotel_room,hotel_canyin,hotel_meet,hotel_yule,hotel_spa
+			'type_more'=> 'hotel_intro,hotel_room,hotel_canyin,hotel_meet,hotel_yule,hotel_spa'
+		)
+	);
+	if($key_val == 'key_val')
+	{
+		foreach($list as $key=>$val)
+		{
+			unset($list[$key]);
+			$list[$val['id']]=$val['name'];
+		}
+	}
+	
+	if($key_val == 'type_more')
+	{
+		foreach($list as $key=>$val)
+		{
+			unset($list[$key]);
+			$list[$val['id']]=$val['type_more'];
+		}
+	}
+	return $list;
+}
 function resizeImage($im,$maxwidth,$maxheight,$name,$filetype)
 {
     $pic_width = imagesx($im);

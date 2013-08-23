@@ -19,6 +19,9 @@ class categoryAction extends field_publicAction
 	{
 		$list=D("category")->category_list_pro();
 		//var_dump($list);die;
+		$category_list = category_father('key_val');
+		
+		$this->assign('category_father',$category_list);
 		$this->assign("list",$list["item"]);
 		$this->assign("pages",$list["pages"]);
 		$this->assign("total",$list["total"]);
@@ -30,6 +33,7 @@ class categoryAction extends field_publicAction
 	public function category_add()
 	{
 		
+		$this->assign('category_father',category_father());
 		$this->assign("page_title","分类管理");
     	$this->display();
 	}
@@ -88,7 +92,7 @@ class categoryAction extends field_publicAction
 			$data=M("category")->where("category_id=".intval(get("category_id")))->find();
 			
 			$this->assign("data",$data);
-			
+			$this->assign('category_father',category_father());
 			$this->assign("page_title","分类管理");
 			$this->display();
 		}

@@ -31,12 +31,9 @@
 				<td>
 					<select name="category_type" id="category_type">
 						<option value="">请选择</option>
-						<option value="qiuchang">球场</option>
-						<option value="jiudian">酒店</option>
-						<option value="bieshu">别墅</option>
-						<option value="canting">餐厅</option>
-						<option value="qiutong">球童</option>
-						<option value="qiudaotu">球道图</option>
+						<volist id="vo" name="category_father">
+						<option value="{$vo.id}">{$vo.name}</option>
+						</volist>
 					</select>
 				</td>
 			</tr>
