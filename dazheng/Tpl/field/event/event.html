@@ -85,7 +85,12 @@
 		<td>{$vo.event_fenzhan_id}</td>
 		<td><php>if($vo['event_is_zhutui']=='Y'){echo '是';}elseif($vo['event_is_zhutui']=='N'){echo '否';}</php></td>
 		<td><php>if($vo['event_is_tj']=='Y'){echo '是';}elseif($vo['event_is_tj']=='N'){echo '否';}</php></td>
-		<td><php>if($vo['event_is_baoming']=='Y'){echo '是';}elseif($vo['event_is_baoming']=='N'){echo '否';}</php></td>
+		<td><php>if($vo['event_is_baoming']=='Y'){echo '是';}elseif($vo['event_is_baoming']=='N'){echo '否';}</php></td>赛事门票申请跳转页
+		<td>
+			<php>if($data['event_ticket_status'] == 1){echo '正常申请页';}</php>
+			<php>if($data['event_ticket_status'] == 2){echo 'wap页';}</php>
+			<php>if($data['event_ticket_status'] == 3){echo '宝马大师赛';}</php>
+		</td>
 		<td>{$vo.event_sort}</td>
 		<td>{$vo.event_addtime|format_to_time}</td>
 		<td>
