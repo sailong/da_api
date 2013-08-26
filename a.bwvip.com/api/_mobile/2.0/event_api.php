@@ -7,7 +7,6 @@ if(!defined("IN_DISCUZ"))
 $ac=$_G['gp_ac'];
 
 
-
 //page 1
 $page=$_G['gp_page'];
 if(!$page)
@@ -27,6 +26,7 @@ else
 {
 	$page_start=($page-1)*($page_size);
 }
+
 
 //page 2
 $page2=$_G['gp_page2'];
@@ -71,7 +71,7 @@ $hot_2013district=array(
 //选择 赛事
 if($ac=="select_event")
 {
-	$list3=DB::query("select event_id,event_id as event_uid,event_name,event_is_zhutui,event_zhutui_pic,event_content,event_url,event_type from tbl_event where event_is_zhutui='Y' and field_uid=0 order by event_sort desc limit 1 ");
+	$list3=DB::query("select event_id,event_name,event_uid,event_is_zhutui,event_zhutui_pic,event_content,event_url,event_type,event_logo from tbl_event where event_is_zhutui='Y' and field_uid=0 order by event_sort desc limit 1 ");
 	while($row3 = DB::fetch($list3))
 	{
 		if($row3['event_zhutui_pic'])
@@ -88,13 +88,9 @@ if($ac=="select_event")
 		$list_data3[]=$row3;
 	}
 
-	$list=DB::query("select event_id,event_id as event_uid,event_name,event_is_zhutui,event_content,event_url,event_type,event_logo from tbl_event where event_is_tj='Y' order by event_sort desc  ");
+	$list=DB::query("select event_id,event_name,event_id as event_uid,event_is_zhutui,event_content,event_url,event_type,event_logo from tbl_event where event_is_tj='Y' and field_uid=0 order by event_sort desc  ");
 	while($row = DB::fetch($list))
 	{
-		//$field=DB::query("select field_id from pre_fenzhan where sid= ");
-		//$row['field_ids']=
-		
-		//$row['event_pic']=$site_url."/uc_server/avatar.php?uid=".$row['event_uid']."&size=middle";
 		
 		if($row['event_logo'])
 		{
@@ -139,7 +135,7 @@ if($ac=="apply_ing")
 {
 	$login_uid=$_G['gp_login_uid'];
 
-	$list=DB::query("select event_id,event_name,event_uid,event_is_zhutui,event_content,event_url,event_type from tbl_event where event_baoming_starttime<=".time()." and event_baoming_endtime>=".time()." and field_uid=0 and event_is_baoming='Y' order by event_baoming_starttime desc  limit 100 ");
+	$list=DB::query("select event_id,event_name,event_uid,event_is_zhutui,event_content,event_url,event_type,event_logo from tbl_event where event_baoming_starttime<=".time()." and event_baoming_endtime>=".time()." and field_uid=0 and event_is_baoming='Y' order by event_baoming_starttime desc  limit 100 ");
 	while($row = DB::fetch($list))
 	{
 		if($login_uid)
@@ -252,7 +248,7 @@ if($ac=="event_blog")
 	if($max_page>=$page)
 	{
 
-		$list=DB::query("select arc_id as blogid,arc_name as subject,arc_replynum as replynum,arc_viewtype as view_type,arc_pic as pic ,arc_addtime as dateline,arc_content as content,FROM_UNIXTIME(arc_addtime, '%Y%m%d') as today from tbl_arc where arc_model='arc'  and arc_state=1 and arctype_id=3 order by today desc,arc_sort desc  limit $page_start,$page_size");
+		$list=DB::query("select arc_id as blogid,arc_name as subject,arc_replynum as replynum,arc_viewtype as view_type,arc_pic as pic ,arc_addtime as dateline,arc_content as content,FROM_UNIXTIME(arc_addtime, '%Y%m%d') as today from tbl_arc where arc_model='arc' and arc_state=1 and arc_viewstatus=1 and arctype_id=3 order by today desc,arc_sort desc  limit $page_start,$page_size");
 		$i=0;
 		while($row = DB::fetch($list))
 		{
@@ -300,17 +296,8 @@ if($ac=="event_blog_detail")
 		$detail_data['username']="";
 		$detail_data['uid']="0";
 		
-		$detail_data['content']=strip_tags($detail_data['content'],"<p><img><br><div><a>");
-		
-		$detail_data['content']=str_replace("<img ","<div style=\"text-align:center; width:100%; \"><img ",$detail_data['content']);
-		$detail_data['content']=str_replace("jpg\">","jpg\"></div>",$detail_data['content']);
-		$detail_data['content']=str_replace("jpg\" />","jpg\" /></div>",$detail_data['content']);
-		
-		
-		
+		$detail_data['content']=strip_tags($detail_data['content'],"<p><img><br><div>");
 		$detail_data['content']=str_replace("<img ","<div style=\"text-align:center; width:100%; \"><a href=\"http://www.bwvip.com/news_detail_pic\"><changsailong><img ",$detail_data['content']);
-		$detail_data['content']=str_replace("jpg\">","jpg\"></a></div>",$detail_data['content']);
-		$detail_data['content']=str_replace("jpg\" />","jpg\" /></a></div>",$detail_data['content']);
 		
 		/**
 		 * 添加图片编号
@@ -326,23 +313,33 @@ if($ac=="event_blog_detail")
 		    $i++;
 		}
 		$detail_data['content']=$str;
+		if($_G['gp_test'] == 1) {
+			echo '<pre>';
+			var_dump($content_arr);
+			var_dump($str);die;
+			//var_dump($find_str);
+		}
 		unset($str,$content_arr,$find_str);
+		
 		/**
 		 * 添加图片编号
 		 * end
 		 */
-		 
+		
+		$detail_data['content']=str_replace("jpg\">","jpg\"></a></div>",$detail_data['content']);
+		$detail_data['content']=str_replace("jpg\" />","jpg\" /></a></div>",$detail_data['content']);
+		$detail_data['content']=str_replace("jpg\" alt=\"\" />","jpg\" /></a></div>",$detail_data['content']);
 
 		if($detail_data['content'])
 		{
 			$detail_data['content']=str_replace(".=\"uchome-message-pic\"","",$detail_data['content']);
 			$detail_data['content']=str_replace("src=\"data/attachment/","src=\"".$site_url."/data/attachment/",$detail_data['content']);
+			$detail_data['content']=str_replace("src=\"/Public/editor/attached/image","src=\"".$site_url."/Public/editor/attached/image",$detail_data['content']);
 			
 			
-			$detail_data['content'] = "<div style='font-size:18px; line-height:150%; width:100%; bakcground:red; '>".$detail_data['content'];
+			$detail_data['content'] = "<div style='font-size:18px; line-height:180%; width:100%; bakcground:red; '>".$detail_data['content'];
 			$detail_data['content'] = $detail_data['content']."</div>";
 		}
-		
 
 		if($pic_width)
 		{
@@ -399,7 +396,7 @@ if($ac=="event_blog_detail")
 		}
 		
 		//$list=DB::query("select arc_id as blogid,arc_name as subject,arc_addtime as dateline from tbl_arc where arc_id<>'".$blogid."' order by arc_addtime desc limit 2");
-		$list=DB::query("select arc_id as blogid,arc_name as subject,arc_addtime as dateline from tbl_arc where arc_state=1 and arc_type='".$detail_data['arc_type']."' order by arc_addtime desc limit 2");
+		$list=DB::query("select arc_id as blogid,arc_name as subject,arc_addtime as dateline from tbl_arc where arc_state=1 and arc_type='".$detail_data['arc_type']."' and arc_id<>'".$blogid."' order by arc_addtime desc limit 2");
 		while($row = DB::fetch($list))
 		{
 			if($row['dateline'])
@@ -803,6 +800,7 @@ if($ac=="rule")
 				{
 					$imageids_arr = explode(',',$root_topic['imageid']);
 					$pic_ids = implode("','",$imageids_arr);
+					
 					$root_topic_img_rs =  DB::query("select photo from jishigou_topic_image where id in ('{$pic_ids}')");
 					unset($imageids_arr,$pic_ids);
 					
@@ -944,7 +942,7 @@ if($ac=="blog_comment_me")
 				$row['message']=cutstr_html($row['message']);
 			}
 
-			$row['touxiang']=$site_url."/uc_server/avatar.php?uid=".$row['uid']."&size=small";
+			$row['touxiang']=$site_url."/uc_server/avatar.php?uid=".$row['authorid']."&size=small";
 
 			$row['dateline']=date("Y-m-d G:i:s",$row['dateline']);
 			$list_data[]=$row;
@@ -1087,6 +1085,70 @@ if($ac=="event_baoming_action")
 	
 }
 
+if($ac=='dz_ticket_event_list')
+{
+	//大正赛事门票列表
+	$sql = "select event_id from tbl_ticket group by event_id limit $page_start,$page_size";
+	$list=DB::query($sql);
+	if(empty($list)){
+		api_json_result(1,1,"没有数据",$data);
+	}
+	$event_ids = array();
+	while($row = DB::fetch($list))
+	{
+		$event_ids[$row['event_id']] = $row['event_id'];
+	}
+	$sql = "select event_id,event_name,field_uid,event_logo,event_starttime,event_ticket_status from tbl_event where event_id in('".implode("','",$event_ids)."')";
+	$list=DB::query($sql);
+	$event_list = array();
+	while($row = DB::fetch($list))
+	{
+		$row['event_logo'] = $site_url.'/'.$row['event_logo'];
+		$row['event_starttime'] = date('Y年m月d日',$row['event_starttime']);
+		if($row['event_ticket_status'] == 2){
+			$row['wab_url'] = 'http://www.bwvip.com/wap/bmwreg.php';
+		}
+		
+		$row2 = DB::fetch_first("select ad_url,ad_file,ad_file_iphone4,ad_file_iphone5,ad_width,ad_height from tbl_ad where field_uid='".$row['field_uid']."' and ad_page='ticket' order by ad_sort desc limit 1");
+		
+		
+		$arr=explode("|",$row2['ad_url']);
+		if(count($arr)>1)
+		{
+			$row2['ad_action']=$arr[0];
+			$row2['ad_action_id']=$arr[1];
+			$row2['ad_action_text']=$arr[2];
+			$row2['event_url']=$arr[3];
+		}
+	
+		if($row2['ad_file'])
+		{
+			$row2['ad_file']="".$site_url."/".$row2['ad_file'];
+		}
+		if($row2['ad_file_iphone4'])
+		{
+			$row2['ad_file_iphone4']="".$site_url."/".$row2['ad_file_iphone4'];
+		}
+		if($row2['ad_file_iphone5'])
+		{
+			$row2['ad_file_iphone5']="".$site_url."/".$row2['ad_file_iphone5'];
+		}
+		
+		if(!empty($row2))
+		{
+			$row['ad_list']=$row2;
+		}
+		else
+		{
+			$row['ad_list']=null;
+		}
+		$event_list[] = $row;
+	}
+	$data['title'] = 'event_list';
+	$data['data'] = $event_list;
+	
+	api_json_result(1,0,"成功",$data);
+}
 
 
 

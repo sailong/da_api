@@ -588,19 +588,18 @@ if($ac=="select_event_all")
 if($ac=="event_ticket_list")
 {
 	$event_id = $_G['gp_event_id'];
-	$user_ticket_imei = $_G['gp_sn'];
+	//$user_ticket_imei = $_G['gp_sn'];
 	if(empty($event_id))
 	{
 		api_json_result(1,1,"缺少参数event_id",$data);
 		exit;
 	}
 	
-	$get_info=DB::fetch_first("select user_ticket_id,user_ticket_status,user_ticket_codepic,(select ticket_name from tbl_ticket where ticket_id=tbl_user_ticket.ticket_id) ticket_name from tbl_user_ticket where user_ticket_imei='".$user_ticket_imei."' and
-	event_id='".$event_id."' order by user_ticket_addtime desc limit 1 ");
-	$apply_pic="";
-	$ticket_name="";
+	//$get_info=DB::fetch_first("select user_ticket_id,user_ticket_status,user_ticket_codepic,(select ticket_name from tbl_ticket where ticket_id=tbl_user_ticket.ticket_id) ticket_name from tbl_user_ticket where event_id='".$event_id."' order by user_ticket_addtime desc limit 1 ");//user_ticket_imei='".$user_ticket_imei."' and
+	//$apply_pic="";
+	//$ticket_name="";
 	
-	if($get_info['user_ticket_id'])
+	/* if($get_info['user_ticket_id'])
 	{
 		$apply_status=(string)$get_info['user_ticket_status'];
 		$list_data=null;
@@ -629,7 +628,7 @@ if($ac=="event_ticket_list")
 	{
 		$apply_status=(string)-2;
 		$apply_message="未申请";
-	}
+	} */
 
 	
 	$list=DB::query("select ticket_id,ticket_name,ticket_type from tbl_ticket where event_id='".$event_id."' order by ticket_sort desc  limit 100 ");
@@ -640,21 +639,21 @@ if($ac=="event_ticket_list")
 		}else{
 			$row['company_flag']='N';
 		}
-		$list_data[]=array_default_value($row);
+		$list_data[]=$row;
 	}
 	unset($list);
 	
 	
 		
-		$data['title'] = "data";
-		$data['data']=array(
+		$data['title'] = "data_list";
+		$data['data']=$list_data;/* array(
 			'apply_status'=>$apply_status,
 			'apply_message'=>$apply_message,
 			'apply_pic'=>$apply_pic,
 			'ticket_name'=>$ticket_name,
 			'list_data'=>$list_data,
 			
-		);
+		); */
 		
 		//print_r($data);
 		api_json_result(1,0,'门票列表',$data);
