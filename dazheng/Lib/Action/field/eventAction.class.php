@@ -55,6 +55,8 @@ class eventAction extends field_publicAction
 			$data["event_right"]=post("event_right");
 			$data["event_right_flag"]=post("event_right_flag").time();
 			$data["event_right_intro"]=post("event_right_intro");
+			
+			
 			//$data["event_right_pic"]=post("event_right_pic");
 			
 			if($_FILES["event_logo"]["error"]==0 || $_FILES["event_timepic"]["error"]==0 || $_FILES["event_zhutui_pic"]["error"]==0 || $_FILES["event_left_pic"]["error"]==0 || $_FILES["event_right_pic"]["error"]==0)
@@ -106,6 +108,7 @@ class eventAction extends field_publicAction
 			$data["event_is_zhutui"]=post("event_is_zhutui");
 			$data["event_is_baoming"]=post("event_is_baoming");
 			$data["event_url"]=post("event_url");
+			$data["event_ticket_status"]=post("event_ticket_status");
 			$data["event_go_action"]=post("event_go_action");
 			$data["event_go_value"]=post("event_go_value");
 			$data["event_addtime"]=time();
@@ -222,6 +225,7 @@ class eventAction extends field_publicAction
 				$data["event_is_baoming"]=post("event_is_baoming");
 			}
 			$data["event_url"]=post("event_url");
+			$data["event_ticket_status"]=post("event_ticket_status");
 			$data["event_go_action"]=post("event_go_action");
 			$data["event_go_value"]=post("event_go_value");
 			
