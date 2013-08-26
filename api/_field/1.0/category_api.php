@@ -26,7 +26,7 @@ if($ac=="category_list")
 		api_json_result(1,1,"缺少参数field_uid",null);
 	}
 
-	$list=DB::query("select category_id,category_name,field_uid,category_type,category_sort,category_addtime from tbl_category where 1 and field_uid='".$field_uid."' order by category_addtime desc");
+	$list=DB::query("select category_id,category_name,category_type,category_sort from tbl_category where 1 and field_uid='".$field_uid."' order by category_addtime desc");
 	
 	while($row = DB::fetch($list) )
 	{	

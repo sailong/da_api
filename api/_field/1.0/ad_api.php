@@ -58,28 +58,8 @@ if($ac=="ad")
 		}
 		$list_data[]=array_default_value($row);
 	}
-	
-	
-	
-	
-	$list=DB::query("select category_id,category_name,field_uid,category_type,category_sort,category_addtime from tbl_category where 1 and field_uid='".$field_uid."' order by category_addtime desc");
-	
-	while($row = DB::fetch($list))
-	{	
-		$row['category_type_more'] = $type_more[$row['category_type']];
-		$category_data[$row['category_type']][]=array_default_value($row);
-	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
 		$data['title']		= "data";
-		$data['data']     =  array('ad_list'=>$list_data,'category_list'=>$category_data);
+		$data['data']     =  $list_data;
 	if(!empty($list_data))
 	{
 		api_json_result(1,0,$app_error['event']['10502'],$data);
@@ -89,60 +69,6 @@ if($ac=="ad")
 		api_json_result(1,1,"没有数据",$data);
 	}
 
-}
-
-function category_father($key_val)
-{
-	$list = array(
-		array(
-			'id'   => 'julebu',
-			'name' => '俱乐部介绍',//field_golf,field_hotel,field_huisuo,field_meet
-			'type_more'=> 'field_golf,field_hotel,field_huisuo,field_meet'
-		),
-		array(
-			'id'   => 'qiudaotu',
-			'name' => '球道图',//qiudaotu
-			'type_more'=> 'qiudaotu'
-		),
-		array(
-			'id'   => 'qiutong',
-			'name' => '球童介绍',//qiutong
-			'type_more'=> 'qiutong'
-		),
-		array(
-			'id'   => 'canyin',
-			'name' => '餐饮介绍',//canyin
-			'type_more'=> 'canyin'
-		),
-		array(
-			'id'   => 'bieshu',
-			'name' => '别墅项目',//mingren_photo,mingren_intro,mingren_room,mingren_yuyue
-			'type_more'=> 'mingren_photo,mingren_intro,mingren_room,mingren_yuyue'
-		),
-		array(
-			'id'   => 'jiudian',
-			'name' => '酒店项目',//hotel_intro,hotel_room,hotel_canyin,hotel_meet,hotel_yule,hotel_spa
-			'type_more'=> 'hotel_intro,hotel_room,hotel_canyin,hotel_meet,hotel_yule,hotel_spa'
-		)
-	);
-	if($key_val == 'key_val')
-	{
-		foreach($list as $key=>$val)
-		{
-			unset($list[$key]);
-			$list[$val['id']]=$val['name'];
-		}
-	}
-	
-	if($key_val == 'type_more')
-	{
-		foreach($list as $key=>$val)
-		{
-			unset($list[$key]);
-			$list[$val['id']]=$val['type_more'];
-		}
-	}
-	return $list;
 }
 
 
