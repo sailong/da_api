@@ -10,7 +10,7 @@ $language=$_G['gp_language'];
 $now_time = time();
 //是否检查field_uid
 if(!in_array($ac,array('free_ticket','free_ticket2'))) {
-    if(empty($ac) || empty($field_uid)) 
+    if(empty($ac) || $field_uid=='') 
     {
         api_json_result(1,1,"参数不完整",'');
     }

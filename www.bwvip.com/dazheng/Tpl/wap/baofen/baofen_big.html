@@ -1,5 +1,6 @@
 <include file="../public/header"/>
 <style type="text/css">
+.bg_hover{background:#ccc;}
 .ndbm {
 
 	list-style:none;
@@ -67,7 +68,7 @@
 				<td>加洞状态</td>
               </tr>
               <volist id="v" name="fenzu_user">
-              <tr>
+              <tr overstyle="on" >
                 <td height="30" style="width:80px; text-align:left;">{$v.realname}</td>
                 <volist id="d" name="dongs">
 				<php>
@@ -132,6 +133,21 @@
     <div id="con1_p"></div>
   </div>
 </div>
+
+
+<script>
+	$(document).ready(function(){
+		$("tr[overstyle='on']").hover(
+		  function ()
+		  {
+		    $(this).addClass("bg_hover");
+		  },
+		  function (){
+		    $(this).removeClass("bg_hover");
+		  }
+		);
+	});
+</script>
 
 <!--copyright-->
 <div id="copyright" >

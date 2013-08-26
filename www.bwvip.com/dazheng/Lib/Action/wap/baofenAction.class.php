@@ -463,13 +463,13 @@ class baofenAction extends wap_publicAction
 					$str1 = implode ( '|', $data1 ); 
 					$total_avepushs = floor ( $total_score / 18 ); 
 					
-
-
 					
+			
 					$arry ['par'] = "`par`='".$arrypar."'";	
 					$arry ['pars'] = "`pars`='".$str1."'";	
 					$arry ['score'] = "`score`='".$str."'";	
 					$arry ['total_pushs'] = "`total_score`='".$total_score."'";	
+					
 					$arry ['total_avepushs'] = "`total_avepushs`='".$total_avepushs."'";	
 					$arry ['total_eagle'] = "`total_eagle`='".$total_eagle."'";	
 					$arry ['total_birdie'] = "`total_birdie`='".$total_birdie."'";	
@@ -626,7 +626,7 @@ class baofenAction extends wap_publicAction
 			//$this->success("保存成功",U('field/public/login'));
 			//echo "<hr>ok";
 			//header ( "Location: baofen.php?ac=ndupdate&fzt=$fzt1&qc_id=".$_POST['qc_id']."&field_id=".$_POST['qc_id']." " );
-			header ( "Location:".U('wap/baofen/baofen_big',array('fenzhan_id'=>$fenzhan_id,'fenzu_id'=>$fzt1))."" );
+			header ( "Location:".U('wap/baofen/baofen_big',array('fenzhan_id'=>$fenzhan_id))."" );
 		}
 		else
 		{
@@ -642,6 +642,7 @@ class baofenAction extends wap_publicAction
 	
 	public function baofen_save_action()
 	{ 
+		
 		$arr_b =  $_POST['userdk'];
 
 		$fenzhan_id = post('fenzhan_id');
@@ -674,7 +675,7 @@ class baofenAction extends wap_publicAction
 			}
 			
 			
-			if(count($sub_arr)>1)
+			if(count($sub_arr)>=1)
 			{
 				$sub_fenzhan_sql =" and ( ";
 				for($i=0; $i<count($sub_arr); $i++)
@@ -693,7 +694,7 @@ class baofenAction extends wap_publicAction
 			}
 			else
 			{
-				$sub_fenzhan_sql=" and (event_id='".$sid."') ";
+				$sub_fenzhan_sql=" and (event_id='".$event_id."') ";
 			}
 			
 			
@@ -879,13 +880,13 @@ class baofenAction extends wap_publicAction
 					$str1 = implode ( '|', $data1 ); 
 					$total_avepushs = floor ( $total_score / 18 ); 
 					
-
-
 					
+			
 					$arry ['par'] = "`par`='".$arrypar."'";	
 					$arry ['pars'] = "`pars`='".$str1."'";	
 					$arry ['score'] = "`score`='".$str."'";	
 					$arry ['total_pushs'] = "`total_score`='".$total_score."'";	
+					
 					$arry ['total_avepushs'] = "`total_avepushs`='".$total_avepushs."'";	
 					$arry ['total_eagle'] = "`total_eagle`='".$total_eagle."'";	
 					$arry ['total_birdie'] = "`total_birdie`='".$total_birdie."'";	
@@ -898,6 +899,8 @@ class baofenAction extends wap_publicAction
 				
 					 
 					$res=M()->query("update tbl_baofen set ".(implode(",",$arry))." where baofen_id='".$key."' ");
+					//echo "update tbl_baofen set ".(implode(",",$arry))." where baofen_id='".$key."' ";
+					//echo "<hr>";
 					
 				
 						 
@@ -1020,10 +1023,10 @@ class baofenAction extends wap_publicAction
 					$total_sum_ju=$ju_1+$ju_2+$ju_3+$ju_4;
 					$zong_score=$lun_1+$lun_2+$lun_3+$lun_4;
 					$res=M()->query("update tbl_baofen set total_sum_ju='".$total_sum_ju."',zong_score='".$zong_score."' ".$up_sql."  where event_user_id='".$baofen[0]['event_user_id']."' ".$sub_fenzhan_sql."  ");
-					/*
-					echo "update tbl_baofen set total_sum_ju='".$total_sum_ju."',zong_score='".$zong_score."' ".$up_sql."  where event_user_id='".$baofen[0]['event_user_id']."' ".$sub_fenzhan_sql."  ";
-					echo "<hr>";
-					*/
+					
+					//echo "update tbl_baofen set total_sum_ju='".$total_sum_ju."',zong_score='".$zong_score."' ".$up_sql."  where event_user_id='".$baofen[0]['event_user_id']."' ".$sub_fenzhan_sql."  ";
+					//echo "<hr>";
+					
 				} 	
 				
 			}
@@ -1046,6 +1049,8 @@ class baofenAction extends wap_publicAction
 		{
 			//print_r($_POST);
 		}
+		
+		
 		
 		
 		

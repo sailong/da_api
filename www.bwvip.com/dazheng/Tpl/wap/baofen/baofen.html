@@ -1,5 +1,6 @@
 <include file="../public/header"/>
 <style type="text/css">
+.bg_hover{background:#ccc;}
 .ndbm {
 
 	list-style:none;
@@ -132,6 +133,22 @@
     <div id="con1_p"></div>
   </div>
 </div>
+
+
+<script>
+	$(document).ready(function(){
+		$("tr[overstyle='on']").hover(
+		  function ()
+		  {
+		    $(this).addClass("bg_hover");
+		  },
+		  function (){
+		    $(this).removeClass("bg_hover");
+		  }
+		);
+	});
+</script>
+
 
 <!--copyright-->
 <div id="copyright" >
