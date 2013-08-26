@@ -16,6 +16,12 @@ if(!in_array($ac,array('free_ticket','free_ticket2'))) {
     }
 }
 
+//分类ID
+$category_id = $_G['gp_category_id'];
+if($category != ''){
+	$category_sql = " and category_id='{$category_id}' ";
+}
+
 //赛事列表
 if($ac == 'filedevent') 
 {
@@ -136,10 +142,10 @@ if($ac == 'qiutong')
 	$page_size = !empty($page_size) ? $page_size : 10;
 	
 	$offset = ($page-1)*$page_size;
-	$sql =  "select * from tbl_qiutong where field_uid='{$field_uid}' order by qiutong_id limit {$offset},{$page_size}";
+	$sql =  "select * from tbl_qiutong where field_uid='{$field_uid}' ".$category_sql."  order by qiutong_id limit {$offset},{$page_size}";
     if(!empty($search)) 
     {
-        $sql = "select * from tbl_qiutong where field_uid='{$field_uid}' and (qiutong_number='{$search}' or qiutong_name like '%{$search}%' or qiutong_name_en like '%{$search}%') limit {$offset},{$page_size}";
+        $sql = "select * from tbl_qiutong where field_uid='{$field_uid}'  ".$category_sql." and (qiutong_number='{$search}' or qiutong_name like '%{$search}%' or qiutong_name_en like '%{$search}%') limit {$offset},{$page_size}";
     }
 	
     $list = DB::query($sql);
@@ -237,7 +243,7 @@ if($ac == 'menulist1')
         $menu_type=1;
     }
     $return_data['title'] = 'menulist';
-    $sql = "select * from tbl_field_1stmenu where field_uid='{$field_uid}' and field_1stmenu_type='{$menu_type}' order by field_1stmenu_id asc";
+    $sql = "select * from tbl_field_1stmenu where field_uid='{$field_uid}' ".$category_sql."  and field_1stmenu_type='{$menu_type}' order by field_1stmenu_id asc";
     
     $list = DB::query($sql);
     $menu_list = array();

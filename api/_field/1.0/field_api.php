@@ -66,14 +66,21 @@ else
 	$page_start2=($page2-1)*($page_size2);
 }
 
+//分类ID
+$category_id = $_G['gp_category_id'];
+if($category != ''){
+	$category_sql = " and category_id='{$category_id}' ";
+}
+
 //球场介绍  field_golf field_hotel field_huisuo field_meet field_other
 if($ac=="field_intro")
 {
 	$field_uid=$_G['gp_field_uid'];
 	$type=$_G['gp_type'];
+	
 	if($field_uid && $type)
 	{
-		$detail_data=DB::fetch_first("select about_id,about_id as blogid,about_name as arc_name,about_replynum as arc_replynum,about_addtime as dateline,about_content as content,about_tel as tel,about_tel2 from tbl_field_about where about_type='".$type."' and field_uid='".$field_uid."' ".$language_sql." order by about_id desc limit 1 ");
+		$detail_data=DB::fetch_first("select about_id,about_id as blogid,about_name as arc_name,about_replynum as arc_replynum,about_addtime as dateline,about_content as content,about_tel as tel,about_tel2 from tbl_field_about where about_type='".$type."' and field_uid='".$field_uid."' ".$category_sql." ".$language_sql." order by about_id desc limit 1 ");
 		
 		$detail_data['content']=strip_tags($detail_data['content'],"");
 		
@@ -127,7 +134,7 @@ if($ac=="field_intro_list")
 	$type=$_G['gp_type'];
 	if($field_uid && $type)
 	{
-		$list=DB::query("select about_id,about_id as blogid,about_name as arc_name,about_replynum as arc_replynum,about_addtime as dateline,about_content as content,about_tel as tel,about_tel2,about_pic,about_more from tbl_field_about where about_type='".$type."' and field_uid='".$field_uid."' ".$language_sql." ");
+		$list=DB::query("select about_id,about_id as blogid,about_name as arc_name,about_replynum as arc_replynum,about_addtime as dateline,about_content as content,about_tel as tel,about_tel2,about_pic,about_more from tbl_field_about where about_type='".$type."' and field_uid='".$field_uid."'  ".$category_sql." ".$language_sql." ");
 		while($row=DB::fetch($list))
 		{
 			$row['content']=strip_tags($row['content'],"");
@@ -426,7 +433,7 @@ if($ac=="golf_news")
 if($ac=="field_news")
 {
 	$field_uid=$_G['gp_field_uid'];
-	$total=DB::result_first("select count(arc_id) from tbl_arc where arc_model='arc' and arc_type='Q' and field_uid='".$field_uid."'  $language_sql ");
+	$total=DB::result_first("select count(arc_id) from tbl_arc where arc_model='arc' and arc_type='Q' and field_uid='".$field_uid."' ".$category_sql." ". $language_sql);
 	$max_page=intval($total/$page_size);
 	if($max_page<$total/$page_size)
 	{
