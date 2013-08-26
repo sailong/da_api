@@ -1,0 +1,30 @@
+body{ margin:0; padding:0; font-size:12px; font-family:Arial, Helvetica, sans-serif; color:#000;  background:url(images/background.png) repeat-x;}
+input,select,textarea{font-size:12px; }
+div, dl, dt, dd, p, ul, li, ol, table, span,h1, h2, h3, h4, h5, h6{ margin:0; padding:0; text-indent:0;}
+h1, h2, h3, h4, h5, h6{ font-weight:normal; font-size:12px;}
+img{ border:none;vertical-align:middle;}
+li{ list-style:none;}
+
+
+/* 默认全局样式超链接样式 */
+a { text-decoration:none; color:#133DB6;}
+a:visited {text-decoration:none; color:#133DB6;}
+a:hover { text-decoration:underline; color:#133DB6;}
+.num {color:#f60;}
+.clearfix {display: inline-block;}
+
+.clear{border-top:1px solid transparent !important;
+margin-top:-1px !important;
+border-top:0;
+margin-top:0;
+clear:both;
+visibility:hidden;
+}
+
+
+
+.add_form{}
+.add_form th{text-align:right; font-size:17px; color:#25472F;}
+.add_form td{ padding:10px 0;  font-size:17px;}
+.add_form .mod_input{line-height:35px; height:35px; border:1px solid #9FC6AE; text-indent:6px; font-size:18px; color:#999;}
+.add_form .btn{width:194px; height:56px;  font-size:25px; color:#fff; background:url(images/btn_bg.png); border:none; font-weight:bold; cursor:pointer;}

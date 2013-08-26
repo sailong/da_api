@@ -1,0 +1,18 @@
+body { margin-left:0; padding-left:0;}			
+.ticket_date_element { width:226px; overflow:hidden; padding:3px 0; float:left;}
+.ticket_date_element_r { width:86px; overflow:hidden; padding:3px 0; float:left;}
+#birthday_element { width:110px; position:relative;}
+#birthday_element .text01 { left:85px; position:absolute; top:0; margin-top:2px; padding:0;}
+.error { color:red;}
+.error .input_text, .error .input_textarea { border: 1px solid red;}
+.termInfoBox { left:232px; margin-top:10px;}
+.preload { display:none;}
+.below_dotted_line_left { color:red; display:none; font-weight:bold; float: none;*margin-top:0; }
+
+
+.below_dotted_line_right{ text-align: left; margin-top: 0px; float: left;}
+.switch_language{float: right;}
+
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+.hack_rfi01 { margin-top:0px !important;}
+}

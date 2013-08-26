@@ -37,7 +37,7 @@ $discuz->init();
 $space = array();
 
 $mod = getgpc('mod');
-if(!in_array($mod, array('space', 'spacecp', 'misc', 'magic', 'editor', 'invite', 'task', 'medal', 'rss','news'))) {
+if(!in_array($mod, array('space', 'spacecp', 'misc', 'magic', 'editor', 'invite', 'task', 'medal', 'rss','news','down'))) {
 	$mod = 'news';
 	$_GET['do'] = 'index';
 }

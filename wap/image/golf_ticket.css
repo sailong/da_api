@@ -1,0 +1,47 @@
+BODY {
+	PADDING-LEFT: 0px; MARGIN-LEFT: 0px
+}
+.ticket_date_element {
+	PADDING-BOTTOM: 3px; PADDING-LEFT: 0px; WIDTH: 226px; PADDING-RIGHT: 0px; FLOAT: left; OVERFLOW: hidden; PADDING-TOP: 3px
+}
+.ticket_date_element_r {
+	PADDING-BOTTOM: 3px; PADDING-LEFT: 0px; WIDTH: 86px; PADDING-RIGHT: 0px; FLOAT: left; OVERFLOW: hidden; PADDING-TOP: 3px
+}
+#birthday_element {
+	POSITION: relative; WIDTH: 110px
+}
+#birthday_element .text01 {
+	POSITION: absolute; PADDING-BOTTOM: 0px; MARGIN-TOP: 2px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; TOP: 0px; PADDING-TOP: 0px; LEFT: 85px
+}
+.error {
+	COLOR: red
+}
+.error .input_text {
+	BORDER-BOTTOM: red 1px solid; BORDER-LEFT: red 1px solid; BORDER-TOP: red 1px solid; BORDER-RIGHT: red 1px solid
+}
+.error .input_textarea {
+	BORDER-BOTTOM: red 1px solid; BORDER-LEFT: red 1px solid; BORDER-TOP: red 1px solid; BORDER-RIGHT: red 1px solid
+}
+.termInfoBox {
+	MARGIN-TOP: 10px; LEFT: 232px
+}
+.preload {
+	DISPLAY: none
+}
+.below_dotted_line_left {
+	MARGIN-TOP: 0px; DISPLAY: none; FLOAT: none; COLOR: red; FONT-WEIGHT: bold
+}
+.below_dotted_line_right {
+	TEXT-ALIGN: left; MARGIN-TOP: 0px; FLOAT: left
+}
+.switch_language {
+	FLOAT: right
+}
+
+@media Unknown    
+{
+.hack_rfi01 {
+	MARGIN-TOP: 0px !important
+}
+
+}
