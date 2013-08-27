@@ -18,7 +18,7 @@ if(!in_array($ac,array('free_ticket','free_ticket2'))) {
 
 //分类ID
 $category_id = $_G['gp_category_id'];
-if($category != ''){
+if(!empty($category_id)){
 	$category_sql = " and category_id='{$category_id}' ";
 }
 
