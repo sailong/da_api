@@ -135,6 +135,11 @@ class field_aboutAction extends field_publicAction
     		$dict_info = M('dict')->where("dict_type='13' and dict_value='{$about_type}'")->find();
     		$this->assign('dict_info',$dict_info);
 		    $dict_value = get('about_type');
+			
+			
+			$category_list = $this->get_category_list($dict_value);
+			$this->assign('category_list',$category_list);
+			
     		$page_list=select_dict(13);
             foreach($page_list as $key=>$val) {
                 if($val['dict_value'] == $dict_value) {
@@ -160,8 +165,6 @@ class field_aboutAction extends field_publicAction
 			$this->assign('usejs',$b);     //输出到html
 			$this->assign('editor',$a);
 			
-			$category_list = $this->get_category_list($about_type);
-			$this->assign('category_list',$category_list);
 			
 			$this->assign("page_title","修改球场介绍");
 			$this->display();
@@ -314,10 +317,11 @@ class field_aboutAction extends field_publicAction
 	public function get_category_list($about_type)
 	{
 		$field_uid = $_SESSION["field_uid"];
-		$category_about_types = category_father('key_val');
+		$category_about_types = category_father('type_more');
+	
 		$category_type = '';
 		foreach($category_about_types as $key=>$val){
-			if(strpos($val,$about_type)){
+			if(false !== strpos($val,$about_type) || $val==$about_type){
 				$category_type = $key;
 				break;
 			}
