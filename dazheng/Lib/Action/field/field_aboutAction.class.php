@@ -27,9 +27,21 @@ class field_aboutAction extends field_publicAction
         }
 	    
 		$list=D("field_about")->field_about_list_pro(" and field_uid='".$_SESSION['field_uid']."' ");
-		
 		//echo '<pre>';
 		//var_dump($list);
+		foreach($list['item'] as $key=>$val){
+			if(!empty($val['category_id'])){
+				$category_ids[$val['category_id']] = $val['category_id'];
+			}
+		}
+		$category_data = M('category')->where("category_id in('".implode("','",$category_ids)."')")->select();
+		
+		foreach($category_data as $key=>$val){
+			$category_list[$val['category_id']] =  $val;
+		}
+		unset($category_ids,$category_data);
+		
+		$this->assign("category_list",$category_list);
 		$this->assign("list",$list["item"]);
 		$this->assign("pages",$list["pages"]);
 		$this->assign("total",$list["total"]);
