@@ -20,7 +20,7 @@ if($_GET['username']) {
 	$uid = $member['uid'];
 }
 
-$dos = array('downdetails');
+$dos = array('downdetails','fieldspace');
 
 $do = (!empty($_GET['do']) && in_array($_GET['do'], $dos))?$_GET['do']:'index';
 

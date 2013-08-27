@@ -467,8 +467,8 @@ class baofenAction extends wap_publicAction
 			
 					$arry ['par'] = "`par`='".$arrypar."'";	
 					$arry ['pars'] = "`pars`='".$str1."'";	
-					$arry ['score'] = "`score`='".$str."'";	 
-					$arry ['total_score'] = "`total_score`='".$sdata[21]."'";	
+					$arry ['score'] = "`score`='".$str."'";	
+					$arry ['total_pushs'] = "`total_score`='".$total_score."'";	
 					
 					$arry ['total_avepushs'] = "`total_avepushs`='".$total_avepushs."'";	
 					$arry ['total_eagle'] = "`total_eagle`='".$total_eagle."'";	
@@ -496,7 +496,13 @@ class baofenAction extends wap_publicAction
 						$res=M()->query("update tbl_baofen set ".(implode(",",$sql_sets))." where baofen_id='".$key."'");
 						//echo "update tbl_baofen set ".(implode(",",$sql_sets))." where uid='".$key."' ";
 						//echo "<hr>";
-					} 
+					}
+					else
+					{ 
+						$res=M()->query("update tbl_baofen set total_score=cave_1+cave_2+cave_3+cave_4+cave_5+cave_6+cave_7+cave_8+cave_9+cave_10+cave_11+cave_12+cave_13+cave_14+cave_15+cave_16+cave_17+cave_18 where baofen_id='".$key."'");
+						//echo "update tbl_baofen set total_score=cave_1+cave_2+cave_3+cave_4+cave_5+cave_6+cave_7+cave_8+cave_9+cave_10+cave_11+cave_12+cave_13+cave_14+cave_15+cave_16+cave_17+cave_18 where uid='".$key."' ";
+						//echo "<hr>";
+					}
 					
 					
 					
@@ -766,7 +772,7 @@ class baofenAction extends wap_publicAction
 					$data ['event_id'] = $event_id;
 					$data ['fenzhan_id'] = $fenzhan_id;
 					$data ['field_id'] = $field_id; 
-					$data ['total_score'] = $total_score;  
+					//$data ['total_score'] = $total_score;  
 					if($baofen[0]['baofen_id'])
 					{
 						$sql = "update tbl_baofen set ".(implode ( " , ",$sql_sets ))." where baofen_id='".$key."' ";
@@ -879,7 +885,7 @@ class baofenAction extends wap_publicAction
 					$arry ['par'] = "`par`='".$arrypar."'";	
 					$arry ['pars'] = "`pars`='".$str1."'";	
 					$arry ['score'] = "`score`='".$str."'";	
-					$arry ['total_score'] = "`total_score`='".$sdata[21]."'";	
+					$arry ['total_pushs'] = "`total_score`='".$total_score."'";	
 					
 					$arry ['total_avepushs'] = "`total_avepushs`='".$total_avepushs."'";	
 					$arry ['total_eagle'] = "`total_eagle`='".$total_eagle."'";	
@@ -908,7 +914,12 @@ class baofenAction extends wap_publicAction
 						//echo "update tbl_baofen set ".(implode(",",$sql_sets))." where uid='".$key."' ";
 						//echo "<hr>";
 					}
-					 
+					else
+					{ 
+						$res=M()->query("update tbl_baofen set total_score=cave_1+cave_2+cave_3+cave_4+cave_5+cave_6+cave_7+cave_8+cave_9+cave_10+cave_11+cave_12+cave_13+cave_14+cave_15+cave_16+cave_17+cave_18 where baofen_id='".$key."'");
+						//echo "update tbl_baofen set total_score=cave_1+cave_2+cave_3+cave_4+cave_5+cave_6+cave_7+cave_8+cave_9+cave_10+cave_11+cave_12+cave_13+cave_14+cave_15+cave_16+cave_17+cave_18 where uid='".$key."' ";
+						//echo "<hr>";
+					}
 					
 					
 					

@@ -1,0 +1,718 @@
+* {
+	FONT-FAMILY: sans-serif; FONT-SIZE: 11px
+}
+BODY {
+	BACKGROUND-COLOR: #fff; MARGIN: 0px
+}
+TD {
+	LINE-HEIGHT: 12px; FONT-FAMILY: arial,helvetica,sans-serif; FONT-SIZE: 11px
+}
+A {
+	COLOR: #4c4c4c; TEXT-DECORATION: none
+}
+A.selectboxEntry {
+	LINE-HEIGHT: 16px; WIDTH: 100%; DISPLAY: block; COLOR: #4c4c4c; FONT-SIZE: 11px; OVERFLOW: hidden
+}
+A.selectboxEntry:hover {
+	BACKGROUND-COLOR: #039; COLOR: #fff
+}
+.selectboxContent {
+	POSITION: absolute; DISPLAY: none; TOP: 18px; LEFT: 0px
+}
+H2 {
+	MARGIN: 0px; FONT-FAMILY: Arial; COLOR: #000
+}
+H2 {
+	PADDING-BOTTOM: 10px; LINE-HEIGHT: 16px; FONT-SIZE: 17px; FONT-WEIGHT: bold; -padding-bottom: 9px; -font-size: 17px; -line-height: 19px
+}
+.hidden {
+	DISPLAY: none
+}
+.notshow {
+	DISPLAY: none
+}
+.form_section {
+	PADDING-BOTTOM: 0px; MARGIN: 0px; PADDING-LEFT: 0px; WIDTH: 505px; PADDING-RIGHT: 0px; CLEAR: both; OVERFLOW: visible; PADDING-TOP: 12px
+}
+.form_item {
+	CLEAR: both
+}
+.error .error .form_item_element .input_text {
+	BORDER-BOTTOM: red 1px solid; BORDER-LEFT: red 1px solid; BORDER-TOP: red 1px solid; BORDER-RIGHT: red 1px solid
+}
+.error .error .form_item_element .input_textarea {
+	BORDER-BOTTOM: red 1px solid; BORDER-LEFT: red 1px solid; BORDER-TOP: red 1px solid; BORDER-RIGHT: red 1px solid
+}
+.error .error .form_item_element .input_checkbox {
+	BORDER-BOTTOM: red 1px solid; BORDER-LEFT: red 1px solid; BORDER-TOP: red 1px solid; BORDER-RIGHT: red 1px solid
+}
+.form_section_items {
+	FLOAT: left; OVERFLOW: visible
+}
+.editmode .form_item_element .small {
+	WIDTH: 98px; MARGIN-BOTTOM: 5px; MARGIN-RIGHT: 10px
+}
+.firstRun .form_item_element .small {
+	WIDTH: 98px; MARGIN-BOTTOM: 5px; MARGIN-RIGHT: 10px
+}
+.form_item_element .small {
+	WIDTH: 98px; MARGIN-BOTTOM: 5px; MARGIN-RIGHT: 6px
+}
+.section_extra_head {
+	WIDTH: 440px; FLOAT: left; FONT-SIZE: 18px
+}
+.section_extra_intro {
+	WIDTH: 440px; FLOAT: left
+}
+.form_section_label {
+	BORDER-BOTTOM: blue 0px solid; BORDER-LEFT: blue 0px solid; MARGIN-TOP: -2px; WIDTH: 300px; FLOAT: left; FONT-SIZE: 13px; BORDER-TOP: blue 0px solid; FONT-WEIGHT: bold; BORDER-RIGHT: blue 0px solid
+}
+.small_select {
+	WIDTH: 90px; OVERFLOW: hidden
+}
+.input_text {
+	WIDTH: 315px; OVERFLOW: hidden
+}
+.input_select {
+	WIDTH: 315px; OVERFLOW: hidden
+}
+.input_textarea {
+	WIDTH: 315px; OVERFLOW: hidden
+}
+.input_checkbox {
+	WIDTH: 28px; OVERFLOW: hidden
+}
+.input_hidden {
+	VISIBILITY: hidden
+}
+.form_section_label {
+	WIDTH: 135px; FLOAT: left; text-align:center;
+}
+.error LABEL {
+	COLOR: red
+}
+.error .form_element LABEL {
+	COLOR: red
+}
+.error .error .form_item_label {
+	COLOR: red
+}
+.form_section .section_error {
+	DISPLAY: none
+}
+.error .section_error {
+	DISPLAY: block
+}
+.error#page_error {
+	DISPLAY: block
+}
+#page_error {
+	MARGIN: 0px 0px 10px; DISPLAY: none; COLOR: red; FONT-WEIGHT: bold; PADDING-TOP: 1px
+}
+.form_section .form_item INPUT.readonly {
+	BACKGROUND-COLOR: #eee
+}
+.readonly {
+	BACKGROUND-COLOR: #eee
+}
+.section_error {
+	MARGIN: 0px 107px 8px 165px; DISPLAY: none; COLOR: red; FONT-WEIGHT: bold
+}
+#page_intro_edit {
+	WIDTH: 475px; DISPLAY: none
+}
+.firstRun #page_intro_edit {
+	DISPLAY: block
+}
+#common_data_usage {
+	DISPLAY: none
+}
+.firstRun #common_data_usage {
+	DISPLAY: block
+}
+#page_intro_confirm {
+	WIDTH: 475px; DISPLAY: block
+}
+.firstRun #page_intro_confirm {
+	DISPLAY: none
+}
+.editmode INPUT {
+	BACKGROUND-IMAGE: url(/wap/images/bg_forms.gif); BORDER-BOTTOM: #afafaf 1px solid; BORDER-LEFT: #929292 1px solid; PADDING-LEFT: 3px; WIDTH: 315px; FONT-FAMILY: Arial; HEIGHT: 20px; FONT-SIZE: 11px; BORDER-TOP: #929292 1px solid; BORDER-RIGHT: #afafaf 1px solid; -background-repeat: no-repeat; -background-attachment: fixed
+}
+.firstRun INPUT {
+	BACKGROUND-IMAGE: url(/wap/images/bg_forms.gif); BORDER-BOTTOM: #afafaf 1px solid; BORDER-LEFT: #929292 1px solid; PADDING-LEFT: 3px; WIDTH: 315px; FONT-FAMILY: Arial; HEIGHT: 20px; FONT-SIZE: 11px; BORDER-TOP: #929292 1px solid; BORDER-RIGHT: #afafaf 1px solid; -background-repeat: no-repeat; -background-attachment: fixed
+}
+.error .error INPUT {
+	BACKGROUND-IMAGE: url(/wap/images/bg_forms.gif); BORDER-BOTTOM: #f00 1px solid; BORDER-LEFT: #f00 1px solid; PADDING-LEFT: 3px; WIDTH: 315px; HEIGHT: 20px; BORDER-TOP: #f00 1px solid; BORDER-RIGHT: #f00 1px solid; -background-repeat: no-repeat; -background-attachment: fixed
+}
+.error .error .form_element INPUT {
+	BACKGROUND-IMAGE: url(/wap/images/bg_forms.gif); BORDER-BOTTOM: #f00 1px solid; BORDER-LEFT: #f00 1px solid; PADDING-LEFT: 3px; WIDTH: 315px; HEIGHT: 20px; BORDER-TOP: #f00 1px solid; BORDER-RIGHT: #f00 1px solid; -background-repeat: no-repeat; -background-attachment: fixed
+}
+INPUT {
+	BACKGROUND-IMAGE: url(/wap/images/1x1_trans.gif); BORDER-BOTTOM: #eee 1px solid; BORDER-LEFT: #eee 1px solid; BACKGROUND-COLOR: #eee; PADDING-LEFT: 3px; WIDTH: 315px; HEIGHT: 20px; BORDER-TOP: #eee 1px solid; BORDER-RIGHT: #eee 1px solid; -background-repeat: no-repeat; -background-attachment: fixed
+}
+.editmode TEXTAREA {
+	BACKGROUND-IMAGE: url(/wap/images/bg_forms.gif); BORDER-BOTTOM: #afafaf 1px solid; BORDER-LEFT: #929292 1px solid; PADDING-LEFT: 3px; WIDTH: 315px; FONT-FAMILY: Arial; FONT-SIZE: 11px; BORDER-TOP: #929292 1px solid; BORDER-RIGHT: #afafaf 1px solid; -background-repeat: no-repeat; -background-attachment: fixed
+}
+.firstRun TEXTAREA {
+	BACKGROUND-IMAGE: url(/wap/images/bg_forms.gif); BORDER-BOTTOM: #afafaf 1px solid; BORDER-LEFT: #929292 1px solid; PADDING-LEFT: 3px; WIDTH: 315px; FONT-FAMILY: Arial; FONT-SIZE: 11px; BORDER-TOP: #929292 1px solid; BORDER-RIGHT: #afafaf 1px solid; -background-repeat: no-repeat; -background-attachment: fixed
+}
+.error .error TEXTAREA {
+	BACKGROUND-IMAGE: url(/wap/images/bg_forms.gif); BORDER-BOTTOM: #f00 1px solid; BORDER-LEFT: #f00 1px solid; PADDING-LEFT: 3px; WIDTH: 315px; BORDER-TOP: #f00 1px solid; BORDER-RIGHT: #f00 1px solid; -background-repeat: no-repeat; -background-attachment: fixed
+}
+.error .form_element TEXTAREA {
+	BACKGROUND-IMAGE: url(/wap/images/bg_forms.gif); BORDER-BOTTOM: #f00 1px solid; BORDER-LEFT: #f00 1px solid; PADDING-LEFT: 3px; WIDTH: 315px; BORDER-TOP: #f00 1px solid; BORDER-RIGHT: #f00 1px solid; -background-repeat: no-repeat; -background-attachment: fixed
+}
+TEXTAREA {
+	BACKGROUND-IMAGE: url(/wap/images/1x1_trans.gif); BORDER-BOTTOM: #eee 1px solid; BORDER-LEFT: #eee 1px solid; BACKGROUND-COLOR: #eee; PADDING-LEFT: 3px; WIDTH: 315px; HEIGHT: 108px; BORDER-TOP: #eee 1px solid; BORDER-RIGHT: #eee 1px solid; -background-repeat: no-repeat; -background-attachment: fixed
+}
+.input_textarea {
+	WHITE-SPACE: pre; HEIGHT: 57px; OVERFLOW: auto
+}
+.small INPUT {
+	WIDTH: 96px
+}
+.editmode .section_confirm {
+	DISPLAY: inline
+}
+.section_confirm {
+	MARGIN: 12px 0px 1px 165px; WIDTH: 165px; DISPLAY: none; FLOAT: left; HEIGHT: 15px; CLEAR: both
+}
+.editmode .section_edit {
+	DISPLAY: none
+}
+.firstRun .section_confirm {
+	DISPLAY: none
+}
+.firstRun .section_edit {
+	DISPLAY: none
+}
+.firstRun .confirm_only {
+	DISPLAY: none
+}
+.secondRun .confirm_only {
+	DISPLAY: none
+}
+.firstRun #editProfileContainer {
+	DISPLAY: block
+}
+#editProfileContainer {
+	DISPLAY: block
+}
+.secondRun #editProfileContainer {
+	DISPLAY: block
+}
+.section_edit {
+	MARGIN: 14px 0px -1px 165px; DISPLAY: inline; FLOAT: left; HEIGHT: 15px; CLEAR: both
+}
+.clearboth {
+	CLEAR: both
+}
+.selectioncheck BR {
+	LINE-HEIGHT: 4px
+}
+.selectioncheck .formOffset2 {
+	MARGIN-TOP: 6px
+}
+.selectioncheck {
+	MARGIN-BOTTOM: 14px
+}
+A#buttonValidateForm {
+	TEXT-INDENT: 7px; MARGIN: 0px 0px 18px; WIDTH: 140px; DISPLAY: block; HEIGHT: 20px; COLOR: #fff; PADDING-TOP: 4px
+}
+A#buttonSaveForm {
+	TEXT-INDENT: 7px; MARGIN: 0px 0px 18px; WIDTH: 140px; DISPLAY: block; HEIGHT: 20px; COLOR: #fff; PADDING-TOP: 4px
+}
+A#buttonEditProfile {
+	TEXT-INDENT: 7px; MARGIN: 0px 0px 18px; WIDTH: 140px; DISPLAY: block; HEIGHT: 20px; COLOR: #fff; PADDING-TOP: 4px
+}
+A#buttonShowProfile {
+	TEXT-INDENT: 7px; MARGIN: 0px 0px 18px; WIDTH: 140px; DISPLAY: block; HEIGHT: 20px; COLOR: #fff; PADDING-TOP: 4px
+}
+A#buttonValidateForm {
+	BACKGROUND-COLOR: #666
+}
+A#buttonSaveForm {
+	BACKGROUND-COLOR: #666
+}
+A#buttonEditProfile {
+	BACKGROUND-COLOR: #666
+}
+A#buttonShowProfile {
+	BACKGROUND-COLOR: #666
+}
+A#buttonValidateForm:hover {
+	BACKGROUND-COLOR: #039; COLOR: #fff
+}
+A#buttonValidateForm:focus {
+	BACKGROUND-COLOR: #039; COLOR: #fff
+}
+A#buttonSaveForm:hover {
+	BACKGROUND-COLOR: #039; COLOR: #fff
+}
+A#buttonSaveForm:focus {
+	BACKGROUND-COLOR: #039; COLOR: #fff
+}
+A#buttonEditProfile:hover {
+	BACKGROUND-COLOR: #039; COLOR: #fff
+}
+A#buttonEditProfile:focus {
+	BACKGROUND-COLOR: #039; COLOR: #fff
+}
+A#buttonShowProfile:hover {
+	BACKGROUND-COLOR: #039; COLOR: #fff
+}
+A#buttonShowProfile:focus {
+	BACKGROUND-COLOR: #039; COLOR: #fff
+}
+A#buttonCreateProceed {
+	PADDING-BOTTOM: 4px; BACKGROUND-COLOR: #666; TEXT-INDENT: 7px; MARGIN: -6px 0px -8px -7px; PADDING-LEFT: 0px; PADDING-RIGHT: 7px; HEIGHT: 16px; COLOR: #fff; PADDING-TOP: 4px
+}
+A#buttonCreateProceed:hover {
+	BACKGROUND-COLOR: #039; COLOR: #fff
+}
+A#buttonCreateProceed:focus {
+	BACKGROUND-COLOR: #039; COLOR: #fff
+}
+.editmode .form_item_element_info {
+	DISPLAY: block
+}
+.firstRun .form_item_element_info {
+	DISPLAY: block
+}
+.form_item_element_info {
+	MARGIN: 2px 0px 0px; DISPLAY: none; FLOAT: left
+}
+.form_item_element_info A IMG {
+	BORDER-BOTTOM: 0px; BORDER-LEFT: 0px; BORDER-TOP: 0px; BORDER-RIGHT: 0px
+}
+.form_item_element {
+	MARGIN-TOP: 1px; WIDTH: 324px; MARGIN-BOTTOM: 6px; FLOAT: left
+}
+.form_item_element_info {
+	PADDING-BOTTOM: 0px; PADDING-LEFT: 0px; WIDTH: 13px; PADDING-RIGHT: 0px; HEIGHT: 12px; OVERFLOW: hidden; PADDING-TOP: 0px
+}
+.form_item_element_info A {
+	BACKGROUND-IMAGE: url(/wap/images/info_b.gif); WIDTH: 13px; DISPLAY: block; BACKGROUND-REPEAT: no-repeat; BACKGROUND-POSITION: left top; HEIGHT: 12px; TEXT-DECORATION: none
+}
+.form_item_element_info A :link {
+	BACKGROUND-IMAGE: url(/wap/images/info_b.gif); WIDTH: 13px; DISPLAY: block; BACKGROUND-REPEAT: no-repeat; BACKGROUND-POSITION: left top; HEIGHT: 12px; TEXT-DECORATION: none
+}
+.form_item_element_info A :visited {
+	BACKGROUND-IMAGE: url(/wap/images/info_b.gif); WIDTH: 13px; DISPLAY: block; BACKGROUND-REPEAT: no-repeat; BACKGROUND-POSITION: left top; HEIGHT: 12px; TEXT-DECORATION: none
+}
+.form_item_element_info A:focus {
+	BACKGROUND-IMAGE: url(/wap/images/info_b.gif); BACKGROUND-REPEAT: no-repeat; BACKGROUND-POSITION: 0px -12px; TEXT-DECORATION: none
+}
+.form_item_element_info A:hover {
+	BACKGROUND-IMAGE: url(/wap/images/info_b.gif); BACKGROUND-REPEAT: no-repeat; BACKGROUND-POSITION: 0px -12px; TEXT-DECORATION: none
+}
+.form_item_element_info A:active {
+	BACKGROUND-IMAGE: url(/wap/images/info_b.gif); BACKGROUND-REPEAT: no-repeat; BACKGROUND-POSITION: 0px -12px; TEXT-DECORATION: none
+}
+.close {
+	POSITION: absolute; WIDTH: 13px; HEIGHT: 12px; OVERFLOW: hidden; TOP: 1px; RIGHT: 0px
+}
+.close A {
+	BACKGROUND-IMAGE: url(/wap/images/close_b.gif); WIDTH: 13px; DISPLAY: block; BACKGROUND-REPEAT: no-repeat; BACKGROUND-POSITION: left top; HEIGHT: 12px; TEXT-DECORATION: none
+}
+.close A :link {
+	BACKGROUND-IMAGE: url(/wap/images/close_b.gif); WIDTH: 13px; DISPLAY: block; BACKGROUND-REPEAT: no-repeat; BACKGROUND-POSITION: left top; HEIGHT: 12px; TEXT-DECORATION: none
+}
+.close A :visited {
+	BACKGROUND-IMAGE: url(/wap/images/close_b.gif); WIDTH: 13px; DISPLAY: block; BACKGROUND-REPEAT: no-repeat; BACKGROUND-POSITION: left top; HEIGHT: 12px; TEXT-DECORATION: none
+}
+.close A:focus {
+	BACKGROUND-IMAGE: url(/wap/images/close_b.gif); WIDTH: 13px; DISPLAY: block; BACKGROUND-REPEAT: no-repeat; BACKGROUND-POSITION: 0px -13px; HEIGHT: 12px; TEXT-DECORATION: none
+}
+.close A:hover {
+	BACKGROUND-IMAGE: url(/wap/images/close_b.gif); WIDTH: 13px; DISPLAY: block; BACKGROUND-REPEAT: no-repeat; BACKGROUND-POSITION: 0px -13px; HEIGHT: 12px; TEXT-DECORATION: none
+}
+.close A:active {
+	BACKGROUND-IMAGE: url(/wap/images/close_b.gif); WIDTH: 13px; DISPLAY: block; BACKGROUND-REPEAT: no-repeat; BACKGROUND-POSITION: 0px -13px; HEIGHT: 12px; TEXT-DECORATION: none
+}
+.infoText {
+	MARGIN: 30px 0px 0px 48px; WIDTH: 390px; HEIGHT: 220px; OVERFLOW: auto
+}
+.infoText H1 {
+	MARGIN: 0px; FONT-FAMILY: Arial; COLOR: #000; -font-family: Helvetica,Arial
+}
+.infoText H1 {
+	PADDING-BOTTOM: 3px; LINE-HEIGHT: 22px; FONT-SIZE: 18px; -padding-bottom: 6px; -font-size: 18px; -line-height: 22px
+}
+.infoBox {
+	BORDER-BOTTOM: #afafaf 1px solid; BORDER-LEFT: #afafaf 1px solid; BACKGROUND-COLOR: #fff; WIDTH: 481px; HEIGHT: 250px; BORDER-TOP: #afafaf 1px solid; BORDER-RIGHT: #afafaf 1px solid
+}
+.closeLink {
+	MARGIN: 20px 0px 0px
+}
+.infoContent {
+	MARGIN: 10px 0px 0px
+}
+IMG.arrow {
+	BACKGROUND-IMAGE: url(/wap/images/arrow_standard.gif); BORDER-BOTTOM: 0px; POSITION: static; BORDER-LEFT: 0px; MARGIN-TOP: -1px; WIDTH: 7px; DISPLAY: inline; BACKGROUND-REPEAT: no-repeat; BACKGROUND-POSITION: left top; HEIGHT: 11px; BORDER-TOP: 0px; BORDER-RIGHT: 0px
+}
+A IMG.arrow {
+	BACKGROUND-IMAGE: url(/wap/images/arrow_standard.gif); BORDER-BOTTOM: 0px; POSITION: static; BORDER-LEFT: 0px; MARGIN-TOP: -1px; WIDTH: 7px; DISPLAY: inline; BACKGROUND-REPEAT: no-repeat; BACKGROUND-POSITION: left top; HEIGHT: 11px; BORDER-TOP: 0px; BORDER-RIGHT: 0px
+}
+A:hover IMG.arrow {
+	BACKGROUND-IMAGE: url(/wap/images/arrow_standard.gif); BORDER-BOTTOM: 0px; POSITION: static; BORDER-LEFT: 0px; MARGIN-TOP: -1px; WIDTH: 7px; DISPLAY: inline; BACKGROUND-REPEAT: no-repeat; BACKGROUND-POSITION: left bottom; HEIGHT: 11px; BORDER-TOP: 0px; BORDER-RIGHT: 0px
+}
+A.linkHighlight IMG.arrow {
+	BACKGROUND-IMAGE: url(/wap/images/arrow_standard.gif); BORDER-BOTTOM: 0px; POSITION: static; BORDER-LEFT: 0px; MARGIN-TOP: -1px; WIDTH: 7px; DISPLAY: inline; BACKGROUND-REPEAT: no-repeat; BACKGROUND-POSITION: left bottom; HEIGHT: 11px; BORDER-TOP: 0px; BORDER-RIGHT: 0px
+}
+A.arrow {
+	MARGIN-TOP: -1px; HEIGHT: 12px; COLOR: #4c4c4c; TEXT-DECORATION: none
+}
+A:hover {
+	COLOR: #039
+}
+A.arrow IMG {
+	BACKGROUND-IMAGE: url(/wap/images/arrow_standard.gif); BORDER-BOTTOM: 0px; POSITION: static; BORDER-LEFT: 0px; MARGIN-TOP: -1px; WIDTH: 7px; DISPLAY: inline; BACKGROUND-REPEAT: no-repeat; BACKGROUND-POSITION: left top; HEIGHT: 11px; BORDER-TOP: 0px; BORDER-RIGHT: 0px
+}
+A.arrow:hover IMG {
+	BACKGROUND-IMAGE: url(/wap/images/arrow_standard.gif); BORDER-BOTTOM: 0px; POSITION: static; BORDER-LEFT: 0px; MARGIN-TOP: -1px; WIDTH: 7px; DISPLAY: inline; BACKGROUND-REPEAT: no-repeat; BACKGROUND-POSITION: left bottom; HEIGHT: 11px; BORDER-TOP: 0px; BORDER-RIGHT: 0px
+}
+A.arrowWhite {
+	MARGIN-TOP: -1px; HEIGHT: 12px; COLOR: #4c4c4c; TEXT-DECORATION: none
+}
+A.arrowWhite IMG {
+	BACKGROUND-IMAGE: url(/wap/images/arrowWhite.gif); BORDER-BOTTOM: 0px; POSITION: static; BORDER-LEFT: 0px; MARGIN-TOP: -1px; WIDTH: 7px; DISPLAY: inline; BACKGROUND-REPEAT: no-repeat; BACKGROUND-POSITION: left top; HEIGHT: 11px; BORDER-TOP: 0px; BORDER-RIGHT: 0px
+}
+A.arrowWhite:hover IMG {
+	BACKGROUND-IMAGE: url(/wap/images/arrowWhite.gif); BORDER-BOTTOM: 0px; POSITION: static; BORDER-LEFT: 0px; MARGIN-TOP: -1px; WIDTH: 7px; DISPLAY: inline; BACKGROUND-REPEAT: no-repeat; BACKGROUND-POSITION: left top; HEIGHT: 11px; BORDER-TOP: 0px; BORDER-RIGHT: 0px
+}
+.smallform {
+	PADDING-BOTTOM: 12px; MARGIN: 0px; PADDING-LEFT: 0px; WIDTH: 490px; PADDING-RIGHT: 0px; PADDING-TOP: 12px
+}
+.smallform {
+	PADDING-BOTTOM: 12px; MARGIN: 0px; PADDING-LEFT: 0px; WIDTH: 490px; PADDING-RIGHT: 0px; PADDING-TOP: 12px
+}
+.smallform#page_error {
+	MARGIN: 0px
+}
+#washingmaschine {
+	BORDER-BOTTOM: #afafaf 1px solid; BORDER-LEFT: #afafaf 1px solid; BACKGROUND-COLOR: #f00; WIDTH: 50px; HEIGHT: 50px; MARGIN-LEFT: -315px; BORDER-TOP: #afafaf 1px solid; TOP: 15%; BORDER-RIGHT: #afafaf 1px solid; LEFT: 50%
+}
+#washing {
+	Z-INDEX: 2001; POSITION: absolute; WIDTH: 50px; DISPLAY: none; HEIGHT: auto
+}
+#finfobox {
+	POSITION: absolute; DISPLAY: none; LEFT: 1px
+}
+#fwarnbox {
+	POSITION: absolute; DISPLAY: none; LEFT: 1px
+}
+#page_logout {
+	MARGIN-BOTTOM: 10px
+}
+.jqm {
+	WIDTH: 0px; HEIGHT: 0px
+}
+.section_seperator {
+	BACKGROUND-COLOR: #afafaf; MARGIN-TOP: 0px; WIDTH: 479px; HEIGHT: 1px; CLEAR: both; OVERFLOW: hidden
+}
+.profile_line {
+	BACKGROUND-COLOR: #afafaf; WIDTH: 479px; HEIGHT: 1px; OVERFLOW: hidden
+}
+.head_copy {
+	MARGIN-TOP: 20px; WIDTH: 478px
+}
+.reset_pw_section {
+	HEIGHT: 95px
+}
+* {
+	FONT-SIZE: 12px
+}
+BODY {
+	PADDING-LEFT: 10000px; MARGIN-LEFT: 270px
+}
+TD {
+	LINE-HEIGHT: 14px; FONT-SIZE: 12px
+}
+.section_extra_head {
+	FLOAT: none; HEIGHT: 30px; FONT-SIZE: 18px; FONT-WEIGHT: bold
+}
+.form_section_label {
+	MARGIN-TOP: 1px; FONT-SIZE: 14px
+}
+.editmode INPUT {
+	FONT-SIZE: 12px
+}
+.firstRun INPUT {
+	FONT-SIZE: 12px
+}
+.editmode TEXTAREA {
+	FONT-SIZE: 12px
+}
+.firstRun TEXTAREA {
+	FONT-SIZE: 12px
+}
+INPUT {
+	FONT-SIZE: 12px
+}
+A#buttonValidateForm {
+	PADDING-BOTTOM: 4px; BACKGROUND-COLOR: #666; TEXT-INDENT: 7px; MARGIN: 0px; WIDTH: 140px; DISPLAY: block; HEIGHT: 16px; COLOR: #fff; PADDING-TOP: 6px
+}
+A#buttonSaveForm {
+	PADDING-BOTTOM: 4px; BACKGROUND-COLOR: #666; TEXT-INDENT: 7px; MARGIN: 0px; WIDTH: 140px; DISPLAY: block; HEIGHT: 16px; COLOR: #fff; PADDING-TOP: 6px
+}
+A#buttonShowProfile {
+	PADDING-BOTTOM: 4px; BACKGROUND-COLOR: #666; TEXT-INDENT: 7px; MARGIN: 0px; WIDTH: 140px; DISPLAY: block; HEIGHT: 16px; COLOR: #fff; PADDING-TOP: 6px
+}
+A#buttonValidateForm:hover {
+	BACKGROUND-COLOR: #039; COLOR: #fff
+}
+A#buttonValidateForm:focus {
+	BACKGROUND-COLOR: #039; COLOR: #fff
+}
+A#buttonSaveForm:hover {
+	BACKGROUND-COLOR: #039; COLOR: #fff
+}
+A#buttonSaveForm:focus {
+	BACKGROUND-COLOR: #039; COLOR: #fff
+}
+A#buttonShowProfile:hover {
+	BACKGROUND-COLOR: #039; COLOR: #fff
+}
+A#buttonShowProfile:focus {
+	BACKGROUND-COLOR: #039; COLOR: #fff
+}
+#btn_save_form {
+	MARGIN-TOP: 12px
+}
+.form_section_items A#buttonValidateForm {
+	MARGIN-TOP: 12px
+}
+A.selectboxEntry {
+	FONT-SIZE: 11px
+}
+.bmwSelectBoxTableA {
+	BACKGROUND-IMAGE: url(/wap/images/ecrm2_form_item_bg.jpg); BACKGROUND-POSITION: -1px -1px
+}
+.bmwSelectionBoxReadOnly {
+	BACKGROUND-IMAGE: url(/wap/images/ecrm2_selectbox_readonly_bg.jpg); PADDING-BOTTOM: 2px; PADDING-LEFT: 7px; WIDTH: 315px; PADDING-RIGHT: 0px; BACKGROUND-REPEAT: no-repeat; HEIGHT: 20px; COLOR: #b0b0b0; OVERFLOW: hidden; PADDING-TOP: 2px
+}
+.readonly {
+	COLOR: #b0b0b0
+}
+.form_item_element_info {
+	WIDTH: 15px; DISPLAY: block; HEIGHT: 15px
+}
+.form_item_element_info A.standard_button_i {
+	BACKGROUND-IMAGE: url(/wap/images/ecrm2_button_bg_i.jpg); POSITION: relative; PADDING-BOTTOM: 0px; MARGIN: 0px; PADDING-LEFT: 0px; WIDTH: 15px; PADDING-RIGHT: 0px; DISPLAY: block; BACKGROUND-REPEAT: no-repeat; HEIGHT: 15px; OVERFLOW: hidden; CURSOR: pointer; PADDING-TOP: 0px
+}
+.form_item_element_info A.standard_button_i:link {
+	BACKGROUND-IMAGE: url(/wap/images/ecrm2_button_bg_i.jpg); POSITION: relative; PADDING-BOTTOM: 0px; MARGIN: 0px; PADDING-LEFT: 0px; WIDTH: 15px; PADDING-RIGHT: 0px; DISPLAY: block; BACKGROUND-REPEAT: no-repeat; HEIGHT: 15px; OVERFLOW: hidden; CURSOR: pointer; PADDING-TOP: 0px
+}
+.form_item_element_info A.standard_button_i:visited {
+	BACKGROUND-IMAGE: url(/wap/images/ecrm2_button_bg_i.jpg); POSITION: relative; PADDING-BOTTOM: 0px; MARGIN: 0px; PADDING-LEFT: 0px; WIDTH: 15px; PADDING-RIGHT: 0px; DISPLAY: block; BACKGROUND-REPEAT: no-repeat; HEIGHT: 15px; OVERFLOW: hidden; CURSOR: pointer; PADDING-TOP: 0px
+}
+.form_item_element_info A.standard_button_i:focus {
+	BACKGROUND-POSITION: left bottom
+}
+.form_item_element_info A.standard_button_i:active {
+	BACKGROUND-POSITION: left bottom
+}
+.form_item_element_info A.standard_button_i:hover {
+	BACKGROUND-POSITION: left bottom
+}
+A.standard_button_b {
+	BACKGROUND-IMAGE: url(/wap/images/button.jpg); POSITION: relative; PADDING-BOTTOM: 0px; MARGIN: 0px; PADDING-LEFT: 14px; WIDTH: 145px; PADDING-RIGHT: 0px; DISPLAY: block; BACKGROUND-REPEAT: no-repeat; HEIGHT: 38px; COLOR: #fff; OVERFLOW: hidden; CURSOR: pointer; FONT-WEIGHT: normal; PADDING-TOP: 4px;
+}
+A.standard_button_b:link {
+	BACKGROUND-IMAGE: url(/wap/images/button.jpg); POSITION: relative; PADDING-BOTTOM: 0px; MARGIN: 0px; PADDING-LEFT: 14px; WIDTH: 145px; PADDING-RIGHT: 0px; DISPLAY: block; BACKGROUND-REPEAT: no-repeat; HEIGHT: 38px; COLOR: #fff; OVERFLOW: hidden; CURSOR: pointer; FONT-WEIGHT: normal; PADDING-TOP: 4px;
+}
+A.standard_button_b:visited {
+	BACKGROUND-IMAGE: url(/wap/images/button.jpg); POSITION: relative; PADDING-BOTTOM: 0px; MARGIN: 0px; PADDING-LEFT: 14px; WIDTH: 145px; PADDING-RIGHT: 0px; DISPLAY: block; BACKGROUND-REPEAT: no-repeat; HEIGHT: 38px; COLOR: #fff; OVERFLOW: hidden; CURSOR: pointer; FONT-WEIGHT: normal; PADDING-TOP: 4px
+}
+ .infoBox {
+	Z-INDEX: 3000; BORDER-BOTTOM: 0px; BORDER-LEFT: 0px; BACKGROUND-COLOR: transparent; WIDTH: 253px; HEIGHT: 176px; OVERFLOW: hidden; BORDER-TOP: 0px; BORDER-RIGHT: 0px
+}
+.infoBoxBg {
+	BACKGROUND-IMAGE: url(/wap/images/ecrm2_info_box_bg.png); Z-INDEX: 0; POSITION: absolute; WIDTH: 100%; HEIGHT: 100%; OVERFLOW: hidden; TOP: 0px; LEFT: 0px
+}
+.infoBoxBg2 {
+	BACKGROUND-IMAGE: url(/wap/images/ecrm2_info_box_bg2.png); Z-INDEX: 0; POSITION: absolute; WIDTH: 100%; HEIGHT: 100%; OVERFLOW: hidden; TOP: 0px; LEFT: 0px
+}
+.infoText {
+	Z-INDEX: 1; POSITION: absolute; MARGIN: 0px; WIDTH: 218px; HEIGHT: 125px; OVERFLOW: hidden; TOP: 18px; LEFT: 18px
+}
+.close {
+	Z-INDEX: 1; WIDTH: 15px; HEIGHT: 15px; TOP: 9px; RIGHT: 11px
+}
+.close A {
+	BACKGROUND-IMAGE: url(/wap/images/ecrm2_button_bg_close.jpg); WIDTH: 15px; HEIGHT: 15px
+}
+.close A :link {
+	BACKGROUND-IMAGE: url(/wap/images/ecrm2_button_bg_close.jpg); WIDTH: 15px; HEIGHT: 15px
+}
+.close A :visited {
+	BACKGROUND-IMAGE: url(/wap/images/ecrm2_button_bg_close.jpg); WIDTH: 15px; HEIGHT: 15px
+}
+.close A:hover {
+	BACKGROUND-IMAGE: url(/wap/images/ecrm2_button_bg_close.jpg); WIDTH: 15px; BACKGROUND-POSITION: left bottom; HEIGHT: 15px
+}
+.close A:focus {
+	BACKGROUND-IMAGE: url(/wap/images/ecrm2_button_bg_close.jpg); WIDTH: 15px; BACKGROUND-POSITION: left bottom; HEIGHT: 15px
+}
+.close A:active {
+	BACKGROUND-IMAGE: url(/wap/images/ecrm2_button_bg_close.jpg); WIDTH: 15px; BACKGROUND-POSITION: left bottom; HEIGHT: 15px
+}
+#finfobox {
+	LEFT: 525px
+}
+.helpInfoBox {
+	Z-INDEX: 3000; BORDER-BOTTOM: 0px; POSITION: absolute; BORDER-LEFT: 0px; BACKGROUND-COLOR: transparent; WIDTH: 253px; DISPLAY: none; HEIGHT: 268px; OVERFLOW: hidden; BORDER-TOP: 0px; BORDER-RIGHT: 0px; LEFT: 501px
+}
+.helpInfoBoxBg {
+	BACKGROUND-IMAGE: url(/wap/images/ecrm2_top_info_box_bg.png); Z-INDEX: 0; POSITION: absolute; WIDTH: 100%; HEIGHT: 100%; OVERFLOW: hidden; TOP: 0px; LEFT: 0px
+}
+.helpInfoBox .close {
+	TOP: 14px; RIGHT: 9px
+}
+.helpInfoText {
+	POSITION: absolute; MARGIN: 0px; WIDTH: 218px; HEIGHT: 215px; OVERFLOW: hidden; TOP: 29px; LEFT: 18px
+}
+.termInfoBox {
+	Z-INDEX: 3000; BORDER-BOTTOM: 0px; POSITION: absolute; BORDER-LEFT: 0px; BACKGROUND-COLOR: transparent; WIDTH: 253px; DISPLAY: none; HEIGHT: 307px; OVERFLOW: hidden; BORDER-TOP: 0px; BORDER-RIGHT: 0px; LEFT: 501px
+}
+.termInfoBoxBg {
+	BACKGROUND-IMAGE: url(/wap/images/ecrm2_terms_info_box_bg.png); Z-INDEX: 0; POSITION: absolute; WIDTH: 100%; HEIGHT: 100%; OVERFLOW: hidden; TOP: 0px; LEFT: 0px
+}
+.termInfoBox .close {
+	TOP: 9px; RIGHT: 10px
+}
+.termInfoText {
+	POSITION: absolute; MARGIN: 0px; WIDTH: 218px; HEIGHT: 253px; OVERFLOW: hidden; TOP: 18px; LEFT: 17px
+}
+.smallInfoBoxBg {
+	BACKGROUND-IMAGE: url(/wap/images/ecrm2_info_box_bg_small.png); Z-INDEX: 0; POSITION: absolute; WIDTH: 100%; HEIGHT: 100%; OVERFLOW: hidden; TOP: 0px; LEFT: 0px; -background-image: none; -filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/wap/images/ecrm2_info_box_bg_small.png',sizingMethod='scale')
+}
+.infoBoxBg {
+	-background-image: none; -filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/wap/images/ecrm2_info_box_bg.png',sizingMethod='scale')
+}
+.infoBoxBg2 {
+	-background-image: none; -filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/wap/images/ecrm2_info_box_bg2.png',sizingMethod='scale')
+}
+.helpInfoBoxBg {
+	-background-image: none; -filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/wap/images/ecrm2_top_info_box_bg.png',sizingMethod='scale')
+}
+.termInfoBoxBg {
+	-background-image: none; -filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/wap/images/ecrm2_terms_info_box_bg.png',sizingMethod='scale')
+}
+.infoText H1 {
+	PADDING-BOTTOM: 0px; MARGIN: 1px 0px 0px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; HEIGHT: 17px; FONT-SIZE: 13px; OVERFLOW: hidden; FONT-WEIGHT: bold; PADDING-TOP: 0px
+}
+.infoContent {
+	MARGIN-TOP: 14px
+}
+.dotted_line {
+	BACKGROUND-IMAGE: url(/wap/images/ecrm2_dotted_line.gif); POSITION: relative; WIDTH: 479px; HEIGHT: 1px; OVERFLOW: hidden
+}
+.below_dotted_line_headline {
+	POSITION: relative; MARGIN-TOP: 10px; WIDTH: 479px; MARGIN-BOTTOM: 8px; OVERFLOW: hidden
+}
+.below_dotted_line {
+	POSITION: relative; MARGIN-TOP: 6px; WIDTH: 479px; HEIGHT: 31px; OVERFLOW: hidden
+}
+.below_dotted_line_left {
+	POSITION: relative; MARGIN-TOP: 4px; WIDTH: 370px; FLOAT: left; HEIGHT: 20px; OVERFLOW: hidden
+}
+.below_dotted_line_right {
+	POSITION: relative; TEXT-ALIGN: right; MARGIN-TOP: 2px; WIDTH: 100px; FLOAT: right; HEIGHT: 20px; OVERFLOW: hidden
+}
+.above_dotted_line {
+	POSITION: relative; MARGIN-TOP: 8px; WIDTH: 479px; HEIGHT: 20px; OVERFLOW: hidden
+}
+.above_dotted_line_left {
+	POSITION: relative; WIDTH: 250px; FLOAT: left; HEIGHT: 20px; FONT-SIZE: 14px; OVERFLOW: hidden; FONT-WEIGHT: bold
+}
+.above_dotted_line_right {
+	POSITION: relative; TEXT-ALIGN: right; WIDTH: 200px; FLOAT: right; HEIGHT: 20px; OVERFLOW: hidden; PADDING-TOP: 5px
+}
+#button_show_profile_container {
+	WIDTH: 304px; HEIGHT: 24px
+}
+#button_show_profile {
+	FLOAT: left
+}
+#button_save_form_2 {
+	FLOAT: right
+}
+#login_iframe {
+	Z-INDEX: 10; BORDER-BOTTOM: 0px; POSITION: absolute; BORDER-LEFT: 0px; WIDTH: 250px; HEIGHT: 300px; OVERFLOW: hidden; BORDER-TOP: 0px; TOP: 0px; BORDER-RIGHT: 0px; LEFT: 0px
+}
+.form_item_label {
+	BACKGROUND-COLOR: #fff
+}
+.firstRun #page_intro_edit {
+	MARGIN-TOP: 10px; HEIGHT: 30px
+}
+.rfi_left_checkbox {
+	POSITION: relative; WIDTH: 228px; FLOAT: left; CLEAR: both; OVERFLOW: hidden
+}
+.rfi_right_checkbox {
+	POSITION: relative; WIDTH: 85px; FLOAT: left; HEIGHT: 22px; OVERFLOW: hidden
+}
+#page_intro_confirm {
+	PADDING-BOTTOM: 18px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; PADDING-TOP: 10px
+}
+.section_error {
+	MARGIN: 0px 27px 8px 165px
+}
+#fwarnbox {
+	BORDER-BOTTOM: #afafaf 1px solid; BORDER-LEFT: #afafaf 1px solid; BACKGROUND-COLOR: #fff; BORDER-TOP: #afafaf 1px solid; BORDER-RIGHT: #afafaf 1px solid; LEFT: 434px
+}
+
+@media Unknown    
+{
+.hack_rfi01 {
+	MARGIN-TOP: -20px
+}
+    }
+.snsIframeContainer {
+	Z-INDEX: 9000; POSITION: absolute; BACKGROUND-COLOR: #fff; WIDTH: 800px; DISPLAY: none; HEIGHT: 550px; OVERFLOW: hidden; TOP: 50px; LEFT: 250px
+}
+.snsIframeClose {
+	Z-INDEX: 10; POSITION: absolute; WIDTH: 15px; HEIGHT: 15px; TOP: 5px; LEFT: 700px
+}
+.snsIframe {
+	POSITION: absolute; WIDTH: 750px; HEIGHT: 500px; TOP: 30px; LEFT: 10px
+}
+DIV.sina {
+	BORDER-BOTTOM: #999 1px solid; BORDER-LEFT: #999 1px solid; WIDTH: 600px; HEIGHT: 315px; BORDER-TOP: #999 1px solid; BORDER-RIGHT: #999 1px solid; LEFT: 250px
+}
+DIV.sina .snsIframeClose {
+	LEFT: 580px
+}
+DIV.sina .snsIframe {
+	WIDTH: 600px; HEIGHT: 315px; LEFT: 0px
+}
+DIV.renren {
+	BORDER-BOTTOM: #999 0px solid; BORDER-LEFT: #999 0px solid; BACKGROUND-COLOR: transparent; WIDTH: 470px; HEIGHT: 380px; BORDER-TOP: #999 0px solid; BORDER-RIGHT: #999 0px solid; LEFT: 250px
+}
+DIV.renren .snsIframeClose {
+	DISPLAY: none
+}
+DIV.renren .snsIframe {
+	WIDTH: 422px; HEIGHT: 335px; LEFT: 40px
+}
+DIV.qq {
+	BORDER-BOTTOM: #999 1px solid; BORDER-LEFT: #999 1px solid; WIDTH: 545px; HEIGHT: 370px; BORDER-TOP: #999 1px solid; BORDER-RIGHT: #999 1px solid; LEFT: 250px; -height: 440px; -width: 565px
+}
+DIV.qq .snsIframeClose {
+	LEFT: 530px
+}
+DIV.qq .snsIframe {
+	MARGIN-TOP: -260px; WIDTH: 750px; HEIGHT: 700px; MARGIN-LEFT: -150px; TOP: 0px; LEFT: 10px; -height: 700px; -width: 710px
+}
+DIV.douban {
+	BORDER-BOTTOM: #999 1px solid; BORDER-LEFT: #999 1px solid; WIDTH: 595px; HEIGHT: 340px; BORDER-TOP: #999 1px solid; BORDER-RIGHT: #999 1px solid
+}
+DIV.douban .snsIframeClose {
+	LEFT: 580px
+}
+DIV.douban .snsIframe {
+	WIDTH: 600px; LEFT: 0px
+}

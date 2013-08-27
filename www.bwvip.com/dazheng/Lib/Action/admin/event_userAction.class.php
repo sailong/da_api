@@ -198,7 +198,6 @@ $event_info=M("event")->where("event_id=".intval(get("event_id")))->find();
 		if(post('event_id'))
 		{
 			$arr=explode(",",post('ids'));
-			
 			for($i=0; $i<count($arr); $i++)
 			{
 				//获取报名信息
@@ -208,22 +207,26 @@ $event_info=M("event")->where("event_id=".intval(get("event_id")))->find();
 				{
 					
 					$baoming_info=M()->query("select * from tbl_event_apply where event_user_id='".$event_user_id."' and fenzhan_id='".post('fenzhan_id')."' ");
+					
 					if(!$baoming_info[0]["event_apply_id"])
 					{
+					if($_SESSION['field_uid']==null){$field_uid=0;}
+					
+					
 						$data['parent_id']=0;
 						$data['event_id']=post('event_id');
 						$data['fenzhan_id']=post('fenzhan_id');
-						$data['field_uid']=$_SESSION['field_uid'];
+						$data['field_uid']=$field_uid;
 						$data['uid']=$user_info['uid'];
 						$data['event_user_id']=$user_info['event_user_id'];
+						$data['code_pic']=null;
 						$data['event_apply_realname']=$user_info['event_user_realname'];
 						$data['event_apply_sex']=$user_info['event_user_sex'];
 						$data['event_apply_card']=$user_info['event_user_card'];
 						$data['event_apply_chadian']=$user_info['event_user_chadian'];
 						$data['event_apply_state']=1;
 						$data['event_apply_addtime']=time();
-						
-						$res=M('event_apply')->add($data);
+						$res=M('event_apply')->add($data); 
 					}
 					
 				}

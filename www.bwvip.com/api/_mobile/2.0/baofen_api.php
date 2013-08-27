@@ -601,7 +601,7 @@ function ju_par_format($option)
 			$dataInfo = "-";
 		}
 		
-		$dataInfo = "+" . $option;
+		
 	}
 	else if ($option < 0)
 	{
@@ -615,7 +615,6 @@ function ju_par_format($option)
 
 	return (string)$dataInfo;
 }
-
 
 
 ?>

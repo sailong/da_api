@@ -406,8 +406,8 @@ if($ac=='rank')
 				$str_new=implode("|",$s_arr);
 				$arr_new=explode("|",$str_new);
 
-				$row['score_sub']=array_default_value($arr_new);
-				$gscore[] = array_default_value($row,array('status','score_1','score_2','score_3','score_4','color_4','color_1','color_2','color_3','color_4')); 
+				$row['score_sub']=array_default_value($score_1);
+				$gscore[] = array_default_value($row,array('score_sub','status','score_1','score_2','score_3','score_4','color_4','color_1','color_2','color_3','color_4')); 
 			}
 			$i++;
 			
