@@ -67,7 +67,7 @@ if($ac=="album_list")
 		while($row = DB::fetch($list))
 		{
 			
-			$photo=DB::result_first("select photo_url_small from tbl_photo where album_id='".$row['album_id']."' order by photo_addtime desc limit 1 ");
+			$photo=DB::result_first("select photo_url_small from tbl_photo where album_id='".$row['album_id']."' order by photo_addtime asc limit 1 ");
 			
 			if($photo)
 			{
