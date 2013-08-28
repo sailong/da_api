@@ -111,7 +111,7 @@
 			-->
 			
 			<td>{$vo.type_name|default='暂无'}</td>
-			<td>{$vo.category_id}</td>
+			<td>{$category_list[$vo['category_id']]['category_name']}</td>
 			<!--
 			<td><php>if($vo['arc_pic']){</php><img src="/{$vo.arc_pic}" style="max-width:150px; max-height:80px;"><php>}</php></td>
 
