@@ -238,12 +238,12 @@ if($ac == 'order_qiutong')
 if($ac == 'menulist1')
 {
     $menu_type = $_G['gp_menu_type'];
-    if(empty($menu_type)) 
-    {
-        $menu_type=1;
-    }
+    if(!empty($menu_type))
+	{
+		$menu_type_sql = " and field_1stmenu_type='{$menu_type}'";
+	}
     $return_data['title'] = 'menulist';
-    $sql = "select * from tbl_field_1stmenu where field_uid='{$field_uid}' ".$category_sql."  and field_1stmenu_type='{$menu_type}' order by field_1stmenu_id asc";
+    $sql = "select * from tbl_field_1stmenu where field_uid='{$field_uid}' ".$category_sql." {$menu_type_sql} order by field_1stmenu_id asc";
     
     $list = DB::query($sql);
     $menu_list = array();
@@ -300,12 +300,12 @@ if($ac == 'menulist1')
 if($ac == 'menulist1_iphone')
 {
     $menu_type = $_G['gp_menu_type'];
-    if(empty($menu_type)) 
-    {
-        $menu_type=1;
-    }
+    if(!empty($menu_type))
+	{
+		$menu_type_sql = " and field_1stmenu_type='{$menu_type}'";
+	}
     $return_data['title'] = 'menulist';
-    $sql = "select * from tbl_field_1stmenu where field_uid='{$field_uid}' and field_1stmenu_type='{$menu_type}' order by field_1stmenu_id asc";
+    $sql = "select * from tbl_field_1stmenu where field_uid='{$field_uid}' ".$category_sql." {$menu_type_sql} order by field_1stmenu_id asc";
     
     $list = DB::query($sql);
     $menu_list = array();
@@ -371,8 +371,12 @@ if($ac == 'menulist2')
         api_json_result(1,1,'缺少参数',null);
         exit;
     }
+	if(!empty($menu_type))
+	{
+		$menu_type_sql = " and field_1stmenu_type='{$menu_type}'";
+	}
     $return_data['title'] = 'menulist';
-    $sql = "select * from tbl_field_2ndmenu where field_uid='{$field_uid}' and field_1stmenu_id='{$up_id}' and field_1stmenu_type='{$menu_type}' order by field_2ndmenu_id desc";
+    $sql = "select * from tbl_field_2ndmenu where field_uid='{$field_uid}' and field_1stmenu_id='{$up_id}' {$menu_type_sql} order by field_2ndmenu_id desc";
     
     $list = DB::query($sql);
     $menu_list = array();

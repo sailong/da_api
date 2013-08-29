@@ -75,10 +75,11 @@ if($ac=="import_photo_form_dz")
 			}
 			
 			$photo_info=DB::fetch_first("select photo_id,photo_url_small from tbl_photo where picid='".$row_pic['picid']."'");
+			$photo_id = $photo_info['photo_id'];
 			//var_dump($photo_info);
 			if(!empty($photo_info))
 			{
-				//DB::query("update tbl_photo set photo_url='".$filepath."' and photo_url_small='".$filepath_small."' where photo_id='".$photo_info['photo_id']."'");
+				DB::query("update tbl_photo set photo_url='{$filepath}',photo_url_small='{$filepath_small}' where photo_id='{$photo_id}'");
 			}
 			else
 			{
@@ -95,6 +96,161 @@ if($ac=="import_photo_form_dz")
 	echo "{$page}处理完成";
 
 }
+
+if($ac == 'del_dir_files')
+{
+	$dir = dirname(dirname(dirname(dirname(__FILE__))));
+	$path = $_G['gp_path'];
+	
+	if(empty($path)){
+		return false;
+	}
+	$dir = $dir.'/'.$path;
+	$act = $_G['gp_act'];
+	if($act == 'chmod')
+	{
+		chmodFileByDir($dir);
+		chmodDirByDir($dir);
+		echo '修改成功';die;
+	}
+	
+	
+	/* chmod($dir,0777);die; //修改文件目录权限
+	chgrp($dir,'apache');
+	mkdir($dir);die; */
+	if($act == 'rmdir')
+	{
+		if(file_exists($dir))
+		{
+			//删除文件
+			delFileByDir($dir);
+			
+			//删除文件夹
+			delDirByDir($dir);
+		}
+		
+		echo '删除成功';
+	}
+	
+}
+
+//删除所有文件
+function delFileByDir($dir)
+{
+	if(is_dir($dir))
+	{
+		$list = scandir($dir);
+		if($list)
+		{
+			foreach($list as $file)
+			{
+				if(($file != ".") && ($file != ".."))
+				{
+					$tmp = $dir."/".$file;
+					
+					if(is_dir($tmp))
+					{
+						delFileByDir($tmp);
+					}
+					else
+					{
+						@unlink($tmp);
+					}
+				}
+				else
+				{
+					continue;
+				}
+			}
+		}
+		else
+		{
+			@unlink($dir);
+		}
+	}
+}
+
+//删除最后一个目录 
+function delDirByDir($dir)
+{
+	$list = scandir($dir);
+	if(count($list) > 2)
+	{
+		foreach($list as $file)
+		{
+			if(($file != ".") && ($file != ".."))
+			{
+				$tmp = $dir."/".$file;
+				delDirByDir($tmp);
+			}
+		}
+	}
+	else
+	{
+		@rmdir($dir);
+	}
+}
+
+function chmodFileByDir($dir)
+{
+	if(is_dir($dir))
+	{
+		$list = scandir($dir);
+		if($list)
+		{
+			foreach($list as $file)
+			{
+				if(($file != ".") && ($file != ".."))
+				{
+					$tmp = $dir."/".$file;
+					
+					if(is_dir($tmp))
+					{
+						chmodFileByDir($tmp);
+					}
+					else
+					{
+						@chmod($tmp,0777);
+					}
+				}
+				else
+				{
+					continue;
+				}
+			}
+		}
+		else
+		{
+			@chmod($dir,0777);
+		}
+	}
+}
+//修改最后一个目录 的权限
+function chmodDirByDir($dir)
+{
+	$list = scandir($dir);
+	if(count($list) > 2)
+	{
+		foreach($list as $file)
+		{
+			
+			if(($file != ".") && ($file != ".."))
+			{
+				$tmp = $dir."/".$file;
+				chmodDirByDir($tmp);
+			}
+			else
+			{
+				@chmod($dir,0777);
+			}
+		}
+	}
+	else
+	{
+		$a=@chmod($dir,0777);
+	}
+}
+
 
 
 function makethumb($srcfile,$dstfile,$thumbwidth,$thumbheight,$maxthumbwidth=0,$maxthumbheight=0,$src_x=0,$src_y=0,$src_w=0,$src_h=0, $thumb_cut_type=0, $thumb_quality = 100) {

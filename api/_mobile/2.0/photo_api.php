@@ -67,7 +67,7 @@ if($ac=="album_list")
 		while($row = DB::fetch($list))
 		{
 			
-			$photo=DB::result_first("select photo_url_small from tbl_photo where album_id='".$row['album_id']."' order by photo_addtime asc limit 1 ");
+			$photo=DB::result_first("select photo_url_small from tbl_photo where album_id='".$row['album_id']."' order by photo_id asc limit 1 ");
 			
 			if($photo)
 			{
@@ -114,7 +114,7 @@ if($ac=="photo_list")
 	}
 	if($max_page>=$page2)
 	{
-		$list=DB::query("select photo_id,photo_name,photo_url,photo_url_small,photo_addtime from tbl_photo where 1 ".$sql." order by photo_addtime asc limit $page_start2,$page_size2  ");
+		$list=DB::query("select photo_id,photo_name,photo_url,photo_url_small,photo_addtime from tbl_photo where 1 ".$sql." order by photo_id asc limit $page_start2,$page_size2  ");
 		while($row = DB::fetch($list))
 		{
 			if($row['photo_url'])
