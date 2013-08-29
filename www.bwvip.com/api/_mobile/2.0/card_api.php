@@ -392,7 +392,7 @@ if($ac=='rank')
 
 				$row['today_score']=ju_par_format($row['total_ju_par']);
 				$row['total_score']=(string)$row['zong_score'];
-				if($row['total_score']==1000)
+				if($row['total_score']==1000 || $row['total_score']==0)
 				{
 					$row['total_score']='-';
 				}
@@ -405,8 +405,16 @@ if($ac=='rank')
 				unset($s_arr[20]);
 				$str_new=implode("|",$s_arr);
 				$arr_new=explode("|",$str_new);
-
-				$row['score_sub']=array_default_value($score_1);
+				
+				if(!$score_1)
+				{
+					$row['score_sub']=array('-','-','-','-','-','-','-','-','-','-','-','-','-','-','-','-','-','-');
+				}
+				else
+				{
+					$row['score_sub']=array_default_value($score_1);
+				}
+				
 				$gscore[] = array_default_value($row,array('score_sub','status','score_1','score_2','score_3','score_4','color_4','color_1','color_2','color_3','color_4')); 
 			}
 			$i++;
@@ -424,6 +432,14 @@ if($ac=='rank')
 				if($gscore[$i]['status']==-4)
 				{
 					$gscore[$i]['order']="CUT";
+				}
+				else if($gscore[$i]['status']==-2)
+				{
+					$gscore[$i]['order']="WD";
+				}
+				else if($gscore[$i]['status']==-1)
+				{
+					$gscore[$i]['order']="DQ";
 				}
 				else if(intval($gscore[$i]['zong_score'])>0)
 				{

@@ -32,6 +32,9 @@ else if(strpos($userAgent,"Android"))
 	$mlh_down_url = DB::result_first("select app_version_file from tbl_app_version where app_version_type='android' and field_uid=1186 order by app_version_addtime desc limit 1 ");
 	$ns_down_url = DB::result_first("select app_version_file from tbl_app_version where app_version_type='android' and field_uid=1160 order by app_version_addtime desc limit 1 ");
 }
+$dz_down_url = DB::result_first("select app_version_file from tbl_app_version where app_version_type='android' and field_uid=0 order by app_version_addtime desc limit 1 ");
+	$mlh_down_url = DB::result_first("select app_version_file from tbl_app_version where app_version_type='android' and field_uid=1186 order by app_version_addtime desc limit 1 ");
+	$ns_down_url = DB::result_first("select app_version_file from tbl_app_version where app_version_type='android' and field_uid=1160 order by app_version_addtime desc limit 1 ");
 
 /*球场uid----field_uid*/
 $field_uid = empty($_G['gp_field_uid']) ? 0 : $_G['gp_field_uid'];

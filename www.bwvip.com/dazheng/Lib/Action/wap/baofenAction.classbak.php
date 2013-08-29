@@ -91,10 +91,6 @@ class baofenAction extends wap_publicAction
 	public function baofen()
 	{
 		$fenzhan_id=get("fenzhan_id");
-		if($fenzhan_id==50)
-		{$str=" and fenzhan_id in(51,54,57,60)";}
-		else
-		{$str=" and fenzhan_id $fenzhan_id";}
 		$fenzu_id=get("fenzu_id");
 		if(!$fenzhan_id)
 		{
@@ -125,7 +121,7 @@ class baofenAction extends wap_publicAction
 		if($fenzhan_id)
 		{
 			//$fenzu_list=D("fenzu")->fenzu_select_pro(" and fenzhan_id='".$fenzhan_id."'",999," fenzu_number asc ");
-			$fenzu_list=M()->query("select * from tbl_baofen where  1 $str group by fenzu_id order by fenzu_id   ");  
+			$fenzu_list=M()->query("select * from tbl_baofen where fenzhan_id='".$fenzhan_id."' group by fenzu_id order by fenzu_id   ");  
 			$this->assign('fenzu_list',$fenzu_list);
 			
 			$dong=M()->query("select dongs from tbl_baofen_user where baofen_user_id='".$_SESSION['baofen_user_id']."' ");
@@ -146,8 +142,7 @@ class baofenAction extends wap_publicAction
 				$fenzu_id=$fenzu_list['item'][0]['fenzu_id']; 
 			}
 			 
-			$fenzu_user=M()->query("select * from tbl_baofen where 1 $str $strwhere ");  
-			
+			$fenzu_user=M()->query("select * from tbl_baofen where fenzhan_id='".$fenzhan_id."' $strwhere ");  
 			
 			$this->assign("fenzu_user",$fenzu_user);
 			
@@ -767,8 +762,8 @@ class baofenAction extends wap_publicAction
 					$baofen=M()->query("select * from tbl_baofen where baofen_id='".$key."'");
 					$data ['baofen_id'] = $key;
 					//$data ['lun'] = $lun; 
-					$data ['event_id'] =  $baofen[0]['event_id'];
-					$data ['fenzhan_id'] = $baofen[0]['fenzhan_id'];
+					$data ['event_id'] = $event_id;
+					$data ['fenzhan_id'] = $fenzhan_id;
 					$data ['field_id'] = $field_id; 
 					$data ['total_score'] = $total_score;  
 					if($baofen[0]['baofen_id'])
@@ -915,7 +910,7 @@ class baofenAction extends wap_publicAction
 					
 					
 					//更新总分 0828
-					$res=M()->query("update tbl_baofen set total_score=（cave_1+cave_2+cave_3+cave_4+cave_5+cave_6+cave_7+cave_8+cave_9+cave_10+cave_11+cave_12+cave_13+cave_14+cave_15+cave_16+cave_17 +cave_18） "); 
+					$res=M()->query("update tbl_baofen set total_score=（cave_1+cave_2+cave_3+cave_4+cave_5+cave_6+cave_7+cave_8+cave_9+cave_10+cave_11+cave_12+cave_13+cave_14+cave_15+cave_16+cave_17 +cave_18） where  fenzhan_id='".$fenzhan_id."' "); 
 					 
 					
 					
@@ -1033,14 +1028,11 @@ class baofenAction extends wap_publicAction
 			//未打球排名成绩初始化	
 			$sql="update tbl_baofen set total_ju_par=1000 where cave_1=0 and cave_2=0  and cave_3=0  and cave_4=0  and cave_5=0  and cave_6=0  and cave_7=0 and cave_8=0 and cave_9=0 and cave_1=0  and cave_10=0  and cave_11=0  and cave_12=0  and cave_13=0  and cave_14=0  and cave_15=0  and cave_16=0  and cave_17=0  and cave_18=0 and fenzhan_id='".$fenzhan_id."' ";
 			$res=M()->query($sql);
-			if($fenzhan_id==50){
-			$res=M()->query("update tbl_baofen set total_sum_ju=total_ju_par+total_ju_par1,  zong_score=total_score+total_score_lun1 where  fenzhan_id in(51,54,57,60);");
-			$res=M()->query("update tbl_baofen set is_end=1 where cave_1>0 and cave_2>0  and cave_3>0  and cave_4>0  and cave_5>0  and cave_6>0  and cave_7>0  and cave_8>0  and cave_9>0  and cave_10>0  and cave_11>0  and cave_12>0  and cave_13>0  and cave_14>0  and cave_15>0  and cave_16>0  and cave_17>0  and cave_18>0  and total_score<999 and fenzhan_id in(51,54,57,60)");
-			}else{
 			//更新比赛状态 	
-			$res=M()->query("update tbl_baofen set is_end=1 where cave_1>0 and cave_2>0  and cave_3>0  and cave_4>0  and cave_5>0  and cave_6>0  and cave_7>0  and cave_8>0  and cave_9>0  and cave_10>0  and cave_11>0  and cave_12>0  and cave_13>0  and cave_14>0  and cave_15>0  and cave_16>0  and cave_17>0  and cave_18>0  and total_score<999 ");
+			$res=M()->query("update tbl_baofen set is_end=1 where cave_1>0 and cave_2>0  and cave_3>0  and cave_4>0  and cave_5>0  and cave_6>0  and cave_7>0  and cave_8>0  and cave_9>0  and cave_10>0  and cave_11>0  and cave_12>0  and cave_13>0  and cave_14>0  and cave_15>0  and cave_16>0  and cave_17>0  and cave_18>0  and total_score<999  and fenzhan_id='".$fenzhan_id."' ");
 			
-		}
+			
+			
 			$fenzu_list=M()->query("select fenzu_id from tbl_baofen where fenzhan_id='".$fenzhan_id."' group by fenzu_id order by fenzu_id   ");  
 			for($i=0; $i<count($fenzu_list); $i++)
 			{

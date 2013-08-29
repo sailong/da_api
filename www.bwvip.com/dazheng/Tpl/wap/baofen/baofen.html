@@ -23,6 +23,8 @@
 		【<a href="/baofen/show.php?ac=list&fenzhan_id=<php> echo get('fenzhan_id');</php>" target="_blank">直播页</a>】
 		</div>
       </div>
+	  
+	  
       <div class="nav_u" >
         <table width="100%" border="0">
           <tr>
@@ -64,7 +66,7 @@
                 <td>{$d}</td>
                 </volist>
 				<td>Thru</td>
-				<td>CUT</td>
+				<td>状态</td>
 				<td>加洞状态</td>
               </tr>
               <volist id="v" name="fenzu_user">
@@ -93,10 +95,7 @@
 					<php>
 					}
 					</php>
-                    </volist>
-                    <option value="-1" >DQ</option>
-                    <option value="-2" >RTD</option>
-                    <option value="-4" >CUT</option>
+                    </volist> 
                     </select>
 				</td>
                 </volist>
@@ -114,7 +113,7 @@
               </volist>
             </table>
 			<p>
-			参赛状态：-4:CUT   DQ:-1
+			参赛状态：-4:CUT  -2:WD   -1:DQ
 			</p>
           </DIV>
           <table width="250" cellpadding="0" cellspacing="0">
@@ -122,6 +121,7 @@
               <td height="45" align="center"><span style="text-align:center; padding-top:20px;">
                 <input type="hidden" name='ac' id="ac" value="tjbaofen">
                 <input type="hidden" name='fenzhan_id' id="fenzhan_id" value="{$fenzhan_id}">
+                <input type="hidden" name='fenzu_id' id="fenzu_id" value="{$fenzu_id}">
                 <input type="hidden" name='lun' id="fenzhan_id" value="{$lun}">
                 <input type="image" src="/skin/wap/images/submit_btn.jpg" width="109" height="27" />
                 </span></td>
