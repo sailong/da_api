@@ -68,7 +68,7 @@ class sys_messageAction extends AdminAuthAction
 			$ext_title=post("ext_title");
 			
 			
-			if(post("receiver_type")==3 || post("ext_action") == '')
+			if(post("ext_action") == '')
 			{
 				$message_extinfo=array('action'=>"system_msg");	
 			}
@@ -195,7 +195,7 @@ class sys_messageAction extends AdminAuthAction
 			$ext_title=post("ext_title");
 			
 			
-			if(post("receiver_type")==3 || post("ext_action") == '')
+			if(post("ext_action") == '')
 			{
 				$message_extinfo=array('action'=>"system_msg");	
 			}
