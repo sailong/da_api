@@ -1,0 +1,81 @@
+<include file="../Public/header_dialog" />
+{$usejs}
+
+<div class="so_main">
+
+  <div class="page_tit">球场比赛管理</div>
+  <div class="tit_tab">
+	<ul>
+		<li><a class=on href="{:U('admin/field_event/field_event_add')}">添加球场比赛</a></li>
+	</ul>
+  </div>
+
+<table border="0" cellspacing="0" cellpadding="0" style="width:900px;">
+<tr>
+<td>
+<!--/dialog_start-->
+
+<form method="post" id="act_form" name="act_form" action="{:U('admin/field_event/field_event_add_action')}" enctype="multipart/form-data">
+	<table class="add_table" border="0" cellspacing="0" cellpadding="0" >
+		<tbody>
+		<tr>
+					<th>比赛名称：</th>
+					<td><input type="text" name="field_event_name" id="field_event_name" class="mod_input2" style="width:300px;" ></td>
+				</tr>
+				<tr>
+					<th>英文名称：</th>
+					<td><input type="text" name="field_event_name_en" id="field_event_name_en" class="mod_input2" style="width:300px;" ></td>
+				</tr>
+				<tr>
+					<th>比赛LOGO：</th>
+					<td><input type="file" name="field_event_logo" id="field_event_logo"  class="mod_input"></td>
+				</tr>
+				<tr>
+					<th>球场UID：</th>
+					<td><input type="text" name="field_uid" id="field_uid" class="mod_input2" style="width:66px;" ></td>
+				</tr>
+				<tr>
+					<th>比赛时间：</th>
+					<td><input type="text" name="field_event_time" id="field_event_time" readonly class="mod_input_date" style="width:200px;" onFocus="WdatePicker({isShowClear:false,readOnly:true})" ></td>
+				</tr>
+				
+		</tbody>
+		<tfoot>
+			<tr>
+				<th></th>
+				<td>
+					<input type="submit" class="btn_b"  value="添加" style="margin-right:10px;"/>
+					<input type="button" class="btn_w" onclick="close_dialog(this)" value="取消" />
+				</td>
+		</tfoot>
+	</table><!--/add_table-->
+</form>
+
+<script>
+$(document).ready(function(){
+$.formValidator.initConfig({formID:"act_form",theme:'ArrowSolidBox',mode:'AutoTip',onError:function(msg){msg_error(msg)},inIframe:true});
+
+	$("#field_event_name").formValidator({empty:true,onShow:"请输入比赛名称",onFocus:"请输入比赛名称",onCorrect:"输入正确"}).inputValidator({min:1,max:50,onError:"请输入比赛名称"});
+		$("#field_event_name_en").formValidator({empty:true,onShow:"请输入英文名称",onFocus:"请输入英文名称",onCorrect:"输入正确"}).inputValidator({min:1,max:50,onError:"请输入英文名称"});
+		$("#field_event_logo").formValidator({empty:true,onShow:"请输入比赛LOGO",onFocus:"请输入比赛LOGO",onCorrect:"输入正确"}).inputValidator({min:1,max:300,onError:"请输入比赛LOGO"});
+		$("#field_uid").formValidator({empty:true,onShow:"请输入球场UID",onFocus:"请输入球场UID",onCorrect:"输入正确"}).inputValidator({min:1,max:11,onError:"请输入球场UID"});
+		$("#field_event_time").formValidator({empty:true,onShow:"请输入比赛时间",onFocus:"请输入比赛时间",onCorrect:"输入正确"}).inputValidator({min:1,max:10,onError:"请输入比赛时间"});
+		
+
+	$.formValidator.reloadAutoTip();
+});
+
+function reloadAutoTip()
+{
+	$.formValidator.reloadAutoTip();
+}
+
+</script>
+
+<!--/dialog_end-->
+</td>
+</tr>
+</table>
+
+</div>
+<include file="../Public/_footer" />

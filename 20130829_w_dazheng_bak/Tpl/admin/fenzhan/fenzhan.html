@@ -1,0 +1,127 @@
+<include file="../public/_header" />
+<div class="so_main">
+
+  <include file="../event/event_manage_header" />
+
+
+  <div class="search_box">
+		<form name="search_form" action="/default.php" method="get">
+		<input type="hidden" name="g" value="admin">
+		<input type="hidden" name="m" value="fenzhan">
+		<input type="hidden" name="a" value="fenzhan">
+		<input type="hidden" name="event_id" value="<php> echo  get('event_id');</php>">
+
+		<table border="0" cellspacing="0" cellpadding="0">
+			<th>名称：</th>
+			<td><input type="text" name="k" class="search_input" style="width:120px;" value="<php> echo  get('k');</php>"></td>
+			<th>开始时间：</th>
+			<td>
+				<input type="text" name="starttime" class="search_input_date" style="width:120px;" value="<php> echo  get('starttime');</php>" onFocus="WdatePicker({isShowClear:false,readOnly:true})"> 至 
+				<input type="text" name="endtime" class="search_input_date" style="width:120px;" value="<php> echo  get('endtime');</php>" onFocus="WdatePicker({isShowClear:false,readOnly:true})">
+			</td>
+			
+			<td class="btn">
+				<input type="submit" value="搜索" class="btn_b" style="margin-right:8px;" >
+				<input type="button" value="查看全部" class="btn_b" onclick="javascript:location='{:U('admin/fenzhan/fenzhan',array('event_id'=>$event_id))}';">
+			</td>
+		</table>
+	</form>
+  </div><!--/search_box-->
+
+  <!--------list -------->
+  <div class="Toolbar_inbox">
+  	<div class="page right">{$pages}</div>
+
+	<a href="{:U('admin/fenzhan/fenzhan_add',array('event_id'=>$event_id))}" class="btn_a"><span>添加分站</span></a>
+	<a href="javascript:void(0);" class="btn_a"  onclick="mod_delete_batch('{:U('admin/fenzhan/fenzhan_delete_action')}','mod_table');"><span>批量删除</span></a>
+
+	<div class="clear"></div>
+  </div>
+  <div class="list">
+	<php>if($total>0){</php>
+	  <table width="100%" id="mod_table" border="0" cellspacing="0" cellpadding="0">
+	  <tr>
+		<th style="width:30px;">
+			<input type="checkbox" id="checkbox_handle" onclick="select_all(this,'mod_table','checkbox')" value="0">
+			<label for="checkbox"></label>
+		</th>
+		<th class="line_l">分站ID</th>
+		<th class="line_l">分站名称</th>
+		<th class="line_l">所在球场</th>
+		<th class="line_l">年份</th>
+		<!--
+		<th class="line_l">时间表</th>
+		-->
+		<th class="line_l">开始时间</th>
+		<th class="line_l">结束时间</th>
+		<th class="line_l">排序</th>
+		<th class="line_l">状态</th>
+		<th class="line_l">添加时间</th>
+		<th class="line_l">操作</th>
+	</tr>
+	<volist id="vo" name="list">
+	<tr overstyle="on"  id=ids_{$vo["fenzhan_id"]}>
+		<td><input type="checkbox" name="checkbox" onclick="select_one(this)" value="{$vo.fenzhan_id}" ></td>
+		<td>{$vo.fenzhan_id}</th>
+			<td><a href="javascript:void(0);" onclick="mod_dialog('查看详细','{:U('admin/fenzhan/fenzhan_detail', array('fenzhan_id'=>$vo['fenzhan_id']))}');">{$vo.fenzhan_name}</a></td>
+			<td>{$vo.field_id}</td>
+			<td>{$vo.year}</td>
+			<!--
+			<td>{$vo.timepic}</td>
+			-->
+			<td>{$vo.starttime|format_to_time}</td>
+			<td>{$vo.endtime|format_to_time}</td>
+			<td>{$vo.orderby}</td>
+			<td>{$vo.is_delete}</td>
+			<td>{$vo.addtime|format_to_time}</td>
+		<td>
+			
+			
+			<a href="{:U('wap/baofen/login', array('fenzhan_id'=>$vo['fenzhan_id']))}" target="_blank">报分入口</a> 
+			
+			|
+			<a href="{:U('admin/fenzhan/jinji', array('event_id'=>$event_id,'fenzhan_id'=>$vo['fenzhan_id']))}" >自动晋级</a> 
+			|
+			<a href="{:U('admin/baofen_user/baofen_user',array('event_id'=>$event_id,'fenzhan_id'=>$vo['fenzhan_id']))}">报分员管理</a> 
+			| 
+			<a href="{:U('admin/fenzhan/fenzhan_edit', array('event_id'=>$event_id,'fenzhan_id'=>$vo['fenzhan_id']))}">修改</a> | 
+			
+			<a href="javascript:void(0);" onclick="mod_delete_one('{:U('admin/fenzhan/fenzhan_delete_action')}','{$vo['fenzhan_id']}');">删除</a>
+		</td>
+	</tr>
+	</volist>
+    </table>
+	  <php>}else{</php>
+			<div class="no_data">
+				<img src="/skin/images/no_data.gif" align="absmiddle"> <span>没有分站... </span>
+			</div>
+	 <php>}</php>
+  </div>
+
+  <div class="Toolbar_inbox">
+	<div class="page right">{$pages}</div>
+
+	<a href="{:U('admin/fenzhan/fenzhan_add')}" class="btn_a"><span>添加分站</span></a>
+	<a href="javascript:void(0);" class="btn_a"  onclick="mod_delete_batch('{:U('admin/fenzhan/fenzhan_delete_action')}','mod_table');"><span>批量删除</span></a>
+
+
+	<div class="clear"></div>
+  </div>
+</div>
+
+<script>
+	$(document).ready(function(){
+		$("tr[overstyle='on']").hover(
+		  function ()
+		  {
+		    $(this).addClass("bg_hover");
+		  },
+		  function (){
+		    $(this).removeClass("bg_hover");
+		  }
+		);
+	});
+</script>
+
+
+<include file="../public/_footer" />

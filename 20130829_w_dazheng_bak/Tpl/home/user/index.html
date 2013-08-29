@@ -1,0 +1,95 @@
+<include file="../Public/header" />
+  <div class="content">
+    <div class="newsLeft" style="width:700px;">
+        <div class="location"><a href="{$site.site_url}"><img src="__PUBLIC__/images/location.jpg" alt="{$site.site_name}" /></a> > 用户中心</div>
+
+
+
+<!--------list -------->
+  <div class="list" style="margin-top:20px;">
+	<php>if($total>0){</php>
+	  <table width="100%" id="mod_table" border="0" cellspacing="0" cellpadding="0">
+	  <tr>
+		<th style="width:30px;">
+			<input type="checkbox" id="checkbox_handle" onclick="select_all(this,'mod_table','checkbox')" value="0">
+			<label for="checkbox"></label>
+		</th>
+		<th class="line_l">编号</th>
+		<th class="line_l" style="width:360px;">文章标题</th>
+		<!--
+		<th class="line_l">所属栏目</th>
+		-->
+		<th class="line_l">状态</th>
+		<th class="line_l">添加时间</th>
+		<th class="line_l">操作</th>
+	</tr>
+	<volist id="vo" name="list">
+	<tr overstyle="on"  id=ids_{$vo["arc_id"]}>
+		<td><input type="checkbox" name="checkbox" onclick="select_one(this)" value="{$vo.arc_id}" ></td>
+		<td width="40">{$vo.arc_id}</td>
+		<td><a href="{:U('home/arc/arc_detail', array('arc_id'=>$vo['arc_id']))}" target="_blank"  >{$vo.arc_name}</a> <php>if($vo['arc_is_tj']=="Y"){ echo "<font color='red'>[荐]</font>";}</php> <php>if($vo['arc_is_pic']=="Y"){ echo "<font color='green'>[首页图片]</font>";}</php></th>
+		<!--
+			<td>{$vo.arctype_name} {$vo.arctype_name2} {$vo.arctype_name3}</td>
+			-->
+			<td><php>if($vo['arc_state']==1){ echo "审核通过";}else if($vo['arc_state']==2){ echo "审核未通过";}else{ echo "待审核";}</php>{$vo.}</td>
+			<td>{$vo.arc_addtime|format_to_time}</td>
+		<td>
+			<a href="{:U('home/user/arc_edit', array('arc_id'=>$vo['arc_id']))}">修改</a>
+			<!--
+			<a href="javascript:void(0);"  onclick="mod_dialog('修改文章','{:U('admin/arc/arc_edit', array('arc_id'=>$vo['arc_id']))}')">修改</a> | 
+			 | 
+			<a href="javascript:void(0);" onclick="mod_delete_one('{:U('admin/arc/arc_delete_action')}','{$vo['arc_id']}');">删除</a>
+			-->
+		</td>
+	</tr>
+	</volist>
+    </table>
+	  <php>}else{</php>
+			<div class="no_data" style="margin-top:20px; border-top:1px solid #ccc; padding-top:25px; padding-bottom:20px; text-align:center;">
+				<img src="/skin/images/no_data.gif" align="absmiddle"> <span>没有文章... </span>
+			</div>
+	 <php>}</php>
+  </div>
+
+  <div class="Toolbar_inbox">
+	<div class="page " style="text-align:left;">{$pages}</div>
+
+	<div class="clear"></div>
+  </div><!--/Toolbar_inbox-->
+
+<script>
+	$(document).ready(function(){
+		$("tr[overstyle='on']").hover(
+		  function ()
+		  {
+		    $(this).addClass("bg_hover");
+		  },
+		  function (){
+		    $(this).removeClass("bg_hover");
+		  }
+		);
+	});
+</script>
+
+
+
+
+
+    </div>
+    <div class="newsRight" style="height:400px; width:210px; float:right;">
+
+		<dl class="user_menu">
+			<dd><a href="{:U('home/user/index')}">已发新闻</a></dd>
+			<dd><a href="{:U('home/user/arc_add')}">新闻投稿</a></dd>
+			<dd><a href="{:U('home/user/user_edit')}">用户信息</a></dd>
+			<dd><a href="{:U('home/user/org_my')}">所属机构</a></dd>
+			<dd><a href="{:U('home/user/org')}">从业机构数据库</a></dd>
+			<dd><a href="{:U('home/user/word')}">行业词汇数据库</a></dd>
+		</dl>
+     
+    </div>
+  </div>
+
+
+
+<include file="../Public/footer" />  

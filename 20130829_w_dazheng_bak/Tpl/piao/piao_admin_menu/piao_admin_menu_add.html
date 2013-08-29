@@ -1,0 +1,93 @@
+<include file="../public/header_dialog" />
+{$usejs}
+
+<div class="so_main">
+
+  <div class="page_tit">球场权限菜单管理</div>
+  <div class="tit_tab">
+	<ul>
+		<li><a class=on href="{:U('piao/piao_admin_menu/piao_admin_menu_add')}">添加球场权限菜单</a></li>
+	</ul>
+  </div>
+
+<table border="0" cellspacing="0" cellpadding="0" style="width:900px;">
+<tr>
+<td>
+<!--/dialog_start-->
+
+<form method="post" id="act_form" name="act_form" action="{:U('piao/piao_admin_menu/piao_admin_menu_add_action')}" enctype="multipart/form-data">
+	<table class="add_table" border="0" cellspacing="0" cellpadding="0" >
+		<tbody>
+		<tr>
+					<th>菜单名称：</th>
+					<td><input type="text" name="piao_admin_menu_name" id="piao_admin_menu_name" class="mod_input2" style="width:300px;" ></td>
+				</tr>
+				<tr>
+					<th>上级分类：</th>
+					<td>
+						<select name="piao_admin_menu_parent_id" id="piao_admin_menu_parent_id">
+							<option value="">请选择</option>
+							<option value="0">一级分类</option>
+							<volist id="vo" name="menu">
+							<option value="{$vo.piao_admin_menu_id}">{$vo.piao_admin_menu_name}</option>
+							</volist>
+						</select>
+						<script>set_select_value(document.act_form.piao_admin_menu_parent_id,"<php> echo get('piao_admin_menu_parent_id');</php>");</script>
+					</td>
+				</tr>
+				<tr>
+					<th>链接地址：</th>
+					<td><input type="text" name="piao_admin_menu_url" id="piao_admin_menu_url" class="mod_input2" style="width:600px;" ></td>
+				</tr>
+				<tr>
+					<th>排序：</th>
+					<td><input type="text" name="piao_admin_menu_sort" id="piao_admin_menu_sort" class="mod_input2" style="width:66px;" ></td>
+				</tr>
+				<tr>
+					<th>状态：</th>
+					<td>
+						<input type="radio" name="piao_admin_menu_state" id="piao_admin_menu_state" value="1" checked>显示  
+						<input type="radio" name="piao_admin_menu_state" id="piao_admin_menu_state" value="0">隐藏 
+					</td>
+				</tr>
+		</tbody>
+		<tfoot>
+			<tr>
+				<th></th>
+				<td>
+					<input type="submit" class="btn_b"  value="添加" style="margin-right:10px;"/>
+					<input type="button" class="btn_w" onclick="javascript:history.back(-1);" value="返回" />
+				</td>
+		</tfoot>
+	</table><!--/add_table-->
+</form>
+
+<script>
+$(document).ready(function(){
+$.formValidator.initConfig({formID:"act_form",theme:'ArrowSolidBox',mode:'AutoTip',onError:function(msg){msg_error(msg)},inIframe:true});
+
+	$("#piao_admin_menu_name").formValidator({empty:true,onShow:"请输入菜单名称",onFocus:"请输入菜单名称",onCorrect:"输入正确"}).inputValidator({min:1,max:50,onError:"请输入菜单名称"});
+		$("#piao_admin_menu_parent_id").formValidator({empty:true,onShow:"请输入上级分类",onFocus:"请输入上级分类",onCorrect:"输入正确"}).inputValidator({min:1,max:11,onError:"请输入上级分类"});
+		$("#piao_admin_menu_url").formValidator({empty:true,onShow:"请输入链接地址",onFocus:"请输入链接地址",onCorrect:"输入正确"}).inputValidator({min:1,max:100,onError:"请输入链接地址"});
+		$("#piao_admin_menu_sort").formValidator({empty:true,onShow:"请输入排序",onFocus:"请输入排序",onCorrect:"输入正确"}).inputValidator({min:1,max:11,onError:"请输入排序"});
+		$("#piao_admin_menu_state").formValidator({empty:true,onShow:"请输入状态",onFocus:"请输入状态",onCorrect:"输入正确"}).inputValidator({min:1,max:11,onError:"请输入状态"});
+		$("#piao_uid").formValidator({empty:true,onShow:"请输入所属球场",onFocus:"请输入所属球场",onCorrect:"输入正确"}).inputValidator({min:1,max:11,onError:"请输入所属球场"});
+		
+
+	$.formValidator.reloadAutoTip();
+});
+
+function reloadAutoTip()
+{
+	$.formValidator.reloadAutoTip();
+}
+
+</script>
+
+<!--/dialog_end-->
+</td>
+</tr>
+</table>
+
+</div>
+<include file="../public/_footer" />

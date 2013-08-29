@@ -1,0 +1,82 @@
+<include file="../public/_header" />
+<div class="so_main">
+
+  <div class="page_tit">友情链接</div>
+  <include file="_tab" />
+
+  <!--------list -------->
+  <div class="Toolbar_inbox">
+  	<div class="page right">{$pages}</div>
+
+	<a href="javascript:void(0);" onclick="mod_dialog('添加友情链接','{:U('admin/Flink/flink_add')}');" class="btn_a"><span>添加友情链接</span></a>
+	<a href="javascript:void(0);" class="btn_a"  onclick="mod_delete_batch('{:U('admin/Flink/flink_delete_action')}','mod_table');"><span>批量删除</span></a>
+
+	<div class="clear"></div>
+  </div>
+  <div class="list">
+	<php>if($total>0){</php>
+	  <table width="100%" id="mod_table" border="0" cellspacing="0" cellpadding="0">
+	  <tr>
+		<th style="width:30px;">
+			<input type="checkbox" id="checkbox_handle" onclick="select_all(this,'mod_table','checkbox')" value="0">
+			<label for="checkbox"></label>
+		</th>
+		<th class="line_l" style="width:50px;">ID</th>
+		<th class="line_l">网站名称</th>
+		<th class="line_l">网址</th>
+		<th class="line_l">备注</th>
+		<th class="line_l">排序</th>
+		<th class="line_l">添加时间</th>
+		<th class="line_l">操作</th>
+	</tr>
+	<volist id="vo" name="list">
+	<tr overstyle="on"  id=ids_{$vo["flink_id"]}>
+		<td><input type="checkbox" name="checkbox" onclick="select_one(this)" value="{$vo.flink_id}" ></td>
+			<td>{$vo.flink_id}</th>
+			<td>{$vo.flink_name}</th>
+			<td><a href="javascript:void(0);" onclick="mod_dialog('查看详细','{:U('admin/Flink/flink_detail', array('flink_id'=>$vo['flink_id']))}');">{$vo.flink_url}</a></td>
+			<td>{$vo.flink_info}</td>
+			<td>{$vo.flink_sort}</td>
+			<td>{$vo.flink_addtime|format_to_time}</td>
+			
+		<td>
+			<a href="javascript:void(0);"  onclick="mod_dialog('修改友情链接','{:U('admin/Flink/flink_edit', array('flink_id'=>$vo['flink_id']))}')">修改</a> | 
+			<a href="javascript:void(0);" onclick="mod_delete_one('{:U('admin/Flink/flink_delete_action')}','{$vo['flink_id']}');">删除</a>
+		</td>
+	</tr>
+	</volist>
+    </table>
+	  <php>}else{</php>
+			<div class="no_data">
+				<img src="/skin/images/no_data.gif" align="absmiddle"> <span>没有友情链接，请尝试其他搜索条件... </span>
+			</div>
+	 <php>}</php>
+  </div>
+
+  <div class="Toolbar_inbox">
+	<div class="page right">{$pages}</div>
+
+	<a href="javascript:void(0);" onclick="mod_dialog('添加友情链接','{:U('admin/Flink/flink_add')}');" class="btn_a"><span>添加友情链接</span></a>
+	<a href="javascript:void(0);" class="btn_a"  onclick="mod_delete_batch('{:U('admin/Flink/flink_delete_action')}','mod_table');"><span>批量删除</span></a>
+
+
+	<div class="clear"></div>
+  </div>
+</div>
+
+<script>
+	$(document).ready(function(){
+		$("tr[overstyle='on']").hover(
+		  function ()
+		  {
+		    $(this).addClass("bg_hover");
+		  },
+		  function (){
+		    $(this).removeClass("bg_hover");
+		  }
+		);
+	});
+</script>
+
+
+<include file="../public/_footer" />

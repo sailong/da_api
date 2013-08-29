@@ -1,0 +1,108 @@
+<include file="../public/header_dialog" />
+{$usejs}
+
+<div class="so_main">
+
+  <div class="page_tit">客户端版本管理</div>
+  <div class="tit_tab">
+	<ul>
+		<li><a class=on href="#">修改客户端版本</a></li>
+	</ul>
+  </div>
+
+<table border="0" cellspacing="0" cellpadding="0" style="width:900px;">
+<tr>
+<td>
+<!--/dialog_start-->
+
+<form method="post" id="act_form" name="act_form" action="{:U('admin/app_version/app_version_edit_action')}" enctype="multipart/form-data">
+	<table class="add_table" border="0" cellspacing="0" cellpadding="0" >
+		<tbody>
+		<tr>
+					<th style="width:150px;">类型：</th>
+					<td>
+						<select name="app_version_type" id="app_version_type">
+							<option value="">请选择</option>
+							<option value="android">android</option>
+							<option value="ios">ios</option>
+							<option value="ipad">ipad</option>
+						</select>
+						<script>set_select_value(document.act_form.app_version_type,'{$data.app_version_type}');</script>
+					</td>
+				</tr>
+				<tr>
+					<th>球场UID：</th>
+					<td><input type="text" name="field_uid" id="field_uid" class="mod_input2" style="width:300px;"  value="{$data.field_uid}"></td>
+				</tr>
+				<tr>
+					<th>版本号：</th>
+					<td><input type="text" name="app_version_number" id="app_version_number" class="mod_input2" style="width:300px;"  value="{$data.app_version_number}"></td>
+				</tr>
+				<tr>
+					<th>版本名：</th>
+					<td><input type="text" name="app_version_name" id="app_version_name" class="mod_input2" style="width:300px;"  value="{$data.app_version_name}"></td>
+				</tr>
+				<tr>
+					<th>更新内容：</th>
+					<td><textarea name="app_version_content" id="app_version_content" class="mod_input2" style="width:400px; height:100px;">{$data.app_version_content}</textarea></td>
+				</tr>
+				<tr>
+					<th>下载链接：</th>
+					<td><input type="text" name="app_version_file" id="app_version_file" class="mod_input2" style="width:400px;"  value="{$data.app_version_file}"></td>
+				</tr>
+				<tr>
+					<th>应用市场链接：</th>
+					<td><input type="text" name="app_version_url" id="app_version_url" class="mod_input2" style="width:400px;"  value="{$data.app_version_url}"></td>
+				</tr>
+				<tr>
+					<th>重要更新：</th>
+					<td>
+						<input type="radio" name="app_version_is_important" id="app_version_is_important" value="Y" <php> if($data['app_version_is_important']=="Y"){ echo " checked ";}</php>>是
+						<input type="radio" name="app_version_is_important" id="app_version_is_important" value="N" <php> if($data['app_version_is_important']=="N"){ echo " checked ";}</php>>否
+					</td>
+				</tr>
+				
+		</tbody>
+		<tfoot>
+			<tr>
+				<th></th>
+				<td>
+					<input type="hidden" name="app_version_id" value="{$data.app_version_id}">
+					<input type="submit" class="btn_b" value="保存" style="margin-right:10px;"/>
+					<input type="button" class="btn_w" onclick="close_dialog(this)" value="取消" />
+				</td>
+		</tfoot>
+	</table><!--/add_table-->
+</form>
+
+<script>
+$(document).ready(function(){
+$.formValidator.initConfig({formID:"act_form",theme:'ArrowSolidBox',mode:'AutoTip',onError:function(msg){msg_error(msg)},inIframe:true});
+
+	$("#app_version_type").formValidator({empty:true,onShow:"请输入类型",onFocus:"请输入类型",onCorrect:"输入正确"}).inputValidator({min:1,max:50,onError:"请输入类型"});
+		$("#app_version_number").formValidator({empty:true,onShow:"请输入版本号",onFocus:"请输入版本号",onCorrect:"输入正确"}).inputValidator({min:1,max:50,onError:"请输入版本号"});
+		$("#app_version_name").formValidator({empty:true,onShow:"请输入版本名",onFocus:"请输入版本名",onCorrect:"输入正确"}).inputValidator({min:1,max:50,onError:"请输入版本名"});
+		$("#app_version_content").formValidator({empty:true,onShow:"请输入更新内容",onFocus:"请输入更新内容",onCorrect:"输入正确"}).inputValidator({min:1,max:5000,onError:"请输入更新内容"});
+		$("#app_version_file").formValidator({empty:true,onShow:"请输入下载链接",onFocus:"请输入下载链接",onCorrect:"输入正确"}).inputValidator({min:1,max:200,onError:"请输入下载链接"});
+		$("#app_version_is_important").formValidator({empty:true,onShow:"请输入是否重要更新",onFocus:"请输入是否重要更新",onCorrect:"输入正确"}).inputValidator({min:1,max:50,onError:"请输入是否重要更新"});
+		
+
+	$.formValidator.reloadAutoTip();
+});
+
+function reloadAutoTip()
+{
+	$.formValidator.reloadAutoTip();
+}
+
+</script>
+
+
+<!--/dialog_end-->
+</td>
+</tr>
+</table>
+
+</div>
+
+<include file="../public/_footer" />
