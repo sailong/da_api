@@ -30,15 +30,15 @@ class qiutongAction extends field_publicAction
 		    }
 		}
 		
-		foreach($list['item'] as $key=>$val){
-			if(!empty($val['category_id'])){
-				$category_ids[$val['category_id']] = $val['category_id'];
+		foreach($list['item'] as $key=>$value){
+			if(!empty($value['category_id'])){
+				$category_ids[$value['category_id']] = $value['category_id'];
 			}
 		}
 		$category_data = M('category')->where("category_id in('".implode("','",$category_ids)."')")->select();
 		
 		foreach($category_data as $key=>$value){
-			$category_list[$val['category_id']] =  $value;
+			$category_list[$value['category_id']] =  $value;
 		}
 		unset($category_ids,$category_data);
 		
