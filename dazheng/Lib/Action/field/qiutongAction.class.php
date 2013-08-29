@@ -37,8 +37,8 @@ class qiutongAction extends field_publicAction
 		}
 		$category_data = M('category')->where("category_id in('".implode("','",$category_ids)."')")->select();
 		
-		foreach($category_data as $key=>$val){
-			$category_list[$val['category_id']] =  $val;
+		foreach($category_data as $key=>$value){
+			$category_list[$val['category_id']] =  $value;
 		}
 		unset($category_ids,$category_data);
 		
