@@ -17,7 +17,8 @@ class categoryAction extends field_publicAction
 
 	public function category()
 	{
-		$list=D("category")->category_list_pro();
+		$field_uid = $_SESSION['field_uid'];
+		$list=D("category")->category_list_pro(" and field_uid='{$field_uid}'");
 		//var_dump($list);die;
 		$category_list = category_father('key_val');
 		
