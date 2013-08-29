@@ -1106,7 +1106,7 @@ if($ac=='dz_ticket_event_list')
 		$row['event_logo'] = $site_url.'/'.$row['event_logo'];
 		$row['event_starttime'] = date('Y年m月d日',$row['event_starttime']);
 		if($row['event_ticket_status'] == 2){
-			$row['wab_url'] = 'http://www.bwvip.com/wap/bmwreg.php';
+			$row['wab_url'] = $site_url.'/wap/bmwreg.php';
 		}
 		
 		$row2 = DB::fetch_first("select ad_url,ad_file,ad_file_iphone4,ad_file_iphone5,ad_width,ad_height from tbl_ad where field_uid='".$row['field_uid']."' and ad_page='ticket' order by ad_sort desc limit 1");

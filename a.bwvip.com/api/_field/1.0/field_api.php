@@ -66,21 +66,33 @@ else
 	$page_start2=($page2-1)*($page_size2);
 }
 
+//分类ID
+$category_id = $_G['gp_category_id'];
+
+if(!empty($category_id)){
+	$category_sql = " and category_id='{$category_id}' ";
+}
 //球场介绍  field_golf field_hotel field_huisuo field_meet field_other
 if($ac=="field_intro")
 {
 	$field_uid=$_G['gp_field_uid'];
 	$type=$_G['gp_type'];
+	
 	if($field_uid && $type)
 	{
-		$detail_data=DB::fetch_first("select about_id,about_id as blogid,about_name as arc_name,about_replynum as arc_replynum,about_addtime as dateline,about_content as content,about_tel as tel,about_tel2 from tbl_field_about where about_type='".$type."' and field_uid='".$field_uid."' ".$language_sql." order by about_id desc limit 1 ");
-		
+		$detail_data=DB::fetch_first("select about_id,about_id as blogid,about_name as arc_name,about_replynum as arc_replynum,about_addtime as dateline,about_content as content,about_tel as tel,about_tel2 from tbl_field_about where about_type='".$type."' and field_uid='".$field_uid."' {$category_sql} ".$language_sql." order by about_id desc limit 1 ");
+		if(empty($detail_data))
+		{
+			$data['title']='detail_data';
+			$data['data']=null;
+			api_json_result(1,0,"没有数据",$data);
+		}
+		//echo "select about_id,about_id as blogid,about_name as arc_name,about_replynum as arc_replynum,about_addtime as dateline,about_content as content,about_tel as tel,about_tel2 from tbl_field_about where about_type='".$type."' and field_uid='".$field_uid."' {$category_sql} ".$language_sql." order by about_id desc limit 1 ";die;
 		$detail_data['content']=strip_tags($detail_data['content'],"");
 		
 		//$detail_data['content'] = "<div style='font-size:18px; line-height:180%; width:100%; bakcground:red; '>".$detail_data['content'];
 		//$detail_data['content'] = $detail_data['content']."</div>";
 		
-
 		if($detail_data['dateline'])
 		{
 			$detail_data['dateline']=date("Y-m-d G:i",$detail_data['dateline']);
@@ -128,7 +140,7 @@ if($ac=="field_intro_list")
 	$type=$_G['gp_type'];
 	if($field_uid && $type)
 	{
-		$list=DB::query("select about_id,about_id as blogid,about_name as arc_name,about_replynum as arc_replynum,about_addtime as dateline,about_content as content,about_tel as tel,about_tel2,about_pic,about_more from tbl_field_about where about_type='".$type."' and field_uid='".$field_uid."' ".$language_sql." ");
+		$list=DB::query("select about_id,about_id as blogid,about_name as arc_name,about_replynum as arc_replynum,about_addtime as dateline,about_content as content,about_tel as tel,about_tel2,about_pic,about_more from tbl_field_about where about_type='".$type."' and field_uid='".$field_uid."'  ".$category_sql." ".$language_sql." ");
 		while($row=DB::fetch($list))
 		{
 			$row['content']=strip_tags($row['content'],"");
@@ -160,6 +172,7 @@ if($ac=="field_intro_list")
 		api_json_result(1,0,"参数不完整",$data);
 	}
 }
+
 
 
 //球场介绍评论列表
@@ -426,7 +439,7 @@ if($ac=="golf_news")
 if($ac=="field_news")
 {
 	$field_uid=$_G['gp_field_uid'];
-	$total=DB::result_first("select count(arc_id) from tbl_arc where arc_model='arc' and arc_type='Q' and field_uid='".$field_uid."'  $language_sql ");
+	$total=DB::result_first("select count(arc_id) from tbl_arc where arc_model='arc' and arc_type='Q' and field_uid='".$field_uid."' {$category_sql} ". $language_sql);
 	$max_page=intval($total/$page_size);
 	if($max_page<$total/$page_size)
 	{
@@ -581,7 +594,7 @@ if($ac=="news_detail")
 		}
 		
 		//$list=DB::query("select arc_id as blogid,arc_name as subject,arc_addtime as dateline from tbl_arc where arc_id<>'".$blogid."' order by arc_addtime desc limit 2");
-		$list=DB::query("select arc_id as blogid,arc_name as subject,arc_addtime as dateline from tbl_arc where arc_state=1 and arc_type='".$detail_data['arc_type']."'  order by arc_addtime desc limit 2");
+		$list=DB::query("select arc_id as blogid,arc_name as subject,arc_addtime as dateline from tbl_arc where arc_state=1 and arc_type='".$detail_data['arc_type']."' and arc_id<>'".$blogid."'  order by arc_addtime desc limit 2");
 		while($row = DB::fetch($list))
 		{
 			if($row['dateline'])
@@ -670,7 +683,6 @@ if($ac=="news_detail_comment")
 //赛事报道评论   添加评论
 if($ac=="news_detail_comment_add")
 {
-
 	//print_r($_POST);
 	$blogid=$_G["gp_blogid"];
 	$parent_cid=$_G["gp_parent_cid"];
