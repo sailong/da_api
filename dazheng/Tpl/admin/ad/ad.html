@@ -7,7 +7,9 @@
 		<li><a <php> if(get("ad_app")==''){ echo " class=on ";}</php> href="{:U('admin/ad/ad',array('ad_app'=>''))}">全部</a></li>
 		<li><a <php> if(get("ad_app")=='bwvip'){ echo " class=on ";}</php> href="{:U('admin/ad/ad',array('ad_app'=>'bwvip'))}">大正网</a></li>
 		<li><a <php> if(get("ad_app")=='bwvip_app'){ echo " class=on ";}</php> href="{:U('admin/ad/ad',array('ad_app'=>'bwvip_app'))}">大正手机客户端</a></li>
-		<li><a <php> if(get("ad_app")=='field_app'){ echo " class=on ";}</php> href="{:U('admin/ad/ad',array('ad_app'=>'field_app'))}">美兰湖球场客户端</a></li>
+		<li><a <php> if(get("ad_app")=='field_app' && get('field_uid')==1186){ echo " class=on ";}</php> href="{:U('admin/ad/ad',array('ad_app'=>'field_app','field_uid'=>1186))}">美兰湖</a></li>
+		<li><a <php> if(get("ad_app")=='field_app' && get('field_uid')==1160){ echo " class=on ";}</php> href="{:U('admin/ad/ad',array('ad_app'=>'field_app','field_uid'=>1160))}">南山</a></li>
+		<li><a <php> if(get("ad_app")=='field_app' && !get('field_uid')){ echo " class=on ";}</php> href="{:U('admin/ad/ad',array('ad_app'=>'field_app'))}">球场客户端</a></li>
 	</ul>
   </div>
 

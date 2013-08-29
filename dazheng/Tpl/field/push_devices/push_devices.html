@@ -1,0 +1,123 @@
+<include file="../public/_header" />
+<div class="so_main">
+
+  <div class="page_tit">推送设备</div>
+  <include file="_tab" />
+
+  <div class="search_box">
+		<form name="search_form" action="/default.php" method="get">
+		<input type="hidden" name="g" value="field">
+		<input type="hidden" name="m" value="push_devices">
+		<input type="hidden" name="a" value="push_devices">
+
+		<table border="0" cellspacing="0" cellpadding="0">
+			<th>名称：</th>
+			<td><input type="text" name="k" class="search_input" style="width:120px;" value="<php> echo  get('k');</php>"></td>
+			<th>开始时间：</th>
+			<td>
+				<input type="text" name="starttime" class="search_input_date" style="width:120px;" value="<php> echo  get('starttime');</php>" onFocus="WdatePicker({isShowClear:false,readOnly:true})"> 至 
+				<input type="text" name="endtime" class="search_input_date" style="width:120px;" value="<php> echo  get('endtime');</php>" onFocus="WdatePicker({isShowClear:false,readOnly:true})">
+			</td>
+			<!--
+			<th>类型：</th>
+			<td>
+				<select name="course_type" style="width:120px;"  class="search_select">
+					<option value="">请选择</option>
+					<option value="1">课件课程</option>
+					<option value="2">辅导课程</option>
+				</select>
+				<script>set_select_value(document.search_form.course_type,"<php> echo  get("course_type");</php>");</script>
+			</td>
+			-->
+			<td class="btn">
+				<input type="submit" value="搜索" class="btn_b" style="margin-right:8px;" >
+				<input type="button" value="查看全部" class="btn_b" onclick="javascript:location='{:U('field/push_devices/push_devices',array('state'=>get('state')))}';">
+			</td>
+		</table>
+	</form>
+  </div><!--/search_box-->
+
+  <!--------list -------->
+  <div class="Toolbar_inbox">
+  	<div class="page right">{$pages}</div>
+
+	<a href="{:U('field/push_devices/push_devices_add')}" class="btn_a"><span>添加推送设备</span></a>
+	<a href="javascript:void(0);" class="btn_a"  onclick="mod_delete_batch('{:U('field/push_devices/push_devices_delete_action')}','mod_table');"><span>批量删除</span></a>
+
+	<div class="clear"></div>
+  </div>
+  <div class="list">
+	<php>if($total>0){</php>
+	  <table width="100%" id="mod_table" border="0" cellspacing="0" cellpadding="0">
+	  <tr>
+		<th style="width:30px;">
+			<input type="checkbox" id="checkbox_handle" onclick="select_all(this,'mod_table','checkbox')" value="0">
+			<label for="checkbox"></label>
+		</th>
+		<th class="line_l">所属用户</th>
+		<th class="line_l">球场UID</th>
+		<th class="line_l">设备名称</th>
+		<th class="line_l">设备版本</th>
+		<th class="line_l">设备TOKEN</th>
+		<th class="line_l">类型</th>
+		<th class="line_l">模式</th>
+		<th class="line_l">提醒数</th>
+		<th class="line_l">状态</th>
+		<th class="line_l">添加时间</th>
+		<th class="line_l">操作</th>
+	</tr>
+	<volist id="vo" name="list">
+	<tr overstyle="on"  id=ids_{$vo["id"]}>
+		<td><input type="checkbox" name="checkbox" onclick="select_one(this)" value="{$vo.id}" ></td>
+		<td>{$vo.uid}</th>
+		<td>{$vo.field_uid}</th>
+			<td><a href="{:U('field/push_devices/push_devices_detail', array('id'=>$vo['id']))}'">{$vo.devices_name}</a></td>
+			<td>{$vo.devices_version}</td>
+			<td>{$vo.devices_token}</td>
+			<td>{$vo.devices_type}</td>
+			<td>{$vo.mode}</td>
+			<td>{$vo.badge_number}</td>
+			<td>{$vo.status}</td>
+			<td>{$vo.addtime|format_to_time}</td>
+			
+		<td>
+			<a href="{:U('field/push_devices/push_devices_edit', array('id'=>$vo['id']))})">修改</a> | 
+			<a href="javascript:void(0);" onclick="mod_delete_one('{:U('field/push_devices/push_devices_delete_action')}','{$vo['id']}');">删除</a>
+		</td>
+	</tr>
+	</volist>
+    </table>
+	  <php>}else{</php>
+			<div class="no_data">
+				<img src="/skin/images/no_data.gif" align="absmiddle"> <span>没有推送设备... </span>
+			</div>
+	 <php>}</php>
+  </div>
+
+  <div class="Toolbar_inbox">
+	<div class="page right">{$pages}</div>
+
+	<a href="{:U('field/push_devices/push_devices_add')}" class="btn_a"><span>添加推送设备</span></a>
+	<a href="javascript:void(0);" class="btn_a"  onclick="mod_delete_batch('{:U('field/push_devices/push_devices_delete_action')}','mod_table');"><span>批量删除</span></a>
+
+
+	<div class="clear"></div>
+  </div>
+</div>
+
+<script>
+	$(document).ready(function(){
+		$("tr[overstyle='on']").hover(
+		  function ()
+		  {
+		    $(this).addClass("bg_hover");
+		  },
+		  function (){
+		    $(this).removeClass("bg_hover");
+		  }
+		);
+	});
+</script>
+
+
+<include file="../public/_footer" />

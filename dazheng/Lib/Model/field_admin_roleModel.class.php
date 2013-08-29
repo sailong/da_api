@@ -7,17 +7,17 @@ class field_admin_roleModel extends Model{
 
 		$where = " 1 ";
 		if(get("admin_role_id"))
-			{
-				$where .=" and admin_role_id='".get("admin_role_id")."' ";
-			}
-			if(get("admin_role_name"))
-			{
-				$where .=" and admin_role_name='".get("admin_role_name")."' ";
-			}
-			if(get("admin_content"))
-			{
-				$where .=" and admin_content='".get("admin_content")."' ";
-			}
+		{
+			$where .=" and admin_role_id='".get("admin_role_id")."' ";
+		}
+		if(get("admin_role_name"))
+		{
+			$where .=" and admin_role_name='".get("admin_role_name")."' ";
+		}
+		if(get("admin_content"))
+		{
+			$where .=" and admin_content='".get("admin_content")."' ";
+		}
 			
 
 		if(get("starttime"))
@@ -30,13 +30,10 @@ class field_admin_roleModel extends Model{
 		}
 
 		$data["item"]=M("field_admin_role")->where($where.$bigwhere)->order($sort)->page($page.",".$page_size)->select();
+		
 		for($i=0; $i<count($data["item"]); $i++)
 		{
-			if($data["item"][$i]["user_id"]!="")
-			{
-				$user=M()->query("select uname from ts_user where  uid='".$data["item"][$i]["user_id"]."' ");
-				$data["item"][$i]["uname"]=$user[0]["uname"];
-			}
+
 		}
 		$data["total"] = M("field_admin_role")->where($where.$bigwhere)->count();
 		

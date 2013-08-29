@@ -42,6 +42,7 @@ class field_admin_menuModel extends Model{
 		$where = " 1 ";
 
 		$data["item"]=M("field_admin_menu")->where($where.$bigwhere)->order($sort)->limit($limit)->select();
+		
 		for($i=0;  $i<count($data['item']); $i++)
 		{
 			if($data["item"][$i]['field_admin_menu_id']!="")
@@ -56,7 +57,7 @@ class field_admin_menuModel extends Model{
 				}
 				*/
 
-				$if_select=M()->query("select admin_role_menu_id from tbl_admin_role_menu where and field_admin_menu_id='".$data["item"][$i]['field_admin_menu_id']."' ");
+				$if_select=M()->query("select admin_role_menu_id from tbl_field_admin_role_menu where and field_admin_menu_id='".$data["item"][$i]['field_admin_menu_id']."' ");
 				$data["item"][$i]['if_select']==$if_select[0]['admin_role_menu_id'];
 				//print_r($if_select);
 			}

@@ -149,6 +149,7 @@ class arcAction extends AdminAuthAction
 			$data["arc_content"]=stripslashes($_POST["arc_content"]);
 			$data["arc_is_tj"]=post("arc_is_tj");
 			$data["arc_path"]=post("arc_path");
+			$data["arc_viewstatus"]=post("arc_viewstatus");
 			$data["arc_statetime"]=strtotime(post("arc_statetime"));
 			
 			$list=M("arc")->save($data);

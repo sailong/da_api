@@ -26,7 +26,7 @@ class indexAction extends field_publicAction
 		$this->assign("menu",$menu['item']);
 			
 		$this->display();
-		//print_r($_SESSION);
+		
 	}
 	
 	public function load_left_menu()
@@ -63,7 +63,7 @@ class indexAction extends field_publicAction
 	//new add
 	public function admin()
 	{
-		$list=D("field_admin")->admin_select_all_pro();
+		$list=D("field_admin")->admin_select_all_pro(" and field_uid='".$_SESSION['field_uid']."' ");
 
 		$this->assign("list",$list["item"]);
 		$this->assign("pages",$list["pages"]);
@@ -73,7 +73,7 @@ class indexAction extends field_publicAction
 
 	public function admin_add()
 	{
-		$role=D("field_admin_role")->admin_role_select_all_nopage_pro();
+		$role=D("field_admin_role")->admin_role_select_all_nopage_pro(" and field_uid='".$_SESSION['field_uid']."' ");
 		$this->assign("role",$role);
 		$this->display();
 	}
@@ -88,6 +88,7 @@ class indexAction extends field_publicAction
 		$data["admin_role_id"]=post("admin_role_id");
 		$data["admin_lasttime"]=time();
 		$data["admin_lastip"]=post("admin_lastip");
+		$data["field_uid"]=$_SESSION['field_uid'];
 		$data["admin_addtime"]=time();
 		
 		$list=M("field_admin")->add($data);
@@ -120,7 +121,7 @@ class indexAction extends field_publicAction
 	{
 		if(intval(get("admin_id"))>0)
 		{
-			$role=D("field_admin_role")->admin_role_select_all_nopage_pro();
+			$role=D("field_admin_role")->admin_role_select_all_nopage_pro(" and field_uid='".$_SESSION['field_uid']."'  ");
 			$this->assign("role",$role);
 
 			$data=M("field_admin")->where("admin_id=".intval(get("admin_id")))->find();
@@ -184,7 +185,7 @@ class indexAction extends field_publicAction
 	
 	public function admin_role()
 	{
-		$list=D("field_admin_role")->admin_role_select_all_pro();
+		$list=D("field_admin_role")->admin_role_select_all_pro(" and field_uid='".$_SESSION['field_uid']."' ");
 
 		$this->assign("list",$list["item"]);
 		$this->assign("pages",$list["pages"]);
@@ -205,6 +206,7 @@ class indexAction extends field_publicAction
 
 		$data["admin_role_name"]=post("admin_role_name");
 		$data["admin_role_content"]=post("admin_role_content");
+		$data["field_uid"]=$_SESSION['field_uid'];
 		$list=M("field_admin_role")->add($data);
 
 		if($list!=false)
@@ -270,12 +272,16 @@ class indexAction extends field_publicAction
 	
 	public function admin_role_menu()
 	{
-		$role=D("field_admin_role")->admin_role_select_all_nopage_pro();
+		$role=D("field_admin_role")->admin_role_select_all_nopage_pro(" and field_uid='".$_SESSION['field_uid']."' ");
 		$this->assign("role",$role);
-
-		$list=D("field_admin_menu")->admin_menu_select_all_nopage_pro(" and admin_menu_parent_id=0 ");
+		
+		
+		$list=D("field_admin_menu")->field_admin_menu_select_pro(" and field_admin_menu_parent_id=0 and field_uid='".$_SESSION['field_uid']."'  ");
+	
+		
 		$this->assign("list",$list["item"]);
 		$this->assign("total",$list["total"]);
+		
     	$this->display();
 	}
 	
@@ -289,7 +295,7 @@ class indexAction extends field_publicAction
 			$des=M()->execute(" delete from tbl_field_admin_role_menu where admin_role_id='".post("canshu")."' ");
 			for($i=0; $i<count($ids); $i++)
 			{
-				$res=M()->execute("insert into tbl_field_admin_role_menu (admin_role_id,admin_menu_id) values ('".post("canshu")."','".$ids[$i]."')");
+				$res=M()->execute("insert into tbl_field_admin_role_menu (admin_role_id,admin_menu_id,field_uid) values ('".post("canshu")."','".$ids[$i]."','".$_SESSION['field_uid']."')");
 			}
 			echo "succeed^保存成功";
 		}

@@ -14,6 +14,11 @@ class adModel extends Model{
 		$page = intval(get("p"))?get("p"):1;
 
 		$where = " 1 ";
+		
+		if(get("field_uid"))
+		{
+			$where .=" and field_uid='".get("field_uid")."' ";
+		}
 
 		if(get("ad_app"))
 		{
