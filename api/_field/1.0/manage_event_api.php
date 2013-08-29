@@ -833,7 +833,7 @@ function erweima()
 	}
 	
 	$pic_filename=$full_save_path.$phone.".png";
-	$sql_save_path = $full_save_path.$phone.".png";
+	$sql_save_path = $save_path.$now_date.$phone.".png";
 	$errorCorrectionLevel = "L";
 	$matrixPointSize=9;
 	$margin=1;
