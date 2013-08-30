@@ -639,7 +639,7 @@ if($ac=="event_ticket_list")
 		}else{
 			$row['company_flag']='N';
 		}
-		$list_data[]=$row;
+		$list_data[]=array_default_value($row);
 	}
 	unset($list);
 	

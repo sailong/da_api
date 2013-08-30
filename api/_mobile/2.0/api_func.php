@@ -1,16 +1,27 @@
 <?php
-function get_thru($event_id,$uid,$event_user_id)
+function get_thru($event_id,$fenzhan_id,$uid,$event_user_id)
 {
+	if($event_id)
+	{
+		$sql .=" and event_id='".$event_id."' ";
+	}
+	
+	if($fenzhan_id)
+	{
+		$sql .=" and fenzhan_id='".$fenzhan_id."' ";
+	}
+	
+	
 	if($uid)
 	{
-		$sql=" and uid='".$uid."' ";
+		$sql .=" and uid='".$uid."' ";
 	}
 	else
 	{
-		$sql=" and event_user_id='".$event_user_id."' ";
+		$sql .=" and event_user_id='".$event_user_id."' ";
 	}
 	
-	$thru = DB::result_first("select thru from tbl_baofen where event_id=$event_id and source='ndong' ".$sql." order by lun desc limit 1 ");
+	$thru = DB::result_first("select thru from tbl_baofen where event_id='".$event_id."' and source='ndong' ".$sql." order by lun desc limit 1 ");
 	if(!$thru)
 	{
 		$thru="-";
@@ -143,7 +154,7 @@ function dong_color($s_arr,$p_arr)
 	{
 		for($i=0; $i<count($s_arr); $i++)
 		{
-			if(intval($p_arr[$i])>=0 && intval($s_arr[$i])>=0)
+			if(intval($p_arr[$i])>0 && intval($s_arr[$i])>0)
 			{
 				if($s_arr[$i]-$p_arr[$i]>=3)
 				{
@@ -181,7 +192,10 @@ function dong_color($s_arr,$p_arr)
 					//$c_arr[$i]=$s_arr[$i]-$p_arr[$i];
 				}
 			}
-			
+			else
+			{
+				$c_arr[$i]=0;
+			}
 			
 		}
 	
