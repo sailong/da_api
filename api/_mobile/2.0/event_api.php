@@ -1087,6 +1087,10 @@ if($ac=="event_baoming_action")
 
 if($ac=='dz_ticket_event_list')
 {
+	$field_uid = $_G['gp_field_uid'];
+	if($field_uid == ''){
+		api_json_result(1,1,'缺少参数field_uid',$data);
+	}
 	//大正赛事门票列表
 	$sql = "select event_id from tbl_ticket group by event_id limit $page_start,$page_size";
 	$list=DB::query($sql);
@@ -1098,7 +1102,7 @@ if($ac=='dz_ticket_event_list')
 	{
 		$event_ids[$row['event_id']] = $row['event_id'];
 	}
-	$sql = "select event_id,event_name,field_uid,event_logo,event_starttime,event_ticket_status from tbl_event where event_id in('".implode("','",$event_ids)."')";
+	$sql = "select event_id,event_name,field_uid,event_logo,event_starttime,event_ticket_status from tbl_event where event_id in('".implode("','",$event_ids)."') and field_uid='{$field_uid}'";
 	$list=DB::query($sql);
 	$event_list = array();
 	while($row = DB::fetch($list))
