@@ -27,9 +27,21 @@ class field_aboutAction extends field_publicAction
         }
 	    
 		$list=D("field_about")->field_about_list_pro(" and field_uid='".$_SESSION['field_uid']."' ");
-		
 		//echo '<pre>';
 		//var_dump($list);
+		foreach($list['item'] as $key=>$val){
+			if(!empty($val['category_id'])){
+				$category_ids[$val['category_id']] = $val['category_id'];
+			}
+		}
+		$category_data = M('category')->where("category_id in('".implode("','",$category_ids)."')")->select();
+		
+		foreach($category_data as $key=>$val){
+			$category_list[$val['category_id']] =  $val;
+		}
+		unset($category_ids,$category_data);
+		
+		$this->assign("category_list",$category_list);
 		$this->assign("list",$list["item"]);
 		$this->assign("pages",$list["pages"]);
 		$this->assign("total",$list["total"]);
@@ -51,6 +63,9 @@ class field_aboutAction extends field_publicAction
             }
         }
 		$about_type = get('about_type');
+		
+		$category_list = $this->get_category_list($about_type);
+		
 		$dict_info = M('dict')->where("dict_type='13' and dict_value='{$about_type}'")->find();
 		$this->assign('dict_info',$dict_info);
 		import("@.ORG.editor");  //导入类
@@ -59,6 +74,7 @@ class field_aboutAction extends field_publicAction
 		$b=$editor->usejs();             //js代码
 		$this->assign('usejs',$b);     //输出到html
 		$this->assign('editor',$a);
+		$this->assign('category_list',$category_list);
 		$this->assign("page_title","添加球场介绍");
     	$this->display();
 	}
@@ -76,6 +92,7 @@ class field_aboutAction extends field_publicAction
 			$data["about_tel2"]=post("about_tel2");
 			$data["about_sort"]=post("about_sort");
 			$data["language"]=post("language");
+			$data["category_id"]=post("category_id");
 			$data["about_more"]=post("about_more");
 			$data["about_addtime"]=$now_time;
 			$pic_arr = array();
@@ -130,6 +147,11 @@ class field_aboutAction extends field_publicAction
     		$dict_info = M('dict')->where("dict_type='13' and dict_value='{$about_type}'")->find();
     		$this->assign('dict_info',$dict_info);
 		    $dict_value = get('about_type');
+			
+			
+			$category_list = $this->get_category_list($dict_value);
+			$this->assign('category_list',$category_list);
+			
     		$page_list=select_dict(13);
             foreach($page_list as $key=>$val) {
                 if($val['dict_value'] == $dict_value) {
@@ -155,6 +177,7 @@ class field_aboutAction extends field_publicAction
 			$this->assign('usejs',$b);     //输出到html
 			$this->assign('editor',$a);
 			
+			
 			$this->assign("page_title","修改球场介绍");
 			$this->display();
 		}
@@ -179,7 +202,7 @@ class field_aboutAction extends field_publicAction
 			$data["language"]=post("language");
 			$data["about_sort"]=post("about_sort");
 			$data["about_more"]=post("about_more");
-			
+			$data["category_id"]=post("category_id");
 			$uploadinfo=upload_file("upload/about","png,jpg,jpeg,gif,bmp,tiff,psd");
 			
 			$pic_arr = array();
@@ -302,7 +325,34 @@ class field_aboutAction extends field_publicAction
 		}
 
 	}
-
+	//菜单所属分类
+	public function get_category_list($about_type)
+	{
+		$field_uid = $_SESSION["field_uid"];
+		$category_about_types = category_father('type_more');
+	
+		$category_type = '';
+		foreach($category_about_types as $key=>$val){
+			if(false !== strpos($val,$about_type) || $val==$about_type){
+				$category_type = $key;
+				break;
+			}
+		}
+		
+		$category_list = M('category')->where("field_uid='{$field_uid}' and category_type='{$category_type}'")->select();
+		
+		if(empty($category_list))
+		{
+			return false;
+		}
+		$data_list = array();
+		foreach($category_list as $key=>$val)
+		{
+			$data_list[$val['category_id']] = $val;
+		}
+		unset($category_list);
+		return $data_list;
+	}
 
 	
 

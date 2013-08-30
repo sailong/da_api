@@ -9,7 +9,7 @@
 class eventModel extends Model{
 
 	//list and page
-	function event_list_pro($bigwhere="", $page_size=20, $sort=" event_addtime desc ") 
+	function event_list_pro($bigwhere="", $page_size=20, $sort=" event_sort desc,event_addtime desc ") 
 	{
 		$page = intval(get("p"))?get("p"):1;
 

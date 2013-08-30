@@ -398,7 +398,7 @@ class baofenAction extends wap_publicAction
 						}
 						elseif ($i == '21')
 						{
-							$sdata [$i] = $total_score;
+							$sdata [$i] = $row[0]['lout']+$row[0]['lin'];
 						}
 						elseif ($i > 9)
 						{
@@ -809,7 +809,7 @@ class baofenAction extends wap_publicAction
 						}
 						elseif ($i == '21')
 						{
-							$sdata [$i] = $total_score;
+							$sdata [$i] = $row[0]['lout']+$row[0]['lin'];
 						}
 						elseif ($i > 9)
 						{

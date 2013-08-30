@@ -302,14 +302,17 @@ if($ac=='rank')
 				}
 
 				$row['ju_par_total']=get_ju_par_total_sort($ju_1,$ju_2,$ju_3,$ju_4);
-				if($row['zong_score']>0)
+				if($row['zong_score']>0 && $row['zong_score']<400)
 				{
-					$row['ju_par_total']=ju_par_format(get_ju_par_total_view($ju_1,$ju_2,$ju_3,$ju_4));
+					//$row['ju_par_total']=ju_par_format(get_ju_par_total_view($ju_1,$ju_2,$ju_3,$ju_4));
+					$row['ju_par_total']=ju_par_format($row['total_sum_ju']);
 				}
 				else
 				{
 					$row['ju_par_total']="-";
 				}
+				
+				
 				
 				
 				if($lun_1>0)
@@ -390,7 +393,7 @@ if($ac=='rank')
 
 				$row['today_score']=ju_par_format($row['total_ju_par']);
 				$row['total_score']=(string)$row['zong_score'];
-				if($row['total_score']==1000 || $row['total_score']==0)
+				if($row['total_score']>400 || $row['total_score']==0)
 				{
 					$row['total_score']='-';
 				}

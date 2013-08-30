@@ -60,6 +60,11 @@ class field_menuAction extends field_publicAction
 	    $field_menu_model = new field_menuModel();
 	    $list = $field_menu_model->get_1stmenu_list($field_uid,$page,20);
 	    foreach($list['item'] as $key=>&$val) {
+			if(!empty($val['category_id']))
+			{
+				$category_ids[$val['category_id']] = $val['category_id'];
+			}
+			
 	        if($language == 'en') {
 	            $val['field_1stmenu_name'] = $val['field_1stmenu_name_en'];
 	        }
@@ -73,6 +78,14 @@ class field_menuAction extends field_publicAction
 	    if($first_menu) {
 	        return $list['item'];exit;
 	    }
+		
+		$category_data = M('category')->where("category_id in('".implode("','",$category_ids)."')")->select();
+		foreach($category_data as $id=>$value){
+			$category_list[$value['category_id']]=$value;
+		}
+		unset($category_ids,$category_data);
+		
+		$this->assign("category_list",$category_list);
 	    $this->assign('list',$list['item']);
 		$this->assign("pages",$list["pages"]);
 		$this->assign("total",$list["total"]);
@@ -87,6 +100,9 @@ class field_menuAction extends field_publicAction
 	    if(empty($language)) {
 	        $language = 'cn';
 	    }
+		$category_list = $this->get_category_list();
+		
+		$this->assign('category_list',$category_list);
 	    $this->assign('language',$language);
 	    $this->display('add_1st_menu');
 	}
@@ -110,6 +126,7 @@ class field_menuAction extends field_publicAction
 		    {
 		        $data['field_1stmenu_name'] = post('field_1stmenu_name');
 		    }
+			$data["category_id"]=post("category_id");
 		    $data['field_1stmenu_addtime'] = time();
 		    $list=M("field_1stmenu")->add($data);
 		    if($list!=false)
@@ -150,7 +167,9 @@ class field_menuAction extends field_publicAction
 	        $info['field_1stmenu_name'] = $info['field_1stmenu_name_en'];
 	    }
 	    unset($info['field_1stmenu_name_en']);
-	   
+		$category_list = $this->get_category_list();
+		
+		$this->assign('category_list',$category_list);
 	    $this->assign('language',$language);
 	    $this->assign('data',$info);
 	    
@@ -171,7 +190,7 @@ class field_menuAction extends field_publicAction
 		    {
 		        $data['field_1stmenu_name'] = post('field_1stmenu_name');
 		    }
-		    
+		    $data["category_id"]=post("category_id");
 		    $data['field_1stmenu_addtime'] = time();
 		    $list=M("field_1stmenu")->where('field_1stmenu_id='.post('field_1stmenu_id'))->save($data);
 		    if($list!=false)
@@ -545,5 +564,24 @@ class field_menuAction extends field_publicAction
             imagejpeg($im,$name);
         }           
     }
+	//菜单所属分类
+	public function get_category_list()
+	{
+		$field_uid = $_SESSION["field_uid"];
+		$category_type = 'canyin';
+		$category_list = M('category')->where("field_uid='{$field_uid}' and category_type='{$category_type}'")->select();
+		
+		if(empty($category_list))
+		{
+			return false;
+		}
+		$data_list = array();
+		foreach($category_list as $key=>$val)
+		{
+			$data_list[$val['category_id']] = $val;
+		}
+		unset($category_list);
+		return $data_list;
+	}
 }
 ?>

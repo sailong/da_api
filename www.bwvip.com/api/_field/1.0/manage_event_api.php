@@ -10,10 +10,16 @@ $language=$_G['gp_language'];
 $now_time = time();
 //是否检查field_uid
 if(!in_array($ac,array('free_ticket','free_ticket2'))) {
-    if(empty($ac) || $field_uid=='') 
+    if(empty($ac) || empty($field_uid)) 
     {
         api_json_result(1,1,"参数不完整",'');
     }
+}
+
+//分类ID
+$category_id = $_G['gp_category_id'];
+if(!empty($category_id)){
+	$category_sql = " and category_id='{$category_id}' ";
 }
 
 //赛事列表
@@ -136,10 +142,10 @@ if($ac == 'qiutong')
 	$page_size = !empty($page_size) ? $page_size : 10;
 	
 	$offset = ($page-1)*$page_size;
-	$sql =  "select * from tbl_qiutong where field_uid='{$field_uid}' order by qiutong_id limit {$offset},{$page_size}";
+	$sql =  "select * from tbl_qiutong where field_uid='{$field_uid}' ".$category_sql."  order by qiutong_id limit {$offset},{$page_size}";
     if(!empty($search)) 
     {
-        $sql = "select * from tbl_qiutong where field_uid='{$field_uid}' and (qiutong_number='{$search}' or qiutong_name like '%{$search}%' or qiutong_name_en like '%{$search}%') limit {$offset},{$page_size}";
+        $sql = "select * from tbl_qiutong where field_uid='{$field_uid}'  ".$category_sql." and (qiutong_number='{$search}' or qiutong_name like '%{$search}%' or qiutong_name_en like '%{$search}%') limit {$offset},{$page_size}";
     }
 	
     $list = DB::query($sql);
@@ -232,12 +238,12 @@ if($ac == 'order_qiutong')
 if($ac == 'menulist1')
 {
     $menu_type = $_G['gp_menu_type'];
-    if(empty($menu_type)) 
-    {
-        $menu_type=1;
-    }
+    if(!empty($menu_type))
+	{
+		$menu_type_sql = " and field_1stmenu_type='{$menu_type}'";
+	}
     $return_data['title'] = 'menulist';
-    $sql = "select * from tbl_field_1stmenu where field_uid='{$field_uid}' and field_1stmenu_type='{$menu_type}' order by field_1stmenu_id asc";
+    $sql = "select * from tbl_field_1stmenu where field_uid='{$field_uid}' ".$category_sql." {$menu_type_sql} order by field_1stmenu_id asc";
     
     $list = DB::query($sql);
     $menu_list = array();
@@ -294,12 +300,12 @@ if($ac == 'menulist1')
 if($ac == 'menulist1_iphone')
 {
     $menu_type = $_G['gp_menu_type'];
-    if(empty($menu_type)) 
-    {
-        $menu_type=1;
-    }
+    if(!empty($menu_type))
+	{
+		$menu_type_sql = " and field_1stmenu_type='{$menu_type}'";
+	}
     $return_data['title'] = 'menulist';
-    $sql = "select * from tbl_field_1stmenu where field_uid='{$field_uid}' and field_1stmenu_type='{$menu_type}' order by field_1stmenu_id asc";
+    $sql = "select * from tbl_field_1stmenu where field_uid='{$field_uid}' ".$category_sql." {$menu_type_sql} order by field_1stmenu_id asc";
     
     $list = DB::query($sql);
     $menu_list = array();
@@ -365,8 +371,12 @@ if($ac == 'menulist2')
         api_json_result(1,1,'缺少参数',null);
         exit;
     }
+	if(!empty($menu_type))
+	{
+		$menu_type_sql = " and field_1stmenu_type='{$menu_type}'";
+	}
     $return_data['title'] = 'menulist';
-    $sql = "select * from tbl_field_2ndmenu where field_uid='{$field_uid}' and field_1stmenu_id='{$up_id}' and field_1stmenu_type='{$menu_type}' order by field_2ndmenu_id desc";
+    $sql = "select * from tbl_field_2ndmenu where field_uid='{$field_uid}' and field_1stmenu_id='{$up_id}' {$menu_type_sql} order by field_2ndmenu_id desc";
     
     $list = DB::query($sql);
     $menu_list = array();
@@ -801,29 +811,35 @@ if($ac == 'uidtomobile')
 }
 
 //生成二维码成功返回路径，失败返回 false
-function erweima($phone)
+function erweima()
 {
 	$phone = mt_rand(1000000000,9999999999);
     //如果没有就生成二维码
-	include "../tool/phpqrcode/qrlib.php";
-	$prefix = "..";
+	$path_erweima_core = dirname(dirname(dirname(dirname(__FILE__))));
+	
+	include $path_erweima_core."/tool/phpqrcode/qrlib.php";
+	$prefix = $path_erweima_core;
 	$save_path="/upload/erweima/";
 	$now_date = date("Ymd",time());
-	$full_save_path=$save_path.$now_date."/";
+	$full_save_path=$path_erweima_core.$save_path.$now_date."/";
+
 	if(!file_exists($prefix.$save_path))
 	{
 		mkdir($prefix.$save_path);
 	}
-	if(!file_exists($prefix.$full_save_path))
+	if(!file_exists($full_save_path))
 	{
-		mkdir($prefix.$full_save_path);
+		$a = mkdir($full_save_path);
 	}
-	$pic_filename=$prefix.$full_save_path.$phone.".png";
-	$sql_save_path = $full_save_path.$phone.".png";
+	
+	$pic_filename=$full_save_path.$phone.".png";
+	$sql_save_path = $save_path.$now_date.$phone.".png";
 	$errorCorrectionLevel = "L";
 	$matrixPointSize=9;
 	$margin=1;
+	
 	QRcode::png($phone, $pic_filename, $errorCorrectionLevel, $matrixPointSize, $margin); 
+	
 	if(file_exists($pic_filename))
 	{
 		return $sql_save_path;

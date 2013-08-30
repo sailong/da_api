@@ -74,7 +74,7 @@
                 <td height="30" style="width:50px;">{$v.realname}</td>
                 <volist id="d" name="dongs">
 				<php>
-				$cj=M()->query("select cave_".$d." from tbl_baofen where event_user_id='".$v['event_user_id']."' and fenzhan_id='".$fenzhan_id."' ");
+				$cj=M()->query("select cave_".$d." from tbl_baofen where event_user_id='".$v['event_user_id']."' $str");
 				$dong_cj=$cj[0]['cave_'.$d];
 				</php>
                 <td>

@@ -22,12 +22,16 @@
 	<table class="add_table" border="0" cellspacing="0" cellpadding="0" >
 		<tbody>
 				<tr>
-					<th>用户ID ：</th>
-					<td><input type="text" name="uid" id="uid" class="mod_input2" style="width:200px;"  value="{$data.uid}"  onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')"></td>
+					<th width="10%">用户ID ：</th>
+					<td>{$data.uid}<input type="hidden" name="uid" id="uid" readonly class="mod_input2" style="width:200px;" value="{$data.uid}"  onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')"></td>
 				</tr>
 				<tr>
+				  <th>报名ID ：</th>
+				  <td>{$data.event_apply_id}<input type="hidden" name="event_apply_id" id="event_apply_id" readonly class="mod_input2" style="width:200px;"  value="{$data.event_apply_id}"  onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')" /></td>
+		  </tr>
+				<tr>
 					<th>姓名：</th>
-					<td><input type="text" name="realname" id="realname" class="mod_input2" style="width:300px;"  value="{$data.realname}"></td>
+					<td>{$data.realname}<input type="hidden" name="realname" id="realname" readonly class="mod_input2" style="width:300px;"  value="{$data.realname}"></td>
 				</tr>
 				 <tr>
 					<th>分组 ：</th>
@@ -59,7 +63,7 @@
 				</td>
 		</tfoot>
 	</table><!--/add_table-->
-</form>
+    </form>
 	   
   </div>
 

@@ -29,6 +29,20 @@ class qiutongAction extends field_publicAction
 		        $val['qiutong_content'] = mb_substr($val['qiutong_content'],0,20,'utf8').'...';
 		    }
 		}
+		
+		foreach($list['item'] as $key=>$value){
+			if(!empty($value['category_id'])){
+				$category_ids[$value['category_id']] = $value['category_id'];
+			}
+		}
+		$category_data = M('category')->where("category_id in('".implode("','",$category_ids)."')")->select();
+		
+		foreach($category_data as $key=>$value){
+			$category_list[$value['category_id']] =  $value;
+		}
+		unset($category_ids,$category_data);
+		
+		$this->assign("category_list",$category_list);
 		$this->assign("list",$list["item"]);
 		$this->assign("pages",$list["pages"]);
 		$this->assign("total",$list["total"]);
@@ -39,7 +53,10 @@ class qiutongAction extends field_publicAction
 
 	public function qiutong_add()
 	{
-
+		
+		$category_list = $this->get_category_list();
+		
+		$this->assign('category_list',$category_list);
 		$this->assign("page_title","添加球童");
     	$this->display();
 	}
@@ -69,6 +86,7 @@ class qiutongAction extends field_publicAction
 			}
 			$data["field_uid"]=$_SESSION["field_uid"];//post("field_uid");
 			$data["uid"]=$uid;
+			$data["category_id"]=post("category_id");
 			$data["qiutong_content"]=post("qiutong_content");
 			$data["qiutong_addtime"]=time();
 			$list=M("qiutong")->add($data);
@@ -94,8 +112,13 @@ class qiutongAction extends field_publicAction
 		if(intval(get("qiutong_id"))>0)
 		{
 			$data=M("qiutong")->where("qiutong_id=".intval(get("qiutong_id")))->find();
-			$this->assign("data",$data);
 			
+			
+			$category_list = $this->get_category_list();
+		
+			$this->assign('category_list',$category_list);
+			
+			$this->assign("data",$data);
 			$this->assign("page_title","修改球童");
 			$this->display();
 		}
@@ -120,6 +143,7 @@ class qiutongAction extends field_publicAction
 				$data["qiutong_photo"]=$uploadinfo;
 			}
 			$data["field_uid"]=$_SESSION["field_uid"];//post("field_uid");
+			$data["category_id"]=post("category_id");
 			$data["qiutong_content"]=post("qiutong_content");
 			
 			$list=M("qiutong")->save($data);
@@ -391,6 +415,25 @@ class qiutongAction extends field_publicAction
         
         return false;
     }
+	//球童所属分类
+	public function get_category_list()
+	{
+		$field_uid = $_SESSION["field_uid"];
+		$category_type = 'qiutong';
+		$category_list = M('category')->where("field_uid='{$field_uid}' and category_type='{$category_type}'")->select();
+		
+		if(empty($category_list))
+		{
+			return false;
+		}
+		$data_list = array();
+		foreach($category_list as $key=>$val)
+		{
+			$data_list[$val['category_id']] = $val;
+		}
+		unset($category_list);
+		return $data_list;
+	}
 
 }
 ?>

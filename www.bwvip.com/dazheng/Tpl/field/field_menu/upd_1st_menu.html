@@ -78,6 +78,18 @@
 						<script>set_select_value(document.act_form.field_1stmenu_type,"{$data.field_1stmenu_type}");</script>
 					</td>
 				</tr>
+				<tr>
+					<th>所属分类：</th>
+					<td>
+						<select name="category_id" id="category_id">
+							<option value="">请选择</option>
+							<volist id="vo" name="category_list">
+							<option value="{$vo.category_id}">{$vo.category_name}</option>
+							</volist>
+						</select>
+						<script>set_select_value(document.act_form.category_id,"{$data.category_id}");</script>
+					</td>
+				</tr>
 				<!--<tr>
 					<th>语言：</th>
 					<td><select name="language">

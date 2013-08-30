@@ -59,6 +59,7 @@
 		<th class="line_l">球童照片</th>
 		<!--<th class="line_l">所属球场</th>-->
 		<th class="line_l">球童介绍</th>
+		<th class="line_l">所属分类</th>
 		<th class="line_l">添加时间</th>
 		<th class="line_l">操作</th>
 	</tr>
@@ -72,6 +73,7 @@
 			<td><img src="{$vo.qiutong_photo}" style="max-height:60px; max-width:100px;"/></td>
 			<!--<td>{$vo.field_uid}</td>-->
 			<td><a href="javascript:void(0);" title="球童介绍" onclick="mod_dialog('查看详细','{:U('field/qiutong/qiutong_detail', array('qiutong_id'=>$vo['qiutong_id']))}');">{$vo.qiutong_content}</a></td>
+			<td>{$category_list[$vo['category_id']]['category_name']}</td>
 			<td>{$vo.qiutong_addtime|format_to_time}</td>
 			
 		<td>

@@ -101,6 +101,7 @@ class adAction extends field_publicAction
 			$data["event_id"]=post("event_id");
 			$data["field_uid"]=$_SESSION['field_uid'];
 			
+			
 			$data["ad_state"]=1;
 			$data["ad_addtime"]=time();
 			

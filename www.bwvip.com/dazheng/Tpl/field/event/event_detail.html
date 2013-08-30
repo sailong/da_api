@@ -6,7 +6,7 @@
 
 	<table class="add_table" border="0" cellspacing="0" cellpadding="0" >
 		<tbody>
-		<tr>
+				<tr>
 					<th>赛事UID：</th>
 						<td>{$data.event_uid}</td>
 				</tr>
@@ -43,6 +43,14 @@
 				<tr>
 					<th>赛事推荐：</th>
 						<td>{$data.event_is_tj}</td>
+				</tr>
+				<tr>
+					<th>门票申请页面：</th>
+					<td>
+						<php>if($data['event_ticket_status'] == 1){echo '正常申请页';}</php>
+						<php>if($data['event_ticket_status'] == 2){echo 'wap页';}</php>
+						<php>if($data['event_ticket_status'] == 3){echo '宝马大师赛';}</php>
+					</td>
 				</tr>
 				<tr>
 					<th>添加时间：</th>

@@ -45,12 +45,17 @@ class fenzuModel extends Model{
 		}
 
 		$data["item"]=M("fenzu")->where($where.$bigwhere)->field("fenzu_id,fenzu_number,fenzu_name,fenzu_tee,lun,fenzu_start_time,fenzu_ampm,event_id,fenzhan_id,fenzu_addtime")->order($sort)->page($page.",".$page_size)->select();
-		for($i=0; $i<count($data["item"]); $i++)
+		foreach($data["item"] as $key=>&$val)
 		{
-			if($data["item"][$i]["fenzhan_id"]!="")
+			if($val["fenzhan_id"]!="")
 			{
-				$fenzhan=M()->query("select fenzhan_name from ".C("db_prefix")."fenzhan where fenzhan_id='".$data["item"][$i]["fenzhan_id"]."' ");
-				$data["item"][$i]["fenzhan_name"]=$fenzhan[0]["fenzhan_name"];
+				$fenzhan=M('fenzhan')->field('fenzhan_name')->where("fenzhan_id='{$val["fenzhan_id"]}'")->find();//query("select fenzhan_name from ".C("db_prefix")."fenzhan where fenzhan_id='".$data["item"][$i]["fenzhan_id"]."' ");
+				$val["fenzhan_name"]=$fenzhan["fenzhan_name"];
+			}
+		    if($val["event_id"]!="")
+			{
+			    $event=M('event')->where("event_id='{$val["event_id"]}'")->find();
+			    $val["event_name"]=$event["event_name"];
 			}
 		}
 		$data["total"] = M("fenzu")->where($where.$bigwhere)->count();

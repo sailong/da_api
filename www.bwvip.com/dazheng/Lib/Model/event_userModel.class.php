@@ -11,7 +11,7 @@ class event_userModel extends Model
 {
 
 	//list and page
-	function event_user_list_pro($bigwhere="", $page_size=20, $sort="  ") 
+	function event_user_list_pro($bigwhere="", $page_size=20, $sort=" event_user_addtime desc ") 
 	{
 		$page = intval(get("p"))?get("p"):1;
 

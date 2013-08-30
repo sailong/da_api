@@ -38,7 +38,7 @@ class field_aboutModel extends Model{
 			$where .=" and about_name like '%".get('k')."%' ";
 		}
 
-		$data["item"]=M("field_about")->where($where.$bigwhere)->field("about_id,field_uid,about_name,about_type,about_content,about_tel,about_tel2,about_replynum,about_sort,about_addtime,about_pic,about_more")->order($sort)->page($page.",".$page_size)->select();
+		$data["item"]=M("field_about")->where($where.$bigwhere)->field("about_id,category_id,field_uid,about_name,about_type,about_content,about_tel,about_tel2,about_replynum,about_sort,about_addtime,about_pic,about_more")->order($sort)->page($page.",".$page_size)->select();
 		//echo M('field_about')->getLastSql();
 		for($i=0; $i<count($data["item"]); $i++)
 		{

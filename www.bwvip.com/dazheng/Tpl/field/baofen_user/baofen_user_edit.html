@@ -36,6 +36,7 @@
 							</volist>
 						</select>
 						<script>set_select_value(document.act_form.fenzhan_id,"{$data.fenzhan_id}");</script>
+						（若无分站信息，可以到分站管理添加分站信息）
 					</td>
 				</tr>
 				<tr>
@@ -62,15 +63,7 @@
 						<script>set_checkbox_value(document.act_form.dongs[],'{$data.dongs}',',');</script>
 					</td>
 				</tr>
-				<tr>
-					<th>比赛当前ID：</th>
-					<td><input type="text" name="iteamid" id="iteamid" class="mod_input2" style="width:66px;"  value="{$data.iteamid}"></td>
-				</tr>
-				<tr>
-					<th>onlymark：</th>
-					<td><input type="text" name="onlymark" id="onlymark" class="mod_input2" style="width:66px;"  value="{$data.onlymark}"></td>
-				</tr>
-				
+			
 		</tbody>
 		<tfoot>
 			<tr>

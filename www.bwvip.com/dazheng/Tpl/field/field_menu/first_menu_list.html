@@ -86,6 +86,7 @@
 		-->
 		
 		<th class="line_l">分类类型</th>
+		<th class="line_l">所属分类</th>
 		<!--
 		<th class="line_l">图片</th>
 		<th class="line_l">来源</th>
@@ -110,6 +111,7 @@
 			-->
 			
 			<td>{$vo.type_name|default='暂无'}</td>
+			<td>{$category_list[$vo['category_id']]['category_name']}</td>
 			<!--
 			<td><php>if($vo['arc_pic']){</php><img src="/{$vo.arc_pic}" style="max-width:150px; max-height:80px;"><php>}</php></td>
 
