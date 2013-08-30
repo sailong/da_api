@@ -1148,6 +1148,10 @@ if($ac=='dz_ticket_event_list')
 		}
 		$event_list[] = $row;
 	}
+	if(empty($event_list))
+	{
+		$event_list = null;
+	}
 	$data['title'] = 'event_list';
 	$data['data'] = $event_list;
 	

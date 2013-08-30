@@ -5,6 +5,10 @@ if(!defined("IN_DISCUZ"))
 }
 
 $ac=$_G['gp_ac'];
+if($ac == 'erweima'){
+
+echo erweima();die;
+}
 $field_uid = $_G['gp_field_uid'];//球场编号
 $language=$_G['gp_language'];
 $now_time = time();
@@ -810,6 +814,7 @@ if($ac == 'uidtomobile')
 	*/
 }
 
+
 //生成二维码成功返回路径，失败返回 false
 function erweima()
 {
@@ -833,7 +838,7 @@ function erweima()
 	}
 	
 	$pic_filename=$full_save_path.$phone.".png";
-	$sql_save_path = $save_path.$now_date.$phone.".png";
+	$sql_save_path = $save_path.$now_date.'/'.$phone.".png";
 	$errorCorrectionLevel = "L";
 	$matrixPointSize=9;
 	$margin=1;
