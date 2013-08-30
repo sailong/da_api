@@ -73,7 +73,7 @@
 	<tr overstyle="on"  id=ids_{$vo["ticket_id"]}>
 		<td><input type="checkbox" name="checkbox" onclick="select_one(this)" value="{$vo.ticket_id}" ></td>
 		<td><a href="{:U('field/ticket/ticket_detail', array('ticket_id'=>$vo['ticket_id']))}'">{$vo.ticket_name}</a></th>
-			<td>{$event_list[$vo['event_id']]}{$vo['event_id']}</td>
+			<td>{$event_list[$vo['event_id']]}</td>
 			<!-- <td>{$vo.fenzhan_id}</td> -->
 			<td>{$vo.ticket_price}</td>
 			<td>{$vo.ticket_ren_num}</td>
