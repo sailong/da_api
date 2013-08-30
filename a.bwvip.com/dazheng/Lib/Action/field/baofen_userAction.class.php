@@ -28,6 +28,7 @@ class baofen_userAction extends field_publicAction
 		
 		$list=D("baofen_user")->baofen_user_list_pro();
 		
+		
 		$event_info=M("event")->where("event_id=".intval(get("event_id")))->find();
 		$this->assign('event_name',$event_info['event_name']);
 		$this->assign('event_id',$event_info['event_id']);

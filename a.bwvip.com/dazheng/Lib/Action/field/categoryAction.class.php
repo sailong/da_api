@@ -17,10 +17,11 @@ class categoryAction extends field_publicAction
 
 	public function category()
 	{
-		$list=D("category")->category_list_pro();
-		//var_dump($list);die;
+		$field_uid = $_SESSION['field_uid'];
+		$list=D("category")->category_list_pro(" and field_uid='{$field_uid}'");
+	
 		$category_list = category_father('key_val');
-		
+		//var_dump($category_list);die;
 		$this->assign('category_father',$category_list);
 		$this->assign("list",$list["item"]);
 		$this->assign("pages",$list["pages"]);

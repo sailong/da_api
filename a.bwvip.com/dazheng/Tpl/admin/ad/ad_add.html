@@ -31,7 +31,7 @@
 						<select name="ad_app" id="ad_app" class="mod_select">
 							<option value="">请选择</option>
 							<option value="bwvip_app">大正手机客户端</option>
-							<option value="field_app">美兰湖球场客户端</option>
+							<option value="field_app">球场客户端</option>
 							<option value="bwvip">大正官网</option>
 						</select>
 						<script>set_select_value(document.act_form.ad_app,"{$data.ad_app}");</script>
@@ -78,6 +78,17 @@
 				<tr>
 					<th><font color="red">*</font>排序：</th>
 					<td><input type="text" name="ad_sort" id="ad_sort" class="mod_input2" style="width:300px;" value="{$data.ad_sort}"></td>
+				</tr>
+				<tr>
+					<th><font color="red">*</font>所属赛事：</th>
+					<td>
+						<select name="event_id">
+							<option value="">请选择</option>
+							<volist id="vo" name="event">
+							<option value="{$vo.event_id}">{$vo.event_name}</option>
+							</volist>
+						</select>
+					</td>
 				</tr>
 			
 		</tbody>

@@ -1,0 +1,144 @@
+<include file="../public/_header" />
+<div class="so_main">
+
+  <include file="../event/event_manage_header" />
+  
+  <div class="tit_tab">
+	<ul>
+		<li style="line-height:30px;">1> 选择分站：</li>
+		<volist id="vo" name="fenzhan">
+		<li><a <php> if(get("fenzhan_id")==$vo['fenzhan_id']){ echo " class=on ";}</php> href="{:U('admin/fenzhan/fenzhan_lun',array('event_id'=>$event_id,'fenzhan_id'=>$vo['fenzhan_id']))}">{$vo['fenzhan_name']}</a></li>
+		</volist>
+	</ul>
+   </div>
+   <!--
+   <div class="tit_tab_small">
+	<ul>
+		<li style="line-height:30px;">2> 选择轮数：</li>
+		<volist id="vo" name="lun_arr">
+		<li><a <php> if(get("lun")==$vo){ echo " class=on ";}</php> href="{:U('admin/fenzhan/fenzhan_lun',array('event_id'=>$event_id,'fenzhan_id'=>get('fenzhan_id'),'lun'=>$vo))}">第{$vo}轮</a></li>
+		</volist>
+	</ul>
+   </div>	   
+   -->
+ 
+  <!--------list -------->
+  <div class="Toolbar_inbox">
+  	<div class="page right">{$pages}</div>
+	
+	<php>
+	/*
+	if(get('fenzhan_id'))
+	{
+		if(count($fenzu)>0)
+		{
+		*/
+		</php>
+		<a href="javascript:void(0);" class="btn_a"  onclick="mod_batch_dialog('{:U('admin/fenzhan/batch_lun',array('event_id'=>get('event_id'),'fenzhan_id'=>get('fenzhan_id')))}','mod_table','批量添加到分轮');"><span>批量添加到分轮</span></a>
+		
+		<a href="javascript:void(0);" class="btn_a"  onclick="mod_batch_dialog('{:U('admin/fenzhan/batch_lun_del',array('event_id'=>get('event_id'),'fenzhan_id'=>get('fenzhan_id')))}','mod_table','批量移除分轮');"><span>批量移除分轮</span></a>
+		
+	
+		<a href="javascript:void(0);" class="btn_a"  onclick="mod_batch_dialog('{:U('admin/fenzhan/batch_fenzu',array('fenzhan_id'=>get('fenzhan_id')))}','mod_table','批量添加至分组');"><span>批量添加至分组</span></a>
+		
+		<a href="javascript:void(0);" class="btn_a"  onclick="mod_batch_dialog('{:U('admin/fenzhan/batch_fenzu_del',array('fenzhan_id'=>get('fenzhan_id')))}','mod_table','批量添加至分组');"><span>批量移除分组</span></a>
+		<php>
+	/*		
+		}
+		else
+		{
+		</php>
+		<font color=red>不能分轮，请先设置分轮信息</font>
+		<php>	
+		}
+	}
+	else
+	{
+		echo '<font color=green>请先选择分站</font>';
+	}
+	*/
+	</php>
+	
+	
+	<div class="clear"></div>
+  </div>
+  <div class="list">
+	<php>if($total>0){</php>
+	  <table width="100%" id="mod_table" border="0" cellspacing="0" cellpadding="0">
+	  <tr>
+		<th style="width:30px;">
+			<input type="checkbox" id="checkbox_handle" onclick="select_all(this,'mod_table','checkbox')" value="0">
+			<label for="checkbox"></label>
+		</th>
+		<th class="line_l">报名编号</th>
+		<th class="line_l">用户ID</th>
+		<th class="line_l">姓名</th>
+		<th class="line_l"><b>分轮信息</b></th>
+		<th class="line_l">分组</th>
+		
+		
+		<th class="line_l">赛事</th>
+		<th class="line_l">分站</th>
+		
+		<th class="line_l">状态</th>
+		<th class="line_l">报名时间</th>
+		<th class="line_l">操作</th>
+	</tr>
+	<volist id="vo" name="list">
+	<tr overstyle="on"  id=ids_{$vo["event_apply_id"]}>
+			<td><input type="checkbox" name="checkbox" onclick="select_one(this)" value="{$vo.event_apply_id}" ></td>
+			<td>{$vo.event_apply_id}</th>
+			<td>{$vo.uid}</td>
+			<td>{$vo.event_apply_realname}</td>
+			<td><font color="red"><php> echo implode(',',$vo['lun_arr']);</php></font></td>
+			<td><php>
+			for($j=0; $j<count($vo['lun_info']); $j++)
+			{
+				echo "第".$vo['lun_info'][$j]['lun']."轮 第".$vo['lun_info'][$j]['fenzu_number']."组 <br/>";
+			}
+			</php></td>
+			<td>{$vo.event_name}(ID:{$vo.event_id})</th>
+			<td>{$vo.fenzhan_name}(ID:{$vo.fenzhan_id})</th>
+			<td><php>if($vo['event_apply_state']==0){ echo '待审核';}if($vo['event_apply_state']==1){ echo '审核通过';}if($vo['event_apply_state']==2){ echo '审核未通过';}</php></td>
+			<td>{$vo.event_apply_addtime|format_to_time}</td>
+		<td>
+			
+			<!--
+			<a href="{:U('admin/event_apply/event_apply_edit', array('event_apply_id'=>$vo['event_apply_id']))})">修改</a> | 
+			<a href="javascript:void(0);" onclick="mod_delete_one('{:U('admin/event_apply/event_apply_delete_action')}','{$vo['event_apply_id']}');">删除</a>
+			-->
+		</td>
+	</tr>
+	</volist>
+    </table>
+	  <php>}else{</php>
+			<div class="no_data">
+				<img src="/skin/images/no_data.gif" align="absmiddle"> <span>没有赛事报名... </span>
+			</div>
+	 <php>}</php>
+  </div>
+
+  <div class="Toolbar_inbox">
+	<div class="page right">{$pages}</div>
+
+	
+	<div class="clear"></div>
+  </div>
+</div>
+
+<script>
+	$(document).ready(function(){
+		$("tr[overstyle='on']").hover(
+		  function ()
+		  {
+		    $(this).addClass("bg_hover");
+		  },
+		  function (){
+		    $(this).removeClass("bg_hover");
+		  }
+		);
+	});
+</script>
+
+
+<include file="../public/_footer" />

@@ -77,6 +77,9 @@
 					<td>
 						<select name="ext_action" style="width:100px;">
 							<option value="">请选择</option>
+							<option value="event_list">赛事列表</option>
+							<option value="wap">WAP</option>
+							<option value="bmw_apply">门票报名</option>
 							<option value="mathcenter">赛事直播</option>
 							<option value="blog_detail">博客详细页</option>
 							<option value="app_store">APP STORE</option>
@@ -94,7 +97,7 @@
 					<th></th>
 					<td>
 
-						<input type="text" name="ext_title" id="ext_title" class="mod_input2" style="width:100px;"  value="{$data['message_content']['n_extras']['title']}">（相应TITLE）
+						<input type="text" name="ext_title" id="ext_title" class="mod_input2" style="width:100px;"  value="{$data['message_content']['n_extras']['title']}">（相应TITLE，当扩展信息为WAP是此处填写wap地址）
 					
 					</td>
 				</tr>

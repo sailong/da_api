@@ -32,15 +32,17 @@ class fenzhan_tblModel extends Model{
 		}
 
 		$data["item"]=M("fenzhan")->where($where.$bigwhere)->order($sort)->page($page.",".$page_size)->select();
-		
-		foreach($data["item"] as $key=>&$val) {
-		    if($val["event_id"]!="")
+		for($i=0; $i<count($data["item"]); $i++)
+		{
+			if($data["item"][$i]["event_id"]!="")
 			{
-				$event=M('event')->where("event_id='{$val["event_id"]}'")->find();
-			    $val["event_name"]=$event["event_name"];
+				$event=M()->query("select event_name from ".C("db_prefix")."event where event_id='".$data["item"][$i]["event_id"]."' ");
+				$data["item"][$i]["event_name"]=$event[0]["event_name"];
+				
+				$fenzhan=M()->query("select fenzhan_name from ".C("db_prefix")."fenzhan where fenzhan_id='".$data["item"][$i]["fenzhan_id"]."' ");
+				$data["item"][$i]["fenzhan_name"]=$fenzhan[0]["fenzhan_name"];
 			}
 		}
-
 		$data["total"] = M("fenzhan")->where($where.$bigwhere)->count();
 		
 		import ("@.ORG.Page");

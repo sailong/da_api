@@ -18,8 +18,7 @@ class photoAction extends AdminAuthAction
 	public function photo()
 	{
 		$list=D("photo")->photo_list_pro();
-		//echo '<pre>';
-		//var_dump($list);die;
+
 		$this->assign("list",$list["item"]);
 		$this->assign("pages",$list["pages"]);
 		$this->assign("total",$list["total"]);

@@ -1,0 +1,165 @@
+<include file="../public/_header" />
+<div class="so_main">
+
+  <div class="page_tit">消息推送</div>
+  <div class="tit_tab">
+	<ul>
+		<li><a <php> if(get("message_type")==''){ echo " class=on ";}</php> href="{:U('field/push_message/push_message',array('message_type'=>''))}">全部</a></li>
+		<li><a <php> if(get("message_type")=='android'){ echo " class=on ";}</php> href="{:U('field/push_message/push_message',array('message_type'=>'android'))}">android</a></li>
+		<li><a <php> if(get("message_type")=='ios'){ echo " class=on ";}</php> href="{:U('field/push_message/push_message',array('message_type'=>'ios'))}">ios</a></li>
+		
+	</ul>
+	</div>
+	
+
+  <div class="search_box">
+		<form name="search_form" action="/default.php" method="get">
+		<input type="hidden" name="g" value="field">
+		<input type="hidden" name="m" value="push_message">
+		<input type="hidden" name="a" value="push_message">
+
+		<table border="0" cellspacing="0" cellpadding="0">
+			<th>名称：</th>
+			<td><input type="text" name="k" class="search_input" style="width:120px;" value="<php> echo  get('k');</php>"></td>
+			<th>开始时间：</th>
+			<td>
+				<input type="text" name="starttime" class="search_input_date" style="width:120px;" value="<php> echo  get('starttime');</php>" onFocus="WdatePicker({isShowClear:false,readOnly:true})"> 至 
+				<input type="text" name="endtime" class="search_input_date" style="width:120px;" value="<php> echo  get('endtime');</php>" onFocus="WdatePicker({isShowClear:false,readOnly:true})">
+			</td>
+			
+			<td class="btn">
+				<input type="submit" value="搜索" class="btn_b" style="margin-right:8px;" >
+				<input type="button" value="查看全部" class="btn_b" onclick="javascript:location='{:U('field/push_message/push_message',array('state'=>get('state')))}';">
+			</td>
+		</table>
+	</form>
+  </div><!--/search_box-->
+
+  <!--------list -------->
+  <div class="Toolbar_inbox">
+  	<div class="page right">{$pages}</div>
+	<!--
+	<a href="{:U('field/push_message/push_message_add')}" class="btn_a"><span>添加消息推送</span></a>
+	-->
+	<a href="{:U('field/push_message/push_message_add_android',array('message_type'=>'android'))}" class="btn_a"><span>添加Android消息推送</span></a>
+	<a href="{:U('field/push_message/push_message_add_android',array('message_type'=>'ios'))}" class="btn_a"><span>添加IOS消息推送</span></a>
+	<a href="javascript:void(0);" class="btn_a"  onclick="mod_delete_batch('{:U('field/push_message/push_message_delete_action')}','mod_table');"><span>批量删除</span></a>
+
+	<div class="clear"></div>
+  </div>
+  <div class="list">
+	<php>if($total>0){</php>
+	  <table width="100%" id="mod_table" border="0" cellspacing="0" cellpadding="0">
+	  <tr>
+		<th style="width:30px;">
+			<input type="checkbox" id="checkbox_handle" onclick="select_all(this,'mod_table','checkbox')" value="0">
+			<label for="checkbox"></label>
+		</th>
+		<th class="line_l">消息ID</th>
+		<th class="line_l">消息编号</th>
+		<!--
+		<th class="line_l">球场UID</th>
+		-->
+		<th class="line_l">推送平台</th>
+		<th class="line_l">目标用户</th>
+		<th class="line_l">消息内容</th>
+		<!--
+		<th class="line_l">消息内容</th>
+		-->
+		<th class="line_l">设备编号</th>
+		<th class="line_l">消息状态</th>
+		<th class="line_l">发送范围</th>
+		<th class="line_l">共需发送</th>
+		<th class="line_l">总发送数</th>
+		<th class="line_l">错误代码</th>
+		<th class="line_l">错误信息</th>
+		<th class="line_l">添加人</th>
+		<th class="line_l">发送时间</th>
+		<th class="line_l">添加时间</th>
+		<th class="line_l">操作</th>
+	</tr>
+	<volist id="vo" name="list">
+	<tr overstyle="on"  id=ids_{$vo["message_id"]}>
+		<td><input type="checkbox" name="checkbox" onclick="select_one(this)" value="{$vo.message_id}" ></td>
+		<td>{$vo.message_id}</th>
+		<td>{$vo.message_number}</th>
+		<!--
+		<td>{$vo.field_uid}</th>
+		-->
+			<td>{$vo.message_type}</td>
+			<td>{$vo.uid}</td>
+			<td>
+			<php>
+			$arr=json_decode($vo['message_content'],true);
+			echo urldecode($arr['n_content']);
+			</php>
+			</td>
+			<!--
+			<td>{$vo.message_content}</td>
+			-->
+			<td>{$vo.devices_token}</td>
+			<td>{$vo.message_state}</td>
+			<td>{$vo.receiver_type}</td>
+			<td>{$vo.message_totalnum}</td>
+			<td>{$vo.message_sendnum}</td>
+			<td>{$vo.message_errorcode}</td>
+			<td>{$vo.message_errormsg}</td>
+			<td><php>if($vo['message_is_sys']){ echo "系统生成";}else{ echo "管理员";}</php></td>
+			<td>{$vo.message_sendtime|format_to_time}</td>
+			<td>{$vo.message_addtime|format_to_time}</td>
+		<td>
+			<php>
+			if($vo['message_type']=="android")
+			{
+			</php>
+			<!--
+			<a href="{:U('field/push_message/push_message_edit_android', array('message_id'=>$vo['message_id']))})">修改</a> | 
+			-->
+			<php>
+			}
+			else
+			{
+			</php>
+			<a href="{:U('field/push_message/push_message_edit', array('message_id'=>$vo['message_id']))})">修改</a> | 
+			<php>
+			}
+			</php>
+			<a href="javascript:void(0);" onclick="mod_delete_one('{:U('field/push_message/push_message_delete_action')}','{$vo['message_id']}');">删除</a>
+		</td>
+	</tr>
+	</volist>
+    </table>
+	  <php>}else{</php>
+			<div class="no_data">
+				<img src="/skin/images/no_data.gif" align="absmiddle"> <span>没有消息推送... </span>
+			</div>
+	 <php>}</php>
+  </div>
+
+  <div class="Toolbar_inbox">
+	<div class="page right">{$pages}</div>
+
+	
+	<a href="javascript:void(0);" class="btn_a"  onclick="mod_delete_batch('{:U('field/push_message/push_message_delete_action')}','mod_table');"><span>批量删除</span></a>
+
+
+	<div class="clear"></div>
+  </div>
+</div>
+
+<script>
+	$(document).ready(function(){
+		$("tr[overstyle='on']").hover(
+		  function ()
+		  {
+		    $(this).addClass("bg_hover");
+		  },
+		  function (){
+		    $(this).removeClass("bg_hover");
+		  }
+		);
+	});
+</script>
+
+
+<include file="../public/_footer" />

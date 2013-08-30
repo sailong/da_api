@@ -77,13 +77,29 @@
 						<input type="radio" name="event_is_baoming" id="event_is_baoming" value="N" >否
 					</td>
 				</tr>
+				
+				<tr>
+					<th>显示轮数：</th>
+					<td>
+						<input type="text" name="event_lun_num" id="event_lun_num" class="mod_input2" style="width:66px;"  value="{$data.event_lun_num}">
+						（客户端赛事直播页，显示轮数）
+					</td>
+				</tr>
+				
+				
+				<tr>
+					<th>显示报分：</th>
+					<td>
+						<input type="radio" name="event_is_viewscore" id="event_is_viewscore" value="Y" checked >是  
+						<input type="radio" name="event_is_viewscore" id="event_is_viewscore" value="N" >否
+						(设置 赛事直播页，显示该比赛的成绩（选是），还是介绍（选否）)
+					</td>
+				</tr>
+				
+				
 				<tr>
 					<th>排序：</th>
 					<td><input type="text" name="event_sort" id="event_sort" class="mod_input2" style="width:66px;"  value="{$data.event_sort}"></td>
-				</tr>
-				<tr>
-					<th>跳转网址：</th>
-					<td><input type="text" name="event_url" id="event_url" class="mod_input2" style="width:500px;"  value="{$data.event_url}"></td>
 				</tr>
 				<tr>
 					<th>跳转模块：</th>
@@ -128,7 +144,7 @@
 				<th></th>
 				<td>
 					<input type="submit" class="btn_b"  value="添加" style="margin-right:10px;"/>
-					<input type="button" class="btn_w" onclick="close_dialog(this)" value="取消" />
+					<input type="button" class="btn_w" onclick="javascript:history.back(-1);" value="返回" />
 				</td>
 		</tfoot>
 	</table><!--/add_table-->
@@ -147,6 +163,7 @@ $.formValidator.initConfig({formID:"act_form",theme:'ArrowSolidBox',mode:'AutoTi
 		$("#event_content").formValidator({empty:true,onShow:"请输入详细介绍",onFocus:"请输入详细介绍",onCorrect:"输入正确"}).inputValidator({min:1,max:3000,onError:"请输入详细介绍"});
 		$("#event_state").formValidator({empty:true,onShow:"请输入赛事状态",onFocus:"请输入赛事状态",onCorrect:"输入正确"}).inputValidator({min:1,max:1,onError:"请输入赛事状态"});
 		$("#event_is_tj").formValidator({empty:true,onShow:"请输入赛事推荐",onFocus:"请输入赛事推荐",onCorrect:"输入正确"}).inputValidator({min:1,max:50,onError:"请输入赛事推荐"});
+		$("#event_lun_num").formValidator({onShow:"请输入显示轮数",onFocus:"请输入显示轮数",onCorrect:"输入正确"}).inputValidator({min:1,max:50,onError:"请输入显示轮数"});
 		
 
 	$.formValidator.reloadAutoTip();

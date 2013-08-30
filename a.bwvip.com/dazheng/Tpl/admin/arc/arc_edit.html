@@ -98,6 +98,16 @@
 					<td><input type="text" name="field_uid" id="field_uid" class="mod_input2" style="width:100px;" value="{$data.field_uid}"> </td>
 				</tr>
 				<tr>
+					<th>客户端隐藏：</th>
+					<td><select name="arc_viewstatus">
+							<option value="">请选择</option>
+							<option value="1">显示</option>
+							<option value="0">隐藏</option>
+						</select>
+						<script>set_select_value(document.act_form.arc_viewstatus,"{$data.arc_viewstatus}");</script>
+					</td>
+				</tr>
+				<tr>
 					<th>语言：</th>
 					<td><select name="language">
 							<option value="">请选择</option>

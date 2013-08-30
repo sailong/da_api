@@ -60,6 +60,11 @@ class field_menuAction extends field_publicAction
 	    $field_menu_model = new field_menuModel();
 	    $list = $field_menu_model->get_1stmenu_list($field_uid,$page,20);
 	    foreach($list['item'] as $key=>&$val) {
+			if(!empty($val['category_id']))
+			{
+				$category_ids[$val['category_id']] = $val['category_id'];
+			}
+			
 	        if($language == 'en') {
 	            $val['field_1stmenu_name'] = $val['field_1stmenu_name_en'];
 	        }
@@ -73,6 +78,14 @@ class field_menuAction extends field_publicAction
 	    if($first_menu) {
 	        return $list['item'];exit;
 	    }
+		
+		$category_data = M('category')->where("category_id in('".implode("','",$category_ids)."')")->select();
+		foreach($category_data as $id=>$value){
+			$category_list[$value['category_id']]=$value;
+		}
+		unset($category_ids,$category_data);
+		
+		$this->assign("category_list",$category_list);
 	    $this->assign('list',$list['item']);
 		$this->assign("pages",$list["pages"]);
 		$this->assign("total",$list["total"]);

@@ -1,0 +1,120 @@
+<include file="../public/header_dialog" />
+{$usejs}
+
+<div class="so_main">
+
+  <div class="page_tit">报分员管理</div>
+  <div class="tit_tab">
+	<ul>
+		<li><a class=on href="{:U('admin/baofen_user/baofen_user_add')}">添加报分员</a></li>
+	</ul>
+  </div>
+
+<table border="0" cellspacing="0" cellpadding="0" style="width:900px;">
+<tr>
+<td>
+<!--/dialog_start-->
+
+<form method="post" id="act_form" name="act_form" action="{:U('admin/baofen_user/baofen_user_add_action')}" enctype="multipart/form-data">
+	<table class="add_table" border="0" cellspacing="0" cellpadding="0" >
+		<tbody>
+				<tr>
+					<th>用户名：</th>
+					<td><input type="text" name="username" id="username" class="mod_input2" style="width:300px;" ></td>
+				</tr>
+				<tr>
+					<th>密码：</th>
+					<td><input type="text" name="password" id="password" class="mod_input2" style="width:300px;" ></td>
+				</tr>
+				
+				<tr>
+					<th>所属分站：</th>
+					<td>
+						<select name="fenzhan_id" id="fenzhan_id">
+							<option value="">请选择</option>
+							<volist id="vo" name="fenzhan">
+							<option value="{$vo.fenzhan_id}">{$vo.fenzhan_name}</option>
+							</volist>
+						</select>
+					</td>
+				</tr>
+				<!--
+				<tr>
+					<th>所属赛事：</th>
+					<td><input type="text" name="event_id" id="event_id" class="mod_input2" style="width:66px;" value="<php> echo get('event_id');</php>" ></td>
+				</tr>
+				-->
+				<!--
+				<tr>
+					<th>所在球场：</th>
+					<td><input type="text" name="field_id" id="field_id" class="mod_input2" style="width:66px;" value="<php> echo get('field_id');</php>" ></td>
+				</tr>
+				-->
+				<tr>
+					<th>负责球洞：</th>
+					<td>
+						球洞1<input type="checkbox" name="dongs[]" value="1">&nbsp;&nbsp;&nbsp;
+						球洞2<input type="checkbox" name="dongs[]" value="2">&nbsp;&nbsp;&nbsp;
+						球洞3<input type="checkbox" name="dongs[]" value="3">&nbsp;&nbsp;&nbsp;
+						球洞4<input type="checkbox" name="dongs[]" value="4">&nbsp;&nbsp;&nbsp;
+						球洞5<input type="checkbox" name="dongs[]" value="5">&nbsp;&nbsp;&nbsp;
+						球洞6<input type="checkbox" name="dongs[]" value="6">&nbsp;&nbsp;&nbsp;
+						球洞7<input type="checkbox" name="dongs[]" value="7">&nbsp;&nbsp;&nbsp;
+						球洞8<input type="checkbox" name="dongs[]" value="8">&nbsp;&nbsp;&nbsp;
+						球洞9<input type="checkbox" name="dongs[]" value="9">&nbsp;&nbsp;&nbsp;<br />
+						球洞10<input type="checkbox" name="dongs[]" value="10">&nbsp;&nbsp;&nbsp;
+						球洞11<input type="checkbox" name="dongs[]" value="11">&nbsp;&nbsp;&nbsp;
+						球洞12<input type="checkbox" name="dongs[]" value="12">&nbsp;&nbsp;&nbsp;
+						球洞13<input type="checkbox" name="dongs[]" value="13">&nbsp;&nbsp;&nbsp;
+						球洞14<input type="checkbox" name="dongs[]" value="14">&nbsp;&nbsp;&nbsp;
+						球洞15<input type="checkbox" name="dongs[]" value="15">&nbsp;&nbsp;&nbsp;
+						球洞16<input type="checkbox" name="dongs[]" value="16">&nbsp;&nbsp;&nbsp;
+						球洞17<input type="checkbox" name="dongs[]" value="17">&nbsp;&nbsp;&nbsp;
+						球洞18<input type="checkbox" name="dongs[]" value="18">&nbsp;&nbsp;&nbsp;
+					</td>
+				</tr>
+	
+		</tbody>
+		<tfoot>
+			<tr>
+				<th></th>
+				<td>
+					<input type="hidden" name="event_id" id="event_id" class="mod_input2" style="width:66px;" value="<php> echo get('event_id');</php>" >
+					<input type="submit" class="btn_b"  value="添加" style="margin-right:10px;"/>
+					<input type="button" class="btn_w" onclick="javascript:history.back(-1);" value="返回" />
+				</td>
+		</tfoot>
+	</table><!--/add_table-->
+</form>
+
+<script>
+$(document).ready(function(){
+$.formValidator.initConfig({formID:"act_form",theme:'ArrowSolidBox',mode:'AutoTip',onError:function(msg){msg_error(msg)},inIframe:true});
+
+	$("#username").formValidator({empty:true,onShow:"请输入用户名",onFocus:"请输入用户名",onCorrect:"输入正确"}).inputValidator({min:1,max:50,onError:"请输入用户名"});
+		$("#password").formValidator({empty:true,onShow:"请输入密码",onFocus:"请输入密码",onCorrect:"输入正确"}).inputValidator({min:1,max:50,onError:"请输入密码"});
+		$("#event_id").formValidator({empty:true,onShow:"请输入所属赛事",onFocus:"请输入所属赛事",onCorrect:"输入正确"}).inputValidator({min:1,max:11,onError:"请输入所属赛事"});
+		$("#fenzhan_id").formValidator({empty:true,onShow:"请输入所属分站",onFocus:"请输入所属分站",onCorrect:"输入正确"}).inputValidator({min:1,max:11,onError:"请输入所属分站"});
+		$("#field_id").formValidator({empty:true,onShow:"请输入所在球场",onFocus:"请输入所在球场",onCorrect:"输入正确"}).inputValidator({min:1,max:11,onError:"请输入所在球场"});
+		$("#dongs").formValidator({empty:true,onShow:"请输入负责球洞",onFocus:"请输入负责球洞",onCorrect:"输入正确"}).inputValidator({min:1,max:100,onError:"请输入负责球洞"});
+		$("#iteamid").formValidator({empty:true,onShow:"请输入比赛当前ID",onFocus:"请输入比赛当前ID",onCorrect:"输入正确"}).inputValidator({min:1,max:11,onError:"请输入比赛当前ID"});
+		$("#onlymark").formValidator({empty:true,onShow:"请输入onlymark",onFocus:"请输入onlymark",onCorrect:"输入正确"}).inputValidator({min:1,max:11,onError:"请输入onlymark"});
+		
+
+	$.formValidator.reloadAutoTip();
+});
+
+function reloadAutoTip()
+{
+	$.formValidator.reloadAutoTip();
+}
+
+</script>
+
+<!--/dialog_end-->
+</td>
+</tr>
+</table>
+
+</div>
+<include file="../public/_footer" />

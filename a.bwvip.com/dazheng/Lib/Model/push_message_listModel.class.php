@@ -16,6 +16,11 @@ class push_message_listModel extends Model{
 
 		$where = " 1 ";
 
+		if(get('k')!="")
+		{
+			$where .=" and uid='".get('k')."' ";
+		}
+
 
 
 		if(get("starttime")!="")
@@ -35,6 +40,7 @@ class push_message_listModel extends Model{
 				$user=M()->query("select uname from ".C("db_prefix")."user where  uid='".$data["item"][$i]["user_id"]."' ");
 				$data["item"][$i]["uname"]=$user[0]["uname"];
 			}
+			$data['item'][$i]['msg_len']=strlen($data['item'][$i]['message_content'].$data['item'][$i]['devices_token']);
 		}
 		$data["total"] = M("push_message_list")->where($where.$bigwhere)->count();
 		

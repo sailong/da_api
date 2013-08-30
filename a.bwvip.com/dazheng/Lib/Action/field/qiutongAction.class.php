@@ -29,6 +29,20 @@ class qiutongAction extends field_publicAction
 		        $val['qiutong_content'] = mb_substr($val['qiutong_content'],0,20,'utf8').'...';
 		    }
 		}
+		
+		foreach($list['item'] as $key=>$value){
+			if(!empty($value['category_id'])){
+				$category_ids[$value['category_id']] = $value['category_id'];
+			}
+		}
+		$category_data = M('category')->where("category_id in('".implode("','",$category_ids)."')")->select();
+		
+		foreach($category_data as $key=>$value){
+			$category_list[$value['category_id']] =  $value;
+		}
+		unset($category_ids,$category_data);
+		
+		$this->assign("category_list",$category_list);
 		$this->assign("list",$list["item"]);
 		$this->assign("pages",$list["pages"]);
 		$this->assign("total",$list["total"]);

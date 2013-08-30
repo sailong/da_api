@@ -22,7 +22,7 @@ class event_userAction extends field_publicAction
 		{
 			$sql =" and event_id='".get('event_id')."'";
 		}
-		$list=D("event_user")->event_user_list_pro($sql);
+		$list=D("event_user")->event_user_list_pro($sql,20," event_user_addtime desc ");
 
 
 		$this->assign("list",$list["item"]);

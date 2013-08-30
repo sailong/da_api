@@ -160,30 +160,46 @@ class Image {
      * @param boolean $interlace 启用隔行扫描
      * @return void
      */
-    static function thumb($image, $thumbname, $type='', $maxWidth=200, $maxHeight=50, $interlace=true) {
+    static function thumb($image, $thumbname, $type='', $maxWidth=200, $maxHeight=50, $interlace=true,$if_resize=false)
+	{
         // 获取原图信息
         $info = Image::getImageInfo($image);
-        if ($info !== false) {
+        if ($info !== false)
+		{
             $srcWidth = $info['width'];
             $srcHeight = $info['height'];
             $type = empty($type) ? $info['type'] : $type;
             $type = strtolower($type);
             $interlace = $interlace ? 1 : 0;
             unset($info);
-            $scale = min($maxWidth / $srcWidth, $maxHeight / $srcHeight); // 计算缩放比例
-            if ($scale >= 1) {
-                // 超过原图大小不再缩略
-                $width = $srcWidth;
-                $height = $srcHeight;
-            } else {
-                // 缩略图尺寸
-                $width = (int) ($srcWidth * $scale);
-                $height = (int) ($srcHeight * $scale);
-            }
+			
+			if($if_resize)
+			{
+				$width = $maxWidth;
+                $height = $maxHeight;
+			}
+			else
+			{
+				$scale = min($maxWidth / $srcWidth, $maxHeight / $srcHeight); // 计算缩放比例
+				if($scale>= 1)
+				{
+					// 超过原图大小不再缩略
+					$width = $srcWidth;
+					$height = $srcHeight;
+				}
+				else
+				{
+					// 缩略图尺寸
+					$width = (int) ($srcWidth * $scale);
+					$height = (int) ($srcHeight * $scale);
+				}
+			}
+		
 
             // 载入原图
             $createFun = 'ImageCreateFrom' . ($type == 'jpg' ? 'jpeg' : $type);
-            if(!function_exists($createFun)) {
+            if(!function_exists($createFun))
+			{
                 return false;
             }
             $srcImg = $createFun($image);
