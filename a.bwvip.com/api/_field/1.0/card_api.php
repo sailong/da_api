@@ -112,7 +112,7 @@ if($ac==='show')
 //显示排名 新 赛事功能（赛事详细）
 if($ac=='rank')
 {
-	$limit=100;
+	$limit=120;
 
 	$pic_width=$_G['gp_pic_width'];
 	$login_uid=$_G['gp_login_uid'];

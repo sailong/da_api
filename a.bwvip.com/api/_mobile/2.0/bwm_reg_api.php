@@ -73,7 +73,7 @@ if($ac=="bwm_reg")
 	}
 	
 	$erweima_path = erweima();
-	echo $erweima_path;die;
+	
     if(empty($erweima_path)) {
         api_json_result(1,1,"二维码生成失败",null);
     }

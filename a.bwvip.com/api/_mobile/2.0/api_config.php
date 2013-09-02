@@ -1,6 +1,6 @@
 <?php
-//é…ç½®
-$site_url="http://a.bwvip.com";
+//ÅäÖÃ
+$site_url="http://www.bwvip.com";
 $token_timelong=1*24*3600;
 
 ?>

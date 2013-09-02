@@ -73,11 +73,13 @@ if($ac=="select_city")
 			$list=DB::query("select id,name,(select count(id) from ".DB::table("common_field")." where province=".DB::table("common_district").".id ) as qiuchang_num  from ".DB::table("common_district")." where 1=1 ".$sql." order by id asc limit $page_start,$page_size ");
 			while($row = DB::fetch($list) )
 			{
-				$list_data[]=$row;
+				$list_data[]=array_default_value($row);
 			}
 
 	}//end page
-
+    if(empty($list_data)) {
+        $list_data = null;
+    }
 	$data['title']		= "list_data";
 	$data['data']		= $list_data;
 
@@ -134,7 +136,7 @@ if($ac=="select_field")
 			{
 				
 				$row_sub['par']=str_replace(",","|",$row_sub['par']);
-				$row['chang'][]=$row_sub;
+				$row['chang'][]=array_default_value($row_sub);
 				$i++;
 			}
 			if($i==0)
@@ -152,7 +154,7 @@ if($ac=="select_field")
 			
 			if($i>0)
 			{
-				$list_data[]=$row;
+				$list_data[]=array_default_value($row);
 			}
 			
 		}
@@ -167,6 +169,9 @@ if($ac=="select_field")
 		}
 	}
 
+    if(empty($list_data)) {
+        $list_data = null;
+    }
 	$data['title']		= "list_data";
 	$data['data']		= $list_data;
 
@@ -210,11 +215,10 @@ if($ac=="score_add")
 	$par=$out_par."|".$bzg."|".$in_par."|".$bzg2."|".$total_bzg;
 	$tee=$_G['gp_tee'];
 
-	$res=DB::query(" insert into ".DB::table("common_score")." (uid,sais_id,tee,fuid,par,addtime,dateline,dong_names,source,is_edit) values ('".$uid."','0','".$tee."','".$field_uid."','".$par."','".time()."','".time()."','".$dong_names."','user','Y') ");
-	//echo " insert into ".DB::table("common_score")." (uid,sais_id,tee,fuid,par,addtime,dateline,dong_names) values ('".$uid."','0','".$tee."','".$field_uid."','".$par."','".time()."','".time()."','".$dong_names."') ";
+	$res=DB::query(" insert into tbl_baofen (uid,event_id,fenzhan_id,tee,field_id,par,addtime,dateline,dong_names,source,is_edit) values ('".$uid."','0','0','".$tee."','".$field_uid."','".$par."','".time()."','".time()."','".$dong_names."','user','Y') ");
 
-	$max_id=DB::result_first("select max(id) from ".DB::table("common_score")." where uid='".$uid."' and sais_id=0 ");
-	$res2=DB::query(" update ".DB::table("common_score")." set group_id='".$max_id."' where id='".$max_id."'  ");
+	$max_id=DB::result_first("select max(baofen_id) from tbl_baofen where uid='".$uid."' and event_id=0 ");
+	$res2=DB::query(" update tbl_baofen set group_id='".$max_id."' where baofen_id='".$max_id."'  ");
 
 	api_json_result(1,0,$max_id,$data);
 
@@ -226,9 +230,8 @@ if($ac=="score_edit")
 {
 	$id=$_G["gp_id"];
 	
-
 	//个人信息
-	$detail_info=DB::fetch_first("select id,uid,fuid,par,score,dong_names,(select realname from ".DB::table("common_member_profile")." where uid=".DB::table("common_score").".uid) as realname,tuigan from ".DB::table("common_score")." where id='".$id."' ");
+	$detail_info=DB::fetch_first("select baofen_id as id,baofen_id,uid,field_id as fuid,par,score,dong_names,(select realname from ".DB::table("common_member_profile")." where uid=tbl_baofen.uid) as realname,tuigan from tbl_baofen where baofen_id='".$id."' ");
 	if($detail_info['id'])
 	{
 		
@@ -288,12 +291,12 @@ if($ac=="score_edit")
 		}
 
 		$brr=explode("|",$detail_info['dong_names']);
-		$detail_info['dong_names']=$brr;
-		$detail_data=$detail_info;
+		$detail_info['dong_names']=array_default_value($brr);
+		$detail_data=array_default_value($detail_info);
 	}
 
 	//同组
-	$list=DB::query("select id,uid,fuid,par,score,dong_names,source,is_edit,(select realname from ".DB::table("common_member_profile")." where uid=".DB::table("common_score").".uid) as realname,tuigan from ".DB::table("common_score")." where group_id='".$id."' and id<>'".$id."' order by parent_id asc ");
+	$list=DB::query("select baofen_id as id,baofen_id,uid,field_id as fuid,par,score,dong_names,source,is_edit,(select realname from ".DB::table("common_member_profile")." where uid=tbl_baofen.uid) as realname,tuigan from tbl_baofen where group_id='".$id."' and baofen_id<>'".$id."' order by parent_id asc ");
 	while($row=DB::fetch($list))
 	{
 		
@@ -301,11 +304,14 @@ if($ac=="score_edit")
 		{
 			$arr=explode("|",$row['score']);
 			$brr=explode("|",$row['tuigan']);
+			$arr = array_default_value($arr);
+			$brr = array_default_value($brr);
 			unset($arr[9]);
 			unset($arr[19]);
 			unset($arr[20]);
 			$c1=implode(",",$arr);
 			$c_str=explode(",",$c1);
+			$c_str = array_default_value($c_str);
 			for($i=0; $i<count($c_str); $i++)
 			{
 				if($brr[$i])
@@ -317,13 +323,13 @@ if($ac=="score_edit")
 					$c_str[$i]=$c_str[$i]."/0";
 				}
 			}
-			$row['score']=$c_str;
+			$row['score']=array_default_value($c_str);
 		}
 
 		if($row['tuigan'])
 		{
 			$row['tuigan']=explode("|",$row['tuigan']);
-			
+			$row['tuigan']=array_default_value($row['tuigan']);
 			$row['tuigan'][18]="0";
 			$row['tuigan'][19]="0";
 			$row['tuigan'][20]="0";
@@ -342,6 +348,8 @@ if($ac=="score_edit")
 		{
 			$ccc=str_replace("|",",",$row['par']);
 			$crr=explode(",",$ccc);
+			$ccc = array_default_value($ccc);
+			$crr = array_default_value($crr);
 			unset($crr[9]);
 			unset($crr[19]);
 			unset($crr[20]);
@@ -350,10 +358,17 @@ if($ac=="score_edit")
 		}
 
 		$brr=explode("|",$row['dong_names']);
+		$brr = array_default_value($brr);
 		$row['dong_names']=$brr;
-		$list_data[]=$row;
+		$list_data[]=array_default_value($row);
 	}
 
+    if(empty($detail_data)) {
+        $detail_data = null;
+    }
+    if(empty($list_data)) {
+        $list_data = null;
+    }
 	$data['title']="detail_data";
 	$data['data']=array(
 		'detail_data'=>$detail_data,	
@@ -364,19 +379,21 @@ if($ac=="score_edit")
 }
 
 
+
 //成绩卡展示页
 if($ac=="score_detail")
 {
 	$id=$_G["gp_id"];
 
 	//单人成绩
-	$detail_info=DB::fetch_first("select id,uid,(select realname from ".DB::table("common_member_profile")." where uid=".DB::table("common_score").".uid) as realname,fuid,par,pars,score,dong_names,sais_id,(select realname from ".DB::table("common_member_profile")." where uid=".DB::table("common_score").".sais_id) as sais_name,fuid,(select realname from ".DB::table("common_member_profile")." where uid=".DB::table("common_score").".fuid) as field_name,dateline,uploadimg,tuigan,is_edit,source from ".DB::table("common_score")." where id='".$id."' ");
-	if($detail_info['id'])
+	$detail_info=DB::fetch_first("select baofen_id as id, baofen_id,uid,(select realname from ".DB::table("common_member_profile")." where uid=tbl_baofen.uid) as realname,field_id as fuid,par,pars,score,dong_names,event_id as sais_id,(select event_name from tbl_event where event_id=tbl_baofen.event_id) as sais_name,(select realname from ".DB::table("common_member_profile")." where uid=tbl_baofen.field_id) as field_name,dateline,uploadimg,tuigan,is_edit,source from tbl_baofen where baofen_id='".$id."' ");
+	if($detail_info['baofen_id'])
 	{
-		$detail_info['tongzu_num']=DB::result_first("select count(id) from ".DB::table("common_score")." where group_id='".$detail_info['id']."' ");
+		$detail_info['tongzu_num']=DB::result_first("select count(baofen_id) from tbl_baofen where group_id='".$detail_info['baofen_id']."' ");
 		if($detail_info['tuigan'])
 		{
 			$detail_info['tuigan']=explode("|",$detail_info['tuigan']);
+			$detail_info['tuigan'] = array_default_value($detail_info['tuigan']);
 			$detail_info['tuigan'][18]="0";
 			$detail_info['tuigan'][19]="0";
 			$detail_info['tuigan'][20]="0";
@@ -402,10 +419,68 @@ if($ac=="score_detail")
 			$detail_info['uploadimg']='';
 			$detail_info['uploadimg_small']="";
 		}
+		
+		//color
+		if($detail_info['score'])
+		{
+			$s_arr=explode("|",$detail_info['score']);
+		}
+		if($detail_info['par'])
+		{
+			$p_arr=explode("|",$detail_info['par']);
+		}
+		
+		if(!empty($s_arr))
+		{
+			$c_arr=array();
+		}
+		
+		for($i=0; $i<count($p_arr); $i++)
+		{
+			if($s_arr[$i]!="" )
+			{
+				if($s_arr[$i]-$p_arr[$i]==3)
+				{
+					$c_arr[$i]=1;
+				}
+				else if($s_arr[$i]-$p_arr[$i]==2)
+				{
+					$c_arr[$i]=2;
+				}
+				else if($s_arr[$i]-$p_arr[$i]==1)
+				{
+					$c_arr[$i]=3;
+				}
+				else if($s_arr[$i]-$p_arr[$i]==0)
+				{
+					$c_arr[$i]=4;
+				}
+				else if($s_arr[$i]-$p_arr[$i]==-1)
+				{
+					$c_arr[$i]=5;
+				}
+				else if($s_arr[$i]-$p_arr[$i]==-2)
+				{
+					$c_arr[$i]=6;
+				}
+				else if($s_arr[$i]-$p_arr[$i]==-3)
+				{
+					$c_arr[$i]=7;
+				}
+				else
+				{
+					$c_arr[$i]=0;
+					//$c_arr[$i]=$s_arr[$i]-$p_arr[$i];
+				}
+			}
+		}
+		//$detail_info['color']=array_default_value($c_arr);
+		$detail_info['color']=$c_arr;
 
 		if($detail_info['score'])
 		{
 			$detail_info['score']=explode("|",$detail_info['score']);
+			$detail_info['score'] = array_default_value($detail_info['score']);
 			for($i=0; $i<count($detail_info['score']); $i++)
 			{
 				if($detail_info['score'][$i]=="")
@@ -417,37 +492,95 @@ if($ac=="score_detail")
 		if($detail_info['par'])
 		{
 			$detail_info['par']=explode("|",$detail_info['par']);
+			$detail_info['par'] = array_default_value($detail_info['par']);
 		}
 		if($detail_info['pars'])
 		{
 			$detail_info['pars']=explode("|",$detail_info['pars']);
+			$detail_info['pars'] = array_default_value($detail_info['pars']);
 		}
 		if($detail_info['dong_names'])
 		{
 			$detail_info['dong_names']=explode("|",$detail_info['dong_names']);
+			$detail_info['dong_names'] = array_default_value($detail_info['dong_names']);
 		}
 
 		$detail_info['dateline']=date("Y年m月d日",$detail_info['dateline']);
-		$detail_data=$detail_info;
+		$detail_data=array_default_value($detail_info);
 	}
 
 
 	//同组成绩
-	$list=DB::query("select id,uid,(select realname from ".DB::table("common_member_profile")." where uid=".DB::table("common_score").".uid )as realname,score from ".DB::table("common_score")." where group_id='".$id."' and id<>'".$id."' order by parent_id asc ");
+	$list=DB::query("select baofen_id as id,baofen_id,uid,(select realname from ".DB::table("common_member_profile")." where uid=tbl_baofen.uid )as realname,score from tbl_baofen where group_id='".$id."' and baofen_id<>'".$id."' order by parent_id asc ");
 	while($row=DB::fetch($list))
-	{
+	{	
+		//color
+		if($row['score'])
+		{
+			$s_arr=explode("|",$row['score']);
+		}
+		if($row['par'])
+		{
+			$p_arr=explode("|",$row['par']);
+		}
+		if(!empty($s_arr))
+		{
+			$c_arr=array();
+		}
+		for($i=0; $i<count($p_arr); $i++)
+		{
+			if($s_arr[$i]!="" )
+			{
+				if($s_arr[$i]-$p_arr[$i]==3)
+				{
+					$c_arr[$i]=1;
+				}
+				else if($s_arr[$i]-$p_arr[$i]==2)
+				{
+					$c_arr[$i]=2;
+				}
+				else if($s_arr[$i]-$p_arr[$i]==1)
+				{
+					$c_arr[$i]=3;
+				}
+				else if($s_arr[$i]-$p_arr[$i]==0)
+				{
+					$c_arr[$i]=4;
+				}
+				else if($s_arr[$i]-$p_arr[$i]==-1)
+				{
+					$c_arr[$i]=5;
+				}
+				else if($s_arr[$i]-$p_arr[$i]==-2)
+				{
+					$c_arr[$i]=6;
+				}
+				else if($s_arr[$i]-$p_arr[$i]==-3)
+				{
+					$c_arr[$i]=7;
+				}
+				else
+				{
+					$c_arr[$i]=0;
+					//$c_arr[$i]=$s_arr[$i]-$p_arr[$i];
+				}
+			}
+		}
+		$row['color']=$c_arr;
 	
 		if($row['score'])
 		{
 			$row['score']=explode("|",$row['score']);
+			$row['score']=array_default_value($row['score']);
 		}
 	
 		if($row['dong_names'])
 		{
 			$row['dong_names']=explode("|",$row['dong_names']);
+			$row['dong_names']=array_default_value($row['dong_names']);
 		}
 		
-		$list_data[]=$row;
+		$list_data[]=array_default_value($row);
 	}
 
 
@@ -515,9 +648,19 @@ if($ac=="score_detail")
 		}
 	}
 	
+    if(empty($detail_data)) {
+        $detail_data = null;
+    }
+    if(empty($list_data)) {
+        $list_data = null;
+    }
+    if(empty($reply_data)) {
+        $reply_data = null;
+    }
+
 	$data['title']="detail_data";
 	$data['data']=array(
-		'detail_data'=>$detail_data,	
+		'detail_data'=>array_default_value($detail_data),	
 		'list_data'=>$list_data,
 		'list_pinglun'=>$reply_data
 	);
@@ -546,15 +689,17 @@ if($ac=="score_save")
 		{
 			$score=$arr[$i]['score'];
 
-			$info==DB::fetch_first("select source,is_edit,uid,par from ".DB::table("common_score")." where id='".$arr[$i]['id']."'  ");
+			$info==DB::fetch_first("select source,is_edit,uid,par from tbl_baofen where baofen_id='".$arr[$i]['id']."'  ");
 			$par=explode("|",$info['par']);
-			//print_r($par);
-			//echo "<br />";
-
+			$par=array_default_value($par);
+			
+			$dong_sql="";
 			for($n=0; $n<count($score); $n++)
 			{
+				
 					
 				$fen = explode("/",$score[$n]);
+				$fen=array_default_value($fen);
 				if($fen[0]=="")
 				{
 					$fen[0]="0";
@@ -594,6 +739,9 @@ if($ac=="score_save")
 				{
 					$tuigan .=$fen[1]."|";
 				}
+				
+				//18洞sql jack add 0710
+				$dong_sql .=" ,cave_".$n."='".$fen."' ";
 
 			}
 			$score_row=$score_row."".$score_total;
@@ -601,6 +749,7 @@ if($ac=="score_save")
 			
 			//pars
 			$score_arr=explode("|",$score_row);
+			$score_arr=array_default_value($score_arr);
 			for($j=0; $j<count($score_arr); $j++)
 			{
 				$pars_one=$score_arr[$j]-$par[$j];
@@ -622,7 +771,9 @@ if($ac=="score_save")
 				
 				$pars_arr[]=$pars_one;
 			}
+			$pars_arr=array_default_value($pars_arr);
 			$pars=implode("|",$pars_arr);
+			
 			//echo $pars;
 			//echo "<hr2>";
 
@@ -637,24 +788,24 @@ if($ac=="score_save")
 				$uid=$info['uid'];
 				if($source=="waika")
 				{
-					$res=DB::query("update ".DB::table("common_score")." set score='".$score_row."',pars='".$pars."',tuigan='".$tuigan."',is_edit='N' where id='".$arr[$i]['id']."' ");	
+					$res=DB::query("update tbl_baofen set score='".$score_row."',pars='".$pars."',tuigan='".$tuigan."',is_edit='N',flag='app'  where baofen_id='".$arr[$i]['id']."' ");
 				}
 				else
 				{
-					$res=DB::query("update ".DB::table("common_score")." set score='".$score_row."',pars='".$pars."',tuigan='".$tuigan."' where id='".$arr[$i]['id']."' ");
+					$res=DB::query("update tbl_baofen set score='".$score_row."',pars='".$pars."',tuigan='".$tuigan."' where baofen_id='".$arr[$i]['id']."' ");
 				}
-				//echo "update ".DB::table("common_score")." set score='".$score_row."',pars='".$pars."',tuigan='".$tuigan."',is_edit='N' where id='".$arr[$i]['id']."' ";
-
+				
 				//添加微博 20130520
+				
 				if(!$result = DB::result_first(" select tid from ultrax.jishigou_topic where uid='".$uid."' and score_id=".$arr[$i]['id']))
 				{
-					$score_info = DB::fetch_first(" select cs.sais_id,cs.uid,cs.fuid,cs.id,cs.addtime,cmp.realname as sai_name ,cmp2.realname as qc_name from ".DB::table("common_score")." as cs LEFT JOIN ".DB::table("common_member_profile")." as cmp ON cmp.uid = cs.sais_id LEFT JOIN ".DB::table("common_member_profile")." as cmp2 ON cmp2.uid=cs.fuid where cs.id=".$arr[$i]['id']);
+					$score_info = DB::fetch_first(" select cs.event_id,cs.uid,cs.field_id,cs.baofen_id as id,cs.addtime,cmp.realname as sai_name ,cmp2.realname as qc_name from tbl_baofen as cs LEFT JOIN ".DB::table("common_member_profile")." as cmp ON cmp.uid = cs.event_id LEFT JOIN ".DB::table("common_member_profile")." as cmp2 ON cmp2.uid=cs.field_id where cs.baofen_id=".$arr[$i]['id']);
 
 					$weibdata['uid']     = $score_info['uid'];
-					$weibdata['fuid']    = $score_info['fuid'];
-					$sais_username = DB::result_first(" select username from ".DB::table('common_member')." where uid=".$score_info['sais_id']);
-					$qc_username   = DB::result_first(" select username from ".DB::table('common_member')." where uid=".$score_info['fuid']);
-					$username      = DB::result_first(" select username from ".DB::table('common_member')." where uid=".$score_info['uid']);
+					$weibdata['fuid']    = $score_info['field_id'];
+					$sais_username = DB::result_first(" select event_name from tbl_event where event_id='".$score_info['event_id']."'");
+					$qc_username   = DB::result_first(" select username from ".DB::table('common_member')." where uid='".$weibdata['field_id']."'");
+					$username      = DB::result_first(" select username from ".DB::table('common_member')." where uid='".$score_info['uid']."'");
 
 					if($sais_username)
 					{
@@ -666,10 +817,11 @@ if($ac=="score_save")
 					}
 					
 
-					DB::query(" insert into ultrax.jishigou_topic (uid,username,fuid,content,score_id,dateline,type) values ('".$weibdata['uid']."','".$username ."','".$weibdata['fuid']."','".$weibdata['content']."','".$score_info['id']."','".time()."' ,'first')  ");
+					DB::query(" insert into ultrax.jishigou_topic (uid,username,content,score_id,dateline,type) values ('".$weibdata['uid']."','".$username ."','".$weibdata['content']."','".$score_info['id']."','".time()."' ,'first')  ");
 				}
+			
 				
-				//echo "update ".DB::table("common_score")." set score='".$par."',tuigan='".$tuigan."' where id='".$arr[$i]['id']."' ";
+				//echo "update tbl_baofen set score='".$par."',tuigan='".$tuigan."' where id='".$arr[$i]['id']."' ";
 				//echo "<hr>";
 			}
 
@@ -697,7 +849,7 @@ if($ac=="up_pic")
 	{
 		if($_FILES["pic"]["error"]<=0 && $_FILES["pic"]["name"])
 		{
-			$save_path="./upload/score/";
+			$save_path="../upload/score/";
 			$full_save_path=$save_path.date("Ymd",time())."/";
 			if(!file_exists($save_path))
 			{
@@ -707,24 +859,27 @@ if($ac=="up_pic")
 			{
 				mkdir($full_save_path);
 			}
-
-			move_uploaded_file($_FILES["pic"]["tmp_name"], $full_save_path. time().$_FILES["pic"]["name"]);//将上传的文件存储到服务器
 			
-			$file_path="./upload/score/".date("Ymd",time())."/".time().$_FILES["pic"]["name"];
+			$time_name=time();
+
+			move_uploaded_file($_FILES["pic"]["tmp_name"], $full_save_path. $time_name.$_FILES["pic"]["name"]);//将上传的文件存储到服务器
+			
+			$file_path="../upload/score/".date("Ymd",time())."/".$time_name.$_FILES["pic"]["name"];
+			$file_path_sql="/upload/score/".date("Ymd",time())."/".$time_name.$_FILES["pic"]["name"];
 			$extname=end(explode(".",$file_path));
 			if($extname=="jpg")
 			{
 				$pic_source=imagecreatefromjpeg($file_path);
 			}
 
-			$file_path2="./upload/score/".date("Ymd",time())."/".time().$_FILES["pic"]["name"]."_small";
-			//echo $file_path2;
+			$file_path2="../upload/score/".date("Ymd",time())."/".$time_name.$_FILES["pic"]["name"]."_small";
+
 			if(file_exists($file_path))
 			{
 				$aa=resizeImage($pic_source,100,100,$file_path2,".".$extname);
-				//print_r($aa);
 
-				$res=DB::query("update ".DB::table("common_score")." set uploadimg='".$file_path."' where id='".$id."' ");	
+
+				$res=DB::query("update tbl_baofen set uploadimg='".$file_path_sql."' where baofen_id='".$id."' ");	
 				api_json_result(1,0,"保存成功",$data);
 			}
 			else
@@ -771,120 +926,116 @@ if($ac=="add_friend")
 	$parent_id=$_G['gp_parent_id'];
 	$source=$_G['gp_source'];
 	$tee=$_G['gp_tee'];
-	$mobile=$_G['gp_mobile'];
-	
+	$mobile=$_G['gp_mobile'];	
 
-	$user=DB::fetch_first("select uid,sais_id,tee,fuid,par,dong_names from ".DB::table("common_score")." where id='".$parent_id."' limit 1 ");
+	$user=DB::fetch_first("select uid,event_id,event_id as sais_id,tee,field_id as fuid,par,dong_names from tbl_baofen where baofen_id='".$parent_id."' limit 1 ");
 	if($user['uid'])
 	{
 
-			if($source=="bwvip")
+		if($source=="bwvip")
+		{
+			$res=DB::query(" insert into tbl_baofen (uid,event_id,fenzhan_id,tee,field_id,par,addtime,dateline,dong_names,parent_id,group_id,source,is_edit) values ('".$mobile."','0','0','".$tee."','".$user['fuid']."','".$user['par']."','".time()."','".time()."','".$user['dong_names']."','".$parent_id."','".$parent_id."','user','Y') ");
+			
+			$max_id=DB::result_first("select max(baofen_id) from tbl_baofen where group_id='".$parent_id."' and uid='".$mobile."' limit 1 ");
+			$data['title']="add_data";
+			$data['data']=array(
+					'message'=>	'添加成功',
+					'id'=>	$max_id,
+				);
+			api_json_result(1,0,null,$data);
+		}
+		else
+		{
+
+			$member=DB::fetch_first("select uid from ".DB::table("common_member_profile")." where mobile='".$mobile."' limit 1 ");
+			$member2=DB::fetch_first("select uid from ".DB::table("common_member")." where username='".$mobile."' limit 1 ");
+			if($member['uid'] || $member2['uid'])
 			{
-				$res=DB::query(" insert into ".DB::table("common_score")." (uid,sais_id,tee,fuid,par,addtime,dateline,dong_names,parent_id,group_id,source,is_edit) values ('".$mobile."','0','".$tee."','".$user['fuid']."','".$user['par']."','".time()."','".time()."','".$user['dong_names']."','".$parent_id."','".$parent_id."','user','Y') ");
-				
-				$max_id=DB::result_first("select max(id) from ".DB::table("common_score")." where group_id='".$parent_id."' and uid='".$mobile."' limit 1 ");
+				if($member['uid'])
+				{
+					$uid=$member['uid'];
+				}
+				else
+				{
+					if($member2['uid'])
+					{
+						$uid=$member2['uid'];
+					}
+				}
+
+				$res=DB::query(" insert into tbl_baofen (uid,event_id,fenzhan_id,tee,field_id,par,addtime,dateline,dong_names,parent_id,group_id,source,is_edit) values ('".$uid."','0','0','".$tee."','".$user['fuid']."','".$user['par']."','".time()."','".time()."','".$user['dong_names']."','".$parent_id."','".$parent_id."','user','Y') ");
+
+				$max_id=DB::result_first("select max(baofen_id) from tbl_baofen where group_id='".$parent_id."' and uid='".$uid."' limit 1 ");
 				$data['title']="add_data";
 				$data['data']=array(
-						'message'=>	'添加成功',
-						'id'=>	$max_id,
-					);
+					'message'=>	'添加成功',
+					'id'=>	$max_id,
+				);
 				api_json_result(1,0,null,$data);
 			}
 			else
 			{
+			
+				//如果未注册,则增加新用户
+				$t=time();
+				$email=$_G['gp_email']?$_G['gp_email']:$t.'@bw.com';
+				$username=$mobile;
+				$password=$mobile;
+				$realname=$_G['gp_realname'];
 
-				$member=DB::fetch_first("select uid from ".DB::table("common_member_profile")." where mobile='".$mobile."' limit 1 ");
-				$member2=DB::fetch_first("select uid from ".DB::table("common_member")." where username='".$mobile."' limit 1 ");
-				if($member['uid'] || $member2['uid'])
+				if($username && $password &&  $email)
 				{
-					if($member['uid'])
-					{
-						$uid=$member['uid'];
-					}
-					else
-					{
-						if($member2['uid'])
-						{
-							$uid=$member2['uid'];
-						}
-					}
+					$uid = uc_user_register($username,$password, $email);
+				}
+				else
+				{
+					api_json_result(1,10018,$api_error['register']['10018'],null);
+				}
 
-					$res=DB::query(" insert into ".DB::table("common_score")." (uid,sais_id,tee,fuid,par,addtime,dateline,dong_names,parent_id,group_id,source,is_edit) values ('".$uid."','0','".$tee."','".$user['fuid']."','".$user['par']."','".time()."','".time()."','".$user['dong_names']."','".$parent_id."','".$parent_id."','user','Y') ");
+				if($uid>0)
+				{
+					
 
-					$max_id=DB::result_first("select max(id) from ".DB::table("common_score")." where group_id='".$parent_id."' and uid='".$uid."' limit 1 ");
+					//处理用户信息
+					//userlogin($username, $password);
+					
+					$post_string = "&username=".$username."&password=".$password."";
+					$info = request_by_curl_new($site_url.'/member.php?mod=logging&action=login&loginsubmit=yes',$post_string);
+					
+					DB::query("UPDATE ultrax.jishigou_members SET nickname='$realname',validate=1 WHERE ucuid='$uid'"); 
+					DB::query("UPDATE ".DB::table('common_member_profile')."  SET realname='$realname',mobile='$mobile',cron_fensi_state=0  WHERE uid='$uid'"); 
+					DB::query("UPDATE ".DB::table('common_member')."  SET groupid='10'  WHERE uid='$uid'"); 
+
+					$res=DB::query("insert into tbl_baofen (uid,event_id,fenzhan_id,tee,field_id,par,addtime,dateline,dong_names,parent_id,group_id,source,is_edit) values ('".$uid."','0','0','".$tee."','".$user['fuid']."','".$user['par']."','".time()."','".time()."','".$user['dong_names']."','".$parent_id."','".$parent_id."','user','Y') ");
+					$max_id=DB::result_first("select max(baofen_id) from tbl_baofen where group_id='".$parent_id."' and uid='".$uid."' limit 1 ");
+
 					$data['title']="add_data";
 					$data['data']=array(
 						'message'=>	'添加成功',
 						'id'=>	$max_id,
 					);
-					api_json_result(1,0,null,$data);
+
 				}
 				else
 				{
-					//如果未注册,则增加新用户
-					$t=time();
-					$email=$_G['gp_email']?$_G['gp_email']:$t.'@bw.com';
-					$username=$mobile;
-					$password=$mobile;
-					$realname=$_G['gp_realname'];
-
-					if($username && $password &&  $email)
-					{
-						$uid = uc_user_register($username,$password, $email);
-					}
-					else
-					{
-						api_json_result(1,10018,$api_error['register']['10018'],null);
-					}
-
-					if($uid>0)
-					{
-						
-
-
-						//处理用户信息
-						//userlogin($username, $password);
-						
-						$post_string = "&username=".$username."&password=".$password."";
-						$info = request_by_curl_new('".$site_url."/member.php?mod=logging&action=login&loginsubmit=yes',$post_string);
-						
-						DB::query("UPDATE ultrax.jishigou_members SET nickname='$realname',validate=1 WHERE ucuid='$uid'"); 
-						DB::query("UPDATE ".DB::table('common_member_profile')."  SET realname='$realname',mobile='$mobile',cron_fensi_state=0  WHERE uid='$uid'"); 
-						DB::query("UPDATE ".DB::table('common_member')."  SET groupid='10'  WHERE uid='$uid'"); 
-
-
-
-						$res=DB::query("insert into ".DB::table("common_score")." (uid,sais_id,tee,fuid,par,addtime,dateline,dong_names,parent_id,group_id,source,is_edit) values ('".$uid."','0','".$tee."','".$user['fuid']."','".$user['par']."','".time()."','".time()."','".$user['dong_names']."','".$parent_id."','".$parent_id."','user','Y') ");
-						$max_id=DB::result_first("select max(id) from ".DB::table("common_score")." where group_id='".$parent_id."' and uid='".$uid."' limit 1 ");
-
-						$data['title']="add_data";
-						$data['data']=array(
-							'message'=>	'添加成功',
-							'id'=>	$max_id,
-						);
-
-					}
-					else
-					{
-						$data['title']="add_data";
-						$data['data']=array(
-							'message'=>	'添加失败',
-							'id'=>	$max_id,
-						);
-					}
-
-					
-					
-					api_json_result(1,0,null,$data);
-
+					$data['title']="add_data";
+					$data['data']=array(
+						'message'=>	'添加失败',
+						'id'=>	$max_id,
+					);
 				}
+
+				
+				
+				api_json_result(1,0,null,$data);
+
 			}
+		}
 		
 	}//if_parent
 
 	
 }
-
 
 
 
@@ -895,13 +1046,11 @@ if($ac=="score_delete")
 	$id=$_G['gp_id'];
 	if($id)
 	{
-		$res=DB::query("delete from ".DB::table("common_score")." where id='".$id."' ");
+		$res=DB::query("delete from tbl_baofen where baofen_id='".$id."' or group_id='".$id."' ");
 		$res2=DB::query("delete from jishigou_topic where score_id='".$id."' ");
 	}
-	
 	api_json_result(1,0,"删除成功",$data);
 }
-
 
 
 
@@ -913,19 +1062,20 @@ if($ac=="score_link")
 	{
 		$data['title']		= "data";
 		$data['data']=array(
-					  'link'=>"<通讯录名称>你好，你的好友<用户名>刚刚添加了一张和你一起打球的成绩卡。请下载大正客户端查看 ".$site_url."/app。",
+					  'link'=>"<通讯录名称>你好，你的好友<用户名>刚刚添加了一张和你一起打球的成绩卡。请下载美兰湖客户端查看。",
 					 );
 	}
 	else
 	{
 		$data['title']		= "data";
 		$data['data']=array(
-					  'link'=>"<受邀请者姓名>你好，你的好友<邀请者用户名>帮您注册了大正网，并邀您下载安装大正网手机客户端和他一起高球互动。用户名/密码都是<手机号码>。点击下载： ".$site_url."/app。",
+					  'link'=>"<受邀请者姓名>你好，你的好友<邀请者用户名>帮您注册了美兰湖，并邀您下载安装美兰湖手机客户端和他一起高球互动。用户名/密码都是<手机号码>。",
 					 );
 	}
 	
 	api_json_result(1,0,$app_error['event']['10502'],$data);
 }
+
 
 
 
@@ -936,9 +1086,9 @@ if($ac=="score_list")
 	$sid=$_G['gp_sid'];
 	if($sid)
 	{
-		$sid_sql=" and sais_id='".$sid."' ";
+		$sid_sql=" and event_id='".$sid."' ";
 	}
-	$total=DB::result_first("select count(id)  from ".DB::table("common_score")." where uid='".$uid."' ".$sid_sql." ");
+	$total=DB::result_first("select count(baofen_id) from tbl_baofen where uid='".$uid."' ".$sid_sql." ");
 	$max_page=intval($total/$page_size);
 	if($max_page<$total/$page_size)
 	{
@@ -946,7 +1096,7 @@ if($ac=="score_list")
 	}
 	if($max_page>=$page)
 	{
-		$list=DB::query("select id,uid,sais_id,(select realname from ".DB::table("common_member_profile")." where uid=".DB::table("common_score").".sais_id) as sais_name,fuid,(select realname from ".DB::table("common_member_profile")." where uid=".DB::table("common_score").".fuid) as field_name,par,score,pars,total_score,addtime,dong_names,uploadimg,is_edit from ".DB::table("common_score")." where uid='".$uid."' ".$sid_sql." order by addtime desc limit $page_start,$page_size  ");
+		$list=DB::query("select baofen_id as id,baofen_id,uid,event_id,(select event_name from tbl_event where event_id=tbl_baofen.event_id) as sais_name,field_id as fuid,(select realname from ".DB::table("common_member_profile")." where uid=tbl_baofen.field_id) as field_name,par,score,pars,total_score,addtime,dong_names,uploadimg,is_edit from tbl_baofen where uid='".$uid."' ".$sid_sql." order by addtime desc limit $page_start,$page_size  ");
 		while($row =DB::fetch($list))
 		{
 			$row['par']=explode("|",$row['par']);
@@ -974,9 +1124,13 @@ if($ac=="score_list")
 			}
 
 			$row['addtime']=date("Y年m月d日",$row['addtime']);
-			$list_data[]=$row;
+			$list_data[]=array_default_value($row);
 		}
 	}
+	
+    if(empty($list_data)) {
+        $list_data = null;
+    }
 	$data['title']='list_data';
 	$data['data']=$list_data;
 	api_json_result(1,0,$app_error['event']['10502'],$data);
@@ -1010,10 +1164,17 @@ if($ac=="chadian_rank")
 		$list=DB::query("select uid,realname,chadian from ".DB::table("common_member_profile")." where chadian>0 order by chadian asc limit $page_start,$page_size ");
 		while($row=DB::fetch($list))
 		{
-			$list_data[]=$row;
+			$row['rank_number']=DB::result_first("select count(uid) from ".DB::table("common_member_profile")." where chadian<'".$row['chadian']."' and chadian>0 ");
+			$row['rank_number']=(string)($row['rank_number']+1);
+			//echo "select count(uid) from ".DB::table("common_member_profile")." where chadian<'".$row['chadian']."' and chadian>0 ";
+			//echo "<hr>";
+			$list_data[]=array_default_value($row);
 		}
 	}
 
+    if(empty($list_data)) {
+        $list_data = null;
+    }
 	$data['title']='list_data';
 	$data['data']=$list_data;
 	//print_r($data);
@@ -1028,7 +1189,7 @@ if($ac=="chadian_rank")
 if($ac=="waika_list")
 {
 	$uid=$_G['gp_uid'];
-	$total=DB::result_first("select count(id)  from ".DB::table("common_score")." where uid='".$uid."' and source='waika' and score='' ");
+	$total=DB::result_first("select count(baofen_id) from tbl_baofen where uid='".$uid."' and source='waika' and score='' ");
 	$max_page=intval($total/$page_size);
 	if($max_page<$total/$page_size)
 	{
@@ -1036,7 +1197,7 @@ if($ac=="waika_list")
 	}
 	if($max_page>=$page)
 	{
-		$list=DB::query("select id,uid,sais_id,(select realname from ".DB::table("common_member_profile")." where uid=".DB::table("common_score").".sais_id) as sais_name,fuid,(select realname from ".DB::table("common_member_profile")." where uid=".DB::table("common_score").".fuid) as field_name,addtime from ".DB::table("common_score")." where uid='".$uid."' and source='waika' and score='' order by addtime desc limit $page_start,$page_size  ");
+		$list=DB::query("select baofen_id,baofen_id as id,uid,event_id,event_id as sais_id,(select event_name from tbl_event where event_id=tbl_baofen.event_id) as sais_name,field_id,field_id as fuid,(select realname from ".DB::table("common_member_profile")." where uid=tbl_field.field_id) as field_name,dateline as addtime from tbl_baofen where uid='".$uid."' and source='waika' and score='' order by addtime desc limit $page_start,$page_size  ");
 		while($row =DB::fetch($list))
 		{
 			if($row['sais_name']==null)
@@ -1056,7 +1217,8 @@ if($ac=="waika_list")
 	}
 
 	//	
-	$list=DB::query("select id,uid,sais_id,(select realname from ".DB::table("common_member_profile")." where uid=".DB::table("common_score").".sais_id) as sais_name,fuid,(select realname from ".DB::table("common_member_profile")." where uid=".DB::table("common_score").".fuid) as field_name,par,score,pars,total_score,addtime,dong_names,uploadimg,is_edit from ".DB::table("common_score")." where source='waika' and score<>'' and sais_id='1000333' order by addtime desc limit $page_start,$page_size  ");
+	$list=DB::query("select baofen_id,baofen_id as id,uid,event_id,event_id as sais_id,(select event_name from tbl_event where event_id=tbl_baofen.event_id) as sais_name,field_id,field_id as fuid,(select realname from ".DB::table("common_member_profile")." where uid=tbl_baofen.field_id) as field_name,dateline as addtime from tbl_baofen where source='waika' and score<>'' and event_id='27' order by addtime desc limit $page_start,$page_size  ");
+	//$list=DB::query("select id,uid,sais_id,(select realname from ".DB::table("common_member_profile")." where uid=".DB::table("common_score").".sais_id) as sais_name,fuid,(select realname from ".DB::table("common_member_profile")." where uid=".DB::table("common_score").".fuid) as field_name,par,score,pars,total_score,addtime,dong_names,uploadimg,is_edit from ".DB::table("common_score")." where source='waika' and score<>'' and sais_id='1000333' order by addtime desc limit $page_start,$page_size  ");
 	while($row =DB::fetch($list))
 	{
 		$row['par']=explode("|",$row['par']);
@@ -1098,11 +1260,13 @@ if($ac=="waika_list")
 
 
 
+
+
 //qiuyou_list  球友成绩卡
 if($ac=="qiuyou_list")
 {
 	$uid=$_G['gp_uid'];
-	$total=DB::result_first("select count(id)  from ".DB::table("common_score")." where uid in (select uid from (select buddyid from jishigou_buddys where  uid='".$uid."') as t2) and uid<>'".$uid."' ");
+	$total=DB::result_first("select count(baofen_id) from tbl_baofen where uid in (select uid from (select buddyid from jishigou_buddys where  uid='".$uid."') as t2) and uid<>'".$uid."' ");
 	$max_page=intval($total/$page_size);
 	if($max_page<$total/$page_size)
 	{
@@ -1110,7 +1274,7 @@ if($ac=="qiuyou_list")
 	}
 	if($max_page>=$page)
 	{
-		$list=DB::query("select id,uid,(select realname from ".DB::table("common_member_profile")." where uid=".DB::table("common_score").".uid) as realname,sais_id,(select realname from ".DB::table("common_member_profile")." where uid=".DB::table("common_score").".sais_id) as sais_name,fuid,(select realname from ".DB::table("common_member_profile")." where uid=".DB::table("common_score").".fuid) as field_name,addtime,uploadimg,lun from ".DB::table("common_score")." where uid in (select uid from (select buddyid from jishigou_buddys where  uid='".$uid."') as t2) and uid<>'".$uid."'  order by addtime desc limit $page_start,$page_size  ");
+		$list=DB::query("select baofen_id as id,baofen_id,uid,(select realname from ".DB::table("common_member_profile")." where uid=tbl_baofen.uid) as realname,event_id as sais_id,(select event_name from tbl_event where uid=tbl_baofen.event_id) as sais_name,field_id as fuid,(select realname from ".DB::table("common_member_profile")." where uid=tbl_baofen.field_id) as field_name,addtime,uploadimg,lun from tbl_baofen where uid in (select uid from (select buddyid from jishigou_buddys where uid='".$uid."') as t2) and uid<>'".$uid."'  order by addtime desc limit $page_start,$page_size  ");
 		while($row =DB::fetch($list))
 		{
 			
@@ -1137,13 +1301,19 @@ if($ac=="qiuyou_list")
 			}
 
 			$row['addtime']=date("Y年m月d日",$row['addtime']);
-			$list_data[]=$row;
+			$list_data[]=array_default_value($row);
 		}
 	}
+	
+    if(empty($list_data)) {
+        $list_data = null;
+    }
 	$data['title']='list_data';
 	$data['data']=$list_data;
 	api_json_result(1,0,$app_error['event']['10502'],$data);
 }
+
+
 
 
 //成绩分析  1890317
@@ -1167,14 +1337,16 @@ if($ac=="fenxi_index")
 
 	//guoling_lv
 	$total_guoling_lv=0;
-	$list=DB::query("select par,score,tuigan,dateline from ".DB::table("common_score")." where uid='".$uid."' ");
+	$list=DB::query("select par,score,tuigan,dateline from tbl_baofen where uid='".$uid."' ");
 	$n=0;
 	while($row=DB::fetch($list))
 	{
 		$guoling_num=0;
 
-		$tuigan=explode("|",$row['tuigan']);	
+		$tuigan=explode("|",$row['tuigan']);
+		$tuigan=array_default_value($tuigan);	
 		$score=explode("|",$row['score']);
+		$score=array_default_value($score);
 		unset($score[9]);
 		unset($score[19]);
 		unset($score[20]);
@@ -1182,6 +1354,7 @@ if($ac=="fenxi_index")
 		$score=explode(",",$c1);
 
 		$par=explode("|",$row['par']);
+		$par=array_default_value($par);
 		unset($par[9]);
 		unset($par[19]);
 		unset($par[20]);
@@ -1209,7 +1382,7 @@ if($ac=="fenxi_index")
 
 	//pingjun_tuigan
 	$total_pingjun_tuigan=0;
-	$list=DB::query("select par,score,tuigan,dateline from ".DB::table("common_score")." where uid='".$uid."' ");
+	$list=DB::query("select par,score,tuigan,dateline from tbl_baofen where uid='".$uid."' ");
 	$n=0;
 	while($row=DB::fetch($list))
 	{
@@ -1225,8 +1398,12 @@ if($ac=="fenxi_index")
 	}
 	$detail_data['pingjun_tuigan']=round($total_pingjun_tuigan/$n,2);
 
+	
+    if(empty($detail_data)) {
+        $list_data = null;
+    }
 	$data['title']='detail_data';
-	$data['data']=$detail_data;
+	$data['data']=array_default_value($detail_data);
 	
 	//print_r($data);
 	api_json_result(1,0,$app_error['event']['10502'],$data);
@@ -1240,7 +1417,7 @@ if($ac=="fenxi_tuigan")
 	$uid=$_G['gp_uid'];
 	if($uid)
 	{
-		$list=DB::query("select par,score,tuigan,dateline from ".DB::table("common_score")." where uid='".$uid."' ");
+		$list=DB::query("select par,score,tuigan,dateline from tbl_baofen where uid='".$uid."' ");
 		while($row=DB::fetch($list))
 		{
 			$gan_0=0;
@@ -1292,7 +1469,7 @@ if($ac=="fenxi_tuigan")
 			unset($row['par']);
 			unset($row['score']);
 			unset($row['tuigan']);
-			$list_data[]=$row;
+			$list_data[]=array_default_value($row);
 
 			
 		}
@@ -1320,14 +1497,13 @@ if($ac=="fenxi_tuigan")
 		$data['title']="fenxi_data";
 		$data['data']=array(
 			'lv_list'=>$list_data,
-			'total_data'=>$total_data,
+			'total_data'=>array_default_value($total_data),
 		);
 		
 		//print_r($data);
 
 
 	}// if uid
-
 
 	api_json_result(1,0,$app_error['event']['10502'],$data);
 
@@ -1341,7 +1517,7 @@ if($ac=="fenxi_guoling")
 	$uid=$_G['gp_uid'];
 	if($uid)
 	{
-		$list=DB::query("select par,score,tuigan,dateline from ".DB::table("common_score")." where uid='".$uid."' ");
+		$list=DB::query("select par,score,tuigan,dateline from tbl_baofen where uid='".$uid."' ");
 		while($row=DB::fetch($list))
 		{
 			$gan_0=0;
@@ -1352,20 +1528,25 @@ if($ac=="fenxi_guoling")
 			$total=0;
 			$guoling_num=0;
 
-			$tuigan=explode("|",$row['tuigan']);	
+			$tuigan=explode("|",$row['tuigan']);
+			$tuigan=array_default_value($tuigan);	
 			$score=explode("|",$row['score']);
+			$score=array_default_value($score);
 			unset($score[9]);
 			unset($score[19]);
 			unset($score[20]);
 			$c1=implode(",",$score);
 			$score=explode(",",$c1);
+			$score=array_default_value($score);
 
 			$par=explode("|",$row['par']);
+			$par=array_default_value($par);
 			unset($par[9]);
 			unset($par[19]);
 			unset($par[20]);
 			$c1=implode(",",$par);
 			$par=explode(",",$c1);
+			$par=array_default_value($par);
 
 			for($i=0; $i<count($tuigan); $i++)
 			{
@@ -1381,10 +1562,13 @@ if($ac=="fenxi_guoling")
 			unset($row['par']);
 			unset($row['score']);
 			unset($row['tuigan']);
-			$list_data[]=$row;
+			$list_data[]=array_default_value($row);
 
 		}
 
+    	if(empty($list_data)) {
+            $list_data = null;
+        }
 
 		$data['title']="fenxi_data";
 		$data['data']=array(
@@ -1394,7 +1578,6 @@ if($ac=="fenxi_guoling")
 		//print_r($data);
 
 	}// if uid
-
 
 	api_json_result(1,0,$app_error['event']['10502'],$data);
 
@@ -1408,7 +1591,7 @@ if($ac=="fenxi_chengji")
 	$uid=$_G['gp_uid'];
 	if($uid)
 	{
-		$list=DB::query("select par,score,tuigan,dateline from ".DB::table("common_score")." where uid='".$uid."' ");
+		$list=DB::query("select par,score,tuigan,dateline from tbl_baofen where uid='".$uid."' ");
 		while($row=DB::fetch($list))
 		{
 			$gan_0=0;
@@ -1427,18 +1610,21 @@ if($ac=="fenxi_chengji")
 			$qita_num=0;
 				
 			$score=explode("|",$row['score']);
+			$score=array_default_value($score);
 			unset($score[9]);
 			unset($score[19]);
 			unset($score[20]);
 			$c1=implode(",",$score);
 			$score=explode(",",$c1);
-
+            
 			$par=explode("|",$row['par']);
+			$par=array_default_value($par);
 			unset($par[9]);
 			unset($par[19]);
 			unset($par[20]);
 			$c1=implode(",",$par);
 			$par=explode(",",$c1);
+			$par=array_default_value($par);
 
 			$all_total=$all_total+count($score);
 
@@ -1484,7 +1670,7 @@ if($ac=="fenxi_chengji")
 			unset($row['score']);
 			unset($row['tuigan']);
 		
-			$list_data[]=$row;
+			$list_data[]=array_default_value($row);
 
 		}
 
@@ -1507,14 +1693,13 @@ if($ac=="fenxi_chengji")
 		$data['title']="fenxi_data";
 		$data['data']=array(
 			'lv_list'=>$list_data,
-			'total_data'=>$total_data,
+			'total_data'=>array_default_value($total_data),
 		);
 		
 		//print_r($data);
 
 
 	}// if uid
-
 
 	api_json_result(1,0,$app_error['event']['10502'],$data);
 
@@ -1536,5 +1721,33 @@ function get_juli($lng1,$lat1,$lng2,$lat2)//根据经纬度计算距离
 	return round($s,1);
 }
 
+/**
+ * 检查一维数组并替换数组中的某一项元素
+ * @param array $arr      将要替换的数组
+ * @param array $fields   要替换的字段
+ * $fields = array(
+ * 				'key'=>'val'   //key:将要替换的字段；val:最终替换后的结果
+ * 			);
+ */
+function check_field_to_relace($arr=array(), $fields=array()) {
+    if(empty($arr) || empty($fields)) {
+        return null;
+    }
+    
+    
+    foreach($arr as $key=>$val) {
+        if(is_array($arr[$key])) {
+           //$arr[$key] = current(array_map(__FUNCTION__,array($arr[$key]),array($fields)));//处理多维度
+           //$arr[$key] = check_field_to_relace($arr[$key],$fields);//处理多维度
+           continue;
+        }
+        if(isset($fields[$key])) {
+            $arr[$key]=$fields[$key];
+        }
+    }
+
+    
+    return $arr;
+}
 
 ?>

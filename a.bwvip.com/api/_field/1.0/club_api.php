@@ -272,7 +272,7 @@ if($ac=="member_detail")
 		//成绩卡列表
 		//if($detail_data['groupid']==24)
 		//{
-			$total2=DB::result_first("select id from ".DB::table('common_score')."  where uid=$get_uid ");
+			$total2=DB::result_first("select baofen_id from tbl_baofen where uid=$get_uid ");
 			$max_page2=intval($total2/$page_size2);
 			if($max_page2<$total2/$page_size2)
 			{
@@ -281,18 +281,12 @@ if($ac=="member_detail")
 
 			if($max_page2>=$page2)
 			{
-				$query = DB::query("select id,uid,fuid,fz_id,par,score,pars,total_score,lun,onlymark,FROM_UNIXTIME(dateline, '%Y-%m-%d') as dateline,(select realname from ".DB::table("common_member_profile")." where uid=".DB::table('common_score').".sais_id) as event_name from ".DB::table('common_score')."  where sais_id>0 and uid=$get_uid $strwhere order by addtime desc limit $page_start2,$page_size2");
-
-				//echo "select id,uid,fuid,par,score,pars,total_score,FROM_UNIXTIME(dateline, '%Y-%m-%d') as dateline,(select realname from ".DB::table("common_member_profile")." where uid=".DB::table('common_score').".uid) as event_name from ".DB::table('common_score')."  where uid=$get_uid $strwhere order by addtime desc limit $page_start2,$page_size2";
+				$query = DB::query("select baofen_id as id,baofen_id,baofen_id as ndid,uid,field_id as fuid,fenzhan_id as fz_id,par,score,pars,total_score,lun,FROM_UNIXTIME(dateline, '%Y-%m-%d') as dateline,(select event_name from tbl_event where event_id=tbl_baofen.event_id) as event_name from tbl_baofen where event_id>0 and uid=$get_uid $strwhere order by addtime desc limit $page_start2,$page_size2");
 				while($row = DB::fetch($query))
 				{
-					$row['ndid']=DB::result_first("select nd_id from ".DB::table("golf_nd_baofen")." where uid='".$row['uid']."' and onlymark='".$row['onlymark']."'  ");
-					if(!$row['ndid'])
-					{
-						$row['ndid']=DB::result_first("select nd_id from ".DB::table("golf_nd_baofen")." where uid='".$row['uid']."' and fenz_id='".$row['fz_id']."'  ");
-					}
+
 					$row['event_name']=$row['event_name']." ";
-					$row['iframe_url']=$site_url."/nd/score.php?ndid=".$row['ndid']."&size=small";
+					$row['iframe_url']=$site_url."/nd/score.php?ndid=".$row['baofen_id']."&size=small";
 					$score_list[] = array_default_value($row); 
 				}
 			}
@@ -559,10 +553,10 @@ if($ac=="friend")
 	if($type=="qiuchang")
 	{
 
-		$fuid=DB::fetch_first("select fuid from ".DB::table("common_score")." where uid='".$uid."' order by dateline desc limit 1  ");
-		if($fuid)
+		$field_id=DB::fetch_first("select field_id from tbl_baofen where uid='".$uid."' order by dateline desc limit 1  ");
+		if($field_id)
 		{
-			$list=DB::query("select uid,(select realname from ".DB::table("common_member_profile")." where uid=".DB::table("common_member").".uid) as realname,(select count(id) from jishigou_buddys where uid='".$uid."' and  buddyid=".DB::table("common_member").".uid) as is_guanzhu from ".DB::table("common_member")." where  uid in ( SELECT uid FROM ( select uid from ".DB::table('common_score')." where fuid='".$fuid."' ) as t2 ) ".$not_in_sql." limit 6 ");
+			$list=DB::query("select uid,(select realname from ".DB::table("common_member_profile")." where uid=".DB::table("common_member").".uid) as realname,(select count(id) from jishigou_buddys where uid='".$uid."' and  buddyid=".DB::table("common_member").".uid) as is_guanzhu from ".DB::table("common_member")." where  uid in ( SELECT uid FROM ( select uid from tbl_baofen where field_id='".$field_id."' ) as t2 ) ".$not_in_sql." limit 6 ");
 			while($row = DB::fetch($list))
 			{
 				$row['touxiang']=$site_url."/uc_server/avatar.php?uid=".$row['uid']."&size=small";
@@ -576,12 +570,11 @@ if($ac=="friend")
 	//同一赛事
 	if($type=="saishi")
 	{
-		//$sais_id=DB::fetch_first("select sais_id from ".DB::table("common_score")." where uid='".$uid."' order by dateline desc limit 1  ");
-		$sais_id=1000333;
-		$my_event=DB::result_first("select count(uid) from ".DB::table("common_score")." where uid='".$uid."' and  sais_id='".$sais_id."'  ");
+		$event_id=1000333;
+		$my_event=DB::result_first("select count(uid) from tbl_baofen where uid='".$uid."' and event_id='".$event_id."'  ");
 		if($my_event>0)
 		{
-			$list=DB::query("select uid,(select realname from ".DB::table("common_member_profile")." where uid=".DB::table("common_member").".uid) as realname,(select count(id) from jishigou_buddys where uid='".$uid."' and  buddyid=".DB::table("common_member").".uid) as is_guanzhu from ".DB::table("common_member")." where uid in ( SELECT uid FROM ( select uid from ".DB::table('common_score')." where sais_id='".$sais_id."' ) as t2 ) ".$not_in_sql." limit 6 ");
+			$list=DB::query("select uid,(select realname from ".DB::table("common_member_profile")." where uid=".DB::table("common_member").".uid) as realname,(select count(id) from jishigou_buddys where uid='".$uid."' and  buddyid=".DB::table("common_member").".uid) as is_guanzhu from ".DB::table("common_member")." where uid in ( SELECT uid FROM ( select uid from tbl_baofen where event_id='".$event_id."' ) as t2 ) ".$not_in_sql." limit 6 ");
 
 			//$list=DB::query("select uid,(select realname from ".DB::table("common_member_profile")." where uid=".DB::table("common_member").".uid) as realname,(select count(id) from jishigou_buddys where uid='".$uid."' and  buddyid=".DB::table("common_member").".uid ) as is_guanzhu from ".DB::table("common_member")." where  uid in (select uid from ".DB::table('common_score')." where sais_id in (select sais_id  from ".DB::table('common_score')." where uid='".$uid."' ) ) ".$not_in_sql." limit 6 ");
 			while($row = DB::fetch($list))
@@ -1061,24 +1054,27 @@ if($ac=="push_msg_list")
 {
 	$uid=$_G['gp_uid'];
     
-	//$list=DB::query("select message_id,message_number,message_type,uid,message_title,message_content,message_sendtime from tbl_push_message where uid='".$uid."' and uid=0 ");
-	$list=DB::query("select message_id,message_number,message_type,uid,message_title,message_content,message_sendtime from tbl_push_message where uid='$uid'");
+	$list=DB::query("select message_id,message_number,message_type,uid,message_content,message_addtime,message_pic from tbl_push_message where uid='$uid' or uid=0 order by message_addtime desc ");
     
 	while($row=DB::fetch($list))
 	{
+
 	    if(!json_parser($row['message_content']))
 		{
 	        continue;
 	    }
-	    $msg=json_decode($row['message_content'],true);
 		
+	    $msg=json_decode($row['message_content'],true);
 	    $row['message_info']=$msg;
+	    $row['message_info']['n_title']=urldecode($row['message_info']['n_title']);
+	    $row['message_info']['n_content']=urldecode($row['message_info']['n_content']);
+	    $row['message_info']['n_extras']['title']=urldecode($row['message_info']['n_extras']['title']);
 	    
-		$row['message_sendtime']=date("Y-m-d",$row['message_sendtime']);
+		$row['message_addtime']=date("Y-m-d",$row['message_addtime']);
 		unset($row['message_content']);
 		$list_data[]=array_default_value($row,message_content);
-		
 	}
+	
 	/*
     if(empty($list_data))
 	{

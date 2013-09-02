@@ -18,19 +18,31 @@ class ticketAction extends field_publicAction
 	public function ticket()
 	{
 		$list=D("ticket")->ticket_list_pro();
-
-		$this->assign("list",$list["item"]);
-		$this->assign("pages",$list["pages"]);
-		$this->assign("total",$list["total"]);
+		$field_uid = post('field_uid');
+		if($field_uid == '')
+		{
+			$field_uid = $_SESSION['field_uid'];
+		}
 		
-		$field_uid = $_SESSION['field_uid'];
 		$event_list = M('event')->where("field_uid='{$field_uid}'")->select();
-		//echo '<pre>';
-		//var_dump($event_list);
+		
 		foreach($event_list as $key=>$val){
 			unset($event_list[$key]);
 			$event_list[$val['event_id']]=$val['event_name'];
 		}
+		
+		foreach($list["item"] as $key=>$val)
+		{
+			if(empty($event_list[$val['event_id']])){
+				unset($list["item"][$key]);
+			}
+		}
+		$this->assign("list",$list["item"]);
+		$this->assign("pages",$list["pages"]);
+		$this->assign("total",$list["total"]);
+		//echo '<pre>';
+		//var_dump($event_list);
+		
 		//echo '<pre>';
 		//var_dump($event_list);
 		$this->assign("event_list",$event_list);

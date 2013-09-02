@@ -793,7 +793,7 @@ if($ac=="member_detail")
 			if($max_page2>=$page2)
 			{
 			
-				$query = DB::query("select baofen_id as id,event_id,uid,fuid,fz_id,par,score,pars,total_score,lun,dateline,event_name from (select baofen_id,field_id,baofen_id as id,uid,field_id as fuid,event_id,fenzhan_id as fz_id,sid,par,score,pars,total_score,lun,FROM_UNIXTIME(dateline, '%Y-%m-%d') as dateline,addtime,(select event_name from tbl_event where event_id=tbl_baofen.event_id) as event_name from tbl_baofen where addtime>'".strtotime("2013-04-01")."' and uid=$get_uid $strwhere ) as t2 group by event_id order by total_score asc,addtime desc limit $page_start2,$page_size2");
+				$query = DB::query("select baofen_id as id,event_id,uid,fuid,fz_id,par,score,pars,total_score,lun,dateline,event_name,start_time from (select baofen_id,field_id,baofen_id as id,uid,field_id as fuid,event_id,fenzhan_id as fz_id,sid,par,score,pars,total_score,lun,FROM_UNIXTIME(dateline, '%Y-%m-%d') as dateline,addtime,(select event_name from tbl_event where event_id=tbl_baofen.event_id) as event_name,start_time from tbl_baofen where start_time>'".strtotime("2013-04-01")."' and uid=$get_uid $strwhere ) as t2 group by event_id order by total_score asc,start_time desc limit $page_start2,$page_size2");
 
 				while($row = DB::fetch($query))
 				{
@@ -1040,7 +1040,7 @@ if($ac=="golf_news")
 {
 	$field_uid=$_G['gp_field_uid'];
 	$page_size=9;
-	$total=DB::result_first("select count(arc_id) from tbl_arc where arc_model='arc' and arc_state=1 and (arctype_id=2 or arc_type='Q') and arc_viewtype='normal' $language_sql ");
+	$total=DB::result_first("select count(arc_id) from tbl_arc where arc_model='arc' and arc_state=1 and arc_viewstatus=1  and (arctype_id=2 or arc_type='Q') and arc_viewtype='normal' $language_sql ");
 	$max_page=intval($total/$page_size);
 	if($max_page<$total/$page_size)
 	{
@@ -1049,7 +1049,7 @@ if($ac=="golf_news")
 	if($max_page>=$page)
 	{
 
-		$list=DB::query("select arc_id as blogid,arc_name as subject,arc_replynum as replynum,arc_viewtype as view_type,arc_pic as pic ,arc_addtime as dateline,arc_content as content,FROM_UNIXTIME(arc_addtime,'%Y%m%d') as today from tbl_arc where  arc_model='arc' and arc_state=1 and arc_viewtype='normal' and arc_state=1 and (arctype_id=2 or arc_type='Q')  $language_sql order by today desc,arc_sort desc limit $page_start,$page_size");
+		$list=DB::query("select arc_id as blogid,arc_name as subject,arc_replynum as replynum,arc_viewtype as view_type,arc_pic as pic ,arc_addtime as dateline,arc_content as content,FROM_UNIXTIME(arc_addtime,'%Y%m%d') as today from tbl_arc where  arc_model='arc' and arc_state=1 and arc_viewtype='normal' and arc_state=1 and arc_viewstatus=1 and (arctype_id=2 or arc_type='Q')  $language_sql order by today desc,arc_sort desc limit $page_start,$page_size");
 		$i=0;
 		while($row = DB::fetch($list))
 		{
@@ -1077,7 +1077,7 @@ if($ac=="golf_news")
 
 
 	$page_size=3;
-	$total=DB::result_first("select count(arc_id) from tbl_arc where arc_model='arc' and arc_state=1 and arc_viewtype='pic' and arc_state=1 and (arctype_id=2 or arc_type='Q')  ");
+	$total=DB::result_first("select count(arc_id) from tbl_arc where arc_model='arc' and arc_state=1 and arc_viewstatus=1 and arc_viewtype='pic' and arc_state=1 and (arctype_id=2 or arc_type='Q')  ");
 	$max_page=intval($total/$page_size);
 	if($max_page<$total/$page_size)
 	{
@@ -1085,7 +1085,7 @@ if($ac=="golf_news")
 	}
 	if($max_page>=$page)
 	{
-		$list=DB::query("select arc_id as blogid,arc_name as subject,arc_replynum as replynum,arc_viewtype as view_type,arc_pic as pic ,arc_addtime as dateline,arc_content as content,FROM_UNIXTIME(arc_addtime,'%Y%m%d') as today from tbl_arc where  arc_model='arc' and arc_state=1  and arc_viewtype='pic' and (arctype_id=2 or arc_type='Q') $language_sql order by today desc,arc_sort desc limit $page_start,$page_size");
+		$list=DB::query("select arc_id as blogid,arc_name as subject,arc_replynum as replynum,arc_viewtype as view_type,arc_pic as pic ,arc_addtime as dateline,arc_content as content,FROM_UNIXTIME(arc_addtime,'%Y%m%d') as today from tbl_arc where  arc_model='arc' and arc_state=1 and arc_viewstatus=1  and arc_viewtype='pic' and (arctype_id=2 or arc_type='Q') $language_sql order by today desc,arc_sort desc limit $page_start,$page_size");
 		$i=0;
 		while($row = DB::fetch($list))
 		{
@@ -1761,26 +1761,43 @@ if($ac=="system_msg")
 if($ac=="push_msg_list")
 {
 	$uid=$_G['gp_uid'];
+	$field_uid=$_G['gp_field_uid'];
+	$type=$_G['gp_type'];
+	if($field_uid!="")
+	{
+		$sql .=" and field_uid='".$field_uid."' ";
+	}
+	
+	if($type!="")
+	{
+		$sql .=" and message_type='".$type."' ";
+	}
     
-	//$list=DB::query("select message_id,message_number,message_type,uid,message_title,message_content,message_addtime from tbl_push_message where uid='".$uid."' and uid=0 ");
-	$list=DB::query("select message_id,message_number,message_type,uid,message_title,message_content,message_pic,message_addtime from tbl_push_message where uid='$uid'");
+	$list=DB::query("select message_id,message_number,message_type,uid,message_title,message_content,message_pic,message_addtime from tbl_push_message where (uid='{$uid}' or uid=0) ".$sql." ");
+	
+	//echo "select message_id,message_number,message_type,uid,message_title,message_content,message_pic,message_addtime from tbl_push_message where uid='{$uid}' ".$sql." ";
     
 	while($row=DB::fetch($list))
 	{
+		/*
 	    if(!json_parser($row['message_content']))
 		{
 	        continue;
 	    }
+		*/
 	    $msg=json_decode($row['message_content'],true);
+		//print_r($msg);
 		$msg['n_title'] = urldecode($msg['n_title']);
 		$msg['n_content'] = urldecode($msg['n_content']);
-		if($msg['n_extras']['title']) {
+		if($msg['n_extras']['title'])
+		{
 			$msg['n_extras']['title'] = urldecode($msg['n_extras']['title']);
 		}
 		$row['pic_width'] = '';
 		$row['pic_height'] = '';
 	    $row['message_info']=$msg;
-		if(!empty($row['message_pic'])) {
+		if(!empty($row['message_pic']))
+		{
 			if(stripos($row['message_pic'],"http://") === false) {
 				$row['message_pic']=$site_url.'/'.$row['message_pic'];
 			}
@@ -1791,7 +1808,7 @@ if($ac=="push_msg_list")
 		}
 		
 		$row['message_sendtime']=date("Y-m-d",$row['message_addtime']);
-		unset($row['message_content']);
+		//unset($row['message_content']);
 		$list_data[]=array_default_value($row,message_content);
 		
 	}
@@ -1906,7 +1923,9 @@ if($ac=="sys_msg_detail")
 	$message_id=$_G['gp_message_id'];
 	
 	$message_info=DB::fetch_first("select message_id,uid,message_title,message_content,message_pic,message_addtime from tbl_sys_message where message_id='$message_id'");
-    
+    if(empty($message_info)){
+		api_json_result(1,1,$app_error['event']['10502'],$data);exit;
+	}
 
 	if(!json_parser($message_info['message_content']))
 	{

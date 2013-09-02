@@ -68,9 +68,9 @@ if($uid <= 0) {
          $post_string = "&username=".$_G['gp_username']."&password=".$_G['gp_password']."";
          $info = request_by_curl_new($site_url.'/member.php?mod=logging&action=login&loginsubmit=yes',$post_string);
 
-		$mobile =$_G['gp_mobile'];
+		$mobile =$_G['gp_username'];
 		$realname =urldecode($_G['gp_realname']);
-		$realname =iconv("gb2312","UTF-8",$realname); 
+		//$realname =iconv("gb2312","UTF-8",$realname); 
 		//$realname =iconv("gb2312","UTF-8",$realname); 
 		$is_auto_guanzhu =$_G['gp_is_auto_guanzhu'];		
 
@@ -83,6 +83,7 @@ if($uid <= 0) {
 		{
 			$sheng=$sheng."省";
 		}
+		/*
 
 		if($is_auto_guanzhu && $sheng)
 		{
@@ -105,9 +106,10 @@ if($uid <= 0) {
 
 			}
 		}
+		*/
  
 		 DB::query("UPDATE ultrax.jishigou_members SET nickname='$realname',validate=1 WHERE ucuid='$uid'"); 
-		 DB::query("UPDATE ".DB::table('common_member_profile')."  SET realname='$realname',mobile='$mobile',resideprovince='$sheng',cron_fensi_state=0  WHERE uid='$uid'"); 
+		 DB::query("UPDATE ".DB::table('common_member_profile')."  SET realname='$realname',mobile='$mobile',resideprovince='$sheng',cron_fensi_state=0,reg_source=1186  WHERE uid='$uid'"); 
 				 
 		setcookie('Example_auth', uc_authcode($uid."\t".$_POST['username'], 'ENCODE'));
 		api_json_result(1,0,$api_error['login']['10010'],$data);

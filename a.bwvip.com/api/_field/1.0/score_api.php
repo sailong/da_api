@@ -482,8 +482,8 @@ if($ac=="score_detail")
 		$detail_data['tid']=0;
 	}
 
-	//if($tid)
-	//{
+	if($tid)
+	{
 		$reply_list=DB::query("select tid,uid,
 (select realname from ".DB::table("common_member_profile")." where uid=jishigou_topic.uid) as username,content,replys,forwards,dateline,type,(select photo from jishigou_topic_image where tid=jishigou_topic.tid limit 1) as photo from jishigou_topic where totid='".$detail_data['tid']."'  order by dateline desc limit 10 ");
 		while($row2 = DB::fetch($reply_list) )
@@ -499,7 +499,7 @@ if($ac=="score_detail")
 			$row2['root_topic']=null;
 			$reply_data[]=array_default_value($row2);
 		}
-	//}
+	}
 	
     if(empty($detail_data)) {
         $detail_data = null;
