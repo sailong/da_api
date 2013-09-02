@@ -12,9 +12,26 @@ if(!defined('IN_DISCUZ'))
 $t=time();
 $ac=$_G['gp_ac'];// show显示列表、记录 edit修改记录 del 删除 rank排名
 $uid=$_G['gp_uid'];
-$sid=$_G['gp_sid']; //赛事ID
 $lun=$_G['gp_lun'];//赛事第几轮  
 $limit = $_G['gp_limit'] ? $_G['gp_limit'] : '10';//显示条数
+
+if($_G['gp_sid'])
+{
+	$event_id=$_G['gp_sid'];
+}
+else if($_G['gp_event_id'])
+{
+	$event_id=$_G['gp_event_id'];
+}
+else
+{
+	$event_id=0;
+}
+
+if(!$event_id)
+{
+	api_json_result(1,1,"该赛事不存在或已被删除",$data);
+}
 
 
 
@@ -22,7 +39,7 @@ $limit = $_G['gp_limit'] ? $_G['gp_limit'] : '10';//显示条数
 if($ac=='rank')
 {
 	$limit=300;
-	if($sid==30)
+	if($event_id==30)
 	{
 		$limit=156;
 	}
@@ -31,9 +48,9 @@ if($ac=='rank')
 	$login_uid=$_G['gp_login_uid'];
 
 	$lun=1;
-	if($sid>0)
+	if($event_id>0)
 	{
-		$event_sql=" and event_id='".$sid."' ";
+		$event_sql=" and event_id='".$event_id."' ";
 	}
 	else
 	{
@@ -129,7 +146,7 @@ if($ac=='rank')
 			
 			$sub_arr=array();
 			$sub_arr[]=$parent_fenzhan_id;
-			$sub_fenzhan=DB::query("select fenzhan_id from tbl_fenzhan where parent_id='".$parent_fenzhan_id."'  and event_id='".$sid."' ");
+			$sub_fenzhan=DB::query("select fenzhan_id from tbl_fenzhan where parent_id='".$parent_fenzhan_id."'  and event_id='".$event_id."' ");
 			while($sub_row=DB::fetch($sub_fenzhan))
 			{
 				$sub_arr[]=$sub_row['fenzhan_id'];
@@ -139,7 +156,7 @@ if($ac=='rank')
 		else
 		{
 			$sub_arr=array();
-			$sub_fenzhan=DB::query("select fenzhan_id from tbl_fenzhan where event_id='".$sid."' ");
+			$sub_fenzhan=DB::query("select fenzhan_id from tbl_fenzhan where event_id='".$event_id."' ");
 			while($sub_row=DB::fetch($sub_fenzhan))
 			{
 				$sub_arr[]=$sub_row['fenzhan_id'];
@@ -172,10 +189,10 @@ if($ac=='rank')
 		}
 		else
 		{
-			$baofen_sql=" and (event_id='".$sid."') ";
+			$baofen_sql=" and (event_id='".$event_id."') ";
 		}
 	
-		//$baofen_sql=" and (event_id='".$sid."') ";
+		//$baofen_sql=" and (event_id='".$event_id."') ";
 		
 		//echo $baofen_sql;
 		//echo "<hr>";
@@ -398,7 +415,7 @@ if($ac=='rank')
 					$row['total_score']='-';
 				}
 			
-				$row['score_status']=get_thru($sid,$row['fenzhan_id'],$row['uid'],$row['event_user_id']);
+				$row['score_status']=get_thru($event_id,$row['fenzhan_id'],$row['uid'],$row['event_user_id']);
 
 				$s_arr=explode("|",$row['score']);
 				unset($s_arr[9]);

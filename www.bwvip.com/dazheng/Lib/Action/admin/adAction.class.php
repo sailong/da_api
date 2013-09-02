@@ -91,6 +91,7 @@ class adAction extends AdminAuthAction
 			$data["ad_url"]=post("ad_url");
 			$data["ad_sort"]=post("ad_sort");
 			$data["event_id"]=post("event_id");
+			
 			if(post("field_uid"))
 			{
 				$data["field_uid"]=post("field_uid");
@@ -98,6 +99,7 @@ class adAction extends AdminAuthAction
 			
 			$data["ad_state"]=1;
 			$data["ad_addtime"]=time();
+			$data["ad_apptype"]=post("ad_apptype");
 			
 			$list=M("ad")->add($data);
 			if($list!=false)
@@ -195,7 +197,8 @@ class adAction extends AdminAuthAction
 			{
 				$data["field_uid"]=post("field_uid");
 			}
-		
+			$data["ad_apptype"]=post("ad_apptype");
+			
 			$list=M("ad")->save($data);
 			if($list!=false)
 			{

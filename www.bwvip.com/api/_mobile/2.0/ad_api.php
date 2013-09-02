@@ -12,13 +12,24 @@ $ac=$_G['gp_ac'];
 if($ac=="ad")
 {
 	$page=$_G['gp_page'];
+	$apptype=$_G['gp_apptype'];
+	
+	if($apptype)
+	{
+		$apptype_sql=" and (ad_apptype='".$apptype."' or ad_apptype='all' )";
+	}
+	else
+	{
+		$apptype_sql=" and (ad_apptype='".$apptype."' or ad_apptype='all' )";
+	}
+	
 	$field_uid=$_G['gp_field_uid'];
 	if($page)
 	{
 		$sql=" and ad_page='".$page."' ";
 	}
 	
-	$ad=DB::query("select ad_url,ad_file,ad_file_iphone4,ad_file_iphone5,ad_width,ad_height from tbl_ad where ad_app='bwvip_app' ".$sql."    ");
+	$ad=DB::query("select ad_url,ad_file,ad_file_iphone4,ad_file_iphone5,ad_width,ad_height from tbl_ad where ad_app='bwvip_app' ".$sql."  ".$apptype_sql."  ");
 	while($row=DB::fetch($ad))
 	{
 		$arr=explode("|",$row['ad_url']);
@@ -75,8 +86,17 @@ if($ac=="ad")
 if($ac=="ad_list")
 {
 	$type=$_G['gp_type'];
+	$apptype=$_G['gp_apptype'];
+	if($apptype)
+	{
+		$apptype_sql=" and (ad_apptype='".$apptype."' or ad_apptype='all' )";
+	}
+	else
+	{
+		$apptype_sql=" and ( ad_apptype='all' )";
+	}
 	
-	$list=DB::query("select ad_url,ad_file,ad_file_iphone4,ad_file_iphone5,ad_width,ad_height from tbl_ad where ad_page='".$type."' and ad_app='bwvip_app' order by ad_sort desc ");
+	$list=DB::query("select ad_url,ad_file,ad_file_iphone4,ad_file_iphone5,ad_width,ad_height from tbl_ad where ad_page='".$type."' and ad_app='bwvip_app'   ".$apptype_sql."  order by ad_sort desc ");
 
 	while($ad = DB::fetch($list))
 	{
@@ -132,7 +152,18 @@ if($ac=="ad_list")
 //广告接口
 if($ac=="ad_index")
 {
-	$ad=DB::fetch_first("select ad_url,ad_file,ad_file_iphone4,ad_file_iphone5,ad_width,ad_height from tbl_ad where ad_page='ad_index' and ad_app='bwvip_app' order by rand() limit 1  ");
+	$apptype=$_G['gp_apptype'];
+	
+	if($apptype)
+	{
+		$apptype_sql=" and (ad_apptype='".$apptype."' or ad_apptype='all' )";
+	}
+	else
+	{
+		$apptype_sql=" and ( ad_apptype='all' )";
+	}
+	
+	$ad=DB::fetch_first("select ad_url,ad_file,ad_file_iphone4,ad_file_iphone5,ad_width,ad_height from tbl_ad where ad_page='ad_index' and ad_app='bwvip_app'  ".$apptype_sql."  order by rand() limit 1  ");
 	if($ad['ad_file'])
 	{
 		$ad['ad_file']=$site_url."/".$ad['ad_file'];
@@ -167,7 +198,18 @@ if($ac=="ad_index")
 //广告接口 欢迎页
 if($ac=="ad_welcome")
 {
-	$ad=DB::fetch_first("select ad_url,ad_file,ad_file_iphone4,ad_file_iphone5,ad_width,ad_height from tbl_ad where ad_page='ad_welcome' and ad_app='bwvip_app' order by ad_sort desc limit 1  ");
+	$apptype=$_G['gp_apptype'];
+	
+	if($apptype)
+	{
+		$apptype_sql=" and (ad_apptype='".$apptype."' or ad_apptype='all' )";
+	}
+	else
+	{
+		$apptype_sql=" and ( ad_apptype='all' )";
+	}
+	
+	$ad=DB::fetch_first("select ad_url,ad_file,ad_file_iphone4,ad_file_iphone5,ad_width,ad_height from tbl_ad where ad_page='ad_welcome' and ad_app='bwvip_app'  ".$apptype_sql."  order by ad_sort desc limit 1  ");
 
 	$arr=explode("|",$ad['ad_url']);
 	if(count($arr)>1)
