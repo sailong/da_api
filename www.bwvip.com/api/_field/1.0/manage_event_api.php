@@ -5,6 +5,10 @@ if(!defined("IN_DISCUZ"))
 }
 
 $ac=$_G['gp_ac'];
+if($ac == 'erweima'){
+
+echo erweima();die;
+}
 $field_uid = $_G['gp_field_uid'];//球场编号
 $language=$_G['gp_language'];
 $now_time = time();
@@ -31,8 +35,20 @@ if($ac == 'filedevent')
 	$page_size = !empty($page_size) ? $page_size : 10;
 	
 	$offset = ($page-1)*$page_size;
+	
+	/* fieldevent: [
+	{
+	field_event_id: "1",
+	field_event_name: "2013年宝马大师赛于10月举行",
+	field_event_logo: "http://www.bwvip.com/upload/field_event//20130604/51adec89de944.png",
+	field_uid: "1186",
+	field_event_time: "1382544000",
+	field_event_addtime: "1369294681",
+	field_event_date: "2013年10月24日"
+	}
+	] */
     //拿到最新一条的赛事
-    $sql = "select * from tbl_field_event where field_uid='{$field_uid}' order by field_event_id desc limit {$offset},{$page_size}";
+    /* $sql = "select * from tbl_field_event where field_uid='{$field_uid}' order by field_event_id desc limit {$offset},{$page_size}";
     $list = DB::query($sql);
     $field_event_list = array();//球童列表
     while($row=DB::fetch($list)) 
@@ -54,8 +70,30 @@ if($ac == 'filedevent')
         $return_data['data'] = null;
         api_json_result(1,0,$app_error['event']['10502'],$return_data);
         exit;
-    }
+    } */
     
+	$sql = "select * from tbl_event where field_uid='{$field_uid}' order by event_id desc limit {$offset},{$page_size}";
+    $list = DB::query($sql);
+    $field_event_list = array();//球童列表
+    while($row=DB::fetch($list)) 
+    {
+		$event_list['field_event_id'] = $row['event_id'];
+		$event_list['field_event_name'] = $row['event_name'];
+		$event_list['field_uid'] = $row['field_uid'];
+        $event_list['field_event_logo'] = $site_url.'/'.$row['event_logo'];
+        $event_list['field_event_date'] = date('Y年m月d日',$row['event_starttime']);
+        $field_event_list[] = array_default_value($event_list);
+    }
+    unset($list);
+    $field_event_list = array_default_value($field_event_list);
+    if(empty($field_event_list)) 
+    {
+        $return_data['title'] = 'fieldevent';
+        $return_data['data'] = null;
+        api_json_result(1,0,$app_error['event']['10502'],$return_data);
+        exit;
+    } 
+	
     if(empty($field_event_list)) {
         $field_event_list = null;
     }
@@ -69,20 +107,21 @@ if($ac == 'eventsort')
 {
     $field_event_id = $_G['gp_field_eventid'];
     //拿到最新一条的赛事
-    $sql = "select * from tbl_field_event where field_event_id='{$field_event_id}' and field_uid='{$field_uid}' order by field_event_id desc limit 1";
-    $new_event = DB::fetch_first($sql);//赛事信息
+    $sql = "select * from tbl_event where event_id='{$field_event_id}' and field_uid='{$field_uid}' order by event_id desc limit 1";
+	
+    $event_info = DB::fetch_first($sql);//赛事信息
     
-    if(empty($new_event)) 
+	
+    if(empty($event_info)) 
     {
-        api_json_result(1,1,'没有数据',null);
+        api_json_result(1,0,'没有数据',null);
     }
-    if($language == 'en') {
-        $new_event['field_event_name'] = $new_event['field_event_name_en'];
-    }
-    unset($new_event['field_event_name_en']);
-    $new_event['field_event_date'] = date('Y年m月d日',$new_event['field_event_time']);
-    $new_event['field_event_logo'] = $site_url.'/'.$new_event['field_event_logo'];
-    $sql = "select * from tbl_field_event_rank where field_uid='{$field_uid}'";
+    $new_event['field_event_id'] = $event_info['event_id'];
+	$new_event['field_event_name'] = $event_info['event_name'];
+    $new_event['field_event_date'] = date('Y年m月d日',$event_info['event_starttime']);
+    $new_event['field_event_logo'] = $site_url.'/'.$event_info['event_logo'];
+	
+    $sql = "select * from tbl_field_event_rank where field_uid='{$field_uid}' and field_event_id='{$field_event_id}'";
     $list = DB::query($sql);
     //赛事比赛排行
     $new_event_rank = array();//赛事冠军列表
@@ -809,6 +848,7 @@ if($ac == 'uidtomobile')
     
 	*/
 }
+
 
 //生成二维码成功返回路径，失败返回 false
 function erweima()

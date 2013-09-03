@@ -14,6 +14,12 @@ class app_versionModel extends Model{
 		$page = intval(get("p"))?get("p"):1;
 
 		$where = " 1 ";
+		
+		if(get("app_version_type")!="")
+		{
+			$where .=" and app_version_type='".get("app_version_type")."' ";
+		}
+		
 
 		if(get("starttime")!="")
 		{

@@ -75,7 +75,7 @@
 		<td><input type="checkbox" name="checkbox" onclick="select_one(this)" value="{$vo.ticket_id}" ></td>
 			<td>{$vo.ticket_id}</th>
 			<td>{$vo.ticket_name}</th>
-			<td>{$vo.event_name}</td>
+			<td>{$event_list[$vo['event_id']]}({$vo['event_id']})</td>
 			
 			<td>{$vo.ticket_price}</td>
 			<td>{$vo.ticket_ren_num}</td>

@@ -20,10 +20,39 @@ class ticketAction extends piao_publicAction
 		
 		
 		$list=D("ticket")->ticket_list_pro();
-
+		$field_uid = get('field_uid');
+		if($field_uid == '')
+		{
+			$field_uid = $_SESSION['field_uid'];
+		}
+		
+		if($field_uid  != '')
+		{
+			$event_list = M('event')->where("field_uid='{$field_uid}'")->select();
+		}
+		else
+		{
+			$event_list = M('event')->select();
+		}
+		
+		
+		foreach($event_list as $key=>$val){
+			unset($event_list[$key]);
+			$event_list[$val['event_id']]=$val['event_name'];
+		}
+		
+		/* foreach($list["item"] as $key=>$val)
+		{
+			if(empty($event_list[$val['event_id']])){
+				unset($list["item"][$key]);
+			}
+		} */
+		
 		$this->assign("list",$list["item"]);
 		$this->assign("pages",$list["pages"]);
 		$this->assign("total",$list["total"]);
+		
+		$this->assign("event_list",$event_list);
 
 		$this->assign("page_title","门票");
     	$this->display();

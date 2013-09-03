@@ -28,6 +28,8 @@ class app_versionAction extends AdminAuthAction
 
 	public function app_version_add()
 	{
+		$page_list=select_dict(15,"select");
+		$this->assign("page_list",$page_list);
 
 		$this->assign("page_title","添加客户端版本");
     	$this->display();
@@ -71,6 +73,9 @@ class app_versionAction extends AdminAuthAction
 		{
 			$data=M("app_version")->where("app_version_id=".intval(get("app_version_id")))->find();
 			$this->assign("data",$data);
+			
+			$page_list=select_dict(15,"select");
+			$this->assign("page_list",$page_list);
 			
 			$this->assign("page_title","修改客户端版本");
 			$this->display();

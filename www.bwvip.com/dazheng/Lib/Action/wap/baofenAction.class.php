@@ -128,6 +128,8 @@ class baofenAction extends wap_publicAction
 		}
 		
 		
+		
+		
 		$this->assign('fenzhan_id',$fenzhan_id);
 		$this->assign('fenzu_id',$fenzu_id);
 		$this->assign('lun',$lun); 

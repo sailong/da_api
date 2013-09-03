@@ -1,6 +1,6 @@
 body{color:#444; height:100%}
 a{text-decoration:none; color:#2D64B3;}
-html.off,html.off body {background: #e2e9ea url(../images/admin_img/left_bg.png) repeat-y -40px top;}
+html.off,html.off body {background:#fff url(../images/body_bg.jpg) no-repeat center 60px; }
 html.on,html.on body{background: #e2e9ea; background-image:none;}
 html.addbg,html.addbg body{background:#e2e9ea}
 a:hover{text-decoration:underline;}
@@ -11,7 +11,7 @@ a:hover{text-decoration:underline;}
 .ib, .ib-li li, .ib-a a, .ib-span span,.common-form ul li span.text,.fixed-bottom .fixed-but .button,.arrowhead,.arrowhead-b,#Skin li,.shortcut a,.shortcut a span,.picBut a,.tab-use{display:inline-block;display:-moz-inline-stack;zoom:1;*display:inline;}
 .cut_line span{ color:#9fc7e8; padding:0 4px}
 .mr6{margin-right:6px}.mr8{margin-right:8px}.mr10{margin-right:10px}.mb6{margin-bottom:6px}.mb8{margin-bottom:8px}.mb10{margin-bottom:10px}
-.picBut {background:url("../images/admin_img/picBnt.png") no-repeat 0 -28px;color:#FFF;float:left; text-align:center;font-weight:700;height:28px;line-height:26px;*line-height:30px;margin-right:10px;width:75px}
+.picBut {background:url("../images/picBnt.png") no-repeat 0 -28px;color:#FFF;float:left; text-align:center;font-weight:700;height:28px;line-height:26px;*line-height:30px;margin-right:10px;width:75px}
 .picBut a{color:#fff;text-decoration: none; width:75px}
 .line-x{border-bottom:1px solid #eee;}
 .title-1{border-bottom:1px solid #eee; padding-left:5px}
@@ -21,35 +21,35 @@ body fieldset legend{padding:3px 8px;font-weight:700;border:1px solid #D8D8D8;ba
 body fieldset.blue{border:1px solid #dce3ed}
 body fieldset.blue legend{padding:3px 8px;font-weight:700;color:#347add; background:none; border:none}
 .fixed-bottom{height:60px;_margin-top:12px}
-.fixed-bottom .fixed-but{position: fixed;_position: relative; bottom:0;height:30px; border-top:1px solid #f1f1f1; padding:10px 0; width:100%;background: #fff url(../images/admin_img/x_bg.png) repeat-x 0 -100px;}
+.fixed-bottom .fixed-but{position: fixed;_position: relative; bottom:0;height:30px; border-top:1px solid #f1f1f1; padding:10px 0; width:100%;background: #fff url(../images/x_bg.png) repeat-x 0 -100px;}
 .fixed-bottom .fixed-but .button,.fixed-bottom .fixed-but .button input{
-	background: url(../images/admin_img/btn-content.png) no-repeat; border:none; height:32px; line-height:32px; vertical-align:middle; margin:0;}
+	background: url(../images/btn-content.png) no-repeat; border:none; height:32px; line-height:32px; vertical-align:middle; margin:0;}
 .fixed-bottom .fixed-but .button{padding:0 0 0 10px; margin:0; margin:0 5px}
 .fixed-bottom .fixed-but .button input{padding-right:10px; margin:0;background-position: right top; display:block;color:#004092; font-size:14px; font-weight:700; white-space: nowrap;}
 .subnav{ padding:10px}.subnav h2{ margin-bottom:6px}
 .explain-col{ border:1px solid #ffbe7a;zoom:1; background: #fffced; padding:8px 10px; line-height:20px}
 .vote_bar{width:90%; height:13px; border:1px solid #999}
-.vote_bar div{background: url(../images/admin_img/x_bg.png) repeat-x left -194px; float: left; position:relative; height:16px;_height:13px}
+.vote_bar div{background: url(../images/x_bg.png) repeat-x left -194px; float: left; position:relative; height:16px;_height:13px}
 .vote_bar div span{ display:block; position:absolute; left:0; top:0; width:180px; text-align:center; height:16px; font-size:10px; line-height:12px; vertical-align:middle}
 
 /*头部*/
-.crumbs,.tab-web-panel li a:hover,.tab-web-panel li.on a{background: url(../images/admin_img/icon_use.png) no-repeat}
-.header {background:#3c86c5 url(../images/admin_img/hdbg.gif) no-repeat right top; height:80px}
-.header .logo{float:left;width:136px;height:80px;margin-right:10px;_margin-right:7px;background: url(../images/admin_img/logo.gif) no-repeat;}
+.crumbs,.tab-web-panel li a:hover,.tab-web-panel li.on a{background: url(../images/icon_use.png) no-repeat}
+.header {background:#3c86c5 url(../images/hdbg.gif) no-repeat right top; height:60px}
+.header .logo{float:left;width:168px;height:60px;margin-right:10px;_margin-right:7px;background: url(../images/logo.gif) no-repeat;}
 .header .logo a{display:block;height:80px;text-decoration: none;}
 .header .rt{width:290px;}
-.header .nav{ display:block; height:34px; position:relative; bottom:-10px}
+.header .nav{ display:block; height:60px;  }
 .header .col-auto{ overflow:visible}
 .header .nav li,
-	.header .nav li a{background: url(../images/admin_img/nav_bg.png) no-repeat;display:block;_float:left;height:34px; line-height:38px; font-size:14px; font-weight:700}
+	.header .nav li a{display:block;_float:left;height:60px; line-height:60px; font-size:14px; font-weight:700}
 	.header .nav li{float:left;padding:0 0 0 8px}
 	.header .nav li a{background-position: right top; padding:0 15px 0 7px}
-	.header .nav li.on{background-position: left -43px;}
-	.header .nav li.on a{background-position: right -43px; color:#367abb;}
+	.header .nav li.on{background:#186CC2;}
+	.header .nav li.on a{ color:#fff;}
 	.header .nav li.tab_web{ position:relative}
 	.header .nav li.tab_web a{ position:absolute;}
 	.header .nav li.tab_web a,
-	.header .nav li.tab_web a span{background: url(../images/admin_img/site.png) no-repeat;height:34px;line-height:34px;*line-height:38px;_float: left}
+	.header .nav li.tab_web a span{background: url(../images/site.png) no-repeat;height:34px;line-height:34px;*line-height:38px;_float: left}
 	
 	.header .nav li.tab_web{background:none; line-height:38px; vertical-align:middle; padding:0;}
 	.header .nav li.tab_web a{padding:0;padding-left:10px;cursor: hand;!important;cursor: pointer;white-space: nowrap;}
@@ -67,26 +67,25 @@ body fieldset.blue legend{padding:3px 8px;font-weight:700;color:#347add; backgro
 .header .log{padding:16px 0 0 6px; height:20px}
 .header .tab_style{padding:16px 14px 0 0}
 #Skin{padding:14px 0 0 0; position:relative; z-index:1000; height:11px; font-size:0;}
-#Skin li {cursor:pointer;height:11px;width:14px;_overflow:hidden;background:url(../images/admin_img/skinbt.png) no-repeat;}
+#Skin li {cursor:pointer;height:11px;width:14px;_overflow:hidden;background:url(../images/skinbt.png) no-repeat;}
 	#Skin .s1 {background-position:-14px -66px}
 	#Skin .s2 {background-position:0 -55px}
 	#Skin .s3 {background-position:0 -33px}
 	#Skin .s4 {}
 /*主体样式*/
-.left_menu{margin-right:12px;_margin-right:10px;padding:12px;_padding:12px 0 12px 12px;width:110px; position:relative; display:block;}
+.left_menu{margin-right:12px;_margin-right:10px;padding:12px;_padding:12px 0 12px 12px;width:142px; position:relative; display:block;}
 .left_menu_on{ width:0; padding:0;}
 .left_menu_on div{ visibility:hidden;_display:none}
-.left_menu h3{font-weight: 700;color: #275d96;border-bottom:1px solid #d9e4ea; line-height:24px; height:24px; margin-bottom:4px;_width:112px;_margin-right:12px}
+.left_menu h3{font-weight: 700;color: #275d96;border-bottom:1px solid #d9e4ea; line-height:36px; height:36px; margin-bottom:4px;_width:112px;_margin-right:12px}
 
-.left_menu ul li{width:122px;color:#666; display:block;_margin-right:2px}
-.left_menu ul li a{line-height:24px;padding-left:8px;display:block;text-decoration: none;background-color:#f7fbfc;_width:100px;}
-.left_menu ul li a:hover,
-	.left_menu ul li.on,.left_menu h3 span{background: url(../images/admin_img/left_menu.png) no-repeat;text-decoration: none}
-	.left_menu ul li.on{width:104px; height:29px; padding-left:20px; margin:0}
+.left_menu ul li{width:164px; margin-bottom:1px; height:30px; color:#666; display:block;_margin-right:2px}
+.left_menu ul li a{line-height:30px;padding-left:8px;display:block;text-decoration: none;background-color:#f7fbfc;_width:162px;}
+.left_menu h3 span{background: url(../images/left_menu.png) no-repeat;text-decoration: none}
+	.left_menu ul li.on{background:#fff; border:1px solid #84B4DB; border-right:none; width:146px; height:30px; padding-left:20px;  margin-bottom:1px; }
 	.left_menu ul li.on a{ height:29px; line-height:29px; background:none; padding:0; display:block}
 	.left_menu ul li.on a:hover{background:none}
-.left_menu ul li a:hover{background-position: left -38px}
-.left_menu a.open,.left_menu a.close{background: url(../images/admin_img/left_menu_openClose.png) no-repeat 3px center;width:10px; display:block; position:absolute; z-index:100; height:auto; right:-11px; top:0}
+.left_menu ul li a:hover{background:#fff;}
+.left_menu a.open,.left_menu a.close{background: url(../images/left_menu_openClose.png) no-repeat 3px center;width:10px; display:block; position:absolute; z-index:100; height:auto; right:-11px; top:0}
 .left_menu a.open:hover,.left_menu a.close:hover{ background-color:#d6e1e4}
 .left_menu a.close{background-position:right center}
 .left_menu h3 span{background-position: left -78px; display:block; float:right; height:14px; width:14px; margin-top:5px}
@@ -95,7 +94,7 @@ body fieldset.blue legend{padding:3px 8px;font-weight:700;color:#347add; backgro
 .crumbs{background-position:left -18px; height:22px; padding:6px 0 0 18px;*height:20px;*padding:8px 0 0 18px;}
 .shortcut{ float:right; position:relative; top:-3px;*top:-4px;}
 .shortcut a{ margin-left:6px; padding-left:6px; color:#0364ae}
-.shortcut a,.shortcut a span{background: url(../images/admin_img/bnt_bg.png) no-repeat 0 -83px; height:21px; line-height:21px;*line-height:24px;_line-height:20px; text-align:center;}
+.shortcut a,.shortcut a span{background: url(../images/bnt_bg.png) no-repeat 0 -83px; height:21px; line-height:21px;*line-height:24px;_line-height:20px; text-align:center;}
 .shortcut a span{background-position: right -83px; padding-right:6px;}
 /*容器样式*/
 .col-tab{ }
@@ -104,15 +103,15 @@ body fieldset.blue legend{padding:3px 8px;font-weight:700;color:#347add; backgro
 .col-tab ul.tabBut li{ background:#eaeef4; padding:0 8px;}
 .col-tab ul.tabBut li.on{position:relative; background:#fff;border-bottom:0;height:26px;_height:27px; font-weight:700;}
 .col-tab ul.tabBut li.icon{background-image:url(../images/icon/exclamation_small.png);padding-left:18px;background-repeat: no-repeat;background-position: 3px center;}
-.col-tab .content{border:1px solid #dce3ed;_zoom:1;}
+.col-tab .content{ _zoom:1;}
 .col-tab .content-r{border-top:1px solid #dce3ed}
 .col-tab .contentList{border:1px solid #dce3ed;_zoom:1;}
 
-.col-1{ border:1px solid #f4f6f5;zoom:1; background:#fff}
-.col-1 div.content{border:1px solid #c2d1d8;zoom:1;}
+.col-1{border-left:1px solid #84B4DB; zoom:1; background:#fff}
+.col-1 div.content{ zoom:1;}
 
 .col-2{ border:1px solid #c7d8ea;zoom:1;}
-.col-2 h6{border-bottom:1px solid #c7d8ea; color:#3a6ea5;background: url(../images/admin_img/x_bg.png) repeat-x left -42px; height:26px; line-height:28px; padding:0 10px}
+.col-2 h6{border-bottom:1px solid #c7d8ea; color:#3a6ea5;background: url(../images/x_bg.png) repeat-x left -42px; height:26px; line-height:28px; padding:0 10px}
 .col-2 div.content{ padding:9px 10px}
 
 
@@ -120,7 +119,7 @@ body fieldset.blue legend{padding:3px 8px;font-weight:700;color:#347add; backgro
 .cat-menu{ width:180px; margin:10px 8px 0 0; }
 .cat-menu div.content{padding-left:8px}
 /*收藏导航*/
-.fav-nav,.fav-nav span,.fav-nav a{height:28px;line-height:28px;background: url(../images/admin_img/fav-nav-bg.png) repeat-x left top;}
+.fav-nav,.fav-nav span,.fav-nav a{height:28px;line-height:28px;background: url(../images/fav-nav-bg.png) repeat-x left top;}
 .fav-nav{padding:0 0 0 12px;position: absolute; left:0;bottom:0px;width:100%;}
 .fav-nav span{background-position: right -78px;position:relative;display:block;float:left;background-repeat: no-repeat; padding-right:2px}
 .fav-nav div{ float:left}
@@ -136,7 +135,7 @@ body fieldset.blue legend{padding:3px 8px;font-weight:700;color:#347add; backgro
 .content-menu a:hover{text-decoration: none}
 .content-menu a em{display:inline-block;display:-moz-inline-stack;zoom:1;*display:inline;}
 .content-menu a.add,.content-menu a.add em,
-	.content-menu a.on,.content-menu a.on em{background: url(../images/admin_img/bnt_bg.png) no-repeat;height:28px; line-height:28px;*line-height:28px}
+	.content-menu a.on,.content-menu a.on em{background: url(../images/bnt_bg.png) no-repeat;height:28px; line-height:28px;*line-height:28px}
 .content-menu span{color:#ddd; padding:0 8px}
 .content-menu a{cursor:pointer;}
 .content-menu a.add{ padding:0 0 0 5px;}
@@ -146,7 +145,7 @@ body fieldset.blue legend{padding:3px 8px;font-weight:700;color:#347add; backgro
 /*分页*/
 #pages { padding:14px 0 10px;font-family:宋体; text-align:right}
 #pages a { display:inline-block; width:26px; height:22px; line-height:22px; background:#fff; border:1px solid #e3e3e3; text-align:center; color:#333}
-#pages a.a1 { background:url(../images/admin_img/pages.png) no-repeat 0 5px; width:56px; }
+#pages a.a1 { background:url(../images/pages.png) no-repeat 0 5px; width:56px; }
 #pages a:hover { background:#f1f1f1; color:#000; text-decoration:none; }
 #pages span { display:inline-block; width:26px; height:22px; line-height:22px; background:#5a85b2; border:1px solid #5a85b2; color:#fff; text-align:center; }
 .page .noPage { display:inline-block; width:56px; height:22px; line-height:22px; background:url(../img/icu/titleBg.png) repeat-x 0 -55px ; border:1px solid #e3e3e3; text-align:center; color:#a4a4a4; }
@@ -165,7 +164,7 @@ body fieldset.blue legend{padding:3px 8px;font-weight:700;color:#347add; backgro
 .role-memu li a span{float:right; color: #999}
 .role-memu li a span img{ margin-right:2px}
 .role-memu li.on a{ background:#e0e9f0}
-.role-but,.role-but span{background: url(../images/admin_img/tbtn.png) no-repeat; height:36px; line-height:36px; vertical-align:middle; padding-left:12px; border:none;display:inline-block;display:-moz-inline-stack;zoom:1;*display:inline;}
+.role-but,.role-but span{background: url(../images/tbtn.png) no-repeat; height:36px; line-height:36px; vertical-align:middle; padding-left:12px; border:none;display:inline-block;display:-moz-inline-stack;zoom:1;*display:inline;}
 .role-but span{background-position: right top; padding:0 12px 0 0; font-weight:700; font-size:14px; color:#fff}
 
 /*发布内容
@@ -221,7 +220,7 @@ body fieldset.blue legend{padding:3px 8px;font-weight:700;color:#347add; backgro
 	
 /*工作流*/
 .workflow{padding:10px 140px 10px 10px;}
-.workflow .col{padding-bottom:20px;background: url(../images/admin_img/arrowhead-y.png) no-repeat 10px bottom;}
+.workflow .col{padding-bottom:20px;background: url(../images/arrowhead-y.png) no-repeat 10px bottom;}
 .workflow div.off{padding:0; background:none}
 .workflow .content{left:130px; position:relative;}
 .workflow .title{position:absolute; left:-130px; top:-1px; width:90px; font-size:14px; font-weight:700; text-align:center; padding: 0 0 3px 0; background:#fff}
@@ -230,12 +229,12 @@ body fieldset.blue legend{padding:3px 8px;font-weight:700;color:#347add; backgro
 .workflow .name{font-size:14px}
 
 /*锁频*/
-.ScreenLock {background-color:#3a6ea5;background-image:url("../images/admin_img/ScreenLock.png")}
+.ScreenLock {background-color:#3a6ea5;background-image:url("../images/ScreenLock.png")}
 .ScreenLock {background-position:50% 50%;background-repeat:no-repeat;height:100%;left:0;position:absolute;top:0;width:100%;z-index:2000}
 .ScreenLock .inputpwd {font-size:14px;height:134px;left:50%;margin:-102px 0 0 -150px;padding:28px;position:absolute;top:50%;width:280px}
 .ScreenLock h5{ height:60px; line-height:60px; padding-top:10px; padding-left:40px;background:url(../images/msg_img/msg_bg.png) no-repeat 0px -476px;}
-.ScreenLock .input-text{border:1px solid #A7A6AA;height:18px;margin:0 5px 0 0;padding:2px 0 2px 5px;border: 1px solid #d0d0d0;background: #FFF url(../images/admin_img/input.png) repeat-x; font-family: Verdana, Geneva, sans-serif,"宋体";font-size:12px;}
-.ScreenLock .submit{ background: url(../images/admin_img/ScreenLockBut.png) no-repeat; height:24px; width:55px;cursor:hand;display:inline-block;display:-moz-inline-stack;zoom:1;*display:inline; border:none}
+.ScreenLock .input-text{border:1px solid #A7A6AA;height:18px;margin:0 5px 0 0;padding:2px 0 2px 5px;border: 1px solid #d0d0d0;background: #FFF url(../images/input.png) repeat-x; font-family: Verdana, Geneva, sans-serif,"宋体";font-size:12px;}
+.ScreenLock .submit{ background: url(../images/ScreenLockBut.png) no-repeat; height:24px; width:55px;cursor:hand;display:inline-block;display:-moz-inline-stack;zoom:1;*display:inline; border:none}
 
 /*网站地图*/
 .map-menu ul{margin:4px;width:156px;border:1px solid #A4C0F7;}
@@ -245,7 +244,9 @@ body fieldset.blue legend{padding:3px 8px;font-weight:700;color:#347add; backgro
 
 /*附件 未使用-已使用*/
 .tab-use{ position: relative}
-.tab-use .arrows{background: url(../images/admin_img/toggle-collapse-dark.png) no-repeat;  width:16px; height:16px; overflow:hidden; position:absolute; left:0; top:-11px;}
+.tab-use .arrows{background: url(../images/toggle-collapse-dark.png) no-repeat;  width:16px; height:16px; overflow:hidden; position:absolute; left:0; top:-11px;}
 .tab-use ul{ position:absolute; display:none; top:5px; left:0; width:80px}
 .tab-use ul li{}
 .tab-use ul a{ width:auto;padding:3px 8px}
+
+
