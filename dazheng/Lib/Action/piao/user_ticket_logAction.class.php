@@ -17,8 +17,18 @@ class user_ticket_logAction extends piao_publicAction
 
 	public function user_ticket_log()
 	{
-		$list=D("user_ticket_log")->user_ticket_log_list_pro();
-
+		$event_id = $_SESSION['event_id'];
+	
+		$ticket_list = M('user_ticket')->where("event_id='{$event_id}'")->select();
+		
+		$ticket_ids = array();
+		foreach($ticket_list as $key=>$val)
+		{
+			$ticket_ids[$val['ticket_id']] = $val['ticket_id'];
+		}
+		
+		$list=D("user_ticket_log")->user_ticket_log_list_pro(" and ticket_id in('".implode("','",$ticket_ids)."')");
+		
 		$this->assign("list",$list["item"]);
 		$this->assign("pages",$list["pages"]);
 		$this->assign("total",$list["total"]);

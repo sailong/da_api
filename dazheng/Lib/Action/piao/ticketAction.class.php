@@ -18,9 +18,9 @@ class ticketAction extends piao_publicAction
 	public function ticket()
 	{
 		
-		
-		$list=D("ticket")->ticket_list_pro();
-		$field_uid = get('field_uid');
+		$event_id = $_SESSION['event_id'];
+		$list=D("ticket")->ticket_list_pro(" and event_id='{$event_id}'");
+		/* $field_uid = get('field_uid');
 		if($field_uid == '')
 		{
 			$field_uid = $_SESSION['field_uid'];
@@ -33,8 +33,9 @@ class ticketAction extends piao_publicAction
 		else
 		{
 			$event_list = M('event')->select();
-		}
+		} */
 		
+		$event_list = M('event')->where("event_id='{$event_id}'")->select();
 		
 		foreach($event_list as $key=>$val){
 			unset($event_list[$key]);
@@ -60,8 +61,9 @@ class ticketAction extends piao_publicAction
 
 	public function ticket_add()
 	{
-		$event=M()->query("select event_id,event_name from tbl_event ");
-		$this->assign('event',$event);
+		$event_id = $_SESSION['event_id'];
+		$event=M()->query("select event_id,event_name from tbl_event where event_id='{$event_id}'");
+		$this->assign('event_list',$event);
 		
 		import("@.ORG.editor");  //导入类
 		$editor=new editor("400px","700px",$data["ticket_content"],"ticket_content");     //创建一个对象
@@ -114,8 +116,9 @@ class ticketAction extends piao_publicAction
 			$data=M("ticket")->where("ticket_id=".intval(get("ticket_id")))->find();
 			$this->assign("data",$data);
 			
-			$event=M()->query("select event_id,event_name from tbl_event ");
-			$this->assign('event',$event);
+			$event_id = $_SESSION['event_id'];
+			$event=M()->query("select event_id,event_name from tbl_event where event_id='{$event_id}'");
+			$this->assign('event_list',$event);
 			
 			import("@.ORG.editor");  //导入类
 			$editor=new editor("400px","700px",$data["ticket_content"],"ticket_content");     //创建一个对象
@@ -207,8 +210,15 @@ class ticketAction extends piao_publicAction
 			$data=M("ticket")->where("ticket_id=".intval(get("ticket_id")))->find();
 			if(!empty($data))
 			{
+				$event_id = $_SESSION['event_id'];
+				$event=M()->query("select event_id,event_name from tbl_event where event_id='{$event_id}'");
+				foreach($event as $key=>$val){
+					unset($event[$key]);
+					$event[$val['event_id']] = $val['event_name'];
+				}
+				$this->assign('event_list',$event);
+				
 				$this->assign("data",$data);
-
 				$this->assign("page_title",$data["ticket_name"]."门票");
 				$this->display();
 			}

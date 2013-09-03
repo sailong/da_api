@@ -15,35 +15,35 @@
 <td>
 <!--/dialog_start-->
 
-<form method="post" id="act_form" name="act_form" action="{:U('piao/user_ticket_log/user_ticket_log_edit_action')}" enctype="multipart/form-data">
+<form method="post" id="act_form" name="act_form" action="{:U('field/user_ticket_log/user_ticket_log_edit_action')}" enctype="multipart/form-data">
 	<table class="add_table" border="0" cellspacing="0" cellpadding="0" >
 		<tbody>
-			<tr>
-				<th>所属用户：</th>
-				<td><input type="text" name="uid" id="uid" class="mod_input2" style="width:66px;"  value="{$data.uid}"></td>
-			</tr>
-			<tr>
-				<th>所属门票：</th>
-				<td><input type="text" name="ticket_id" id="ticket_id" class="mod_input2" style="width:66px;"  value="{$data.ticket_id}"></td>
-			</tr>
-			<tr>
-				<th>领取码：</th>
-				<td><input type="text" name="user_ticket_code" id="user_ticket_code" class="mod_input2" style="width:300px;"  value="{$data.user_ticket_code}"></td>
-			</tr>
-			<tr>
-				<th>来源：</th>
-				<td><input type="text" name="user_ticket_log_source" id="user_ticket_log_source" class="mod_input2" style="width:300px;"  value="{$data.user_ticket_log_source}"></td>
-			</tr>
-			<tr>
-				<th>状态：</th>
-				<td>
-					<select name="user_ticket_log_status">
-						<option value="">请选择</option>
-						<option value="{$data.user_ticket_log_status}">{$data.user_ticket_log_status}</option>
-					</select>
-					<script>set_select_value(document.act_form.user_ticket_log_status,"{$data.user_ticket_log_status}");</script>
-				</td>
-			</tr>
+		<tr>
+					<th>所属用户：</th>
+					<td><input type="text" name="uid" id="uid" class="mod_input2" style="width:66px;"  value="{$data.uid}"></td>
+				</tr>
+				<tr>
+					<th>所属门票：</th>
+					<td><input type="text" name="ticket_id" id="ticket_id" class="mod_input2" style="width:66px;"  value="{$data.ticket_id}"></td>
+				</tr>
+				<tr>
+					<th>领取码：</th>
+					<td><input type="text" name="user_ticket_code" id="user_ticket_code" class="mod_input2" style="width:300px;"  value="{$data.user_ticket_code}"></td>
+				</tr>
+				<tr>
+					<th>来源：</th>
+					<td><input type="text" name="user_ticket_log_source" id="user_ticket_log_source" class="mod_input2" style="width:300px;"  value="{$data.user_ticket_log_source}"></td>
+				</tr>
+				<tr>
+					<th>状态：</th>
+					<td>
+						<select name="user_ticket_log_status">
+							<option value="">请选择</option>
+							<option value="{$data.user_ticket_log_status}">{$data.user_ticket_log_status}</option>
+						</select>
+						<script>set_select_value(document.act_form.user_ticket_log_status,"{$data.user_ticket_log_status}");</script>
+					</td>
+				</tr>
 				
 		</tbody>
 		<tfoot>

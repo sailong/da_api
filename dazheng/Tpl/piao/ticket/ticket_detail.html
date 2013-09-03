@@ -23,12 +23,12 @@
 				</tr>
 				<tr>
 					<th>所属赛事：</th>
-						<td>{$data.event_id}</td>
+						<td>{$event_list[$data['event_id']]}</td>
 				</tr>
-				<tr>
+				<!-- <tr>
 					<th>所属分站：</th>
 						<td>{$data.fenzhan_id}</td>
-				</tr>
+				</tr> -->
 				<tr>
 					<th>门票价格：</th>
 						<td>{$data.ticket_price}</td>
@@ -43,7 +43,7 @@
 				</tr>
 				<tr>
 					<th>图片：</th>
-						<td>{$data.ticket_pic}</td>
+						<td><img src="/{$data.ticket_pic}" style="max-width:300px;max-height:200px;"/></td>
 				</tr>
 				<tr>
 					<th>开始时间：</th>
