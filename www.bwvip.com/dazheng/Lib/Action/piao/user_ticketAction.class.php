@@ -17,7 +17,8 @@ class user_ticketAction extends piao_publicAction
 
 	public function user_ticket()
 	{
-		$list=D("user_ticket")->user_ticket_list_pro();
+		$event_id = $_SESSION['event_id'];
+		$list=D("user_ticket")->user_ticket_list_pro(" and event_id='{$event_id}'");
 
 		$this->assign("list",$list["item"]);
 		$this->assign("pages",$list["pages"]);
@@ -40,6 +41,7 @@ class user_ticketAction extends piao_publicAction
 		{
 			$data["uid"]=post("uid");
 			$data["ticket_id"]=post("ticket_id");
+			$data["event_id"]=$_SESSION['event_id'];
 			$data["user_ticket_code"]=post("user_ticket_code");
 			if($_FILES["user_ticket_codepic"]["error"]==0)
 			{

@@ -27,23 +27,53 @@
 					<td><input type="text" name="ticket_id" id="ticket_id" class="mod_input2" style="width:66px;"  value="{$data.ticket_id}"></td>
 				</tr>
 				<tr>
+					<th>门票类型：</th>
+					<td>
+						<select name="ticket_type" id="ticket_type">
+							<option value="">请选择</option>
+							<option value="BASE">普通</option>
+							<option value="VIP">VIP</option>
+						</select>
+						<script>set_select_value(document.act_form.ticket_type,"{$data.ticket_type}");</script>
+					</td>
+				</tr>
+				<tr>
 					<th>领取码：</th>
-					<td><input type="text" name="user_ticket_code" id="user_ticket_code" class="mod_input2" style="width:300px;"  value="{$data.user_ticket_code}"></td>
+					<td>{$data.user_ticket_code}
+					<!-- <input type="text" name="user_ticket_code" id="user_ticket_code" class="mod_input2" style="width:300px;"  value="{$data.user_ticket_code}"> -->
+					</td>
 				</tr>
 				<tr>
 					<th>二维码图片：</th>
-					<td><input type="file" name="user_ticket_codepic" id="user_ticket_codepic"  class="mod_input"></td>
+					<td><img src="{$data.user_ticket_codepic}" style="max-height:100px;max-width:100px;"><input type="file" name="user_ticket_codepic" id="user_ticket_codepic"  class="mod_input"></td>
+				</tr>
+				<tr>
+					<th>订票张数：</th>
+					<td><input type="text" name="user_ticket_nums" id="user_ticket_nums" class="mod_input2" style="width:66px;" value="{$data.user_ticket_nums}"></td>
 				</tr>
 				<tr>
 					<th>姓名：</th>
 					<td><input type="text" name="user_ticket_realname" id="user_ticket_realname" class="mod_input2" style="width:300px;"  value="{$data.user_ticket_realname}"></td>
 				</tr>
 				<tr>
+					<th>性别：</th>
+					<td><php>if($data['user_ticket_sex'] == '男'){echo '<input type="radio" name="user_ticket_sex" value="男" class="mod_input2" checked />男<input type="radio" name="user_ticket_sex" value="女" class="mod_input2" style="margin-left:20px;" >女</td>';}</php>
+						<php>if($data['user_ticket_sex'] == '女'){echo '<input type="radio" name="user_ticket_sex" value="男" class="mod_input2"/>男<input type="radio" name="user_ticket_sex" value="女" class="mod_input2" style="margin-left:20px;" checked />女</td>';}</php>
+				</tr>
+				<tr>
+					<th>年龄：</th>
+					<td><input type="text" name="user_ticket_age" id="user_ticket_age" class="mod_input2" style="width:66px;" value="{$data.user_ticket_age}"></td>
+				</tr>
+				<tr>
+					<th>地区：</th>
+					<td><input type="text" name="user_ticket_address" id="user_ticket_address" class="mod_input2" style="width:300px;" value="{$data.user_ticket_address}"></td>
+				</tr>
+				<!-- <tr>
 					<th>证件类型：</th>
 					<td>
 						<select name="user_ticket_cardtype">
 							<option value="">请选择</option>
-							<option value="{$data.user_ticket_cardtype}">{$data.user_ticket_cardtype}</option>
+							<option value="0">身份证</option>
 						</select>
 						<script>set_select_value(document.act_form.user_ticket_cardtype,"{$data.user_ticket_cardtype}");</script>
 					</td>
@@ -51,17 +81,31 @@
 				<tr>
 					<th>证件号码：</th>
 					<td><input type="text" name="user_ticket_card" id="user_ticket_card" class="mod_input2" style="width:300px;"  value="{$data.user_ticket_card}"></td>
-				</tr>
+				</tr> -->
 				<tr>
 					<th>手机号：</th>
-					<td><input type="text" name="user_ticket_mobile" id="user_ticket_mobile" class="mod_input2" style="width:120px;"  value="{$data.user_ticket_mobile}"></td>
+					<td><input type="text" name="user_ticket_mobile" id="user_ticket_mobile" class="mod_input2" style="width:300px;"  value="{$data.user_ticket_mobile}"></td>
+				</tr>
+				<tr>
+					<th>手机串号：</th>
+					<td><input type="text" name="user_ticket_imei" id="user_ticket_imei" class="mod_input2" style="width:300px;" value="{$data.user_ticket_imei}"></td>
+				</tr>
+				<tr>
+					<th>公司名称：</th>
+					<td><input type="text" name="user_ticket_company" id="user_ticket_company" class="mod_input2" style="width:300px;" value="{$data.user_ticket_company}"></td>
+				</tr>
+				<tr>
+					<th>公司职位：</th>
+					<td><input type="text" name="user_ticket_company_post" id="user_ticket_company_post" class="mod_input2" style="width:300px;" value="{$data.user_ticket_company_post}"/></td>
 				</tr>
 				<tr>
 					<th>状态：</th>
 					<td>
 						<select name="user_ticket_status">
 							<option value="">请选择</option>
-							<option value="{$data.user_ticket_status}">{$data.user_ticket_status}</option>
+							<option value="0">待审核</option>
+							<option value="1">审核通过</option>
+							<option value="2">审核不通过</option>
 						</select>
 						<script>set_select_value(document.act_form.user_ticket_status,"{$data.user_ticket_status}");</script>
 					</td>
@@ -84,18 +128,18 @@
 $(document).ready(function(){
 $.formValidator.initConfig({formID:"act_form",theme:'ArrowSolidBox',mode:'AutoTip',onError:function(msg){msg_error(msg)},inIframe:true});
 
-	$("#uid").formValidator({empty:true,onShow:"请输入所属用户",onFocus:"请输入所属用户",onCorrect:"输入正确"}).inputValidator({min:1,max:11,onError:"请输入所属用户"});
-		$("#ticket_id").formValidator({empty:true,onShow:"请输入门票",onFocus:"请输入门票",onCorrect:"输入正确"}).inputValidator({min:1,max:11,onError:"请输入门票"});
-		$("#user_ticket_code").formValidator({empty:true,onShow:"请输入领取码",onFocus:"请输入领取码",onCorrect:"输入正确"}).inputValidator({min:1,max:50,onError:"请输入领取码"});
-		$("#user_ticket_codepic").formValidator({empty:true,onShow:"请输入二维码图片",onFocus:"请输入二维码图片",onCorrect:"输入正确"}).inputValidator({min:1,max:300,onError:"请输入二维码图片"});
-		$("#user_ticket_realname").formValidator({empty:true,onShow:"请输入姓名",onFocus:"请输入姓名",onCorrect:"输入正确"}).inputValidator({min:1,max:50,onError:"请输入姓名"});
-		$("#user_ticket_cardtype").formValidator({empty:true,onShow:"请输入证件类型",onFocus:"请输入证件类型",onCorrect:"输入正确"}).inputValidator({min:1,max:50,onError:"请输入证件类型"});
-		$("#user_ticket_card").formValidator({empty:true,onShow:"请输入证件号码",onFocus:"请输入证件号码",onCorrect:"输入正确"}).inputValidator({min:1,max:50,onError:"请输入证件号码"});
-		$("#user_ticket_mobile").formValidator({empty:true,onShow:"请输入手机号",onFocus:"请输入手机号",onCorrect:"输入正确"}).inputValidator({min:1,max:11,onError:"请输入手机号"});
-		$("#user_ticket_status").formValidator({empty:true,onShow:"请输入状态",onFocus:"请输入状态",onCorrect:"输入正确"}).inputValidator({min:1,max:1,onError:"请输入状态"});
+//	$("#uid").formValidator({empty:true,onShow:"请输入所属用户",onFocus:"请输入所属用户",onCorrect:"输入正确"}).inputValidator({min:1,max:11,onError:"请输入所属用户"});
+//		$("#ticket_id").formValidator({empty:true,onShow:"请输入门票",onFocus:"请输入门票",onCorrect:"输入正确"}).inputValidator({min:1,max:11,onError:"请输入门票"});
+//		$("#user_ticket_code").formValidator({empty:true,onShow:"请输入领取码",onFocus:"请输入领取码",onCorrect:"输入正确"}).inputValidator({min:1,max:50,onError:"请输入领取码"});
+//		$("#user_ticket_codepic").formValidator({empty:true,onShow:"请输入二维码图片",onFocus:"请输入二维码图片",onCorrect:"输入正确"}).inputValidator({min:1,max:300,onError:"请输入二维码图片"});
+//		$("#user_ticket_realname").formValidator({empty:true,onShow:"请输入姓名",onFocus:"请输入姓名",onCorrect:"输入正确"}).inputValidator({min:1,max:50,onError:"请输入姓名"});
+//		$("#user_ticket_cardtype").formValidator({empty:true,onShow:"请输入证件类型",onFocus:"请输入证件类型",onCorrect:"输入正确"}).inputValidator({min:1,max:50,onError:"请输入证件类型"});
+//		$("#user_ticket_card").formValidator({empty:true,onShow:"请输入证件号码",onFocus:"请输入证件号码",onCorrect:"输入正确"}).inputValidator({min:1,max:50,onError:"请输入证件号码"});
+//		$("#user_ticket_mobile").formValidator({empty:true,onShow:"请输入手机号",onFocus:"请输入手机号",onCorrect:"输入正确"}).inputValidator({min:1,max:11,onError:"请输入手机号"});
+//		$("#user_ticket_status").formValidator({empty:true,onShow:"请输入状态",onFocus:"请输入状态",onCorrect:"输入正确"}).inputValidator({min:1,max:1,onError:"请输入状态"});
 		
 
-	$.formValidator.reloadAutoTip();
+//	$.formValidator.reloadAutoTip();
 });
 
 function reloadAutoTip()

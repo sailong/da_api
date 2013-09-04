@@ -111,7 +111,7 @@ if($uid <= 0) {
 		*/
  
 		 DB::query("UPDATE ultrax.jishigou_members SET nickname='$realname',validate=1 WHERE ucuid='$uid'"); 
-		 DB::query("UPDATE ".DB::table('common_member_profile')."  SET realname='$realname',mobile='$mobile',resideprovince='$sheng',cron_fensi_state=0  WHERE uid='$uid'"); 
+		 DB::query("UPDATE ".DB::table('common_member_profile')."  SET realname='$realname',mobile='$mobile',resideprovince='$sheng',cron_fensi_state=0,regdate='".time()."'  WHERE uid='$uid'"); 
 
 		 DB::query("UPDATE ".DB::table('common_member')."  SET groupid='10'  WHERE uid='$uid'"); 
 				 

@@ -26,32 +26,79 @@
 						<td>{$data.ticket_id}</td>
 				</tr>
 				<tr>
+					<th>门票类型：</th>
+						<td>{$data.ticket_type}</td>
+				</tr>
+				<tr>
 					<th>领取码：</th>
 						<td>{$data.user_ticket_code}</td>
 				</tr>
 				<tr>
 					<th>二维码图片：</th>
-						<td>{$data.user_ticket_codepic}</td>
+						<td><img src="{$data.user_ticket_codepic}"></td>
+				</tr>
+				<tr>
+					<th>订票张数：</th>
+					<td>{$data.user_ticket_nums}</td>
 				</tr>
 				<tr>
 					<th>姓名：</th>
 						<td>{$data.user_ticket_realname}</td>
 				</tr>
+				
 				<tr>
+					<th>性别：</th>
+					<td>{$data.user_ticket_sex}</php>
+				</tr>
+				<tr>
+					<th>年龄：</th>
+					<td>{$data.user_ticket_age}</td>
+				</tr>
+				<tr>
+					<th>地区：</th>
+					<td>{$data.user_ticket_address}</td>
+				</tr>
+				<!-- <tr>
 					<th>证件类型：</th>
-						<td>{$data.user_ticket_cardtype}</td>
+						<td><php>if($data['user_ticket_cardtype'] == 0){echo '身份证';}</php></td>
 				</tr>
 				<tr>
 					<th>证件号码：</th>
 						<td>{$data.user_ticket_card}</td>
-				</tr>
+				</tr> -->
 				<tr>
 					<th>手机号：</th>
 						<td>{$data.user_ticket_mobile}</td>
 				</tr>
 				<tr>
+					<th>手机串号：</th>
+					<td>{$data.user_ticket_imei}</td>
+				</tr>
+				<tr>
+					<th>公司名称：</th>
+					<td>{$data.user_ticket_company}</td>
+				</tr>
+				<tr>
+					<th>公司职位：</th>
+					<td>{$data.user_ticket_company_post}</td>
+				</tr>
+				<tr>
 					<th>状态：</th>
-						<td>{$data.user_ticket_status}</td>
+						<td>
+						<php>
+						switch($data['user_ticket_status']){
+							case 0:
+								echo '待审核';
+								break;
+							case 1:
+								echo '审核通过';
+								break;
+							case 2:
+								echo '审核不通过';
+								break;
+						}
+						</php>
+						</td>
 				</tr>
 				<tr>
 					<th>添加时间：</th>

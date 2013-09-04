@@ -283,7 +283,7 @@ if($ac=="event_blog")
 
 
 
-//赛事报道 详细
+//新闻 详细
 if($ac=="event_blog_detail")
 {
 	//print_r(getimagesize("".$site_url."/data/attachment/album/201303/19/114243utqdpvtp9vipq2gd.jpg.thumb.jpg"));
@@ -292,9 +292,10 @@ if($ac=="event_blog_detail")
 	$pic_width=$_G['gp_pic_width'];
 	if($blogid)
 	{
-		$detail_data=DB::fetch_first("select uid,arc_type,arc_id as blogid,arc_name as subject,arc_replynum as replynum,arc_viewtype as view_type,arc_pic as pic ,arc_addtime as dateline,arc_content as content from tbl_arc where arc_id='".$blogid."' ");
+		$detail_data=DB::fetch_first("select uid,field_uid,arc_type,arc_id as blogid,arc_name as subject,arc_replynum as replynum,arc_viewtype as view_type,arc_pic as pic ,arc_addtime as dateline,arc_content as content from tbl_arc where arc_id='".$blogid."' ");
 		$detail_data['username']="";
 		$detail_data['uid']="0";
+
 		
 		$detail_data['content']=strip_tags($detail_data['content'],"<p><img><br><div>");
 		$detail_data['content']=str_replace("<img ","<div style=\"text-align:center; width:100%; \"><a href=\"http://www.bwvip.com/news_detail_pic\"><changsailong><img ",$detail_data['content']);
@@ -393,6 +394,20 @@ if($ac=="event_blog_detail")
 		if($detail_data['dateline'])
 		{
 			$detail_data['dateline']=date("Y-m-d G:i",$detail_data['dateline']);
+			
+			if($detail_data['field_uid']==1186)
+			{
+				$detail_data['dateline']="来自美兰湖球场 ".$detail_data['dateline'];
+			}
+			else if($detail_data['field_uid']==1160)
+			{
+				$detail_data['dateline']="来自南山球会 ".$detail_data['dateline'];
+			}
+			else
+			{
+				$detail_data['dateline']="".$detail_data['dateline'];
+			}
+			
 		}
 		
 		//$list=DB::query("select arc_id as blogid,arc_name as subject,arc_addtime as dateline from tbl_arc where arc_id<>'".$blogid."' order by arc_addtime desc limit 2");

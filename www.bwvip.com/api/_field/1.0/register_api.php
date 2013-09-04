@@ -109,7 +109,7 @@ if($uid <= 0) {
 		*/
  
 		 DB::query("UPDATE ultrax.jishigou_members SET nickname='$realname',validate=1 WHERE ucuid='$uid'"); 
-		 DB::query("UPDATE ".DB::table('common_member_profile')."  SET realname='$realname',mobile='$mobile',resideprovince='$sheng',cron_fensi_state=0,reg_source=1186  WHERE uid='$uid'"); 
+		 DB::query("UPDATE ".DB::table('common_member_profile')."  SET realname='$realname',mobile='$mobile',resideprovince='$sheng',cron_fensi_state=0,reg_source=1186,regdate='".time()."'  WHERE uid='$uid'"); 
 				 
 		setcookie('Example_auth', uc_authcode($uid."\t".$_POST['username'], 'ENCODE'));
 		api_json_result(1,0,$api_error['login']['10010'],$data);

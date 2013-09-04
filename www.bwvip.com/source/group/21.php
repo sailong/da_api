@@ -109,7 +109,7 @@ $ssre=DB::fetch($ssinfo);
 
 //成绩卡排行
 
-$query = DB::query("select cs.id, cs.uid, cs.fuid, cs.total_score, cmp.realname from ".DB::table('common_score')." cs left join ".DB::table('common_member_profile')." cmp on cmp.uid=cs.uid where cs.fuid='".$_GET['uid']."' and cs.status='2' and cs.total_score>50 order by cs.total_score asc limit 10");
+$query = DB::query("select cs.baofen_id as id, cs.uid, cs.field_id, cs.total_score, cmp.realname from tbl_baofen cs left join ".DB::table('common_member_profile')." cmp on cmp.uid=cs.uid where cs.field_id='".$_GET['uid']."' and cs.status='2' and cs.total_score>50 order by cs.total_score asc limit 10");
 $i = 0;
 while($row = DB::fetch($query)) {
 	$i++;
@@ -119,14 +119,14 @@ while($row = DB::fetch($query)) {
 }
 
 
-$query = DB::query("select cs.id, cs.uid, cs.tee, cs.dateline, cmp.realname from ".DB::table('common_score')." as cs left join ".DB::table('common_member_profile')." as cmp on cmp.uid=cs.uid where cs.fuid='".$_GET['uid']."' and cs.status='2'  and cs.total_score>50 group by cs.uid order by cs.total_score asc limit 10");
+$query = DB::query("select cs.baofen_id as id, cs.uid, cs.tee, cs.dateline, cmp.realname from tbl_baofen as cs left join ".DB::table('common_member_profile')." as cmp on cmp.uid=cs.uid where cs.field_id='".$_GET['uid']."' and cs.status='2'  and cs.total_score>50 group by cs.uid order by cs.total_score asc limit 10");
 while($row = DB::fetch($query)) {
 	$row['dateline'] = date('Y-m-d H:i:s', $row['dateline']);
 	$row['realname'] = (strlen($row['realname']) < 5) ? $row['realname'] : mb_substr($row['realname'], 0, 5, 'utf-8');
 	$rank[] = $row;
 }
 foreach($rank as $k=>$v) {
-	$query = DB::query("select total_score from ".DB::table('common_score')." where uid='".$v['uid']."' and status='2' order by total_score asc limit 3");
+	$query = DB::query("select total_score from tbl_baofen where uid='".$v['uid']."' and status='2' order by total_score asc limit 3");
 	$total = 0;
 	$i = 0;
 	while($row = DB::fetch($query)) {
@@ -134,7 +134,7 @@ foreach($rank as $k=>$v) {
 		$total += $row['total_score'];
 	}
 	if($i < 3) {
-		$total_first = DB::fetch_first("select total_score from ".DB::table('common_score')." where uid='".$v['uid']."' and status='2' order by total_score asc");
+		$total_first = DB::fetch_first("select total_score from tbl_baofen where uid='".$v['uid']."' and status='2' order by total_score asc");
 		$total_score = $total_first['total_score'];
 	} else {
 		$total_score = round($total/3, 2);

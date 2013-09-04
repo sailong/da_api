@@ -252,7 +252,7 @@ $caves = explode('|',$arr['score'] );
 			if($game_type=='elite'){
 
 				$theurl = 'home.php?mod=space&do=common&op=score&uid='.$uid.'&gt=elite';
-				$sql = "SELECT COUNT(*) FROM tbl_baofen WHERE status = '2'  AND uid = '".$uid."'";
+				$sql = "SELECT COUNT(*) FROM tbl_baofen WHERE  uid = '".$uid."'";
 				$tmp = DB::query($sql);
 				$result = DB::fetch($tmp);
 				$record_amount = $result["COUNT(*)"];
@@ -289,7 +289,7 @@ $caves = explode('|',$arr['score'] );
 					FROM tbl_baofen AS cs
 					LEFT JOIN ".DB::table('common_field')." AS cf ON cf.uid = cs.field_id
 					LEFT JOIN ".DB::table('common_district')." AS cd ON cd.id = cs.province
-					WHERE status = '2'  AND cs.uid = '".$uid."'
+					WHERE  cs.uid = '".$uid."'
 					ORDER BY cs.dateline DESC
 					LIMIT ".$start.",".$pagesize."
 					";

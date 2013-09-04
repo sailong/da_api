@@ -20,6 +20,8 @@ if(!$width)
  //字体缩放
 $ziti=14/460;
 $fonts=$ziti*$width;
+$ziti=16/460;
+$fonts1=$ziti*$width;
 
 $input=450/460;
 $inputc=$input*$width;
@@ -35,6 +37,12 @@ $inputc=$input*$width;
 	font-size: <?php echo $fonts;?>px;
 	font-weight: 600;
 	color: #999;
+}
+.tptitle1 {
+	font-size: <?php echo $fonts1;?>px;
+	font-weight: 600;
+	color: #999;
+	padding-left:20px;
 }
 p {
 	font-size: <?php echo $fonts;?>px; 
@@ -58,16 +66,18 @@ h3 {
 </head> 
 <body >
 
-<table width="<?php echo $width;?>" border="0" align="left" cellpadding="0" cellspacing="0"><tr><td><img src="images/banner.jpg" width="<?php echo $width;?>" ></td>
+<table width="<?php echo $width;?>" border="0" align="left" cellpadding="0" cellspacing="0">
+<tr>
+<td>
+<img src="images/huifengbanner.jpg" width="<?php echo $width;?>" >
+</td>
 </tr>
   <tr>
     <td  style="padding: 15px;"><!-- add the info layer functionality here -->
 
-      <h3 >观看2013 BMW大师赛（中国）。</h3>
-      <p >2013年10月24日至27日，BMW大师赛将于上海举办。<br>
-        即刻注册抢票，就有机会亲临现场，见证顶级赛事，观赏世界级球手的精彩表现。</p>
-      <p >抢票以先到先得形式进行，每人每场比赛日可抢得2张亲临观赏票，观赛日期可多选。</p>
-      <p >注册抢票即有机会获得惊喜抢票大奖。</p>
+     
+      <h3 >观看2013汇丰冠军赛。</h3>
+      <p >享有"亚洲大满贯赛"美誉的世界高尔夫锦标赛-汇丰冠军赛在观澜湖高尔夫球会奥拉沙宝成功举办一届之后，今年将重返上海并永久落户。第九届赛事将于2013年10月31日至11月3日日在上海佘山国际高尔夫俱乐部举行，该场地曾于2005年至2011年连续承办了七届汇丰冠军赛。</p>
     </td>
   </tr>
   
@@ -77,7 +87,7 @@ h3 {
    
   <tr>
      <td  style="padding: 15px;">
-     <form name="form1" id="form1" method="post" action="bmwregac.php?ac=bwm_reg"  onsubmit="return CheckForm()"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+     <form name="form1" id="form1" method="post"   onsubmit="return CheckForm()"><table width="100%" border="0" cellspacing="0" cellpadding="0">
        <tr>
          <td align="center" class="centertl">姓名</td>
        </tr>
@@ -302,109 +312,130 @@ return  true;
          <td align="center" class="centertl">观看比赛</td>
        </tr>
        <tr>
-         <td class="tptitle">请选择观看比赛的日期(可多选)* 
-           <br>
+         <td class="tptitle">请选择观看比赛的日期(可多选)* <br>
            重复提交，以最后一次提交内容为准 
-*</td>
+           *</td>
        </tr>
        <tr>
-         <td><label for="watch_date"> 
-           <input type="checkbox" name="watch_date[]" id="watch_date" value="10月24日"> </label>         
-           10月24日
-           <label for="watch_date2"> 
-           <input type="checkbox" name="watch_date[]" id="watch_date2"  value="10月25日"> </label>        
-           10月25日
-           <br> 
-           <label for="watch_date3"> 
-            <input type="checkbox" name="watch_date[]" id="watch_date3" value="10月26日">  </label>       
-           10月26日
-           <label for="watch_date4"> 
-            <input type="checkbox" name="watch_date[]" id="watch_date4" value="10月27日"> </label>    
-           10月27日
-        </label></td>
+         <td height="25" align="right">&nbsp;</td>
        </tr>
        <tr>
-         <td align="center" class="centertl">您的购车计划 </td>
+         <td align="left" class="centertl">普通票：</td>
        </tr>
        <tr>
-         <td class="tptitle">是否是BMW车主？*</td>
+         <td align="left" class="tptitle1">职业-业余配对赛：200元，10月30日</td>
        </tr>
        <tr>
-         <td><label for="is_owners"></label>
-           <select name="is_owners" id="is_owners" class="inputc" >
-             <option value="">请选择</option>
-             <option value="1">是</option>
-             <option value="0">否</option>
-           </select></td>
+         <td height="25" align="right"><table width="10%" border="0" cellspacing="0" cellpadding="0" style="padding-right:80px;">
+           <tr>
+             <td><img src="images/jiahao.png" width="15" height="15"></td>
+             <td><input name="name2" type="text" id="name2" size="5" ></td>
+             <td><img src="images/jianhao.png" width="15" height="15"></td>
+           </tr>
+         </table></td>
        </tr>
        <tr>
-         <td class="tptitle">您感兴趣的BMW车系*</td>
+         <td align="left" class="tptitle1">平日票：500元，10月31日或11月1日</td>
        </tr>
        <tr>
-         <td><label for="bwm_cars"></label>
-           <select name="bwm_cars" id="bwm_cars" class="inputc" >
-             <option value="0">请选择</option>
-             <option value="BMW 1系">BMW 1系</option>
-             <option value="BMW 3系">BMW 3系</option>
-             <option value="BMW 5系">BMW 5系</option>
-             <option value="BMW 6系">BMW 6系</option>
-             <option value="BMW 7系">BMW 7系</option>
-             <option value="BMW X1系">BMW X1系</option>
-             <option value="BMW X3系">BMW X3系</option>
-             <option value="BMW X5系">BMW X5系</option>
-             <option value="BMW X6系">BMW X6系</option>
-             <option value="BMW Z4系">BMW Z4系</option>
-             <option value="BMW M">BMW M</option>
-             <option value="暂无计划">暂无计划</option>
-           </select></td>
-       </tr>
-      <tr>
-         <td class="tptitle">您打算何时购买新车*</td>
+         <td height="25" align="right"><table width="10%" border="0" cellspacing="0" cellpadding="0">
+           <tr>
+             <td><img src="images/jiahao.png" width="15" height="15"></td>
+             <td><input name="name3" type="text" id="name3" size="5" ></td>
+             <td><img src="images/jianhao.png" width="15" height="15"></td>
+           </tr>
+         </table></td>
        </tr>
        <tr>
-         <td><label for="buy_car_date"></label>
-           <select name="buy_car_date" id="buy_car_date" class="inputc" >
-             <option value="0">请选择</option>
-             <option value="3个月以内">3个月以内</option>
-             <option value="3-6个月">3-6个月</option>
-             <option value="6-12个月">6-12个月</option>
-             <option value="1年以上">1年以上</option>
-             <option value="暂无打算">暂无打算</option>
-           </select></td>
+         <td align="left" class="tptitle1">周末票：1000元，11月2日或11月3日</td>
        </tr>
        <tr>
-         <td align="center" class="centertl">了解渠道 </td>
+         <td height="25" align="right"><table width="100" border="0" cellspacing="0" cellpadding="0">
+           <tr>
+             <td><img src="images/jiahao.png" width="15" height="15"></td>
+             <td><input name="name2" type="text" id="name2" size="5" ></td>
+             <td><img src="images/jianhao.png" width="15" height="15"></td>
+           </tr>
+         </table></td>
        </tr>
        <tr>
-         <td class="tptitle">您从何处得到我们的信息?*</td>
+         <td align="left" class="tptitle1">套票：2000元，10月30-11月3日</td>
        </tr>
        <tr>
-         <td><label for="learn_channels"></label>
-           <select name="learn_channels" id="learn_channels" class="inputc" >
-             <option value="">请选择</option>
-             <option value="高尔夫球场">高尔夫球场</option>
-             <option value="高尔夫练习场">高尔夫练习场</option>
-             <option value="高尔夫专卖店/高尔夫订场中介">高尔夫专卖店/高尔夫订场中介</option>
-             <option value="报纸/杂志媒体">报纸/杂志媒体</option>
-             <option value="户外媒体">户外媒体</option>
-             <option value="线上媒体">线上媒体</option>
-             <option value="其他">其他</option>	
-           </select></td>
+         <td height="25" align="right"><table width="100" border="0" cellspacing="0" cellpadding="0">
+           <tr>
+             <td><img src="images/jiahao.png" width="15" height="15"></td>
+             <td><input name="name2" type="text" id="name2" size="5" ></td>
+             <td><img src="images/jianhao.png" width="15" height="15"></td>
+           </tr>
+         </table></td>
        </tr>
        <tr>
-         <td>&nbsp;</td>
+         <td align="left" class="centertl">家庭票：</td>
        </tr>
        <tr>
-         <td> </td>
+         <td align="left" class="tptitle"><span class="tptitle1">职业-业余配对赛：300元，10月30日</span></td>
        </tr>
        <tr>
-         <td class="tptitle"><label for="is_contact"><input name="is_contact" type="checkbox" id="is_contact" value="1" checked>
-           需要当地经销商与我取得联系。</label></td>
+         <td height="25" align="right"><table width="100" border="0" cellspacing="0" cellpadding="0">
+           <tr>
+             <td><img src="images/jiahao.png" width="15" height="15"></td>
+             <td><input name="name2" type="text" id="name2" size="5" ></td>
+             <td><img src="images/jianhao.png" width="15" height="15"></td>
+           </tr>
+         </table></td>
        </tr>
        <tr>
-         <td class="tptitle"><label for="is_readed">
-           <input name="is_readed" type="checkbox" id="is_readed" checked value="1">
-           我已阅读并接受数据使用声明. </label></td>
+         <td align="left" class="tptitle"><span class="tptitle1">平日票：900元，10月31日或11月1日 </span></td>
+       </tr>
+       <tr>
+         <td height="25" align="right"><table width="100" border="0" cellspacing="0" cellpadding="0">
+           <tr>
+             <td><img src="images/jiahao.png" width="15" height="15"></td>
+             <td><input name="name2" type="text" id="name2" size="5" ></td>
+             <td><img src="images/jianhao.png" width="15" height="15"></td>
+           </tr>
+         </table></td>
+       </tr>
+       <tr>
+         <td align="left" class="tptitle1">周末票：1800元，11月2日或11月3日</td>
+       </tr>
+       <tr>
+         <td height="25" align="right"><table width="100" border="0" cellspacing="0" cellpadding="0">
+           <tr>
+             <td><img src="images/jiahao.png" width="15" height="15"></td>
+             <td><input name="name2" type="text" id="name2" size="5" ></td>
+             <td><img src="images/jianhao.png" width="15" height="15"></td>
+           </tr>
+         </table></td>
+       </tr>
+       <tr>
+         <td align="left" class="tptitle1">套票：3500元，10月30日-11月3日</td>
+       </tr>
+       <tr>
+         <td height="25" align="right"><table width="100" border="0" cellspacing="0" cellpadding="0">
+           <tr>
+             <td><img src="images/jiahao.png" width="15" height="15"></td>
+             <td><input name="name2" type="text" id="name2" size="5" ></td>
+             <td><img src="images/jianhao.png" width="15" height="15"></td>
+           </tr>
+         </table></td>
+       </tr>
+       <tr>
+         <td align="left" class="centertl">特殊票：</td>
+       </tr>
+       <tr>
+         <td align="left" class="tptitle1">学生票：100元，10月30日或10月31日
+           或11月1日</td>
+       </tr>
+       <tr>
+         <td height="25" align="right"><table width="100" border="0" cellspacing="0" cellpadding="0">
+           <tr>
+             <td><img src="images/jiahao.png" width="15" height="15"></td>
+             <td><input name="name2" type="text" id="name2" size="5" ></td>
+             <td><img src="images/jianhao.png" width="15" height="15"></td>
+           </tr>
+         </table></td>
        </tr>
        <tr>
          <td>&nbsp;</td>
@@ -422,7 +453,7 @@ return  true;
   </tr>
   
   <tr>
-    <td><img src="images/bottom.jpg" width="<?php echo $width;?>" ></td>
+    <td>&nbsp;</td>
   </tr>
 </table>
 </body>

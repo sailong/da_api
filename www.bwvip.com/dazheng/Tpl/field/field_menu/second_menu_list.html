@@ -7,6 +7,9 @@
 		<li><a <php> if(get("language")=='cn'){ echo " class=on ";}</php> href="{:U('field/field_menu/field_2ndmenu_list',array('language'=>'cn','field_1stmenu_id'=>$field_1stmenu_id))}">中文</a></li>
 		<li><a <php> if(get("language")=='en'){ echo " class=on ";}</php> href="{:U('field/field_menu/field_2ndmenu_list',array('language'=>'en','field_1stmenu_id'=>$field_1stmenu_id))}">英文</a></li>
 	</ul>
+	<ul style="float:right;">
+		<li><a href="{:U('field/field_menu/first_menu_list',array('language'=>'cn'))}">菜单分类管理</a></li>
+	</ul>
 	<!--<ul style="float:right;">
 		<li><a href="javascript:;" onclick="javascript:history.back(-1);">返回上一级</a></li>
 	</ul>

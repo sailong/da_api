@@ -103,7 +103,10 @@ class baofenAction extends wap_publicAction
 		
 		}
 		else
-		{$str=" and fenzhan_id=$fenzhan_id";}
+		{
+			$str=" and fenzhan_id=$fenzhan_id";
+		}
+		
 		$fenzu_id=get("fenzu_id");
 		if(!$fenzhan_id)
 		{
@@ -665,6 +668,7 @@ class baofenAction extends wap_publicAction
 			$field_id=$fenzhan_info['field_id'];
 			$fenzhan_a=$fenzhan_info['fenzhan_a'];
 			$fenzhan_b=$fenzhan_info['fenzhan_b'];
+			$fenzhan_lun=$fenzhan_info['fenzhan_lun'];
 			
 			//下级分站
 			if($fenzhan_info['parent_id'])
@@ -797,14 +801,23 @@ class baofenAction extends wap_publicAction
 					//统计总分
 					$baofen=M()->query("select * from tbl_baofen where baofen_id='".$key."'");
 					$avcave=0;
+					$total_score_new=0;
 					for($i = 1; $i <= 18; $i ++)
 					{
 						if($baofen[0]['cave_'.$i]>0)
 						{
 							$avcave+=Gpar($baofen[0]['cave_'.$i],$par[$i-1]);
+							$total_score_new+=$baofen[0]['cave_'.$i];
 						}
 					}
-					$sql="update tbl_baofen set total_ju_par=$avcave where baofen_id='".$key."'"; 
+					
+					//第1轮自动更新状态
+					if($total_score_new>0 && $baofen[0]['status']==0 && $fenzhan_lun==1)
+					{
+						$status_sql =",status=1 ";
+					}
+					
+					$sql="update tbl_baofen set total_ju_par=$avcave ".$status_sql." where baofen_id='".$key."'"; 
 					//echo $sql;
 					//echo "<hr>";
 					$res=M()->query($sql);
@@ -825,7 +838,7 @@ class baofenAction extends wap_publicAction
 						}
 						elseif ($i == '21')
 						{
-				        $sdata [$i] = $row[0]['lout']+$row[0]['lin'];
+							$sdata [$i] = $row[0]['lout']+$row[0]['lin'];
 						}
 						elseif ($i > 9)
 						{
@@ -905,7 +918,6 @@ class baofenAction extends wap_publicAction
 					$arry ['total_ju_par'] = "`total_ju_par`='".$avcave."'";	 
 					$arry ['total_sum_ju'] = "`total_sum_ju`='".$total_sum_ju."'";	 
 					$arry ['zong_score'] = "`zong_score`='".$zong_score."'";
-				
 					 
 					$res=M()->query("update tbl_baofen set ".(implode(",",$arry))." where baofen_id='".$key."' ");
 					//echo "update tbl_baofen set ".(implode(",",$arry))." where baofen_id='".$key."' ";

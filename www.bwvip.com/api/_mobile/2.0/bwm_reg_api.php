@@ -3,7 +3,16 @@ if(!defined("IN_DISCUZ"))
 {
 	exit('Access Denied');
 }
+$userAgent = $_SERVER['HTTP_USER_AGENT'];
 
+$user_device = '';
+if(strpos($userAgent,"iPhone") || strpos($userAgent,"iPad") || strpos($userAgent,"iPod") || strpos($userAgent,"iOS"))
+{
+	$user_device = 'IOS';
+}else if(strpos($userAgent,"Android"))
+{
+	$user_device = 'Android';
+}
 
 $ac=$_G['gp_ac'];
 //修改密码
@@ -37,19 +46,36 @@ if($ac=="bwm_reg")
 	$learn_channels = urldecode($_G['gp_learn_channels']);
 	$is_contact = $_G['gp_is_contact'];
 	$is_readed = $_G['gp_is_readed'];
-	$bwm_addtime = time();
-	$bwm_adddate = date('Y年m月d日',$bwm_addtime);
-	if(empty($is_readed)){
-		$is_readed = 1;
+	if(!empty($is_readed))
+	{
+		$is_readed = '是';
+	}else{
+		$is_readed = '否';
 	}
-	$sql = "insert into tbl_bwm_game(qiancheng,family_name,name,year,month,day,phone,email,province,city,address,postcode,watch_date,is_owners,bwm_cars,buy_car_date,learn_channels,is_contact,is_readed,bwm_addtime,bwm_adddate)";
-	$sql .= " values('{$qiancheng}','{$family_name}','{$name}','{$year}','{$month}','{$day}','{$phone}','{$email}','{$province}','{$city}','{$address}','{$postcode}','{$watch_date}','{$is_owners}','{$bwm_cars}','{$buy_car_date}','{$learn_channels}','{$is_contact}','{$is_readed}','{$bwm_addtime}','{$bwm_adddate}')";
+	if(!empty($is_contact))
+	{
+		$is_contact = '是';
+	}else{
+		$is_contact = '否';
+	}
+	if(!empty($is_owners))
+	{
+		$is_owners = '是';
+	}else{
+		$is_owners = '否';
+	}
+	$bwm_addtime = time();
+	$bwm_adddate = date('Y年m月d日 H:i:s',$bwm_addtime);
+	
+	$sql = "insert into tbl_bwm_game(qiancheng,family_name,name,year,month,day,phone,email,province,city,address,postcode,watch_date,is_owners,bwm_cars,buy_car_date,learn_channels,is_contact,is_readed,bwm_addtime,bwm_adddate,user_device)";
+	$sql .= " values('{$qiancheng}','{$family_name}','{$name}','{$year}','{$month}','{$day}','{$phone}','{$email}','{$province}','{$city}','{$address}','{$postcode}','{$watch_date}','{$is_owners}','{$bwm_cars}','{$buy_car_date}','{$learn_channels}','{$is_contact}','{$is_readed}','{$bwm_addtime}','{$bwm_adddate}','{$user_device}')";
 	
     $res = DB::query($sql);
 	if($res == false){
 		api_json_result(1,1,"提交失败",null);
 	}
-
+	
+	
     api_json_result(1,0,"国内注册用户，我们将寄送门票到您注册邮寄地址，海外注册用户烦请您在比赛当日至BMW大师赛现场领取门票，每日限领2张。",null);
 }
 
