@@ -81,6 +81,7 @@ if($ac == 'filedevent')
 		$event_list['field_event_name'] = $row['event_name'];
 		$event_list['field_uid'] = $row['field_uid'];
         $event_list['field_event_logo'] = $site_url.'/'.$row['event_logo'];
+		$event_list['field_event_time'] = $row['event_starttime'];
         $event_list['field_event_date'] = date('Y年m月d日',$row['event_starttime']);
         $field_event_list[] = array_default_value($event_list);
     }
