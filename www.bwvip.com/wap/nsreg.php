@@ -69,15 +69,16 @@ h3 {
 <table width="<?php echo $width;?>" border="0" align="left" cellpadding="0" cellspacing="0">
 <tr>
 <td>
-<img src="images/huifengbanner.jpg" width="<?php echo $width;?>" >
+<img src="images/nanshanbanner.jpg" width="<?php echo $width;?>" >
 </td>
 </tr>
   <tr>
     <td  style="padding: 15px;"><!-- add the info layer functionality here -->
 
      
-      <h3 >观看2013汇丰冠军赛。</h3>
-      <p >享有"亚洲大满贯赛"美誉的世界高尔夫锦标赛-汇丰冠军赛在观澜湖高尔夫球会奥拉沙宝成功举办一届之后，今年将重返上海并永久落户。第九届赛事将于2013年10月31日至11月3日日在上海佘山国际高尔夫俱乐部举行，该场地曾于2005年至2011年连续承办了七届汇丰冠军赛。</p>
+      <h3 >观看2013中国大师赛。</h3>
+      <p >2013年中国大师赛于山东省烟台市龙口南山高尔夫球会：10月7日，巨星荟萃，闪亮登场，激情挥杆！      </p>
+      <p >尊敬的各位球友，让我们共同倒计时，共同迎接这澎湃时刻，共享辉煌，这个10月让我们和世界各国的明星，各大媒体，高层富商和国际球星欢度国庆！</p>
     </td>
   </tr>
   
@@ -88,7 +89,7 @@ h3 {
   <tr>
      <td  style="padding: 15px;">
     
-      <form name="form1" id="form1" method="post" action="hfregac.php?ac=hf_reg"  onsubmit="return CheckForm()">
+      <form name="form1" id="form1" method="post" action="nsregac.php?ac=ns_reg"  onsubmit="return CheckForm()">
     <table width="100%" border="0" cellspacing="0" cellpadding="0">
        <tr>
          <td align="center" class="centertl">姓名</td>
@@ -336,131 +337,49 @@ return  true;
          <td height="25" align="right">&nbsp;</td>
        </tr>
        <tr>
-         <td align="left" class="centertl">普通票：</td>
+         <td align="left" class="centertl">&nbsp;</td>
        </tr>
        <tr>
-         <td align="left" class="tptitle1">职业-业余配对赛：200元，10月30日</td>
+         <td align="left" class="tptitle1">平日：300元，仅限10日或11日</td>
        </tr>
        <tr>
          <td height="25" align="right"><table width="10%" border="0" cellspacing="0" cellpadding="0" style="padding-right:80px;">
            <tr>
              <td><img src="images/jiahao.png" width="15" height="15" onClick="showpicket('name2','add')"></td>
-             <td><input name="name2" type="text" id="name2" value="0" size="3" maxlength="3" onkeyup="value=value.replace(/[^\d]/g,'') " 
+             <td><input name="name2" type="text" id="name2" value="0" size="3" maxlength="3" onKeyUp="value=value.replace(/[^\d]/g,'') " 
       onbeforepaste="clipboardData.setData('text',clipboardData.getData('text').replace(/[^\d]/g,''))"  style="width:30px; text-align:center;"></td>
              <td><img src="images/jianhao.png" width="15" height="15"  onClick="showpicket('name2','sub')"></td>
            </tr>
          </table></td>
        </tr>
        <tr>
-         <td align="left" class="tptitle1">平日票：500元，10月31日或11月1日</td>
+         <td align="left" class="tptitle1">假日：500元，仅限12日或13日</td>
        </tr>
        <tr>
          <td height="25" align="right"><table width="10%" border="0" cellspacing="0" cellpadding="0" style="padding-right:80px;">
            <tr>
              <td><img src="images/jiahao.png" width="15" height="15" onClick="showpicket('name2','add')"></td>
-             <td><input name="name3" type="text" id="name3" value="0" size="3" maxlength="3" onkeyup="value=value.replace(/[^\d]/g,'') " 
+             <td><input name="name3" type="text" id="name3" value="0" size="3" maxlength="3" onKeyUp="value=value.replace(/[^\d]/g,'') " 
       onbeforepaste="clipboardData.setData('text',clipboardData.getData('text').replace(/[^\d]/g,''))"  style="width:30px; text-align:center;"></td>
              <td><img src="images/jianhao.png" width="15" height="15"  onClick="showpicket('name2','sub')"></td>
            </tr>
          </table></td>
        </tr>
        <tr>
-         <td align="left" class="tptitle1">周末票：1000元，11月2日或11月3日</td>
+         <td align="left" class="tptitle1">套票：1000元，10日-13日比赛</td>
        </tr>
        <tr>
          <td height="25" align="right"><table width="10%" border="0" cellspacing="0" cellpadding="0" style="padding-right:80px;">
            <tr>
              <td><img src="images/jiahao.png" width="15" height="15" onClick="showpicket('name2','add')"></td>
-             <td><input name="name4" type="text" id="name4" value="0" size="3" maxlength="3" onkeyup="value=value.replace(/[^\d]/g,'') " 
+             <td><input name="name4" type="text" id="name4" value="0" size="3" maxlength="3" onKeyUp="value=value.replace(/[^\d]/g,'') " 
       onbeforepaste="clipboardData.setData('text',clipboardData.getData('text').replace(/[^\d]/g,''))"  style="width:30px; text-align:center;"></td>
              <td><img src="images/jianhao.png" width="15" height="15"  onClick="showpicket('name2','sub')"></td>
            </tr>
          </table></td>
        </tr>
        <tr>
-         <td align="left" class="tptitle1">套票：2000元，10月30-11月3日</td>
-       </tr>
-       <tr>
-         <td height="25" align="right"><table width="10%" border="0" cellspacing="0" cellpadding="0" style="padding-right:80px;">
-           <tr>
-             <td><img src="images/jiahao.png" width="15" height="15" onClick="showpicket('name2','add')"></td>
-             <td><input name="name5" type="text" id="name5" value="0" size="3" maxlength="3" onkeyup="value=value.replace(/[^\d]/g,'') " 
-      onbeforepaste="clipboardData.setData('text',clipboardData.getData('text').replace(/[^\d]/g,''))"  style="width:30px; text-align:center;"></td>
-             <td><img src="images/jianhao.png" width="15" height="15"  onClick="showpicket('name2','sub')"></td>
-           </tr>
-         </table></td>
-       </tr>
-       <tr>
-         <td align="left" class="centertl">家庭票：</td>
-       </tr>
-       <tr>
-         <td align="left" class="tptitle"><span class="tptitle1">职业-业余配对赛：300元，10月30日</span></td>
-       </tr>
-       <tr>
-         <td height="25" align="right"><table width="10%" border="0" cellspacing="0" cellpadding="0" style="padding-right:80px;">
-           <tr>
-             <td><img src="images/jiahao.png" width="15" height="15" onClick="showpicket('name2','add')"></td>
-             <td><input name="name6" type="text" id="name6" value="0" size="3" maxlength="3" onkeyup="value=value.replace(/[^\d]/g,'') " 
-      onbeforepaste="clipboardData.setData('text',clipboardData.getData('text').replace(/[^\d]/g,''))"  style="width:30px; text-align:center;"></td>
-             <td><img src="images/jianhao.png" width="15" height="15"  onClick="showpicket('name2','sub')"></td>
-           </tr>
-         </table></td>
-       </tr>
-       <tr>
-         <td align="left" class="tptitle"><span class="tptitle1">平日票：900元，10月31日或11月1日 </span></td>
-       </tr>
-       <tr>
-         <td height="25" align="right"><table width="10%" border="0" cellspacing="0" cellpadding="0" style="padding-right:80px;">
-           <tr>
-             <td><img src="images/jiahao.png" width="15" height="15" onClick="showpicket('name2','add')"></td>
-             <td><input name="name7" type="text" id="name7" value="0" size="3" maxlength="3" onkeyup="value=value.replace(/[^\d]/g,'') " 
-      onbeforepaste="clipboardData.setData('text',clipboardData.getData('text').replace(/[^\d]/g,''))"  style="width:30px; text-align:center;"></td>
-             <td><img src="images/jianhao.png" width="15" height="15"  onClick="showpicket('name2','sub')"></td>
-           </tr>
-         </table></td>
-       </tr>
-       <tr>
-         <td align="left" class="tptitle1">周末票：1800元，11月2日或11月3日</td>
-       </tr>
-       <tr>
-         <td height="25" align="right"><table width="10%" border="0" cellspacing="0" cellpadding="0" style="padding-right:80px;">
-           <tr>
-             <td><img src="images/jiahao.png" width="15" height="15" onClick="showpicket('name2','add')"></td>
-             <td><input name="name8" type="text" id="name8" value="0" size="3" maxlength="3" onkeyup="value=value.replace(/[^\d]/g,'') " 
-      onbeforepaste="clipboardData.setData('text',clipboardData.getData('text').replace(/[^\d]/g,''))"  style="width:30px; text-align:center;"></td>
-             <td><img src="images/jianhao.png" width="15" height="15"  onClick="showpicket('name2','sub')"></td>
-           </tr>
-         </table></td>
-       </tr>
-       <tr>
-         <td align="left" class="tptitle1">套票：3500元，10月30日-11月3日</td>
-       </tr>
-       <tr>
-         <td height="25" align="right"><table width="10%" border="0" cellspacing="0" cellpadding="0" style="padding-right:80px;">
-           <tr>
-             <td><img src="images/jiahao.png" width="15" height="15" onClick="showpicket('name2','add')"></td>
-             <td><input name="name9" type="text" id="name9" value="0" size="3" maxlength="3" onkeyup="value=value.replace(/[^\d]/g,'') " 
-      onbeforepaste="clipboardData.setData('text',clipboardData.getData('text').replace(/[^\d]/g,''))"  style="width:30px; text-align:center;"></td>
-             <td><img src="images/jianhao.png" width="15" height="15"  onClick="showpicket('name2','sub')"></td>
-           </tr>
-         </table></td>
-       </tr>
-       <tr>
-         <td align="left" class="centertl">特殊票：</td>
-       </tr>
-       <tr>
-         <td align="left" class="tptitle1">学生票：100元，10月30日或10月31日
-           或11月1日</td>
-       </tr>
-       <tr>
-         <td height="25" align="right"><table width="10%" border="0" cellspacing="0" cellpadding="0" style="padding-right:80px;">
-           <tr>
-             <td><img src="images/jiahao.png" width="15" height="15" onClick="showpicket('name2','add')"></td>
-             <td><input name="name10" type="text" id="name10" value="0" size="3" maxlength="3" onkeyup="value=value.replace(/[^\d]/g,'') " 
-      onbeforepaste="clipboardData.setData('text',clipboardData.getData('text').replace(/[^\d]/g,''))"  style="width:30px; text-align:center;"></td>
-             <td><img src="images/jianhao.png" width="15" height="15"  onClick="showpicket('name2','sub')"></td>
-           </tr>
-         </table></td>
+         <td align="left" class="tptitle1">18岁以下青少年需成年人陪同可免费观赛</td>
        </tr>
        <tr>
          <td>&nbsp;</td>
@@ -469,14 +388,12 @@ return  true;
          <td align="center"><input type="image" name="imageField" id="imageField" src="images/button.jpg"></td>
        </tr>
        <tr>
-         <td><img src="images/hfbottom.jpg" width="<?php echo $width;?>" ></td>
+         <td><img src="images/nsbottom.jpg" width="<?php echo $width;?>" ></td>
        </tr>
       
      </table>
         </form>
      </td>
   </tr>
-  
-  
 </table>
 </body>

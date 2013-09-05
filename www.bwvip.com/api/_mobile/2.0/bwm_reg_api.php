@@ -5,13 +5,14 @@ if(!defined("IN_DISCUZ"))
 }
 $userAgent = $_SERVER['HTTP_USER_AGENT'];
 
-$user_device = '';
 if(strpos($userAgent,"iPhone") || strpos($userAgent,"iPad") || strpos($userAgent,"iPod") || strpos($userAgent,"iOS"))
 {
 	$user_device = 'IOS';
 }else if(strpos($userAgent,"Android"))
 {
 	$user_device = 'Android';
+}else{
+	$user_device = '';
 }
 
 $ac=$_G['gp_ac'];
@@ -45,13 +46,13 @@ if($ac=="bwm_reg")
 	$buy_car_date = urldecode($_G['gp_buy_car_date']);
 	$learn_channels = urldecode($_G['gp_learn_channels']);
 	$is_contact = $_G['gp_is_contact'];
-	$is_readed = $_G['gp_is_readed'];
-	if(!empty($is_readed))
+	$is_readed = '是';//$_G['gp_is_readed'];
+	/* if(!empty($is_readed))
 	{
 		$is_readed = '是';
 	}else{
 		$is_readed = '否';
-	}
+	} */
 	if(!empty($is_contact))
 	{
 		$is_contact = '是';
@@ -64,10 +65,11 @@ if($ac=="bwm_reg")
 	}else{
 		$is_owners = '否';
 	}
+	
 	$bwm_addtime = time();
 	$bwm_adddate = date('Y年m月d日 H:i:s',$bwm_addtime);
 	
-	$sql = "insert into tbl_bwm_game(qiancheng,family_name,name,year,month,day,phone,email,province,city,address,postcode,watch_date,is_owners,bwm_cars,buy_car_date,learn_channels,is_contact,is_readed,bwm_addtime,bwm_adddate,user_device)";
+	$sql = "insert into tbl_user_ticket_bmw(qiancheng,family_name,name,year,month,day,phone,email,province,city,address,postcode,watch_date,is_owners,bwm_cars,buy_car_date,learn_channels,is_contact,is_readed,bwm_addtime,bwm_adddate,user_device)";
 	$sql .= " values('{$qiancheng}','{$family_name}','{$name}','{$year}','{$month}','{$day}','{$phone}','{$email}','{$province}','{$city}','{$address}','{$postcode}','{$watch_date}','{$is_owners}','{$bwm_cars}','{$buy_car_date}','{$learn_channels}','{$is_contact}','{$is_readed}','{$bwm_addtime}','{$bwm_adddate}','{$user_device}')";
 	
     $res = DB::query($sql);
