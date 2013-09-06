@@ -19,7 +19,14 @@ class user_ticketAction extends piao_publicAction
 	{
 		
 		$event_id = $_SESSION['event_id'];
-		$list=D("user_ticket")->user_ticket_list_pro(" and event_id='{$event_id}'");
+		$price = get('price');
+		$price_sql = '';
+		if($price == 'free'){
+			$price_sql = " and ticket_price='0'";
+		}elseif($price == 'no_free'){
+			$price_sql = " and ticket_price!='0'";
+		}
+		$list=D("user_ticket")->user_ticket_list_pro(" and event_id='{$event_id}' {$price_sql}");
 		$ticket_lists = M('ticket')->where("event_id='{$event_id}'")->select();
 		
 		foreach($list["item"] as $key=>$val)
@@ -88,6 +95,8 @@ class user_ticketAction extends piao_publicAction
 			$data["user_ticket_company_post"]=post("user_ticket_company_post");
 			$data["user_ticket_realname"]=post("user_ticket_realname");
 			$data["user_ticket_mobile"]=post("user_ticket_mobile");
+			$data["ticket_price"]=post("ticket_price");
+			
 			if($ticket_info['ticket_price'] == '0'){
 				$data["user_ticket_status"] = 1;
 			}else{
@@ -112,7 +121,6 @@ class user_ticketAction extends piao_publicAction
 			{
 				if($ticket_info['ticket_price'] == '0'){
 					//添加系统消息
-					
 					$this->sys_message_add_return($data);
 				}
 				$this->success("添加成功",U('piao/user_ticket/user_ticket'));exit;
@@ -174,12 +182,17 @@ class user_ticketAction extends piao_publicAction
 			$data["user_ticket_company"]=post("user_ticket_company");
 			$data["user_ticket_company_post"]=post("user_ticket_company_post");
 			$data["user_ticket_realname"]=post("user_ticket_realname");
-			$data["user_ticket_realname"]=post("user_ticket_realname");
 	
 			$data["user_ticket_mobile"]=post("user_ticket_mobile");
 			$data["user_ticket_status"]=post("user_ticket_status");
+			$data["ticket_price"]=post("ticket_price");
 			
 			$list=M("user_ticket")->save($data);
+			if($list){
+				if($data["user_ticket_status"] == '1'){
+					$this->sys_message_add_return($data);
+				}
+			}
 			$this->success("修改成功",U('piao/user_ticket/user_ticket'));			
 		}
 		else
@@ -330,39 +343,39 @@ class user_ticketAction extends piao_publicAction
 	public function user_add_return()
 	{
 		
-		$data["username"]=post("user_ticket_realname");	
+		$user_data["username"]=post("user_ticket_realname");	
 		$password=post("user_ticket_mobile");
 		$salt = substr(uniqid(rand()), -6);
 		$password = md5(md5($password).$salt);
-		$data["salt"]=$salt;
-		$data["password"]=$password;
-		$data["email"]=post("user_ticket_mobile").'@bw.com'; 
-		$data["mobile"]=post("user_ticket_mobile"); 
-		$data["regip"]=time();
-		$data["regdate"]=time();
+		$user_data["salt"]=$salt;
+		$user_data["password"]=$password;
+		$user_data["email"]=post("user_ticket_mobile").'@bw.com'; 
+		$user_data["mobile"]=post("user_ticket_mobile"); 
+		$user_data["regip"]=time();
+		$user_data["regdate"]=time();
 		//生成ucenter会员 
-		$list=M("ucenter_members","pre_")->add($data); 
+		$list=M("ucenter_members","pre_")->add($user_data); 
 		$ucuid=$list;
 		unset($data["salt"]);
 		//unset($data["username"]);
 		//$data["realname"]=post("realname"); 
 		//$data["mobile"]=post("mobile");  
-		$data["groupid"]=10;  
+		$user_data["groupid"]=10;  
 		//生成社区会员 
-		$list=M("common_member","pre_")->add($data); 
+		$list=M("common_member","pre_")->add($user_data); 
 		
-		$data["uid"]=$ucuid; 
-		$data["gender"]=post("gender"); 
-		$data["realname"]=post("user_ticket_realname");	
+		$user_data["uid"]=$ucuid; 
+		$user_data["gender"]=post("gender"); 
+		$user_data["realname"]=post("user_ticket_realname");	
 		
 		//生成真实姓名
-		$list=M("common_member_profile","pre_")->add($data); 
-		$data["nickname"]=post("user_ticket_realname");
-		$data["ucuid"]=$ucuid; 
-		$data["role_id"]=3; 			
+		$list=M("common_member_profile","pre_")->add($user_data); 
+		$user_data["nickname"]=post("user_ticket_realname");
+		$user_data["ucuid"]=$ucuid; 
+		$user_data["role_id"]=3; 			
 		
 		//生成微博记录
-		$list=M("members","jishigou_")->add($data); 
+		$list=M("members","jishigou_")->add($user_data); 
 		
 		if($list!=false)
 		{
@@ -374,9 +387,8 @@ class user_ticketAction extends piao_publicAction
 		}
 	}
 	
-	public function sys_message_add_return($data_info)
+	public function sys_message_add_return($user_ticket_info)
 	{
-	
 /* 		{
 		  message_id: "4",
 		  uid: "1000139",
@@ -395,49 +407,49 @@ class user_ticketAction extends piao_publicAction
 		  message_sendtime: "2013-07-26"
 		},
  */		
-		$event_id = $ticket_info['event_id'];
+		$sys_event_id = $user_ticket_info['event_id'];
 		
-		$event_info = M('event')->where("event_id='{$event_id}'")->find();
-		$field_uid=$event_info['field_uid'];
-		if(empty($field_uid)){
-			$field_uid = 0;
+		$sys_event_info = M('event')->where("event_id='{$sys_event_id}'")->find();
+		$sys_field_uid=$sys_event_info['field_uid'];
+		if(empty($sys_field_uid)){
+			$sys_field_uid = 0;
 		}
 		//$max=M()->query("select max(message_number) as max_id from tbl_sys_message where message_type='".post("message_type")."'  ");
 		//$data["message_number"]=$max[0]['max_id']+1;
 		//$data["message_type"]=post("message_type");
-		$data["field_uid"]=$field_uid;
-		if($ticket_info["uid"])
+		$sys_data["field_uid"]=$sys_field_uid;
+		if($user_ticket_info["uid"])
 		{
-			$uid=$ticket_info["uid"];
+			$sys_uid=$user_ticket_info["uid"];
 			//$is_push=M()->query("select if_push from pre_common_member_profile where uid='".$uid."' ");
 		}
 		else
 		{
-			$uid=0;
+			$sys_uid=0;
 		}
-		$data["uid"]=$uid;
-		$data["message_title"]=$event_info['event_name']."门票申请成功";//post("message_title");
+		$sys_data["uid"]=$sys_uid;
+		$sys_data["message_title"]=$sys_event_info['event_name']."门票申请成功";//post("message_title");
 
-		$n_title=$data["message_title"];
-		$n_content=$data["message_title"];
+		$n_title=$sys_data["message_title"];
+		$n_content=$sys_data["message_title"];
 		
 		$message_extinfo=array('action'=>"system_msg");	
 		
 		$msg_content = json_encode(array('n_title'=>urlencode($n_title), 'n_content'=>urlencode($n_content),'n_extras'=>$message_extinfo));
 
-		$data["message_content"]=$msg_content;
-		$data["receiver_type"]=3;//3:指定用户
-		$data['message_pic']=$ticket_info['user_ticket_codepic'];
+		$sys_data["message_content"]=$msg_content;
+		$sys_data["receiver_type"]=3;//3:指定用户
+		$sys_data['message_pic']=$user_ticket_info['user_ticket_codepic'];
 		
 	
-		$data["message_state"]=0;
-		$data["message_totalnum"]=0;
-		$data["message_sendnum"]=0;
-		$data["message_errorcode"]="";
-		$data["message_errormsg"]="";
-		$data["message_addtime"]=time();
+		$sys_data["message_state"]=0;
+		$sys_data["message_totalnum"]=0;
+		$sys_data["message_sendnum"]=0;
+		$sys_data["message_errorcode"]="";
+		$sys_data["message_errormsg"]="";
+		$sys_data["message_addtime"]=time();
 		
-		$list=M("sys_message")->add($data);
+		$list=M("sys_message")->add($sys_data);
 
 		if($list!=false)
 		{

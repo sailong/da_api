@@ -9,6 +9,7 @@
 		<input type="hidden" name="g" value="piao">
 		<input type="hidden" name="m" value="user_ticket">
 		<input type="hidden" name="a" value="user_ticket">
+		<input type="hidden" name="price" value="<php> echo  get('price');</php>">
 
 		<table border="0" cellspacing="0" cellpadding="0">
 			<th>门票列表：</th>
@@ -50,7 +51,7 @@
   <div class="Toolbar_inbox">
   	<div class="page right">{$pages}</div>
 
-	<a href="{:U('piao/user_ticket/user_ticket_add')}" class="btn_a"><span>添加门票领取</span></a>
+	<!-- <a href="{:U('piao/user_ticket/user_ticket_add')}" class="btn_a"><span>添加门票领取</span></a> -->
 	<a href="javascript:void(0);" class="btn_a"  onclick="mod_delete_batch('{:U('piao/user_ticket/user_ticket_delete_action')}','mod_table');"><span>批量删除</span></a>
 	<a href="javascript:void(0);" class="btn_a"  onclick="mod_modify_batch('{:U('piao/user_ticket/user_ticket_check_action')}','mod_table');"><span>批量审核</span></a>
 	<div class="clear"></div>
@@ -113,7 +114,7 @@
   <div class="Toolbar_inbox">
 	<div class="page right">{$pages}</div>
 
-	<a href="{:U('piao/user_ticket/user_ticket_add')}" class="btn_a"><span>添加门票领取</span></a>
+	<!-- <a href="{:U('piao/user_ticket/user_ticket_add')}" class="btn_a"><span>添加门票领取</span></a> -->
 	<a href="javascript:void(0);" class="btn_a"  onclick="mod_delete_batch('{:U('piao/user_ticket/user_ticket_delete_action')}','mod_table');"><span>批量删除</span></a>
 	<a href="javascript:void(0);" class="btn_a"  onclick="mod_modify_batch('{:U('piao/user_ticket/user_ticket_check_action')}','mod_table');"><span>批量审核</span></a>
 
