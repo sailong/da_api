@@ -18,7 +18,7 @@ class user_ticketModel extends Model{
 
 		if(get("k")!="")
 		{
-			$where .=" and user_ticket_name like '%".get("k")."%' ";
+			$where .=" and ticket_id=".get("k");
 		}
 
 		if(get("starttime")!="")
@@ -29,7 +29,7 @@ class user_ticketModel extends Model{
 		{
 			$where .=" and user_ticket_addtime<".strtotime(get("endtime"))." ";
 		}
-
+		
 		$data["item"]=M("user_ticket")->where($where.$bigwhere)->field("user_ticket_id,uid,ticket_id,ticket_type,user_ticket_code,user_ticket_codepic,user_ticket_realname,user_ticket_nums,user_ticket_sex,user_ticket_age,user_ticket_address,user_ticket_cardtype,user_ticket_card,user_ticket_mobile,user_ticket_imei,user_ticket_company,user_ticket_company_post,user_ticket_status,user_ticket_addtime")->order($sort)->page($page.",".$page_size)->select();
 		for($i=0; $i<count($data["item"]); $i++)
 		{

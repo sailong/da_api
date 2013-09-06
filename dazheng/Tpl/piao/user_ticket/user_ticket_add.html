@@ -19,14 +19,23 @@
 	<table class="add_table" border="0" cellspacing="0" cellpadding="0" >
 		<tbody>
 		<tr>
-					<th>所属用户：</th>
+				<!-- <th>所属用户：</th>
 					<td><input type="text" name="uid" id="uid" class="mod_input2" style="width:66px;" ></td>
-				</tr>
+				</tr> -->
 				<tr>
-					<th>门票ID：</th>
-					<td><input type="text" name="ticket_id" id="ticket_id" class="mod_input2" style="width:66px;" ></td>
+					<th>门票列表：</th>
+					<!-- <td><input type="text" name="ticket_id" id="ticket_id" class="mod_input2" style="width:66px;" ></td> -->
+					<td>
+						<select name="ticket_id" id="ticket_id">
+						<option value="">请选择</option>
+						<volist id="vo" name="ticket_list">
+							<option value="{$vo.ticket_id}">{$vo.ticket_name}</option>
+						</volist>
+						</select>
+					</td>
+					
 				</tr>
-				<tr>
+				<!-- <tr>
 					<th>门票类型：</th>
 					<td>
 						<select name="ticket_type" id="ticket_type">
@@ -34,15 +43,15 @@
 							<option value="VIP">VIP</option>
 						</select>
 					</td>
-				</tr>
+				</tr> -->
 				<!-- <tr>
 					<th>领取码：</th>
 					<td><input type="text" name="user_ticket_code" id="user_ticket_code" class="mod_input2" style="width:300px;" ></td>
 				</tr> -->
-				<tr>
+				<!-- <tr>
 					<th>二维码图片：</th>
 					<td><input type="file" name="user_ticket_codepic" id="user_ticket_codepic"  class="mod_input"></td>
-				</tr>
+				</tr> -->
 				<tr>
 					<th>订票张数：</th>
 					<td><input type="text" name="user_ticket_nums" id="user_ticket_nums" class="mod_input2" style="width:66px;" ></td>
@@ -92,7 +101,7 @@
 					<th>公司职位：</th>
 					<td><input type="text" name="user_ticket_company_post" id="user_ticket_company_post" class="mod_input2" style="width:300px;" ></td>
 				</tr>
-				<tr>
+				<!-- <tr>
 					<th>状态：</th>
 					<td>
 						<select name="user_ticket_status" id="user_ticket_status">
@@ -102,7 +111,7 @@
 							<option value="2">审核不通过</option>
 						</select>
 					</td>
-				</tr>
+				</tr> -->
 				
 		</tbody>
 		<tfoot>

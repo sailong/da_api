@@ -202,6 +202,12 @@ class bmw_ticketAction extends field_publicAction
 		}
 
 	}
+	
+	public function bmw_ticket_excel()
+	{
+		$this->display();
+
+	}
 
 
 	

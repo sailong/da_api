@@ -74,7 +74,7 @@
 	<tr overstyle="on"  id=ids_{$vo["ticket_id"]}>
 		<td><input type="checkbox" name="checkbox" onclick="select_one(this)" value="{$vo.ticket_id}" ></td>
 		<td>{$vo.ticket_id}</td>
-		<td><a href="{:U('piao/ticket/ticket_detail', array('ticket_id'=>$vo['ticket_id']))}'">{$vo.ticket_name}</a></th>
+		<td>{$vo.ticket_name}</a></th>
 		<td>{$event_list[$vo['event_id']]}({$vo['event_id']})</td>
 		<!-- <td>{$vo.fenzhan_id}</td> -->
 		<td>{$vo.ticket_price}</td>
@@ -89,6 +89,7 @@
 		<td>{$vo.ticket_addtime|format_to_time}</td>
 			
 		<td>
+			<a href="{:U('piao/ticket/ticket_detail', array('ticket_id'=>$vo['ticket_id']))}'">详情</a> | 
 			<a href="{:U('piao/ticket/ticket_edit', array('ticket_id'=>$vo['ticket_id']))})">修改</a> | 
 			<a href="javascript:void(0);" onclick="mod_delete_one('{:U('piao/ticket/ticket_delete_action')}','{$vo['ticket_id']}');">删除</a>
 		</td>

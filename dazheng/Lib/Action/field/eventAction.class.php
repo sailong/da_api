@@ -109,6 +109,7 @@ class eventAction extends field_publicAction
 			$data["event_is_baoming"]=post("event_is_baoming");
 			$data["event_url"]=post("event_url");
 			$data["event_ticket_status"]=post("event_ticket_status");
+			$data["event_ticket_wapurl"]=post("event_ticket_wapurl");
 			$data["event_go_action"]=post("event_go_action");
 			$data["event_go_value"]=post("event_go_value");
 			$data["event_addtime"]=time();
@@ -226,6 +227,7 @@ class eventAction extends field_publicAction
 			}
 			$data["event_url"]=post("event_url");
 			$data["event_ticket_status"]=post("event_ticket_status");
+			$data["event_ticket_wapurl"]=post("event_ticket_wapurl");
 			$data["event_go_action"]=post("event_go_action");
 			$data["event_go_value"]=post("event_go_value");
 			
