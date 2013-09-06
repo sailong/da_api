@@ -283,7 +283,7 @@ if($ac=="event_blog")
 
 
 
-//赛事报道 详细
+//新闻 详细
 if($ac=="event_blog_detail")
 {
 	//print_r(getimagesize("".$site_url."/data/attachment/album/201303/19/114243utqdpvtp9vipq2gd.jpg.thumb.jpg"));
@@ -292,9 +292,10 @@ if($ac=="event_blog_detail")
 	$pic_width=$_G['gp_pic_width'];
 	if($blogid)
 	{
-		$detail_data=DB::fetch_first("select uid,arc_type,arc_id as blogid,arc_name as subject,arc_replynum as replynum,arc_viewtype as view_type,arc_pic as pic ,arc_addtime as dateline,arc_content as content from tbl_arc where arc_id='".$blogid."' ");
+		$detail_data=DB::fetch_first("select uid,field_uid,arc_type,arc_id as blogid,arc_name as subject,arc_replynum as replynum,arc_viewtype as view_type,arc_pic as pic ,arc_addtime as dateline,arc_content as content from tbl_arc where arc_id='".$blogid."' ");
 		$detail_data['username']="";
 		$detail_data['uid']="0";
+
 		
 		$detail_data['content']=strip_tags($detail_data['content'],"<p><img><br><div>");
 		$detail_data['content']=str_replace("<img ","<div style=\"text-align:center; width:100%; \"><a href=\"http://www.bwvip.com/news_detail_pic\"><changsailong><img ",$detail_data['content']);
@@ -393,6 +394,20 @@ if($ac=="event_blog_detail")
 		if($detail_data['dateline'])
 		{
 			$detail_data['dateline']=date("Y-m-d G:i",$detail_data['dateline']);
+			
+			if($detail_data['field_uid']==1186)
+			{
+				$detail_data['dateline']="来自美兰湖球场 ".$detail_data['dateline'];
+			}
+			else if($detail_data['field_uid']==1160)
+			{
+				$detail_data['dateline']="来自南山球会 ".$detail_data['dateline'];
+			}
+			else
+			{
+				$detail_data['dateline']="".$detail_data['dateline'];
+			}
+			
 		}
 		
 		//$list=DB::query("select arc_id as blogid,arc_name as subject,arc_addtime as dateline from tbl_arc where arc_id<>'".$blogid."' order by arc_addtime desc limit 2");
@@ -1085,12 +1100,17 @@ if($ac=="event_baoming_action")
 	
 }
 
+
+
 if($ac=='dz_ticket_event_list')
 {
 	$field_uid = $_G['gp_field_uid'];
-	if($field_uid == ''){
+	/*
+	if($field_uid == '')
+	{
 		api_json_result(1,1,'缺少参数field_uid',$data);
 	}
+	*/
 	//大正赛事门票列表
 	$sql = "select event_id from tbl_ticket group by event_id limit $page_start,$page_size";
 	$list=DB::query($sql);
@@ -1098,23 +1118,57 @@ if($ac=='dz_ticket_event_list')
 		api_json_result(1,1,"没有数据",$data);
 	}
 	$event_ids = array();
+	
+	
 	while($row = DB::fetch($list))
 	{
-		$event_ids[$row['event_id']] = $row['event_id'];
+		//$event_ids[$row['event_id']] = $row['event_id'];
 	}
-	$sql = "select event_id,event_name,field_uid,event_logo,event_starttime,event_ticket_status from tbl_event where event_id in('".implode("','",$event_ids)."') and field_uid='{$field_uid}'";
+	
+
+	if($field_uid==1186)
+	{
+		$event_ids[25] = 25;
+		$event_ids[34] = 34;
+		$sql = "select event_id,event_name,field_uid,event_logo,event_starttime,event_endtime,event_ticket_status,event_ticket_wapurl from tbl_event where event_id in('".implode("','",$event_ids)."')";
+		
+	}
+	else if($field_uid==1160)
+	{
+		$sql = "select event_id,event_name,field_uid,event_logo,event_starttime,event_endtime,event_ticket_status,event_ticket_wapurl from tbl_event where event_id=41";
+	}
+	else
+	{
+		$sql = "select event_id,event_name,field_uid,event_logo,event_starttime,event_endtime,event_ticket_status,event_ticket_wapurl from tbl_event where event_id=25 or event_id=31 or event_id=41 or event_id=58 order by event_starttime asc ";
+	}
+	
+	
+	
 	$list=DB::query($sql);
 	$event_list = array();
 	while($row = DB::fetch($list))
 	{
 		$row['event_logo'] = $site_url.'/'.$row['event_logo'];
-		$row['event_starttime'] = date('Y年m月d日',$row['event_starttime']);
-		if($row['event_ticket_status'] == 2){
-			$row['wab_url'] = $site_url.'/wap/bmwreg.php';
+		$y_s=date('m',$row['event_starttime']);
+		$d_s=date('d',$row['event_starttime']);
+		$y_e=date('m',$row['event_endtime']);
+		$d_e=date('d',$row['event_endtime']);
+		if($y_s==$y_e)
+		{
+			$row['event_starttime']=$y_s."月".$d_s."日-".$d_e."日";
 		}
+		else
+		{
+			$row['event_starttime']=$y_s."月".$d_s."日-".$y_e."月".$d_e."日";
+		}
+		/*
+		$row['event_starttime'] = date('Y年m月d日',$row['event_starttime']);
+		$row['event_starttime'] = $row['event_starttime']." - ".date('Y年m月d日',$row['event_endtime']);
+		*/
+		$row['wab_url'] = $row['event_ticket_wapurl'];
+		
 		
 		$row2 = DB::fetch_first("select ad_url,ad_file,ad_file_iphone4,ad_file_iphone5,ad_width,ad_height from tbl_ad where field_uid='".$row['field_uid']."' and ad_page='ticket' order by ad_sort desc limit 1");
-		
 		
 		$arr=explode("|",$row2['ad_url']);
 		if(count($arr)>1)

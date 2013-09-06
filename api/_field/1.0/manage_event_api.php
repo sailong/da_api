@@ -6,7 +6,7 @@ if(!defined("IN_DISCUZ"))
 
 $ac=$_G['gp_ac'];
 if($ac == 'erweima'){
-
+echo user_add_return(time());
 echo erweima();die;
 }
 $field_uid = $_G['gp_field_uid'];//球场编号
@@ -936,7 +936,7 @@ if($ac == 'free_ticket2')
 	}
 	
 	$user_ticket_mobile = $_G['gp_phone'];//手机号
-	$uid = $_['gp_uid'];
+	$uid = $_G['gp_uid'];
 	$user_ticket_imei = $_G['gp_phone_imei'];//手机窜号
 	$ticket_id = $_G['gp_ticket_id'];//门票ID
 	$ticket_type = $_G['gp_ticket_type'];//门票类型
@@ -960,12 +960,12 @@ if($ac == 'free_ticket2')
 			$uid = user_add_return($user_ticket_mobile);
 		}
 	}
-	$ticket_info=DB::fetch_first("select event_id,ticket_times,ticket_type,ticket_price,ticket_pirce,ticket_starttime,ticket_endtime from tbl_ticket where ticket_id='".$ticket_id."' limit 1 ");
+	$ticket_info=DB::fetch_first("select event_id,ticket_times,ticket_type,ticket_price,ticket_starttime,ticket_endtime from tbl_ticket where ticket_id='".$ticket_id."' limit 1 ");
 	$event_id=$ticket_info['event_id'];
 	$ticket_times=$ticket_info['ticket_times'];
 	$ticket_starttime=$ticket_info['ticket_starttime'];
 	$ticket_endtime=$ticket_info['ticket_endtime']; 
-	$ticket_price = $ticket_info['ticket_pirce'];
+	$ticket_price = $ticket_info['ticket_price'];
 	$ticket_type = $ticket_info['ticket_type'];
 	//检查用户是否已提交申请
     $sql = "select user_ticket_id,ticket_id,user_ticket_codepic,ticket_price,user_ticket_status from tbl_user_ticket where ticket_id='{$ticket_id}' and ticket_type='".$ticket_type."' and (user_ticket_mobile='{$user_ticket_mobile}' or user_ticket_imei='{$user_ticket_imei}')";
@@ -1019,19 +1019,19 @@ if($ac == 'free_ticket2')
 	if($ticket_type=='BASE')
 	{
 		$user_ticket_status = 1;
-		$sql = "insert into tbl_user_ticket(ticket_id,event_id,ticket_type,user_ticket_code,user_ticket_codepic,user_ticket_realname,user_ticket_sex,user_ticket_age,user_ticket_address,user_ticket_mobile,user_ticket_imei,user_ticket_company,user_ticket_company_post,user_ticket_status,user_ticket_addtime,ticket_times,ticket_starttime,ticket_endtime,ticket_price) values('{$ticket_id}','{$event_id}','{$ticket_type}','{$user_ticket_code}','{$user_ticket_codepic}','{$user_ticket_realname}','{$user_ticket_sex}','{$user_ticket_age}','{$user_ticket_address}','{$user_ticket_mobile}','{$user_ticket_imei}','{$user_ticket_company}','{$user_ticket_company_post}','{$user_ticket_status}','{$user_ticket_addtime}','{$ticket_times}','{$ticket_starttime}','{$ticket_endtime}','{$ticket_price}')";
+		$sql = "insert into tbl_user_ticket(uid,ticket_id,event_id,ticket_type,user_ticket_code,user_ticket_codepic,user_ticket_realname,user_ticket_sex,user_ticket_age,user_ticket_address,user_ticket_mobile,user_ticket_imei,user_ticket_company,user_ticket_company_post,user_ticket_status,user_ticket_addtime,ticket_times,ticket_starttime,ticket_endtime,ticket_price) values('{$uid}','{$ticket_id}','{$event_id}','{$ticket_type}','{$user_ticket_code}','{$user_ticket_codepic}','{$user_ticket_realname}','{$user_ticket_sex}','{$user_ticket_age}','{$user_ticket_address}','{$user_ticket_mobile}','{$user_ticket_imei}','{$user_ticket_company}','{$user_ticket_company_post}','{$user_ticket_status}','{$user_ticket_addtime}','{$ticket_times}','{$ticket_starttime}','{$ticket_endtime}','{$ticket_price}')";
 		$res = DB::query($sql);
 		if($res)
 		{
 			
 			$ticket_detail = DB::fetch_first("select ticket_name,ticket_price,ticket_ren_num,ticket_num,ticket_pic,ticket_starttime,ticket_endtime,ticket_times,ticket_content from tbl_ticket where ticket_id='{$ticket_id}' limit 1");
-			$ticket_detail['ticket_name'] = $ticket_detail['ticket_name'];
-			$ticket_detail['ticket_pic'] = $site_url.$erweima_path;
+			$return_detail['ticket_name'] = $ticket_detail['ticket_name'];
+			$return_detail['ticket_pic'] = $site_url.$erweima_path;
 			//$ticket_detail['ticket_starttime'] = date('Y年m月d日',$ticket_detail['ticket_starttime']);
 			//$ticket_detail['ticket_endtime'] = date('Y年m月d日',$ticket_detail['ticket_endtime']);
 			
 			$data['title'] = 'erweima';
-			$data['data'] =$ticket_detail;
+			$data['data'] =$return_detail;
 			if($ticket_price=='0'){
 				//发系统消息
 				$user_ticket_info = array(
@@ -1051,7 +1051,7 @@ if($ac == 'free_ticket2')
 	{
 		$user_ticket_status = 0;
 		
-		$sql = "insert into tbl_user_ticket(ticket_id,event_id,ticket_type,user_ticket_code,user_ticket_codepic,user_ticket_realname,user_ticket_sex,user_ticket_age,user_ticket_address,user_ticket_mobile,user_ticket_imei,user_ticket_company,user_ticket_company_post,user_ticket_status,user_ticket_addtime,ticket_times,ticket_starttime,ticket_endtime) values('{$ticket_id}','{$event_id}','{$ticket_type}','{$user_ticket_code}','{$user_ticket_codepic}','{$user_ticket_realname}','{$user_ticket_sex}','{$user_ticket_age}','{$user_ticket_address}','{$user_ticket_mobile}','{$user_ticket_imei}','{$user_ticket_company}','{$user_ticket_company_post}','{$user_ticket_status}','{$user_ticket_addtime}','{$ticket_times}','{$ticket_starttime}','{$ticket_endtime}')";
+		$sql = "insert into tbl_user_ticket(uid,ticket_id,event_id,ticket_type,user_ticket_code,user_ticket_codepic,user_ticket_realname,user_ticket_sex,user_ticket_age,user_ticket_address,user_ticket_mobile,user_ticket_imei,user_ticket_company,user_ticket_company_post,user_ticket_status,user_ticket_addtime,ticket_times,ticket_starttime,ticket_endtime) values('{$uid}','{$ticket_id}','{$event_id}','{$ticket_type}','{$user_ticket_code}','{$user_ticket_codepic}','{$user_ticket_realname}','{$user_ticket_sex}','{$user_ticket_age}','{$user_ticket_address}','{$user_ticket_mobile}','{$user_ticket_imei}','{$user_ticket_company}','{$user_ticket_company_post}','{$user_ticket_status}','{$user_ticket_addtime}','{$ticket_times}','{$ticket_starttime}','{$ticket_endtime}')";
 		
 		$res = DB::query($sql);
 		if($res)
@@ -1119,49 +1119,26 @@ if($ac == 'free_ticket2')
 	//添加系统消息
 	function sys_message_add_return($user_ticket_info)
 	{
-/* 		{
-		  message_id: "4",
-		  uid: "1000139",
-		  message_title: "测试消息",
-		  message_pic: "",
-		  message_addtime: "1374825755",
-		  pic_width: "",
-		  pic_height: "",
-		  message_info: {
-			n_title: "测试消息",
-			n_content: "测试消息测试消息测试消息",
-			n_extras: {
-			  action: "system_msg"
-			}
-		  },
-		  message_sendtime: "2013-07-26"
-		},
- */		
 		$sys_event_id = $user_ticket_info['event_id'];
 		
 		$sql = "select field_uid,event_name from tbl_event where event_id='{$sys_event_id}'";
-		/* $rs = DB::query($sql);
-		$ucuid=DB::insert_id(); */
-		$sys_event_info = DB::fetch_first($sql);//M('event')->where("event_id='{$sys_event_id}'")->find();
+	
+		$sys_event_info = DB::fetch_first($sql);
 		$sys_field_uid=$sys_event_info['field_uid'];
 		if(empty($sys_field_uid)){
 			$sys_field_uid = 0;
 		}
-		//$max=M()->query("select max(message_number) as max_id from tbl_sys_message where message_type='".post("message_type")."'  ");
-		//$data["message_number"]=$max[0]['max_id']+1;
-		//$data["message_type"]=post("message_type");
 		$field_uid=$sys_field_uid;
 		if($user_ticket_info["uid"])
 		{
 			$sys_uid=$user_ticket_info["uid"];
-			//$is_push=M()->query("select if_push from pre_common_member_profile where uid='".$uid."' ");
 		}
 		else
 		{
 			$sys_uid=0;
 		}
 		$uid=$sys_uid;
-		$message_title=$sys_event_info['event_name']."门票申请成功";//post("message_title");
+		$message_title=$sys_event_info['event_name']."门票申请成功";
 
 		$n_title=$message_title;
 		$n_content=$message_title;
@@ -1175,14 +1152,14 @@ if($ac == 'free_ticket2')
 		$message_pic=$user_ticket_info['user_ticket_codepic'];
 		
 	
-		$message_state=0;
+		
 		$message_totalnum=0;
 		$message_sendnum=0;
 		$message_errorcode="";
 		$message_errormsg="";
 		$message_addtime=time();
 		
-		$sql = "insert into tbl_sys_message(field_uid,uid,message_title,message_content,receiver_type,message_pic,message_state,message_totalnum,message_sendnum,message_errorcode,message_errormsg,message_addtime) values()":
+		$sql = "insert into tbl_sys_message(field_uid,uid,message_title,message_content,receiver_type,message_pic,message_totalnum,message_sendnum,message_errorcode,message_errormsg,message_addtime) values('{$field_uid}','{$uid}','{$message_title}','{$message_content}','{$receiver_type}','{$message_pic}','{$message_sendnum}','{$message_errorcode}','{$message_errormsg}','{$field_uid}','{$message_addtime}')";
 		$rs = DB::query($sql);
 
 		if($rs!=false)
