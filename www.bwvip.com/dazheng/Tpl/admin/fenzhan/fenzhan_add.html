@@ -169,7 +169,8 @@ function reloadAutoTip()
 
 function getarea(val) {
 
-var url = 'home.php?mod=spacecp&ac=apply&op=caddie&do=area&val='+val;
+//var url = 'home.php?mod=spacecp&ac=apply&op=caddie&do=area&val='+val;
+var url = 'ajax.php?do=area&val='+val;
 
  $.post(url,{},function(result){ 
     $("#field_id").html(result);

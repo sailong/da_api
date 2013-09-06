@@ -49,39 +49,40 @@ class userAction extends AdminAuthAction
 	{
 		if(M()->autoCheckToken($_POST))
 		{
-			$data["user_name"]=post("user_name");
-			$data["user_password"]=md5(post("user_password"));
-			$data["user_realname"]=post("user_realname");
-			$data["role_id"]=post("role_id");
-			$data["company_id"]=post("company_id");
-			$data["user_sex"]=post("user_sex");
-			$data["user_email"]=post("user_email");
-			$data["user_email2"]=post("user_email2");
-			$data["user_nation"]=post("user_nation");
-			$data["user_jiguan"]=post("user_jiguan");
-			$data["user_company"]=post("user_company");
-			$data["user_company_address"]=post("user_company_address");
-			$data["user_company_post"]=post("user_company_post");
-			$data["user_address"]=post("user_address");
-			$data["user_post"]=post("user_post");
-			$data["user_xueli"]=post("user_xueli");
-			$data["user_xuewei"]=post("user_xuewei");
-			$data["user_zhuanye"]=post("user_zhuanye");
-			$data["user_fangxiang"]=post("user_fangxiang");
-			$data["user_duty"]=post("user_duty");
-			$data["user_zhicheng"]=post("user_zhicheng");
-			$data["user_qq"]=post("user_qq");
-			$data["user_tel"]=post("user_tel");
-			$data["user_mobile"]=post("user_mobile");
-			$data["user_content"]=post("user_content");
-			$data["user_lasttime"]=strtotime(post("user_lasttime"));
-
-			$data["user_fax"]=post("user_fax");
-			$data["user_birthday"]=post("user_birthday");
-
-			$data["user_addtime"]=time();
+			$data["username"]=post("username");		
+			$password=post("password");
+			 $salt = substr(uniqid(rand()), -6);
+			 $password = md5(md5($password).$salt);
+			$data["salt"]=$salt;
+			$data["password"]=$password;
+			$data["email"]=post("email"); 
 			
-			$list=M("user")->add($data);
+			$data["regip"]=time();
+			$data["regdate"]=time();
+			//生成ucenter会员 
+			$list=M("ucenter_members","pre_")->add($data); 
+			$ucuid=$list;
+			unset($data["salt"]);
+			//unset($data["username"]);
+			//$data["realname"]=post("realname"); 
+			//$data["mobile"]=post("mobile");  
+			$data["groupid"]=10;  
+			//生成社区会员 
+			$list=M("common_member","pre_")->add($data); 
+			
+			$data["uid"]=$ucuid; 
+			$data["gender"]=post("gender"); 
+			$data["realname"]=post("realname"); 
+			
+			//生成真实姓名
+			$list=M("common_member_profile","pre_")->add($data); 
+			$data["nickname"]=post("realname"); 
+			$data["ucuid"]=$ucuid; 
+			$data["role_id"]=3; 			
+			
+			//生成微博记录
+			$list=M("members","jishigou_")->add($data); 
+			
 			if($list!=false)
 			{
 				$this->success("添加成功");
@@ -101,15 +102,18 @@ class userAction extends AdminAuthAction
 
 	public function user_edit()
 	{
-		if(intval(get("user_id"))>0)
+		if(intval(get("uid"))>0)
 		{
-			$data=M("user")->where("user_id=".intval(get("user_id")))->find();
-			$this->assign("data",$data);
-
-			$xl=select_dict(4,"select");
-			$this->assign("xl",$xl);
-			$xw=select_dict(5,"select");
-			$this->assign("xw",$xw);
+			$data=M("common_member","pre_")->where("uid=".intval(get("uid")))->find();
+			$db = M( "common_member","pre_" );
+			$fix ="pre_";
+			$table = $fix."common_member";
+			$table2 = $fix."common_member_profile";
+			$data= $db -> field( "$table.*,$table2.*,$table.username as uname" ) ->
+			join( "$table2 on $table.uid=$table2.uid" ) ->
+			where("$table.uid=".intval(get("uid")))->find();
+			$this->assign("data",$data); 
+			 
 			
 			$this->assign("page_title","修改用户");
 			$this->display();
@@ -125,39 +129,53 @@ class userAction extends AdminAuthAction
 		if(M()->autoCheckToken($_POST))
 		{
 
-			$data["user_id"]=post('user_id');
-			$data["role_id"]=post("role_id");
+			$uid=post("uid");	 
+			$username=post("username");
+			$realname=post("realname");
+			$password=post("password");
+			$gender=post("gender"); 
+			$mobile=post("mobile"); 
+			$email=post("email"); 
 			
-			if(post("user_password"))
-			{
-				$data["user_password"]=md5(post("user_password"));
+			$upda="username='$username',";
+			$updp="uid='$uid',";
+			$updj="username='$username',";
+			if($password){
+			 $salt = substr(uniqid(rand()), -6);
+			 $password = md5(md5($password).$salt); 
+			$upda.="password='$password',salt='$salt',";
+			
+			$updp.="password='$password',";
 			}
-			$data["user_realname"]=post("user_realname");
-			$data["user_sex"]=post("user_sex");
-			$data["user_email"]=post("user_email");
-			$data["user_email2"]=post("user_email2");
-			$data["user_nation"]=post("user_nation");
-			$data["user_jiguan"]=post("user_jiguan");
-			$data["user_company"]=post("user_company");
-			$data["user_company_address"]=post("user_company_address");
-			$data["user_company_post"]=post("user_company_post");
-			$data["user_address"]=post("user_address");
-			$data["user_post"]=post("user_post");
-			$data["user_xueli"]=post("user_xueli");
-			$data["user_xuewei"]=post("user_xuewei");
-			$data["user_zhuanye"]=post("user_zhuanye");
-			$data["user_fangxiang"]=post("user_fangxiang");
-			$data["user_duty"]=post("user_duty");
-			$data["user_zhicheng"]=post("user_zhicheng");
-			$data["user_qq"]=post("user_qq");
-			$data["user_tel"]=post("user_tel");
-			$data["user_mobile"]=post("user_mobile");
-			$data["user_content"]=post("user_content");
-			$data["user_fax"]=post("user_fax");
-			$data["user_birthday"]=post("user_birthday");
-
-			$list=M("user")->save($data);
-			if($list!=false)
+			if($email){	
+			$upda.="email='$email',";
+			}
+			if($mobile){	
+			$updp.="mobile='$mobile',";
+			} 
+			if($realname){	
+			$updp.="realname='$realname',";
+			$updj.="nickname='$realname',";
+			}
+			if($gender){	
+			$updp.="gender='$gender',";
+			$updj.="gender='$gender',";
+			}
+			  
+			  
+			$upda.="username='$username'";
+			$updp.="uid='$uid'";
+			$updj.="username='$username'";
+			//ucenter会员  
+			$res=M()->execute("update pre_ucenter_members set $upda where uid=".$uid." ");  
+			//生成社区会员 			
+			$res1=M()->execute("update pre_common_member set $upda where uid=".$uid." "); 		
+			//生成社区会员 			
+			$res2=M()->execute("update pre_common_member_profile set $updp where uid=".$uid." "); 			
+			  
+			//生成微博记录   
+			$res3=M()->execute("update jishigou_members set $updj where uid=".$uid." ");   
+			if($res!=false||$res1!=false||$res2!=false||$res3!=false)
 			{
 				$this->success("修改成功");
 			}
@@ -180,9 +198,9 @@ class userAction extends AdminAuthAction
 			$ids_arr=explode(",",post("ids"));
 			for($i=0; $i<count($ids_arr); $i++)
 			{
-				$res=M("user")->where("user_id=".$ids_arr[$i])->delete();
+				//$res=M("user")->where("uid=".$ids_arr[$i])->delete();
 			}
-			echo "succeed^删除成功";
+			echo "succeed^删除功能暂停";
 		}
 	}
 
@@ -194,7 +212,7 @@ class userAction extends AdminAuthAction
 			$ids_arr=explode(",",post("ids"));
 			for($i=0; $i<count($ids_arr); $i++)
 			{
-				$res=M()->execute("update tbl_user set user_state=1 where user_id=".$ids_arr[$i]." ");
+				$res=M()->execute("update tbl_user set user_state=1 where uid=".$ids_arr[$i]." ");
 			}
 			if($res)
 			{
@@ -210,14 +228,14 @@ class userAction extends AdminAuthAction
 
 	public function user_detail()
 	{
-		if(intval(get("user_id"))>0)
+		if(intval(get("uid"))>0)
 		{
-			$data=M("user")->where("user_id=".intval(get("user_id")))->find();
+			$data=M("common_member","pre_")->where("uid=".intval(get("uid")))->find();
 			if(!empty($data))
 			{
 				$this->assign("data",$data);
 
-				$this->assign("page_title",$data["user_name"]."用户");
+				$this->assign("page_title",$data["username"]."用户");
 				$this->display();
 			}
 			else

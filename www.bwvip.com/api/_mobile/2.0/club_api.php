@@ -1049,7 +1049,7 @@ if($ac=="golf_news")
 	if($max_page>=$page)
 	{
 
-		$list=DB::query("select field_uid,arc_id as blogid,arc_name as subject,arc_replynum as replynum,arc_viewtype as view_type,arc_pic as pic ,arc_addtime as dateline,arc_content as content,FROM_UNIXTIME(arc_addtime,'%Y%m%d') as today from tbl_arc where  arc_model='arc' and arc_state=1 and arc_viewtype='normal' and arc_state=1 and arc_viewstatus=1 and (arctype_id=2 or arc_type='Q')  $language_sql order by today desc,arc_sort desc limit $page_start,$page_size");
+		$list=DB::query("select field_uid,arc_id as blogid,arc_name as subject,arc_replynum as replynum,arc_viewtype as view_type,arc_pic as pic ,arc_addtime as dateline,arc_content as content,FROM_UNIXTIME(arc_addtime,'%Y%m%d') as today,arc_top from tbl_arc where  arc_model='arc' and arc_state=1 and arc_viewtype='normal' and arc_state=1 and arc_viewstatus=1 and (arctype_id=2 or arc_type='Q')  $language_sql order by arc_top desc,today desc,arc_sort desc limit $page_start,$page_size");
 		$i=0;
 		while($row = DB::fetch($list))
 		{
@@ -1099,7 +1099,7 @@ if($ac=="golf_news")
 	}
 	if($max_page>=$page)
 	{
-		$list=DB::query("select field_uid,arc_id as blogid,arc_name as subject,arc_replynum as replynum,arc_viewtype as view_type,arc_pic as pic ,arc_addtime as dateline,arc_content as content,FROM_UNIXTIME(arc_addtime,'%Y%m%d') as today from tbl_arc where  arc_model='arc' and arc_state=1 and arc_viewstatus=1  and arc_viewtype='pic' and (arctype_id=2 or arc_type='Q') $language_sql order by today desc,arc_sort desc limit $page_start,$page_size");
+		$list=DB::query("select field_uid,arc_id as blogid,arc_name as subject,arc_replynum as replynum,arc_viewtype as view_type,arc_pic as pic ,arc_addtime as dateline,arc_content as content,FROM_UNIXTIME(arc_addtime,'%Y%m%d') as today,arc_top from tbl_arc where  arc_model='arc' and arc_state=1 and arc_viewstatus=1  and arc_viewtype='pic' and (arctype_id=2 or arc_type='Q') $language_sql order by arc_top desc,today desc,arc_sort desc limit $page_start,$page_size");
 		$i=0;
 		while($row = DB::fetch($list))
 		{
@@ -1620,7 +1620,8 @@ if($ac=="comment_me")
 	
 
 	$uid=$_G['gp_uid'];
-	if($uid)
+	$username=$_G['gp_username'];
+	if($uid && $username)
 	{
 		$res=DB::query("update jishigou_members set topic_new=0 where uid='".$uid."' ");
 		if($_G['gp_is_hulue'])
@@ -1639,7 +1640,7 @@ if($ac=="comment_me")
 			if($max_page>=$page)
 			{
 
-					$list=DB::query("select tid,uid,(select realname from ".DB::table("common_member_profile")." where uid=jishigou_topic.uid) as username,content,content2,(select `longtext` from jishigou_topic_longtext where tid=jishigou_topic.tid) as full_content,replys,forwards,dateline,imageid,voice,voice_timelong from jishigou_topic where type<>'reply' and totid='".$uid."' and type='reply' order by dateline desc limit $page_start,$page_size ");
+					$list=DB::query("select tid,uid,(select realname from ".DB::table("common_member_profile")." where uid=jishigou_topic.uid) as username,content,content2,(select `longtext` from jishigou_topic_longtext where tid=jishigou_topic.tid) as full_content,replys,forwards,dateline,imageid,voice,voice_timelong from jishigou_topic where type<>'reply' and content like '%<M ".$username.">%' order by dateline desc limit $page_start,$page_size ");
 					while($row = DB::fetch($list) )
 					{
 						$imageids_arr = explode(',',$row['imageid']);

@@ -65,14 +65,14 @@
 $(document).ready(function(){
 $.formValidator.initConfig({formID:"act_form",theme:'ArrowSolidBox',mode:'AutoTip',onError:function(msg){msg_error(msg)},inIframe:true});
 
-	$("#arc_name").formValidator({empty:true,onShow:"请输入文章名称",onFocus:"请输入文章名称",onCorrect:"输入正确"}).inputValidator({min:1,max:50,onError:"请输入文章名称"});
+	$("#arc_name").formValidator({empty:true,onShow:"请输入新闻名称",onFocus:"请输入新闻名称",onCorrect:"输入正确"}).inputValidator({min:1,max:50,onError:"请输入新闻名称"});
 	$("#staff_id").formValidator({empty:true,onShow:"请输入发布人",onFocus:"请输入发布人",onCorrect:"输入正确"}).inputValidator({min:1,max:11,onError:"请输入发布人"});
 	//$("#arctype_id").formValidator({empty:true,onShow:"请输入所属栏目",onFocus:"请输入所属栏目",onCorrect:"输入正确"}).inputValidator({min:1,max:11,onError:"请输入所属栏目"});
-	$("#arc_note").formValidator({empty:true,onShow:"请输入文章简介",onFocus:"请输入文章简介",onCorrect:"输入正确"}).inputValidator({min:1,max:300,onError:"请输入文章简介"});
+	$("#arc_note").formValidator({empty:true,onShow:"请输入新闻简介",onFocus:"请输入新闻简介",onCorrect:"输入正确"}).inputValidator({min:1,max:300,onError:"请输入新闻简介"});
 	$("#arc_pic").formValidator({empty:true,onShow:"请输入图片",onFocus:"请输入图片",onCorrect:"输入正确"}).inputValidator({min:1,max:300,onError:"请输入图片"});
 	$("#arc_source").formValidator({empty:true,onShow:"请输入来源",onFocus:"请输入来源",onCorrect:"输入正确"}).inputValidator({min:1,max:50,onError:"请输入来源"});
 	$("#arc_editor").formValidator({empty:true,onShow:"请输入编辑",onFocus:"请输入编辑",onCorrect:"输入正确"}).inputValidator({min:1,max:50,onError:"请输入编辑"});
-	$("#arc_content").formValidator({empty:true,onShow:"请输入文章内容",onFocus:"请输入文章内容",onCorrect:"输入正确"}).inputValidator({min:1,onError:"请输入文章内容"});
+	$("#arc_content").formValidator({empty:true,onShow:"请输入新闻内容",onFocus:"请输入新闻内容",onCorrect:"输入正确"}).inputValidator({min:1,onError:"请输入新闻内容"});
 	$("#arc_is_tj").formValidator({empty:true,onShow:"请输入推荐",onFocus:"请输入推荐",onCorrect:"输入正确"}).inputValidator({min:1,max:10,onError:"请输入推荐"});
 	$("#arc_state").formValidator({empty:true,onShow:"请输入状态",onFocus:"请输入状态",onCorrect:"输入正确"}).inputValidator({min:1,max:10,onError:"请输入状态"});
 	$("#arc_path").formValidator({empty:true,onShow:"请输入路径",onFocus:"请输入路径",onCorrect:"输入正确"}).inputValidator({min:1,max:50,onError:"请输入路径"});

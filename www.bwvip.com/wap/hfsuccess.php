@@ -1,11 +1,27 @@
 <? 
  
+ function get_device_type(){
+	$agent = strtolower($_SERVER['HTTP_USER_AGENT']);
+	$type = 'other';
+	if(strpos($agent, 'iphone') || strpos($agent, 'ipad')){
+		$type = 'ios';
+	}
+	if(strpos($agent, 'android')){
+		$type = 'android';
+	}
+	return $type;
+}
+
+ 
 $width = $_GET ['width'];
 if(!$width)
 {
 	$width=460;
 }
- 
+  if(get_device_type()=='ios'){
+	$width=320;
+} 
+
  //字体缩放
 $ziti=14/460;
 $fonts=$ziti*$width;
@@ -15,6 +31,7 @@ $fonts1=$ziti*$width;
 $input=450/460;
 $inputc=$input*$width;
  
+ $imgwidth=$width-30;
 ?>
 
 <html xmlns="http://www.w3.org/1999/xhtml"><style type="text/css">
@@ -57,8 +74,8 @@ h3 {
 
 <table width="<?php echo $width;?>" border="0" align="left" cellpadding="0" cellspacing="0">
 <tr>
-<td>
-<img src="images/huifengbanner.jpg" width="<?php echo $width;?>" >
+<td align="center">
+<img src="images/huifengbanner.jpg" width="<?php echo $imgwidth;?>" >
 </td>
 </tr>
   <tr>
@@ -72,9 +89,12 @@ h3 {
 或致电4008109966大正服务热线。</p>
     </td>
   </tr>
+  <tr>
+    <td align="center" > </td>
+  </tr>
   
  <tr>
-    <td><img src="images/hfbottom.jpg" width="<?php echo $width;?>" ></td>
+    <td align="center"><img src="images/hfbottom.jpg" width="<?php echo $imgwidth;?>" ></td>
   </tr>
   
 </table>

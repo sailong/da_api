@@ -794,7 +794,8 @@ if($ac=="comment_me")
 	
 
 	$uid=$_G['gp_uid'];
-	if($uid)
+	$username=$_G['gp_username'];
+	if($uid && $username)
 	{
 		$res=DB::query("update jishigou_members set topic_new=0 where uid='".$uid."' ");
 		if($_G['gp_is_hulue'])
@@ -804,7 +805,7 @@ if($ac=="comment_me")
 		else
 		{
 			//分页
-			$total=DB::result_first("select count(tid) from jishigou_topic where  touid='".$uid."' and type='reply' ");
+			$total=DB::result_first("select count(tid) from jishigou_topic where type<>'reply' and content like '%<M ".$username.">%' ");
 			$max_page=intval($total/$page_size);
 			if($max_page<$total/$page_size)
 			{
@@ -813,7 +814,7 @@ if($ac=="comment_me")
 			if($max_page>=$page)
 			{
 
-					$list=DB::query("select tid,uid,(select realname from ".DB::table("common_member_profile")." where uid=jishigou_topic.uid) as username,content,content2,replys,forwards,dateline,(select photo from jishigou_topic_image where tid=jishigou_topic.tid limit 1) as photo,voice,voice_timelong from jishigou_topic where touid='".$uid."' and type='reply' order by dateline desc limit $page_start,$page_size ");
+					$list=DB::query("select tid,uid,(select realname from ".DB::table("common_member_profile")." where uid=jishigou_topic.uid) as username,content,content2,replys,forwards,dateline,(select photo from jishigou_topic_image where tid=jishigou_topic.tid limit 1) as photo,voice,voice_timelong from jishigou_topic where type<>'reply' and content like '%<M ".$username.">%' order by dateline desc limit $page_start,$page_size ");
 					while($row = DB::fetch($list) )
 					{
 						if($row['photo'])

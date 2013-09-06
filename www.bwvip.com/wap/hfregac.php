@@ -88,7 +88,7 @@ $ac=$_G['gp_ac'];
 if($ac=="hf_reg")
 { 
 	$qiancheng = $_G['gp_qiancheng'];
-	 
+	 $width = $_G['gp_width'];
 	$family_name = $_G['gp_family_name'];
 	$name = $_G['gp_name'];	
 	$year = $_G['gp_year'];
@@ -99,12 +99,67 @@ if($ac=="hf_reg")
 	$prov = $_G['gp_province'];	
     $province=$provinceArray[$prov];
 	$city = $_G['gp_city']; 
+	
+	
+	$name2 = $_G['gp_name2'];
+	$name3 = $_G['gp_name3'];
+	$name4 = $_G['gp_name4'];
+	$name5 = $_G['gp_name5'];
+	$name6 = $_G['gp_name6'];
+	$name7 = $_G['gp_name7'];
+	$name8 = $_G['gp_name8'];
+	$name9 = $_G['gp_name9'];
+	$name10 = $_G['gp_name10'];
+	if($name2)
+	{
+	  $str.=",200|".$name2; 
+		}
+	
+	if($name3)
+	{
+	  $str.=",500|".$name3; 
+		}
+	
+	if($name4)
+	{
+	  $str.=",1000|".$name4; 
+		}
+	if($name5)
+	{
+	  $str.=",2000|".$name5; 
+		}
+	
+	if($name6)
+	{
+	  $str.=",300|".$name6; 
+		}
+	
+	if($name7)
+	{
+	  $str.=",900|".$name7; 
+		}
+
+	if($name8)
+	{
+	  $str.=",1800|".$name8; 
+		}
+	
+	if($name9)
+	{
+	  $str.=",3500|".$name9; 
+		}
+	
+	if($name10)
+	{
+	  $str.=",100|".$name10; 
+		}
 
 	$address = $_G['gp_address'];
 	$postcode = $_G['gp_postcode'];
 	$watchdate = $_G['gp_watch_date']; 
-	 
-	$watch_date=implode(",", $watchdate );
+	
+	 $watch_date=$str;
+	//$watch_date=implode(",", $watchdate );
 	//$watch_date=rtrim($watch_date, ",") ;
 	$is_owners = $_G['gp_is_owners'];
 	$bwm_cars = $_G['gp_bwm_cars']; 
@@ -155,10 +210,10 @@ if($ac=="hf_reg")
     $res = DB::query($sql);
 	
 	if($res == false){
-	 	echo "<script>location='hferror.php';</script>";
+	 	echo "<script>location='hferror.php?width=$width';</script>";
 	}
 
-   	echo "<script>location='hfsuccess.php';</script>";
+   	echo "<script>location='hfsuccess.php?width=$width';</script>";
 }
  
  

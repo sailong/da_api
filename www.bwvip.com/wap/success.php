@@ -1,10 +1,25 @@
 <? 
- 
+function get_device_type(){
+	$agent = strtolower($_SERVER['HTTP_USER_AGENT']);
+	$type = 'other';
+	if(strpos($agent, 'iphone') || strpos($agent, 'ipad')){
+		$type = 'ios';
+	}
+	if(strpos($agent, 'android')){
+		$type = 'android';
+	}
+	return $type;
+}
+ 	 
 $width = $_GET ['width'];
 if(!$width)
 {
 	$width=460;
 }
+ if(get_device_type()=='ios'){
+	$width=320;
+} 
+
  
  //字体缩放
 $ziti=14/460;
@@ -71,6 +86,9 @@ h3 {
 与您进行联系，请保持手机畅通，
 或致电4008109966大正服务热线。</p>
     </td>
+  </tr>
+  <tr>
+    <td align="center" ><input type="image" name="imageField" id="imageField" src="images/close.jpg" onClick="window.close();"></td>
   </tr>
   
  <tr>

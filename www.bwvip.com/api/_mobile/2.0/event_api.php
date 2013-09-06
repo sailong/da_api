@@ -1100,12 +1100,17 @@ if($ac=="event_baoming_action")
 	
 }
 
+
+
 if($ac=='dz_ticket_event_list')
 {
 	$field_uid = $_G['gp_field_uid'];
-	if($field_uid == ''){
+	/*
+	if($field_uid == '')
+	{
 		api_json_result(1,1,'缺少参数field_uid',$data);
 	}
+	*/
 	//大正赛事门票列表
 	$sql = "select event_id from tbl_ticket group by event_id limit $page_start,$page_size";
 	$list=DB::query($sql);
@@ -1113,23 +1118,54 @@ if($ac=='dz_ticket_event_list')
 		api_json_result(1,1,"没有数据",$data);
 	}
 	$event_ids = array();
+	
+	
 	while($row = DB::fetch($list))
 	{
 		$event_ids[$row['event_id']] = $row['event_id'];
 	}
-	$sql = "select event_id,event_name,field_uid,event_logo,event_starttime,event_ticket_status from tbl_event where event_id in('".implode("','",$event_ids)."') and field_uid='{$field_uid}'";
+	
+
+	if($field_uid==1186)
+	{
+		$sql = "select event_id,event_name,field_uid,event_logo,event_starttime,event_endtime,event_ticket_status,event_ticket_wapurl from tbl_event where event_id=25 ";
+	}
+	else if($field_uid==1160)
+	{
+		$sql = "select event_id,event_name,field_uid,event_logo,event_starttime,event_endtime,event_ticket_status,event_ticket_wapurl from tbl_event where event_id=41";
+	}
+	else
+	{
+		$sql = "select event_id,event_name,field_uid,event_logo,event_starttime,event_endtime,event_ticket_status,event_ticket_wapurl from tbl_event where event_id=25 or event_id=31 or event_id=41";
+	}
+	
+	
+	
 	$list=DB::query($sql);
 	$event_list = array();
 	while($row = DB::fetch($list))
 	{
 		$row['event_logo'] = $site_url.'/'.$row['event_logo'];
-		$row['event_starttime'] = date('Y年m月d日',$row['event_starttime']);
-		if($row['event_ticket_status'] == 2){
-			$row['wab_url'] = $site_url.'/wap/bmwreg.php';
+		$y_s=date('m',$row['event_starttime']);
+		$d_s=date('d',$row['event_starttime']);
+		$y_e=date('m',$row['event_endtime']);
+		$d_e=date('d',$row['event_endtime']);
+		if($y_s==$y_e)
+		{
+			$row['event_starttime']=$y_s."月".$d_s."日-".$d_e."日";
 		}
+		else
+		{
+			$row['event_starttime']=$y_s."月".$d_s."日-".$y_e."月".$d_e."日";
+		}
+		/*
+		$row['event_starttime'] = date('Y年m月d日',$row['event_starttime']);
+		$row['event_starttime'] = $row['event_starttime']." - ".date('Y年m月d日',$row['event_endtime']);
+		*/
+		$row['wab_url'] = $row['event_ticket_wapurl'];
+		
 		
 		$row2 = DB::fetch_first("select ad_url,ad_file,ad_file_iphone4,ad_file_iphone5,ad_width,ad_height from tbl_ad where field_uid='".$row['field_uid']."' and ad_page='ticket' order by ad_sort desc limit 1");
-		
 		
 		$arr=explode("|",$row2['ad_url']);
 		if(count($arr)>1)

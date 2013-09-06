@@ -1,7 +1,7 @@
 <include file="../public/_header" />
 <div class="so_main">
 
-  <div class="page_tit">文章</div>
+  <div class="page_tit">新闻</div>
   <div class="tit_tab">
 	<ul>
 		<li><a <php> if(get("arc_state")=='0'){ echo " class=on ";}</php> href="{:U('admin/arc/arc',array('arc_state'=>0))}">待审核</a></li>
@@ -60,7 +60,7 @@
   <div class="Toolbar_inbox">
   	<div class="page right">{$pages}</div>
 
-	<a href="{:U('admin/arc/arc_add')}" class="btn_a"><span>添加文章</span></a>
+	<a href="{:U('admin/arc/arc_add')}" class="btn_a"><span>添加新闻</span></a>
 	
 	<php>if(get('arc_state')=='0'){</php>
 	<a href="javascript:void(0);" class="btn_a"  onclick="mod_post_batch('{:U('admin/arc/arc_check_action')}','mod_table');"><span>审核通过</span></a>
@@ -87,15 +87,15 @@
 			<label for="checkbox"></label>
 		</th>
 		<th class="line_l">编号</th>
-		<th class="line_l">文章主标题</th>
+		<th class="line_l">新闻主标题</th>
 		<!--
 		<th class="line_l">发布人</th>
 		-->
 		<th class="line_l">所属栏目</th>
 		<th class="line_l">显示方式</th>
 		<th class="line_l">图片</th>
-		<th class="line_l">来源</th>
-		<th class="line_l">编辑</th>
+
+		<th class="line_l">置顶</th>
 		<th class="line_l">排序</th>
 		<th class="line_l">状态</th>
 		<th class="line_l">添加时间</th>
@@ -115,8 +115,7 @@
 
 			<td><php>if($vo['arc_pic']){</php><img src="/{$vo.arc_pic}" class="pic" style="max-width:150px; max-height:80px;"><php>}</php></td>
 
-			<td>{$vo.arc_source}</td>
-			<td>{$vo.arc_editor}</td>
+			<td>{$vo.arc_top}</td>
 			<td>{$vo.arc_sort}</td>
 			<td><php>if($vo['arc_state']==1){ echo "审核通过";}else if($vo['arc_state']==2){ echo "审核未通过";}else{ echo "待审核";}</php>{$vo.}</td>
 			<td>{$vo.arc_addtime|format_to_time}</td>
@@ -124,7 +123,7 @@
 		<td>
 			<a href="{:U('admin/arc/arc_edit', array('arc_id'=>$vo['arc_id']))}">修改</a> | 
 			<!--
-			<a href="javascript:void(0);"  onclick="mod_dialog('修改文章','{:U('admin/arc/arc_edit', array('arc_id'=>$vo['arc_id']))}')">修改</a> | 
+			<a href="javascript:void(0);"  onclick="mod_dialog('修改新闻','{:U('admin/arc/arc_edit', array('arc_id'=>$vo['arc_id']))}')">修改</a> | 
 			-->
 			<a href="javascript:void(0);" onclick="mod_delete_one('{:U('admin/arc/arc_delete_action')}','{$vo['arc_id']}');">删除</a>
 		</td>
@@ -133,14 +132,14 @@
     </table>
 	  <php>}else{</php>
 			<div class="no_data">
-				<img src="/skin/images/no_data.gif" align="absmiddle"> <span>没有文章... </span>
+				<img src="/skin/images/no_data.gif" align="absmiddle"> <span>没有新闻... </span>
 			</div>
 	 <php>}</php>
   </div>
 
   <div class="Toolbar_inbox">
 	<div class="page right">{$pages}</div>
-	<a href="javascript:void(0);" onclick="mod_dialog('添加文章','{:U('admin/arc/arc_add')}');" class="btn_a"><span>添加文章</span></a>
+	<a href="javascript:void(0);" onclick="mod_dialog('添加新闻','{:U('admin/arc/arc_add')}');" class="btn_a"><span>添加新闻</span></a>
 	
 	<php>if(get('arc_state')=='0'){</php>
 	<a href="javascript:void(0);" class="btn_a"  onclick="mod_post_batch('{:U('admin/arc/arc_check_action')}','mod_table');"><span>审核通过</span></a>

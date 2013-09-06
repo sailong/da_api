@@ -163,6 +163,52 @@ function mod_delete_batch(action_url,obj)
 }
 
 
+//批量修改
+function mod_modify_batch(action_url,obj)
+{
+	var length = 0;
+	ids    = getInputChecked(obj);
+	length = ids.length;
+	ids    = ids.toString();
+
+	if(ids=='') 
+	{
+		art.dialog({
+				icon: 'error',
+				time: 2,
+				content: '请至少选择一个'
+			});
+		return ;
+	}
+
+	if(ids == '' || !confirm('修改成功后将无法恢复，确认继续？')) return false;
+	
+	$.post(action_url, {ids:ids}, function(res){
+		if(res.split('^')[0]=='succeed')
+		{
+			ids = ids.toString().split(',');
+			for(i = 0; i < ids.length; i++)
+			{
+				//$('#ids_'+ids[i]).remove();
+			}
+			art.dialog({
+				icon: ''+res.split('^')[0]+'',
+				time: 2,
+				content: ''+res.split('^')[1]+''
+			});
+		}
+		else
+		{
+			art.dialog({
+				icon: ''+res.split('^')[0]+'',
+				time: 2,
+				content: ''+res.split('^')[1]+''
+			});
+		}
+	});
+}
+
+
 
 //批量提交
 function mod_post_batch(action_url,obj)

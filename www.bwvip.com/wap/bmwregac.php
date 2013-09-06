@@ -90,6 +90,7 @@ if($ac=="bwm_reg")
 	$qiancheng = $_G['gp_qiancheng'];
 	 
 	$family_name = $_G['gp_family_name'];
+	  $width = $_G['gp_width'];
 	$name = $_G['gp_name'];	
 	$year = $_G['gp_year'];
 	$month = $_G['gp_month'];
@@ -155,10 +156,10 @@ if($ac=="bwm_reg")
     $res = DB::query($sql);
 	
 	if($res == false){
-	 	echo "<script>location='error.php';</script>";
+	 	echo "<script>location='error.php?width=$width';</script>";
 	}
 
-   	echo "<script>location='success.php';</script>";
+   	echo "<script>location='success.php?width=$width';</script>";
 }
  
  

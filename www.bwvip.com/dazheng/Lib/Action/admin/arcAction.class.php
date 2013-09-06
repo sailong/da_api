@@ -1,7 +1,7 @@
 <?php
 /**
  *    #Case		tankuang
- *    #Page		ArcAction.class.php (文章)
+ *    #Page		ArcAction.class.php (新闻)
  *
  *    @author		Zhang Long
  *    @E-mail		68779953@qq.com
@@ -25,7 +25,7 @@ class arcAction extends AdminAuthAction
 		$this->assign("pages",$list["pages"]);
 		$this->assign("total",$list["total"]);
 
-		$this->assign("page_title","文章");
+		$this->assign("page_title","新闻");
     	$this->display();
 	}
 
@@ -42,7 +42,7 @@ class arcAction extends AdminAuthAction
 		$this->assign('usejs',$b);     //输出到html
 		$this->assign('editor',$a);
 
-		$this->assign("page_title","添加文章");
+		$this->assign("page_title","添加新闻");
     	$this->display();
 	}
 
@@ -116,7 +116,7 @@ class arcAction extends AdminAuthAction
 			$arc_type=D("arctype")->arctype_admin_tree_pro(" and arctype_parent_id=0 "," and arctype_type='A' ");
 			$this->assign("arc_type",$arc_type['item']);
 			
-			$this->assign("page_title","修改文章");
+			$this->assign("page_title","修改新闻");
 			$this->display();
 		}
 		else
@@ -149,6 +149,7 @@ class arcAction extends AdminAuthAction
 			$data["arc_content"]=stripslashes($_POST["arc_content"]);
 			$data["arc_is_tj"]=post("arc_is_tj");
 			$data["arc_path"]=post("arc_path");
+			$data["arc_top"]=post("arc_top");
 			$data["arc_viewstatus"]=post("arc_viewstatus");
 			$data["arc_statetime"]=strtotime(post("arc_statetime"));
 			
@@ -286,7 +287,7 @@ class arcAction extends AdminAuthAction
 				$this->assign("data",$data);
 
 
-				$this->assign("page_title",$data["arc_name"]."文章");
+				$this->assign("page_title",$data["arc_name"]."新闻");
 				$this->display();
 			}
 			else
@@ -309,7 +310,7 @@ class arcAction extends AdminAuthAction
 			$data=M("arc")->where("arc_id=".intval(get("arc_id")))->find();
 			$this->assign("data",$data);
 
-			$this->assign("page_title","修改文章");
+			$this->assign("page_title","修改新闻");
 			$this->display();
 
 	}

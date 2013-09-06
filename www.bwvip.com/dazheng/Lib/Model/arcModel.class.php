@@ -45,7 +45,7 @@ class arcModel extends Model{
 			$where .=" and arc_addtime<".strtotime(get("endtime"))." ";
 		}
 
-		$data["item"]=M("arc")->field("arc_id,arc_name,arctype_id,arc_viewtype,arc_pic,arc_sort,arc_state,arc_addtime,arc_statetime")->where($where.$bigwhere)->order($sort)->page($page.",".$page_size)->select();
+		$data["item"]=M("arc")->field("arc_id,arc_name,arctype_id,arc_viewtype,arc_top,arc_pic,arc_sort,arc_state,arc_addtime,arc_statetime")->where($where.$bigwhere)->order($sort)->page($page.",".$page_size)->select();
 		for($i=0; $i<count($data["item"]); $i++)
 		{
 			if($data["item"][$i]["user_id"]!="")
@@ -94,7 +94,7 @@ class arcModel extends Model{
 		{
 			if($data["item"][$i]["user_id"]!="")
 			{
-				$user=M()->query("select uname from ".C("db_prefix")."user where  uid='".$data["item"][$i]["user_id"]."' ");
+				$user=M()->query("select uname from ".C("db_prefix")."user where uid='".$data["item"][$i]["user_id"]."' ");
 				$data["item"][$i]["uname"]=$user[0]["uname"];
 			}
 		}

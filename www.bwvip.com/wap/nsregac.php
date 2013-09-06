@@ -88,7 +88,7 @@ $ac=$_G['gp_ac'];
 if($ac=="ns_reg")
 { 
 	$qiancheng = $_G['gp_qiancheng'];
-	 
+	  $width = $_G['gp_width'];
 	$family_name = $_G['gp_family_name'];
 	$name = $_G['gp_name'];	
 	$year = $_G['gp_year'];
@@ -100,11 +100,31 @@ if($ac=="ns_reg")
     $province=$provinceArray[$prov];
 	$city = $_G['gp_city']; 
 
+
+	$name2 = $_G['gp_name2'];
+	$name3 = $_G['gp_name3'];
+	$name4 = $_G['gp_name4']; 
+	if($name2)
+	{
+	  $str.=",300|".$name2; 
+		}
+	
+	if($name3)
+	{
+	  $str.=",500|".$name3; 
+		}
+	
+	if($name4)
+	{
+	  $str.=",1000|".$name4; 
+		}
+	
+	
 	$address = $_G['gp_address'];
 	$postcode = $_G['gp_postcode'];
-	$watchdate = $_G['gp_watch_date']; 
-	 
-	$watch_date=implode(",", $watchdate );
+	//$watchdate = $_G['gp_watch_date']; 
+	 $watch_date=$str;
+	//$watch_date=implode(",", $watchdate );
 	//$watch_date=rtrim($watch_date, ",") ;
 	$is_owners = $_G['gp_is_owners'];
 	$bwm_cars = $_G['gp_bwm_cars']; 
@@ -127,7 +147,7 @@ if($ac=="ns_reg")
 	$ticket_id = empty($_G['gp_ticket_id']) ? 0 : $_G['gp_ticket_id'];//门票ID
 	$event_id = empty($_G['gp_event_id']) ? 0 : $_G['gp_event_id'];//赛事ID
 	
-	$ticket_type = 'hf';//门票类型
+	$ticket_type = 'ns';//门票类型
 	$ticket_times = empty($_G['gp_ticket_times']) ? 1 : $_G['gp_ticket_times'];//门票数量
 	$user_ticket_realname = urldecode($family_name.$name);//订票人真实姓名
 	$user_ticket_sex = urldecode($qiancheng);//性别
@@ -155,10 +175,10 @@ if($ac=="ns_reg")
     $res = DB::query($sql);
 	
 	if($res == false){
-	 	echo "<script>location='nserror.php';</script>";
+	 	echo "<script>location='nserror.php?width=$width';</script>";
 	}
 
-   	echo "<script>location='nssuccess.php';</script>";
+   	echo "<script>location='nssuccess.php?width=$width';</script>";
 }
  
  
