@@ -288,4 +288,105 @@ function get_randmod_str(){
    return $serial;
 }
 
+/*
+*  添加用户注册
+*/
+function user_add_return($phone)
+{
+	
+	$username=time(). mt_rand(1000,9999);//post("user_ticket_realname");	
+	$password='123456';
+	$salt = substr(uniqid(rand()), -6);
+	$password = md5(md5($password).$salt);
+	$salt=$salt;
+	$password=$password;
+	$email=$username.'@bw.com'; 
+	$mobile=$phone; 
+	$regip=time();
+	$regdate=time();
+	$gender = '';
+	//生成ucenter会员
+	$sql = "insert into pre_ucenter_members(username,salt,password,email,regip,regdate) values('{$username}','{$salt}','{$password}','{$email}','{$regip}','{$regdate}')";
+	$rs = DB::query($sql);
+	$ucuid=DB::insert_id();
+	$groupid=10;  
+	//生成社区会员
+	$sql = "insert into pre_common_member(uid,username,password,email,regdate,groupid) values('{$ucuid}','{$username}','{$password}','{$email}','{$regdate}','{$groupid}')";
+	$rs = DB::query($sql);
+	
+	$sql = "insert into pre_common_member_profile(uid,realname,gender,mobile,regdate) values('{$ucuid}','{$username}','{$gender}','{$mobile}','{$regdate}')";
+	//生成真实姓名
+	$rs = DB::query($sql);
+	
+	$role_id = 3;
+	$sql = "insert into jishigou_members(uid,username,nickname,password,email,phone,regip,regdate,gender,role_id) values('{$ucuid}','{$username}','{$username}','{$password}','{$email}','{$mobile}','{$regip}','{$regdate}','{$gender}','{$role_id}')";
+	///生成微博记录
+	$rs = DB::query($sql);
+	if($rs!=false)
+	{
+		return $ucuid;
+	}
+	else
+	{
+		return false;
+	}
+}
+//添加系统消息
+function sys_message_add_return($user_ticket_info)
+{
+	$sys_event_id = $user_ticket_info['event_id'];
+	
+	$sql = "select field_uid,event_name from tbl_event where event_id='{$sys_event_id}'";
+
+	$sys_event_info = DB::fetch_first($sql);
+	$sys_field_uid=$sys_event_info['field_uid'];
+	if(empty($sys_field_uid)){
+		$sys_field_uid = 0;
+	}
+	$field_uid=$sys_field_uid;
+	if($user_ticket_info["uid"])
+	{
+		$sys_uid=$user_ticket_info["uid"];
+	}
+	else
+	{
+		$sys_uid=0;
+	}
+	$uid=$sys_uid;
+	$message_title=$sys_event_info['event_name']."门票申请成功";
+
+	$n_title=$message_title;
+	$n_content=$message_title;
+	
+	$message_extinfo=array('action'=>"system_msg");	
+	
+	$msg_content = json_encode(array('n_title'=>urlencode($n_title), 'n_content'=>urlencode($n_content),'n_extras'=>$message_extinfo));
+
+	$smessage_content=$msg_content;
+	$receiver_type=3;//3:指定用户
+	$message_pic=$user_ticket_info['user_ticket_codepic'];
+	
+
+	
+	$message_totalnum=0;
+	$message_sendnum=0;
+	$message_errorcode="";
+	$message_errormsg="";
+	$message_addtime=time();
+	
+	$sql = "insert into tbl_sys_message(field_uid,uid,message_title,message_content,receiver_type,message_pic,message_totalnum,message_sendnum,message_errorcode,message_errormsg,message_addtime) values('{$field_uid}','{$uid}','{$message_title}','{$message_content}','{$receiver_type}','{$message_pic}','{$message_sendnum}','{$message_errorcode}','{$message_errormsg}','{$field_uid}','{$message_addtime}')";
+	$rs = DB::query($sql);
+
+	if($rs!=false)
+	{
+		return true;
+	}
+	else
+	{				
+		return false;
+	}
+
+}
+
+
 ?>
