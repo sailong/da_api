@@ -970,10 +970,15 @@ if($ac == 'free_ticket2')
 	//检查用户是否已提交申请
     $sql = "select user_ticket_id,ticket_id,user_ticket_codepic,ticket_price,user_ticket_status from tbl_user_ticket where ticket_id='{$ticket_id}' and ticket_type='".$ticket_type."' and (user_ticket_mobile='{$user_ticket_mobile}' or user_ticket_imei='{$user_ticket_imei}')";
     $list = DB::fetch_first($sql);
+	
+	$ticket_detail = DB::fetch_first("select ticket_name,ticket_price,ticket_ren_num,ticket_num,ticket_pic,ticket_starttime,ticket_endtime,ticket_times,ticket_content from tbl_ticket where ticket_id='{$ticket_id}' limit 1");
+	$return_detail['ticket_name'] = $ticket_detail['ticket_name'];
+	//$return_detail['ticket_starttime'] = date('Y年m月d日',$ticket_detail['ticket_starttime']);
+	//$return_detail['ticket_endtime'] = date('Y年m月d日',$ticket_detail['ticket_endtime']);
+	$data['title'] = 'erweima';
 	//已经索取过
 	if($list)
 	{
-		$data['title'] = 'erweima';
 		$erweima_path = erweima($user_ticket_mobile);
 		if(empty($erweima_path)) {
 			api_json_result(1,1,"二维码生成失败",null);
@@ -987,12 +992,14 @@ if($ac == 'free_ticket2')
 		if($ticket_type == 'BASE'){
 			if(empty($list['user_ticket_codepic'])) 
 			{
-				$data['data'] = $site_url.$erweima_path;
+				$return_detail['ticket_pic'] = $site_url.$erweima_path;
+				$data['data'] =$return_detail;
 				api_json_result(1,0,"索取门票成功",$data);
 			}
 			else 
 			{
-				$data['data'] = $site_url.$list['user_ticket_codepic'];
+				$return_detail['ticket_pic'] = $site_url.$list['user_ticket_codepic'];
+				$data['data'] =$return_detail;
 				api_json_result(1,0,"索取门票成功",$data);
 			}
 		}
@@ -1000,7 +1007,8 @@ if($ac == 'free_ticket2')
 			$data['title'] = 'erweima';
 			$data['data'] = null;
 			if($list['user_ticket_status'] == 1){
-				$data['data'] = $site_url.$erweima_path;
+				$return_detail['ticket_pic'] = $site_url.$erweima_path;
+				$data['data'] =$return_detail;
 				api_json_result(1,0,"门票索取成功",$data);
 			}
 			
@@ -1023,14 +1031,7 @@ if($ac == 'free_ticket2')
 		$res = DB::query($sql);
 		if($res)
 		{
-			
-			$ticket_detail = DB::fetch_first("select ticket_name,ticket_price,ticket_ren_num,ticket_num,ticket_pic,ticket_starttime,ticket_endtime,ticket_times,ticket_content from tbl_ticket where ticket_id='{$ticket_id}' limit 1");
-			$return_detail['ticket_name'] = $ticket_detail['ticket_name'];
 			$return_detail['ticket_pic'] = $site_url.$erweima_path;
-			//$ticket_detail['ticket_starttime'] = date('Y年m月d日',$ticket_detail['ticket_starttime']);
-			//$ticket_detail['ticket_endtime'] = date('Y年m月d日',$ticket_detail['ticket_endtime']);
-			
-			$data['title'] = 'erweima';
 			$data['data'] =$return_detail;
 			if($ticket_price=='0'){
 				//发系统消息
