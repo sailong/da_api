@@ -502,7 +502,7 @@ if($ac=="select_event_all")
 {
 	$field_uid=$_G['gp_field_uid'];
 	
-	$list=DB::query("select event_id,event_name,event_uid,event_is_zhutui,event_content,event_starttime,event_logo,(select count(ticket_id) from tbl_ticket where event_id=tbl_event.event_id) as ticket_num from tbl_event where field_uid='".$field_uid."'  order by event_sort desc limit 100 ");
+	$list=DB::query("select event_id,event_name,event_uid,event_is_zhutui,event_content,event_starttime,event_logo,(select count(ticket_id) from tbl_ticket where event_id=tbl_event.event_id) as ticket_num from tbl_event where field_uid='".$field_uid."' and event_id<>34  order by event_sort desc limit 100 ");
 	while($row = DB::fetch($list))
 	{
 		if($row['ticket_num']>0)

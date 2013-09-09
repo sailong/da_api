@@ -779,6 +779,11 @@ class fenzhanAction extends AdminAuthAction
 	
 	public function jinji()
 	{
+		
+		$event_info=M("event")->where("event_id=".intval(get("event_id")))->find();
+		$this->assign('event_name',$event_info['event_name']);
+		$this->assign('event_id',$event_info['event_id']);
+		
 		$this->assign('fenzhan_on',1);
 		
 		$fenzhan=D('fenzhan_tbl')->fenzhan_list_pro(" and event_id='".get("event_id")."' "); 
@@ -795,8 +800,7 @@ class fenzhanAction extends AdminAuthAction
 		
 		if(post('next_fenzhan_id') && post('fenzhan_id') && post('jinji_par'))
 		{
-			print_r($_POST);
-			echo "<hr>";
+		
 			//del old
 			$ress=M()->query("delete from tbl_event_apply where fenzhan_id='".post('next_fenzhan_id')."' ");
 			$sql="insert tbl_event_apply(parent_id,event_id,fenzhan_id,field_uid,uid,event_user_id,event_apply_realname,event_apply_sex,event_apply_card,event_apply_chadian,event_apply_state,event_apply_addtime) select parent_id,event_id,".post('next_fenzhan_id').",field_uid,uid,event_user_id,event_apply_realname,event_apply_sex,event_apply_card,event_apply_chadian,event_apply_state,event_apply_addtime from tbl_event_apply where fenzhan_id ='".post('fenzhan_id')."' ";
@@ -811,22 +815,22 @@ class fenzhanAction extends AdminAuthAction
 				if($ju_par[0]['baofen_id'])
 				{
 					$up=M()->query("update tbl_event_apply set total_sum_ju='".$ju_par[0]['total_sum_ju']."' where event_apply_id='".$list[$i]['event_apply_id']."' ");
-					echo "update tbl_event_apply set total_sum_ju='".$ju_par[0]['total_sum_ju']."' where event_apply_id='".$list[$i]['event_apply_id']."' ";
-					echo "<hr>";
+					//echo "update tbl_event_apply set total_sum_ju='".$ju_par[0]['total_sum_ju']."' where event_apply_id='".$list[$i]['event_apply_id']."' ";
+					//echo "<hr>";
 				}
 				else
 				{
 					$up=M()->query("delete from tbl_event_apply where event_apply_id='".$list[$i]['event_apply_id']."' ");
-					echo "delete from tbl_event_apply where event_apply_id='".$list[$i]['event_apply_id']."' ";
-					echo "<hr>";
+					//echo "delete from tbl_event_apply where event_apply_id='".$list[$i]['event_apply_id']."' ";
+					//echo "<hr>";
 				}
 				
 			}
 			
-			/*
+			
 			$fenzhan_info=M()->query("select fenzhan_id,fenzhan_lun from tbl_fenzhan where fenzhan_id='".post('next_fenzhan_id')."' ");
-			$sql="insert tbl_event_apply(parent_id,event_id,fenzhan_id,field_uid,uid,event_user_id,event_apply_realname,event_apply_sex,event_apply_card,zong_score,total_sum_ju,addtime,dateline,source,lun,status ) select uid,event_user_id,realname,event_id,sid,par,".post('next_fenzhan_id').",field_id,fenzu_id,zong_score,total_sum_ju,addtime,dateline,source,".$fenzhan_info[0]['fenzhan_lun'].",0 from tbl_baofen where total_sum_ju<='".post('jinji_par')."' and fenzhan_id='".post('fenzhan_id')."' and status>=0 ;";
-			*/
+			$up=M()->query("insert tbl_baofen(uid,event_user_id,realname,event_id,sid,par,fenzhan_id,field_id,fenzu_id,zong_score,total_sum_ju,addtime,dateline,source,lun,status ) select uid,event_user_id,realname,event_id,sid,par,".post('next_fenzhan_id').",field_id,fenzu_id,zong_score,total_sum_ju,addtime,dateline,source,".$fenzhan_info[0]['fenzhan_lun'].",0 from tbl_baofen where total_sum_ju<='".post('jinji_par')."' and fenzhan_id='".post('fenzhan_id')."' and status>=0 ");
+			
 			$ress=M()->query("update tbl_baofen set status='-4' where total_sum_ju>'".post('jinji_par')."' and fenzhan_id='".post('fenzhan_id')."' and status>=0 ");
 			
 			$this->success("处理成功",U('admin/fenzhan/fenzhan',array('event_id'=>post('event_id'))));

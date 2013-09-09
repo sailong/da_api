@@ -62,7 +62,7 @@ h3 {
 <table width="<?php echo $width;?>" border="0" align="left" cellpadding="0" cellspacing="0">
 <tr>
 <td>
-<img src="images/nanshanbanner.jpg" width="<?php echo $width;?>" >
+<img src="images/huabinbanner.jpg" width="<?php echo $width;?>" >
 </td>
 </tr>
   <tr>
@@ -74,13 +74,12 @@ h3 {
             与您进行联系，请保持手机畅通，<br />
             或致电4008109966大正服务热线。</p>
             </td> 
-        </tr>
-        
+        </tr> 
     </table></td>
   </tr>
   
  <tr>
-    <td><img src="images/nsbottom.jpg" width="<?php echo $width;?>" ></td>
+    <td><img src="images/hbbottom.jpg" width="<?php echo $width;?>" ></td>
   </tr>
   
 </table>

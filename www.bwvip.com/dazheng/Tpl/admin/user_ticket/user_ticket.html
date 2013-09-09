@@ -6,7 +6,7 @@
 
   <div class="search_box">
 		<form name="search_form" action="/default.php" method="get">
-		<input type="hidden" name="g" value="piao">
+		<input type="hidden" name="g" value="admin">
 		<input type="hidden" name="m" value="user_ticket">
 		<input type="hidden" name="a" value="user_ticket">
 		<input type="hidden" name="price" value="<php> echo  get('price');</php>">
@@ -41,7 +41,7 @@
 			-->
 			<td class="btn">
 				<input type="submit" value="搜索" class="btn_b" style="margin-right:8px;" >
-				<input type="button" value="查看全部" class="btn_b" onclick="javascript:location='{:U('piao/user_ticket/user_ticket',array('state'=>get('state')))}';">
+				<input type="button" value="查看全部" class="btn_b" onclick="javascript:location='{:U('admin/user_ticket/user_ticket',array('state'=>get('state')))}';">
 			</td>
 		</table>
 	</form>
@@ -51,9 +51,9 @@
   <div class="Toolbar_inbox">
   	<div class="page right">{$pages}</div>
 
-	<!-- <a href="{:U('piao/user_ticket/user_ticket_add')}" class="btn_a"><span>添加门票领取</span></a> -->
-	<a href="javascript:void(0);" class="btn_a"  onclick="mod_delete_batch('{:U('piao/user_ticket/user_ticket_delete_action')}','mod_table');"><span>批量删除</span></a>
-	<a href="javascript:void(0);" class="btn_a"  onclick="mod_modify_batch('{:U('piao/user_ticket/user_ticket_check_action')}','mod_table');"><span>批量审核</span></a>
+	<!-- <a href="{:U('admin/user_ticket/user_ticket_add')}" class="btn_a"><span>添加门票领取</span></a> -->
+	<a href="javascript:void(0);" class="btn_a"  onclick="mod_delete_batch('{:U('admin/user_ticket/user_ticket_delete_action')}','mod_table');"><span>批量删除</span></a>
+	<a href="javascript:void(0);" class="btn_a"  onclick="mod_modify_batch('{:U('admin/user_ticket/user_ticket_check_action')}','mod_table');"><span>批量审核</span></a>
 	<div class="clear"></div>
   </div>
   <div class="list">
@@ -64,6 +64,7 @@
 			<input type="checkbox" id="checkbox_handle" onclick="select_all(this,'mod_table','checkbox')" value="0">
 			<label for="checkbox"></label>
 		</th>
+		<th class="line_l">编号</th>
 		<th class="line_l">所属用户</th>
 		<th class="line_l">门票ID</th>
 		<th class="line_l">门票类型</th>
@@ -82,24 +83,26 @@
 	<volist id="vo" name="list">
 	<tr overstyle="on"  id=ids_{$vo["user_ticket_id"]}>
 		<td><input type="checkbox" name="checkbox" onclick="select_one(this)" value="{$vo.user_ticket_id}" ></td>
+		<td>{$vo.user_ticket_id}</th>
 		<td>{$vo.uid}</th>
-			<td>{$ticket_list[$vo['ticket_id']]}({$vo.ticket_id})</td>
-			<td>{$vo.ticket_type}</td>
-			<td>{$vo.user_ticket_code}</td>
-			<td><img src="{$vo.user_ticket_codepic}" style="max-width:60px;max-height:60px;"></td>
-			<td>{$vo.user_ticket_nums}</td>
-			<td>{$vo.user_ticket_realname}</td>
-			<!-- <td><php>if($vo['user_ticket_cardtype'] == 0){echo '身份证';}</php></td>
-			<td>{$vo.user_ticket_card}</td> -->
-			<td>{$vo.user_ticket_mobile}</td>
-			<td>{$vo.user_ticket_imei}</td>
-			<td><php>switch($vo['user_ticket_status']){case 0: echo '待审核';break;case 1: echo '审核通过';break;case 2: echo '审核不通过';break;}</php></td>
-			<td>{$vo.user_ticket_addtime|format_to_time}</td>
+		
+		<td>{$ticket_list[$vo['ticket_id']]}</td>
+		<td>{$vo.ticket_type}</td>
+		<td>{$vo.user_ticket_code}</td>
+		<td><img src="{$vo.user_ticket_codepic}" style="max-width:60px;max-height:60px;"></td>
+		<td>{$vo.user_ticket_nums}</td>
+		<td>{$vo.user_ticket_realname}</td>
+		<!-- <td><php>if($vo['user_ticket_cardtype'] == 0){echo '身份证';}</php></td>
+		<td>{$vo.user_ticket_card}</td> -->
+		<td>{$vo.user_ticket_mobile}</td>
+		<td>{$vo.user_ticket_imei}</td>
+		<td><php>switch($vo['user_ticket_status']){case 0: echo '待审核';break;case 1: echo '审核通过';break;case 2: echo '审核不通过';break;}</php></td>
+		<td>{$vo.user_ticket_addtime|format_to_time}</td>
 			
 		<td>
-			<a href="{:U('piao/user_ticket/user_ticket_detail', array('user_ticket_id'=>$vo['user_ticket_id']))}'">详情</a> | 
-			<a href="{:U('piao/user_ticket/user_ticket_edit', array('user_ticket_id'=>$vo['user_ticket_id']))})">修改</a> | 
-			<a href="javascript:void(0);" onclick="mod_delete_one('{:U('piao/user_ticket/user_ticket_delete_action')}','{$vo['user_ticket_id']}');">删除</a>
+			<a href="{:U('admin/user_ticket/user_ticket_detail', array('user_ticket_id'=>$vo['user_ticket_id']))}'">详情</a> | 
+			<a href="{:U('admin/user_ticket/user_ticket_edit', array('user_ticket_id'=>$vo['user_ticket_id']))})">修改</a> | 
+			<a href="javascript:void(0);" onclick="mod_delete_one('{:U('admin/user_ticket/user_ticket_delete_action')}','{$vo['user_ticket_id']}');">删除</a>
 		</td>
 	</tr>
 	</volist>
@@ -114,9 +117,9 @@
   <div class="Toolbar_inbox">
 	<div class="page right">{$pages}</div>
 
-	<!-- <a href="{:U('piao/user_ticket/user_ticket_add')}" class="btn_a"><span>添加门票领取</span></a> -->
-	<a href="javascript:void(0);" class="btn_a"  onclick="mod_delete_batch('{:U('piao/user_ticket/user_ticket_delete_action')}','mod_table');"><span>批量删除</span></a>
-	<a href="javascript:void(0);" class="btn_a"  onclick="mod_modify_batch('{:U('piao/user_ticket/user_ticket_check_action')}','mod_table');"><span>批量审核</span></a>
+	<!-- <a href="{:U('admin/user_ticket/user_ticket_add')}" class="btn_a"><span>添加门票领取</span></a> -->
+	<a href="javascript:void(0);" class="btn_a"  onclick="mod_delete_batch('{:U('admin/user_ticket/user_ticket_delete_action')}','mod_table');"><span>批量删除</span></a>
+	<a href="javascript:void(0);" class="btn_a"  onclick="mod_modify_batch('{:U('admin/user_ticket/user_ticket_check_action')}','mod_table');"><span>批量审核</span></a>
 
 	<div class="clear"></div>
   </div>

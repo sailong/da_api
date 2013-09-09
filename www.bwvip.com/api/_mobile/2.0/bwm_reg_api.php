@@ -8,7 +8,7 @@ $userAgent = $_SERVER['HTTP_USER_AGENT'];
 if(strpos($userAgent,"iPhone") || strpos($userAgent,"iPad") || strpos($userAgent,"iPod") || strpos($userAgent,"iOS"))
 {
 	$user_device = 'IOS';
-}else if(strpos($userAgent,"Android"))
+}else if(strpos($userAgent,"Android") || $_G['gp_from'] == 'android')
 {
 	$user_device = 'Android';
 }else{
@@ -18,7 +18,15 @@ if(strpos($userAgent,"iPhone") || strpos($userAgent,"iPad") || strpos($userAgent
 $ac=$_G['gp_ac'];
 //修改密码
 if($ac=="bwm_reg")
-{
+{	
+	$field_uid = $_G['gp_field_uid'];
+	if($field_uid == 0)
+	{
+		$field_name = '大正客户端';
+	}else{
+		$field_info = DB::fetch_first("select * from pre_common_field where uid='{$field_uid}' limit 1");
+		$field_name = $field_info['fieldname'];
+	}
 	$qiancheng = urldecode($_G['gp_qiancheng']);
 	$family_name = urldecode($_G['gp_family_name']);
 	$name = urldecode($_G['gp_name']);
@@ -69,8 +77,8 @@ if($ac=="bwm_reg")
 	$bwm_addtime = time();
 	$bwm_adddate = date('Y年m月d日 H:i:s',$bwm_addtime);
 	
-	$sql = "insert into tbl_user_ticket_bmw(qiancheng,family_name,name,year,month,day,phone,email,province,city,address,postcode,watch_date,is_owners,bwm_cars,buy_car_date,learn_channels,is_contact,is_readed,bwm_addtime,bwm_adddate,user_device)";
-	$sql .= " values('{$qiancheng}','{$family_name}','{$name}','{$year}','{$month}','{$day}','{$phone}','{$email}','{$province}','{$city}','{$address}','{$postcode}','{$watch_date}','{$is_owners}','{$bwm_cars}','{$buy_car_date}','{$learn_channels}','{$is_contact}','{$is_readed}','{$bwm_addtime}','{$bwm_adddate}','{$user_device}')";
+	$sql = "insert into tbl_user_ticket_bmw(qiancheng,family_name,name,year,month,day,phone,email,province,city,address,postcode,watch_date,is_owners,bwm_cars,buy_car_date,learn_channels,is_contact,is_readed,bwm_addtime,bwm_adddate,user_device,field_name)";
+	$sql .= " values('{$qiancheng}','{$family_name}','{$name}','{$year}','{$month}','{$day}','{$phone}','{$email}','{$province}','{$city}','{$address}','{$postcode}','{$watch_date}','{$is_owners}','{$bwm_cars}','{$buy_car_date}','{$learn_channels}','{$is_contact}','{$is_readed}','{$bwm_addtime}','{$bwm_adddate}','{$user_device}','{$field_name}')";
 	
     $res = DB::query($sql);
 	if($res == false){

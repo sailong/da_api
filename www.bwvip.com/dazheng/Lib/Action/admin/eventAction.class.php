@@ -105,6 +105,7 @@ class eventAction extends AdminAuthAction
 			$data["event_lun_num"]=post("event_lun_num");
 			$data["event_is_viewscore"]=post("event_is_viewscore");
 			$data["event_sort_fenzhan_id"]=post("event_sort_fenzhan_id");
+			$data["event_viewtype"]=post("event_viewtype");
 			$data["event_addtime"]=time();
 			$list=M("event")->add($data);
 			$this->success("添加成功",U('admin/event/event'));
@@ -218,6 +219,7 @@ class eventAction extends AdminAuthAction
 			$data["event_lun_num"]=post("event_lun_num");
 			$data["event_is_viewscore"]=post("event_is_viewscore");
 			$data["event_sort_fenzhan_id"]=post("event_sort_fenzhan_id");
+			$data["event_viewtype"]=post("event_viewtype");
 			
 			$list=M("event")->save($data);
 			$this->success("修改成功",U('admin/event/event_manage',array('event_id'=>$data['event_id'])));

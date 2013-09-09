@@ -259,13 +259,13 @@
 									<!--{if $list[score]}-->
 									<!--{loop $list[score] $key $val}-->
 									<td height="25" align="center" bgcolor="#6BBDD2">
-										<input type='text' id='score_<!--{$key}-->' value='<!--{$val}-->' style='border:1px solid #62CAE3' onblur="getscore('score_<!--{$key}-->')" name='score[]' maxlength='1' />
+										<input type='text' id='score_<!--{$key}-->' value='<!--{$val}-->' style='border:1px solid #62CAE3' onblur="getscore('score_<!--{$key}-->')" name='score[]' maxlength='2' />
 									</td>
 									<!--{/loop}-->
 									<!--{else}-->
 									<!--{loop $num $key $val}-->
 									<td align="center" bgcolor="#6BBDD2">
-										<input type='text' id='score_<!--{$key}-->' value='' style='border:1px solid #62CAE3' onblur="getscore('score_<!--{$key}-->')" name='score[]' maxlength='1' />
+										<input type='text' id='score_<!--{$key}-->' value='' style='border:1px solid #62CAE3' onblur="getscore('score_<!--{$key}-->')" name='score[]' maxlength='2' />
 									</td>
 									<!--{/loop}-->
 									<!--{/if}-->

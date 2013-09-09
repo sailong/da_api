@@ -104,7 +104,7 @@ if  (document.getElementById("name").value.length  ==  0)  {
 	return  false;
 	}
  if  (document.getElementById("phone").value.length  !=  11)  {  
-	alert("请输入您的手机号!");
+	alert("请输入正确手机号!");
 	document.getElementById("phone").focus();
 	return  false;
 	}

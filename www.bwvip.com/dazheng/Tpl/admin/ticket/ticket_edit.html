@@ -1,0 +1,140 @@
+<include file="../public/header_dialog" />
+{$usejs}
+
+<div class="so_main">
+
+  <div class="page_tit">门票管理</div>
+  <div class="tit_tab">
+	<ul>
+		<li><a class=on href="#">修改门票</a></li>
+	</ul>
+  </div>
+
+<table border="0" cellspacing="0" cellpadding="0" style="width:900px;">
+<tr>
+<td>
+<!--/dialog_start-->
+
+<form method="post" id="act_form" name="act_form" action="{:U('admin/ticket/ticket_edit_action')}" enctype="multipart/form-data">
+	<table class="add_table" border="0" cellspacing="0" cellpadding="0" >
+		<tbody>
+		<tr>
+					<th>门票名称：</th>
+					<td><input type="text" name="ticket_name" id="ticket_name" class="mod_input2" style="width:300px;"  value="{$data.ticket_name}"></td>
+				</tr>
+				<tr>
+					<th>所属赛事：</th>
+					<td>
+						<select name="event_id">
+							<option value="">请选择</option>
+							<volist id="list" name="event_list">
+							<option value="{$list.event_id}">{$list.event_name}</option>
+							</volist>
+						</select>
+						<script>set_select_value(document.act_form.event_id,"{$data.event_id}");</script>
+					</td>
+				</tr>
+				<!-- <tr>
+					<th>所属分站：</th>
+					<td>
+						<select name="fenzhan_id">
+							<option value="">请选择</option>
+							<option value="{$data.fenzhan_id}">{$data.fenzhan_id}</option>
+						</select>
+						<script>set_select_value(document.act_form.fenzhan_id,"{$data.fenzhan_id}");</script>
+					</td>
+				</tr> -->
+				<tr>
+					<th>门票价格：</th>
+					<td><input type="text" name="ticket_price" id="ticket_price" class="mod_input2" style="width:66px;"  value="{$data.ticket_price}"></td>
+				</tr>
+				<tr>
+					<th>票面人数：</th>
+					<td><input type="text" name="ticket_ren_num" id="ticket_ren_num" class="mod_input2" style="width:66px;"  value="{$data.ticket_ren_num}"></td>
+				</tr>
+				<tr>
+					<th>总数：</th>
+					<td><input type="text" name="ticket_num" id="ticket_num" class="mod_input2" style="width:66px;"  value="{$data.ticket_num}"></td>
+				</tr>
+				<tr>
+					<th>图片：</th>
+					<td><img src="/{$data.ticket_pic}" style="max-width:300px;max-height:200px;"/><br/><input type="file" name="ticket_pic" id="ticket_pic"  class="mod_input"></td>
+				</tr>
+				<tr>
+					<th>开始时间：</th>
+					<td><input type="text" name="ticket_starttime" id="ticket_starttime" readonly class="mod_input_date" style="width:200px;" value="{$data.ticket_starttime|format_to_time}" onFocus="WdatePicker({isShowClear:false,readOnly:true})" ></td>
+				</tr>
+				<tr>
+					<th>结束时间：</th>
+					<td><input type="text" name="ticket_endtime" id="ticket_endtime" readonly class="mod_input_date" style="width:200px;" value="{$data.ticket_endtime|format_to_time}" onFocus="WdatePicker({isShowClear:false,readOnly:true})" ></td>
+				</tr>
+				<tr>
+					<th>类型：</th>
+					<td>
+						<select name="ticket_type">
+							<option value="">请选择</option>
+							<option value="BASE">普通</option>
+							<option value="VIP">VIP</option>
+						</select>
+						<script>set_select_value(document.act_form.ticket_type,"{$data.ticket_type}");</script>
+					</td>
+				</tr>
+				<tr>
+					<th>销费次数：</th>
+					<td><input type="text" name="ticket_times" id="ticket_times" class="mod_input2" style="width:66px;"  value="{$data.ticket_times}"></td>
+				</tr>
+				<tr>
+					<th>介绍：</th>
+					<td>{$editor}</td>
+				</tr>
+				
+		</tbody>
+		<tfoot>
+			<tr>
+				<th></th>
+				<td>
+					<input type="hidden" name="ticket_id" value="{$data.ticket_id}">
+					<input type="submit" class="btn_b" value="保存" style="margin-right:10px;"/>
+					<input type="button" class="btn_w" onclick="javascript:history.back(-1);" value="返回" />
+				</td>
+		</tfoot>
+	</table><!--/add_table-->
+</form>
+
+<script>
+$(document).ready(function(){
+$.formValidator.initConfig({formID:"act_form",theme:'ArrowSolidBox',mode:'AutoTip',onError:function(msg){msg_error(msg)},inIframe:true});
+
+	$("#ticket_name").formValidator({empty:true,onShow:"请输入门票名称",onFocus:"请输入门票名称",onCorrect:"输入正确"}).inputValidator({min:1,max:50,onError:"请输入门票名称"});
+		$("#event_id").formValidator({empty:true,onShow:"请输入所属赛事",onFocus:"请输入所属赛事",onCorrect:"输入正确"}).inputValidator({min:1,max:11,onError:"请输入所属赛事"});
+		$("#fenzhan_id").formValidator({empty:true,onShow:"请输入所属分站",onFocus:"请输入所属分站",onCorrect:"输入正确"}).inputValidator({min:1,max:11,onError:"请输入所属分站"});
+		$("#ticket_price").formValidator({empty:true,onShow:"请输入门票价格",onFocus:"请输入门票价格",onCorrect:"输入正确"}).inputValidator({min:1,max:11,onError:"请输入门票价格"});
+		$("#ticket_ren_num").formValidator({empty:true,onShow:"请输入票面人数",onFocus:"请输入票面人数",onCorrect:"输入正确"}).inputValidator({min:1,max:11,onError:"请输入票面人数"});
+		$("#ticket_num").formValidator({empty:true,onShow:"请输入总数",onFocus:"请输入总数",onCorrect:"输入正确"}).inputValidator({min:1,max:11,onError:"请输入总数"});
+		$("#ticket_pic").formValidator({empty:true,onShow:"请输入图片",onFocus:"请输入图片",onCorrect:"输入正确"}).inputValidator({min:1,max:300,onError:"请输入图片"});
+		$("#ticket_starttime").formValidator({empty:true,onShow:"请输入开始时间",onFocus:"请输入开始时间",onCorrect:"输入正确"}).inputValidator({min:1,max:10,onError:"请输入开始时间"});
+		$("#ticket_endtime").formValidator({empty:true,onShow:"请输入结束时间",onFocus:"请输入结束时间",onCorrect:"输入正确"}).inputValidator({min:1,max:10,onError:"请输入结束时间"});
+		$("#ticket_type").formValidator({empty:true,onShow:"请输入类型",onFocus:"请输入类型",onCorrect:"输入正确"}).inputValidator({min:1,max:50,onError:"请输入类型"});
+		$("#ticket_times").formValidator({empty:true,onShow:"请输入销费次数",onFocus:"请输入销费次数",onCorrect:"输入正确"}).inputValidator({min:1,max:11,onError:"请输入销费次数"});
+		$("#ticket_content").formValidator({empty:true,onShow:"请输入介绍",onFocus:"请输入介绍",onCorrect:"输入正确"}).inputValidator({min:1,max:5000,onError:"请输入介绍"});
+		
+
+	$.formValidator.reloadAutoTip();
+});
+
+function reloadAutoTip()
+{
+	$.formValidator.reloadAutoTip();
+}
+
+</script>
+
+
+<!--/dialog_end-->
+</td>
+</tr>
+</table>
+
+</div>
+
+<include file="../Public/_footer" />

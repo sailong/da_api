@@ -184,9 +184,9 @@
 							<!--{loop $num $key $val}-->
 							<td>
 								<!--{if ($key == '9') || ($key == '19') || ($key == '20')}-->
-								<input name='score[]' type='text' id='score_<!--{$key}-->' onblur="getscore('score_<!--{$key}-->')" value='' size="2" maxlength='1' readonly />
+								<input name='score[]' type='text' id='score_<!--{$key}-->' onblur="getscore('score_<!--{$key}-->')" value='' size="2" maxlength='2' readonly />
 								<!--{else}-->
-								<input name='score[]' type='text' id='score_<!--{$key}-->' onblur="getscore('score_<!--{$key}-->')" value='' size="2" maxlength='1' />
+								<input name='score[]' type='text' id='score_<!--{$key}-->' onblur="getscore('score_<!--{$key}-->')" value='' size="2" maxlength='2' />
 								<!--{/if}-->
 						  </td>
 							<!--{/loop}--> 

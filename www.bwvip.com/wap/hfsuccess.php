@@ -1,37 +1,23 @@
 <? 
  
- function get_device_type(){
-	$agent = strtolower($_SERVER['HTTP_USER_AGENT']);
-	$type = 'other';
-	if(strpos($agent, 'iphone') || strpos($agent, 'ipad')){
-		$type = 'ios';
-	}
-	if(strpos($agent, 'android')){
-		$type = 'android';
-	}
-	return $type;
-}
-
- 
 $width = $_GET ['width'];
 if(!$width)
 {
 	$width=460;
 }
-  if(get_device_type()=='ios'){
-	$width=320;
-} 
-
+ 
  //字体缩放
 $ziti=14/460;
 $fonts=$ziti*$width;
 $ziti=16/460;
 $fonts1=$ziti*$width;
 
+$ziti=18/460;
+$pt=$ziti*$width;
+
 $input=450/460;
 $inputc=$input*$width;
  
- $imgwidth=$width-30;
 ?>
 
 <html xmlns="http://www.w3.org/1999/xhtml"><style type="text/css">
@@ -60,6 +46,7 @@ h3 {
 	color: #000;
 }
 .inputc{width:<?php echo $inputc;?>px;}
+.pt{margin:0;padding:0;font-size:<?php echo $pt;?>px; color:#000000; font-weight:500;padding:20px;}
 </style> 
 <head> 
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />  
@@ -74,27 +61,26 @@ h3 {
 
 <table width="<?php echo $width;?>" border="0" align="left" cellpadding="0" cellspacing="0">
 <tr>
-<td align="center">
-<img src="images/huifengbanner.jpg" width="<?php echo $imgwidth;?>" >
+<td>
+<img src="images/huifengbanner.jpg" width="<?php echo $width;?>" >
 </td>
 </tr>
   <tr>
     <td  style="padding: 15px;"><!-- add the info layer functionality here -->
-
-     
-      
-      <p >您已经成功提交，稍后我们的客服
-人员将通过客服专线13301159966
-与您进行联系，请保持手机畅通，
-或致电4008109966大正服务热线。</p>
-    </td>
-  </tr>
-  <tr>
-    <td align="center" > </td>
+      <table width="95%" border="0" align="center" cellpadding="0" cellspacing="0" style="background:url(images/bg.png) no-repeat;">
+        <tr>
+          <td align="center"><p class="pt">您已经成功提交，稍后我们的客服<br />
+            人员将通过客服专线13301159966<br />
+            与您进行联系，请保持手机畅通，<br />
+            或致电4008109966大正服务热线。</p>
+            </td> 
+        </tr>
+          
+    </table></td>
   </tr>
   
  <tr>
-    <td align="center"><img src="images/hfbottom.jpg" width="<?php echo $imgwidth;?>" ></td>
+    <td><img src="images/hfbottom.jpg" width="<?php echo $width;?>" ></td>
   </tr>
   
 </table>

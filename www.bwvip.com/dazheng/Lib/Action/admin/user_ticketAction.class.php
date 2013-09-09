@@ -7,7 +7,7 @@
  *    @E-mail			123695069@qq.com
  *    @Date			2013-08-06
  */
-class user_ticketAction extends piao_publicAction
+class user_ticketAction extends AdminAuthAction
 {
 
 	public function _initialize()
@@ -113,7 +113,7 @@ class user_ticketAction extends piao_publicAction
 				if(!empty($uid)){
 					$data["uid"] = $uid;
 				}else{
-					$this->success("添加失败",U('piao/user_ticket/user_ticket'));
+					$this->success("添加失败",U('admin/user_ticket/user_ticket'));
 				}
 			}
 			$list=M("user_ticket")->add($data);
@@ -123,13 +123,13 @@ class user_ticketAction extends piao_publicAction
 					//添加系统消息
 					$this->sys_message_add_return($data);
 				}
-				$this->success("添加成功",U('piao/user_ticket/user_ticket'));exit;
+				$this->success("添加成功",U('admin/user_ticket/user_ticket'));exit;
 			}
-			$this->success("添加失败",U('piao/user_ticket/user_ticket'));
+			$this->success("添加失败",U('admin/user_ticket/user_ticket'));
 		}
 		else
 		{
-			$this->error("不能重复提交",U('piao/user_ticket/user_ticket_add'));
+			$this->error("不能重复提交",U('admin/user_ticket/user_ticket_add'));
 		}
 
 	}
@@ -193,11 +193,11 @@ class user_ticketAction extends piao_publicAction
 					$this->sys_message_add_return($data);
 				}
 			}
-			$this->success("修改成功",U('piao/user_ticket/user_ticket'));			
+			$this->success("修改成功",U('admin/user_ticket/user_ticket'));			
 		}
 		else
 		{
-			$this->error("不能重复提交",U('piao/user_ticket/user_ticket'));
+			$this->error("不能重复提交",U('admin/user_ticket/user_ticket'));
 		}
 
 	}

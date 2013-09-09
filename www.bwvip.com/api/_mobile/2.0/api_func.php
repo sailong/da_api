@@ -1,5 +1,5 @@
 <?php
-function get_thru($event_id,$fenzhan_id,$uid,$event_user_id)
+function get_thru($event_id,$fenzhan_id,$uid,$event_user_id,$fenzhan_ing_status=0,$lun,$fenzhan_num)
 {
 	if($event_id)
 	{
@@ -11,24 +11,176 @@ function get_thru($event_id,$fenzhan_id,$uid,$event_user_id)
 		$sql .=" and fenzhan_id='".$fenzhan_id."' ";
 	}
 	
-	
+	$user_sql="";
 	if($uid)
 	{
-		$sql .=" and uid='".$uid."' ";
+		$user_sql .=" and uid='".$uid."' ";
 	}
 	else
 	{
-		$sql .=" and event_user_id='".$event_user_id."' ";
+		$user_sql .=" and event_user_id='".$event_user_id."' ";
 	}
 	
-	$thru = DB::result_first("select thru from tbl_baofen where event_id='".$event_id."' and source='ndong' ".$sql." order by lun desc limit 1 ");
-	if(!$thru)
+	
+	if($fenzhan_id)
 	{
-		$thru="-";
+		$score_info=DB::fetch_first("select total_score,score,status,cave_1,cave_2,cave_3,cave_4,cave_5,cave_6,cave_7,cave_8,cave_9,cave_10,cave_11,cave_12,cave_13,cave_14,cave_15,cave_16,cave_17,cave_18 from tbl_baofen where source='ndong' and fenzhan_id='".$fenzhan_id."' ".$user_sql." order by lun desc limit 1 ");
+		$total_score=$score_info['total_score'];
+
+		if($score_info['cave_1'] && !$score_info['cave_2'])
+		{
+			$next_dong=1;
+		}
+		else if($score_info['cave_2'] && !$score_info['cave_3'])
+		{
+			$next_dong=2;
+		}
+		else if($score_info['cave_3'] && !$score_info['cave_4'])
+		{
+			$next_dong=3;
+		}
+		else if($score_info['cave_4'] && !$score_info['cave_5'])
+		{
+			$next_dong=4;
+		}
+		else if($score_info['cave_5'] && !$score_info['cave_6'])
+		{
+			$next_dong=5;
+		}
+		else if($score_info['cave_6'] && !$score_info['cave_7'])
+		{
+			$next_dong=6;
+		}
+		else if($score_info['cave_7'] && !$score_info['cave_8'])
+		{
+			$next_dong=7;
+		}
+		else if($score_info['cave_8'] && !$score_info['cave_9'])
+		{
+			$next_dong=8;
+		}
+		else if($score_info['cave_9'] && !$score_info['cave_10'])
+		{
+			$next_dong=9;
+		}
+		else if($score_info['cave_10'] && !$score_info['cave_11'])
+		{
+			$next_dong=10;
+		}
+		else if($score_info['cave_11'] && !$score_info['cave_12'])
+		{
+			$next_dong=11;
+		}
+		else if($score_info['cave_12'] && !$score_info['cave_13'])
+		{
+			$next_dong=12;
+		}
+		else if($score_info['cave_13'] && !$score_info['cave_14'])
+		{
+			$next_dong=13;
+		}
+		else if($score_info['cave_14'] && !$score_info['cave_15'])
+		{
+			$next_dong=14;
+		}
+		else if($score_info['cave_15'] && !$score_info['cave_16'])
+		{
+			$next_dong=15;
+		}
+		else if($score_info['cave_16'] && !$score_info['cave_17'])
+		{
+			$next_dong=16;
+		}
+		else if($score_info['cave_17'] && !$score_info['cave_18'])
+		{
+			$next_dong=17;
+		}
+		else if($score_info['cave_18'] && !$score_info['cave_1'])
+		{
+			$next_dong='F';
+		}
+		else
+		{
+			$next_dong='F';
+		}
+		
+		/*
+
+		$s_arr=explode("|",$score_info['score']);
+		unset($s_arr[9]);
+		unset($s_arr[19]);
+		unset($s_arr[20]);
+		$str_new=implode("|",$s_arr);
+		$arr_new=explode("|",$str_new);
+
+		$dong_num=0;
+		for($i=0; $i<count($arr_new); $i++)
+		{
+			if($arr_new[$i]>0)	
+			{
+				$dong_num=$dong_num+1;
+			}
+		}
+
+		//$dong_num=count($arr_new);
+		//$score_info['score']=$arr_new;
+		*/
+		
+		if($fenzhan_ing_status==0 || $total_score<=0)
+		{
+			$str=DB::result_first("select start_time from tbl_baofen where source='ndong' and fenzhan_id='".$fenzhan_id."' ".$user_sql." order by lun desc limit 1 ");
+			$str=date("G:i",$str);
+		}
+		else if($fenzhan_ing_status==1)
+		{
+			//$dong_num=DB::result_first("select count(baofen_id) as num from tbl_baofen where source='ndong' and fenzhan_id='".$fenzhan_id."' ".$user_sql." ");
+			$tee=DB::result_first("select tee from tbl_baofen where source='ndong' and fenzhan_id='".$fenzhan_id."' ".$user_sql." order by lun desc limit 1 ");
+			if($tee==1)
+			{
+				$str=$dong_num+$tee;
+			}
+			else if($tee==10)
+			{
+				if($dong_num<10)
+				{
+					$str=$dong_num+$tee;
+				}
+				else
+				{
+					$str=$dong_num+$tee-9;
+				}
+				
+			}
+			else
+			{
+				$str="-";
+			}
+
+
+			$str=$next_dong;
+
+			//$str="-";
+			
+		}
+		else
+		{
+			$str="-";
+		}
+		
+		if($score_info['status']<0)
+		{
+			$str="-";
+		}
+	}
+	else
+	{
+		$str="-";
 	}
 	
-	return $thru;
+	return (string)$str;
+	
 }
+
 
 function get_ju_par_total_sort($ju_1,$ju_2,$ju_3,$ju_4,$ju_5=0)
 {
