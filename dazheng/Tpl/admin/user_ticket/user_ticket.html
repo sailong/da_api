@@ -1,0 +1,187 @@
+<include file="../public/_header" />
+<div class="so_main">
+
+  <div class="page_tit">门票领取</div>
+  <include file="_tab" />
+
+  <div class="search_box">
+		<form name="search_form" action="/default.php" method="get">
+		<input type="hidden" name="g" value="admin">
+		<input type="hidden" name="m" value="user_ticket">
+		<input type="hidden" name="a" value="user_ticket">
+		<input type="hidden" name="price" value="<php> echo  get('price');</php>">
+
+		<table border="0" cellspacing="0" cellpadding="0">
+			<th>门票列表：</th>
+			<!-- <td><input type="text" name="k" class="search_input" style="width:120px;" value="<php> echo  get('k');</php>"></td> -->
+			<td>
+				<select name="k" id="ticket_id">
+					<option value="">请选择</option>
+				<volist id="vo" name="ticket_lists">
+					<option value="{$vo.ticket_id}">{$vo.ticket_name}</option>
+				</volist>
+				</select>
+				<script>set_select_value(document.search_form.ticket_id,"<php> echo  get('k');</php>");</script>
+			</td>
+			<th>开始时间：</th>
+			<td>
+				<input type="text" name="starttime" class="search_input_date" style="width:120px;" value="<php> echo  get('starttime');</php>" onFocus="WdatePicker({isShowClear:false,readOnly:true})"> 至 
+				<input type="text" name="endtime" class="search_input_date" style="width:120px;" value="<php> echo  get('endtime');</php>" onFocus="WdatePicker({isShowClear:false,readOnly:true})">
+			</td>
+			<!--
+			<th>类型：</th>
+			<td>
+				<select name="course_type" style="width:120px;"  class="search_select">
+					<option value="">请选择</option>
+					<option value="1">课件课程</option>
+					<option value="2">辅导课程</option>
+				</select>
+				<script>set_select_value(document.search_form.course_type,"<php> echo  get("course_type");</php>");</script>
+			</td>
+			-->
+			<td class="btn">
+				<input type="submit" value="搜索" class="btn_b" style="margin-right:8px;" >
+				<input type="button" value="查看全部" class="btn_b" onclick="javascript:location='{:U('admin/user_ticket/user_ticket',array('state'=>get('state')))}';">
+			</td>
+		</table>
+	</form>
+  </div><!--/search_box-->
+
+  <!--------list -------->
+  <div class="Toolbar_inbox">
+  	<div class="page right">{$pages}</div>
+
+	<!-- <a href="{:U('admin/user_ticket/user_ticket_add')}" class="btn_a"><span>添加门票领取</span></a> -->
+	<a href="javascript:void(0);" class="btn_a"  onclick="mod_delete_batch('{:U('admin/user_ticket/user_ticket_delete_action')}','mod_table');"><span>批量删除</span></a>
+	<a href="javascript:void(0);" class="btn_a"  onclick="mod_modify_batch('{:U('admin/user_ticket/user_ticket_check_action')}','mod_table');"><span>批量审核</span></a>
+	<div class="clear"></div>
+  </div>
+  <div class="list">
+	<php>if($total>0){</php>
+	  <table width="100%" id="mod_table" border="0" cellspacing="0" cellpadding="0">
+	  <tr>
+		<th style="width:30px;">
+			<input type="checkbox" id="checkbox_handle" onclick="select_all(this,'mod_table','checkbox')" value="0">
+			<label for="checkbox"></label>
+		</th>
+		<th class="line_l">编号</th>
+		<th class="line_l">所属用户</th>
+		<th class="line_l">门票ID</th>
+		<th class="line_l">门票类型</th>
+		<th class="line_l">领取码</th>
+		<th class="line_l">二维码图片</th>
+		<th class="line_l">订票张数</th>
+		<th class="line_l">姓名</th>
+		<!-- <th class="line_l">证件类型</th>
+		<th class="line_l">证件号码</th> -->
+		<th class="line_l">手机号</th>
+		<th class="line_l">手机串号</th>
+		<th class="line_l">状态</th>
+		<th class="line_l">添加时间</th>
+		<th class="line_l">操作</th>
+	</tr>
+	<volist id="vo" name="list">
+	<tr overstyle="on"  id=ids_{$vo["user_ticket_id"]}>
+		<td><input type="checkbox" name="checkbox" onclick="select_one(this)" value="{$vo.user_ticket_id}" ></td>
+		<td>{$vo.user_ticket_id}</th>
+		<td>{$vo.uid}</th>
+		
+		<td>{$ticket_list[$vo['ticket_id']]}</td>
+		<td>{$vo.ticket_type}</td>
+		<td>{$vo.user_ticket_code}</td>
+		<td><img src="{$vo.user_ticket_codepic}" style="max-width:60px;max-height:60px;"></td>
+		<td>{$vo.user_ticket_nums}</td>
+		<td>{$vo.user_ticket_realname}</td>
+		<!-- <td><php>if($vo['user_ticket_cardtype'] == 0){echo '身份证';}</php></td>
+		<td>{$vo.user_ticket_card}</td> -->
+		<td>{$vo.user_ticket_mobile}</td>
+		<td>{$vo.user_ticket_imei}</td>
+		<td><php>switch($vo['user_ticket_status']){case 0: echo '待审核';break;case 1: echo '审核通过';break;case 2: echo '审核不通过';break;}</php></td>
+		<td>{$vo.user_ticket_addtime|format_to_time}</td>
+			
+		<td>
+			<a href="{:U('admin/user_ticket/user_ticket_detail', array('user_ticket_id'=>$vo['user_ticket_id']))}'">详情</a> | 
+			<a href="{:U('admin/user_ticket/user_ticket_edit', array('user_ticket_id'=>$vo['user_ticket_id']))})">修改</a> | 
+			<a href="javascript:void(0);" onclick="mod_delete_one('{:U('admin/user_ticket/user_ticket_delete_action')}','{$vo['user_ticket_id']}');">删除</a>
+		</td>
+	</tr>
+	</volist>
+    </table>
+	  <php>}else{</php>
+			<div class="no_data">
+				<img src="/skin/images/no_data.gif" align="absmiddle"> <span>没有门票领取... </span>
+			</div>
+	 <php>}</php>
+  </div>
+
+  <div class="Toolbar_inbox">
+	<div class="page right">{$pages}</div>
+
+	<!-- <a href="{:U('admin/user_ticket/user_ticket_add')}" class="btn_a"><span>添加门票领取</span></a> -->
+	<a href="javascript:void(0);" class="btn_a"  onclick="mod_delete_batch('{:U('admin/user_ticket/user_ticket_delete_action')}','mod_table');"><span>批量删除</span></a>
+	<a href="javascript:void(0);" class="btn_a"  onclick="mod_modify_batch('{:U('admin/user_ticket/user_ticket_check_action')}','mod_table');"><span>批量审核</span></a>
+
+	<div class="clear"></div>
+  </div>
+</div>
+
+<script>
+	$(document).ready(function(){
+		$("tr[overstyle='on']").hover(
+		  function ()
+		  {
+		    $(this).addClass("bg_hover");
+		  },
+		  function (){
+		    $(this).removeClass("bg_hover");
+		  }
+		);
+	});
+	//批量修改
+function mod_modify_batch(action_url,obj)
+{
+	var length = 0;
+	ids    = getInputChecked(obj);
+	length = ids.length;
+	ids    = ids.toString();
+
+	if(ids=='') 
+	{
+		art.dialog({
+				icon: 'error',
+				time: 2,
+				content: '请至少选择一个'
+			});
+		return ;
+	}
+
+	if(ids == '' || !confirm('修改成功后将无法恢复，确认继续？')) return false;
+	
+	$.post(action_url, {ids:ids}, function(res){
+		if(res.split('^')[0]=='succeed')
+		{
+			ids = ids.toString().split(',');
+			for(i = 0; i < ids.length; i++)
+			{
+				//$('#ids_'+ids[i]).remove();
+			}
+			art.dialog({
+				icon: ''+res.split('^')[0]+'',
+				time: 2,
+				content: ''+res.split('^')[1]+''
+			});
+		}
+		else
+		{
+			art.dialog({
+				icon: ''+res.split('^')[0]+'',
+				time: 2,
+				content: ''+res.split('^')[1]+''
+			});
+		}
+	});
+}
+</script>
+
+
+<include file="../public/_footer" />

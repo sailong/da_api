@@ -15,6 +15,11 @@ class ticketModel extends Model{
 		$page = intval(get("p"))?get("p"):1;
 
 		$where = " 1 ";
+		
+		if(get("event_id")!="")
+		{
+			$where .=" and event_id='".get("event_id")."' ";
+		}
 
 		if(get("k")!="")
 		{
@@ -37,6 +42,11 @@ class ticketModel extends Model{
 			{
 				$user=M()->query("select uname from ".C("db_prefix")."user where  uid='".$data["item"][$i]["user_id"]."' ");
 				$data["item"][$i]["uname"]=$user[0]["uname"];
+			}
+			if($data["item"][$i]["event_id"]!="")
+			{
+				$user=M()->query("select event_name from ".C("db_prefix")."event where  event_id='".$data["item"][$i]["event_id"]."' ");
+				$data["item"][$i]["event_name"]=$user[0]["event_name"];
 			}
 		}
 		$data["total"] = M("ticket")->where($where.$bigwhere)->count();
