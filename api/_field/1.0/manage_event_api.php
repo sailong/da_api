@@ -111,7 +111,6 @@ if($ac == 'eventsort')
     $sql = "select * from tbl_event where event_id='{$field_event_id}' and field_uid='{$field_uid}' order by event_id desc limit 1";
 	
     $event_info = DB::fetch_first($sql);//赛事信息
-    
 	
     if(empty($event_info)) 
     {
@@ -140,36 +139,37 @@ if($ac == 'eventsort')
         $sort_ids[$row['field_event_rank_id']] = $row['field_event_rank_sort'];
     }
     unset($list);
-    $sql = "select * from pre_common_member_profile where uid in(".implode(",",$uid_arr).")";
-    $list = DB::query($sql);
-    $user_info = array();
-    while($row=DB::fetch($list)) 
-    {
-        $user_info[$row['uid']]=$row;
-    }
-    
-    unset($list);
-    foreach($new_event_rank as $key=>&$val) 
-    {
-        $val['username'] = $user_info[$val['uid']]['realname'];
-    }
-    unset($user_info);
-    array_multisort($sort_ids,$new_event_rank);
-    if(empty($new_event)) {
-        $new_event = null;
-    }
-    if(empty($new_event_rank)) {
-        $new_event_rank = null;
-    }
-    $return_data = array(
-        'title' => 'event',
-        'data' => array(
-            'event_info' => array_default_value($new_event),
-        	'member_sort' => array_default_value($new_event_rank)
-        )
-    );
+	if(!empty($uid_arr)){
+		$sql = "select * from pre_common_member_profile where uid in(".implode(",",(array)$uid_arr).")";
+		$list = DB::query($sql);
+		$user_info = array();
+		while($row=DB::fetch($list)) 
+		{
+			$user_info[$row['uid']]=$row;
+		}
+		
+		unset($list);
+		foreach($new_event_rank as $key=>&$val) 
+		{
+			$val['username'] = $user_info[$val['uid']]['realname'];
+		}
+		unset($user_info);
+		array_multisort($sort_ids,$new_event_rank);
+	}
+	if(empty($new_event)) {
+		$new_event = null;
+	}
+	if(empty($new_event_rank)) {
+		$new_event_rank = null;
+	}
+	$return_data = array(
+		'title' => 'event',
+		'data' => array(
+			'event_info' => array_default_value($new_event),
+			'member_sort' => array_default_value($new_event_rank)
+		)
+	);
     unset($new_event_rank,$new_event);
-   
     api_json_result(1,0,$app_error['event']['10502'],$return_data);
 }
 //球童列表

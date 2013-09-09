@@ -343,13 +343,13 @@ class user_ticketAction extends piao_publicAction
 	public function user_add_return()
 	{
 		
-		$user_data["username"]=post("user_ticket_realname");	
-		$password=post("user_ticket_mobile");
+		$user_data["username"]=time(). mt_rand(1000,9999);//post("user_ticket_realname");	
+		$password='123456';
 		$salt = substr(uniqid(rand()), -6);
 		$password = md5(md5($password).$salt);
 		$user_data["salt"]=$salt;
 		$user_data["password"]=$password;
-		$user_data["email"]=post("user_ticket_mobile").'@bw.com'; 
+		$user_data["email"]=$user_data["username"].'@bw.com'; 
 		$user_data["mobile"]=post("user_ticket_mobile"); 
 		$user_data["regip"]=time();
 		$user_data["regdate"]=time();
@@ -442,7 +442,7 @@ class user_ticketAction extends piao_publicAction
 		$sys_data['message_pic']=$user_ticket_info['user_ticket_codepic'];
 		
 	
-		$sys_data["message_state"]=0;
+		//$sys_data["message_state"]=0;
 		$sys_data["message_totalnum"]=0;
 		$sys_data["message_sendnum"]=0;
 		$sys_data["message_errorcode"]="";

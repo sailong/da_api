@@ -19,7 +19,10 @@ $ac=$_G['gp_ac'];
 //修改密码
 if($ac=="bwm_reg")
 {	
+	$ticket_id = 12;
 	$field_uid = $_G['gp_field_uid'];
+	$uid = $_G['uid'];
+	
 	if($field_uid == 0)
 	{
 		$field_name = '大正客户端';
@@ -27,6 +30,8 @@ if($ac=="bwm_reg")
 		$field_info = DB::fetch_first("select * from pre_common_field where uid='{$field_uid}' limit 1");
 		$field_name = $field_info['fieldname'];
 	}
+	
+	$user_ticket_imei = urldecode($_G['user_ticket_imei']);
 	$qiancheng = urldecode($_G['gp_qiancheng']);
 	$family_name = urldecode($_G['gp_family_name']);
 	$name = urldecode($_G['gp_name']);
@@ -58,29 +63,45 @@ if($ac=="bwm_reg")
 	$bwm_addtime = time();
 	$bwm_adddate = date('Y年m月d日 H:i:s',$bwm_addtime);
 	
-	$ticket_info = get_ticket_info(26);
+	if($uid == ''){
+		$uid = user_add_return($phone);
+	}
+	
+	if(empty($uid)){
+		$uid = 0;
+	}
+	
+	$ticket_info = get_ticket_info($ticket_id);
 	$user_ticket_age = intval(date('Y',time()))-intval(($year?$year:date('Y',time())));
 	
 	$watch_date_arr = explode(',',$watch_date);
 	
 	$user_ticket_data = array(
+		'uid' => $uid,
 		'ticket_id' => $ticket_info['ticket_id'],
 		'event_id' => $ticket_info['event_id'],
 		'ticket_type' => $ticket_info['ticket_type'],
 		'ticket_starttime' =>$ticket_info['ticket_starttime'],
 		'ticket_endtime' => $ticket_info['ticket_endtime'],
 		'ticket_times' => $ticket_info['ticket_times'],
-		
+		'ticket_price' => $ticket_info['ticket_price'],
+		'user_ticket_imei' => $user_ticket_imei,
+		'user_ticket_nums' => '1',
 		'user_ticket_realname' => $family_name.$name,
 		'user_ticket_sex' => $qiancheng == '先生' ? '男':'女',
 		'user_ticket_age' => $user_ticket_age,
 		'user_ticket_address' => $province.$city.$address,
 		'user_ticket_mobile' => $phone
 	);
-	
+	if(!empty($ticket_info['ticket_price'])){
+		$user_ticket_data['user_ticket_status'] = '0';
+	}else{
+		$user_ticket_data['user_ticket_status'] = '1';
+	}
 	$nian = date('Y',time());
 	$insert_ids = array();
 	$watch_num = 0;
+	$erweima_path = erweima();
 	foreach($watch_date_arr as $key=>$val){
 		if(empty($val))
 		{
@@ -95,8 +116,9 @@ if($ac=="bwm_reg")
 		$user_ticket_data['ticket_endtime']=$ticket_enttime;
 		//echo strtotime("{$nian}-{$yue}-{$ri}").'<br>';die;
 		//echo date('Y-m-d',mktime(0,0,0,$yue,$ri,$nian)).'<br>';
+		$user_ticket_data['user_ticket_codepic']=$erweima_path;
 		$insert_ids[] = $user_ticket_id = insert_into_user_ticket($user_ticket_data);
-		
+		sys_message_add_return($user_ticket_data);
 	}
 	$user_ticket_ids = implode(",",$insert_ids);
 	if(count($insert_ids) != $watch_num){
@@ -118,8 +140,7 @@ if($ac=="bwm_reg")
 		$is_owners = '否';
 	}
 	
-	/* $erweima_path = erweima();
-	
+	/*
 	 	if(empty($erweima_path)) {
 			api_json_result(1,1,"二维码生成失败",null);
 		}
@@ -135,7 +156,7 @@ if($ac=="bwm_reg")
 	}
 	$insert_id = DB::insert_id();
 	
-	$sql = "update tbl_user_ticket set out_idtype='_bmw',out_id='{$insert_id}' where user_ticket_id in({$user_ticket_ids})";
+	$sql = "update tbl_user_ticket set out_idtype='tbl_user_ticket_bmw',out_id='{$insert_id}' where user_ticket_id in({$user_ticket_ids})";
 	$rs = DB::query($sql);
 	if(!$rs){
 		$sql = "delete from tbl_user_ticket where user_ticket_id in({$user_ticket_ids})";
@@ -170,12 +191,13 @@ function insert_into_user_ticket($data_list)
 	$values = array();
 	foreach($data_list as $key=>$val){
 		if(!empty($val)){
-			$fields[$key] = $key;
-			$values[$val] = $val;
+			$fields[] = $key;
+			$values[] = $val;
 		}
 	}
 	
 	$sql = "insert into tbl_user_ticket(".implode(',',$fields).") values('".implode("','",$values)."')";
+	//echo $sql.'<br>';
 	$rs = DB::query($sql);
 	if($rs){
 		$last_id = DB::insert_id();
@@ -186,8 +208,64 @@ function insert_into_user_ticket($data_list)
 
 
 if($ac == 'preg'){
-
-	$str = $_G['gp_str'];
+	
+	$ticket_id = 12;
+	if($uid == ''){
+		$uid = user_add_return($phone);
+	}
+	
+	if(empty($uid)){
+		$uid = 0;
+	}
+	$watch_date = "10月28日,10月27日";
+	$ticket_info = get_ticket_info($ticket_id);
+	$user_ticket_age = intval(date('Y',time()))-intval(($year?$year:date('Y',time())));
+	
+	$watch_date_arr = explode(',',$watch_date);
+	
+	$user_ticket_data = array(
+		'uid' => $uid,
+		'ticket_id' => $ticket_info['ticket_id'],
+		'event_id' => $ticket_info['event_id'],
+		'ticket_type' => $ticket_info['ticket_type'],
+		'ticket_starttime' =>$ticket_info['ticket_starttime'],
+		'ticket_endtime' => $ticket_info['ticket_endtime'],
+		'ticket_times' => $ticket_info['ticket_times'],
+		'ticket_price' => $ticket_info['ticket_price'],
+		'user_ticket_imei' => $user_ticket_imei,
+		'user_ticket_nums' => '1',
+		'user_ticket_realname' => $family_name.$name,
+		'user_ticket_sex' => $qiancheng == '先生' ? '男':'女',
+		'user_ticket_age' => $user_ticket_age,
+		'user_ticket_address' => $province.$city.$address,
+		'user_ticket_mobile' => $phone
+	);
+	$nian = date('Y',time());
+	$insert_ids = array();
+	$watch_num = 0;
+	$erweima_path = erweima();
+	foreach($watch_date_arr as $key=>$val){
+		if(empty($val))
+		{
+			continue;
+		}
+		$watch_num++;
+		$yue = $val[0].$val[1];
+		$ri = $val[5].$val[6];
+		$ticket_starttime = mktime(0,0,0,$yue,$ri,$nian);
+		$ticket_enttime = $ticket_starttime+86400;
+		$user_ticket_data['ticket_starttime']=$ticket_starttime;
+		$user_ticket_data['ticket_endtime']=$ticket_enttime;
+		//echo strtotime("{$nian}-{$yue}-{$ri}").'<br>';die;
+		//echo date('Y-m-d',mktime(0,0,0,$yue,$ri,$nian)).'<br>';
+		
+		$user_ticket_data['user_ticket_codepic']=$erweima_path;
+		$insert_ids[] = $user_ticket_id = insert_into_user_ticket($user_ticket_data);
+		sys_message_add_return($user_ticket_data);
+	}
+	
+	//sys_message_add_return($user_ticket_data);
+	/* $str = $_G['gp_str'];
 	$type = $_G['gp_type'];
 	echo $str;
 	echo '<br>';
@@ -199,7 +277,7 @@ if($ac == 'preg'){
 	else
 	{
 		echo '错误';
-	}
+	} */
 }
 function preg_match_type($str,$type="int")
 {
@@ -293,6 +371,14 @@ function get_randmod_str(){
 */
 function user_add_return($phone)
 {
+	if(!empty($phone))
+	{
+		$sql = "select uid,mobile from pre_common_member_profile where mobile='{$phone}'";
+		$rs=DB::fetch_first($sql);
+		if(!empty($rs)){
+			return $rs['uid'];
+		}
+	}
 	
 	$username=time(). mt_rand(1000,9999);//post("user_ticket_realname");	
 	$password='123456';
