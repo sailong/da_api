@@ -32,7 +32,8 @@ class ticketModel extends Model{
 		}
 		if(get("endtime")!="")
 		{
-			$where .=" and ticket_addtime<".strtotime(get("endtime"))." ";
+			$endtime = strtotime(get("endtime")) + 86400;
+			$where .=" and ticket_addtime<".$endtime." ";
 		}
 
 		$data["item"]=M("ticket")->where($where.$bigwhere)->field("ticket_id,ticket_name,event_id,fenzhan_id,ticket_price,ticket_ren_num,ticket_num,ticket_pic,ticket_starttime,ticket_endtime,ticket_type,ticket_times,ticket_content,ticket_addtime")->order($sort)->page($page.",".$page_size)->select();

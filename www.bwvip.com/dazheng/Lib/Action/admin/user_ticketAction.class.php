@@ -18,9 +18,10 @@ class user_ticketAction extends AdminAuthAction
 	public function user_ticket()
 	{
 		$event_id = get('event_id');
+		
 		$event_id_sql = '';
 		if($event_id){
-			$event_id_sql = " and event_id='{$evnet_id}'";
+			$event_id_sql = " and event_id='{$event_id}'";
 		}
 		$event_select=D('event')->event_select_pro(" ");
 		$this->assign('event_select',$event_select['item']);
@@ -265,6 +266,33 @@ class user_ticketAction extends AdminAuthAction
 
 				$this->assign("page_title",$data["user_ticket_name"]."门票领取");
 				$this->display();
+			}
+			else
+			{
+				$this->error("您该问的信息不存在");	
+			}
+			
+		}
+		else
+		{
+			$this->error("您该问的信息不存在");
+		}
+
+	}
+	
+	public function user_ticket_detail_ext()
+	{
+		if(intval(get("out_id"))>0 || get("out_idtype") != '')
+		{
+			$table_name = get("out_idtype");
+			$data=M()->table($table_name)->where("id=".intval(get("out_id")))->find();
+			
+			if(!empty($data))
+			{
+				$this->assign("data",$data);
+
+				$this->assign("page_title","附加信息");
+				$this->display($table_name);
 			}
 			else
 			{

@@ -214,12 +214,12 @@ if($ac=="hb_reg")
 	$is_contact = $_G['gp_is_contact']; 
 	$is_readed = $_G['gp_is_readed'];	 
 	$bwm_addtime = time();
-	$source="49";
+	$event_id="49";
 	if(empty($is_readed)){
 		$is_readed = 1;
 	}
-	$sql = "insert into tbl_user_ticket_get(qiancheng,source,family_name,name,year,month,day,phone,email,province,city,address,postcode,watch_date,is_owners,bwm_cars,buy_car_date,learn_channels,is_contact,is_readed,bwm_addtime)";
-	$sql .= " values('{$qiancheng}','{$source}','{$family_name}','{$name}','{$year}','{$month}','{$day}','{$phone}','{$email}','{$province}','{$city}','{$address}','{$postcode}','{$watch_date}','{$is_owners}','{$bwm_cars}','{$buy_car_date}','{$learn_channels}','{$is_contact}','{$is_readed}','{$bwm_addtime}')";
+	$sql = "insert into tbl_user_ticket_get(qiancheng,event_id,family_name,name,year,month,day,phone,email,province,city,address,postcode,watch_date,is_owners,bwm_cars,buy_car_date,learn_channels,is_contact,is_readed,bwm_addtime)";
+	$sql .= " values('{$qiancheng}','{$event_id}','{$family_name}','{$name}','{$year}','{$month}','{$day}','{$phone}','{$email}','{$province}','{$city}','{$address}','{$postcode}','{$watch_date}','{$is_owners}','{$bwm_cars}','{$buy_car_date}','{$learn_channels}','{$is_contact}','{$is_readed}','{$bwm_addtime}')";
 	
     $res = DB::query($sql);
 	

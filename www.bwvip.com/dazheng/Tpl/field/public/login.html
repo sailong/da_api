@@ -35,7 +35,13 @@
 		<form name="login_form" action="{:U('field/public/login_action')}" method="post" onsubmit="return check_pro();">
 			<input type="hidden" name="forward" value="" />
 			<ul class="login_list">
-				<li><label>球场：</label><input type="text" class="login_input" name="field_uid" id="field_uid" size="24" value="<php> echo get('field_uid');</php>" /></li>
+				<li><label>球场：</label><select name="field_uid" class="login_input">
+					<option value="">请选择</option>
+					<option value="1186">美兰湖</option>
+					<option value="1160">南山</option>
+					<option value="3803491">华彬</option>
+				</select>
+				
 				<li><label>用户名：</label><input type="text" class="login_input" name="username" id="username" size="24" /></li>
 				<li><label>密&nbsp;&nbsp;码：</label><input type="password" class="login_input" name="password" id="password" size="24"/></li>
 				<li><label>验证码：</label><input name="code" type="text" class="login_input" size="4" style="width:60px;" /> &nbsp;<img id="verifyImg" src="?g=admin&m=public&a=verify" onClick="fleshVerify()"  BORDER="0" ALT="点击刷新验证码" style="cursor:pointer" align="absmiddle"> <!-- &nbsp; &nbsp;<a href="javascript:void();" onClick="fleshVerify()" >换一张</a>--></li>

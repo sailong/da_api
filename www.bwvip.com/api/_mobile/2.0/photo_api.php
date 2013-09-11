@@ -62,7 +62,7 @@ if($ac=="album_list")
 	}
 	if($max_page>=$page)
 	{
-		$list=DB::query("select album_id,album_name,album_sort,album_addtime from tbl_album where 1 order by album_id desc limit $page_start,$page_size  ");
+		$list=DB::query("select album_id,album_name,album_sort,album_addtime from tbl_album where 1 order by album_sort desc,album_addtime desc limit $page_start,$page_size  ");
 		
 		while($row = DB::fetch($list))
 		{

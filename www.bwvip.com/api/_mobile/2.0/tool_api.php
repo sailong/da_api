@@ -18,7 +18,9 @@ if($ac=="import_photo_form_dz")
 		$page_size = 100;
 	}
 	$offset = ($page-1)*$page_size;
-	$list=DB::query("select albumid,albumname,uid,updatetime from pre_home_album where uid='1000333' order by albumid asc limit {$offset},{$page_size}");
+	$ids="1000333,1889013,1000399,1889200,1888967,1888969,1899210,1899209,3801823,3801790,1899463";
+
+	$list=DB::query("select albumid,albumname,uid,updatetime from pre_home_album where uid in (".$ids.") order by albumid asc limit {$offset},{$page_size}");
 	
 	while($row=DB::fetch($list))
 	{

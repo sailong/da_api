@@ -71,7 +71,7 @@ $hot_2013district=array(
 //选择 赛事
 if($ac=="select_event")
 {
-	$list3=DB::query("select event_id,event_name,event_uid,event_is_zhutui,event_zhutui_pic,event_content,event_url,event_type,event_logo from tbl_event where event_is_zhutui='Y' and field_uid=0 order by event_sort desc limit 1 ");
+	$list3=DB::query("select event_id,event_name,event_uid,event_is_zhutui,event_zhutui_pic,event_content,event_url,event_type,event_logo from tbl_event where event_is_zhutui='Y' and (event_viewtype='B' or event_viewtype='A' or event_viewtype='S') order by event_sort desc limit 1 ");
 	while($row3 = DB::fetch($list3))
 	{
 		if($row3['event_zhutui_pic'])
@@ -135,7 +135,7 @@ if($ac=="apply_ing")
 {
 	$login_uid=$_G['gp_login_uid'];
 
-	$list=DB::query("select event_id,event_name,event_uid,event_is_zhutui,event_content,event_url,event_type,event_logo from tbl_event where event_baoming_starttime<=".time()." and event_baoming_endtime>=".time()." and field_uid=0 and event_is_baoming='Y' order by event_baoming_starttime desc  limit 100 ");
+	$list=DB::query("select event_id,event_name,event_uid,event_is_zhutui,event_content,event_url,event_type,event_logo from tbl_event where event_baoming_starttime<=".time()." and event_baoming_endtime>=".time()." and (event_viewtype='B' or event_viewtype='A' or event_viewtype='S') and event_is_baoming='Y' order by event_baoming_starttime desc  limit 100 ");
 	while($row = DB::fetch($list))
 	{
 		if($login_uid)
@@ -569,10 +569,12 @@ if($ac=="delete_comment")
 //赛事聊天室
 if($ac=="event_room")
 {
-	$list=DB::query("select event_id,event_uid,event_name,event_content from tbl_event where event_uid in (select uid from ".DB::table('home_recommend')." where rectype in (6,7,8) ) and field_uid=0 order by event_addtime desc ");
+
+	$list=DB::query("select event_id,event_uid,event_logo,event_name,event_content from tbl_event where event_uid>0 and (event_viewtype='B' or event_viewtype='A' or event_viewtype='S') order by event_sort desc,event_addtime desc ");
 	while($row = DB::fetch($list))
 	{
-		$row['event_pic']=$site_url."/uc_server/avatar.php?uid=".$row['event_uid']."&size=middle";
+		//$row['event_pic']=$site_url."/uc_server/avatar.php?uid=".$row['event_uid']."&size=middle";
+		$row['event_pic']="http://www.bwvip.com/".$row['event_logo'];
 		$row['uid']=$row['event_uid'];
 		$row['event_content']=msubstr(cutstr_html($row['event_content']),0,70);
 		$row['event_content']=str_replace("\r","",$row['event_content']);
@@ -596,7 +598,15 @@ if($ac=="event_detail")
 	$sid=$_G['gp_sid'];
 	if($event_id || $sid)
 	{
-		$detail_data=DB::fetch_first("select event_id,event_name,event_uid,event_content,event_is_zhutui from tbl_event where event_id='".$event_id."' or event_uid='".$sid."' ");
+		if($event_id)
+		{
+			$detail_data=DB::fetch_first("select event_id,event_name,event_uid,event_content,event_is_zhutui from tbl_event where event_id='".$event_id."'  ");
+		}
+		else
+		{
+			$detail_data=DB::fetch_first("select event_id,event_name,event_uid,event_content,event_is_zhutui from tbl_event where event_uid='".$sid."' ");
+		}
+		
 		if($detail_data)
 		{
 			$detail_data['uid']=$detail_data['event_uid'];

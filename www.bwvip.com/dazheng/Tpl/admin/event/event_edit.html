@@ -114,12 +114,24 @@
 						<select name="event_viewtype">
 							<option value="">请选择</option>
 							<option value="B">所有客户端均显示</option>
+							<option value="A">大正客户端和当前球场客户端均显示</option>
 							<option value="S">仅大正客户端显示</option>
 							<option value="Q">仅球场客户端显示</option>
 						</select>
 						<script>set_select_value(document.act_form.event_viewtype,"{$data.event_viewtype}");</script>
 					</td>
 				</tr>
+				
+				<tr>
+					<th>门票申请：</th>
+					<td>
+						<input type="radio" name="event_is_ticket" id="event_is_ticket" value="Y" <php> if($data['event_is_ticket']=="Y"){ echo " checked ";}</php> >是  
+						<input type="radio" name="event_is_ticket" id="event_is_ticket" value="N" <php> if($data['event_is_ticket']=="N"){ echo " checked ";}</php>>否
+						(赛事门票页面，是则显示，否不显示)
+					</td>
+				</tr>
+				
+				
 				<tr>
 					<th>排序：</th>
 					<td><input type="text" name="event_sort" id="event_sort" class="mod_input2" style="width:66px;"  value="{$data.event_sort}"></td>

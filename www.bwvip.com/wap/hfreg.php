@@ -25,7 +25,7 @@ $discuz->init();
 $width = $_GET ['width'];
 if(!$width)
 {
-	$width=460;
+	$width=320;
 } 
 if(get_device_type()=='ios'){
 	$width=320;
