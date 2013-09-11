@@ -19,7 +19,7 @@ $ac=$_G['gp_ac'];
 //修改密码
 if($ac=="bwm_reg")
 {	
-	$ticket_id = 12;
+	$ticket_id = 42;
 	$field_uid = $_G['gp_field_uid'];
 	$uid = $_G['uid'];
 	
@@ -243,7 +243,6 @@ if($ac == 'preg'){
 	$nian = date('Y',time());
 	$insert_ids = array();
 	$watch_num = 0;
-	$erweima_path = erweima();
 	foreach($watch_date_arr as $key=>$val){
 		if(empty($val))
 		{
@@ -259,7 +258,7 @@ if($ac == 'preg'){
 		//echo strtotime("{$nian}-{$yue}-{$ri}").'<br>';die;
 		//echo date('Y-m-d',mktime(0,0,0,$yue,$ri,$nian)).'<br>';
 		
-		$user_ticket_data['user_ticket_codepic']=$erweima_path;
+		$user_ticket_data['user_ticket_codepic']=erweima();
 		$insert_ids[] = $user_ticket_id = insert_into_user_ticket($user_ticket_data);
 		sys_message_add_return($user_ticket_data);
 	}
@@ -308,7 +307,7 @@ function erweima()
 	//如果没有就生成二维码
 	$path_erweima_core = dirname(dirname(dirname(dirname(__FILE__))));
 	
-	include $path_erweima_core."/tool/phpqrcode/qrlib.php";
+	require_once($path_erweima_core."/tool/phpqrcode/qrlib.php");
 	$prefix = $path_erweima_core;
 	$save_path="/upload/erweima/";
 	$now_date = date("Ymd",time());
