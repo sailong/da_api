@@ -442,7 +442,7 @@ class user_ticketAction extends piao_publicAction
 		$sys_data['message_pic']=$user_ticket_info['user_ticket_codepic'];
 		
 	
-		$sys_data["message_state"]=0;
+		//$sys_data["message_state"]=0;
 		$sys_data["message_totalnum"]=0;
 		$sys_data["message_sendnum"]=0;
 		$sys_data["message_errorcode"]="";

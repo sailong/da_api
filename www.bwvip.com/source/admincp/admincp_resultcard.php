@@ -337,7 +337,7 @@ INSERT into tbl_baofen (`uid` ,  `realname`,  `sid`,`event_id`,  `fenzhan_id` , 
 
 	$sql_query = DB::query(" SELECT cm.uid,cmp.mobile,cm.username,cmp.realname FROM ".DB::table('common_member_profile')." as cmp LEFT JOIN ".DB::table('common_member')." as cm ON cm.uid = cmp.uid  where cmp.realname  like '%".$realname."%' limit 10 ");
 	while($result = DB::fetch($sql_query)){
-	   $users[$result['mobile']][$result['uid'] ] = '<a href=/space-uid-'.$result['uid'].'html target=_blank>'.$result['realname'].'|'.$result['username'].'</a>';
+	   $users[$result['mobile']][$result['uid'] ] = '<a href=/space-uid-'.$result['uid'].'.html target=_blank>'.$result['realname'].'|'.$result['username'].'</a>';
 	}
 
 	$user_luru_mobile =array_flip(getgpc('mobile'));

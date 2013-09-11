@@ -17,8 +17,15 @@ class user_ticketAction extends AdminAuthAction
 
 	public function user_ticket()
 	{
+		$event_id = get('event_id');
+		$event_id_sql = '';
+		if($event_id){
+			$event_id_sql = " and event_id='{$evnet_id}'";
+		}
+		$event_select=D('event')->event_select_pro(" ");
+		$this->assign('event_select',$event_select['item']);
 		
-		$event_id = $_SESSION['event_id'];
+		//$event_id = $_SESSION['event_id'];
 		$price = get('price');
 		$price_sql = '';
 		if($price == 'free'){
@@ -26,8 +33,10 @@ class user_ticketAction extends AdminAuthAction
 		}elseif($price == 'no_free'){
 			$price_sql = " and ticket_price!='0'";
 		}
-		$list=D("user_ticket")->user_ticket_list_pro(" and event_id='{$event_id}' {$price_sql}");
-		$ticket_lists = M('ticket')->where("event_id='{$event_id}'")->select();
+		//$list=D("user_ticket")->user_ticket_list_pro(" and event_id='{$event_id}' {$price_sql}");
+		$list=D("user_ticket")->user_ticket_list_pro("{$event_id_sql}{$price_sql}");
+		//$ticket_lists = M('ticket')->where("event_id='{$event_id}'")->select();
+		$ticket_lists = M('ticket')->select();
 		
 		foreach($list["item"] as $key=>$val)
 		{
@@ -268,6 +277,23 @@ class user_ticketAction extends AdminAuthAction
 			$this->error("您该问的信息不存在");
 		}
 
+	}
+	
+	//根据赛事id(event_id)获取相关赛事门票列表
+	public function get_event_ticket_list()
+	{
+		$event_id = get('event_id');
+		
+		if(empty($event_id)){
+			$this->ajaxReturn(null,'参数错误',0);
+		}
+		$ticket_list = M('ticket')->where("event_id='{$event_id}'")->select();
+		
+		if($ticket_list){
+			$this->ajaxReturn($ticket_list,'成功',1);
+		}
+		
+		$this->ajaxReturn(null,'失败',0);
 	}
 	
 	

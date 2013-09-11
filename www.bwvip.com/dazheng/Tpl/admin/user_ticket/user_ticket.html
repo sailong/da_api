@@ -12,14 +12,22 @@
 		<input type="hidden" name="price" value="<php> echo  get('price');</php>">
 
 		<table border="0" cellspacing="0" cellpadding="0">
+			<th>赛事：</th>
+			<td>
+				<select name="event_id" id="event_id" style="width:120px;"  class="search_select">
+					<option value="">请选择</option>
+					<volist id="vo" name="event_select">
+					<option value="{$vo.event_id}">{$vo.event_name}</option>
+					</volist>
+				</select>
+				<script>set_select_value(document.search_form.event_id,"<php> echo  get("event_id");</php>");</script>
+			</td>
 			<th>门票列表：</th>
 			<!-- <td><input type="text" name="k" class="search_input" style="width:120px;" value="<php> echo  get('k');</php>"></td> -->
 			<td>
 				<select name="k" id="ticket_id">
-					<option value="">请选择</option>
-				<volist id="vo" name="ticket_lists">
-					<option value="{$vo.ticket_id}">{$vo.ticket_name}</option>
-				</volist>
+					<option value=''>请选择</option>
+				
 				</select>
 				<script>set_select_value(document.search_form.ticket_id,"<php> echo  get('k');</php>");</script>
 			</td>
@@ -28,6 +36,7 @@
 				<input type="text" name="starttime" class="search_input_date" style="width:120px;" value="<php> echo  get('starttime');</php>" onFocus="WdatePicker({isShowClear:false,readOnly:true})"> 至 
 				<input type="text" name="endtime" class="search_input_date" style="width:120px;" value="<php> echo  get('endtime');</php>" onFocus="WdatePicker({isShowClear:false,readOnly:true})">
 			</td>
+			
 			<!--
 			<th>类型：</th>
 			<td>
@@ -89,7 +98,7 @@
 		<td>{$ticket_list[$vo['ticket_id']]}</td>
 		<td>{$vo.ticket_type}</td>
 		<td>{$vo.user_ticket_code}</td>
-		<td><img src="{$vo.user_ticket_codepic}" style="max-width:60px;max-height:60px;"></td>
+		<td><php>if($vo['user_ticket_codepic']){</php><img src="{$vo['user_ticket_codepic']}" style="max-width:60px;max-height:60px;"><php>}</php></td>
 		<td>{$vo.user_ticket_nums}</td>
 		<td>{$vo.user_ticket_realname}</td>
 		<!-- <td><php>if($vo['user_ticket_cardtype'] == 0){echo '身份证';}</php></td>
@@ -136,6 +145,27 @@
 		    $(this).removeClass("bg_hover");
 		  }
 		);
+		$("#event_id").change(function(){
+			var event_id = $(this).val();
+			$.ajax({
+			 type: 'GET',
+			 url: '/default.php?g=admin&m=user_ticket&a=get_event_ticket_list&event_id='+event_id,
+			 //data: ,
+			 dataType:'json',
+			 success:function(json){
+				var option_str = "<option value=''>请选择</option>";
+				if(json.status == 1){
+					var ticket_list = json.data;
+					for(var i in ticket_list){
+						var ticket_info = ticket_list[i];
+						option_str += "<option value='"+ticket_info['ticket_id']+"'>"+ticket_info['ticket_name']+"</option>";
+					}
+				}
+				$("#ticket_id").append(option_str);
+				//alert(option_str);
+			 }
+			});
+		});
 	});
 	//批量修改
 function mod_modify_batch(action_url,obj)
@@ -180,6 +210,9 @@ function mod_modify_batch(action_url,obj)
 			});
 		}
 	});
+}
+function get_event_ticket_list(event_id){
+	
 }
 </script>
 

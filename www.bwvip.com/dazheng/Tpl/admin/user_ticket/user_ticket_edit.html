@@ -56,7 +56,7 @@
 				</tr>
 				<tr>
 					<th>二维码图片：</th>
-					<td><img src="{$data.user_ticket_codepic}" style="max-height:100px;max-width:100px;"><br/><input type="file" name="user_ticket_codepic" id="user_ticket_codepic"  class="mod_input"></td>
+					<td><php>if($data['user_ticket_codepic']){</php><img src="{$data['user_ticket_codepic']}" style="max-height:100px;max-width:100px;"><php>}</php><br/><input type="file" name="user_ticket_codepic" id="user_ticket_codepic"  class="mod_input"></td>
 				</tr>
 				<tr>
 					<th>订票张数：</th>

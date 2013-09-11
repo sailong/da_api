@@ -2977,13 +2977,14 @@ function scores_ranking_card($sid=27) {
    global $_G;
     $num = $_G['gp_more'] ? 50 : 7;
  $query = DB::query("select uid from tbl_baofen where  field_id='".$_G['gp_uid']."' and source='waika' and  event_id='".$sid."'  and  total_score>50  and dateline>1364774400  group by uid order by total_score asc limit ".$num." ");
+ 
  //$query = DB::query("select uid from ".DB::table("common_score")." where sais_id='".$sid."' and fuid='".$_G['gp_uid']."'    and (ismine=0 or source='waika')  and  total_score>50  group by uid order by total_score asc limit ".$num." ");
     while($row = DB::fetch($query)) {
         $rank[] = $row;
     }
 
    foreach($rank as $k=>$v){
-        $query = DB::query("select cmp.realname,cs.total_score,cs.baofen_id as id,cs.uid from tbl_baofen as cs LEFT JOIN ".DB::table("common_member_profile")." as cmp ON cs.uid=cmp.uid where cs.uid='".$v['uid']."' and cs.source='waika'  and cs.event_id='".$sid."' and cs.field_id='".$_G['gp_uid']."' and   cs.total_score>50  and dateline>1364774400  order by cs.total_score asc limit 3");
+        $query = DB::query("select cmp.realname,cs.total_score,cs.baofen_id as id,cs.uid from tbl_baofen as cs LEFT JOIN ".DB::table("common_member_profile")." as cmp ON cs.uid=cmp.uid where cs.uid='".$v['uid']."' and cs.source='waika' and  cs.status='2'  and cs.event_id='".$sid."' and cs.field_id='".$_G['gp_uid']."' and   cs.total_score>50  and dateline>1364774400  order by cs.total_score asc limit 3"); 
         $i =0; $j=1;
         while($row = DB::fetch($query)) {
              $i++;

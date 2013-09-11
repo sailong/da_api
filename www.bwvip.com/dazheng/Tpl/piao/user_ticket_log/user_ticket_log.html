@@ -66,7 +66,7 @@
 	<tr overstyle="on"  id=ids_{$vo["user_ticket_log_id"]}>
 		<td><input type="checkbox" name="checkbox" onclick="select_one(this)" value="{$vo.user_ticket_log_id}" ></td>
 		<td>{$vo.uid}</th>
-			<td><a href="{:U('piao/user_ticket_log/user_ticket_log_detail', array('user_ticket_log_id'=>$vo['user_ticket_log_id']))}'">{$vo.ticket_id}</a></td>
+			<td><a href="{:U('piao/user_ticket_log/user_ticket_log_detail', array('user_ticket_log_id'=>$vo['user_ticket_log_id']))}'">{$ticket_list[$vo['ticket_id']]['ticket_name']}({$vo.ticket_id})</a></td>
 			<td>{$vo.user_ticket_code}</td>
 			<td>{$vo.user_ticket_log_source}</td>
 			<td>{$vo.user_ticket_log_status}</td>

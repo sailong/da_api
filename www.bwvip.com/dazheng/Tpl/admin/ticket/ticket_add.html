@@ -62,11 +62,11 @@
 				</tr>
 				<tr>
 					<th>开始时间：</th>
-					<td><input type="text" name="ticket_starttime" id="ticket_starttime" readonly class="mod_input_date" style="width:200px;" onFocus="WdatePicker({isShowClear:false,readOnly:true})" ></td>
+					<td><input type="text" name="ticket_starttime" id="ticket_starttime" readonly class="mod_input_date" style="width:200px;"  onFocus="WdatePicker({startDate:'%y-%M-%d 07:00:00',dateFmt:'yyyy-MM-dd HH:mm:ss',alwaysUseStartDate:true})"  ></td>
 				</tr>
 				<tr>
 					<th>结束时间：</th>
-					<td><input type="text" name="ticket_endtime" id="ticket_endtime" readonly class="mod_input_date" style="width:200px;" onFocus="WdatePicker({isShowClear:false,readOnly:true})" ></td>
+					<td><input type="text" name="ticket_endtime" id="ticket_endtime" readonly class="mod_input_date" style="width:200px;"  onFocus="WdatePicker({startDate:'%y-%M-%d 18:00:00',dateFmt:'yyyy-MM-dd HH:mm:ss',alwaysUseStartDate:true})"  /> </td>
 				</tr>
 				<tr>
 					<th>类型：</th>
@@ -104,14 +104,14 @@ $(document).ready(function(){
 $.formValidator.initConfig({formID:"act_form",theme:'ArrowSolidBox',mode:'AutoTip',onError:function(msg){msg_error(msg)},inIframe:true});
 
 	$("#ticket_name").formValidator({empty:true,onShow:"请输入门票名称",onFocus:"请输入门票名称",onCorrect:"输入正确"}).inputValidator({min:1,max:50,onError:"请输入门票名称"});
-		$("#event_id").formValidator({empty:true,onShow:"请输入所属赛事",onFocus:"请输入所属赛事",onCorrect:"输入正确"}).inputValidator({min:1,max:11,onError:"请输入所属赛事"});
+		//$("#event_id").formValidator({empty:true,onShow:"请输入所属赛事",onFocus:"请输入所属赛事",onCorrect:"输入正确"}).inputValidator({min:1,max:11,onError:"请输入所属赛事"});
 		$("#fenzhan_id").formValidator({empty:true,onShow:"请输入所属分站",onFocus:"请输入所属分站",onCorrect:"输入正确"}).inputValidator({min:1,max:11,onError:"请输入所属分站"});
 		$("#ticket_price").formValidator({empty:true,onShow:"请输入门票价格",onFocus:"请输入门票价格",onCorrect:"输入正确"}).inputValidator({min:1,max:11,onError:"请输入门票价格"});
 		$("#ticket_ren_num").formValidator({empty:true,onShow:"请输入票面人数",onFocus:"请输入票面人数",onCorrect:"输入正确"}).inputValidator({min:1,max:11,onError:"请输入票面人数"});
 		$("#ticket_num").formValidator({empty:true,onShow:"请输入总数",onFocus:"请输入总数",onCorrect:"输入正确"}).inputValidator({min:1,max:11,onError:"请输入总数"});
 		$("#ticket_pic").formValidator({empty:true,onShow:"请输入图片",onFocus:"请输入图片",onCorrect:"输入正确"}).inputValidator({min:1,max:300,onError:"请输入图片"});
-		$("#ticket_starttime").formValidator({empty:true,onShow:"请输入开始时间",onFocus:"请输入开始时间",onCorrect:"输入正确"}).inputValidator({min:1,max:10,onError:"请输入开始时间"});
-		$("#ticket_endtime").formValidator({empty:true,onShow:"请输入结束时间",onFocus:"请输入结束时间",onCorrect:"输入正确"}).inputValidator({min:1,max:10,onError:"请输入结束时间"});
+		$("#ticket_starttime").formValidator({empty:true,onShow:"请输入开始时间",onFocus:"请输入开始时间",onCorrect:"输入正确"}).inputValidator({min:1,max:20,onError:"请输入开始时间"});
+		$("#ticket_endtime").formValidator({empty:true,onShow:"请输入结束时间",onFocus:"请输入结束时间",onCorrect:"输入正确"}).inputValidator({min:1,max:20,onError:"请输入结束时间"});
 		$("#ticket_type").formValidator({empty:true,onShow:"请输入类型",onFocus:"请输入类型",onCorrect:"输入正确"}).inputValidator({min:1,max:50,onError:"请输入类型"});
 		$("#ticket_times").formValidator({empty:true,onShow:"请输入入场次数",onFocus:"请输入入场次数",onCorrect:"输入正确"}).inputValidator({min:1,max:11,onError:"请输入入场次数"});
 		$("#ticket_content").formValidator({empty:true,onShow:"请输入介绍",onFocus:"请输入介绍",onCorrect:"输入正确"}).inputValidator({min:1,max:5000,onError:"请输入介绍"});

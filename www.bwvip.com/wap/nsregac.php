@@ -106,17 +106,17 @@ if($ac=="ns_reg")
 	$name4 = $_G['gp_name4']; 
 	if($name2)
 	{
-	  $str.=",300|".$name2; 
+	  $str.=",56|".$name2; 
 		}
 	
 	if($name3)
 	{
-	  $str.=",500|".$name3; 
+	  $str.=",57|".$name3; 
 		}
 	
 	if($name4)
 	{
-	  $str.=",1000|".$name4; 
+	  $str.=",58|".$name4; 
 		}
 	
 	
@@ -125,7 +125,7 @@ if($ac=="ns_reg")
 	//$watchdate = $_G['gp_watch_date']; 
 	 $watch_date=$str;
 	//$watch_date=implode(",", $watchdate );
-	//$watch_date=rtrim($watch_date, ",") ;
+	$watch_date=ltrim($watch_date, ",") ;
 	$is_owners = $_G['gp_is_owners'];
 	$bwm_cars = $_G['gp_bwm_cars']; 
 	$buy_car_date = $_G['gp_buy_car_date'];	 
@@ -133,15 +133,16 @@ if($ac=="ns_reg")
 	$is_contact = $_G['gp_is_contact']; 
 	$is_readed = $_G['gp_is_readed'];	 
 	$bwm_addtime = time();
+	$source="41";
 	if(empty($is_readed)){
 		$is_readed = 1;
 	}
-	$sql = "insert into tbl_user_ticket_ns(qiancheng,family_name,name,year,month,day,phone,email,province,city,address,postcode,watch_date,is_owners,bwm_cars,buy_car_date,learn_channels,is_contact,is_readed,bwm_addtime)";
-	$sql .= " values('{$qiancheng}','{$family_name}','{$name}','{$year}','{$month}','{$day}','{$phone}','{$email}','{$province}','{$city}','{$address}','{$postcode}','{$watch_date}','{$is_owners}','{$bwm_cars}','{$buy_car_date}','{$learn_channels}','{$is_contact}','{$is_readed}','{$bwm_addtime}')";
+	$sql = "insert into tbl_user_ticket_get(qiancheng,source,family_name,name,year,month,day,phone,email,province,city,address,postcode,watch_date,is_owners,bwm_cars,buy_car_date,learn_channels,is_contact,is_readed,bwm_addtime)";
+	$sql .= " values('{$qiancheng}','{$source}','{$family_name}','{$name}','{$year}','{$month}','{$day}','{$phone}','{$email}','{$province}','{$city}','{$address}','{$postcode}','{$watch_date}','{$is_owners}','{$bwm_cars}','{$buy_car_date}','{$learn_channels}','{$is_contact}','{$is_readed}','{$bwm_addtime}')";
 	
     $res = DB::query($sql);
 	
-		include "erweima.php";
+		//include "erweima.php";
 		$user_ticket_mobile = $phone;//手机号
 	$user_ticket_imei = $_G['gp_phone_imei'];//手机窜号
 	$ticket_id = empty($_G['gp_ticket_id']) ? 0 : $_G['gp_ticket_id'];//门票ID
@@ -159,11 +160,11 @@ if($ac=="ns_reg")
 	$user_ticket_addtime = time();//$_G['company_post'];//随机唯一窜
 	$ticket_starttime=strtotime('2013-10-10 7:00');
 	$ticket_endtime=strtotime('2013-10-13 19:00');
-	$out_idtype='tbl_user_ticket_ns';	
+	$out_idtype='tbl_user_ticket_get';	
 	$out_id = DB::insert_id(); 
 	
 //生成二维码 
-	$erweima_path = erweima();
+	//$erweima_path = erweima();
 	$user_ticket_codepic = $erweima_path;
 	
 	$row=explode("/",$user_ticket_codepic);
@@ -172,7 +173,7 @@ if($ac=="ns_reg")
 	$user_ticket_status = 0;
 		$sql = "insert into tbl_user_ticket(ticket_id,event_id,ticket_type,user_ticket_code,user_ticket_codepic,user_ticket_realname,user_ticket_sex,user_ticket_age,user_ticket_address,user_ticket_mobile,user_ticket_imei,user_ticket_company,user_ticket_company_post,user_ticket_status,user_ticket_addtime,ticket_times,ticket_starttime,ticket_endtime,out_idtype,out_id) values('{$ticket_id}','{$event_id}','{$ticket_type}','{$user_ticket_code}','{$user_ticket_codepic}','{$user_ticket_realname}','{$user_ticket_sex}','{$user_ticket_age}','{$user_ticket_address}','{$user_ticket_mobile}','{$user_ticket_imei}','{$user_ticket_company}','{$user_ticket_company_post}','{$user_ticket_status}','{$user_ticket_addtime}','{$ticket_times}','{$ticket_starttime}','{$ticket_endtime}','{$out_idtype}','{$out_id}')";
 	
-    $res = DB::query($sql);
+    //$res = DB::query($sql);
 	
 	if($res == false){
 	 	echo "<script>location='nserror.php?width=$width';</script>";

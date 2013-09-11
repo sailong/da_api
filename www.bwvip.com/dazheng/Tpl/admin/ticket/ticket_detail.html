@@ -43,7 +43,7 @@
 				</tr>
 				<tr>
 					<th>图片：</th>
-						<td><img src="/{$data.ticket_pic}" style="max-width:300px;max-height:200px;"/></td>
+						<td><php>if($data['ticket_pic']){</php><img src="{$data['ticket_pic']}" style="max-width:300px;max-height:200px;"/><php>}</php></td>
 				</tr>
 				<tr>
 					<th>开始时间：</th>
