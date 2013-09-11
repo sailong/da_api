@@ -27,10 +27,12 @@ class user_ticket_logModel extends Model{
 		}
 		if(get("endtime")!="")
 		{
-			$where .=" and user_ticket_log_addtime<".strtotime(get("endtime"))." ";
+			$endtime = strtotime(get("endtime")) + 86400;
+			$where .=" and user_ticket_log_addtime<".$endtime." ";
 		}
 
 		$data["item"]=M("user_ticket_log")->where($where.$bigwhere)->field("user_ticket_log_id,uid,ticket_id,user_ticket_code,user_ticket_log_source,user_ticket_log_status,user_ticket_log_addtime")->order($sort)->page($page.",".$page_size)->select();
+		//echo M()->getLastSql();
 		for($i=0; $i<count($data["item"]); $i++)
 		{
 			if($data["item"][$i]["user_id"]!="")

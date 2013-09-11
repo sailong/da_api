@@ -58,7 +58,7 @@
 				</tr>
 				<tr>
 					<th>图片：</th>
-					<td><img src="/{$data.ticket_pic}" style="max-width:300px;max-height:200px;"/><br/><input type="file" name="ticket_pic" id="ticket_pic"  class="mod_input"></td>
+					<td><php>if($vo['ticket_pic']){</php><img src="{$vo['ticket_pic']}" style="max-width:300px;max-height:200px;"/><php>}</php><br/><input type="file" name="ticket_pic" id="ticket_pic"  class="mod_input"></td>
 				</tr>
 	<tr>
 					<th>开始时间：</th>

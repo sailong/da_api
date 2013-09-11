@@ -17,18 +17,39 @@ class user_ticket_logAction extends AdminAuthAction
 
 	public function user_ticket_log()
 	{
-		$event_id = $_SESSION['event_id'];
-	
-		$ticket_list = M('user_ticket')->where("event_id='{$event_id}'")->select();
 		
-		$ticket_ids = array();
-		foreach($ticket_list as $key=>$val)
+		
+		$event_select=D('event')->event_select_pro(" ");
+		$this->assign('event_select',$event_select['item']);
+		//echo '<pre>';
+		//var_dump($event_select['item']);die;
+		$ticket_id = get("ticket_id");
+		$ticket_id_sql = '';
+		if($ticket_id){
+			$ticket_id_sql = " and ticket_id='{$ticket_id}'";
+		}
+		
+		$list=D("user_ticket_log")->user_ticket_log_list_pro($ticket_id_sql);
+		
+		foreach($list["item"] as $key=>$val)
 		{
 			$ticket_ids[$val['ticket_id']] = $val['ticket_id'];
 		}
 		
-		$list=D("user_ticket_log")->user_ticket_log_list_pro(" and ticket_id in('".implode("','",$ticket_ids)."')");
+		if($ticket_ids){
+			$ticket_list = M('ticket')->field('ticket_name,ticket_id')->where("ticket_id in('".implode("','",(array)$ticket_ids)."')")->select();
+			
+		}
 		
+		if($ticket_list)
+		{
+			foreach($ticket_list as $key=>$val){
+				unset($ticket_list[$key]);
+				$ticket_list[$val['ticket_id']] = $val;
+			}
+		}
+		
+		$this->assign("ticket_list",$ticket_list);
 		$this->assign("list",$list["item"]);
 		$this->assign("pages",$list["pages"]);
 		$this->assign("total",$list["total"]);
@@ -163,6 +184,23 @@ class user_ticket_logAction extends AdminAuthAction
 			$this->error("您该问的信息不存在");
 		}
 
+	}
+	
+	//根据赛事id(event_id)获取相关赛事门票列表
+	public function get_event_ticket_list()
+	{
+		$event_id = get('event_id');
+		
+		if(empty($event_id)){
+			$this->ajaxReturn(null,'参数错误',0);
+		}
+		$ticket_list = M('ticket')->where("event_id='{$event_id}'")->select();
+		
+		if($ticket_list){
+			$this->ajaxReturn($ticket_list,'成功',1);
+		}
+		
+		$this->ajaxReturn(null,'失败',0);
 	}
 
 

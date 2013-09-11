@@ -81,7 +81,7 @@
 		<td>{$vo.ticket_price}元</td>
 		<td>{$vo.ticket_ren_num}人</td>
 		<td>{$vo.ticket_num}</td>
-		<td><img src="{$vo.ticket_pic}" style="max-height:60px; max-width:100px;"/></td>
+		<td><php>if($vo['ticket_pic']){</php><img src="{$vo['ticket_pic']}" style="max-height:60px; max-width:100px;"/><php>}</php></td>
 		<td>{$vo.ticket_starttime|format_to_fulltime}</td>
 		<td>{$vo.ticket_endtime|format_to_fulltime}</td>
 		<td><php>if($vo['ticket_type']=='BASE'){echo "普通";}if($vo['ticket_type']=='VIP'){echo $vo['ticket_type'];}</php></td>
