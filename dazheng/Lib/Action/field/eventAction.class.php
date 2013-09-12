@@ -112,6 +112,9 @@ class eventAction extends field_publicAction
 			$data["event_ticket_wapurl"]=post("event_ticket_wapurl");
 			$data["event_go_action"]=post("event_go_action");
 			$data["event_go_value"]=post("event_go_value");
+			$data["event_lun_num"]=post("event_lun_num");
+			$data["event_is_viewscore"]=post("event_is_viewscore");
+			$data["event_sort_fenzhan_id"]=post("event_sort_fenzhan_id");
 			$data["event_addtime"]=time();
 			$list=M("event")->add($data);
 			$this->success("添加成功",U('field/event/event'));
@@ -169,13 +172,15 @@ class eventAction extends field_publicAction
 			$data["event_right_intro"]=post("event_right_intro");
 			//$data["event_right_pic"]=post("event_right_pic");
 			
+			
 			if($_FILES["event_logo"]["error"]==0 || $_FILES["event_timepic"]["error"]==0 || $_FILES["event_zhutui_pic"]["error"]==0 || $_FILES["event_left_pic"]["error"]==0 || $_FILES["event_right_pic"]["error"]==0)
 			{
 				$uploadinfo=upload_file("upload/event/");
 				foreach($uploadinfo as $key=>$val){
-					$uploadinfo[$val['key']] = $val;
+					$uploadinfo[$val['up_name']] = $val;
 					unset($uploadinfo[$key]);
 				}
+				
 				if(!empty($uploadinfo["event_logo"]))
 				{
 					$data["event_logo"]=$uploadinfo["event_logo"]["savepath"] . $uploadinfo["event_logo"]["savename"];
