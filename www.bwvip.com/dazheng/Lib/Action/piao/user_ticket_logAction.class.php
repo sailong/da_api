@@ -19,24 +19,31 @@ class user_ticket_logAction extends piao_publicAction
 	{
 		$event_id = $_SESSION['event_id'];
 	
-		$user_ticket_list = M('user_ticket')->where("event_id='{$event_id}'")->select();
+		$ticket_list = M('ticket')->where("event_id='{$event_id}'")->select();
 		
-		$ticket_ids = array();
-		foreach($user_ticket_list as $key=>$val)
-		{
-			$ticket_ids[$val['ticket_id']] = $val['ticket_id'];
-		}
 		
-		$list=D("user_ticket_log")->user_ticket_log_list_pro(" and ticket_id in('".implode("','",$ticket_ids)."')");
-		
-		$ticket_list = M('ticket')->where("ticket_id in('".implode("','",$ticket_ids)."')")->select();
 		foreach($ticket_list as $key=>$val){
 			unset($ticket_list[$key]);
 			$ticket_list[$val['ticket_id']]=$val;
+			$ticket_ids[$val['ticket_id']] = $val['ticket_id'];
 		}
+		
+		$ticket_id_sql = '';
+		$ticket_id = get('ticket_id');
+		if($ticket_id){
+			$ticket_id_sql .= " and ticket_id='{$ticket_id}'";
+		}elseif($ticket_ids){
+			$ticket_id_sql .= " and ticket_id in('".implode("','",$ticket_ids)."')";
+		}
+		
+		$list=D("user_ticket_log")->user_ticket_log_list_pro($ticket_id_sql);
+		
+		
 		
 		/* echo '<pre>';
 		var_dump($ticket_list); */
+		/* echo '<pre>';
+		var_dump($list); */
 		$this->assign("ticket_list",$ticket_list);
 		$this->assign("list",$list["item"]);
 		$this->assign("pages",$list["pages"]);

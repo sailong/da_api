@@ -7,7 +7,7 @@
  *    @E-mail			123695069@qq.com
  *    @Date			2013-08-06
  */
-class user_ticketAction extends AdminAuthAction
+class user_ticket_getAction extends AdminAuthAction
 {
 
 	public function _initialize()
@@ -15,7 +15,7 @@ class user_ticketAction extends AdminAuthAction
 		parent::_initialize();
 	}
 
-	public function user_ticket()
+	public function user_ticket_get()
 	{
 		$event_id = get('event_id');
 		
@@ -26,42 +26,18 @@ class user_ticketAction extends AdminAuthAction
 		$event_select=D('event')->event_select_pro(" ");
 		$this->assign('event_select',$event_select['item']);
 		
-		//$event_id = $_SESSION['event_id'];
-		$price = get('price');
-		$price_sql = '';
-		if($price == 'free'){
-			$price_sql = " and ticket_price='0'";
-		}elseif($price == 'no_free'){
-			$price_sql = " and ticket_price!='0'";
-		}
-		//$list=D("user_ticket")->user_ticket_list_pro(" and event_id='{$event_id}' {$price_sql}");
-		$list=D("user_ticket")->user_ticket_list_pro("{$event_id_sql}{$price_sql}");
-		//$ticket_lists = M('ticket')->where("event_id='{$event_id}'")->select();
-		$ticket_lists = M('ticket')->select();
 		
-		foreach($list["item"] as $key=>$val)
-		{
-			$ticket_ids[$val['ticket_id']] = $val['ticket_id'];
-		}
+		$list=D("user_ticket_get")->user_ticket_get_list_pro("{$event_id_sql}");
 		
-		$ticket_list = M('ticket')->where("ticket_id in('".implode("','",(array)$ticket_ids)."')")->select();
-		
-		foreach($ticket_list as $key=>$val)
-		{
-			unset($ticket_list[$key]);
-			$ticket_list[$val['ticket_id']] = $val['ticket_name'];
-		}
-		$this->assign("ticket_lists",$ticket_lists);
-		$this->assign("ticket_list",$ticket_list);
 		$this->assign("list",$list["item"]);
 		$this->assign("pages",$list["pages"]);
 		$this->assign("total",$list["total"]);
 
-		$this->assign("page_title","门票领取");
+		$this->assign("page_title","订单审核");
     	$this->display();
 	}
 
-	public function user_ticket_add()
+	/* public function user_ticket_get_add()
 	{
 	
 		$event_id = $_SESSION['event_id'];
@@ -71,81 +47,81 @@ class user_ticketAction extends AdminAuthAction
 		$this->assign("ticket_list",$ticket_list);
 		$this->assign("page_title","添加门票领取");
     	$this->display();
-	}
+	} */
 
-	public function user_ticket_add_action()
-	{
-		if(M()->autoCheckToken($_POST))
-		{
+	// public function user_ticket_get_add_action()
+	// {
+		// if(M()->autoCheckToken($_POST))
+		// {
 			
-			//$data["uid"]=post("uid");
-			$ticket_id = $data["ticket_id"]=post("ticket_id");
+			// //$data["uid"]=post("uid");
+			// $ticket_id = $data["ticket_id"]=post("ticket_id");
 			
-			$ticket_info = M('ticket')->where("ticket_id='{$ticket_id}'")->find();
+			// $ticket_info = M('ticket')->where("ticket_id='{$ticket_id}'")->find();
 			
-			$data["event_id"]=$ticket_info['event_id'];
-			$data["ticket_starttime"]=$ticket_info['ticket_starttime'];
-			$data["ticket_endtime"]=$ticket_info['ticket_endtime'];
-			$data["ticket_times"]=$ticket_info['ticket_times'];
-			$data["user_ticket_code"]=$this->get_randmod_str();
-			$data["ticket_type"]=$ticket_info['ticket_type'];
-			/* if($_FILES["user_ticket_codepic"]["error"]==0)
-			{
-				$uploadinfo=upload_file("upload/user_ticket/");
-				$data["user_ticket_codepic"]=$uploadinfo[0]["savepath"] . $uploadinfo[0]["savename"];
-			} */
+			// $data["event_id"]=$ticket_info['event_id'];
+			// $data["ticket_starttime"]=$ticket_info['ticket_starttime'];
+			// $data["ticket_endtime"]=$ticket_info['ticket_endtime'];
+			// $data["ticket_times"]=$ticket_info['ticket_times'];
+			// $data["user_ticket_code"]=$this->get_randmod_str();
+			// $data["ticket_type"]=$ticket_info['ticket_type'];
+			// /* if($_FILES["user_ticket_codepic"]["error"]==0)
+			// {
+				// $uploadinfo=upload_file("upload/user_ticket/");
+				// $data["user_ticket_codepic"]=$uploadinfo[0]["savepath"] . $uploadinfo[0]["savename"];
+			// } */
 			
-			$data["user_ticket_codepic"] = $this->erweima();
-			$data["user_ticket_nums"]=post("user_ticket_nums");
-			$data["user_ticket_sex"]=post("user_ticket_sex");
-			$data["user_ticket_age"]=post("user_ticket_age");
-			$data["user_ticket_address"]=post("user_ticket_address");
-			$data["user_ticket_imei"]=post("user_ticket_imei");
-			$data["user_ticket_company"]=post("user_ticket_company");
-			$data["user_ticket_company_post"]=post("user_ticket_company_post");
-			$data["user_ticket_realname"]=post("user_ticket_realname");
-			$data["user_ticket_mobile"]=post("user_ticket_mobile");
-			$data["ticket_price"]=post("ticket_price");
+			// $data["user_ticket_codepic"] = $this->erweima();
+			// $data["user_ticket_nums"]=post("user_ticket_nums");
+			// $data["user_ticket_sex"]=post("user_ticket_sex");
+			// $data["user_ticket_age"]=post("user_ticket_age");
+			// $data["user_ticket_address"]=post("user_ticket_address");
+			// $data["user_ticket_imei"]=post("user_ticket_imei");
+			// $data["user_ticket_company"]=post("user_ticket_company");
+			// $data["user_ticket_company_post"]=post("user_ticket_company_post");
+			// $data["user_ticket_realname"]=post("user_ticket_realname");
+			// $data["user_ticket_mobile"]=post("user_ticket_mobile");
+			// $data["ticket_price"]=post("ticket_price");
 			
-			if($ticket_info['ticket_price'] == '0'){
-				$data["user_ticket_status"] = 1;
-			}else{
-				$data["user_ticket_status"]=0;
-			}
+			// if($ticket_info['ticket_price'] == '0'){
+				// $data["user_ticket_status"] = 1;
+			// }else{
+				// $data["user_ticket_status"]=0;
+			// }
 			
-			$data["user_ticket_addtime"]=time();
+			// $data["user_ticket_addtime"]=time();
 			
-			$pre_member_info = M()->table('pre_common_member_profile')->where("mobile='".$data["user_ticket_mobile"]."'")->find();
-			if($pre_member_info){
-				$data["uid"] = $pre_member_info['uid'];
-			}else{
-				$uid = $this->user_add_return();
-				if(!empty($uid)){
-					$data["uid"] = $uid;
-				}else{
-					$this->success("添加失败",U('admin/user_ticket/user_ticket'));
-				}
-			}
-			$list=M("user_ticket")->add($data);
-			if($list)
-			{
-				if($ticket_info['ticket_price'] == '0'){
-					//添加系统消息
-					$this->sys_message_add_return($data);
-				}
-				$this->success("添加成功",U('admin/user_ticket/user_ticket'));exit;
-			}
-			$this->success("添加失败",U('admin/user_ticket/user_ticket'));
-		}
-		else
-		{
-			$this->error("不能重复提交",U('admin/user_ticket/user_ticket_add'));
-		}
+			// $pre_member_info = M()->table('pre_common_member_profile')->where("mobile='".$data["user_ticket_mobile"]."'")->find();
+			// if($pre_member_info){
+				// $data["uid"] = $pre_member_info['uid'];
+			// }else{
+				// $uid = $this->user_add_return();
+				// if(!empty($uid)){
+					// $data["uid"] = $uid;
+				// }else{
+					// $this->success("添加失败",U('admin/user_ticket/user_ticket'));
+				// }
+			// }
+			// $list=M("user_ticket")->add($data);
+			// if($list)
+			// {
+				// if($ticket_info['ticket_price'] == '0'){
+					// //添加系统消息
+					// $this->sys_message_add_return($data);
+				// }
+				// $this->success("添加成功",U('admin/user_ticket/user_ticket'));exit;
+			// }
+			// $this->success("添加失败",U('admin/user_ticket/user_ticket'));
+		// }
+		// else
+		// {
+			// $this->error("不能重复提交",U('admin/user_ticket/user_ticket_add'));
+		// }
 
-	}
+	// }
 
 
-	public function user_ticket_edit()
+	/* public function user_ticket_get_edit()
 	{
 		if(intval(get("user_ticket_id"))>0)
 		{
@@ -163,9 +139,9 @@ class user_ticketAction extends AdminAuthAction
 		{
 			$this->error("您该问的信息不存在");
 		}
-	}
+	} */
 
-	public function user_ticket_edit_action()
+	/* public function user_ticket_get_edit_action()
 	{
 		if(M()->autoCheckToken($_POST))
 		{
@@ -210,36 +186,86 @@ class user_ticketAction extends AdminAuthAction
 			$this->error("不能重复提交",U('admin/user_ticket/user_ticket'));
 		}
 
-	}
+	} */
 
-	public function user_ticket_delete_action()
+	public function user_ticket_get_delete_action()
 	{
 		if(post("ids"))
 		{
 			$ids_arr=explode(",",post("ids"));
 			for($i=0; $i<count($ids_arr); $i++)
 			{
-				$res=M("user_ticket")->where("user_ticket_id=".$ids_arr[$i])->delete();
+				$res=M("user_ticket_get")->where("id=".$ids_arr[$i])->delete();
 			}
 			echo "succeed^删除成功";
 		}
 	}
 
 
-	public function user_ticket_check_action()
+	public function user_ticket_get_check_action()
 	{
 		if(post("ids"))
 		{
 			$ids_arr=explode(",",post("ids"));
 			
-			foreach($ids_arr as $ke=>$val)
+			foreach($ids_arr as $key1=>$val1)
 			{
-				$res=M()->execute("update tbl_user_ticket set user_ticket_status='1' where user_ticket_id='{$val}'");
-				if($res !== false){
-					$user_ticket_info = M('user_ticket')->where("user_ticket_id='{$val}'")->find();
-					if(!empty($user_ticket_info)){
-						$this->sys_message_add_return($user_ticket_info);
+				//改变审核状态
+				$user_ticket_get_info = M('user_ticket_get')->where("id='{$val1}'")->find();
+				
+				if($user_ticket_get_info !== false){
+					//获取订票信息
+					if($user_ticket_get_info['phone'] && $user_ticket_get_info['check_status']==0){
+						$uid = $this->user_add_return($user_ticket_get_info['phone']);
+						//user_ticket表添加信息
+						$user_ticket_data = array(
+							'uid' => $uid,
+							'ticket_id' =>'',
+							'event_id' => $user_ticket_get_info['event_id'],
+							'ticket_type' =>'',
+							'ticket_times' =>'',
+							'ticket_starttime' =>'',
+							'ticket_endtime' =>'',
+							'ticket_price' =>'',
+							'user_ticket_code' =>'',
+							'out_idtype' =>'tbl_user_ticket_get',
+							'out_id' =>$val1,
+							'user_ticket_codepic' =>'',
+							'user_ticket_nums' => 1,
+							'user_ticket_realname' => $user_ticket_get_info['family_name'].$user_ticket_get_info['name'],
+							//'user_ticket_sex' => ,
+							//'user_ticket_age' => ,
+							'user_ticket_address' => $user_ticket_get_info['province'].$user_ticket_get_info['city'].$user_ticket_get_info['address'],
+							'user_ticket_mobile' => $user_ticket_get_info['phone'],
+							'user_ticket_status' => 1,
+							'user_ticket_addtime' => time()
+						);
+						
+						$order_ticket_info = explode(',',$user_ticket_get_info['watch_date']);//59|1,60|2,61|3,62|4,63|5,64|6,65|7,66|8,67|9
+						foreach($order_ticket_info as $key=>$val){
+							$order_ticket_detail = explode('|',$val);
+							$ticket_id = $order_ticket_detail[0];
+							$ticket_nums = $order_ticket_detail[1];
+							$ticket_info = M('ticket')->where("ticket_id='{$ticket_id}'")->find();
+							$user_ticket_data['ticket_id'] = $ticket_id;
+							$user_ticket_data['ticket_type'] = $ticket_info['ticket_type'];
+							$user_ticket_data['ticket_times'] = $ticket_info['ticket_times'];
+							$user_ticket_data['ticket_starttime'] = $ticket_info['ticket_starttime'];
+							$user_ticket_data['ticket_endtime'] = $ticket_info['ticket_endtime'];
+							$user_ticket_data['ticket_price'] = $ticket_info['ticket_price'];
+							for($i=0;$i<$ticket_nums;$i++){
+								$user_ticket_data['user_ticket_code'] = $this->get_randmod_str();
+								$user_ticket_data['user_ticket_codepic'] = $this->erweima();
+								$rs = M('user_ticket')->add($user_ticket_data);
+								if($rs){
+									$this->sys_message_add_return($user_ticket_data);
+								}
+								$user_ticket_ids[] = $rs;
+							}
+						}
+						
 					}
+					$res=M()->execute("update tbl_user_ticket_get set check_status=1,user_ticket_id='{$rs}',user_ticket_ids='".implode(",",$user_ticket_ids)."' where id='{$val1}'");
 				}
 			}
 			
@@ -255,21 +281,28 @@ class user_ticketAction extends AdminAuthAction
 		}
 	}
 
-	public function user_ticket_detail()
+
+	public function user_ticket_get_detail()
 	{
-		if(intval(get("user_ticket_id"))>0)
+		if(intval(get("id"))>0)
 		{
-			$data=M("user_ticket")->where("user_ticket_id=".intval(get("user_ticket_id")))->find();
+			$data=M("user_ticket_get")->where("id=".intval(get("id")))->find();
 			if(!empty($data))
 			{
-				$ticket_info = M('ticket')->where("ticket_id='".$data['ticket_id']."'")->find();
+				$order_ticket_info = explode(',',$data['watch_date']);
+				$data['order_detail'] = '';
+				foreach($order_ticket_info as $key=>$val){
+					$order_ticket_detail = explode('|',$val);
+					$ticket_id = $order_ticket_detail[0];
+					$ticket_nums = $order_ticket_detail[1];
+					$ticket_info = M('ticket')->where("ticket_id='{$ticket_id}'")->find();
+					$data['order_detail'] .= $ticket_info['ticket_name'].' '.$ticket_nums.'张<br/>';
+				}
 				
 				$event_info = M('event')->where("event_id='".$data['event_id']."'")->find();
-				
 				$this->assign("event_info",$event_info);
-				$this->assign("ticket_info",$ticket_info);
 				$this->assign("data",$data);
-				$this->assign("page_title",$data["user_ticket_name"]."门票领取");
+				$this->assign("page_title","订单审核详情");
 				$this->display();
 			}
 			else
@@ -285,46 +318,7 @@ class user_ticketAction extends AdminAuthAction
 
 	}
 	
-	public function user_ticket_detail_ext()
-	{
-		if(intval(get("out_id"))>0 || get("out_idtype") != '')
-		{
-			$table_name = get("out_idtype");
-			$data=M()->table($table_name)->where("id=".intval(get("out_id")))->find();
-			
-			if(!empty($data))
-			{
-				$order_ticket_info = explode(',',$data['watch_date']);
-				$data['order_detail'] = '';
-				foreach($order_ticket_info as $key=>$val){
-					$order_ticket_detail = explode('|',$val);
-					$ticket_id = $order_ticket_detail[0];
-					$ticket_nums = $order_ticket_detail[1];
-					$ticket_info = M('ticket')->where("ticket_id='{$ticket_id}'")->find();
-					$data['order_detail'] .= $ticket_info['ticket_name'].' '.$ticket_nums.'张<br/>';
-				}
-				$event_info = M('event')->where("event_id='".$data['event_id']."'")->find();
-				
-				$this->assign("event_info",$event_info);
-				$this->assign("data",$data);
-
-				$this->assign("page_title","附加信息");
-				$this->display($table_name);
-			}
-			else
-			{
-				$this->error("您该问的信息不存在");	
-			}
-			
-		}
-		else
-		{
-			$this->error("您该问的信息不存在");
-		}
-
-	}
-	
-	//根据赛事id(event_id)获取相关赛事门票列表
+	/* //根据赛事id(event_id)获取相关赛事门票列表
 	public function get_event_ticket_list()
 	{
 		$event_id = get('event_id');
@@ -339,17 +333,16 @@ class user_ticketAction extends AdminAuthAction
 		}
 		
 		$this->ajaxReturn(null,'失败',0);
-	}
-	
+	} */
 	
 	//生成二维码成功返回路径，失败返回 false
 	public function erweima()
 	{
-		$phone = mt_rand(1000000000,9999999999);
+		$phone = time().mt_rand(1000000000,9999999999);
 		//如果没有就生成二维码
 		$path_erweima_core = dirname(dirname(dirname(dirname(dirname(__FILE__)))));
 		
-		include $path_erweima_core."/tool/phpqrcode/qrlib.php";
+		require_once($path_erweima_core."/tool/phpqrcode/qrlib.php");
 		$prefix = $path_erweima_core;
 		$save_path="/upload/erweima/";
 		$now_date = date("Ymd",time());
@@ -411,37 +404,42 @@ class user_ticketAction extends AdminAuthAction
 	/*
 	*  添加用户注册
 	*/
-	public function user_add_return()
+	public function user_add_return($phone)
 	{
 		
-		$user_data["username"]=time(). mt_rand(1000,9999);//post("user_ticket_realname");	
+		if(!empty($phone))
+		{
+			$rs=M()->table('pre_common_member_profile')->where(" mobile='{$phone}'")->find();
+			if(!empty($rs)){
+				return $rs['uid'];
+			}
+		}
+		
+		$user_data["username"]=time(). mt_rand(1000,9999);
 		$password='123456';
 		$salt = substr(uniqid(rand()), -6);
 		$password = md5(md5($password).$salt);
 		$user_data["salt"]=$salt;
 		$user_data["password"]=$password;
 		$user_data["email"]=$user_data["username"].'@bw.com'; 
-		$user_data["mobile"]=post("user_ticket_mobile"); 
+		$user_data["mobile"]=$phone; 
 		$user_data["regip"]=time();
 		$user_data["regdate"]=time();
 		//生成ucenter会员 
 		$list=M("ucenter_members","pre_")->add($user_data); 
 		$ucuid=$list;
 		unset($data["salt"]);
-		//unset($data["username"]);
-		//$data["realname"]=post("realname"); 
-		//$data["mobile"]=post("mobile");  
 		$user_data["groupid"]=10;  
 		//生成社区会员 
 		$list=M("common_member","pre_")->add($user_data); 
 		
 		$user_data["uid"]=$ucuid; 
-		$user_data["gender"]=post("gender"); 
-		$user_data["realname"]=post("user_ticket_realname");	
+		$user_data["gender"]=''; 
+		$user_data["realname"]=$user_data["username"];	
 		
 		//生成真实姓名
 		$list=M("common_member_profile","pre_")->add($user_data); 
-		$user_data["nickname"]=post("user_ticket_realname");
+		$user_data["nickname"]=$user_data["username"];
 		$user_data["ucuid"]=$ucuid; 
 		$user_data["role_id"]=3; 			
 		

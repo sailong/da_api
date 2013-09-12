@@ -800,5 +800,13 @@ function array_sort_by_field($arr_data, $field, $descending = false)
 }  
 
 
+function guolv_one_html_tags($tagsArr,$str)
+{   
+    foreach ($tagsArr as $tag) {  
+        $p[]="/(<(?:\/".$tag."|".$tag.")[^>]*>)/i";  
+    }  
+    $return_str = preg_replace($p,"",$str);  
+    return $return_str;  
+}  
 
 ?>

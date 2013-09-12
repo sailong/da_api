@@ -95,6 +95,7 @@ class eventAction extends AdminAuthAction
 			$data["event_content"]=stripslashes($_POST["event_content"]);
 			$data["event_state"]=0;
 			$data["event_is_tj"]=post("event_is_tj");
+			
 			$data["event_sort"]=post("event_sort");
 			$data["event_fenzhan_id"]=post("event_fenzhan_id");
 			$data["event_is_zhutui"]=post("event_is_zhutui");
@@ -106,6 +107,9 @@ class eventAction extends AdminAuthAction
 			$data["event_is_viewscore"]=post("event_is_viewscore");
 			$data["event_sort_fenzhan_id"]=post("event_sort_fenzhan_id");
 			$data["event_viewtype"]=post("event_viewtype");
+			$data["event_is_ticket"]=post("event_is_ticket");
+			$data["event_is_bbs"]=post("event_is_bbs");
+			
 			$data["event_addtime"]=time();
 			$list=M("event")->add($data);
 			$this->success("添加成功",U('admin/event/event'));
@@ -148,6 +152,7 @@ class eventAction extends AdminAuthAction
 		if(M()->autoCheckToken($_POST))
 		{
 			$data["event_id"]=post("event_id");
+			$data["field_uid"]=post("field_uid");
 			$data["event_uid"]=post("event_uid");
 			$data["event_name"]=post("event_name");
 
@@ -220,6 +225,17 @@ class eventAction extends AdminAuthAction
 			$data["event_is_viewscore"]=post("event_is_viewscore");
 			$data["event_sort_fenzhan_id"]=post("event_sort_fenzhan_id");
 			$data["event_viewtype"]=post("event_viewtype");
+			
+			if(post("event_is_ticket"))
+			{
+				$data["event_is_ticket"]=post("event_is_ticket");
+			}
+			
+			if(post("event_is_bbs"))
+			{
+				$data["event_is_bbs"]=post("event_is_bbs");
+			}
+			
 			
 			$list=M("event")->save($data);
 			$this->success("修改成功",U('admin/event/event_manage',array('event_id'=>$data['event_id'])));

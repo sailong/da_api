@@ -1,21 +1,168 @@
 <?php
+/*
+*
+* bwvip.com
+* 门票相关
+*
+*/
 if(!defined("IN_DISCUZ"))
 {
 	exit('Access Denied');
 }
+
+$ac=$_G['gp_ac'];
+
+//page 1
+$page=$_G['gp_page'];
+if(!$page)
+{
+	$page=1;
+}
+$page_size=$_G['gp_page_size'];
+if(!$page_size)
+{
+	$page_size=10;
+}
+if($page==1)
+{
+	$page_start=0;
+}
+else
+{
+	$page_start=($page-1)*($page_size);
+}
+//page 2
+$page2=$_G['gp_page'];
+if(!$page2)
+{
+	$page2=1;
+}
+$page_size2=$_G['gp_page_size'];
+if(!$page_size2)
+{
+	$page_size2=9;
+}
+if($page2==1)
+{
+	$page_start2=0;
+}
+else
+{
+	$page_start2=($page2-1)*($page_size2);
+}
+
+$root_path = dirname(dirname(dirname(dirname(__FILE__))));
+
+
+
+//赛事门票 列表
+function event_list_for_ticket()
+{
+	$field_uid = $_G['gp_field_uid'];
+	if($field_uid)
+	{
+		$big_where=" and (event_viewtype='B' or (event_viewtype='A'  and field_uid='".$field_uid."') or (event_viewtype='Q' and field_uid='".$field_uid."'))  and event_is_ticket='Y' ";
+	}
+	else
+	{
+		$big_where=" and (event_viewtype='B' or event_viewtype='A' or event_viewtype='S') and event_is_ticket='Y' ";
+	}
+	
+	$sql = "select event_id,event_name,field_uid,event_logo,event_starttime,event_endtime,event_ticket_status,event_ticket_wapurl from tbl_event where 1 ".$big_where." order by event_sort desc ";
+	
+	$list=DB::query($sql);
+	$event_list = array();
+	while($row = DB::fetch($list))
+	{
+		$row['event_logo'] = $site_url.'/'.$row['event_logo'];
+		$y_s=date('m',$row['event_starttime']);
+		$d_s=date('d',$row['event_starttime']);
+		$y_e=date('m',$row['event_endtime']);
+		$d_e=date('d',$row['event_endtime']);
+		if($y_s==$y_e)
+		{
+			$row['event_starttime']=$y_s."月".$d_s."日-".$d_e."日";
+		}
+		else
+		{
+			$row['event_starttime']=$y_s."月".$d_s."日-".$y_e."月".$d_e."日";
+		}
+		/*
+		$row['event_starttime'] = date('Y年m月d日',$row['event_starttime']);
+		$row['event_starttime'] = $row['event_starttime']." - ".date('Y年m月d日',$row['event_endtime']);
+		*/
+		$row['wab_url'] = $row['event_ticket_wapurl'];
+		
+		
+		$row2 = DB::fetch_first("select ad_url,ad_file,ad_file_iphone4,ad_file_iphone5,ad_width,ad_height from tbl_ad where field_uid='".$row['field_uid']."' and ad_page='ticket' order by ad_sort desc limit 1");
+		
+		$arr=explode("|",$row2['ad_url']);
+		if(count($arr)>1)
+		{
+			$row2['ad_action']=$arr[0];
+			$row2['ad_action_id']=$arr[1];
+			$row2['ad_action_text']=$arr[2];
+			$row2['event_url']=$arr[3];
+		}
+	
+		if($row2['ad_file'])
+		{
+			$row2['ad_file']="".$site_url."/".$row2['ad_file'];
+		}
+		if($row2['ad_file_iphone4'])
+		{
+			$row2['ad_file_iphone4']="".$site_url."/".$row2['ad_file_iphone4'];
+		}
+		if($row2['ad_file_iphone5'])
+		{
+			$row2['ad_file_iphone5']="".$site_url."/".$row2['ad_file_iphone5'];
+		}
+		
+		if(!empty($row2))
+		{
+			$row['ad_list']=$row2;
+		}
+		else
+		{
+			$row['ad_list']=null;
+		}
+		$event_list[] = $row;
+	}
+	if(empty($event_list))
+	{
+		$event_list = null;
+	}
+	$data['title'] = 'event_list';
+	$data['data'] = $event_list;
+	
+	api_json_result(1,0,"成功",$data);
+	
+}
+
+
+
+
+
+
+
+
+//宝马门票申请
 $userAgent = $_SERVER['HTTP_USER_AGENT'];
 
 if(strpos($userAgent,"iPhone") || strpos($userAgent,"iPad") || strpos($userAgent,"iPod") || strpos($userAgent,"iOS"))
 {
 	$user_device = 'IOS';
-}else if(strpos($userAgent,"Android") || $_G['gp_from'] == 'android')
+}
+else if(strpos($userAgent,"Android") || $_G['gp_from'] == 'android')
 {
 	$user_device = 'Android';
 }else{
 	$user_device = '';
 }
 
-$ac=$_G['gp_ac'];
+
+
+
 //修改密码
 if($ac=="bwm_reg")
 {	
@@ -93,11 +240,16 @@ if($ac=="bwm_reg")
 		'user_ticket_address' => $province.$city.$address,
 		'user_ticket_mobile' => $phone
 	);
-	if(!empty($ticket_info['ticket_price'])){
+	
+	if(!empty($ticket_info['ticket_price']))
+	{
 		$user_ticket_data['user_ticket_status'] = '0';
-	}else{
+	}
+	else
+	{
 		$user_ticket_data['user_ticket_status'] = '1';
 	}
+	
 	$nian = date('Y',time());
 	$insert_ids = array();
 	$watch_num = 0;
@@ -121,7 +273,8 @@ if($ac=="bwm_reg")
 		sys_message_add_return($user_ticket_data);
 	}
 	$user_ticket_ids = implode(",",$insert_ids);
-	if(count($insert_ids) != $watch_num){
+	if(count($insert_ids) != $watch_num)
+	{
 		$sql = "delete from tbl_user_ticket where user_ticket_id in({$user_ticket_ids})";
 		DB::query($sql);
 		api_json_result(1,1,"提交失败",null);
@@ -207,10 +360,12 @@ function insert_into_user_ticket($data_list)
 }
 
 
-if($ac == 'preg'){
+if($ac == 'preg')
+{
 	
 	$ticket_id = 12;
-	if($uid == ''){
+	if($uid == '')
+	{
 		$uid = user_add_return($phone);
 	}
 	
@@ -278,6 +433,7 @@ if($ac == 'preg'){
 		echo '错误';
 	} */
 }
+
 function preg_match_type($str,$type="int")
 {
 	switch ($type)
@@ -341,7 +497,8 @@ function erweima()
 }
 
 //获取随机字符串
-function get_randmod_str(){
+function get_randmod_str()
+{
 	$str = 'abcdABCefgD69EFhigkGHI7nm8JKpqMNrs3PQRtuS5vw4TxyU1VWzXYZ20';
 	$len = strlen($str); //得到字串的长度;
 
@@ -416,6 +573,8 @@ function user_add_return($phone)
 		return false;
 	}
 }
+
+
 //添加系统消息
 function sys_message_add_return($user_ticket_info)
 {
@@ -450,7 +609,6 @@ function sys_message_add_return($user_ticket_info)
 	$smessage_content=$msg_content;
 	$receiver_type=3;//3:指定用户
 	$message_pic=$user_ticket_info['user_ticket_codepic'];
-	
 
 	
 	$message_totalnum=0;
@@ -472,6 +630,9 @@ function sys_message_add_return($user_ticket_info)
 	}
 
 }
+
+
+
 
 
 ?>

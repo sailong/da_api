@@ -56,9 +56,9 @@ class tongjiAction extends AdminAuthAction
 		
 		
 		
-		$today_e=strtotime(date("Y-m-d",time())." 23:59:59");
-		$today_s=strtotime(date("Y-m-d",(time()-84000*1))." 00:00:00");
-		$today_num4=M()->query("select count(uid) as num from tbl_app_log where field_uid='0' and app_log_mod='login' and app_log_addtime<'".$today_e."' and app_log_addtime>'".$today_s."' group by uid  ");
+		$today_s=strtotime(date("Y-m-d",(time()-86400*1))." 00:00:00");
+		$today_e=strtotime(date("Y-m-d",(time()-86400*1))." 23:59:59");
+		$today_num4=M()->query("select count(uid) as num from tbl_app_log where field_uid='0' and app_log_mod='login' and app_log_addtime<'".$today_e."' and app_log_addtime>'".$today_s."' and (user_agent='iPhone' or user_agent='Android') group by uid  ");
 		if(!$today_num4[0]['num'])
 		{
 			$today_num4[0]['num']=0;
@@ -76,6 +76,28 @@ class tongjiAction extends AdminAuthAction
 			$today_num6[0]['num']=0;
 		}
 		
+		echo "<li>".$day2."(昨天)：".$today_num4[0]['num']." 　　　 (IOS：".$today_num5[0]['num']." / ANDROID：".$today_num6[0]['num'].")  </li>";
+		
+		
+		$today_s=strtotime(date("Y-m-d",time())." 00:00:00");
+		$today_e=strtotime(date("Y-m-d",time())." 23:59:59");
+		$today_num4=M()->query("select count(uid) as num from tbl_app_log where field_uid='0' and app_log_mod='login' and app_log_addtime<'".$today_e."' and app_log_addtime>'".$today_s."' and (user_agent='iPhone' or user_agent='Android') group by uid  ");
+		if(!$today_num4[0]['num'])
+		{
+			$today_num4[0]['num']=0;
+		}
+		
+		$today_num5=M()->query("select count(uid) as num from tbl_app_log where field_uid='0' and app_log_mod='login' and app_log_addtime<'".$today_e."' and app_log_addtime>'".$today_s."' and user_agent='iPhone' group by uid  ");
+		if(!$today_num5[0]['num'])
+		{
+			$today_num5[0]['num']=0;
+		}
+		
+		$today_num6=M()->query("select count(uid) as num from tbl_app_log where field_uid='0' and app_log_mod='login' and app_log_addtime<'".$today_e."' and app_log_addtime>'".$today_s."' and user_agent='Android' group by uid  ");
+		if(!$today_num6[0]['num'])
+		{
+			$today_num6[0]['num']=0;
+		}
 		echo "<li>".$day."(今天)：".$today_num4[0]['num']." 　　　 (IOS：".$today_num5[0]['num']." / ANDROID：".$today_num6[0]['num'].")  </li>";
 		
 		
@@ -88,7 +110,7 @@ class tongjiAction extends AdminAuthAction
 			$today_num4[0]['num']=0;
 		}
 	
-		echo "<li>已登录客户端人数：".$today_num4[0]['num']."  　  </li>";
+		echo "<li>已登录客户端总数：".$today_num4[0]['num']."  　  </li>";
 		
 		echo "<br /><br /><br /><br /><br />";
 		
@@ -132,9 +154,9 @@ class tongjiAction extends AdminAuthAction
 		
 		
 		
-		$today_e=strtotime(date("Y-m-d",time())." 23:59:59");
-		$today_s=strtotime(date("Y-m-d",(time()-84000*1))." 00:00:00");
-		$today_num4=M()->query("select count(uid) as num from tbl_app_log where field_uid='1186' and app_log_mod='login' and app_log_addtime<'".$today_e."' and app_log_addtime>'".$today_s."' group by uid  ");
+		$today_s=strtotime(date("Y-m-d",(time()-86400*1))." 00:00:00");
+		$today_e=strtotime(date("Y-m-d",(time()-86400*1))." 23:59:59");
+		$today_num4=M()->query("select count(uid) as num from tbl_app_log where field_uid='1186' and app_log_mod='login' and app_log_addtime<'".$today_e."' and app_log_addtime>'".$today_s."' and (user_agent='iPhone' or user_agent='Android') group by uid  ");
 		if(!$today_num4[0]['num'])
 		{
 			$today_num4[0]['num']=0;
@@ -151,7 +173,29 @@ class tongjiAction extends AdminAuthAction
 		{
 			$today_num6[0]['num']=0;
 		}
-	
+		
+		echo "<li>".$day2."(昨天)：".$today_num4[0]['num']." 　　　 (IOS：".$today_num5[0]['num']." / ANDROID：".$today_num6[0]['num'].")  </li>";
+		
+		
+		$today_s=strtotime(date("Y-m-d",time())." 00:00:00");
+		$today_e=strtotime(date("Y-m-d",time())." 23:59:59");
+		$today_num4=M()->query("select count(uid) as num from tbl_app_log where field_uid='1186' and app_log_mod='login' and app_log_addtime<'".$today_e."' and app_log_addtime>'".$today_s."' and (user_agent='iPhone' or user_agent='Android') group by uid  ");
+		if(!$today_num4[0]['num'])
+		{
+			$today_num4[0]['num']=0;
+		}
+		
+		$today_num5=M()->query("select count(uid) as num from tbl_app_log where field_uid='1186' and app_log_mod='login' and app_log_addtime<'".$today_e."' and app_log_addtime>'".$today_s."' and user_agent='iPhone' group by uid  ");
+		if(!$today_num5[0]['num'])
+		{
+			$today_num5[0]['num']=0;
+		}
+		
+		$today_num6=M()->query("select count(uid) as num from tbl_app_log where field_uid='1186' and app_log_mod='login' and app_log_addtime<'".$today_e."' and app_log_addtime>'".$today_s."' and user_agent='Android' group by uid  ");
+		if(!$today_num6[0]['num'])
+		{
+			$today_num6[0]['num']=0;
+		}
 		echo "<li>".$day."(今天)：".$today_num4[0]['num']." 　　　 (IOS：".$today_num5[0]['num']." / ANDROID：".$today_num6[0]['num'].")  </li>";
 		
 		
@@ -164,7 +208,7 @@ class tongjiAction extends AdminAuthAction
 		{
 			$today_num4[0]['num']=0;
 		}
-		echo "<li>已登录客户端人数：".$today_num4[0]['num']."   </li>";
+		echo "<li>已登录客户端总数：".$today_num4[0]['num']."   </li>";
 		
 		
 		echo "<br /><br /><br /><br /><br />";
@@ -207,9 +251,9 @@ class tongjiAction extends AdminAuthAction
 		
 		
 		
-		$today_e=strtotime(date("Y-m-d",time())." 23:59:59");
-		$today_s=strtotime(date("Y-m-d",(time()-84000*1))." 00:00:00");
-		$today_num4=M()->query("select count(uid) as num from tbl_app_log where field_uid='1160' and app_log_mod='login' and app_log_addtime<'".$today_e."' and app_log_addtime>'".$today_s."' group by uid  ");
+		$today_s=strtotime(date("Y-m-d",(time()-86400*1))." 00:00:00");
+		$today_e=strtotime(date("Y-m-d",(time()-86400*1))." 23:59:59");
+		$today_num4=M()->query("select count(uid) as num from tbl_app_log where field_uid='1160' and app_log_mod='login' and app_log_addtime<'".$today_e."' and app_log_addtime>'".$today_s."' and (user_agent='iPhone' or user_agent='Android') group by uid  ");
 		if(!$today_num4[0]['num'])
 		{
 			$today_num4[0]['num']=0;
@@ -226,8 +270,32 @@ class tongjiAction extends AdminAuthAction
 		{
 			$today_num6[0]['num']=0;
 		}
-	
+		
+		echo "<li>".$day2."(昨天)：".$today_num4[0]['num']." 　　　 (IOS：".$today_num5[0]['num']." / ANDROID：".$today_num6[0]['num'].")  </li>";
+		
+		
+		$today_s=strtotime(date("Y-m-d",time())." 00:00:00");
+		$today_e=strtotime(date("Y-m-d",time())." 23:59:59");
+		$today_num4=M()->query("select count(uid) as num from tbl_app_log where field_uid='1160' and app_log_mod='login' and app_log_addtime<'".$today_e."' and app_log_addtime>'".$today_s."' and (user_agent='iPhone' or user_agent='Android') group by uid  ");
+		if(!$today_num4[0]['num'])
+		{
+			$today_num4[0]['num']=0;
+		}
+		
+		$today_num5=M()->query("select count(uid) as num from tbl_app_log where field_uid='1160' and app_log_mod='login' and app_log_addtime<'".$today_e."' and app_log_addtime>'".$today_s."' and user_agent='iPhone' group by uid  ");
+		if(!$today_num5[0]['num'])
+		{
+			$today_num5[0]['num']=0;
+		}
+		
+		$today_num6=M()->query("select count(uid) as num from tbl_app_log where field_uid='1160' and app_log_mod='login' and app_log_addtime<'".$today_e."' and app_log_addtime>'".$today_s."' and user_agent='Android' group by uid  ");
+		if(!$today_num6[0]['num'])
+		{
+			$today_num6[0]['num']=0;
+		}
 		echo "<li>".$day."(今天)：".$today_num4[0]['num']." 　　　 (IOS：".$today_num5[0]['num']." / ANDROID：".$today_num6[0]['num'].")  </li>";
+		
+		
 		
 		
 		$today_s=strtotime(date("Y-m-d",time())." 00:00:00");
@@ -238,7 +306,7 @@ class tongjiAction extends AdminAuthAction
 			$today_num4[0]['num']=0;
 		}
 
-		echo "<li>已登录客户端人数：".$today_num4[0]['num']."   　 </li>";
+		echo "<li>已登录客户端总数：".$today_num4[0]['num']."   　 </li>";
 		
 		
 		
