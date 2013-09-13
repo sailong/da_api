@@ -159,7 +159,6 @@ class user_ticketAction extends field_publicAction
 			$this->assign("data",$data);
 			
 			
-			
 			$this->assign("page_title","修改门票领取");
 			$this->display();
 		}

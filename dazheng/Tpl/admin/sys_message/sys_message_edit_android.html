@@ -77,17 +77,7 @@
 					<td>
 						<select name="ext_action" style="width:100px;">
 							<option value="">请选择</option>
-							<option value="event_list">赛事列表</option>
-							<option value="wap">WAP</option>
-							<option value="bmw_apply">宝马门票报名</option>
-							<option value="apply_ticket">门票申请</option>
-							<option value="mathcenter">赛事直播</option>
-							<option value="blog_detail">博客详细页</option>
-							<option value="app_store">APP STORE</option>
-							<option value="golf_forum_list">高球论坛列表</option>
-							<option value="golf_forum_detail">高球论坛详细页</option>
-							<option value="album_list">图片库</option>
-							<option value="album_detail">图片库详细页</option>
+							{$action_list}
 						</select>
 						<script>set_select_value(document.act_form.ext_action,"{$data['message_content']['n_extras']['action']}");</script>
 					</td>

@@ -19,7 +19,7 @@ class event_userModel extends Model
 
 		if(get("k")!="")
 		{
-			$where .=" and event_user_name like '%".get("k")."%' ";
+			$where .=" and event_user_realname like '%".get("k")."%' ";
 		}
 
 		if(get("starttime")!="")
@@ -32,6 +32,7 @@ class event_userModel extends Model
 		}
 
 		$data["item"]=M("event_user")->where($where.$bigwhere)->field("event_user_id,event_id,uid,event_user_realname,event_user_sex,event_user_card_type,event_user_card,event_user_chadian,event_user_state,event_user_addtime")->order($sort)->page($page.",".$page_size)->select();
+		//echo M()->getLastSql();
 		for($i=0; $i<count($data["item"]); $i++)
 		{
 			if($data["item"][$i]["user_id"]!="")

@@ -34,6 +34,8 @@ class sys_messageAction extends AdminAuthAction
 
 	public function sys_message_add()
 	{
+		$action_list=select_dict(16,"select");
+		$this->assign("action_list",$action_list);
 
 		$this->assign("page_title","添加系统消息");
     	$this->display('sys_message_add_android');
@@ -163,6 +165,9 @@ class sys_messageAction extends AdminAuthAction
 			$data['message_content']['n_content'] = urldecode($data['message_content']['n_content']);
 			
 			$this->assign("data",$data);
+			
+			$action_list=select_dict(16,"select");
+			$this->assign("action_list",$action_list);
 			
 			$this->assign("page_title","修改系统消息");
 			$this->display('sys_message_edit_android');

@@ -34,7 +34,8 @@ class push_messageAction extends field_publicAction
 
 	public function push_message_add()
 	{
-
+		$action_list=select_dict(16,"select");
+		$this->assign("action_list",$action_list);
 		$this->assign("page_title","添加消息推送");
     	$this->display();
 	}
@@ -172,6 +173,9 @@ class push_messageAction extends field_publicAction
 			$data=M("push_message")->where("message_id=".intval(get("message_id")))->find();
 			$this->assign("data",$data);
 			
+			$action_list=select_dict(16,"select");
+			$this->assign("action_list",$action_list);
+			
 			$this->assign("page_title","修改消息推送");
 			$this->display();
 		}
@@ -196,6 +200,9 @@ class push_messageAction extends field_publicAction
 			$data['ext_action']=$content['n_extras']['action'];
 			$data['ext_id']=$content['n_extras']['id'];
 			$data['ext_title']=urldecode($content['n_extras']['title']);
+			
+			$action_list=select_dict(16,"select");
+			$this->assign("action_list",$action_list);
 
 			$this->assign("data",$data);
 			

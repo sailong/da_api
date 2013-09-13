@@ -269,6 +269,44 @@ class user_ticketAction extends piao_publicAction
 		}
 
 	}
+	public function user_ticket_detail_ext()
+	{
+		if(intval(get("out_id"))>0 || get("out_idtype") != '')
+		{
+			$table_name = get("out_idtype");
+			$data=M()->table($table_name)->where("id=".intval(get("out_id")))->find();
+			
+			if(!empty($data))
+			{
+				$order_ticket_info = explode(',',$data['watch_date']);
+				$data['order_detail'] = '';
+				foreach($order_ticket_info as $key=>$val){
+					$order_ticket_detail = explode('|',$val);
+					$ticket_id = $order_ticket_detail[0];
+					$ticket_nums = $order_ticket_detail[1];
+					$ticket_info = M('ticket')->where("ticket_id='{$ticket_id}'")->find();
+					$data['order_detail'] .= $ticket_info['ticket_name'].' '.$ticket_nums.'张<br/>';
+				}
+				$event_info = M('event')->where("event_id='".$data['event_id']."'")->find();
+				
+				$this->assign("event_info",$event_info);
+				$this->assign("data",$data);
+
+				$this->assign("page_title","附加信息");
+				$this->display($table_name);
+			}
+			else
+			{
+				$this->error("您该问的信息不存在");	
+			}
+			
+		}
+		else
+		{
+			$this->error("您该问的信息不存在");
+		}
+
+	}
 	
 	
 	//生成二维码成功返回路径，失败返回 false
