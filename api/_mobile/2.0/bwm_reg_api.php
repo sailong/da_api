@@ -64,7 +64,7 @@ if($ac=="bwm_reg")
 	$bwm_adddate = date('Y年m月d日 H:i:s',$bwm_addtime);
 	
 	if($uid == ''){
-		$uid = user_add_return($phone);
+		$uid = user_add_return($phone,$email);
 	}
 	
 	if(empty($uid)){
@@ -368,7 +368,7 @@ function get_randmod_str(){
 /*
 *  添加用户注册
 */
-function user_add_return($phone)
+function user_add_return($phone,$email)
 {
 	if(!empty($phone))
 	{
@@ -379,13 +379,14 @@ function user_add_return($phone)
 		}
 	}
 	
-	$username=time(). mt_rand(1000,9999);//post("user_ticket_realname");	
+	$rand_nums = time(). mt_rand(1000,9999);
+	$username=$phone;//time(). mt_rand(1000,9999);//post("user_ticket_realname");	
 	$password='123456';
 	$salt = substr(uniqid(rand()), -6);
 	$password = md5(md5($password).$salt);
 	$salt=$salt;
 	$password=$password;
-	$email=$username.'@bw.com'; 
+	$email=$email; 
 	$mobile=$phone; 
 	$regip=time();
 	$regdate=time();
@@ -399,12 +400,12 @@ function user_add_return($phone)
 	$sql = "insert into pre_common_member(uid,username,password,email,regdate,groupid) values('{$ucuid}','{$username}','{$password}','{$email}','{$regdate}','{$groupid}')";
 	$rs = DB::query($sql);
 	
-	$sql = "insert into pre_common_member_profile(uid,realname,gender,mobile,regdate) values('{$ucuid}','{$username}','{$gender}','{$mobile}','{$regdate}')";
+	$sql = "insert into pre_common_member_profile(uid,realname,gender,mobile,regdate) values('{$ucuid}','{$rand_nums}','{$gender}','{$mobile}','{$regdate}')";
 	//生成真实姓名
 	$rs = DB::query($sql);
 	
 	$role_id = 3;
-	$sql = "insert into jishigou_members(uid,username,nickname,password,email,phone,regip,regdate,gender,role_id) values('{$ucuid}','{$username}','{$username}','{$password}','{$email}','{$mobile}','{$regip}','{$regdate}','{$gender}','{$role_id}')";
+	$sql = "insert into jishigou_members(uid,username,nickname,password,email,phone,regip,regdate,gender,role_id) values('{$ucuid}','{$username}','{$rand_nums}','{$password}','{$email}','{$mobile}','{$regip}','{$regdate}','{$gender}','{$role_id}')";
 	///生成微博记录
 	$rs = DB::query($sql);
 	if($rs!=false)
@@ -447,7 +448,7 @@ function sys_message_add_return($user_ticket_info)
 	
 	$msg_content = json_encode(array('n_title'=>urlencode($n_title), 'n_content'=>urlencode($n_content),'n_extras'=>$message_extinfo));
 
-	$smessage_content=$msg_content;
+	$message_content=$msg_content;
 	$receiver_type=3;//3:指定用户
 	$message_pic=$user_ticket_info['user_ticket_codepic'];
 	

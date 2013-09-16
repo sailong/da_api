@@ -38,10 +38,12 @@ if($ac=="ad")
 			$row['ad_action']=$arr[0];
 			$row['ad_action_id']=$arr[1];
 			$row['ad_action_text']=$arr[2];
+			$row['ad_action_ext']=$arr[2];
 			$row['event_url']=$arr[3];
 		}
 		else
 		{
+			$row['ad_action_ext']=$row['ad_action_text'];
 			$row['event_url']="";
 		}
 	
@@ -103,6 +105,7 @@ if($ac=="ad_list")
 			$ad['ad_action']=$arr[0];
 			$ad['ad_action_id']=$arr[1];
 			$ad['ad_action_text']=$arr[2];
+			$ad['ad_action_ext']=$arr[2];
 			$ad['event_url']=$arr[3];
 			if(!$ad['event_url'])
 			{
@@ -111,6 +114,7 @@ if($ac=="ad_list")
 		}
 		else
 		{
+			$row['ad_action_ext']=$ad['ad_action_text'];
 			$ad['event_url']=null;
 		}
 
@@ -211,6 +215,7 @@ if($ac=="ad_welcome")
 		$ad['ad_action']=$arr[0];
 		$ad['ad_action_id']=$arr[1];
 		$ad['ad_action_text']=$arr[2];
+		$ad['ad_action_ext']=$arr[2];
 		$ad['event_url']=$arr[3];
 		if(!$ad['event_url'])
 		{
@@ -219,6 +224,7 @@ if($ac=="ad_welcome")
 	}
 	else
 	{
+		$ad['ad_action_ext']=$ad['ad_action_text'];
 		$ad['event_url']=null;
 	}
 

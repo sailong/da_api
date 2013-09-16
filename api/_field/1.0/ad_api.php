@@ -58,6 +58,9 @@ if($ac=="ad")
 	
 
 	$ad=DB::query("select ad_url,ad_file,ad_file_iphone4,ad_file_iphone5,ad_width,ad_height,ad_action,ad_action_id,ad_action_text from tbl_ad where ad_app='field_app' and field_uid='".$field_uid."' ".$sql."  ".$apptype_sql."   order by ad_sort desc   ");
+	if($_G['gp_test']){
+		echo "select ad_url,ad_file,ad_file_iphone4,ad_file_iphone5,ad_width,ad_height,ad_action,ad_action_id,ad_action_text from tbl_ad where ad_app='field_app' and field_uid='".$field_uid."' ".$sql."  ".$apptype_sql."   order by ad_sort desc   ";die;
+	}
 	while($row=DB::fetch($ad))
 	{
 		$arr=explode("|",$row['ad_url']);
@@ -66,10 +69,12 @@ if($ac=="ad")
 			$row['ad_action']=$arr[0];
 			$row['ad_action_id']=$arr[1];
 			$row['ad_action_text']=$arr[2];
+			$row['ad_action_ext']=$arr[2];
 			$row['event_url']=$arr[3];
 		}
 		else
 		{
+			$row['ad_action_ext']=$row['ad_action_text'];
 			$row['event_url']="";
 		}
 		if($row['ad_file'])
