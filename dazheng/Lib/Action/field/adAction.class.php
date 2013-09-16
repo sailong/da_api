@@ -105,6 +105,7 @@ class adAction extends field_publicAction
 			$data["ad_action_text"]=post("ad_action_text");
 			$data["event_id"]=post("event_id");
 			$data["field_uid"]=$_SESSION['field_uid'];
+			$data["ad_apptype"]=post("ad_apptype");
 			
 			
 			$data["ad_state"]=1;
@@ -113,11 +114,13 @@ class adAction extends field_publicAction
 			$list=M("ad")->add($data);
 			if($list!=false)
 			{
-				msg_dialog_tip("succeed^添加成功");
+				$this->success("添加成功",U('field/ad/ad'));
+				//msg_dialog_tip("succeed^添加成功");
 			}
 			else
 			{
-				msg_dialog_tip("error^添加失败");
+				$this->success("添加失败",U('field/ad/ad'));
+				//msg_dialog_tip("error^添加失败");
 			}
 		}
 		else
@@ -208,15 +211,18 @@ class adAction extends field_publicAction
 			$data["ad_action_id"]=post("ad_action_id");
 			$data["ad_action_text"]=post("ad_action_text");
 			$data["event_id"]=post("event_id");
+			$data["ad_apptype"]=post("ad_apptype");
 			
 			$list=M("ad")->save($data);
 			if($list!=false)
 			{
-				msg_dialog_tip("succeed^修改成功");
+				$this->success("修改成功",U('field/ad/ad'));
+				//msg_dialog_tip("succeed^修改成功");
 			}
 			else
 			{
-				msg_dialog_tip("error^修改失败");
+				$this->success("修改失败",U('field/ad/ad'));
+				//msg_dialog_tip("error^修改失败");
 			}
 		}
 		else

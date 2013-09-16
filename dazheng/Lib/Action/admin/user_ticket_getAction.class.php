@@ -216,7 +216,7 @@ class user_ticket_getAction extends AdminAuthAction
 				if($user_ticket_get_info !== false){
 					//获取订票信息
 					if($user_ticket_get_info['phone'] && $user_ticket_get_info['check_status']==0){
-						$uid = $this->user_add_return($user_ticket_get_info['phone']);
+						$uid = $this->user_add_return($user_ticket_get_info['phone'],$user_ticket_get_info['email']);
 						//user_ticket表添加信息
 						$user_ticket_data = array(
 							'uid' => $uid,
@@ -404,7 +404,7 @@ class user_ticket_getAction extends AdminAuthAction
 	/*
 	*  添加用户注册
 	*/
-	public function user_add_return($phone)
+	public function user_add_return($phone,$email)
 	{
 		
 		if(!empty($phone))
@@ -414,14 +414,14 @@ class user_ticket_getAction extends AdminAuthAction
 				return $rs['uid'];
 			}
 		}
-		
-		$user_data["username"]=time(). mt_rand(1000,9999);
+		$rand_nums = time(). mt_rand(1000,9999);
+		$user_data["username"]=$phone;
 		$password='123456';
 		$salt = substr(uniqid(rand()), -6);
 		$password = md5(md5($password).$salt);
 		$user_data["salt"]=$salt;
 		$user_data["password"]=$password;
-		$user_data["email"]=$user_data["username"].'@bw.com'; 
+		$user_data["email"]=$email; 
 		$user_data["mobile"]=$phone; 
 		$user_data["regip"]=time();
 		$user_data["regdate"]=time();
@@ -435,11 +435,11 @@ class user_ticket_getAction extends AdminAuthAction
 		
 		$user_data["uid"]=$ucuid; 
 		$user_data["gender"]=''; 
-		$user_data["realname"]=$user_data["username"];	
+		$user_data["realname"]=$rand_nums;	
 		
 		//生成真实姓名
 		$list=M("common_member_profile","pre_")->add($user_data); 
-		$user_data["nickname"]=$user_data["username"];
+		$user_data["nickname"]=$rand_nums;
 		$user_data["ucuid"]=$ucuid; 
 		$user_data["role_id"]=3; 			
 		

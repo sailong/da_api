@@ -2,10 +2,10 @@
 <div class="so_main">
 
 
-<div class="page_tit">文章管理</div>
+<div class="page_tit">新闻管理</div>
   <div class="tit_tab">
 	<ul>
-		<li><a class=on href="#">修改文章</a></li>
+		<li><a class=on href="#">修改新闻</a></li>
 	</ul>
   </div>
 
@@ -21,7 +21,7 @@
 		<tbody>
 		
 				<tr>
-					<th>文章标题：</th>
+					<th>新闻标题：</th>
 					<td><input type="text" name="arc_name" id="arc_name" class="mod_input2" style="width:500px;" value="{$data.arc_name}"></td>
 				</tr>
 				
@@ -41,7 +41,7 @@
 					</td>
 				</tr>
 				<tr>
-					<th>文章类型：</th>
+					<th>新闻类型：</th>
 					<td>
 						<select name="arc_type">
 							<option value="">请选择</option>
@@ -76,7 +76,7 @@
 					</td>
 				</tr>
 				<tr>
-					<th>文章来源：</th>
+					<th>新闻来源：</th>
 					<td>
 						<input type="text" name="arc_source" id="arc_source" class="mod_input2" style="width:200px;"  value="{$data.arc_source}">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 						<b>责任编辑：</b>
@@ -84,7 +84,7 @@
 					</td>
 				</tr>
 				<tr>
-					<th>文章简介：</th>
+					<th>新闻简介：</th>
 					<td>
 						<textarea name="arc_note" id="arc_note" class="mod_input2" style="width:500px; height:80px;">{$data.arc_note}</textarea>
 					</td>
@@ -108,6 +108,20 @@
 					</td>
 				</tr>
 				<tr>
+					<th>置顶状态：</th>
+					<td>
+						<select name="arc_top">
+							<option value="">请选择</option>
+							<option value="0">无</option>
+							<option value="1">一级置顶</option>
+							<option value="2">二级置顶</option>
+							<option value="3">三级置顶</option>
+						</select>
+						<script>set_select_value(document.act_form.arc_top,"{$data.arc_top}");</script>
+						（3级置顶最靠前）
+					</td>
+				</tr>
+				<tr>
 					<th>语言：</th>
 					<td><select name="language">
 							<option value="">请选择</option>
@@ -118,7 +132,7 @@
 					</td>
 				</tr>
 				<tr>
-					<th>文章内容：</th>
+					<th>新闻内容：</th>
 					<td>
 					{$editor}
 					</td>
@@ -136,7 +150,7 @@
 				<td>
 					<input type="hidden" name="arc_id" value="{$data.arc_id}">
 					<input type="submit" class="btn_b" value="保存" style="margin-right:10px;"/>
-					<input type="button" class="btn_w" onclick="close_dialog(this)" value="取消" />
+					<input type="button" class="btn_w" onclick="javascript:history.back(-1);" value="取消" />
 				</td>
 		</tfoot>
 	</table><!--/add_table-->
@@ -149,14 +163,14 @@
 $(document).ready(function(){
 $.formValidator.initConfig({formID:"act_form",theme:'ArrowSolidBox',mode:'AutoTip',onError:function(msg){msg_error(msg)},inIframe:true});
 
-	$("#arc_name").formValidator({empty:true,onShow:"请输入文章名称",onFocus:"请输入文章名称",onCorrect:"输入正确"}).inputValidator({min:1,max:100,onError:"请输入文章名称"});
+	$("#arc_name").formValidator({empty:true,onShow:"请输入新闻名称",onFocus:"请输入新闻名称",onCorrect:"输入正确"}).inputValidator({min:1,max:100,onError:"请输入新闻名称"});
 	$("#staff_id").formValidator({empty:true,onShow:"请输入发布人",onFocus:"请输入发布人",onCorrect:"输入正确"}).inputValidator({min:1,max:11,onError:"请输入发布人"});
 	//$("#arctype_id").formValidator({empty:true,onShow:"请输入所属栏目",onFocus:"请输入所属栏目",onCorrect:"输入正确"}).inputValidator({min:1,max:11,onError:"请输入所属栏目"});
-	$("#arc_note").formValidator({empty:true,onShow:"请输入文章简介",onFocus:"请输入文章简介",onCorrect:"输入正确"}).inputValidator({min:1,max:300,onError:"请输入文章简介"});
+	$("#arc_note").formValidator({empty:true,onShow:"请输入新闻简介",onFocus:"请输入新闻简介",onCorrect:"输入正确"}).inputValidator({min:1,max:300,onError:"请输入新闻简介"});
 	$("#arc_pic").formValidator({empty:true,onShow:"请输入图片",onFocus:"请输入图片",onCorrect:"输入正确"}).inputValidator({min:1,max:300,onError:"请输入图片"});
 	$("#arc_source").formValidator({empty:true,onShow:"请输入来源",onFocus:"请输入来源",onCorrect:"输入正确"}).inputValidator({min:1,max:50,onError:"请输入来源"});
 	$("#arc_editor").formValidator({empty:true,onShow:"请输入编辑",onFocus:"请输入编辑",onCorrect:"输入正确"}).inputValidator({min:1,max:50,onError:"请输入编辑"});
-	$("#arc_content").formValidator({empty:true,onShow:"请输入文章内容",onFocus:"请输入文章内容",onCorrect:"输入正确"}).inputValidator({min:1,onError:"请输入文章内容"});
+	$("#arc_content").formValidator({empty:true,onShow:"请输入新闻内容",onFocus:"请输入新闻内容",onCorrect:"输入正确"}).inputValidator({min:1,onError:"请输入新闻内容"});
 	$("#arc_is_tj").formValidator({empty:true,onShow:"请输入推荐",onFocus:"请输入推荐",onCorrect:"输入正确"}).inputValidator({min:1,max:10,onError:"请输入推荐"});
 	$("#arc_state").formValidator({empty:true,onShow:"请输入状态",onFocus:"请输入状态",onCorrect:"输入正确"}).inputValidator({min:1,max:10,onError:"请输入状态"});
 	$("#arc_path").formValidator({empty:true,onShow:"请输入路径",onFocus:"请输入路径",onCorrect:"输入正确"}).inputValidator({min:1,max:50,onError:"请输入路径"});
