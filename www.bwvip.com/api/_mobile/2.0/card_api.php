@@ -430,17 +430,25 @@ if($ac=='rank')
 			for($i=0; $i<count($gscore); $i++)
 			{
 				
-				if($gscore[$i]['status']==-4)
+				if($gscore[$i]['status']==-1)
 				{
 					$gscore[$i]['order']="CUT";
+					$gscore[$i]['score_status']="-";
+				}
+				else if($gscore[$i]['status']==-3)
+				{
+					$gscore[$i]['order']="RTD";
+					$gscore[$i]['score_status']="-";
 				}
 				else if($gscore[$i]['status']==-2)
 				{
 					$gscore[$i]['order']="WD";
+					$gscore[$i]['score_status']="-";
 				}
-				else if($gscore[$i]['status']==-1)
+				else if($gscore[$i]['status']==-4)
 				{
 					$gscore[$i]['order']="DQ";
+					$gscore[$i]['score_status']="-";
 				}
 				else if(intval($gscore[$i]['zong_score'])>0)
 				{

@@ -831,7 +831,7 @@ class fenzhanAction extends AdminAuthAction
 			$fenzhan_info=M()->query("select fenzhan_id,fenzhan_lun from tbl_fenzhan where fenzhan_id='".post('next_fenzhan_id')."' ");
 			$up=M()->query("insert tbl_baofen(uid,event_user_id,realname,event_id,sid,par,fenzhan_id,field_id,fenzu_id,zong_score,total_sum_ju,addtime,dateline,source,lun,status ) select uid,event_user_id,realname,event_id,sid,par,".post('next_fenzhan_id').",field_id,fenzu_id,zong_score,total_sum_ju,addtime,dateline,source,".$fenzhan_info[0]['fenzhan_lun'].",0 from tbl_baofen where total_sum_ju<='".post('jinji_par')."' and fenzhan_id='".post('fenzhan_id')."' and status>=0 ");
 			
-			$ress=M()->query("update tbl_baofen set status='-4' where total_sum_ju>'".post('jinji_par')."' and fenzhan_id='".post('fenzhan_id')."' and status>=0 ");
+			$ress=M()->query("update tbl_baofen set status='-1' where total_sum_ju>'".post('jinji_par')."' and fenzhan_id='".post('fenzhan_id')."' and status>=0 ");
 			
 			$this->success("处理成功",U('admin/fenzhan/fenzhan',array('event_id'=>post('event_id'))));
 			

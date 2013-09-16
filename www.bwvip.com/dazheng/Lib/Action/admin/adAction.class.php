@@ -16,6 +16,7 @@ class adAction extends AdminAuthAction
 
 	public function ad()
 	{
+		
 		$list=D("ad")->ad_list_pro();
 
 		$this->assign("list",$list["item"]);
@@ -30,7 +31,8 @@ class adAction extends AdminAuthAction
 	{
 		$page_list=select_dict(3,"select");
 		$this->assign("page_list",$page_list);
-		
+		$action_list=select_dict(16,"select");
+		$this->assign("action_list",$action_list);
 		$event=D('event')->event_select_pro(" and field_uid='".$_SESSION['field_uid']."' ");
 		$this->assign('event',$event['item']);
 
@@ -85,11 +87,14 @@ class adAction extends AdminAuthAction
 			
 			}
 			$data["ad_type"]='pic';
-			$data["ad_width"]=0;
-			$data["ad_height"]=0;
+			$data["ad_width"]=post("ad_width");
+			$data["ad_height"]=post("ad_height");
 			$data["ad_page"]=post("ad_page");
 			$data["ad_url"]=post("ad_url");
 			$data["ad_sort"]=post("ad_sort");
+			$data["ad_action"]=post("ad_action");
+			$data["ad_action_id"]=post("ad_action_id");
+			$data["ad_action_text"]=post("ad_action_text");
 			$data["event_id"]=post("event_id");
 			
 			if(post("field_uid"))
@@ -104,11 +109,13 @@ class adAction extends AdminAuthAction
 			$list=M("ad")->add($data);
 			if($list!=false)
 			{
-				msg_dialog_tip("succeed^添加成功");
+				$this->success("添加成功",U('admin/ad/ad'));
+				//msg_dialog_tip("succeed^添加成功");
 			}
 			else
 			{
-				msg_dialog_tip("error^添加失败");
+				$this->success("添加失败",U('admin/ad/ad'));
+				//msg_dialog_tip("error^添加失败");
 			}
 		}
 		else
@@ -131,6 +138,9 @@ class adAction extends AdminAuthAction
 
 			$page_list=select_dict(3,"select");
 			$this->assign("page_list",$page_list);
+			
+			$action_list=select_dict(16,"select");
+			$this->assign("action_list",$action_list);
 			//print_r($page_list);
 			
 			$this->assign("page_title","修改广告");
@@ -188,10 +198,14 @@ class adAction extends AdminAuthAction
 				}
 			
 			}
-
+			$data["ad_width"]=post("ad_width");
+			$data["ad_height"]=post("ad_height");
 			$data["ad_page"]=post("ad_page");
 			$data["ad_url"]=post("ad_url");
 			$data["ad_sort"]=post("ad_sort");
+			$data["ad_action"]=post("ad_action");
+			$data["ad_action_id"]=post("ad_action_id");
+			$data["ad_action_text"]=post("ad_action_text");
 			$data["event_id"]=post("event_id");
 			if(post("field_uid"))
 			{
@@ -202,11 +216,13 @@ class adAction extends AdminAuthAction
 			$list=M("ad")->save($data);
 			if($list!=false)
 			{
-				msg_dialog_tip("succeed^修改成功");
+				$this->success("修改成功",U('admin/ad/ad'));
+				//msg_dialog_tip("succeed^修改成功");
 			}
 			else
 			{
-				msg_dialog_tip("error^修改失败");
+				$this->success("修改失败",U('admin/ad/ad'));
+				//msg_dialog_tip("error^修改失败");
 			}
 		}
 		else

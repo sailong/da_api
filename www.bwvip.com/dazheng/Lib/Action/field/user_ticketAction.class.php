@@ -17,8 +17,54 @@ class user_ticketAction extends field_publicAction
 
 	public function user_ticket()
 	{
-		$list=D("user_ticket")->user_ticket_select_pro();
-
+	
+		$ticket_id = get('k');
+		$event_id = get('event_id');
+		$field_uid = $_SESSION['field_uid'];
+		
+		$event_ids = array();
+		$event_ids_sql = '';
+		if($event_ids){
+			$event_ids_sql = " or event_id in('".implode("','",(array)$event_ids)."')";
+		}
+		$event_list = M('event')->where("field_uid='{$field_uid}' {$event_ids_sql}")->select();
+		foreach($event_list as $key=>$val){
+			unset($event_list[$key]);
+			$event_list[$val['event_id']] = $val;
+			$event_ids[$val['event_id']]=$val['event_id'];
+		}
+		if($event_id){
+			$event_ids = $event_id;
+		}
+		//$event_ids_sql = '';
+		if($event_ids){
+			//$event_ids_sql = " and event_id in('".implode("','",$event_ids)."')";
+			$ticket_list = M('ticket')->where("event_id in('".implode("','",(array)$event_ids)."')")->select();
+			//echo M()->getLastSql();
+			foreach($ticket_list as $key=>$val){
+				unset($ticket_list[$key]);
+				$ticket_list[$val['ticket_id']] = $val;
+				$ticket_ids[$val['ticket_id']] = $val['ticket_id'];
+			}
+			$ticket_ids_sql = '';
+			if($ticket_ids){
+				$ticket_ids_sql = " and ticket_id in('".implode("','",(array)$ticket_ids)."')";
+			}
+		}
+		$ticket_id_sql = '';
+		if($ticket_id){
+			$ticket_id_sql = " and ticket_id='{$ticket_id}'";
+		}else{
+			$ticket_id_sql = $ticket_ids_sql;
+		}
+		//echo $ticket_ids_sql;
+		if($ticket_id_sql){
+			$list=D("user_ticket")->user_ticket_list_pro($ticket_id_sql);
+		}
+		
+		
+		$this->assign("event_list",$event_list);
+		$this->assign("ticket_list",$ticket_list);
 		$this->assign("list",$list["item"]);
 		$this->assign("pages",$list["pages"]);
 		$this->assign("total",$list["total"]);
@@ -223,6 +269,23 @@ class user_ticketAction extends field_publicAction
 			$this->error("您该问的信息不存在");
 		}
 
+	}
+	
+	//根据赛事id(event_id)获取相关赛事门票列表
+	public function get_event_ticket_list()
+	{
+		$event_id = get('event_id');
+		
+		if(empty($event_id)){
+			$this->ajaxReturn(null,'参数错误',0);
+		}
+		$ticket_list = M('ticket')->where("event_id='{$event_id}'")->select();
+		
+		if($ticket_list){
+			$this->ajaxReturn($ticket_list,'成功',1);
+		}
+		
+		$this->ajaxReturn(null,'失败',0);
 	}
 
 

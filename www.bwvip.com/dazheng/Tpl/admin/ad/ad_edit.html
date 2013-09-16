@@ -1,5 +1,14 @@
 <include file="../public/header_dialog" />
-<table border="0" cellspacing="0" cellpadding="0" style="width:500px;">
+<div class="page_tit">广告</div>
+  <div class="tit_tab">
+	<ul>
+		<li><a class=on href="#">修改广告</a></li>
+	</ul>
+  </div>
+
+{$usejs}
+
+<table border="0" cellspacing="0" cellpadding="0" style="width:900px;">
 <tr>
 <td>
 <!--/dialog_start-->
@@ -23,8 +32,8 @@
 						<script>set_select_value(document.act_form.ad_apptype,"{$data.ad_apptype}");</script>
 					</td>
 				</tr>
-				<!--
-				<tr>
+				
+				<!-- <tr>
 					<th><font color="red">*</font>广告类型：</th>
 					<td>
 						<select name="ad_type" id="ad_type" class="mod_select">
@@ -35,8 +44,8 @@
 						</select>
 						<script>set_select_value(document.act_form.ad_type,"{$data.ad_type}");</script>
 					</td>
-				</tr>
-				-->
+				</tr> -->
+				
 				<tr>
 					<th><font color="red">*</font>广告分类：</th>
 					<td>
@@ -61,25 +70,40 @@
 				</tr>
 				<tr>
 					<th><font color="red">*</font>广告文件：</th>
-					<td><input type="file" name="ad_file" id="ad_file"  class="mod_input" style="width:300px;"></td>
+					<td>
+						<php>if($data['ad_file']){</php>
+						<a href="{$data.ad_file}" target="_blank" title="查看原图"><img src="{$data.ad_file}"  style="max-width:200px; max-height:100px; "></a>
+						<php>}</php><br/>
+						<input type="file" name="ad_file" id="ad_file"  class="mod_input" style="width:300px;">
+					</td>
 				</tr>
 
 				<tr>
 					<th><font color="red">*</font>广告文件(IPHONE4)：</th>
-					<td><input type="file" name="ad_file_iphone4" id="ad_file_iphone4"  class="mod_input" style="width:300px;"></td>
+					<td>
+						<php>if($data['ad_file_iphone4']){</php>
+						<a href="{$data.ad_file_iphone4}" target="_blank" title="查看原图"><img src="{$data.ad_file_iphone4}"  style="max-width:200px; max-height:100px; "></a>
+						<php>}</php><br/>
+						<input type="file" name="ad_file_iphone4" id="ad_file_iphone4"  class="mod_input" style="width:300px;">
+					</td>
 				</tr>
 				<tr>
 					<th><font color="red">*</font>广告文件(IPHONE5)：</th>
-					<td><input type="file" name="ad_file_iphone5" id="ad_file_iphone5"  class="mod_input" style="width:300px;"></td>
+					<td>
+						<php>if($data['ad_file_iphone5']){</php>
+						<a href="{$data.ad_file_iphone5}" target="_blank" title="查看原图"><img src="{$data.ad_file_iphone5}"  style="max-width:200px; max-height:100px; "></a>
+						<php>}</php><br/>
+						<input type="file" name="ad_file_iphone5" id="ad_file_iphone5"  class="mod_input" style="width:300px;">
+					</td>
 				</tr>
-				<!--
+				
 				<tr>
 					<th><font color="red">*</font>广告宽度：</th>
 					<td><input type="text" name="ad_width" id="ad_width" class="mod_input2" style="width:80px;" value="{$data.ad_width}" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  &nbsp;&nbsp;&nbsp;  
 						<font color="red">*</font>高度：<input type="text" name="ad_height" id="ad_height" class="mod_input2" style="width:80px;" value="{$data.ad_height}">
 					</td>
 				</tr>
-				-->
+				
 				<tr>
 					<th><font color="red">*</font>广告链接：</th>
 					<td><input type="text" name="ad_url" id="ad_url" class="mod_input2" style="width:300px;" value="{$data.ad_url}"></td>
@@ -92,6 +116,24 @@
 				<tr>
 					<th><font color="red">*</font>排序：</th>
 					<td><input type="text" name="ad_sort" id="ad_sort" class="mod_input2" style="width:300px;" value="{$data.ad_sort}"></td>
+				</tr>
+				<tr>
+					<th><font color="red">*</font>跳转页面：</th>
+					<td>
+						<select name="ad_action" id="ad_action" class="mod_select">
+							<option value="">请选择</option>
+							{$action_list}
+						</select>
+						<script>set_select_value(document.act_form.ad_action,"{$data.ad_action}");</script>
+					</td>
+				</tr>
+				<tr>
+					<th><font color="red">*</font>跳转值：</th>
+					<td><input type="text" name="ad_action_id" id="ad_action_id" class="mod_input2" style="width:300px;" value="{$data.ad_action_id}"><span>(WAP页时此处为跳转地址)</span></td>
+				</tr>
+				<tr>
+					<th><font color="red">*</font>跳转信息：</th>
+					<td><input type="text" name="ad_action_text" id="ad_action_text" class="mod_input2" style="width:300px;" value="{$data.ad_action_text}"></td>
 				</tr>
 				<tr>
 					<th><font color="red">*</font>所属赛事：</th>
@@ -113,7 +155,7 @@
 				<td>
 					<input type="hidden" name="ad_id" value="{$data.ad_id}">
 					<input type="submit" class="btn_b" value="保存" style="margin-right:10px;"/>
-					<input type="button" class="btn_w" onclick="close_dialog(this)" value="取消" />
+					<input type="button" class="btn_w" onclick="javascript:history.back(-1);" value="返回" />
 				</td>
 		</tfoot>
 	</table><!--/add_table-->

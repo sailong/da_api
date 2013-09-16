@@ -314,7 +314,7 @@ elseif($operation == 'add') {
 		$status    = 0;              
 	$sql_query = DB::query("
 INSERT into tbl_baofen (`uid` ,  `realname`,  `sid`,`event_id`,  `fenzhan_id` ,  `field_id`, dong_names,source, is_edit,status,  `tee`,`par`, `start_time`,  `dateline`  ,`addtime`
-)values($uid ,  '$realname',  '1000333','1000333','$fenzhan_id','$field_id','$dong_names','$source','$is_edit','$status','$tee','$par','$start_time','$dateline','$addtime')");
+)values($uid ,  '$realname',  '1000333','27','$fenzhan_id','$field_id','$dong_names','$source','$is_edit','$status','$tee','$par','$start_time','$dateline','$addtime')");
                     
                 }
             }

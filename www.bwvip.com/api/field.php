@@ -38,7 +38,9 @@ if(!$no_token)
 		api_json_result(0,88888,'token error！请尝试修改正确的系统时间',null);
 	}
 	
-	//tj_start
+
+	
+//tj_start
 if(strpos($_SERVER['HTTP_USER_AGENT'],"iPhone"))
 {
 	$userAgent="iPhone";
@@ -80,6 +82,7 @@ else
 {
 	$log_field_uid=0;
 }
+$sn=$_G['gp_sn'];
 
 $tj_sql .=" insert into tbl_app_log ( ";
 $tj_sql .=" uid, ";
@@ -91,6 +94,7 @@ $tj_sql .=" province, ";
 $tj_sql .=" user_agent, ";
 $tj_sql .=" versions, ";
 $tj_sql .=" url, ";
+$tj_sql .=" sn, ";
 $tj_sql .=" app_log_addtime ";
 $tj_sql .=" ) values( ";
 $tj_sql .=" '".$log_uid."', ";
@@ -102,6 +106,7 @@ $tj_sql .=" '".$province."', ";
 $tj_sql .=" '".$userAgent."', ";
 $tj_sql .=" '".$versions."', ";
 $tj_sql .=" '".$_SERVER['REQUEST_URI']."', ";
+$tj_sql .=" '".$sn."', ";
 $tj_sql .=" '".time()."' ";
 $tj_sql .=" ) ";
 $tj_up=DB::query($tj_sql);

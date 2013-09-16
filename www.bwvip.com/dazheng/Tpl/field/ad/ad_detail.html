@@ -1,9 +1,17 @@
 <include file="../public/header_dialog" />
-<table border="0" cellspacing="0" cellpadding="0" style="width:500px;">
+
+<div class="page_tit">广告</div>
+  <div class="tit_tab">
+	<ul>
+		<li><a class=on href="#">广告详细</a></li>
+	</ul>
+  </div>
+<table border="0" cellspacing="0" cellpadding="0" style="width:900px;">
 <tr>
 <td>
 <!--/dialog_start-->
 
+<form method="post" id="act_form" name="act_form" action="{:U('field/ad/adedit_action')}" enctype="multipart/form-data">
 	<table class="add_table" border="0" cellspacing="0" cellpadding="0" >
 		<tbody>
 		<tr>
@@ -54,7 +62,7 @@
 			<tr>
 				<th></th>
 				<td>
-					<input type="button" class="btn_w" onclick="close_dialog(this)" value="关闭" />
+					<input type="button" class="btn_w" onclick="javascript:history.back(-1);" value="返回" />
 				</td>
 		</tfoot>
 	</table><!--/add_table-->

@@ -1,5 +1,14 @@
 <include file="../public/header_dialog" />
-<table border="0" cellspacing="0" cellpadding="0" style="width:700px;">
+<div class="page_tit">广告</div>
+  <div class="tit_tab">
+	<ul>
+		<li><a class=on href="#">添加广告</a></li>
+	</ul>
+  </div>
+
+{$usejs}
+
+<table border="0" cellspacing="0" cellpadding="0" style="width:900px;">
 <tr>
 <td>
 <!--/dialog_start-->
@@ -12,15 +21,15 @@
 					<td><input type="text" name="ad_name" id="ad_name" class="mod_input2" style="width:300px;" ></td>
 				</tr>
 				<tr>
-					<th><font color="red">*</font>广告类型：</th>
+					<th><font color="red">*</font>投放平台：</th>
 					<td>
-						<select name="ad_type" id="ad_type" class="mod_select">
+						<select name="ad_apptype" id="ad_apptype" class="mod_select">
 							<option value="">请选择</option>
-							<option value="pic">图片</option>
-							<option value="flash">FLASH</option>
-							<option value="video">视频</option>
+							<option value="all">全部</option>
+							<option value="android">Android</option>
+							<option value="ios">IOS</option>
 						</select>
-						<script>set_select_value(document.act_form.ad_type,"{$data.ad_type}");</script>
+						<script>set_select_value(document.act_form.ad_apptype,"{$data.ad_apptype}");</script>
 					</td>
 				</tr>
 				<tr>
@@ -63,13 +72,31 @@
 						<font color="red">*</font>高度：<input type="text" name="ad_height" id="ad_height" class="mod_input2" style="width:80px;" >
 					</td>
 				</tr>
-				<tr>
+				<!-- <tr>
 					<th><font color="red">*</font>广告链接：</th>
 					<td><input type="text" name="ad_url" id="ad_url" class="mod_input2" style="width:300px;" ></td>
-				</tr>
+				</tr> -->
 				<tr>
 					<th><font color="red">*</font>排序：</th>
 					<td><input type="text" name="ad_sort" id="ad_sort" class="mod_input2" style="width:300px;" value="{$data.ad_sort}"></td>
+				</tr>
+				<tr>
+					<th><font color="red">*</font>跳转页面：</th>
+					<td>
+						<select name="ad_action" id="ad_action" class="mod_select">
+							<option value="">请选择</option>
+							{$action_list}
+						</select>
+						<script>set_select_value(document.act_form.ad_action,"{$data.ad_action}");</script>
+					</td>
+				</tr>
+				<tr>
+					<th><font color="red">*</font>跳转值：</th>
+					<td><input type="text" name="ad_action_id" id="ad_action_id" class="mod_input2" style="width:300px;" value="{$data.ad_action_id}"><span>(WAP页时此处为跳转地址)</span></td>
+				</tr>
+				<tr>
+					<th><font color="red">*</font>跳转信息：</th>
+					<td><input type="text" name="ad_action_text" id="ad_action_text" class="mod_input2" style="width:300px;" value="{$data.ad_action_text}"></td>
 				</tr>
 				<tr>
 					<th><font color="red">*</font>所属赛事：</th>
@@ -90,7 +117,7 @@
 				<td>
 					<input type="hidden" name="field_uid" value="1186"/>
 					<input type="submit" class="btn_b"  value="添加" style="margin-right:10px;"/>
-					<input type="button" class="btn_w" onclick="close_dialog(this)" value="取消" />
+					<input type="button" class="btn_w" onclick="javascript:history.back(-1);" value="返回" />
 				</td>
 		</tfoot>
 	</table><!--/add_table-->

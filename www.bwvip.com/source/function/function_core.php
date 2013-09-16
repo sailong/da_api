@@ -2742,7 +2742,9 @@ if($str1[1]=='mp4')
   }
   $res = shell_exec($cmd);
  //得到图片
-    $cmd = '/usr/bin/ffmpeg  -i '.$out.'.flv -y -f image2 -t 0.001 -s 352x240 '.$out.'.jpg';
+   // $cmd = '/usr/bin/ffmpeg  -i '.$out.'.flv -y -f image2 -t 0.001 -s 352x240 '.$out.'.jpg';
+	 $cmd='ffmpeg -i '.$out.'.mp4 -y -f  image2  -ss 1 -vframes 2  '.$out.'.jpg';
+  
   $res = shell_exec($cmd);
 
 }

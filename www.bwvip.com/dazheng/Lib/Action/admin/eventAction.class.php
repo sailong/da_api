@@ -109,6 +109,8 @@ class eventAction extends AdminAuthAction
 			$data["event_viewtype"]=post("event_viewtype");
 			$data["event_is_ticket"]=post("event_is_ticket");
 			$data["event_is_bbs"]=post("event_is_bbs");
+			$data["event_ticket_status"]=post("event_ticket_status");
+			$data["event_ticket_wapurl"]=post("event_ticket_wapurl");
 			
 			$data["event_addtime"]=time();
 			$list=M("event")->add($data);
@@ -225,6 +227,8 @@ class eventAction extends AdminAuthAction
 			$data["event_is_viewscore"]=post("event_is_viewscore");
 			$data["event_sort_fenzhan_id"]=post("event_sort_fenzhan_id");
 			$data["event_viewtype"]=post("event_viewtype");
+			$data["event_ticket_status"]=post("event_ticket_status");
+			$data["event_ticket_wapurl"]=post("event_ticket_wapurl");
 			
 			if(post("event_is_ticket"))
 			{

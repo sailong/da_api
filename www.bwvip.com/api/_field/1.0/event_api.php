@@ -81,14 +81,15 @@ $hot_2013district=array(
 if($ac=="select_event")
 {
 	$field_uid=$_G['gp_field_uid'];
-	$list3=DB::query("select event_id,event_name,event_uid,event_is_zhutui,event_zhutui_pic,event_content,event_starttime,event_go_action,event_go_value from tbl_event where event_is_zhutui='Y' and field_uid='".$field_uid."'  order by event_sort desc limit 1 ");
+	$list3=DB::query("select event_id,event_name,event_uid,event_logo,event_is_zhutui,event_zhutui_pic,event_content,event_starttime,event_go_action,event_go_value from tbl_event where event_is_zhutui='Y' and field_uid='".$field_uid."'  order by event_sort desc limit 1 ");
 	while($row3 = DB::fetch($list3))
 	{
 		if($row3['event_zhutui_pic'])
 		{
 			$row3['event_zhutui_pic']=$site_url."/".$row3['event_zhutui_pic'];
 		}
-		$row3['event_pic']=$site_url."/uc_server/avatar.php?uid=".$row['event_uid']."&size=big";
+		//$row3['event_pic']=$site_url."/uc_server/avatar.php?uid=".$row['event_uid']."&size=big";
+		$row3['event_pic']=$site_url."/".$row['event_logo'];
 		$row3['uid']=$row3['event_uid'];
 		$row3['event_starttime']=date("Y年m月d日",$row3['event_starttime']);
 		$row3['event_content']=msubstr(cutstr_html($row3['event_content']),0,30);
@@ -98,7 +99,7 @@ if($ac=="select_event")
 	$list=DB::query("select event_id,event_name,event_uid,event_is_zhutui,event_content,event_starttime,event_go_action,event_go_value,event_logo from tbl_event where event_is_tj='Y' and field_uid='".$field_uid."' order by event_sort desc limit 100 ");
 	while($row = DB::fetch($list))
 	{
-		$row['event_pic']=$site_url."/uc_server/avatar.php?uid=".$row['event_uid']."&size=big";
+		$row['event_pic']=$site_url."/".$row['event_logo'];
 		if($row['event_logo'])
 		{
 			$row['event_logo']=$site_url."/".$row['event_logo'];
@@ -198,7 +199,7 @@ if($ac=="apply_ing")
 
 		}
 	
-		$row['event_pic']=$site_url."/uc_server/avatar.php?uid=".$row['event_uid']."&size=big";
+		$row['event_pic']=$site_url."/".$row['event_logo'];
 		if($row['event_logo'])
 		{
 			$row['event_logo']=$site_url."/".$row['event_logo'];

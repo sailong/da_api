@@ -135,7 +135,7 @@ if($ac=="apply_ing")
 {
 	$login_uid=$_G['gp_login_uid'];
 
-	$list=DB::query("select event_id,event_name,event_uid,event_is_zhutui,event_content,event_url,event_type,event_logo from tbl_event where event_baoming_starttime<=".time()." and event_baoming_endtime>=".time()." and (event_viewtype='B' or (event_viewtype='A' and field_uid=0) or event_viewtype='S') and event_is_baoming='Y' order by event_baoming_starttime desc  limit 100 ");
+	$list=DB::query("select event_id,field_uid,event_name,event_uid,event_is_zhutui,event_content,event_url,event_type,event_logo from tbl_event where event_baoming_starttime<=".time()." and event_baoming_endtime>=".time()." and (event_viewtype='B' or (field_uid=0) or event_viewtype='S') and event_is_baoming='Y' order by event_baoming_starttime desc  limit 100 ");
 	while($row = DB::fetch($list))
 	{
 		if($login_uid)
@@ -298,7 +298,15 @@ if($ac=="event_blog_detail")
 		$detail_data['uid']="0";
 
 		
-		$detail_data['content']=strip_tags($detail_data['content'],"<p><img><br><div>");
+		if($blogid==26990)
+		{
+			$detail_data['content']=strip_tags($detail_data['content'],"<p><img><a><br><div>");
+		}
+		else
+		{
+			$detail_data['content']=strip_tags($detail_data['content'],"<p><img><br><div>");
+		}
+		
 		$detail_data['content']=str_replace("<img ","<div style=\"text-align:center; width:100%; \"><a href=\"http://www.bwvip.com/news_detail_pic\"><changsailong><img ",$detail_data['content']);
 		
 		/**
@@ -597,7 +605,7 @@ if($ac=="event_detail")
 {
 	$event_id=$_G['gp_event_id'];
 	$sid=$_G['gp_sid'];
-	if($event_id || $sid)
+	if($event_id || $sid!='')
 	{
 		if($event_id)
 		{

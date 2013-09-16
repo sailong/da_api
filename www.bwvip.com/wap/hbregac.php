@@ -214,7 +214,7 @@ if($ac=="hb_reg")
 	$is_contact = $_G['gp_is_contact']; 
 	$is_readed = $_G['gp_is_readed'];	 
 	$bwm_addtime = time();
-	$event_id="49";
+	$event_id="51";
 	if(empty($is_readed)){
 		$is_readed = 1;
 	}

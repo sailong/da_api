@@ -51,7 +51,8 @@
   <div class="Toolbar_inbox">
   	<div class="page right">{$pages}</div>
 
-	<a href="javascript:void(0);" onclick="mod_dialog('添加广告','{:U('admin/ad/ad_add')}');" class="btn_a"><span>添加广告</span></a>
+	<a href="{:U('admin/ad/ad_add')}" class="btn_a"><span>添加广告</span></a>
+	<!-- <a href="javascript:void(0);" onclick="mod_dialog('添加广告','{:U('admin/ad/ad_add')}');" class="btn_a"><span>添加广告</span></a> -->
 	<a href="javascript:void(0);" class="btn_a"  onclick="mod_delete_batch('{:U('admin/ad/ad_delete_action')}','mod_table');"><span>批量删除</span></a>
 
 	<div class="clear"></div>
@@ -76,7 +77,9 @@
 		<th class="line_l">文件地址</th>
 		<th class="line_l">宽度</th>
 		<th class="line_l">高度</th>
-		<th class="line_l">广告链接</th>
+		<th class="line_l">跳转页面</th>
+		<th class="line_l">跳转值</th>
+		<th class="line_l">跳转信息</th>
 		<th class="line_l">排序</th>
 		<th class="line_l">添加时间</th>
 		<th class="line_l">操作</th>
@@ -97,14 +100,17 @@
 			
 			<td>{$vo.ad_width}</td>
 			<td>{$vo.ad_height}</td>
-			<td>{$vo.ad_url}</td>
+			<td>{$vo.ad_action}</td>
+			<td>{$vo.ad_action_id}</td>
+			<td>{$vo.ad_action_text}</td>
 			<td>{$vo.ad_sort}</td>
 			<!--
 			<td><php>if($vo['ad_state']==1){ echo "已开启";}else{ echo "已关闭";}</php></td>
 			-->
 			<td>{$vo.ad_addtime|format_to_time}</td>
 		<td>
-			<a href="javascript:void(0);"  onclick="mod_dialog('修改广告','{:U('admin/ad/ad_edit', array('ad_id'=>$vo['ad_id']))}')">修改</a> | 
+			<a href="{:U('admin/ad/ad_edit', array('ad_id'=>$vo['ad_id']))}">修改</a> 
+			<!-- <a href="javascript:void(0);"  onclick="mod_dialog('修改广告','{:U('admin/ad/ad_edit', array('ad_id'=>$vo['ad_id']))}')">修改</a> |  -->
 			<a href="javascript:void(0);" onclick="mod_delete_one('{:U('admin/ad/ad_delete_action')}','{$vo['ad_id']}');">删除</a>
 		</td>
 	</tr>
@@ -120,7 +126,8 @@
   <div class="Toolbar_inbox">
 	<div class="page right">{$pages}</div>
 
-	<a href="javascript:void(0);" onclick="mod_dialog('添加广告','{:U('admin/ad/ad_add')}');" class="btn_a"><span>添加广告</span></a>
+	<!-- <a href="javascript:void(0);" onclick="mod_dialog('添加广告','{:U('admin/ad/ad_add')}');" class="btn_a"><span>添加广告</span></a> -->
+	<a href="{:U('admin/ad/ad_add')}" class="btn_a"><span>添加广告</span></a>
 	<a href="javascript:void(0);" class="btn_a"  onclick="mod_delete_batch('{:U('admin/ad/ad_delete_action')}','mod_table');"><span>批量删除</span></a>
 
 

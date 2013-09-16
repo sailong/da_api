@@ -39,6 +39,8 @@ class adAction extends field_publicAction
 	{
 		$page_list=select_dict(14,"select");
 		$this->assign("page_list",$page_list);
+		$action_list=select_dict(16,"select");
+		$this->assign("action_list",$action_list);
 		
 		$event=D('event')->event_select_pro(" and field_uid='".$_SESSION['field_uid']."' ");
 		$this->assign('event',$event['item']);
@@ -52,7 +54,7 @@ class adAction extends field_publicAction
 		if(M()->autoCheckToken($_POST))
 		{
 			$data["ad_name"]=post("ad_name");
-			$data["ad_type"]=post("ad_type");
+			$data["ad_type"]='pic';
 			$data["ad_app"]=post("ad_app");
 			if($_FILES["ad_file"]["error"]==0 || $_FILES["ad_file_iphone4"]["error"]==0 || $_FILES["ad_file_iphone5"]["error"]==0)
 			{
@@ -98,8 +100,12 @@ class adAction extends field_publicAction
 			$data["ad_page"]=post("ad_page");
 			$data["ad_url"]=post("ad_url");
 			$data["ad_sort"]=post("ad_sort");
+			$data["ad_action"]=post("ad_action");
+			$data["ad_action_id"]=post("ad_action_id");
+			$data["ad_action_text"]=post("ad_action_text");
 			$data["event_id"]=post("event_id");
 			$data["field_uid"]=$_SESSION['field_uid'];
+			$data["ad_apptype"]=post("ad_apptype");
 			
 			
 			$data["ad_state"]=1;
@@ -108,11 +114,13 @@ class adAction extends field_publicAction
 			$list=M("ad")->add($data);
 			if($list!=false)
 			{
-				msg_dialog_tip("succeed^添加成功");
+				$this->success("添加成功",U('field/ad/ad'));
+				//msg_dialog_tip("succeed^添加成功");
 			}
 			else
 			{
-				msg_dialog_tip("error^添加失败");
+				$this->success("添加失败",U('field/ad/ad'));
+				//msg_dialog_tip("error^添加失败");
 			}
 		}
 		else
@@ -135,6 +143,8 @@ class adAction extends field_publicAction
 
 			$page_list=select_dict(14,"select");
 			$this->assign("page_list",$page_list);
+			$action_list=select_dict(16,"select");
+			$this->assign("action_list",$action_list);
 			//print_r($page_list);
 			
 			$this->assign("page_title","修改广告");
@@ -152,7 +162,6 @@ class adAction extends field_publicAction
 		{
 			$data["ad_id"]=post("ad_id");
 			$data["ad_name"]=post("ad_name");
-			$data["ad_type"]=post("ad_type");
 			$data["ad_app"]=post("ad_app");
 			if($_FILES["ad_file"]["error"]==0 || $_FILES["ad_file_iphone4"]["error"]==0 || $_FILES["ad_file_iphone5"]["error"]==0)
 			{
@@ -198,16 +207,22 @@ class adAction extends field_publicAction
 			$data["ad_page"]=post("ad_page");
 			$data["ad_url"]=post("ad_url");
 			$data["ad_sort"]=post("ad_sort");
+			$data["ad_action"]=post("ad_action");
+			$data["ad_action_id"]=post("ad_action_id");
+			$data["ad_action_text"]=post("ad_action_text");
 			$data["event_id"]=post("event_id");
+			$data["ad_apptype"]=post("ad_apptype");
 			
 			$list=M("ad")->save($data);
 			if($list!=false)
 			{
-				msg_dialog_tip("succeed^修改成功");
+				$this->success("修改成功",U('field/ad/ad'));
+				//msg_dialog_tip("succeed^修改成功");
 			}
 			else
 			{
-				msg_dialog_tip("error^修改失败");
+				$this->success("修改失败",U('field/ad/ad'));
+				//msg_dialog_tip("error^修改失败");
 			}
 		}
 		else
