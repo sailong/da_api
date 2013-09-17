@@ -1,0 +1,125 @@
+<include file="../public/header_dialog" />
+{$usejs}
+
+<div class="so_main">
+
+  <div class="page_tit">订单审核</div>
+  <div class="tit_tab">
+	<ul>
+		<li><a class=on href="#">查看订票详细</a></li>
+	</ul>
+  </div>
+
+<table border="0" cellspacing="0" cellpadding="0" style="width:900px;">
+<tr>
+<td>
+<!--/dialog_start-->
+
+<form method="post" id="act_form" name="act_form" action="{:U('admin/user_ticket_get/user_ticket_get_edit_action')}" enctype="multipart/form-data">
+	<table class="add_table" border="0" cellspacing="0" cellpadding="0" >
+		<tbody>
+			<!-- <tr>
+				<th>所属用户：</th>
+				<td><input type="text" name="uid" id="uid" class="mod_input2" style="width:66px;"  value="{$data.uid}"></td>
+			</tr> -->
+			<tr>
+				<th>姓：</th>
+				<td><php>if($data['check_status'] == '0'){</php><input type="text" name="family_name" id="family_name" class="mod_input2" style="width:300px;"  value="{$data.family_name}"><php>}else{</php>{$data.family_name}<php>}</php></td>
+			</tr>
+			<tr>
+				<th>名：</th>
+				<td><php>if($data['check_status'] == '0'){</php><input type="text" name="name" id="name" class="mod_input2" style="width:300px;"  value="{$data.name}"><php>}else{</php>{$data.name}<php>}</php></td>
+			</tr>
+			<tr>
+				<th>所属赛事：</th>
+				<td>{$event_info.event_name}</td>
+			</tr>
+			<tr>
+				<th>手机号码：</th>
+				<td><php>if($data['check_status'] == '0'){</php><input type="text" name="phone" id="phone" class="mod_input2" style="width:300px;"  value="{$data.phone}"><php>}else{</php>{$data.phone}<php>}</php></td>
+			</tr>
+			<tr>
+				<th>地址：</th>
+				<td>
+					<p><php>if($data['check_status'] == '0'){</php><input type="text" class="mod_input2" name="address" value="{$data.address}" style="width:300px;"/><php>}else{</php>{$data.address}<php>}</php></p>
+				</td>
+			</tr>
+			<tr>
+				<th>购票信息：</th>
+				<td>
+				<volist id="vo" name="piao_list">
+				<p>{$vo.piao_detail}:&nbsp;&nbsp;<php>if($data['check_status'] == '0'){</php><input type="text" class="mod_input2" name="piao_num_[{$vo.piao_id}]" value="{$vo.order_num}" style="width:50px;"/><php>}else{</php>{$vo.order_num}<php>}</php>张</p>
+				</volist>
+				<!-- <p><input type="hidden" value="{$data.order_detail}"/></p> -->
+				</td>
+			</tr>
+			<tr>
+				<th>审核状态：</th>
+				<td>
+					<php>
+					switch($data['check_status']){
+						case 0:
+							echo '待审核';
+							break;
+						case 1:
+							echo '审核通过';
+							break;
+						case 2:
+							echo '审核不通过';
+							break;
+					}
+					</php>
+				</td>
+			</tr>
+			<tr>
+				<th>添加时间：</th>
+				<td>{$data.bwm_addtime|format_to_time}</td>
+			</tr>
+		</tbody>
+		<tfoot>
+			<tr>
+				<th></th>
+				<td>
+					<input type="hidden" name="id" value="{$data.id}">
+					<php>if($data['check_status'] == '0'){</php><input type="submit" class="btn_b" value="保存" style="margin-right:10px;"/>
+					<php>}else{</php><input type="button" class="btn_w" onclick="javascript:history.back(-1);" value="返回" /><php>}</php>
+					<!-- <input type="button" class="btn_w" onclick="javascript:history.back(-1);" value="返回" /> -->
+				</td>
+		</tfoot>
+	</table><!--/add_table-->
+</form>
+
+<script>
+$(document).ready(function(){
+$.formValidator.initConfig({formID:"act_form",theme:'ArrowSolidBox',mode:'AutoTip',onError:function(msg){msg_error(msg)},inIframe:true});
+
+//	$("#uid").formValidator({empty:true,onShow:"请输入所属用户",onFocus:"请输入所属用户",onCorrect:"输入正确"}).inputValidator({min:1,max:11,onError:"请输入所属用户"});
+//		$("#ticket_id").formValidator({empty:true,onShow:"请输入门票",onFocus:"请输入门票",onCorrect:"输入正确"}).inputValidator({min:1,max:11,onError:"请输入门票"});
+//		$("#user_ticket_code").formValidator({empty:true,onShow:"请输入领取码",onFocus:"请输入领取码",onCorrect:"输入正确"}).inputValidator({min:1,max:50,onError:"请输入领取码"});
+//		$("#user_ticket_codepic").formValidator({empty:true,onShow:"请输入二维码图片",onFocus:"请输入二维码图片",onCorrect:"输入正确"}).inputValidator({min:1,max:300,onError:"请输入二维码图片"});
+//		$("#user_ticket_realname").formValidator({empty:true,onShow:"请输入姓名",onFocus:"请输入姓名",onCorrect:"输入正确"}).inputValidator({min:1,max:50,onError:"请输入姓名"});
+//		$("#user_ticket_cardtype").formValidator({empty:true,onShow:"请输入证件类型",onFocus:"请输入证件类型",onCorrect:"输入正确"}).inputValidator({min:1,max:50,onError:"请输入证件类型"});
+//		$("#user_ticket_card").formValidator({empty:true,onShow:"请输入证件号码",onFocus:"请输入证件号码",onCorrect:"输入正确"}).inputValidator({min:1,max:50,onError:"请输入证件号码"});
+//		$("#user_ticket_mobile").formValidator({empty:true,onShow:"请输入手机号",onFocus:"请输入手机号",onCorrect:"输入正确"}).inputValidator({min:1,max:11,onError:"请输入手机号"});
+//		$("#user_ticket_status").formValidator({empty:true,onShow:"请输入状态",onFocus:"请输入状态",onCorrect:"输入正确"}).inputValidator({min:1,max:1,onError:"请输入状态"});
+		
+
+//	$.formValidator.reloadAutoTip();
+});
+
+function reloadAutoTip()
+{
+	$.formValidator.reloadAutoTip();
+}
+
+</script>
+
+
+<!--/dialog_end-->
+</td>
+</tr>
+</table>
+
+</div>
+
+<include file="../Public/_footer" />

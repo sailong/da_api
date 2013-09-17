@@ -23,8 +23,24 @@ class user_ticketAction extends AdminAuthAction
 		if($event_id){
 			$event_id_sql = " and event_id='{$event_id}'";
 		}
-		$event_select=D('event')->event_select_pro(" ");
-		$this->assign('event_select',$event_select['item']);
+		
+		$user_ticket_status = get('user_ticket_status');
+		$user_ticket_status_sql = '';
+		
+		if($user_ticket_status !== '')
+		{
+			$user_ticket_status_sql = " and user_ticket_status='{$user_ticket_status}'";
+		}
+		
+		$event_select_tmp=D('event')->event_select_pro(" ");
+		$event_select = array();
+		foreach($event_select_tmp['item'] as $key=>$val)
+		{
+			$event_select[$val['event_id']] = $val;
+		}
+		
+		unset($event_select_tmp);
+		$this->assign('event_select',$event_select);
 		
 		//$event_id = $_SESSION['event_id'];
 		$price = get('price');
@@ -35,7 +51,7 @@ class user_ticketAction extends AdminAuthAction
 			$price_sql = " and ticket_price!='0'";
 		}
 		//$list=D("user_ticket")->user_ticket_list_pro(" and event_id='{$event_id}' {$price_sql}");
-		$list=D("user_ticket")->user_ticket_list_pro("{$event_id_sql}{$price_sql}");
+		$list=D("user_ticket")->user_ticket_list_pro("{$event_id_sql}{$price_sql}{$user_ticket_status_sql}");
 		//$ticket_lists = M('ticket')->where("event_id='{$event_id}'")->select();
 		$ticket_lists = M('ticket')->select();
 		
@@ -152,7 +168,7 @@ class user_ticketAction extends AdminAuthAction
 			$data=M("user_ticket")->where("user_ticket_id=".intval(get("user_ticket_id")))->find();
 			$this->assign("data",$data);
 			
-			$event_id = $_SESSION['event_id'];
+			$event_id = get('event_id');
 			$ticket_list = M('ticket')->where("event_id='{$event_id}'")->select();
 			
 			$this->assign("ticket_list",$ticket_list);

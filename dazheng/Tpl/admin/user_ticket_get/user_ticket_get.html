@@ -95,8 +95,8 @@
 		<td><php>switch($vo['check_status']){case 0: echo '待审核';break;case 1: echo '审核通过';break;case 2: echo '审核不通过';break;}</php></td>
 		<td>{$vo.bwm_addtime|format_to_time}</td>
 		<td>
-			<a href="{:U('admin/user_ticket_get/user_ticket_get_detail', array('id'=>$vo['id']))}'">详情</a> | 
-			<a href="{:U('admin/user_ticket_get/user_ticket_get_edit', array('id'=>$vo['id']))})">修改</a> | 
+			<!-- <a href="{:U('admin/user_ticket_get/user_ticket_get_detail', array('id'=>$vo['id']))}'">查看详情</a> |  -->
+			<a href="{:U('admin/user_ticket_get/user_ticket_get_edit', array('id'=>$vo['id']))})">查看详情</a> | 
 			<a href="javascript:void(0);" onclick="mod_delete_one('{:U('admin/user_ticket_get/user_ticket_get_delete_action')}','{$vo['id']}');">删除</a>
 		</td>
 	</tr>

@@ -11,14 +11,8 @@
 		<input type="hidden" name="a" value="ticket">
 
 		<table border="0" cellspacing="0" cellpadding="0">
-			<th>名称：</th>
+			<th>门票名称：</th>
 			<td><input type="text" name="k" class="search_input" style="width:120px;" value="<php> echo  get('k');</php>"></td>
-			<th>开始时间：</th>
-			<td>
-				<input type="text" name="starttime" class="search_input_date" style="width:120px;" value="<php> echo  get('starttime');</php>" onFocus="WdatePicker({isShowClear:false,readOnly:true})"> 至 
-				<input type="text" name="endtime" class="search_input_date" style="width:120px;" value="<php> echo  get('endtime');</php>" onFocus="WdatePicker({isShowClear:false,readOnly:true})">
-			</td>
-			
 			<th>赛事：</th>
 			<td>
 				<select name="event_id" style="width:120px;"  class="search_select">
@@ -28,6 +22,11 @@
 					</volist>
 				</select>
 				<script>set_select_value(document.search_form.event_id,"<php> echo  get("event_id");</php>");</script>
+			</td>
+			<th>开始时间：</th>
+			<td>
+				<input type="text" name="starttime" class="search_input_date" style="width:120px;" value="<php> echo  get('starttime');</php>" onFocus="WdatePicker({isShowClear:false,readOnly:true})"> 至 
+				<input type="text" name="endtime" class="search_input_date" style="width:120px;" value="<php> echo  get('endtime');</php>" onFocus="WdatePicker({isShowClear:false,readOnly:true})">
 			</td>
 			
 			<td class="btn">
@@ -67,7 +66,10 @@
 		<th class="line_l">结束时间</th>
 		<th class="line_l">类型</th>
 		<th class="line_l">入场次数</th>
+		<th class="line_l">排序</th>
+		<!--
 		<th class="line_l">介绍</th>
+		-->
 		<th class="line_l">添加时间</th>
 		<th class="line_l">操作</th>
 	</tr>
@@ -81,12 +83,15 @@
 		<td>{$vo.ticket_price}元</td>
 		<td>{$vo.ticket_ren_num}人</td>
 		<td>{$vo.ticket_num}</td>
-		<td><php>if($vo['ticket_pic']){</php><img src="{$vo['ticket_pic']}" style="max-height:60px; max-width:100px;"/><php>}</php></td>
-		<td>{$vo.ticket_starttime|format_to_fulltime}</td>
-		<td>{$vo.ticket_endtime|format_to_fulltime}</td>
+		<td><php>if($vo['ticket_pic']){</php><img src="{$vo.ticket_pic}" style="max-height:60px; max-width:100px;"/><php>}</php></td>
+		<td>{$vo.ticket_starttime|format_to_time}</td>
+		<td>{$vo.ticket_endtime|format_to_time}</td>
 		<td><php>if($vo['ticket_type']=='BASE'){echo "普通";}if($vo['ticket_type']=='VIP'){echo $vo['ticket_type'];}</php></td>
 		<td>{$vo.ticket_times}</td>
+		<td>{$vo.ticket_sort}</td>
+		<!--
 		<td>{$vo.ticket_content}</td>
+		-->
 		<td>{$vo.ticket_addtime|format_to_time}</td>
 			
 		<td>
