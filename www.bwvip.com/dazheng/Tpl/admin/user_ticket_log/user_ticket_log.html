@@ -59,6 +59,8 @@
 
 	<!-- <a href="{:U('admin/user_ticket_log/user_ticket_log_add')}" class="btn_a"><span>添加验票</span></a> -->
 	<a href="javascript:void(0);" class="btn_a"  onclick="mod_delete_batch('{:U('admin/user_ticket_log/user_ticket_log_delete_action')}','mod_table');"><span>批量删除</span></a>
+	<a href="{:U('admin/user_ticket_log/user_ticket_log',array('event_id'=>get('event_id'),'ticket_id'=>get('ticket_id'),'user_ticket_log_status'=>1,'starttime'=>get('starttime'),'endtime'=>get('endtime')))}" class="btn_a"><span>验票成功</span></a>
+	<a href="{:U('admin/user_ticket_log/user_ticket_log',array('event_id'=>get('event_id'),'ticket_id'=>get('ticket_id'),'user_ticket_log_status'=>2,'starttime'=>get('starttime'),'endtime'=>get('endtime')))}" class="btn_a"><span>验票失败</span></a>
 
 	<div class="clear"></div>
   </div>
@@ -71,6 +73,7 @@
 			<label for="checkbox"></label>
 		</th>
 		<th class="line_l">所属用户</th>
+		<th class="line_l">所属赛事</th>
 		<th class="line_l">所属门票</th>
 		<th class="line_l">领取码</th>
 		<th class="line_l">来源</th>
@@ -82,11 +85,14 @@
 	<tr overstyle="on"  id=ids_{$vo["user_ticket_log_id"]}>
 		<td><input type="checkbox" name="checkbox" onclick="select_one(this)" value="{$vo.user_ticket_log_id}" ></td>
 		<td>{$vo.uid}</th>
-			<td><a href="{:U('admin/user_ticket_log/user_ticket_log_detail', array('user_ticket_log_id'=>$vo['user_ticket_log_id']))}'">{$ticket_list[$vo['ticket_id']]['ticket_name']}</a></td>
-			<td>{$vo.user_ticket_code}</td>
-			<td>{$vo.user_ticket_log_source}</td>
-			<td>{$vo.user_ticket_log_status}</td>
-			<td>{$vo.user_ticket_log_addtime}</td>
+		<td>{$event_list[$vo['event_id']]['event_name']}
+		<td>{$ticket_list[$vo['ticket_id']]['ticket_name']}
+		<!-- <a href="{:U('admin/user_ticket_log/user_ticket_log_detail', array('user_ticket_log_id'=>$vo['user_ticket_log_id']))}'"></a> -->
+		</td>
+		<td>{$vo.user_ticket_code}</td>
+		<td>{$vo.user_ticket_log_source}</td>
+		<td><php>switch($vo['user_ticket_log_status']){case 1: echo '成功';break;case 2: echo '失败';break;}</php></td>
+		<td>{$vo.user_ticket_log_addtime}</td>
 			
 		<td>
 			<!-- <a href="{:U('admin/user_ticket_log/user_ticket_log_edit', array('user_ticket_log_id'=>$vo['user_ticket_log_id']))})">修改</a> |  -->
@@ -107,7 +113,8 @@
 
 	<!-- <a href="{:U('admin/user_ticket_log/user_ticket_log_add')}" class="btn_a"><span>添加验票</span></a> -->
 	<a href="javascript:void(0);" class="btn_a"  onclick="mod_delete_batch('{:U('admin/user_ticket_log/user_ticket_log_delete_action')}','mod_table');"><span>批量删除</span></a>
-
+	<a href="{:U('admin/user_ticket_log/user_ticket_log',array('event_id'=>get('event_id'),'ticket_id'=>get('ticket_id'),'user_ticket_log_status'=>1,'starttime'=>get('starttime'),'endtime'=>get('endtime')))}" class="btn_a"><span>验票成功</span></a>
+	<a href="{:U('admin/user_ticket_log/user_ticket_log',array('event_id'=>get('event_id'),'ticket_id'=>get('ticket_id'),'user_ticket_log_status'=>2,'starttime'=>get('starttime'),'endtime'=>get('endtime')))}" class="btn_a"><span>验票失败</span></a>
 
 	<div class="clear"></div>
   </div>

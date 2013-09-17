@@ -145,11 +145,31 @@ function event_list_for_ticket()
 //我的门票列表
 if($ac=="user_ticket_list")
 {
+
+	$big_where="";
+	$is_zengsong=$_G['gp_is_zengsong'];
+	if($is_zengsong)
+	{
+		$big_where .=" and is_zengsong='".$is_zengsong."' ";
+	}
+	
+	$ticket_id=$_G['gp_ticket_id'];
+	if($ticket_id)
+	{
+		$big_where .=" and ticket_id='".$ticket_id."' ";
+	}
+	
+	$event_id=$_G['gp_event_id'];
+	if($event_id)
+	{
+		$big_where .=" and event_id='".$event_id."' ";
+	}
+	
 	
 	$uid=$_G['gp_uid'];
 	if($uid)
 	{
-		$total=DB::result_first("select user_ticket_id,ticket_id,ticket_type,event_id,user_ticket_code,user_ticket_codepic,user_ticket_nums,user_ticket_addtime from tbl_user_ticket where uid='".$uid."'  ");
+		$total=DB::result_first("select user_ticket_id,ticket_id,ticket_type,event_id,user_ticket_code,user_ticket_codepic,user_ticket_nums,user_ticket_addtime,is_zengsong from tbl_user_ticket where uid='".$uid."'  ".$big_where."  ");
 		
 		$max_page=intval($total/$page_size);
 		if($max_page<$total/$page_size)
@@ -358,8 +378,8 @@ if($ac=="zengsong")
 				
 				
 				//赠送
-				$sql="INSERT INTO `tbl_user_ticket` (`uid`, `ticket_id`, `event_id`, `ticket_type`, `ticket_times`, `ticket_starttime`, `ticket_endtime`, `ticket_price`, `out_idtype`, `out_id`,  `user_ticket_code`, `user_ticket_codepic`, `user_ticket_nums`, `user_ticket_realname`, `user_ticket_sex`, `user_ticket_age`, `user_ticket_address`, `user_ticket_cardtype`, `user_ticket_card`, `user_ticket_mobile`, `user_ticket_imei`, `user_ticket_company`, `user_ticket_company_post`, `user_ticket_status`, `user_ticket_addtime`,`is_zengsong`) 
-				select ".$uid.", `ticket_id`, `event_id`, `ticket_type`, `ticket_times`, `ticket_starttime`, `ticket_endtime`, `ticket_price`, `out_idtype`, `out_id`,  `user_ticket_code`, `user_ticket_codepic`, ".$zengsong_num.", `user_ticket_realname`, `user_ticket_sex`, `user_ticket_age`, `user_ticket_address`, `user_ticket_cardtype`, `user_ticket_card`, `".$zengsong_mobile."`, `user_ticket_imei`, `user_ticket_company`, `user_ticket_company_post`, `user_ticket_status`, ".time().", 'Y' from tbl_user_ticket where user_ticket_id='".$user_ticket_id."' ";
+				$sql="INSERT INTO `tbl_user_ticket` (`parent_id`,`uid`, `ticket_id`, `event_id`, `ticket_type`, `ticket_times`, `ticket_starttime`, `ticket_endtime`, `ticket_price`, `out_idtype`, `out_id`,  `user_ticket_code`, `user_ticket_codepic`, `user_ticket_nums`, `user_ticket_realname`, `user_ticket_sex`, `user_ticket_age`, `user_ticket_address`, `user_ticket_cardtype`, `user_ticket_card`, `user_ticket_mobile`, `user_ticket_imei`, `user_ticket_company`, `user_ticket_company_post`, `user_ticket_status`, `user_ticket_addtime`,`is_zengsong`) 
+				select `user_ticket_id`,".$uid.", `ticket_id`, `event_id`, `ticket_type`, `ticket_times`, `ticket_starttime`, `ticket_endtime`, `ticket_price`, `out_idtype`, `out_id`,  `user_ticket_code`, `user_ticket_codepic`, ".$zengsong_num.", `user_ticket_realname`, `user_ticket_sex`, `user_ticket_age`, `user_ticket_address`, `user_ticket_cardtype`, `user_ticket_card`, `".$zengsong_mobile."`, `user_ticket_imei`, `user_ticket_company`, `user_ticket_company_post`, `user_ticket_status`, ".time().", 'Y' from tbl_user_ticket where user_ticket_id='".$user_ticket_id."' ";
 				DB::query($sql);
 
 				//echo $sql;
@@ -452,14 +472,14 @@ if($ac=="youji")
 				
 				
 				//赠送
-				$sql="INSERT INTO `tbl_user_ticket` (`uid`, `ticket_id`, `event_id`, `ticket_type`, `ticket_times`, `ticket_starttime`, `ticket_endtime`, `ticket_price`, `out_idtype`, `out_id`,  `user_ticket_code`, `user_ticket_codepic`, `user_ticket_nums`, `user_ticket_realname`, `user_ticket_sex`, `user_ticket_age`, `user_ticket_address`, `user_ticket_cardtype`, `user_ticket_card`, `user_ticket_mobile`, `user_ticket_imei`, `user_ticket_company`, `user_ticket_company_post`, `user_ticket_status`, `user_ticket_addtime`,`is_zengsong`) 
-				select ".$uid.", `ticket_id`, `event_id`, `ticket_type`, `ticket_times`, `ticket_starttime`, `ticket_endtime`, `ticket_price`, `out_idtype`, `out_id`,  `user_ticket_code`, `user_ticket_codepic`, ".$zengsong_num.", `".$zengsong_realname."`, `user_ticket_sex`, `user_ticket_age`, `user_ticket_address`, `user_ticket_cardtype`, `user_ticket_card`, `".$zengsong_mobile."`, `user_ticket_imei`, `".$zengsong_address."`, `".$zengsong_post."`, `user_ticket_status`, ".time().", 'Y' from tbl_user_ticket where user_ticket_id='".$user_ticket_id."' ";
-				DB::query($sql);
+				$sql="INSERT INTO `tbl_user_ticket` (`parent_id`,`uid`, `ticket_id`, `event_id`, `ticket_type`, `ticket_times`, `ticket_starttime`, `ticket_endtime`, `ticket_price`, `out_idtype`, `out_id`,  `user_ticket_code`, `user_ticket_codepic`, `user_ticket_nums`, `user_ticket_realname`, `user_ticket_sex`, `user_ticket_age`, `user_ticket_address`, `user_ticket_cardtype`, `user_ticket_card`, `user_ticket_mobile`, `user_ticket_imei`, `user_ticket_company`, `user_ticket_company_post`, `user_ticket_status`, `user_ticket_addtime`,`is_zengsong`) 
+				select `user_ticket_id`,`".$uid."`, `ticket_id`, `event_id`, `ticket_type`, `ticket_times`, `ticket_starttime`, `ticket_endtime`, `ticket_price`, `out_idtype`, `out_id`,  `user_ticket_code`, `user_ticket_codepic`, `".$zengsong_num."`, `".$zengsong_realname."`, `user_ticket_sex`, `user_ticket_age`, `user_ticket_address`, `user_ticket_cardtype`, `user_ticket_card`, `".$zengsong_mobile."`, `user_ticket_imei`, `".$zengsong_address."`, `".$zengsong_post."`, `user_ticket_status`, `".time()."`, 'Y' from tbl_user_ticket where user_ticket_id='".$user_ticket_id."' ";
+				//DB::query($sql);
 
-				//echo $sql;
-				//echo "<hr>";
+				echo $sql;
+				echo "<hr>";
 				
-				DB::query("update tbl_user_ticket set user_ticket_nums=user_ticket_nums-".$zengsong_num." where user_ticket_id='".$user_ticket_id."' ");
+				//DB::query("update tbl_user_ticket set user_ticket_nums=user_ticket_nums-".$zengsong_num." where user_ticket_id='".$user_ticket_id."' ");
 				//echo "update tbl_user_ticket set user_ticket_nums=user_ticket_nums-".$zengsong_num." where user_ticket_id='".$user_ticket_id."' ";
 				//echo "<hr>";
 				

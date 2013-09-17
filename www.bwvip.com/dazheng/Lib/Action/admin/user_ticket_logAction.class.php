@@ -29,7 +29,13 @@ class user_ticket_logAction extends AdminAuthAction
 			$ticket_id_sql = " and ticket_id='{$ticket_id}'";
 		}
 		
-		$list=D("user_ticket_log")->user_ticket_log_list_pro($ticket_id_sql);
+		$user_ticket_log_status = get('user_ticket_log_status');
+		$user_ticket_log_status_sql = '';
+		if($user_ticket_log_status){
+			$user_ticket_log_status_sql = " and user_ticket_log_status='{$user_ticket_log_status}'";
+		}
+		
+		$list=D("user_ticket_log")->user_ticket_log_list_pro($ticket_id_sql.$user_ticket_log_status_sql);
 		
 		foreach($list["item"] as $key=>$val)
 		{
@@ -37,18 +43,33 @@ class user_ticket_logAction extends AdminAuthAction
 		}
 		
 		if($ticket_ids){
-			$ticket_list = M('ticket')->field('ticket_name,ticket_id')->where("ticket_id in('".implode("','",(array)$ticket_ids)."')")->select();
+			$ticket_list = M('ticket')->field('ticket_name,ticket_id,event_id')->where("ticket_id in('".implode("','",(array)$ticket_ids)."')")->select();
 			
 		}
-		
+		$event_ids = array();
 		if($ticket_list)
 		{
 			foreach($ticket_list as $key=>$val){
 				unset($ticket_list[$key]);
 				$ticket_list[$val['ticket_id']] = $val;
+				$event_ids[$val['event_id']] = $val['event_id'];
+			}
+			foreach($list['item'] as $key=>$val){
+				$list['item'][$key]['event_id'] = $ticket_list[$val['ticket_id']]['event_id'];
+			}
+			$event_list_tmp = array();
+			if($event_ids){
+				$event_list_tmp = M('event')->field('event_id,event_name')->where("event_id in('".implode("','",$event_ids)."')")->select();
+			}
+			$event_list = array();
+			foreach($event_list_tmp as $key=>$val)
+			{
+				unset($event_list_tmp[$key]);
+				$event_list[$val['event_id']] = $val;
 			}
 		}
 		
+		$this->assign('event_list',$event_list);
 		$this->assign("ticket_list",$ticket_list);
 		$this->assign("list",$list["item"]);
 		$this->assign("pages",$list["pages"]);

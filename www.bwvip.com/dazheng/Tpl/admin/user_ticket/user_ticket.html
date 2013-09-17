@@ -61,6 +61,9 @@
 
 	<!-- <a href="{:U('admin/user_ticket/user_ticket_add')}" class="btn_a"><span>添加门票领取</span></a> -->
 	<a href="javascript:void(0);" class="btn_a"  onclick="mod_delete_batch('{:U('admin/user_ticket/user_ticket_delete_action')}','mod_table');"><span>批量删除</span></a>
+	<a href="{:U('admin/user_ticket/user_ticket',array('event_id'=>get('event_id'),'k'=>get('k'),'price'=>get('price'),'user_ticket_status'=>'0','starttime'=>get('starttime'),'endtime'=>get('endtime')))}" class="btn_a"><span>待审核</span></a>
+	<a href="{:U('admin/user_ticket/user_ticket',array('event_id'=>get('event_id'),'k'=>get('k'),'price'=>get('price'),'user_ticket_status'=>'1','starttime'=>get('starttime'),'endtime'=>get('endtime')))}" class="btn_a"><span>审核通过</span></a>
+	<a href="{:U('admin/user_ticket/user_ticket',array('event_id'=>get('event_id'),'k'=>get('k'),'price'=>get('price'),'user_ticket_status'=>'2','starttime'=>get('starttime'),'endtime'=>get('endtime')))}" class="btn_a"><span>审核未通过</span></a>
 	<a href="javascript:void(0);" class="btn_a"  onclick="mod_modify_batch('{:U('admin/user_ticket/user_ticket_check_action')}','mod_table');"><span>批量审核</span></a>
 	<div class="clear"></div>
   </div>
@@ -74,7 +77,8 @@
 		</th>
 		<th class="line_l">编号</th>
 		<th class="line_l">所属用户</th>
-		<th class="line_l">门票ID</th>
+		<th class="line_l">所属赛事</th>
+		<th class="line_l">门票名称</th>
 		<th class="line_l">门票类型</th>
 		<th class="line_l">领取码</th>
 		<th class="line_l">二维码图片</th>
@@ -93,7 +97,7 @@
 		<td><input type="checkbox" name="checkbox" onclick="select_one(this)" value="{$vo.user_ticket_id}" ></td>
 		<td>{$vo.user_ticket_id}</th>
 		<td>{$vo.uid}</th>
-		
+		<td>{$event_select[$vo['event_id']]['event_name']}</th>
 		<td>{$ticket_list[$vo['ticket_id']]}</td>
 		<td>{$vo.ticket_type}</td>
 		<td>{$vo.user_ticket_code}</td>
@@ -109,7 +113,7 @@
 			
 		<td>
 			<a href="{:U('admin/user_ticket/user_ticket_detail', array('user_ticket_id'=>$vo['user_ticket_id']))}'">详情</a> | 
-			<a href="{:U('admin/user_ticket/user_ticket_edit', array('user_ticket_id'=>$vo['user_ticket_id']))})">修改</a> | 
+			<a href="{:U('admin/user_ticket/user_ticket_edit', array('event_id'=>$vo['event_id'],'user_ticket_id'=>$vo['user_ticket_id']))})">修改</a> | 
 			<a href="javascript:void(0);" onclick="mod_delete_one('{:U('admin/user_ticket/user_ticket_delete_action')}','{$vo['user_ticket_id']}');">删除</a>
 			<php>if($vo['out_id'] != 0){</php>
 			 | <a href="{:U('admin/user_ticket/user_ticket_detail_ext', array('out_idtype'=>$vo['out_idtype'],'out_id'=>$vo['out_id']))}'">附加信息</a>
@@ -130,6 +134,9 @@
 
 	<!-- <a href="{:U('admin/user_ticket/user_ticket_add')}" class="btn_a"><span>添加门票领取</span></a> -->
 	<a href="javascript:void(0);" class="btn_a"  onclick="mod_delete_batch('{:U('admin/user_ticket/user_ticket_delete_action')}','mod_table');"><span>批量删除</span></a>
+	<a href="{:U('admin/user_ticket/user_ticket',array('event_id'=>get('event_id'),'k'=>get('k'),'price'=>get('price'),'user_ticket_status'=>'0','starttime'=>get('starttime'),'endtime'=>get('endtime')))}" class="btn_a"><span>待审核</span></a>
+	<a href="{:U('admin/user_ticket/user_ticket',array('event_id'=>get('event_id'),'k'=>get('k'),'price'=>get('price'),'user_ticket_status'=>'1','starttime'=>get('starttime'),'endtime'=>get('endtime')))}" class="btn_a"><span>审核通过</span></a>
+	<a href="{:U('admin/user_ticket/user_ticket',array('event_id'=>get('event_id'),'k'=>get('k'),'price'=>get('price'),'user_ticket_status'=>'2','starttime'=>get('starttime'),'endtime'=>get('endtime')))}" class="btn_a"><span>审核未通过</span></a>
 	<a href="javascript:void(0);" class="btn_a"  onclick="mod_modify_batch('{:U('admin/user_ticket/user_ticket_check_action')}','mod_table');"><span>批量审核</span></a>
 
 	<div class="clear"></div>
@@ -157,7 +164,7 @@
 			ticket_list(event_id);
 		});
 	});
-	//批量修改
+
 function ticket_list(event_id)
 {
 	var event_id = event_id|{};
@@ -191,6 +198,7 @@ function ticket_list(event_id)
 		 }
 		});
 }
+	//批量修改
 function mod_modify_batch(action_url,obj)
 {
 	var length = 0;

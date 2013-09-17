@@ -121,72 +121,80 @@ class user_ticket_getAction extends AdminAuthAction
 	// }
 
 
-	/* public function user_ticket_get_edit()
+	public function user_ticket_get_edit()
 	{
-		if(intval(get("user_ticket_id"))>0)
+		if(intval(get("id"))>0)
 		{
-			$data=M("user_ticket")->where("user_ticket_id=".intval(get("user_ticket_id")))->find();
-			$this->assign("data",$data);
+			$data=M("user_ticket_get")->where("id=".intval(get("id")))->find();
+			if(!empty($data))
+			{
+				$order_ticket_info = explode(',',$data['watch_date']);
+				$data['order_detail'] = '';
+				$piao_list = array();
+				foreach($order_ticket_info as $key=>$val){
+					$order_ticket_detail = explode('|',$val);
+					$ticket_id = $order_ticket_detail[0];
+					$ticket_nums = $order_ticket_detail[1];
+					
+					$ticket_info = M('ticket')->where("ticket_id='{$ticket_id}'")->find();
+					$piao_list[$ticket_id]['piao_id'] = $ticket_info['ticket_id'];
+					$piao_list[$ticket_id]['piao_detail'] = $ticket_info['ticket_name'];
+					$piao_list[$ticket_id]['order_num'] = $ticket_nums;
+					$data['order_list'][$ticket_id] = $piao_list;
+					$data['order_detail'] .= $ticket_info['ticket_name'].' '.$ticket_nums.'张<br/>';
+				}
+				
+				$event_info = M('event')->where("event_id='".$data['event_id']."'")->find();
+				
+				$this->assign("piao_list",$piao_list);
+				$this->assign("event_info",$event_info);
+				$this->assign("data",$data);
+				$this->assign("page_title","订单审核详情");
+				$this->display();
+			}
+			else
+			{
+				$this->error("您该问的信息不存在");	
+			}
 			
-			$event_id = $_SESSION['event_id'];
-			$ticket_list = M('ticket')->where("event_id='{$event_id}'")->select();
-			
-			$this->assign("ticket_list",$ticket_list);
-			$this->assign("page_title","修改门票领取");
-			$this->display();
 		}
 		else
 		{
 			$this->error("您该问的信息不存在");
 		}
-	} */
+	}
 
-	/* public function user_ticket_get_edit_action()
+	public function user_ticket_get_edit_action()
 	{
 		if(M()->autoCheckToken($_POST))
 		{
-			$data["user_ticket_id"]=post("user_ticket_id");
-			$data["uid"]=post("uid");
-			$ticket_id = $data["ticket_id"]=post("ticket_id");
-			$ticket_info = M('ticket')->where("ticket_id='{$ticket_id}'")->find();
-			$data["event_id"]=$ticket_info['event_id'];
-			$data["ticket_starttime"]=$ticket_info['ticket_starttime'];
-			$data["ticket_endtime"]=$ticket_info['ticket_endtime'];
-			$data["ticket_times"]=$ticket_info['ticket_times'];
-			$data["ticket_type"]=$ticket_info['ticket_type'];
-			//$data["user_ticket_code"]=post("user_ticket_code");
-			if($_FILES["user_ticket_codepic"]["error"]==0)
-			{
-				$uploadinfo=upload_file("upload/user_ticket/");
-				$data["user_ticket_codepic"]=$uploadinfo[0]["savepath"] . $uploadinfo[0]["savename"];
-			}
-			$data["user_ticket_nums"]=post("user_ticket_nums");
-			$data["user_ticket_sex"]=post("user_ticket_sex");
-			$data["user_ticket_age"]=post("user_ticket_age");
-			$data["user_ticket_address"]=post("user_ticket_address");
-			$data["user_ticket_imei"]=post("user_ticket_imei");
-			$data["user_ticket_company"]=post("user_ticket_company");
-			$data["user_ticket_company_post"]=post("user_ticket_company_post");
-			$data["user_ticket_realname"]=post("user_ticket_realname");
-	
-			$data["user_ticket_mobile"]=post("user_ticket_mobile");
-			$data["user_ticket_status"]=post("user_ticket_status");
-			$data["ticket_price"]=post("ticket_price");
+			$data["id"]=post("id");
+			$data["family_name"]=post("family_name");
+			$data["name"]=post("name");
+			$data["phone"]=post("phone");
+			$data["address"]=post("address");
 			
-			$list=M("user_ticket")->save($data);
-			if($list){
-				if($data["user_ticket_status"] == '1'){
-					$this->sys_message_add_return($data);
-				}
+			$piao_list = $_POST['piao_num_'];
+			
+			$watch_date = array();
+			foreach($piao_list as $key=>$val){
+				$watch_date[$key] = $key.'|'.$val;
 			}
-			$this->success("修改成功",U('admin/user_ticket/user_ticket'));			
+			$data['watch_date'] = implode(',',$watch_date);
+			
+			
+			$list=M("user_ticket_get")->save($data);
+			if($list != false){
+				$this->error("修改成功",U('admin/user_ticket_get/user_ticket_get_edit',array('id'=>$data["id"])));
+			}
+			$this->success("修改失败",U('admin/user_ticket_get/user_ticket_get_edit',array('id'=>$data["id"])));			
 		}
 		else
 		{
-			$this->error("不能重复提交",U('admin/user_ticket/user_ticket'));
+			$this->error("不能重复提交",U('admin/user_ticket_get/user_ticket_get_edit',array('id'=>$data["id"])));
 		}
 
-	} */
+	}
 
 	public function user_ticket_get_delete_action()
 	{
@@ -291,15 +299,23 @@ class user_ticket_getAction extends AdminAuthAction
 			{
 				$order_ticket_info = explode(',',$data['watch_date']);
 				$data['order_detail'] = '';
+				$piao_list = array();
 				foreach($order_ticket_info as $key=>$val){
 					$order_ticket_detail = explode('|',$val);
 					$ticket_id = $order_ticket_detail[0];
 					$ticket_nums = $order_ticket_detail[1];
+					
 					$ticket_info = M('ticket')->where("ticket_id='{$ticket_id}'")->find();
+					$piao_list[$ticket_id]['piao_id'] = $ticket_info['ticket_id'];
+					$piao_list[$ticket_id]['piao_detail'] = $ticket_info['ticket_name'];
+					$piao_list[$ticket_id]['order_num'] = $ticket_nums;
+					$data['order_list'][$ticket_id] = $piao_list;
 					$data['order_detail'] .= $ticket_info['ticket_name'].' '.$ticket_nums.'张<br/>';
 				}
 				
 				$event_info = M('event')->where("event_id='".$data['event_id']."'")->find();
+				
+				$this->assign("piao_list",$piao_list);
 				$this->assign("event_info",$event_info);
 				$this->assign("data",$data);
 				$this->assign("page_title","订单审核详情");
