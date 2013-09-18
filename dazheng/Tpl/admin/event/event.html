@@ -61,7 +61,7 @@
 		<th class="line_l">开始时间</th>
 		<th class="line_l">结束时间</th>
 
-		<th class="line_l">赛事状态</th>
+		
 		<th class="line_l">当前分站</th>
 		<th class="line_l">赛事主推</th>
 		<th class="line_l">赛事推荐</th>
@@ -81,7 +81,7 @@
 			<td><php>if($vo['event_zhutui_pic']){ echo '<a href="'.$vo['event_zhutui_pic'].'" title="点击查看大图" target="_blank"><img src="'.$vo['event_zhutui_pic'].'" style="max-width:100px; max-height:80px;"></a>';}</php></td>
 			<td>{$vo.event_starttime|format_to_time}</td>
 			<td>{$vo.event_endtime|format_to_time}</td>
-			<td>{$vo.event_state}</td>
+			
 			<td>{$vo.event_fenzhan_id}</td>
 			<td>{$vo.event_is_zhutui}</td>
 			<td>{$vo.event_is_tj}</td>
@@ -90,7 +90,9 @@
 			<td>{$vo.event_addtime|format_to_time}</td>
 		<td>
 			<a href="{:U('admin/event/event_manage', array('event_id'=>$vo['event_id']))})">赛事管理</a> | 
+			<!--
 			<a href="{:U('admin/event/event_edit', array('event_id'=>$vo['event_id']))})">修改</a> | 
+			-->
 			<a href="javascript:void(0);" onclick="mod_delete_one('{:U('admin/event/event_delete_action')}','{$vo['event_id']}');">删除</a>
 		</td>
 	</tr>

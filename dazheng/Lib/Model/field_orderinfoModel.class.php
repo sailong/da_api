@@ -75,11 +75,11 @@ class field_orderinfoModel extends Model{
     //list page 获取订场内容列表
     public function get_orderinfo_list($field_uid, $page=1, $page_size=10) 
     {
-        if(empty($field_uid)) {
-            return false;
+        if(!empty($field_uid)) {
+             $where = " field_uid='{$field_uid}'";
         }
         $page = max(1,$page);
-        $where = " field_uid='{$field_uid}'";
+       
         $sort = " field_orderinfo_id desc";
         $offset = ($page-1)*$page_size;
         $data_list['item']=M('field_orderinfo')->where($where)->order($sort)->select();
