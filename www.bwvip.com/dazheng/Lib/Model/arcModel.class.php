@@ -45,7 +45,7 @@ class arcModel extends Model{
 			$where .=" and arc_addtime<".strtotime(get("endtime"))." ";
 		}
 
-		$data["item"]=M("arc")->field("arc_id,arc_name,arctype_id,arc_viewtype,arc_top,arc_pic,arc_sort,arc_state,arc_addtime,arc_statetime")->where($where.$bigwhere)->order($sort)->page($page.",".$page_size)->select();
+		$data["item"]=M("arc")->field("arc_id,arc_name,arctype_id,arc_viewtype,arc_top,arc_pic,arc_sort,arc_state,arc_addtime,arc_statetime,is_video")->where($where.$bigwhere)->order($sort)->page($page.",".$page_size)->select();
 		for($i=0; $i<count($data["item"]); $i++)
 		{
 			if($data["item"][$i]["user_id"]!="")

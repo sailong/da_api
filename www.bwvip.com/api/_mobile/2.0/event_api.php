@@ -293,12 +293,12 @@ if($ac=="event_blog_detail")
 	$pic_width=$_G['gp_pic_width'];
 	if($blogid)
 	{
-		$detail_data=DB::fetch_first("select uid,field_uid,arc_type,arc_id as blogid,arc_name as subject,arc_replynum as replynum,arc_viewtype as view_type,arc_pic as pic ,arc_addtime as dateline,arc_content as content from tbl_arc where arc_id='".$blogid."' ");
+		$detail_data=DB::fetch_first("select uid,field_uid,arc_type,arc_id as blogid,arc_name as subject,arc_replynum as replynum,arc_viewtype as view_type,arc_pic as pic ,arc_addtime as dateline,arc_content as content,is_video from tbl_arc where arc_id='".$blogid."' ");
 		$detail_data['username']="";
 		$detail_data['uid']="0";
 
 		
-		if($blogid==26990)
+		if($detail_data['is_video']=="Y")
 		{
 			$detail_data['content']=strip_tags($detail_data['content'],"<p><img><a><br><div>");
 		}
@@ -1160,7 +1160,7 @@ if($ac=='dz_ticket_event_list')
 		$row['wab_url'] = $row['event_ticket_wapurl'];
 		
 		
-		$row2 = DB::fetch_first("select ad_url,ad_file,ad_file_iphone4,ad_file_iphone5,ad_width,ad_height from tbl_ad where field_uid='".$row['field_uid']."' and ad_page='ticket' order by ad_sort desc limit 1");
+		$row2 = DB::fetch_first("select ad_url,ad_file,ad_file_iphone4,ad_file_iphone5,ad_width,ad_height from tbl_ad where event_id='".$row['event_id']."' and ad_page='ticket' order by ad_sort desc limit 1");
 		
 		$arr=explode("|",$row2['ad_url']);
 		if(count($arr)>1)

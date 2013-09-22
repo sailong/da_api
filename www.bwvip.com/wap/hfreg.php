@@ -21,7 +21,23 @@ $discuz->init();
 	}
 	return $type;
 }
+//获取网址参数 
+$strqurey=$_SERVER["QUERY_STRING"]; 
+if(checkstr($strqurey)){ 
+$strqurey=str_replace('?','&',$strqurey);
+ header('Location: ?'.$strqurey);
+}
 
+
+function checkstr($str){
+    $needle = "?";//判断是否包含?这个字符
+    $tmparray = explode($needle,$str);
+    if(count($tmparray)>1){
+    return true;
+    } else{
+    return false;
+    }
+}
 $width = $_GET ['width'];
 if(!$width)
 {

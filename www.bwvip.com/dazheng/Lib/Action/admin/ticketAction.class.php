@@ -102,6 +102,7 @@ class ticketAction extends AdminAuthAction
 			$data["ticket_type"]=post("ticket_type");
 			$data["ticket_times"]=post("ticket_times");
 			$data["ticket_sort"]=post("ticket_sort");
+			$data["ticket_is_zengsong"]=post("ticket_is_zengsong");
 			$data["ticket_content"]=stripslashes($_POST["ticket_content"]);;
 			$data["ticket_addtime"]=time();
 			
@@ -164,6 +165,7 @@ class ticketAction extends AdminAuthAction
 			$data["ticket_type"]=post("ticket_type");
 			$data["ticket_times"]=post("ticket_times");
 			$data["ticket_sort"]=post("ticket_sort");
+			$data["ticket_is_zengsong"]=post("ticket_is_zengsong");
 			$data["ticket_content"]=stripslashes($_POST["ticket_content"]);;
 			
 			$list=M("ticket")->save($data);

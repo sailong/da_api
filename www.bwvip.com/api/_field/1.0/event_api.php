@@ -596,10 +596,11 @@ if($ac=="event_ticket_list")
 		exit;
 	}
 	
-	$get_info=DB::fetch_first("select user_ticket_id,user_ticket_status,user_ticket_codepic,(select ticket_name from tbl_ticket where ticket_id=tbl_user_ticket.ticket_id) ticket_name from tbl_user_ticket where user_ticket_imei='".$user_ticket_imei."' and
+	$get_info=DB::fetch_first("select user_ticket_id,user_ticket_status,user_ticket_code,user_ticket_codepic,(select ticket_name from tbl_ticket where ticket_id=tbl_user_ticket.ticket_id) ticket_name from tbl_user_ticket where user_ticket_imei='".$user_ticket_imei."' and
 	event_id='".$event_id."' order by user_ticket_addtime desc limit 1 ");
 	$apply_pic="";
 	$ticket_name="";
+	$apply_code=$get_info['user_ticket_code'];
 	
 	if($get_info['user_ticket_id'])
 	{
@@ -652,6 +653,7 @@ if($ac=="event_ticket_list")
 			'apply_status'=>$apply_status,
 			'apply_message'=>$apply_message,
 			'apply_pic'=>$apply_pic,
+			'apply_code'=>$apply_code,
 			'ticket_name'=>$ticket_name,
 			'list_data'=>$list_data,
 			

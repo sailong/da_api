@@ -51,42 +51,39 @@ class eventAction extends AdminAuthAction
 			if($_FILES["event_logo"]["error"]==0 || $_FILES["event_timepic"]["error"]==0 || $_FILES["event_zhutui_pic"]["error"]==0)
 			{
 				$uploadinfo=upload_file("upload/event/");
-				if($_FILES["event_logo"]["error"]==0 && $_FILES["event_logo"]["name"])
+				
+				foreach($uploadinfo as $key=>$val){
+					$uploadinfo[$val['up_name']] = $val;
+					unset($uploadinfo[$key]);
+				}
+				if(!empty($uploadinfo["event_logo"]))
 				{
-					$data["event_logo"]=$uploadinfo[0]["savepath"] . $uploadinfo[0]["savename"];
+					$data["event_logo"]=$uploadinfo["event_logo"]["savepath"] . $uploadinfo["event_logo"]["savename"];
+					$data["event_logo_small"]=$data["event_logo"];
 				}
 
 				//event_timepic
-				if($_FILES["event_timepic"]["error"]==0 && $_FILES["event_timepic"]["name"])
+				if(!empty($uploadinfo["event_timepic"]))
 				{
-					if($_FILES["event_logo"]["error"]==0 && $_FILES["event_logo"]["name"])
-					{
-						$data["event_timepic"]=$uploadinfo[1]["savepath"] . $uploadinfo[1]["savename"];
-					}
-					else
-					{
-						$data["event_timepic"]=$uploadinfo[0]["savepath"] . $uploadinfo[0]["savename"];
-					}
+					$data["event_timepic"]=$uploadinfo["event_timepic"]["savepath"] . $uploadinfo["event_timepic"]["savename"];
 				}
 
 				//event_zhutui_pic
-				if($_FILES["event_zhutui_pic"]["error"]==0 && $_FILES["event_zhutui_pic"]["name"])
+				if(!empty($uploadinfo["event_zhutui_pic"]))
 				{
-					if($_FILES["event_logo"]["error"]==0 && $_FILES["event_logo"]["name"] && $_FILES["event_timepic"]["error"]==0 && $_FILES["event_timepic"]["name"])
-					{
-						$data["event_zhutui_pic"]=$uploadinfo[2]["savepath"] . $uploadinfo[2]["savename"];
-					}
-					else if($_FILES["event_logo"]["error"]==0 && $_FILES["event_logo"]["name"] && $_FILES["event_timepic"]["error"]>0)
-					{
-						$data["event_zhutui_pic"]=$uploadinfo[1]["savepath"] . $uploadinfo[1]["savename"];
-					}
-					else
-					{
-						$data["event_zhutui_pic"]=$uploadinfo[0]["savepath"] . $uploadinfo[0]["savename"];
-					}
+					$data["event_zhutui_pic"]=$uploadinfo["event_zhutui_pic"]["savepath"] . $uploadinfo["event_zhutui_pic"]["savename"];
+				}
+				//event_left_pic
+				if(!empty($uploadinfo["event_left_pic"])) {
+					$data["event_left_pic"]=$uploadinfo["event_left_pic"]["savepath"] . $uploadinfo["event_left_pic"]["savename"];
+				}
+				//event_right_pic
+				if(!empty($uploadinfo["event_right_pic"])) {
+					$data["event_right_pic"]=$uploadinfo["event_right_pic"]["savepath"] . $uploadinfo["event_right_pic"]["savename"];
 				}
 			
 			}
+			
 
 			$data["event_starttime"]=strtotime(post("event_starttime"));
 			$data["event_endtime"]=strtotime(post("event_endtime"));
@@ -161,39 +158,34 @@ class eventAction extends AdminAuthAction
 			if($_FILES["event_logo"]["error"]==0 || $_FILES["event_timepic"]["error"]==0 || $_FILES["event_zhutui_pic"]["error"]==0)
 			{
 				$uploadinfo=upload_file("upload/event/");
-				if($_FILES["event_logo"]["error"]==0 && $_FILES["event_logo"]["name"])
+				foreach($uploadinfo as $key=>$val){
+					$uploadinfo[$val['up_name']] = $val;
+					unset($uploadinfo[$key]);
+				}
+				
+				if(!empty($uploadinfo["event_logo"]))
 				{
-					$data["event_logo"]=$uploadinfo[0]["savepath"] . $uploadinfo[0]["savename"];
+					$data["event_logo"]=$uploadinfo["event_logo"]["savepath"] . $uploadinfo["event_logo"]["savename"];
 				}
 
 				//event_timepic
-				if($_FILES["event_timepic"]["error"]==0 && $_FILES["event_timepic"]["name"])
+				if(!empty($uploadinfo["event_timepic"]))
 				{
-					if($_FILES["event_logo"]["error"]==0 && $_FILES["event_logo"]["name"])
-					{
-						$data["event_timepic"]=$uploadinfo[1]["savepath"] . $uploadinfo[1]["savename"];
-					}
-					else
-					{
-						$data["event_timepic"]=$uploadinfo[0]["savepath"] . $uploadinfo[0]["savename"];
-					}
+					$data["event_timepic"]=$uploadinfo["event_timepic"]["savepath"] . $uploadinfo["event_timepic"]["savename"];
 				}
 
 				//event_zhutui_pic
-				if($_FILES["event_zhutui_pic"]["error"]==0 && $_FILES["event_zhutui_pic"]["name"])
+				if(!empty($uploadinfo["event_zhutui_pic"]))
 				{
-					if($_FILES["event_logo"]["error"]==0 && $_FILES["event_logo"]["name"] && $_FILES["event_timepic"]["error"]==0 && $_FILES["event_timepic"]["name"])
-					{
-						$data["event_zhutui_pic"]=$uploadinfo[2]["savepath"] . $uploadinfo[2]["savename"];
-					}
-					else if($_FILES["event_logo"]["error"]==0 && $_FILES["event_logo"]["name"] && $_FILES["event_timepic"]["error"]>0)
-					{
-						$data["event_zhutui_pic"]=$uploadinfo[1]["savepath"] . $uploadinfo[1]["savename"];
-					}
-					else
-					{
-						$data["event_zhutui_pic"]=$uploadinfo[0]["savepath"] . $uploadinfo[0]["savename"];
-					}
+					$data["event_zhutui_pic"]=$uploadinfo["event_zhutui_pic"]["savepath"] . $uploadinfo["event_zhutui_pic"]["savename"];
+				}
+				//event_left_pic
+				if(!empty($uploadinfo["event_left_pic"])) {
+					$data["event_left_pic"]=$uploadinfo["event_left_pic"]["savepath"] . $uploadinfo["event_left_pic"]["savename"];
+				}
+				//event_right_pic
+				if(!empty($uploadinfo["event_right_pic"])) {
+					$data["event_right_pic"]=$uploadinfo["event_right_pic"]["savepath"] . $uploadinfo["event_right_pic"]["savename"];
 				}
 			
 			}

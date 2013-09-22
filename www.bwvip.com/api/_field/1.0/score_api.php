@@ -1028,6 +1028,7 @@ if($ac=="chadian_rank")
     if(empty($list_data)) {
         $list_data = null;
     }
+	$list_data = null;
 	$data['title']='list_data';
 	$data['data']=$list_data;
 	//print_r($data);

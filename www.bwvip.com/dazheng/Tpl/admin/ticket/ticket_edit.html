@@ -62,11 +62,11 @@
 				</tr>
 				<tr>
 					<th>开始时间：</th>
-					<td><input type="text" name="ticket_starttime" id="ticket_starttime" readonly class="mod_input_date" style="width:200px;" value="{$data.ticket_starttime|format_to_time}" onFocus="WdatePicker({isShowClear:false,readOnly:true})" ></td>
+					<td><input type="text" name="ticket_starttime" id="ticket_starttime" readonly class="mod_input_date" style="width:200px;" value="{$data.ticket_starttime|format_to_fulltime}" onFocus="WdatePicker({startDate:'%y-%M-%d 08:00:00',dateFmt:'yyyy-MM-dd HH:mm:ss',alwaysUseStartDate:true})" ></td>
 				</tr>
 				<tr>
 					<th>结束时间：</th>
-					<td><input type="text" name="ticket_endtime" id="ticket_endtime" readonly class="mod_input_date" style="width:200px;" value="{$data.ticket_endtime|format_to_time}" onFocus="WdatePicker({isShowClear:false,readOnly:true})" ></td>
+					<td><input type="text" name="ticket_endtime" id="ticket_endtime" readonly class="mod_input_date" style="width:200px;" value="{$data.ticket_endtime|format_to_fulltime}" onFocus="WdatePicker({startDate:'%y-%M-%d 08:00:00',dateFmt:'yyyy-MM-dd HH:mm:ss',alwaysUseStartDate:true})" ></td>
 				</tr>
 				<tr>
 					<th>类型：</th>
@@ -80,13 +80,24 @@
 					</td>
 				</tr>
 				<tr>
-					<th>销费次数：</th>
+					<th>入场次数：</th>
 					<td><input type="text" name="ticket_times" id="ticket_times" class="mod_input2" style="width:66px;"  value="{$data.ticket_times}"></td>
 				</tr>
 				<tr>
 					<th>排序：</th>
 					<td><input type="text" name="ticket_sort" id="ticket_sort" class="mod_input2" style="width:66px;"  value="{$data.ticket_sort}">
 					(数值越大，越靠前)
+					</td>
+				</tr>
+				<tr>
+					<th>是否赠送：</th>
+					<td>
+						<select name="ticket_is_zengsong" id="ticket_is_zengsong">
+							<option value="">请选择</option>
+							<option value="Y">是</option>
+							<option value="N">否</option>
+						</select>
+						<script>set_select_value(document.act_form.ticket_is_zengsong,"{$data.ticket_is_zengsong}");</script>
 					</td>
 				</tr>
 				<tr>
@@ -118,8 +129,8 @@ $.formValidator.initConfig({formID:"act_form",theme:'ArrowSolidBox',mode:'AutoTi
 		$("#ticket_ren_num").formValidator({empty:true,onShow:"请输入票面人数",onFocus:"请输入票面人数",onCorrect:"输入正确"}).inputValidator({min:1,max:11,onError:"请输入票面人数"});
 		$("#ticket_num").formValidator({empty:true,onShow:"请输入总数",onFocus:"请输入总数",onCorrect:"输入正确"}).inputValidator({min:1,max:11,onError:"请输入总数"});
 		$("#ticket_pic").formValidator({empty:true,onShow:"请输入图片",onFocus:"请输入图片",onCorrect:"输入正确"}).inputValidator({min:1,max:300,onError:"请输入图片"});
-		$("#ticket_starttime").formValidator({empty:true,onShow:"请输入开始时间",onFocus:"请输入开始时间",onCorrect:"输入正确"}).inputValidator({min:1,max:10,onError:"请输入开始时间"});
-		$("#ticket_endtime").formValidator({empty:true,onShow:"请输入结束时间",onFocus:"请输入结束时间",onCorrect:"输入正确"}).inputValidator({min:1,max:10,onError:"请输入结束时间"});
+		$("#ticket_starttime").formValidator({empty:true,onShow:"请输入开始时间",onFocus:"请输入开始时间",onCorrect:"输入正确"}).inputValidator({min:1,max:20,onError:"请输入开始时间"});
+		$("#ticket_endtime").formValidator({empty:true,onShow:"请输入结束时间",onFocus:"请输入结束时间",onCorrect:"输入正确"}).inputValidator({min:1,max:20,onError:"请输入结束时间"});
 		$("#ticket_type").formValidator({empty:true,onShow:"请输入类型",onFocus:"请输入类型",onCorrect:"输入正确"}).inputValidator({min:1,max:50,onError:"请输入类型"});
 		$("#ticket_times").formValidator({empty:true,onShow:"请输入销费次数",onFocus:"请输入销费次数",onCorrect:"输入正确"}).inputValidator({min:1,max:11,onError:"请输入销费次数"});
 		$("#ticket_content").formValidator({empty:true,onShow:"请输入介绍",onFocus:"请输入介绍",onCorrect:"输入正确"}).inputValidator({min:1,max:5000,onError:"请输入介绍"});

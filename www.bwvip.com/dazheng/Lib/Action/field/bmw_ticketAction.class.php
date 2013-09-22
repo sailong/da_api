@@ -17,11 +17,14 @@ class bmw_ticketAction extends field_publicAction
 
 	public function bmw_ticket()
 	{
-		$list=D("bmw_ticket")->bmw_ticket_list_pro();
+		if($_SESSION['field_uid'] == 1186){
+			$list=D("bmw_ticket")->bmw_ticket_list_pro();
 		
-		$this->assign("list",$list["item"]);
-		$this->assign("pages",$list["pages"]);
-		$this->assign("total",$list["total"]);
+			$this->assign("list",$list["item"]);
+			$this->assign("pages",$list["pages"]);
+			$this->assign("total",$list["total"]);
+		}
+		
 
 		$this->assign("page_title","门票领取");
     	$this->display();

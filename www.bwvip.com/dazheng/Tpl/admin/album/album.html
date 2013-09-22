@@ -44,7 +44,7 @@
 			<input type="checkbox" id="checkbox_handle" onclick="select_all(this,'mod_table','checkbox')" value="0">
 			<label for="checkbox"></label>
 		</th>
-		
+		<th class="line_l">编号</th>
 		<th class="line_l">相册名称</th>
 		<th class="line_l">排序</th>
 		<th class="line_l">添加时间</th>
@@ -53,7 +53,7 @@
 	<volist id="vo" name="list">
 	<tr overstyle="on"  id=ids_{$vo["album_id"]}>
 		<td><input type="checkbox" name="checkbox" onclick="select_one(this)" value="{$vo.album_id}" ></td>
-
+			<td>{$vo.album_id}</td>
 			<td><a href="{:U('admin/album/album_detail', array('album_id'=>$vo['album_id']))}'">{$vo.album_name}</a></td>
 			<td>{$vo.album_sort}</td>
 			<td>{$vo.album_addtime|format_to_time}</td>

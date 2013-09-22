@@ -122,6 +122,17 @@
 					</td>
 				</tr>
 				<tr>
+					<th>显示视频链接：</th>
+					<td><select name="is_video">
+							<option value="">请选择</option>
+							<option value="Y">是</option>
+							<option value="N">否</option>
+						</select>
+						<script>set_select_value(document.act_form.is_video,"{$data.is_video}");</script>
+					</td>
+				</tr>
+				
+				<tr>
 					<th>语言：</th>
 					<td><select name="language">
 							<option value="">请选择</option>

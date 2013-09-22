@@ -1,6 +1,15 @@
 <?php
 
 $ac = $_GET ['ac'];
+
+echo $_SERVER['HTTP_HOST']."<br>"; 
+//获取网页地址 
+echo $_SERVER['PHP_SELF']."<br>"; 
+//获取网址参数 
+echo $_SERVER["QUERY_STRING"]."<br>"; 
+//来源网页的详细地址 
+echo $_SERVER['HTTP_REFERER']."<br>"; 
+ 
 // 设定 cookie
 if($ac=='create'){
  setcookie("cookie['three']", "第三个",time()+3600);

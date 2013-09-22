@@ -55,7 +55,7 @@ class rankAction extends field_publicAction
 		
 	    $this->assign('list',$list);
 		$this->assign("pages",$page->show());
-		$this->assign("total",$total);
+		$this->assign("total",$total[0]['total']);
         $this->assign('language',$language);
 	    
 	    $this->display('rank');

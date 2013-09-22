@@ -31,11 +31,11 @@
 				</tr>
 				<tr>
 					<th>赛事LOGO：</th>
-					<td><input type="file" name="event_logo" id="event_logo"  class="mod_input"> (如需修改，请重新上传)</td>
+					<td><php>if($data['event_logo']){</php><img src="/{$data.event_logo}" style="max-height:600px; max-width:300px;"><br/><php>}</php><input type="file" name="event_logo" id="event_logo"  class="mod_input"> (如需修改，请重新上传)</td>
 				</tr>
 				<tr>
 					<th>时间表图片：</th>
-					<td><input type="file" name="event_timepic" id="event_timepic"  class="mod_input">  (如需修改，请重新上传)</td>
+					<td><php>if($data['event_timepic']){</php><img src="/{$data.event_timepic}" style="max-height:600px; max-width:300px;"><br/><php>}</php><input type="file" name="event_timepic" id="event_timepic"  class="mod_input">  (如需修改，请重新上传)</td>
 				</tr>
 				<tr>
 					<th>比赛时间：</th>
@@ -63,7 +63,7 @@
 				</tr>
 				<tr>
 					<th>主推图片：</th>
-					<td><input type="file" name="event_zhutui_pic" id="event_zhutui_pic"  class="mod_input">  (赛事顶部banner，如需修改，请重新上传)</td>
+					<td><php>if($data['event_zhutui_pic']){</php><img src="/{$data.event_zhutui_pic}" style="max-height:100px; max-width:200px;"><br/><php>}</php><input type="file" name="event_zhutui_pic" id="event_zhutui_pic"  class="mod_input">  (赛事顶部banner，如需修改，请重新上传)</td>
 				</tr>
 
 				<tr>
@@ -129,7 +129,18 @@
 						(赛事门票页面，是则显示，否不显示)
 					</td>
 				</tr>
-				
+				<tr>
+					<th>门票申请页面：</th>
+					<td>
+						<input type="text" name="event_ticket_status" id="event_ticket_status" class="mod_input2" style="width:66px;"  value="{$data.event_ticket_status}"> (1:正常申请页,2:wap页3:宝马大师赛)
+					</td>
+				</tr>
+				<tr>
+					<th>门票申请地址：</th>
+					<td>
+						<input type="text" name="event_ticket_wapurl" id="event_ticket_wapurl" class="mod_input2" style="width:500px;"  value="{$data.event_ticket_wapurl}">
+					</td>
+				</tr>
 				<tr>
 					<th>高球论坛：</th>
 					<td>
