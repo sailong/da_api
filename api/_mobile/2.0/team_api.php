@@ -19,10 +19,9 @@ if(!$sid)
 {
 	$sid = 3803973;
 }
-$sid=0;///test
+
 //球场id
 $qc_id = 3803491;
-$qc_id = 1186;//test
 
 if($fenz_id==30) 
 {
@@ -31,7 +30,7 @@ if($fenz_id==30)
 {
 	$onlymark=379021388;
 }
-$fenz_id = 42;//test
+
 
 //球场标准杆
 $qc_par_result = DB::fetch_first ( " select `par` from " . DB::table ( "common_field" ) . " where uid='$qc_id'" );
@@ -41,40 +40,15 @@ $PIN = $par [9] + $par [10] + $par [11] + $par [12] + $par [13] + $par [14] + $p
 $PTL = $POUT + $PIN;
 
 
-$strwh=$strwh.' and fenz_id='.$fenz_id; 		
+$strwh=$strwh.' and onlymark='.$onlymark; 		
 
-$tuanti_rs = DB::query("select event_apply_id,tuanti_flag from tbl_event_apply where fenzhan_id='{$fenz_id}' and parent_id='0'");
-$country_array = array();
 
-while($row=DB::fetch($tuanti_rs))
-{
-	$country_array[$row['event_apply_id']]=$row['tuanti_flag'];
-}
-unset($tuanti_rs);
-$event_apply_ids = array_keys($country_array);
-$tuanti_people_rs = DB::query("select event_apply_id,parent_id,event_apply_realname from tbl_event_apply where parent_id in('".implode("','",$event_apply_ids)."')");
-$tuanti_people = array();
-$dyarray = array();
-//echo '<pre>';
-while($row=DB::fetch($tuanti_people_rs))
-{
-	$tuanti_people[$row['parent_id']][$row['event_apply_id']]=$row['event_apply_realname'];
-}
-unset($tuanti_people_rs);
-foreach($tuanti_people as $key=>$val)
-{
-	$dyarray[$key] = implode("|",$val);
-}
-/* var_dump($country_array);
-var_dump($dyarray);
- */
 //国家
-/* $country_array = array('3803491' => 'china','948' => 'china','1178' => 'china','1195' => 'china','1035' => 'china','1013' => 'china','1187' => 'china','1212' => 'china','1210' => 'china','1150' => 'china','3804025' => 'korea','3804026' => 'korea','3804027' => 'korea','3804028' => 'korea','3804029' => 'korea','3804031' => 'korea','3804032' => 'korea','3804033' => 'korea','3804034' => 'korea','3804035' => 'korea');
- */
+$country_array = array('3803491' => 'china','948' => 'china','1178' => 'china','1195' => 'china','1035' => 'china','1013' => 'china','1187' => 'china','1212' => 'china','1210' => 'china','1150' => 'china','3804025' => 'korea','3804026' => 'korea','3804027' => 'korea','3804028' => 'korea','3804029' => 'korea','3804031' => 'korea','3804032' => 'korea','3804033' => 'korea','3804034' => 'korea','3804035' => 'korea');
 
 //球员所在球队
-/* $dyarray = array('3803491' => '孙喜丰|许大军','948' => '陈树新|李源梧','1178' => '陈焕成|Herry Chi','1195' => '陈明刚|左坤','1035' => '吴立国|冯四栋','1013' => '梁启生|梁杰坤','1187' => '孙红星|许韫','1212' => '雷盛生|胡险峰','1210' => '陈冠中|张磊','1150' => '杨坚|张义','3804025' => '柳在烈|杨津石','3804026' => '赵泰丰|黄奎碗','3804027' => '金仁兼|申永植','3804028' => '李锺变|张振焕','3804029' => '宋仁石|崔宝贤','3804031' => '余永奎|李奎焕','3804032' => '朴敬挤|崔文石','3804033' => '闵敬曹|咸明英','3804034' => '姜峰石|李准基','3804035' => '魏强福|张治元');
-//国旗 */
+$dyarray = array('3803491' => '孙喜丰|许大军','948' => '陈树新|李源梧','1178' => '陈焕成|Herry Chi','1195' => '陈明刚|左坤','1035' => '吴立国|冯四栋','1013' => '梁启生|梁杰坤','1187' => '孙红星|许韫','1212' => '雷盛生|胡险峰','1210' => '陈冠中|张磊','1150' => '杨坚|张义','3804025' => '柳在烈|杨津石','3804026' => '赵泰丰|黄奎碗','3804027' => '金仁兼|申永植','3804028' => '李锺变|张振焕','3804029' => '宋仁石|崔宝贤','3804031' => '余永奎|李奎焕','3804032' => '朴敬挤|崔文石','3804033' => '闵敬曹|咸明英','3804034' => '姜峰石|李准基','3804035' => '魏强福|张治元');
+//国旗
 $qzarray = array('3803491' => 'big-guoqi.png','948' => 'big-guoqi.png','1178' => 'big-guoqi.png','1195' => 'big-guoqi.png','1035' => 'big-guoqi.png','1013' => 'big-guoqi.png','1187' => 'big-guoqi.png','1212' => 'big-guoqi.png','1210' => 'big-guoqi.png','1150' => 'big-guoqi.png','3804025' => 'big-hanguo.png','3804026' => 'big-hanguo.png','3804027' => 'big-hanguo.png','3804028' => 'big-hanguo.png','3804029' => 'big-hanguo.png','3804031' => 'big-hanguo.png','3804032' => 'big-hanguo.png','3804033' => 'big-hanguo.png','3804034' => 'big-hanguo.png','3804035' => 'big-hanguo.png');
 //颜色
 $ysarray = array('3803491' => '#f00','948' => '#f00','1178' => '#f00','1195' => '#f00','1035' => '#f00','1013' => '#f00','1187' => '#f00','1212' => '#f00','1210' => '#f00','1150' => '#f00','3804025' => '#3a9de2','3804026' => '#3a9de2','3804027' => '#3a9de2','3804028' => '#3a9de2','3804029' => '#3a9de2','3804031' => '#3a9de2','3804032' => '#3a9de2','3804033' => '#3a9de2','3804034' => '#3a9de2','3804035' => '#3a9de2');
@@ -151,6 +125,15 @@ $sg3=$st3*$width;
 
   
 
+//获取赛事ID
+$score_info=DB::fetch_first("select uid,sid,tlcave,start_time,realname from ".DB::table("golf_nd_baofen")." where nd_id='".$nd_id."'  ");
+$event_uid=$score_info['sid'];
+$zong_fen=$score_info['tlcave'];
+$realname=$score_info['realname'];
+$event_name=DB::result_first("select realname from ".DB::table("common_member_profile")." where uid='".$event_uid."' ");
+$addtime=date("Y-m-d G:i:s",$score_info['start_time']);
+
+
 //用户组，模板调用
 $uid = ! empty ( $_GET ['uid'] ) ? $_GET ['uid'] : 0;
 $getstat = array ();
@@ -165,37 +148,51 @@ else
 	$orderby=" isend desc,ttlcave,lin,cave_18,cave_17,cave_16";
 }
 
+/*
+$sql="select *,(cave_1+cave_2+cave_3+cave_4+cave_5+cave_6+cave_7+cave_8+cave_9) as lout,(cave_10+cave_11+cave_12+cave_13+cave_14+cave_15+cave_16+cave_17 +cave_18) as lin,tlcave+tlcave1 as ttlcave from " . DB::table ( 'golf_nd_baofen' ) . " where 1=1 $strwh ORDER BY $orderby"; 
+$bf = DB::query ($sql); 
+while($row=DB::fetch($bf))
+{
+	$nblist[] = $row;
+} 
+$pm = 1;
+if($nblist)
+{
+	foreach ( $nblist as $key => $value )
+	{
+		$nblist [$key] ['pm'] = $pm ++;
+		$nblist [$key] ['chj'] = $nblist [$key] ['tlcave'] - $PTL; 
+	}
+}
+*/
+
+
 
 //竖版
 if($ac=="shuban")
 {
-	$event_info=DB::fetch_first("select event_id,event_name,event_uid,event_fenzhan_id,event_logo,event_left,event_left_flag,event_left_intro,event_left_pic,event_right,event_right_flag,event_right_intro,event_right_pic,event_timepic,event_starttime,event_endtime,event_content,event_state,event_is_tj,event_is_baoming,event_addtime from tbl_event where 1=1 and event_uid='".$sid."' order by event_addtime desc limit 1 ");
-	//echo '<pre>';
-	//var_dump($event_info);die;
+	$event_info=DB::fetch_first("select event_id,event_name,event_uid,event_fenzhan_id,event_logo,event_timepic,event_starttime,event_endtime,event_content,event_state,event_is_tj,event_is_baoming,event_addtime from tbl_event where 1=1 and event_id='".$sid."' order by event_addtime desc limit 1 ");
 	$list_info['event_name']=$event_info['event_name'];
-	$list_info['event_left']=$event_info['event_left'];//'中国';
-	$list_info['event_left_intro']=$event_info['event_left_intro'];//'CHINA';
-	$list_info['event_left_pic']=$site_url.'/'.$event_info['event_left_pic'];//"/nd/images/big-guoqi.png";
-	$list_info['event_right']=$event_info['event_right'];//'韩国';
-	$list_info['event_right_intro']=$event_info['event_right_intro'];//'SOUTH KOREA';
+	$list_info['event_left']='中国';
+	$list_info['event_left_intro']='CHINA';
+	$list_info['event_left_pic']=$site_url."/nd/images/big-guoqi.png";
+	$list_info['event_right']='韩国';
+	$list_info['event_right_intro']='SOUTH KOREA';
 	
-	$list_info['event_right_pic']=$site_url.'/'.$event_info['event_right_pic'];//"/nd/images/big-hanguo.png";
+	$list_info['event_right_pic']=$site_url."/nd/images/big-hanguo.png";
 	$list_info['event_logo']=$site_url."/".$event_info['event_logo'];
 	$list_info['event_logo_info']=getimagesize($list_info['event_logo']);
 	
 	$strwh=$strwh." and isend=1 ";
 	
-	$sql="select nd_id as baofen_id,sid,fenz_id as fenzhan_id,event_apply_id,uid,realname,tlcave,start_time,team_num,(cave_1+cave_2+cave_3+cave_4+cave_5+cave_6+cave_7+cave_8+cave_9) as lout,(cave_10+cave_11+cave_12+cave_13+cave_14+cave_15+cave_16+cave_17 +cave_18) as lin,tlcave+tlcave1 as ttlcave from " .DB::table ( 'golf_nd_baofen' ) . " where 1=1 $strwh ORDER BY $orderby "; 
-	//echo $sql;die;
+	$sql="select nd_id as baofen_id,sid,fenz_id as fenzhan_id,uid,realname,tlcave,start_time,team_num,(cave_1+cave_2+cave_3+cave_4+cave_5+cave_6+cave_7+cave_8+cave_9) as lout,(cave_10+cave_11+cave_12+cave_13+cave_14+cave_15+cave_16+cave_17 +cave_18) as lin,tlcave+tlcave1 as ttlcave from " .DB::table ( 'golf_nd_baofen' ) . " where 1=1 $strwh ORDER BY $orderby "; 
 	$bf = DB::query ($sql); 
 	while($row=DB::fetch($bf))
 	{
 		$row['start_time']=date("Y年m月d日",$row['start_time']);
-		$apply_info = DB::fetch_first("select tuanti_flag from tbl_event_apply where event_apply_id='{$row['event_apply_id']}'");
-		$row['country']=$apply_info['tuanti_flag'];
+		$row['country']=$country_array[$row['uid']];
 		$nblist[]=array_default_value($row,array('duiyuan'));
 	} 
-	//die;
 	$pm = 1;
 	if($nblist)
 	{
@@ -220,17 +217,15 @@ if($ac=="shuban")
 if($ac=="small")
 {
 
-	$event_info=DB::fetch_first("select event_id,event_name,event_uid,event_fenzhan_id,event_logo,event_left,event_left_flag,event_left_intro,event_left_pic,event_right,event_right_flag,event_right_intro,event_right_pic,event_timepic,event_starttime,event_endtime,event_content,event_state,event_is_tj,event_is_baoming,event_addtime from tbl_event where 1=1 and event_uid='".$sid."' order by event_addtime desc limit 1 ");
-	//echo '<pre>';
-	//var_dump($event_info);die;
+	$event_info=DB::fetch_first("select event_id,event_name,event_uid,event_fenzhan_id,event_logo,event_timepic,event_starttime,event_endtime,event_content,event_state,event_is_tj,event_is_baoming,event_addtime from tbl_event where 1=1 and event_id='".$sid."' order by event_addtime desc limit 1 ");
 	$list_info['event_name']=$event_info['event_name'];
-	$list_info['event_left']=$event_info['event_left'];//'中国';
-	$list_info['event_left_intro']=$event_info['event_left_intro'];//'CHINA';
-	$list_info['event_left_pic']=$site_url.'/'.$event_info['event_left_pic'];//"/nd/images/big-guoqi.png";
-	$list_info['event_right']=$event_info['event_right'];//'韩国';
-	$list_info['event_right_intro']=$event_info['event_right_intro'];//'SOUTH KOREA';
+	$list_info['event_left']='中国';
+	$list_info['event_left_intro']='CHINA';
+	$list_info['event_left_pic']=$site_url."/nd/images/big-guoqi.png";
+	$list_info['event_right']='韩国';
+	$list_info['event_right_intro']='SOUTH KOREA';
 	
-	$list_info['event_right_pic']=$site_url.'/'.$event_info['event_right_pic'];//"/nd/images/big-hanguo.png";
+	$list_info['event_right_pic']=$site_url."/nd/images/big-hanguo.png";
 	$list_info['event_logo']=$site_url."/".$event_info['event_logo'];
 	$list_info['event_logo_info']=getimagesize($list_info['event_logo']);
 	
@@ -238,21 +233,19 @@ if($ac=="small")
 	
 	$sql="select team_num,tlcave,(cave_1+cave_2+cave_3+cave_4+cave_5+cave_6+cave_7+cave_8+cave_9) as lout,(cave_10+cave_11+cave_12+cave_13+cave_14+cave_15+cave_16+cave_17 +cave_18) as lin,tlcave+tlcave1 as ttlcave from ".DB::table('golf_nd_baofen')." where 1=1 $strwh group by team_num ORDER BY team_num asc "; 
 	$bf = DB::query ($sql); 
-	
 	while($row=DB::fetch($bf))
 	{
-		$sub_list=DB::query("select nd_id as baofen_id,event_apply_id,sid,fenz_id as fenzhan_id,uid,realname,tlcave,start_time,team_num,(cave_1+cave_2+cave_3+cave_4+cave_5+cave_6+cave_7+cave_8+cave_9) as lout,(cave_10+cave_11+cave_12+cave_13+cave_14+cave_15+cave_16+cave_17 +cave_18) as lin,tlcave+tlcave1 as ttlcave from ".DB::table('golf_nd_baofen')." where 1=1 and team_num='".$row['team_num']."' $strwh order by team_name asc ");
+		$sub_list=DB::query("select nd_id as baofen_id,sid,fenz_id as fenzhan_id,uid,realname,tlcave,start_time,team_num,(cave_1+cave_2+cave_3+cave_4+cave_5+cave_6+cave_7+cave_8+cave_9) as lout,(cave_10+cave_11+cave_12+cave_13+cave_14+cave_15+cave_16+cave_17 +cave_18) as lin,tlcave+tlcave1 as ttlcave from ".DB::table('golf_nd_baofen')." where 1=1 and team_num='".$row['team_num']."' $strwh order by team_name asc ");
 		$row_sub=array();
-		$duiyuan = array();
 		while($row_sub_arr=DB::fetch($sub_list))
 		{
 			$row_sub_arr['start_time']=date("Y年m月d日",$row_sub_arr['start_time']);
-			$row_sub_arr['duiyuan']=str_replace("|",",",$dyarray[$row_sub_arr['event_apply_id']]);
-			$row_sub_arr['country']=$country_array[$row_sub_arr['event_apply_id']];
+			$row_sub_arr['duiyuan']=str_replace("|",",",$dyarray[$row_sub_arr['uid']]);
+			$row_sub_arr['country']=$country_array[$row_sub_arr['uid']];
 		
 			$row_sub[]=array_default_value($row_sub_arr);
 		}
-		//var_dump($row_sub);
+		
 		
 		//$row['sub_member']=(array_sort_by_field($row_sub,'guoqi',true));
 		
@@ -320,18 +313,19 @@ if($ac=="small")
 //横版 heng
 if($ac=="heng")
 {
-	$strwh=$strwh." and isend=1 ";
-	$event_info=DB::fetch_first("select event_id,event_name,event_uid,event_fenzhan_id,event_logo,event_left,event_left_flag,event_left_intro,event_left_pic,event_right,event_right_flag,event_right_intro,event_right_pic,event_timepic,event_starttime,event_endtime,event_content,event_state,event_is_tj,event_is_baoming,event_addtime from tbl_event where 1=1 and event_uid='".$sid."' order by event_addtime desc limit 1 ");
-	//echo '<pre>';
-	//var_dump($event_info);die;
-	$list_info['event_name']=$event_info['event_name'];
-	$list_info['event_left']=$event_info['event_left'];//'中国';
-	$list_info['event_left_intro']=$event_info['event_left_intro'];//'CHINA';
-	$list_info['event_left_pic']=$site_url.'/'.$event_info['event_left_pic'];//"/nd/images/big-guoqi.png";
-	$list_info['event_right']=$event_info['event_right'];//'韩国';
-	$list_info['event_right_intro']=$event_info['event_right_intro'];//'SOUTH KOREA';
+	//$strwh=$strwh." and isend=1 ";
+	$event_info=DB::fetch_first("select event_id,event_name,event_uid,event_fenzhan_id,event_logo,event_timepic,event_starttime,event_endtime,event_content,event_state,event_is_tj,event_is_baoming,event_addtime from tbl_event where 1=1 and event_id='".$sid."' order by event_addtime desc limit 1 ");
 	
-	$list_info['event_right_pic']=$site_url.'/'.$event_info['event_right_pic'];//"/nd/images/big-hanguo.png";
+	$list_info['event_name']=$event_info['event_name'];
+	$list_info['event_left']='中国';
+	$list_info['event_left_intro']='CHINA';
+	
+	$list_info['event_left_pic']=$site_url."/nd/images/big-guoqi.png";
+	
+	$list_info['event_right']='韩国';
+	$list_info['event_right_intro']='SOUTH KOREA';
+	
+	$list_info['event_right_pic']=$site_url."/nd/images/big-hanguo.png";
 	$list_info['event_logo']=$site_url."/".$event_info['event_logo'];
 	$list_info['event_logo_info']=getimagesize($list_info['event_logo']);
 	
@@ -342,15 +336,15 @@ if($ac=="heng")
 	{
 		$row['par']=$par;
 		
-		$sub_list=DB::query("select nd_id as baofen_id,sid,event_apply_id,fenz_id as fenzhan_id,uid,realname,tlcave,start_time,team_num,cave_1,cave_2,cave_3,cave_4,cave_5,cave_6,cave_7,cave_8,cave_9,cave_10,cave_11,cave_12,cave_13,cave_14,cave_15,cave_16,cave_17,cave_18,(cave_1+cave_2+cave_3+cave_4+cave_5+cave_6+cave_7+cave_8+cave_9) as lout,(cave_10+cave_11+cave_12+cave_13+cave_14+cave_15+cave_16+cave_17 +cave_18) as lin,tlcave+tlcave1 as ttlcave from ".DB::table('golf_nd_baofen')." where 1=1 and team_num='".$row['team_num']."' $strwh order by team_name asc ");
+		$sub_list=DB::query("select nd_id as baofen_id,sid,fenz_id as fenzhan_id,uid,realname,tlcave,start_time,team_num,cave_1,cave_2,cave_3,cave_4,cave_5,cave_6,cave_7,cave_8,cave_9,cave_10,cave_11,cave_12,cave_13,cave_14,cave_15,cave_16,cave_17,cave_18,(cave_1+cave_2+cave_3+cave_4+cave_5+cave_6+cave_7+cave_8+cave_9) as lout,(cave_10+cave_11+cave_12+cave_13+cave_14+cave_15+cave_16+cave_17 +cave_18) as lin,tlcave+tlcave1 as ttlcave from ".DB::table('golf_nd_baofen')." where 1=1 and team_num='".$row['team_num']."' $strwh order by team_name asc ");
 		$row_sub=array();
 		$i=0;
 		while($row_sub_arr=DB::fetch($sub_list))
 		{
 			
 			$row_sub_arr['start_time']=date("Y年m月d日",$row_sub_arr['start_time']);
-			$row_sub_arr['duiyuan']=str_replace("|",",",$dyarray[$row_sub_arr['event_apply_id']]);
-			$row_sub_arr['country']=$country_array[$row_sub_arr['event_apply_id']];
+			$row_sub_arr['duiyuan']=str_replace("|",",",$dyarray[$row_sub_arr['uid']]);
+			$row_sub_arr['country']=$country_array[$row_sub_arr['uid']];
 			
 			$row_sub_arr['chj'] = $row_sub_arr['tlcave']-$PTL; 
 			//$row_sub_arr['defen'] = (string)1;

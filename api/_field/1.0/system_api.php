@@ -19,7 +19,15 @@ $ac=$_G['gp_ac'];
 if($ac=="update")
 {
 	$app_version_type=$_G['gp_type'];
-	$field_uid=$_G['gp_client_id'];
+	if($_G['gp_client_id']!="")
+	{
+		$field_uid=$_G['gp_client_id'];
+	}
+	else
+	{
+		$field_uid=$_G['gp_field_uid'];
+	}
+	
 	if($field_uid)
 	{
 		$sql=" and field_uid='".$field_uid."' ";
@@ -28,6 +36,8 @@ if($ac=="update")
 	{
 		$sql=" and field_uid='0' ";
 	}
+	
+	
 	$version =DB::fetch_first( "select app_version_type,app_version_number,app_version_name,app_version_content,app_version_file,app_version_is_important,app_version_addtime from tbl_app_version where app_version_type ='".$app_version_type."' ".$sql." order by app_version_addtime desc limit 1  ");
 	$version['app_version_addtime']=date("Y-m-d G:i:s",$version['app_version_addtime']);
 

@@ -118,7 +118,7 @@ if($ac=="bwm_reg")
 		//echo date('Y-m-d',mktime(0,0,0,$yue,$ri,$nian)).'<br>';
 		$user_ticket_data['user_ticket_codepic']=$erweima_path;
 		$insert_ids[] = $user_ticket_id = insert_into_user_ticket($user_ticket_data);
-		sys_message_add_return($user_ticket_data);
+		sys_message_add_return($user_ticket_data,$field_uid);
 	}
 	$user_ticket_ids = implode(",",$insert_ids);
 	if(count($insert_ids) != $watch_num){
@@ -260,7 +260,7 @@ if($ac == 'preg'){
 		
 		$user_ticket_data['user_ticket_codepic']=erweima();
 		$insert_ids[] = $user_ticket_id = insert_into_user_ticket($user_ticket_data);
-		sys_message_add_return($user_ticket_data);
+		sys_message_add_return($user_ticket_data,$field_uid);
 	}
 	
 	//sys_message_add_return($user_ticket_data);
@@ -372,7 +372,7 @@ function user_add_return($phone,$email)
 {
 	if(!empty($phone))
 	{
-		$sql = "select uid,mobile from pre_common_member_profile where mobile='{$phone}'";
+		$sql = "select uid,mobile from pre_common_member_profile where mobile='{$phone}' order by uid desc";
 		$rs=DB::fetch_first($sql);
 		if(!empty($rs)){
 			return $rs['uid'];
@@ -418,18 +418,16 @@ function user_add_return($phone,$email)
 	}
 }
 //添加系统消息
-function sys_message_add_return($user_ticket_info)
+function sys_message_add_return($user_ticket_info,$field_uid=0)
 {
 	$sys_event_id = $user_ticket_info['event_id'];
 	
 	$sql = "select field_uid,event_name from tbl_event where event_id='{$sys_event_id}'";
 
 	$sys_event_info = DB::fetch_first($sql);
-	$sys_field_uid=$sys_event_info['field_uid'];
-	if(empty($sys_field_uid)){
-		$sys_field_uid = 0;
-	}
-	$field_uid=$sys_field_uid;
+	
+
+	
 	if($user_ticket_info["uid"])
 	{
 		$sys_uid=$user_ticket_info["uid"];

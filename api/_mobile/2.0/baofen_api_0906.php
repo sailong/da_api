@@ -132,7 +132,7 @@ if($ac=='rank')
 		
 		if($now_fenzhan_id)
 		{
-			$fenzhan_info=DB::fetch_first("select * from tbl_fenzhan where fenzhan_id='".$now_fenzhan_id."' ");
+			$fenzhan_info=DB::fetch_first("select parent_id from tbl_fenzhan where fenzhan_id='".$now_fenzhan_id."' ");
 			
 			//下级分站
 			if($fenzhan_info['parent_id'])
@@ -166,13 +166,9 @@ if($ac=='rank')
 		
 		sort($sub_arr);
 		
-		
-		
-		
-		
 		$first_fenzhan_id=$sub_arr[0];
+
 		
-		$fenzhan_num=count($sub_arr);
 		if(count($sub_arr)>=1)
 		{
 			$baofen_sql =" and ( ";
@@ -201,32 +197,20 @@ if($ac=='rank')
 		//echo $baofen_sql;
 		//echo "<hr>";
 		
-		
-		//处理排序
-		$now_fenzhan_info=$fenzhan_info;
-		if($now_fenzhan_info['fenzhan_ing_status']==0 && $now_fenzhan_info['fenzhan_lun']==1)
-		{
-			$order_sql="  ";
-		}
-		else
-		{
-			
-		}
 	
 		
 		//选择成绩
 		$lun_num = DB::result_first("select max(lun) from tbl_baofen where 1=1 ".$baofen_sql." and event_id<>0 limit 1 ");
 		if($lun_num)
 		{
-			//if($event_info['event_sort_fenzhan_id'])
-			if($now_fenzhan_info['fenzhan_ing_status']==0 && $now_fenzhan_info['fenzhan_lun']==1)
+			if($event_info['event_sort_fenzhan_id'])
 			{
-				$query = DB::query(" SELECT id,uid,lun,event_id,total_score,zong_score,score,par,tianshu,total_sum_ju,event_apply_id,username,event_user_id ,status,dateline,jiadong_status,thru,first_thru,thru_sort,start_time,rtype FROM (select event_id,baofen_id as id,uid,lun,total_score,zong_score,score,par,to_days(FROM_UNIXTIME(dateline))-to_days(now()) as tianshu,total_sum_ju ,total_ju_par,total_ju_par1,total_ju_par2,total_ju_par3,event_apply_id,realname,realname as username,event_user_id,status,dateline,jiadong_status,thru,thru as first_thru,TIME_TO_SEC(STR_TO_DATE
-(thru,'%H:%i:%s')) as thru_sort,start_time,rtype from tbl_baofen where fenzhan_id='".$now_fenzhan_id."' and source='ndong' order by start_time asc,status asc,thru_sort asc) as t2 group by event_user_id order by start_time asc,status desc,thru_sort asc,rtype asc limit 0,$limit");
+				$query = DB::query(" SELECT id,uid,lun,event_id,total_score,zong_score,score,par,tianshu,total_sum_ju,event_apply_id,username,event_user_id ,status,dateline,jiadong_status,thru,first_thru,thru_sort FROM (select event_id,baofen_id as id,uid,lun,total_score,zong_score,score,par,to_days(FROM_UNIXTIME(dateline))-to_days(now()) as tianshu,total_sum_ju ,total_ju_par,total_ju_par1,total_ju_par2,total_ju_par3,event_apply_id,realname,realname as username,event_user_id,status,dateline,jiadong_status,thru,thru as first_thru,TIME_TO_SEC(STR_TO_DATE
+(thru,'%H:%i:%s')) as thru_sort from tbl_baofen where fenzhan_id='".$event_info['event_sort_fenzhan_id']."' and source='ndong' order by status asc,thru_sort asc) as t2 group by event_user_id order by status desc,thru_sort asc limit 0,$limit");
 			}
 			else
 			{
-				$query = DB::query(" SELECT id,uid,lun,event_id,total_score,zong_score,score,par,tianshu,total_sum_ju,event_apply_id,username,event_user_id ,status,dateline,jiadong_status,rtype FROM (select event_id,baofen_id as id,uid,lun,total_score,zong_score,score,par,to_days(FROM_UNIXTIME(dateline))-to_days(now()) as tianshu,total_sum_ju ,total_ju_par,total_ju_par1,total_ju_par2,total_ju_par3,event_apply_id,realname,realname as username,event_user_id,status,dateline,jiadong_status,rtype from tbl_baofen where 1=1 ".$baofen_sql." and source='ndong' order by status asc,total_sum_ju asc,jiadong_status desc) as t2 group by event_user_id order by status desc,total_sum_ju asc,jiadong_status desc,rtype asc limit 0,$limit");
+				$query = DB::query(" SELECT id,uid,lun,event_id,total_score,zong_score,score,par,tianshu,total_sum_ju,event_apply_id,username,event_user_id ,status,dateline,jiadong_status FROM (select event_id,baofen_id as id,uid,lun,total_score,zong_score,score,par,to_days(FROM_UNIXTIME(dateline))-to_days(now()) as tianshu,total_sum_ju ,total_ju_par,total_ju_par1,total_ju_par2,total_ju_par3,event_apply_id,realname,realname as username,event_user_id,status,dateline,jiadong_status from tbl_baofen where 1=1 ".$baofen_sql." and source='ndong' order by status asc,total_sum_ju asc,jiadong_status desc) as t2 group by event_user_id order by status desc,total_sum_ju asc,jiadong_status desc limit 0,$limit");
 			}
 			
 			$i=0;
@@ -431,8 +415,7 @@ if($ac=='rank')
 					$row['total_score']='-';
 				}
 			
-				//比赛状态
-				$row['score_status']=get_thru($event_id,$now_fenzhan_id,$row['uid'],$row['event_user_id'],$now_fenzhan_info['fenzhan_ing_status'],$now_fenzhan_info['fenzhan_lun'],$fenzhan_num);
+				$row['score_status']=get_thru($event_id,$row['fenzhan_id'],$row['uid'],$row['event_user_id']);
 
 				$s_arr=explode("|",$row['score']);
 				unset($s_arr[9]);
@@ -456,25 +439,17 @@ if($ac=='rank')
 			for($i=0; $i<count($gscore); $i++)
 			{
 				
-				if($gscore[$i]['status']==-1)
+				if($gscore[$i]['status']==-4)
 				{
 					$gscore[$i]['order']="CUT";
-					$gscore[$i]['score_status']="-";
-				}
-				else if($gscore[$i]['status']==-3)
-				{
-					$gscore[$i]['order']="RTD";
-					$gscore[$i]['score_status']="-";
 				}
 				else if($gscore[$i]['status']==-2)
 				{
 					$gscore[$i]['order']="WD";
-					$gscore[$i]['score_status']="-";
 				}
-				else if($gscore[$i]['status']==-4)
+				else if($gscore[$i]['status']==-1)
 				{
 					$gscore[$i]['order']="DQ";
-					$gscore[$i]['score_status']="-";
 				}
 				else if(intval($gscore[$i]['zong_score'])>0)
 				{

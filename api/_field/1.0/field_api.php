@@ -318,7 +318,7 @@ if($ac=="all_news")
 	if($max_page>=$page)
 	{
 
-		$list=DB::query("select arc_id as blogid,arc_name as subject,arc_replynum as replynum,arc_viewtype as view_type,arc_pic as pic ,arc_addtime as dateline,arc_content as content from tbl_arc where  arc_model='arc' and arc_state=1 and arc_viewtype='normal' and (arc_type='B' or (arc_type='Q' and field_uid='".$field_uid."')) $language_sql order by arc_addtime desc limit $page_start,$page_size");
+		$list=DB::query("select arc_id as blogid,arc_name as subject,arc_replynum as replynum,arc_viewtype as view_type,arc_pic as pic ,arc_addtime as dateline,arc_content as content,FROM_UNIXTIME(arc_addtime,'%Y%m%d') as today,arc_top from tbl_arc where  arc_model='arc' and arc_state=1 and arc_viewtype='normal' and (arc_type='B' or (arc_type='Q' and field_uid='".$field_uid."')) $language_sql order by arc_top desc,today desc,arc_sort desc limit $page_start,$page_size");
 		$i=0;
 		while($row = DB::fetch($list))
 		{
@@ -354,7 +354,7 @@ if($ac=="all_news")
 	}
 	if($max_page>=$page)
 	{
-		$list=DB::query("select arc_id as blogid,arc_name as subject,arc_replynum as replynum,arc_viewtype as view_type,arc_pic as pic ,arc_addtime as dateline,arc_content as content from tbl_arc where  arc_model='arc' and arc_state=1  and arc_viewtype='pic' and (arc_type='B' or (arc_type='Q' and field_uid='".$field_uid."')) $language_sql order by arc_addtime desc  limit $page_start,$page_size");
+		$list=DB::query("select arc_id as blogid,arc_name as subject,arc_replynum as replynum,arc_viewtype as view_type,arc_pic as pic ,arc_addtime as dateline,arc_content as content,FROM_UNIXTIME(arc_addtime,'%Y%m%d') as today,arc_top from tbl_arc where  arc_model='arc' and arc_state=1  and arc_viewtype='pic' and (arc_type='B' or (arc_type='Q' and field_uid='".$field_uid."')) $language_sql order by arc_top desc,today desc,arc_sort desc   limit $page_start,$page_size");
 		$i=0;
 		while($row = DB::fetch($list))
 		{

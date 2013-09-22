@@ -1,5 +1,9 @@
 <?php
-function get_thru($event_id,$fenzhan_id,$uid,$event_user_id)
+
+
+
+
+function get_thru($event_id,$fenzhan_id,$uid,$event_user_id,$fenzhan_ing_status=0,$lun,$fenzhan_num)
 {
 	if($event_id)
 	{
@@ -11,24 +15,176 @@ function get_thru($event_id,$fenzhan_id,$uid,$event_user_id)
 		$sql .=" and fenzhan_id='".$fenzhan_id."' ";
 	}
 	
-	
+	$user_sql="";
 	if($uid)
 	{
-		$sql .=" and uid='".$uid."' ";
+		$user_sql .=" and uid='".$uid."' ";
 	}
 	else
 	{
-		$sql .=" and event_user_id='".$event_user_id."' ";
+		$user_sql .=" and event_user_id='".$event_user_id."' ";
 	}
 	
-	$thru = DB::result_first("select thru from tbl_baofen where event_id='".$event_id."' and source='ndong' ".$sql." order by lun desc limit 1 ");
-	if(!$thru)
+	
+	if($fenzhan_id)
 	{
-		$thru="-";
+		$score_info=DB::fetch_first("select total_score,score,status,cave_1,cave_2,cave_3,cave_4,cave_5,cave_6,cave_7,cave_8,cave_9,cave_10,cave_11,cave_12,cave_13,cave_14,cave_15,cave_16,cave_17,cave_18 from tbl_baofen where source='ndong' and fenzhan_id='".$fenzhan_id."' ".$user_sql." order by lun desc limit 1 ");
+		$total_score=$score_info['total_score'];
+
+		if($score_info['cave_1'] && !$score_info['cave_2'])
+		{
+			$next_dong=1;
+		}
+		else if($score_info['cave_2'] && !$score_info['cave_3'])
+		{
+			$next_dong=2;
+		}
+		else if($score_info['cave_3'] && !$score_info['cave_4'])
+		{
+			$next_dong=3;
+		}
+		else if($score_info['cave_4'] && !$score_info['cave_5'])
+		{
+			$next_dong=4;
+		}
+		else if($score_info['cave_5'] && !$score_info['cave_6'])
+		{
+			$next_dong=5;
+		}
+		else if($score_info['cave_6'] && !$score_info['cave_7'])
+		{
+			$next_dong=6;
+		}
+		else if($score_info['cave_7'] && !$score_info['cave_8'])
+		{
+			$next_dong=7;
+		}
+		else if($score_info['cave_8'] && !$score_info['cave_9'])
+		{
+			$next_dong=8;
+		}
+		else if($score_info['cave_9'] && !$score_info['cave_10'])
+		{
+			$next_dong=9;
+		}
+		else if($score_info['cave_10'] && !$score_info['cave_11'])
+		{
+			$next_dong=10;
+		}
+		else if($score_info['cave_11'] && !$score_info['cave_12'])
+		{
+			$next_dong=11;
+		}
+		else if($score_info['cave_12'] && !$score_info['cave_13'])
+		{
+			$next_dong=12;
+		}
+		else if($score_info['cave_13'] && !$score_info['cave_14'])
+		{
+			$next_dong=13;
+		}
+		else if($score_info['cave_14'] && !$score_info['cave_15'])
+		{
+			$next_dong=14;
+		}
+		else if($score_info['cave_15'] && !$score_info['cave_16'])
+		{
+			$next_dong=15;
+		}
+		else if($score_info['cave_16'] && !$score_info['cave_17'])
+		{
+			$next_dong=16;
+		}
+		else if($score_info['cave_17'] && !$score_info['cave_18'])
+		{
+			$next_dong=17;
+		}
+		else if($score_info['cave_18'] && !$score_info['cave_1'])
+		{
+			$next_dong='F';
+		}
+		else
+		{
+			$next_dong='F';
+		}
+		
+		/*
+
+		$s_arr=explode("|",$score_info['score']);
+		unset($s_arr[9]);
+		unset($s_arr[19]);
+		unset($s_arr[20]);
+		$str_new=implode("|",$s_arr);
+		$arr_new=explode("|",$str_new);
+
+		$dong_num=0;
+		for($i=0; $i<count($arr_new); $i++)
+		{
+			if($arr_new[$i]>0)	
+			{
+				$dong_num=$dong_num+1;
+			}
+		}
+
+		//$dong_num=count($arr_new);
+		//$score_info['score']=$arr_new;
+		*/
+		
+		if($fenzhan_ing_status==0 || $total_score<=0)
+		{
+			$str=DB::result_first("select start_time from tbl_baofen where source='ndong' and fenzhan_id='".$fenzhan_id."' ".$user_sql." order by lun desc limit 1 ");
+			$str=date("G:i",$str);
+		}
+		else if($fenzhan_ing_status==1)
+		{
+			//$dong_num=DB::result_first("select count(baofen_id) as num from tbl_baofen where source='ndong' and fenzhan_id='".$fenzhan_id."' ".$user_sql." ");
+			$tee=DB::result_first("select tee from tbl_baofen where source='ndong' and fenzhan_id='".$fenzhan_id."' ".$user_sql." order by lun desc limit 1 ");
+			if($tee==1)
+			{
+				$str=$dong_num+$tee;
+			}
+			else if($tee==10)
+			{
+				if($dong_num<10)
+				{
+					$str=$dong_num+$tee;
+				}
+				else
+				{
+					$str=$dong_num+$tee-9;
+				}
+				
+			}
+			else
+			{
+				$str="-";
+			}
+
+
+			$str=$next_dong;
+
+			//$str="-";
+			
+		}
+		else
+		{
+			$str="-";
+		}
+		
+		if($score_info['status']<0)
+		{
+			$str="-";
+		}
+	}
+	else
+	{
+		$str="-";
 	}
 	
-	return $thru;
+	return (string)$str;
+	
 }
+
 
 function get_ju_par_total_sort($ju_1,$ju_2,$ju_3,$ju_4,$ju_5=0)
 {
@@ -647,6 +803,97 @@ function array_sort_by_field($arr_data, $field, $descending = false)
 	return $resultArr;
 }  
 
+
+function guolv_one_html_tags($tagsArr,$str)
+{   
+    foreach ($tagsArr as $tag) {  
+        $p[]="/(<(?:\/".$tag."|".$tag.")[^>]*>)/i";  
+    }  
+    $return_str = preg_replace($p,"",$str);  
+    return $return_str;  
+}  
+
+
+
+function get_number($length=8, $chars='abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789',$str='')
+{
+
+	// 密码字符集，可任意添加你需要的字符 
+	$password = '';  
+	for($i=0; $i<$length; $i++)  
+	{  
+		// 这里提供两种字符获取方式  
+		// 第一种是使用 substr 截取$chars中的任意一位字符；  
+		// 第二种是取字符数组 $chars 的任意元素  
+		// $password .= substr($chars, mt_rand(0, strlen($chars) - 1), 1);  
+		$password .= $chars[ mt_rand(0, strlen($chars) - 1) ];  
+	}
+
+    return $password;  
+}
+
+
+
+//发送手机短信
+function send_msg($mobile,$content)
+{
+	
+$start=file_get_contents("msg.txt");
+file_put_contents("msg.txt",$start+1);	
+$flag = 0; 
+        //要post的数据 
+$argv = array( 
+         'sn'=>'SDK-BBX-010-16801', ////替换成您自己的序列号
+		 'pwd'=>strtoupper(md5('SDK-BBX-010-16801'.'f-_4ef-4')), //此处密码需要加密 加密方式为 md5(sn+password) 32位大写
+		 'mobile'=>$mobile,//手机号 多个用英文的逗号隔开 post理论没有长度限制.推荐群发一次小于等于10000个手机号
+		 'content'=>$content,//短信内容
+		 'ext'=>'',		
+		 'stime'=>date("Y-m-d H:i:s"),//定时时间 格式为2011-6-29 11:09:21
+		 'rrid'=>''
+		 ); 
+//构造要post的字符串 
+foreach ($argv as $key=>$value) { 
+          if ($flag!=0) { 
+                         $params .= "&"; 
+                         $flag = 1; 
+          } 
+         $params.= $key."="; $params.= urlencode($value); 
+         $flag = 1; 
+          } 
+         $length = strlen($params); 
+                 //创建socket连接 
+        $fp = fsockopen("sdk2.zucp.net",8060,$errno,$errstr,10) or exit($errstr."--->".$errno); 
+         //构造post请求的头 
+         $header = "POST /webservice.asmx/mt HTTP/1.1\r\n"; 
+         $header .= "Host:sdk2.zucp.net\r\n"; 
+         $header .= "Content-Type: application/x-www-form-urlencoded\r\n"; 
+         $header .= "Content-Length: ".$length."\r\n"; 
+         $header .= "Connection: Close\r\n\r\n"; 
+         //添加post的字符串 
+         $header .= $params."\r\n"; 
+         //发送post的数据 
+         fputs($fp,$header); 
+         $inheader = 1; 
+          while (!feof($fp)) { 
+                         $line = fgets($fp,1024); //去除请求包的头只显示页面的返回数据 
+                         if ($inheader && ($line == "\n" || $line == "\r\n")) { 
+                                 $inheader = 0; 
+                          } 
+                          if ($inheader == 0) { 
+                                // echo $line; 
+                          } 
+          } 
+		  //<string xmlns="http://tempuri.org/">-5</string>
+	       $line=str_replace("<string xmlns=\"http://tempuri.org/\">","",$line);
+	       $line=str_replace("</string>","",$line);
+		   $result=explode("-",$line);
+		  // echo $line."-------------";
+		   
+		    if(count($result)>1)
+			return $line;
+			else
+			return '0#1';
+}
 
 
 ?>
