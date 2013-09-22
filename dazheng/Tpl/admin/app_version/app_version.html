@@ -2,10 +2,17 @@
 <div class="so_main">
 
   <div class="page_tit">客户端版本</div>
-  <include file="_tab" />
+  <div class="tit_tab">
+	<ul>
+		<li><a <php> if(get("app_version_type")==''){ echo " class=on ";}</php> href="{:U('admin/app_version/app_version',array('app_version_type'=>''))}">全部</a></li>
+		<li><a <php> if(get("app_version_type")=='android'){ echo " class=on ";}</php> href="{:U('admin/app_version/app_version',array('app_version_type'=>'android'))}">Android</a></li>
+		<li><a <php> if(get("app_version_type")=='ios'){ echo " class=on ";}</php> href="{:U('admin/app_version/app_version',array('app_version_type'=>'ios'))}">IOS</a></li>
+		
+	</ul>
+  </div>
 
   <div class="search_box">
-		<form name="search_form" action="/index.php" method="get">
+		<form name="search_form" action="/default.php" method="get">
 		<input type="hidden" name="g" value="admin">
 		<input type="hidden" name="m" value="app_version">
 		<input type="hidden" name="a" value="app_version">
@@ -13,12 +20,11 @@
 		<table border="0" cellspacing="0" cellpadding="0">
 			<th>名称：</th>
 			<td><input type="text" name="k" class="search_input" style="width:120px;" value="<php> echo  get('k');</php>"></td>
-			<th>开始时间：</th>
+			<th>添加时间：</th>
 			<td>
 				<input type="text" name="starttime" class="search_input_date" style="width:120px;" value="<php> echo  get('starttime');</php>" onFocus="WdatePicker({isShowClear:false,readOnly:true})"> 至 
 				<input type="text" name="endtime" class="search_input_date" style="width:120px;" value="<php> echo  get('endtime');</php>" onFocus="WdatePicker({isShowClear:false,readOnly:true})">
 			</td>
-			
 			<td class="btn">
 				<input type="submit" value="搜索" class="btn_b" style="margin-right:8px;" >
 				<input type="button" value="查看全部" class="btn_b" onclick="javascript:location='{:U('admin/app_version/app_version',array('state'=>get('state')))}';">

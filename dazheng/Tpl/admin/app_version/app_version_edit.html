@@ -19,7 +19,7 @@
 	<table class="add_table" border="0" cellspacing="0" cellpadding="0" >
 		<tbody>
 		<tr>
-					<th style="width:150px;">类型：</th>
+					<th style="width:150px;">客户端类型：</th>
 					<td>
 						<select name="app_version_type" id="app_version_type">
 							<option value="">请选择</option>
@@ -32,7 +32,13 @@
 				</tr>
 				<tr>
 					<th>球场UID：</th>
-					<td><input type="text" name="field_uid" id="field_uid" class="mod_input2" style="width:300px;"  value="{$data.field_uid}"></td>
+					<td>
+						<select name="field_uid" id="field_uid" class="mod_select">
+							<option value="">请选择</option>
+							{$page_list}
+						</select>
+						<script>set_select_value(document.act_form.field_uid,"{$data.field_uid}");</script>
+					</td>
 				</tr>
 				<tr>
 					<th>版本号：</th>

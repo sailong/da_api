@@ -7,7 +7,7 @@
  *    @E-mail			123695069@qq.com
  *    @Date			2013-08-06
  */
-class bmw_ticketAction extends field_publicAction
+class bmw_ticketAction extends AdminAuthAction
 {
 
 	public function _basic()	
@@ -17,14 +17,11 @@ class bmw_ticketAction extends field_publicAction
 
 	public function bmw_ticket()
 	{
-		if($_SESSION['field_uid'] == 1186){
-			$list=D("bmw_ticket")->bmw_ticket_list_pro();
+		$list=D("bmw_ticket")->bmw_ticket_list_pro();
 		
-			$this->assign("list",$list["item"]);
-			$this->assign("pages",$list["pages"]);
-			$this->assign("total",$list["total"]);
-		}
-		
+		$this->assign("list",$list["item"]);
+		$this->assign("pages",$list["pages"]);
+		$this->assign("total",$list["total"]);
 
 		$this->assign("page_title","门票领取");
     	$this->display();
@@ -203,6 +200,12 @@ class bmw_ticketAction extends field_publicAction
 		{
 			$this->error("您该问的信息不存在");
 		}
+
+	}
+	
+	public function bmw_ticket_excel()
+	{
+		$this->display();
 
 	}
 

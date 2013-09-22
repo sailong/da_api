@@ -91,7 +91,12 @@
 		<td>{$vo.message_id}</th>
 		<!-- <td>{$vo.message_number}</th> -->
 		<!-- <td>{$vo.field_uid}</th> -->
-			<td><a href="javascript:void(0);" onclick="mod_dialog('查看详细','{:U('admin/sys_message/sys_message_detail', array('message_id'=>$vo['message_id']))}');"><php>if($vo['field_uid'] == '0'){echo '大正';}elseif($vo['field_uid'] == '1186'){echo '美兰湖';}else{echo '暂无';}</php></a></td>
+			<td><a href="javascript:void(0);" onclick="mod_dialog('查看详细','{:U('admin/sys_message/sys_message_detail', array('message_id'=>$vo['message_id']))}');">
+			<php>if($vo['field_uid'] == '0'){echo '大正';}
+				elseif($vo['field_uid'] == '1186'){echo '上海美兰湖高尔夫俱乐部';}
+				elseif($vo['field_uid'] == '3803491'){echo '北京华彬国际高尔夫俱乐部';}
+				elseif($vo['field_uid'] == '1160'){echo '山东烟台南山国际高尔夫俱乐部';}
+				else{echo '暂无';}</php></a></td>
 			<td><php>if($vo['uid'] == '0') {echo '所有用户';}else{echo $vo['uid'];}</php></td>
 			<td>{$vo.message_title}</td>
 			<!--

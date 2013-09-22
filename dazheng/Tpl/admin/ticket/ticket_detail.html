@@ -18,7 +18,7 @@
 	<table class="add_table" border="0" cellspacing="0" cellpadding="0" >
 		<tbody>
 		<tr>
-					<th>门票名称：</th>
+				<th style="width:50px;">门票名称：</th>
 						<td>{$data.ticket_name}</td>
 				</tr>
 				<tr>
@@ -62,6 +62,14 @@
 				<tr>
 					<th>入场次数：</th>
 						<td>{$data.ticket_times}</td>
+				</tr>
+				<tr>
+					<th>排序：</th>
+						<td>{$data.ticket_sort}</td>
+				</tr>
+				<tr>
+					<th>是否赠送：</th>
+						<td><php>if($data['ticket_is_zengsong']=='Y'){echo "是";}if($data['ticket_is_zengsong']=='N'){echo '否';}</php></td>
 				</tr>
 				<tr>
 					<th>介绍：</th>

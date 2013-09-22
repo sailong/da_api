@@ -67,6 +67,7 @@
 		<th class="line_l">类型</th>
 		<th class="line_l">入场次数</th>
 		<th class="line_l">排序</th>
+		<th class="line_l">是否正送</th>
 		<!--
 		<th class="line_l">介绍</th>
 		-->
@@ -89,6 +90,7 @@
 		<td><php>if($vo['ticket_type']=='BASE'){echo "普通";}if($vo['ticket_type']=='VIP'){echo $vo['ticket_type'];}</php></td>
 		<td>{$vo.ticket_times}</td>
 		<td>{$vo.ticket_sort}</td>
+		<td><php>if($vo['ticket_is_zengsong']=='Y'){echo "是";}if($vo['ticket_is_zengsong']=='N'){echo '否';}</php></td>
 		<!--
 		<td>{$vo.ticket_content}</td>
 		-->
