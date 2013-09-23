@@ -203,6 +203,7 @@ class user_ticket_getAction extends AdminAuthAction
 			$ids_arr=explode(",",post("ids"));
 			for($i=0; $i<count($ids_arr); $i++)
 			{
+				M('user_ticket')->where("out_id=".$ids_arr[$i])->delete();
 				$res=M("user_ticket_get")->where("id=".$ids_arr[$i])->delete();
 			}
 			echo "succeed^删除成功";
@@ -224,7 +225,7 @@ class user_ticket_getAction extends AdminAuthAction
 				if($user_ticket_get_info !== false){
 					//获取订票信息
 					if($user_ticket_get_info['phone'] && $user_ticket_get_info['check_status']==0){
-						$uid = $this->user_add_return($user_ticket_get_info['phone'],$user_ticket_get_info['email']);
+						$uid = $this->user_add_return($user_ticket_get_info['family_name'].$user_ticket_get_info['name'],$user_ticket_get_info['phone'],$user_ticket_get_info['email']);
 						//user_ticket表添加信息
 						$user_ticket_data = array(
 							'uid' => $uid,
@@ -261,14 +262,13 @@ class user_ticket_getAction extends AdminAuthAction
 							$user_ticket_data['ticket_starttime'] = $ticket_info['ticket_starttime'];
 							$user_ticket_data['ticket_endtime'] = $ticket_info['ticket_endtime'];
 							$user_ticket_data['ticket_price'] = $ticket_info['ticket_price'];
-							for($i=0;$i<$ticket_nums;$i++){
-								$user_ticket_data['user_ticket_code'] = $this->get_randmod_str();
-								$user_ticket_data['user_ticket_codepic'] = $this->erweima();
-								$rs = M('user_ticket')->add($user_ticket_data);
-								if($rs){
-									$this->sys_message_add_return($user_ticket_data);
-								}
-								$user_ticket_ids[] = $rs;
+							$user_ticket_data['user_ticket_nums'] = $ticket_nums;
+							$user_ticket_data['user_ticket_code'] = $this->get_randmod_str();
+							$user_ticket_data['user_ticket_codepic'] = $this->erweima();
+							$rs = M('user_ticket')->add($user_ticket_data);
+							$user_ticket_ids[] = $rs;
+							if($rs){
+								$this->sys_message_add_return($user_ticket_data);
 							}
 						}
 						
@@ -420,19 +420,23 @@ class user_ticket_getAction extends AdminAuthAction
 	/*
 	*  添加用户注册
 	*/
-	public function user_add_return($phone,$email)
+	public function user_add_return($username,$phone,$email)
 	{
 		
 		if(!empty($phone))
 		{
-			$rs=M()->table('pre_common_member_profile')->where(" mobile='{$phone}'")->find();
+			$rs=M()->table('pre_common_member_profile')->where("mobile='{$phone}'")->order('uid desc')->find();
 			if(!empty($rs)){
 				return $rs['uid'];
 			}
 		}
-		$rand_nums = time(). mt_rand(1000,9999);
-		$user_data["username"]=$phone;
-		$password='123456';
+		if(empty($username)){
+			$username = time(). mt_rand(1000,9999);
+		}
+		
+		 
+		$user_data["username"]=$username;
+		$password_tmp = $password=mt_rand(100000,999999);
 		$salt = substr(uniqid(rand()), -6);
 		$password = md5(md5($password).$salt);
 		$user_data["salt"]=$salt;
@@ -451,11 +455,11 @@ class user_ticket_getAction extends AdminAuthAction
 		
 		$user_data["uid"]=$ucuid; 
 		$user_data["gender"]=''; 
-		$user_data["realname"]=$rand_nums;	
+		$user_data["realname"]=$username;	
 		
 		//生成真实姓名
 		$list=M("common_member_profile","pre_")->add($user_data); 
-		$user_data["nickname"]=$rand_nums;
+		$user_data["nickname"]=$username;
 		$user_data["ucuid"]=$ucuid; 
 		$user_data["role_id"]=3; 			
 		
@@ -464,6 +468,13 @@ class user_ticket_getAction extends AdminAuthAction
 		
 		if($list!=false)
 		{
+			//发送短信
+			if($phone){
+				$msg_content="您的门票已购买成功并成为大正网用户,请您下载并登录大正网客户端 个人中心，我的门票中查看具体信息。您的大正登录名为:".$phone."，密码为:".$password_tmp."，大正客户端下载地址：http://www.bwvip.com/app ";
+				$msg_content=iconv('UTF-8', 'GB2312', $msg_content);;
+				$this->send_msg($phone,$msg_content);
+			}
+			
 			return $ucuid;
 		}
 		else
@@ -546,6 +557,69 @@ class user_ticket_getAction extends AdminAuthAction
 		}
 	
 	}
+	
+	//发送手机短信
+	public function send_msg($mobile,$content)
+	{
+		
+		$start=file_get_contents("msg.txt");
+		file_put_contents("msg.txt",$start+1);	
+		$flag = 0; 
+				//要post的数据 
+		$argv = array( 
+			 'sn'=>'SDK-BBX-010-16801', ////替换成您自己的序列号
+			 'pwd'=>strtoupper(md5('SDK-BBX-010-16801'.'f-_4ef-4')), //此处密码需要加密 加密方式为 md5(sn+password) 32位大写
+			 'mobile'=>$mobile,//手机号 多个用英文的逗号隔开 post理论没有长度限制.推荐群发一次小于等于10000个手机号
+			 'content'=>$content,//短信内容
+			 'ext'=>'',		
+			 'stime'=>date("Y-m-d H:i:s"),//定时时间 格式为2011-6-29 11:09:21
+			 'rrid'=>''
+			 ); 
+		//构造要post的字符串 
+		foreach ($argv as $key=>$value) {
+			if ($flag!=0) { 
+						 $params .= "&"; 
+						 $flag = 1; 
+			} 
+			$params.= $key."="; $params.= urlencode($value); 
+			$flag = 1; 
+		} 
+		$length = strlen($params); 
+				 //创建socket连接 
+		$fp = fsockopen("sdk2.zucp.net",8060,$errno,$errstr,10) or exit($errstr."--->".$errno); 
+		//构造post请求的头 
+		$header = "POST /webservice.asmx/mt HTTP/1.1\r\n"; 
+		$header .= "Host:sdk2.zucp.net\r\n"; 
+		$header .= "Content-Type: application/x-www-form-urlencoded\r\n"; 
+		$header .= "Content-Length: ".$length."\r\n"; 
+		$header .= "Connection: Close\r\n\r\n"; 
+		//添加post的字符串 
+		$header .= $params."\r\n"; 
+		//发送post的数据 
+		fputs($fp,$header); 
+		$inheader = 1; 
+		while (!feof($fp)) { 
+			$line = fgets($fp,1024); //去除请求包的头只显示页面的返回数据 
+			if ($inheader && ($line == "\n" || $line == "\r\n")) { 
+				$inheader = 0; 
+			} 
+			if ($inheader == 0) { 
+				// echo $line; 
+			} 
+		} 
+		//<string xmlns="http://tempuri.org/">-5</string>
+		$line=str_replace("<string xmlns=\"http://tempuri.org/\">","",$line);
+		$line=str_replace("</string>","",$line);
+		$result=explode("-",$line);
+		// echo $line."-------------";
+		  
+		if(count($result)>1)
+		return $line;
+		else
+		return '0#1';
+	}
+
+
 
 }
 ?>

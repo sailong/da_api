@@ -135,7 +135,7 @@ class user_ticketAction extends AdminAuthAction
 			if($pre_member_info){
 				$data["uid"] = $pre_member_info['uid'];
 			}else{
-				$uid = $this->user_add_return();
+				$uid = $this->user_add_return($data["user_ticket_realname"],$data["user_ticket_mobile"]);
 				if(!empty($uid)){
 					$data["uid"] = $uid;
 				}else{
@@ -248,7 +248,7 @@ class user_ticketAction extends AdminAuthAction
 		{
 			$ids_arr=explode(",",post("ids"));
 			
-			foreach($ids_arr as $ke=>$val)
+			foreach($ids_arr as $key=>$val)
 			{
 				$res=M()->execute("update tbl_user_ticket set user_ticket_status='1' where user_ticket_id='{$val}'");
 				if($res !== false){
@@ -427,37 +427,46 @@ class user_ticketAction extends AdminAuthAction
 	/*
 	*  添加用户注册
 	*/
-	public function user_add_return()
+	public function user_add_return($username,$phone,$email)
 	{
 		
-		$user_data["username"]=time(). mt_rand(1000,9999);//post("user_ticket_realname");	
-		$password='123456';
+		if(!empty($phone))
+		{
+			$rs=M()->table('pre_common_member_profile')->where("mobile='{$phone}'")->order('uid desc')->find();
+			if(!empty($rs)){
+				return $rs['uid'];
+			}
+		}
+		if(empty($username)){
+			$username = time(). mt_rand(1000,9999);
+		}
+		
+		 
+		$user_data["username"]=$username;
+		$password_tmp = $password=mt_rand(100000,999999);
 		$salt = substr(uniqid(rand()), -6);
 		$password = md5(md5($password).$salt);
 		$user_data["salt"]=$salt;
 		$user_data["password"]=$password;
-		$user_data["email"]=$user_data["username"].'@bw.com'; 
-		$user_data["mobile"]=post("user_ticket_mobile"); 
+		$user_data["email"]=$email; 
+		$user_data["mobile"]=$phone; 
 		$user_data["regip"]=time();
 		$user_data["regdate"]=time();
 		//生成ucenter会员 
 		$list=M("ucenter_members","pre_")->add($user_data); 
 		$ucuid=$list;
 		unset($data["salt"]);
-		//unset($data["username"]);
-		//$data["realname"]=post("realname"); 
-		//$data["mobile"]=post("mobile");  
 		$user_data["groupid"]=10;  
 		//生成社区会员 
 		$list=M("common_member","pre_")->add($user_data); 
 		
 		$user_data["uid"]=$ucuid; 
-		$user_data["gender"]=post("gender"); 
-		$user_data["realname"]=post("user_ticket_realname");	
+		$user_data["gender"]=''; 
+		$user_data["realname"]=$username;	
 		
 		//生成真实姓名
 		$list=M("common_member_profile","pre_")->add($user_data); 
-		$user_data["nickname"]=post("user_ticket_realname");
+		$user_data["nickname"]=$username;
 		$user_data["ucuid"]=$ucuid; 
 		$user_data["role_id"]=3; 			
 		
@@ -466,6 +475,13 @@ class user_ticketAction extends AdminAuthAction
 		
 		if($list!=false)
 		{
+			//发送短信
+			if($phone){
+				$msg_content="您的门票已购买成功并成为大正网用户,请您下载并登录大正网客户端 个人中心，我的门票中查看具体信息。您的大正登录名为:".$phone."，密码为:".$password_tmp."，大正客户端下载地址：http://www.bwvip.com/app ";
+				$msg_content=iconv('UTF-8', 'GB2312', $msg_content);;
+				$this->send_msg($phone,$msg_content);
+			}
+			
 			return $ucuid;
 		}
 		else
@@ -548,6 +564,66 @@ class user_ticketAction extends AdminAuthAction
 		}
 	
 	}
-
+	
+	//发送手机短信
+	public function send_msg($mobile,$content)
+	{
+		
+		$start=file_get_contents("msg.txt");
+		file_put_contents("msg.txt",$start+1);	
+		$flag = 0; 
+				//要post的数据 
+		$argv = array( 
+			 'sn'=>'SDK-BBX-010-16801', ////替换成您自己的序列号
+			 'pwd'=>strtoupper(md5('SDK-BBX-010-16801'.'f-_4ef-4')), //此处密码需要加密 加密方式为 md5(sn+password) 32位大写
+			 'mobile'=>$mobile,//手机号 多个用英文的逗号隔开 post理论没有长度限制.推荐群发一次小于等于10000个手机号
+			 'content'=>$content,//短信内容
+			 'ext'=>'',		
+			 'stime'=>date("Y-m-d H:i:s"),//定时时间 格式为2011-6-29 11:09:21
+			 'rrid'=>''
+			 ); 
+		//构造要post的字符串 
+		foreach ($argv as $key=>$value) {
+			if ($flag!=0) { 
+						 $params .= "&"; 
+						 $flag = 1; 
+			} 
+			$params.= $key."="; $params.= urlencode($value); 
+			$flag = 1; 
+		} 
+		$length = strlen($params); 
+				 //创建socket连接 
+		$fp = fsockopen("sdk2.zucp.net",8060,$errno,$errstr,10) or exit($errstr."--->".$errno); 
+		//构造post请求的头 
+		$header = "POST /webservice.asmx/mt HTTP/1.1\r\n"; 
+		$header .= "Host:sdk2.zucp.net\r\n"; 
+		$header .= "Content-Type: application/x-www-form-urlencoded\r\n"; 
+		$header .= "Content-Length: ".$length."\r\n"; 
+		$header .= "Connection: Close\r\n\r\n"; 
+		//添加post的字符串 
+		$header .= $params."\r\n"; 
+		//发送post的数据 
+		fputs($fp,$header); 
+		$inheader = 1; 
+		while (!feof($fp)) { 
+			$line = fgets($fp,1024); //去除请求包的头只显示页面的返回数据 
+			if ($inheader && ($line == "\n" || $line == "\r\n")) { 
+				$inheader = 0; 
+			} 
+			if ($inheader == 0) { 
+				// echo $line; 
+			} 
+		} 
+		//<string xmlns="http://tempuri.org/">-5</string>
+		$line=str_replace("<string xmlns=\"http://tempuri.org/\">","",$line);
+		$line=str_replace("</string>","",$line);
+		$result=explode("-",$line);
+		// echo $line."-------------";
+		  
+		if(count($result)>1)
+		return $line;
+		else
+		return '0#1';
+	}
 }
 ?>

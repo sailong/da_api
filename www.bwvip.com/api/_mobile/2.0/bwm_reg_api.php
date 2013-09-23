@@ -64,7 +64,7 @@ if($ac=="bwm_reg")
 	$bwm_adddate = date('Y年m月d日 H:i:s',$bwm_addtime);
 	
 	if($uid == ''){
-		$uid = user_add_return($phone,$email);
+		$uid = user_add_return($family_name.$name,$phone,$email);
 	}
 	
 	if(empty($uid)){
@@ -76,6 +76,7 @@ if($ac=="bwm_reg")
 	
 	$watch_date_arr = explode(',',$watch_date);
 	
+	$erweima_path = erweima();
 	$user_ticket_data = array(
 		'uid' => $uid,
 		'ticket_id' => $ticket_info['ticket_id'],
@@ -85,8 +86,9 @@ if($ac=="bwm_reg")
 		'ticket_endtime' => $ticket_info['ticket_endtime'],
 		'ticket_times' => $ticket_info['ticket_times'],
 		'ticket_price' => $ticket_info['ticket_price'],
+		'user_ticket_codepic' => $erweima_path,
 		'user_ticket_imei' => $user_ticket_imei,
-		'user_ticket_nums' => '1',
+		'user_ticket_nums' => count($watch_date_arr),
 		'user_ticket_realname' => $family_name.$name,
 		'user_ticket_sex' => $qiancheng == '先生' ? '男':'女',
 		'user_ticket_age' => $user_ticket_age,
@@ -98,31 +100,12 @@ if($ac=="bwm_reg")
 	}else{
 		$user_ticket_data['user_ticket_status'] = '1';
 	}
-	$nian = date('Y',time());
-	$insert_ids = array();
-	$watch_num = 0;
-	$erweima_path = erweima();
-	foreach($watch_date_arr as $key=>$val){
-		if(empty($val))
-		{
-			continue;
-		}
-		$watch_num++;
-		$yue = $val[0].$val[1];
-		$ri = $val[5].$val[6];
-		$ticket_starttime = mktime(0,0,0,$yue,$ri,$nian);
-		$ticket_enttime = $ticket_starttime+86400;
-		$user_ticket_data['ticket_starttime']=$ticket_starttime;
-		$user_ticket_data['ticket_endtime']=$ticket_enttime;
-		//echo strtotime("{$nian}-{$yue}-{$ri}").'<br>';die;
-		//echo date('Y-m-d',mktime(0,0,0,$yue,$ri,$nian)).'<br>';
-		$user_ticket_data['user_ticket_codepic']=$erweima_path;
-		$insert_ids[] = $user_ticket_id = insert_into_user_ticket($user_ticket_data);
-		sys_message_add_return($user_ticket_data,$field_uid);
-	}
-	$user_ticket_ids = implode(",",$insert_ids);
-	if(count($insert_ids) != $watch_num){
-		$sql = "delete from tbl_user_ticket where user_ticket_id in({$user_ticket_ids})";
+	//$nian = date('Y',time());
+	
+	$user_ticket_ids = $user_ticket_id = insert_into_user_ticket($user_ticket_data);
+	
+	if(empty($user_ticket_id)){
+		$sql = "delete from tbl_user_ticket where user_ticket_id in({$user_ticket_id})";
 		DB::query($sql);
 		api_json_result(1,1,"提交失败",null);
 	}
@@ -165,6 +148,7 @@ if($ac=="bwm_reg")
 		DB::query($sql);
 		api_json_result(1,1,"提交失败",null);
 	}
+	sys_message_add_return($user_ticket_data,$field_uid);
 	/* $data['title']='erweima';
 	$data['data']=$site_url.$erweima_path;*/
     api_json_result(1,0,"国内注册用户，我们将寄送门票到您注册邮寄地址，海外注册用户烦请您在比赛当日至BMW大师赛现场领取门票，每日限领2张。",$data);
@@ -368,7 +352,7 @@ function get_randmod_str(){
 /*
 *  添加用户注册
 */
-function user_add_return($phone,$email)
+function user_add_return($username,$phone,$email)
 {
 	if(!empty($phone))
 	{
@@ -378,10 +362,11 @@ function user_add_return($phone,$email)
 			return $rs['uid'];
 		}
 	}
-	
-	$rand_nums = time(). mt_rand(1000,9999);
-	$username=$phone;//time(). mt_rand(1000,9999);//post("user_ticket_realname");	
-	$password='123456';
+	if(empty($username)){
+		$username = time(). mt_rand(1000,9999);
+	}
+	//$username=$phone;//time(). mt_rand(1000,9999);//post("user_ticket_realname");	
+	$password_tmp = $password=mt_rand(100000,999999);
 	$salt = substr(uniqid(rand()), -6);
 	$password = md5(md5($password).$salt);
 	$salt=$salt;
@@ -400,16 +385,22 @@ function user_add_return($phone,$email)
 	$sql = "insert into pre_common_member(uid,username,password,email,regdate,groupid) values('{$ucuid}','{$username}','{$password}','{$email}','{$regdate}','{$groupid}')";
 	$rs = DB::query($sql);
 	
-	$sql = "insert into pre_common_member_profile(uid,realname,gender,mobile,regdate) values('{$ucuid}','{$rand_nums}','{$gender}','{$mobile}','{$regdate}')";
+	$sql = "insert into pre_common_member_profile(uid,realname,gender,mobile,regdate) values('{$ucuid}','{$username}','{$gender}','{$mobile}','{$regdate}')";
 	//生成真实姓名
 	$rs = DB::query($sql);
 	
 	$role_id = 3;
-	$sql = "insert into jishigou_members(uid,username,nickname,password,email,phone,regip,regdate,gender,role_id) values('{$ucuid}','{$username}','{$rand_nums}','{$password}','{$email}','{$mobile}','{$regip}','{$regdate}','{$gender}','{$role_id}')";
+	$sql = "insert into jishigou_members(uid,username,nickname,password,email,phone,regip,regdate,gender,role_id) values('{$ucuid}','{$username}','{$username}','{$password}','{$email}','{$mobile}','{$regip}','{$regdate}','{$gender}','{$role_id}')";
 	///生成微博记录
 	$rs = DB::query($sql);
 	if($rs!=false)
 	{
+		//发送短信
+		if($mobile){
+			$msg_content="您的门票已购买成功并成为大正网用户,请您下载并登录大正网客户端 个人中心，我的门票中查看具体信息。您的大正登录名为:".$mobile."，密码为:".$password_tmp."，大正客户端下载地址：http://www.bwvip.com/app ";
+			$msg_content=iconv('UTF-8', 'GB2312', $msg_content);;
+			send_msg($mobile,$msg_content);
+		}
 		return $ucuid;
 	}
 	else

@@ -58,9 +58,6 @@ if($ac=="ad")
 	
 
 	$ad=DB::query("select ad_url,ad_file,ad_file_iphone4,ad_file_iphone5,ad_width,ad_height,ad_action,ad_action_id,ad_action_text from tbl_ad where ad_app='field_app' and field_uid='".$field_uid."' ".$sql."  ".$apptype_sql."   order by ad_sort desc   ");
-	if($_G['gp_test']){
-		echo "select ad_url,ad_file,ad_file_iphone4,ad_file_iphone5,ad_width,ad_height,ad_action,ad_action_id,ad_action_text from tbl_ad where ad_app='field_app' and field_uid='".$field_uid."' ".$sql."  ".$apptype_sql."   order by ad_sort desc   ";die;
-	}
 	while($row=DB::fetch($ad))
 	{
 		$arr=explode("|",$row['ad_url']);
@@ -89,7 +86,46 @@ if($ac=="ad")
 		{
 			$row['ad_file_iphone5']="".$site_url."/".$row['ad_file_iphone5'];
 		}
-		$list_data[]=array_default_value($row);
+		
+		
+		
+		if($row['ad_action']=='apply_ticket_detail')
+		{
+			if($row['ad_action_id'])
+			{
+			
+				$row2 = DB::fetch_first("select ad_url,ad_file,ad_file_iphone4,ad_file_iphone5,ad_width,ad_height from tbl_ad where event_id='".$row['ad_action_id']."' and ad_page='ticket' order by ad_sort desc limit 1");
+				$arr=explode("|",$row2['ad_url']);
+				if(count($arr)>1)
+				{
+					$row2['ad_action']=$arr[0];
+					$row2['ad_action_id']=$arr[1];
+					$row2['ad_action_text']=$arr[2];
+					$row2['event_url']=$arr[3];
+				}
+				if($row2['ad_file'])
+				{
+					$row2['ad_file']="".$site_url."/".$row2['ad_file'];
+				}
+				if($row2['ad_file_iphone4'])
+				{
+					$row2['ad_file_iphone4']="".$site_url."/".$row2['ad_file_iphone4'];
+				}
+				if($row2['ad_file_iphone5'])
+				{
+					$row2['ad_file_iphone5']="".$site_url."/".$row2['ad_file_iphone5'];
+				}
+				
+				
+			}
+			
+			
+		}
+		$row['apply_ad_list']=array_default_value($row2,array('event_url'));
+		
+		$list_data[]=array_default_value($row,array('apply_ad_list'));
+		
+		//$list_data[]=array_default_value($row);
 	}
 		$data['title']		= "data";
 		$data['data']     =  $list_data;

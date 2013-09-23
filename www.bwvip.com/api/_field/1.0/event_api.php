@@ -637,9 +637,12 @@ if($ac=="event_ticket_list")
 	$list=DB::query("select ticket_id,ticket_name,ticket_type from tbl_ticket where event_id='".$event_id."' order by ticket_sort desc  limit 100 ");
 	while($row = DB::fetch($list))
 	{
-		if(in_array($row['ticket_type'],array('VIP'))){
+		if(in_array($row['ticket_type'],array('VIP')))
+		{
 			$row['company_flag']='Y';
-		}else{
+		}
+		else
+		{
 			$row['company_flag']='N';
 		}
 		$list_data[]=array_default_value($row);
@@ -647,20 +650,53 @@ if($ac=="event_ticket_list")
 	unset($list);
 	
 	
+
+	if($event_id)
+	{
+	
+		$row2 = DB::fetch_first("select ad_url,ad_file,ad_file_iphone4,ad_file_iphone5,ad_width,ad_height from tbl_ad where event_id='".$event_id."' and ad_page='ticket' order by ad_sort desc limit 1");
+		$arr=explode("|",$row2['ad_url']);
+		if(count($arr)>1)
+		{
+			$row2['ad_action']=$arr[0];
+			$row2['ad_action_id']=$arr[1];
+			$row2['ad_action_text']=$arr[2];
+			$row2['event_url']=$arr[3];
+		}
+		if($row2['ad_file'])
+		{
+			$row2['ad_file']="".$site_url."/".$row2['ad_file'];
+		}
+		if($row2['ad_file_iphone4'])
+		{
+			$row2['ad_file_iphone4']="".$site_url."/".$row2['ad_file_iphone4'];
+		}
+		if($row2['ad_file_iphone5'])
+		{
+			$row2['ad_file_iphone5']="".$site_url."/".$row2['ad_file_iphone5'];
+		}
 		
-		$data['title'] = "data";
-		$data['data']=array(
-			'apply_status'=>$apply_status,
-			'apply_message'=>$apply_message,
-			'apply_pic'=>$apply_pic,
-			'apply_code'=>$apply_code,
-			'ticket_name'=>$ticket_name,
-			'list_data'=>$list_data,
-			
-		);
+	}
+
 		
-		//print_r($data);
-		api_json_result(1,0,'门票列表',$data);
+	$ad_list=array_default_value($row2,array('event_url'));
+	
+	
+		
+	$data['title'] = "data";
+	$data['data']=array(
+		'apply_status'=>$apply_status,
+		'apply_message'=>$apply_message,
+		'apply_pic'=>$apply_pic,
+		'apply_code'=>$apply_code,
+		'ticket_name'=>$ticket_name,
+		'list_data'=>$list_data,
+		'ad_list'=>$ad_list,
+		
+	);
+	
+	//print_r($data);
+	api_json_result(1,0,'门票列表',$data);
 
 }
 
