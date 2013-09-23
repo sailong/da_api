@@ -952,12 +952,12 @@ if($ac == 'free_ticket2')
 	
 	//没有uid则生成
 	if(empty($uid)){
-		$sql = "select uid,mobile from pre_common_member_profile where mobile='{$user_ticket_mobile}'";
+		$sql = "select uid,mobile from pre_common_member_profile where mobile='{$user_ticket_mobile}' order by uid desc";
 		$rs=DB::fetch_first($sql);
 		if(!empty($rs)){
 			$uid=$rs['uid'];
 		}else{
-			$uid = user_add_return($user_ticket_mobile);
+			$uid = user_add_return($user_ticket_realname,$user_ticket_mobile);
 		}
 	}
 	$ticket_info=DB::fetch_first("select event_id,ticket_times,ticket_type,ticket_price,ticket_starttime,ticket_endtime from tbl_ticket where ticket_id='".$ticket_id."' limit 1 ");
@@ -1027,7 +1027,7 @@ if($ac == 'free_ticket2')
 	if($ticket_type=='BASE')
 	{
 		$user_ticket_status = 1;
-		$sql = "insert into tbl_user_ticket(uid,ticket_id,event_id,ticket_type,user_ticket_code,user_ticket_codepic,user_ticket_realname,user_ticket_sex,user_ticket_age,user_ticket_address,user_ticket_mobile,user_ticket_imei,user_ticket_company,user_ticket_company_post,user_ticket_status,user_ticket_addtime,ticket_times,ticket_starttime,ticket_endtime,ticket_price) values('{$uid}','{$ticket_id}','{$event_id}','{$ticket_type}','{$user_ticket_code}','{$user_ticket_codepic}','{$user_ticket_realname}','{$user_ticket_sex}','{$user_ticket_age}','{$user_ticket_address}','{$user_ticket_mobile}','{$user_ticket_imei}','{$user_ticket_company}','{$user_ticket_company_post}','{$user_ticket_status}','{$user_ticket_addtime}','{$ticket_times}','{$ticket_starttime}','{$ticket_endtime}','{$ticket_price}')";
+		$sql = "insert into tbl_user_ticket(uid,ticket_id,event_id,ticket_type,user_ticket_code,user_ticket_codepic,user_ticket_nums,user_ticket_realname,user_ticket_sex,user_ticket_age,user_ticket_address,user_ticket_mobile,user_ticket_imei,user_ticket_company,user_ticket_company_post,user_ticket_status,user_ticket_addtime,ticket_times,ticket_starttime,ticket_endtime,ticket_price) values('{$uid}','{$ticket_id}','{$event_id}','{$ticket_type}','{$user_ticket_code}','{$user_ticket_codepic}','{$ticket_nums}','{$user_ticket_realname}','{$user_ticket_sex}','{$user_ticket_age}','{$user_ticket_address}','{$user_ticket_mobile}','{$user_ticket_imei}','{$user_ticket_company}','{$user_ticket_company_post}','{$user_ticket_status}','{$user_ticket_addtime}','{$ticket_times}','{$ticket_starttime}','{$ticket_endtime}','{$ticket_price}')";
 		$res = DB::query($sql);
 		if($res)
 		{
@@ -1052,7 +1052,7 @@ if($ac == 'free_ticket2')
 	{
 		$user_ticket_status = 0;
 		
-		$sql = "insert into tbl_user_ticket(uid,ticket_id,event_id,ticket_type,user_ticket_code,user_ticket_codepic,user_ticket_realname,user_ticket_sex,user_ticket_age,user_ticket_address,user_ticket_mobile,user_ticket_imei,user_ticket_company,user_ticket_company_post,user_ticket_status,user_ticket_addtime,ticket_times,ticket_starttime,ticket_endtime,ticket_price) values('{$uid}','{$ticket_id}','{$event_id}','{$ticket_type}','{$user_ticket_code}','{$user_ticket_codepic}','{$user_ticket_realname}','{$user_ticket_sex}','{$user_ticket_age}','{$user_ticket_address}','{$user_ticket_mobile}','{$user_ticket_imei}','{$user_ticket_company}','{$user_ticket_company_post}','{$user_ticket_status}','{$user_ticket_addtime}','{$ticket_times}','{$ticket_starttime}','{$ticket_endtime}','{$ticket_price}')";
+		$sql = "insert into tbl_user_ticket(uid,ticket_id,event_id,ticket_type,user_ticket_code,user_ticket_codepic,user_ticket_nums,user_ticket_realname,user_ticket_sex,user_ticket_age,user_ticket_address,user_ticket_mobile,user_ticket_imei,user_ticket_company,user_ticket_company_post,user_ticket_status,user_ticket_addtime,ticket_times,ticket_starttime,ticket_endtime,ticket_price) values('{$uid}','{$ticket_id}','{$event_id}','{$ticket_type}','{$user_ticket_code}','{$user_ticket_codepic}','{$ticket_nums}','{$user_ticket_realname}','{$user_ticket_sex}','{$user_ticket_age}','{$user_ticket_address}','{$user_ticket_mobile}','{$user_ticket_imei}','{$user_ticket_company}','{$user_ticket_company_post}','{$user_ticket_status}','{$user_ticket_addtime}','{$ticket_times}','{$ticket_starttime}','{$ticket_endtime}','{$ticket_price}')";
 		
 		$res = DB::query($sql);
 		if($res)
@@ -1077,16 +1077,18 @@ if($ac == 'free_ticket2')
 	/*
 	*  添加用户注册
 	*/
-	function user_add_return($phone)
+	function user_add_return($username,$phone,$email='')
 	{
+		if(empty($username)){
+			$username=time(). mt_rand(1000,9999);
+		}
 		
-		$username=time(). mt_rand(1000,9999);//post("user_ticket_realname");	
-		$password='123456';
+		$password_tmp = $password=mt_rand(100000,999999);
 		$salt = substr(uniqid(rand()), -6);
 		$password = md5(md5($password).$salt);
 		$salt=$salt;
 		$password=$password;
-		$email=$username.'@bw.com'; 
+		$email=$email.'@bw.com'; 
 		$mobile=$phone; 
 		$regip=time();
 		$regdate=time();
@@ -1110,6 +1112,12 @@ if($ac == 'free_ticket2')
 		$rs = DB::query($sql);
 		if($rs!=false)
 		{
+			//发送短信
+			if($mobile){
+				$msg_content="您的门票已购买成功并成为大正网用户,请您下载并登录大正网客户端 个人中心，我的门票中查看具体信息。您的大正登录名为:".$mobile."，密码为:".$password_tmp."，大正客户端下载地址：http://www.bwvip.com/app ";
+				$msg_content=iconv('UTF-8', 'GB2312', $msg_content);
+				send_msg($mobile,$msg_content);
+			}
 			return $ucuid;
 		}
 		else
