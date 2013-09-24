@@ -53,6 +53,9 @@
 
 	<!-- <a href="{:U('piao/user_ticket/user_ticket_add')}" class="btn_a"><span>添加门票领取</span></a> -->
 	<a href="javascript:void(0);" class="btn_a"  onclick="mod_delete_batch('{:U('piao/user_ticket/user_ticket_delete_action')}','mod_table');"><span>批量删除</span></a>
+	<a href="{:U('piao/user_ticket/user_ticket',array('event_id'=>get('event_id'),'k'=>get('k'),'price'=>get('price'),'user_ticket_status'=>'0','starttime'=>get('starttime'),'endtime'=>get('endtime')))}" class="btn_a"><span>待审核</span></a>
+	<a href="{:U('piao/user_ticket/user_ticket',array('event_id'=>get('event_id'),'k'=>get('k'),'price'=>get('price'),'user_ticket_status'=>'1','starttime'=>get('starttime'),'endtime'=>get('endtime')))}" class="btn_a"><span>审核通过</span></a>
+	<a href="{:U('piao/user_ticket/user_ticket',array('event_id'=>get('event_id'),'k'=>get('k'),'price'=>get('price'),'user_ticket_status'=>'2','starttime'=>get('starttime'),'endtime'=>get('endtime')))}" class="btn_a"><span>审核未通过</span></a>
 	<a href="javascript:void(0);" class="btn_a"  onclick="mod_modify_batch('{:U('piao/user_ticket/user_ticket_check_action')}','mod_table');"><span>批量审核</span></a>
 	<div class="clear"></div>
   </div>
@@ -64,6 +67,7 @@
 			<input type="checkbox" id="checkbox_handle" onclick="select_all(this,'mod_table','checkbox')" value="0">
 			<label for="checkbox"></label>
 		</th>
+		<th class="line_l">编号</th>
 		<th class="line_l">所属用户</th>
 		<th class="line_l">门票名称</th>
 		<th class="line_l">门票类型</th>
@@ -74,7 +78,7 @@
 		<!-- <th class="line_l">证件类型</th>
 		<th class="line_l">证件号码</th> -->
 		<th class="line_l">手机号</th>
-		<th class="line_l">手机串号</th>
+		<!-- <th class="line_l">手机串号</th> -->
 		<th class="line_l">状态</th>
 		<th class="line_l">添加时间</th>
 		<th class="line_l">操作</th>
@@ -82,6 +86,7 @@
 	<volist id="vo" name="list">
 	<tr overstyle="on"  id=ids_{$vo["user_ticket_id"]}>
 		<td><input type="checkbox" name="checkbox" onclick="select_one(this)" value="{$vo.user_ticket_id}" ></td>
+		<td>{$vo.user_ticket_id}</th>
 		<td>{$vo.uid}</th>
 			<td>{$ticket_list[$vo['ticket_id']]}</td>
 			<td>{$vo.ticket_type}</td>
@@ -92,13 +97,13 @@
 			<!-- <td><php>if($vo['user_ticket_cardtype'] == 0){echo '身份证';}</php></td>
 			<td>{$vo.user_ticket_card}</td> -->
 			<td>{$vo.user_ticket_mobile}</td>
-			<td>{$vo.user_ticket_imei}</td>
+			<!-- <td>{$vo.user_ticket_imei}</td> -->
 			<td><php>switch($vo['user_ticket_status']){case 0: echo '待审核';break;case 1: echo '审核通过';break;case 2: echo '审核不通过';break;}</php></td>
 			<td>{$vo.user_ticket_addtime|format_to_time}</td>
 			
 		<td>
 			<a href="{:U('piao/user_ticket/user_ticket_detail', array('user_ticket_id'=>$vo['user_ticket_id']))}'">详情</a> | 
-			<a href="{:U('piao/user_ticket/user_ticket_edit', array('user_ticket_id'=>$vo['user_ticket_id']))})">修改</a> | 
+			<a href="{:U('piao/user_ticket/user_ticket_edit', array('event_id'=>$vo['event_id'],'user_ticket_id'=>$vo['user_ticket_id']))})">修改</a> | 
 			<a href="javascript:void(0);" onclick="mod_delete_one('{:U('piao/user_ticket/user_ticket_delete_action')}','{$vo['user_ticket_id']}');">删除</a>
 			<php>if($vo['out_id'] != 0){</php>
 			 | <a href="{:U('piao/user_ticket/user_ticket_detail_ext', array('out_idtype'=>$vo['out_idtype'],'out_id'=>$vo['out_id']))}'">附加信息</a>
@@ -119,6 +124,9 @@
 
 	<!-- <a href="{:U('piao/user_ticket/user_ticket_add')}" class="btn_a"><span>添加门票领取</span></a> -->
 	<a href="javascript:void(0);" class="btn_a"  onclick="mod_delete_batch('{:U('piao/user_ticket/user_ticket_delete_action')}','mod_table');"><span>批量删除</span></a>
+	<a href="{:U('piao/user_ticket/user_ticket',array('event_id'=>get('event_id'),'k'=>get('k'),'price'=>get('price'),'user_ticket_status'=>'0','starttime'=>get('starttime'),'endtime'=>get('endtime')))}" class="btn_a"><span>待审核</span></a>
+	<a href="{:U('piao/user_ticket/user_ticket',array('event_id'=>get('event_id'),'k'=>get('k'),'price'=>get('price'),'user_ticket_status'=>'1','starttime'=>get('starttime'),'endtime'=>get('endtime')))}" class="btn_a"><span>审核通过</span></a>
+	<a href="{:U('piao/user_ticket/user_ticket',array('event_id'=>get('event_id'),'k'=>get('k'),'price'=>get('price'),'user_ticket_status'=>'2','starttime'=>get('starttime'),'endtime'=>get('endtime')))}" class="btn_a"><span>审核未通过</span></a>
 	<a href="javascript:void(0);" class="btn_a"  onclick="mod_modify_batch('{:U('piao/user_ticket/user_ticket_check_action')}','mod_table');"><span>批量审核</span></a>
 
 	<div class="clear"></div>

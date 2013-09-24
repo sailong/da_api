@@ -22,7 +22,7 @@
 					<th>所属用户：</th>
 					<td><input type="text" name="uid" id="uid" class="mod_input2" style="width:66px;"  value="{$data.uid}"></td>
 				</tr>
-				<tr>
+				<!-- <tr>
 					<th>门票：</th>
 					<td><input type="text" name="ticket_id" id="ticket_id" class="mod_input2" style="width:66px;"  value="{$data.ticket_id}"></td>
 				</tr>
@@ -36,6 +36,18 @@
 						</select>
 						<script>set_select_value(document.act_form.ticket_type,"{$data.ticket_type}");</script>
 					</td>
+				</tr> -->
+				<tr>
+					<th>门票列表：</th>
+					<td>
+						<select name="ticket_id" id="ticket_id">
+						<option value="">请选择</option>
+						<volist id="vo" name="ticket_list">
+							<option value="{$vo.ticket_id}">{$vo.ticket_name}</option>
+						</volist>
+						</select>
+						<script>set_select_value(document.act_form.ticket_id,"{$data.ticket_id}");</script>
+					</td>
 				</tr>
 				<tr>
 					<th>领取码：</th>
@@ -45,7 +57,7 @@
 				</tr>
 				<tr>
 					<th>二维码图片：</th>
-					<td><img src="{$data.user_ticket_codepic}" style="max-height:100px;max-width:100px;"><input type="file" name="user_ticket_codepic" id="user_ticket_codepic"  class="mod_input"></td>
+					<td><php>if($data['user_ticket_codepic']){</php><img src="{$data['user_ticket_codepic']}" style="max-height:100px;max-width:100px;"><php>}</php><br/><input type="file" name="user_ticket_codepic" id="user_ticket_codepic"  class="mod_input"></td>
 				</tr>
 				<tr>
 					<th>订票张数：</th>

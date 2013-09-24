@@ -1,4 +1,5 @@
 <?php
+
 interface PHPExcelInterface {
 	/**
      * 检测Excel文件是否可读

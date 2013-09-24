@@ -35,7 +35,7 @@ class HandlePHPExcel implements PHPExcelInterface {
      */
     protected function _init_env() {
         //注册系统默认的自动处理函数
-        spl_autoload_register("__autoload");
+        //spl_autoload_register("__autoload");
         include_once VENDOR_PHPEXCEL_DIR . "/PHPExcel.php";
         //设置内存大小
         $memory_limit = intval(ini_get('memory_limit'));
@@ -136,7 +136,6 @@ class HandlePHPExcel implements PHPExcelInterface {
         if(empty($pFileName) || !$this->canRead($pFileName)) {
             return false;
         }
-        
         //excel文件下载
         $objDownload = new Download();
         $objDownload->downfile($pFileName, $export_file_name);
@@ -204,6 +203,7 @@ class HandlePHPExcel implements PHPExcelInterface {
         }
        
         $PHPExcel = $this->createPHPExcelHandle($datas);
+		
         if($PHPExcel instanceof PHPExcel) {
             list($suffix, $excel_version) = $this->getExcelSuffixAndVersion($filename);
             $PHPExcel_Writer = PHPExcel_IOFactory::createWriter($PHPExcel, $excel_version);

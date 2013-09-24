@@ -25,7 +25,6 @@
  * @version    1.7.6, 2011-02-27
  */
 
-
 /** PHPExcel root directory */
 if (!defined('PHPEXCEL_ROOT')) {
 	define('PHPEXCEL_ROOT', dirname(__FILE__) . '/');

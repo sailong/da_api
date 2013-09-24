@@ -17,7 +17,6 @@ class user_ticketAction extends field_publicAction
 
 	public function user_ticket()
 	{
-	
 		$ticket_id = get('k');
 		$event_id = get('event_id');
 		$field_uid = $_SESSION['field_uid'];
@@ -58,9 +57,14 @@ class user_ticketAction extends field_publicAction
 			$ticket_id_sql = $ticket_ids_sql;
 		}
 		//echo $ticket_ids_sql;
-		if($ticket_id_sql){
-			$list=D("user_ticket")->user_ticket_list_pro($ticket_id_sql);
+		$user_ticket_status = get('user_ticket_status');
+		$user_ticket_status_sql = '';
+		
+		if($user_ticket_status !== '')
+		{
+			$user_ticket_status_sql = " and user_ticket_status='{$user_ticket_status}'";
 		}
+		$list=D("user_ticket")->user_ticket_list_pro("{$ticket_id_sql}{$user_ticket_status_sql}");
 		
 		
 		$this->assign("event_list",$event_list);
@@ -158,7 +162,10 @@ class user_ticketAction extends field_publicAction
 			$data=M("user_ticket")->where("user_ticket_id=".intval(get("user_ticket_id")))->find();
 			$this->assign("data",$data);
 			
+			$event_id = get('event_id');
+			$ticket_list = M('ticket')->where("event_id='{$event_id}'")->select();
 			
+			$this->assign("ticket_list",$ticket_list);
 			$this->assign("page_title","修改门票领取");
 			$this->display();
 		}
@@ -201,6 +208,11 @@ class user_ticketAction extends field_publicAction
 			$data["user_ticket_status"]=post("user_ticket_status");
 			
 			$list=M("user_ticket")->save($data);
+			if($list){
+				if($data["user_ticket_status"] == '1'){
+					$this->sys_message_add_return($data);
+				}
+			}
 			$this->success("修改成功",U('field/user_ticket/user_ticket'));			
 		}
 		else
@@ -229,18 +241,26 @@ class user_ticketAction extends field_publicAction
 		if(post("ids"))
 		{
 			$ids_arr=explode(",",post("ids"));
-			for($i=0; $i<count($ids_arr); $i++)
+			
+			foreach($ids_arr as $key=>$val)
 			{
-				$res=M()->execute("update tbl_user_ticket set user_ticket_state=1 where user_ticket_id=".$ids_arr[$i]." ");
+				$res=M()->execute("update tbl_user_ticket set user_ticket_status='1' where user_ticket_id='{$val}'");
+				if($res !== false){
+					$user_ticket_info = M('user_ticket')->where("user_ticket_id='{$val}'")->find();
+					if(!empty($user_ticket_info)){
+						$this->sys_message_add_return($user_ticket_info);
+					}
+				}
 			}
-			if($res)
-			{
+			
+			/* if($res)
+			{ */
 				echo "succeed^审核成功";
-			}
+			/* }
 			else
 			{
 				echo "error^审核失败";
-			}			
+			}	 */		
 			
 		}
 	}
@@ -252,8 +272,13 @@ class user_ticketAction extends field_publicAction
 			$data=M("user_ticket")->where("user_ticket_id=".intval(get("user_ticket_id")))->find();
 			if(!empty($data))
 			{
+				$ticket_info = M('ticket')->where("ticket_id='".$data['ticket_id']."'")->find();
+				
+				$event_info = M('event')->where("event_id='".$data['event_id']."'")->find();
+				
+				$this->assign("event_info",$event_info);
+				$this->assign("ticket_info",$ticket_info);
 				$this->assign("data",$data);
-
 				$this->assign("page_title",$data["user_ticket_name"]."门票领取");
 				$this->display();
 			}
@@ -287,6 +312,81 @@ class user_ticketAction extends field_publicAction
 		$this->ajaxReturn(null,'失败',0);
 	}
 
+	
+	public function sys_message_add_return($user_ticket_info)
+	{
+/* 		{
+		  message_id: "4",
+		  uid: "1000139",
+		  message_title: "测试消息",
+		  message_pic: "",
+		  message_addtime: "1374825755",
+		  pic_width: "",
+		  pic_height: "",
+		  message_info: {
+			n_title: "测试消息",
+			n_content: "测试消息测试消息测试消息",
+			n_extras: {
+			  action: "system_msg"
+			}
+		  },
+		  message_sendtime: "2013-07-26"
+		},
+ */		
+		$sys_event_id = $user_ticket_info['event_id'];
+		
+		$sys_event_info = M('event')->where("event_id='{$sys_event_id}'")->find();
+		$sys_field_uid=$sys_event_info['field_uid'];
+		if(empty($sys_field_uid)){
+			$sys_field_uid = 0;
+		}
+		//$max=M()->query("select max(message_number) as max_id from tbl_sys_message where message_type='".post("message_type")."'  ");
+		//$data["message_number"]=$max[0]['max_id']+1;
+		//$data["message_type"]=post("message_type");
+		$sys_data["field_uid"]=$sys_field_uid;
+		if($user_ticket_info["uid"])
+		{
+			$sys_uid=$user_ticket_info["uid"];
+			//$is_push=M()->query("select if_push from pre_common_member_profile where uid='".$uid."' ");
+		}
+		else
+		{
+			$sys_uid=0;
+		}
+		$sys_data["uid"]=$sys_uid;
+		$sys_data["message_title"]=$sys_event_info['event_name']."门票申请成功";//post("message_title");
+
+		$n_title=$sys_data["message_title"];
+		$n_content=$sys_data["message_title"];
+		
+		$message_extinfo=array('action'=>"system_msg");	
+		
+		$msg_content = json_encode(array('n_title'=>urlencode($n_title), 'n_content'=>urlencode($n_content),'n_extras'=>$message_extinfo));
+
+		$sys_data["message_content"]=$msg_content;
+		$sys_data["receiver_type"]=3;//3:指定用户
+		$sys_data['message_pic']=$user_ticket_info['user_ticket_codepic'];
+		
+	
+		$sys_data["message_state"]=0;
+		$sys_data["message_totalnum"]=0;
+		$sys_data["message_sendnum"]=0;
+		$sys_data["message_errorcode"]="";
+		$sys_data["message_errormsg"]="";
+		$sys_data["message_addtime"]=time();
+		
+		$list=M("sys_message")->add($sys_data);
+
+		if($list!=false)
+		{
+			return true;
+		}
+		else
+		{				
+			return false;
+		}
+	
+	}
 
 	
 

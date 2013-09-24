@@ -1,11 +1,12 @@
 <?php
+
 define("WMW_AUTO_LOADER_DIR", dirname(__FILE__));
 WmwAutoLoader::register();
 
 class WmwAutoLoader {
     public static function register() {
         //注册自动加载类
-        spl_autoload_register('__autoload');
+        //spl_autoload_register('__autoload');
         return spl_autoload_register(array('WmwAutoLoader', 'AutoLoad'));
     }
     
