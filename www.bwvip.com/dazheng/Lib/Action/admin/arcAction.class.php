@@ -71,6 +71,7 @@ class arcAction extends AdminAuthAction
 			$data["arc_state"]=1;
 			$data["arc_path"]=post("arc_path");
 			$data["is_video"]=post("is_video");
+			$data["is_span"]=post("is_span");
 			$data["arc_addtime"]=time();
 			$data["arc_statetime"]=strtotime(post("arc_statetime"));
 			
@@ -152,6 +153,7 @@ class arcAction extends AdminAuthAction
 			$data["arc_path"]=post("arc_path");
 			$data["arc_top"]=post("arc_top");
 			$data["is_video"]=post("is_video");
+			$data["is_span"]=post("is_span");
 			$data["arc_viewstatus"]=post("arc_viewstatus");
 			$data["arc_statetime"]=strtotime(post("arc_statetime"));
 			

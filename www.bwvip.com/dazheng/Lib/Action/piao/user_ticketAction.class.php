@@ -26,7 +26,16 @@ class user_ticketAction extends piao_publicAction
 		}elseif($price == 'no_free'){
 			$price_sql = " and ticket_price!='0'";
 		}
-		$list=D("user_ticket")->user_ticket_list_pro(" and event_id='{$event_id}' {$price_sql}");
+		
+		$user_ticket_status = get('user_ticket_status');
+		$user_ticket_status_sql = '';
+		
+		if($user_ticket_status !== '')
+		{
+			$user_ticket_status_sql = " and user_ticket_status='{$user_ticket_status}'";
+		}
+		
+		$list=D("user_ticket")->user_ticket_list_pro(" and event_id='{$event_id}' {$price_sql} {$user_ticket_status_sql}");
 		$ticket_lists = M('ticket')->where("event_id='{$event_id}'")->select();
 		
 		foreach($list["item"] as $key=>$val)
@@ -252,8 +261,13 @@ class user_ticketAction extends piao_publicAction
 			$data=M("user_ticket")->where("user_ticket_id=".intval(get("user_ticket_id")))->find();
 			if(!empty($data))
 			{
+				$ticket_info = M('ticket')->where("ticket_id='".$data['ticket_id']."'")->find();
+				
+				$event_info = M('event')->where("event_id='".$data['event_id']."'")->find();
+				
+				$this->assign("event_info",$event_info);
+				$this->assign("ticket_info",$ticket_info);
 				$this->assign("data",$data);
-
 				$this->assign("page_title",$data["user_ticket_name"]."门票领取");
 				$this->display();
 			}

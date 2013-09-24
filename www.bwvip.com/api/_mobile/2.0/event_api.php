@@ -293,18 +293,33 @@ if($ac=="event_blog_detail")
 	$pic_width=$_G['gp_pic_width'];
 	if($blogid)
 	{
-		$detail_data=DB::fetch_first("select uid,field_uid,arc_type,arc_id as blogid,arc_name as subject,arc_replynum as replynum,arc_viewtype as view_type,arc_pic as pic ,arc_addtime as dateline,arc_content as content,is_video from tbl_arc where arc_id='".$blogid."' ");
+		$detail_data=DB::fetch_first("select uid,field_uid,arc_type,arc_id as blogid,arc_name as subject,arc_replynum as replynum,arc_viewtype as view_type,arc_pic as pic ,arc_addtime as dateline,arc_content as content,is_video,is_span from tbl_arc where arc_id='".$blogid."' ");
 		$detail_data['username']="";
 		$detail_data['uid']="0";
 
 		
 		if($detail_data['is_video']=="Y")
 		{
-			$detail_data['content']=strip_tags($detail_data['content'],"<p><img><a><br><div>");
+			if($detail_data['is_span']=="Y")
+			{
+				$detail_data['content']=strip_tags($detail_data['content'],"<p><img><a><span><strong><br><div>");
+			}
+			else
+			{
+				$detail_data['content']=strip_tags($detail_data['content'],"<p><img><a><br><div>");
+			}
 		}
 		else
 		{
-			$detail_data['content']=strip_tags($detail_data['content'],"<p><img><br><div>");
+			if($detail_data['is_span']=="Y")
+			{
+				$detail_data['content']=strip_tags($detail_data['content'],"<p><img><span><strong><br><div>");
+			}
+			else
+			{
+				$detail_data['content']=strip_tags($detail_data['content'],"<p><img><br><div>");
+			}
+
 		}
 		
 		$detail_data['content']=str_replace("<img ","<div style=\"text-align:center; width:100%; \"><a href=\"http://www.bwvip.com/news_detail_pic\"><changsailong><img ",$detail_data['content']);

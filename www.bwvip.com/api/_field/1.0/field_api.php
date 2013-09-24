@@ -140,7 +140,7 @@ if($ac=="field_intro_list")
 	$type=$_G['gp_type'];
 	if($field_uid && $type)
 	{
-		$list=DB::query("select about_id,about_id as blogid,about_name as arc_name,about_replynum as arc_replynum,about_addtime as dateline,about_content as content,about_tel as tel,about_tel2,about_pic,about_more from tbl_field_about where about_type='".$type."' and field_uid='".$field_uid."'  ".$category_sql." ".$language_sql." ");
+		$list=DB::query("select about_id,about_id as blogid,about_name as arc_name,about_replynum as arc_replynum,about_addtime as dateline,about_content as content,about_tel as tel,about_tel2,about_pic,about_more,about_sort from tbl_field_about where about_type='".$type."' and field_uid='".$field_uid."'  ".$category_sql." ".$language_sql." order by about_sort desc ");
 		while($row=DB::fetch($list))
 		{
 			$row['content']=strip_tags($row['content'],"");

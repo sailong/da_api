@@ -22,7 +22,7 @@ $versions = $_G['gp_versions'] ? $_G['gp_versions'] : '1.0';
 
 
 /*接口mod 对应的 接口文件*/
-$modarray = array('register', 'login','field','ad','club','club1','system','user','finance','message','score','event','manage_event','manage_event1','wap','go','reg_activate','card','tool','category');
+$modarray = array('register', 'login','field','ad','club','club1','system','user','finance','message','score','event','manage_event','manage_event1','wap','go','reg_activate','card','tool','category','login_new');
 $mod = !in_array($discuz->var['mod'], $modarray) ? 'error' : $discuz->var['mod'];
 if($mod=='error') api_json_result(0,99999,'你访问的接口不存在 或者 参数mod值不匹配',null);
 

@@ -22,8 +22,12 @@
 						<td>{$data.uid}</td>
 				</tr>
 				<tr>
+					<th>所属赛事：</th>
+						<td>{$event_info.event_name}</td>
+				</tr>
+				<tr>
 					<th>门票：</th>
-						<td>{$data.ticket_id}</td>
+						<td>{$ticket_info.ticket_name}</td>
 				</tr>
 				<tr>
 					<th>门票类型：</th>
@@ -35,7 +39,7 @@
 				</tr>
 				<tr>
 					<th>二维码图片：</th>
-						<td><img src="{$data.user_ticket_codepic}"></td>
+						<td><php>if($data['user_ticket_codepic']){</php><img src="{$data['user_ticket_codepic']}" style="max-width:300px;max-height:200px;"/><php>}</php></td>
 				</tr>
 				<tr>
 					<th>订票张数：</th>
