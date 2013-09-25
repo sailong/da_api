@@ -14,7 +14,7 @@ class flinkAction extends AdminAuthAction
 
 	public function flink()
 	{
-		$list=D("Flink")->flink_select_all_pro();
+		$list=D("flink")->flink_list_pro();
 
 		$this->assign("list",$list["item"]);
 		$this->assign("pages",$list["pages"]);

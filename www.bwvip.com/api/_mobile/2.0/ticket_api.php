@@ -694,14 +694,13 @@ if($ac == 'ticket_apply')
 	$user_ticket_addtime = time();//$_G['company_post'];//随机唯一窜
 	
 	//没有uid则生成
-	if(empty($uid))
-	{
-		$sql = "select uid,mobile from pre_common_member_profile where mobile='{$user_ticket_mobile}'";
+	if(empty($uid)){
+		$sql = "select uid,mobile from pre_common_member_profile where mobile='{$user_ticket_mobile}' order by uid desc";
 		$rs=DB::fetch_first($sql);
 		if(!empty($rs)){
 			$uid=$rs['uid'];
 		}else{
-			$uid = user_add_return($user_ticket_mobile);
+			$uid = user_add_return($user_ticket_realname,$user_ticket_sex,$user_ticket_mobile);
 		}
 	}
 	$ticket_info=DB::fetch_first("select event_id,ticket_times,ticket_type,ticket_price,ticket_starttime,ticket_endtime from tbl_ticket where ticket_id='".$ticket_id."' limit 1 ");
@@ -891,49 +890,63 @@ function get_randmod_str(){
 }
 
 
-/*
-*  添加用户注册
-*/
-function user_add_return($phone)
-{
-	
-	$username=time(). mt_rand(1000,9999);//post("user_ticket_realname");	
-	$password='123456';
-	$salt = substr(uniqid(rand()), -6);
-	$password = md5(md5($password).$salt);
-	$salt=$salt;
-	$password=$password;
-	$email=$username.'@bw.com'; 
-	$mobile=$phone; 
-	$regip=time();
-	$regdate=time();
-	$gender = '';
-	//生成ucenter会员
-	$sql = "insert into pre_ucenter_members(username,salt,password,email,regip,regdate) values('{$username}','{$salt}','{$password}','{$email}','{$regip}','{$regdate}')";
-	$rs = DB::query($sql);
-	$ucuid=DB::insert_id();
-	$groupid=10;  
-	//生成社区会员
-	$sql = "insert into pre_common_member(uid,username,password,email,regdate,groupid) values('{$ucuid}','{$username}','{$password}','{$email}','{$regdate}','{$groupid}')";
-	$rs = DB::query($sql);
-	
-	$sql = "insert into pre_common_member_profile(uid,realname,gender,mobile,regdate) values('{$ucuid}','{$username}','{$gender}','{$mobile}','{$regdate}')";
-	//生成真实姓名
-	$rs = DB::query($sql);
-	
-	$role_id = 3;
-	$sql = "insert into jishigou_members(uid,username,nickname,password,email,phone,regip,regdate,gender,role_id) values('{$ucuid}','{$username}','{$username}','{$password}','{$email}','{$mobile}','{$regip}','{$regdate}','{$gender}','{$role_id}')";
-	///生成微博记录
-	$rs = DB::query($sql);
-	if($rs!=false)
+	/*
+	*  添加用户注册
+	*/
+	function user_add_return($username,$sex='男',$phone,$email='')
 	{
-		return $ucuid;
+		
+		if(empty($username)){
+			$username=time(). mt_rand(1000,9999);
+		}
+		
+		$password_tmp = $password=mt_rand(100000,999999);
+		$salt = substr(uniqid(rand()), -6);
+		$password = md5(md5($password).$salt);
+		$salt=$salt;
+		$password=$password;
+		$email=time().'@bw.com'; 
+		$mobile=$phone; 
+		$regip=time();
+		$regdate=time();
+		if($sex=='男')
+		{
+			$gender=1;
+		}else{
+			$gender=0;
+		}
+		//生成ucenter会员
+		$sql = "insert into pre_ucenter_members(username,salt,password,email,regip,regdate) values('{$username}','{$salt}','{$password}','{$email}','{$regip}','{$regdate}')";
+		$rs = DB::query($sql);
+		$ucuid=DB::insert_id();
+		$groupid=10;  
+		//生成社区会员
+		$sql = "insert into pre_common_member(uid,username,password,email,regdate,groupid) values('{$ucuid}','{$username}','{$password}','{$email}','{$regdate}','{$groupid}')";
+		$rs = DB::query($sql);
+		
+		$sql = "insert into pre_common_member_profile(uid,realname,gender,mobile,regdate) values('{$ucuid}','{$username}','{$gender}','{$mobile}','{$regdate}')";
+		//生成真实姓名
+		$rs = DB::query($sql);
+		
+		$role_id = 3;
+		$sql = "insert into jishigou_members(uid,username,nickname,password,email,phone,regip,regdate,gender,role_id) values('{$ucuid}','{$username}','{$username}','{$password}','{$email}','{$mobile}','{$regip}','{$regdate}','{$gender}','{$role_id}')";
+		///生成微博记录
+		$rs = DB::query($sql);
+		if($rs!=false)
+		{
+			//发送短信
+			if($mobile){
+				$msg_content="您的门票已购买成功并成为大正网用户,请您下载并登录大正网客户端 个人中心，我的门票中查看具体信息。您的大正登录名为:".$mobile."，密码为:".$password_tmp."，大正客户端下载地址：http://www.bwvip.com/app ";
+				$msg_content=iconv('UTF-8', 'GB2312', $msg_content);
+				send_msg($mobile,$msg_content);
+			}
+			return $ucuid;
+		}
+		else
+		{
+			return false;
+		}
 	}
-	else
-	{
-		return false;
-	}
-}
 //添加系统消息
 function sys_message_add_return($user_ticket_info)
 {
