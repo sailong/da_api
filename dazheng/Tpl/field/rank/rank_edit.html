@@ -18,8 +18,16 @@
 	<table class="add_table" border="0" cellspacing="0" cellpadding="0" >
 		<tbody>
 				<tr>
-					<th>赛事ID：</th>
-					<td><input type="text" name="field_event_id" id="field_event_id" class="mod_input2" style="width:150px;" value="{$info.field_event_id}"></td>
+					<th>赛事：</th>
+					<td>
+						<select name="field_event_id" id="field_event_id">
+							<option value="">请选择</option>
+							<volist id="vo" name="event_list">
+							<option value="{$vo.event_id}">{$vo.event_name}</option>
+							</volist>
+						</select>
+						<script>set_select_value(document.act_form.field_event_id,'{$info.field_event_id}');</script>
+					<!-- <input type="text" name="field_event_id" id="field_event_id" class="mod_input2" style="width:150px;" value="{$info.field_event_id}"> --></td>
 				</tr>
 				<!--<tr>
 					<th>赛事UID：</th>
@@ -85,7 +93,7 @@
 $(document).ready(function(){
 $.formValidator.initConfig({formID:"act_form",theme:'ArrowSolidBox',mode:'AutoTip',onError:function(msg){msg_error(msg)},inIframe:true});
 
-	$("#field_event_id").formValidator({empty:false,onShow:"请输入赛事ID",onFocus:"请输入赛事ID",onCorrect:"输入正确"}).inputValidator({min:1,max:100,onError:"请输入赛事ID"});
+	$("#field_event_id").formValidator({empty:false,onShow:"请选择赛事",onFocus:"请选择赛事",onCorrect:"输入正确"}).inputValidator({min:1,max:100,onError:"请选择赛事"});
 	//$("#field_uid").formValidator({empty:false,onShow:"请输入赛事UID",onFocus:"请输入赛事UID",onCorrect:"输入正确"}).inputValidator({min:1,max:11,onError:"请输入赛事UID"});
 	//$("#arctype_id").formValidator({empty:true,onShow:"请输入所属栏目",onFocus:"请输入所属栏目",onCorrect:"输入正确"}).inputValidator({min:1,max:11,onError:"请输入所属栏目"});
 	$("#field_event_rank_name").formValidator({empty:false,onShow:"请输入排序名称",onFocus:"请输入排序名称",onCorrect:"输入正确"}).inputValidator({min:1,max:300,onError:"请输入排序名称"});

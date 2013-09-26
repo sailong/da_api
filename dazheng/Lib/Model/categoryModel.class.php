@@ -27,10 +27,11 @@ class categoryModel extends Model{
 		}
 		if(get("endtime")!="")
 		{
-			$where .=" and category_addtime<".strtotime(get("endtime"))." ";
+			$endtime = strtotime(get("endtime")) + 86400;
+			$where .=" and category_addtime<".$endtime." ";
 		}
 
-		$data["item"]=M("category")->where($where.$bigwhere)->field("category_id,category_name,field_uid,category_type,category_sort,category_addtime")->order($sort)->page($page.",".$page_size)->select();
+		$data["item"]=M("category")->where($where.$bigwhere)->field("category_id,category_name,field_uid,category_type,category_sort,category_addtime")->order("category_sort asc,".$sort)->page($page.",".$page_size)->select();
 		//echo M()->getLastSql();
 		//var_dump($data["item"]);die;
 		$data["total"] = M("category")->where($where.$bigwhere)->count();

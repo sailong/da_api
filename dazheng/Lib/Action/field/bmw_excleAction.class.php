@@ -58,9 +58,10 @@ class bmw_excleAction extends field_publicAction
 		}
 		
 		$start_date = get('s_date');
-		$end_date = get('e_date');
+		//$end_date = get('e_date');
 		$start_time = strtotime($start_date);
-		$end_time = strtotime($end_date);
+		//$end_time = strtotime($end_date);
+		$end_time = strtotime(get('e_date')) + 86400;
 		$user_ticket_list = M('user_ticket_bmw')->field($fields)->where("bwm_addtime>={$start_time} and bwm_addtime<={$end_time}")->order('id desc')->select();
 		
 		$i=1;

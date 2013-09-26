@@ -87,7 +87,25 @@ class rankAction extends field_publicAction
 //		$b=$editor->usejs();             //js代码
 //		$this->assign('usejs',$b);     //输出到html
 //		$this->assign('editor',$a);
+		//$event_id = get('event_id');
+		$field_uid = $_SESSION['field_uid'];
+		
+		/* $event_ids = array();
+		$event_ids_sql = '';
+		if($event_ids){
+			$event_ids_sql = " or event_id in('".implode("','",(array)$event_ids)."')";
+		} */
+		$event_list = M('event')->where("field_uid='{$field_uid}'")->select();
+		foreach($event_list as $key=>$val){
+			unset($event_list[$key]);
+			$event_list[$val['event_id']] = $val;
+			//$event_ids[$val['event_id']]=$val['event_id'];
+		}
+		/* if($event_id){
+			$event_ids = $event_id;
+		} */
 	    
+		$this->assign('event_list',$event_list);
 	    $this->display('rank_add');
 	}
 	public function rank_add_action() {
@@ -117,6 +135,7 @@ class rankAction extends field_publicAction
 	public function rank_edit() {
 	    $field_event_rank_id = get('field_event_rank_id');
 	    $language = get('language');
+		$field_uid = $_SESSION['field_uid'];
 	    if(empty($language)) {
 	        $language = 'cn';
 	    }
@@ -141,6 +160,18 @@ class rankAction extends field_publicAction
 //		$b=$editor->usejs();             //js代码
 //		$this->assign('usejs',$b);     //输出到html
 //		$this->assign('editor',$a);
+
+		$event_list = M('event')->where("field_uid='{$field_uid}'")->select();
+		foreach($event_list as $key=>$val){
+			unset($event_list[$key]);
+			$event_list[$val['event_id']] = $val;
+			//$event_ids[$val['event_id']]=$val['event_id'];
+		}
+		/* if($event_id){
+			$event_ids = $event_id;
+		} */
+	    
+		$this->assign('event_list',$event_list);
        
 	    $this->assign('info',$info);
 	    

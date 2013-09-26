@@ -68,7 +68,7 @@ class categoryAction extends field_publicAction
 		if(M()->autoCheckToken($_POST))
 		{
 			
-			$data["field_uid"]=post("field_uid");
+			$data["field_uid"]=$_SESSION['field_uid'];//post("field_uid");
 			
 			$data["category_name"]=post("category_name");
 			$data["category_type"]=post("category_type");
@@ -107,7 +107,7 @@ class categoryAction extends field_publicAction
 	{
 		if(M()->autoCheckToken($_POST))
 		{
-			$data["field_uid"]=post("field_uid");
+			$data["field_uid"]=$_SESSION['field_uid'];//post("field_uid");
 			$data["category_id"]=post("category_id");
 			$data["category_name"]=post("category_name");
 			$data["category_type"]=post("category_type");

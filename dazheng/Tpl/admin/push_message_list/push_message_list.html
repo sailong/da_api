@@ -50,7 +50,7 @@
 	<php>if($total>0){</php>
 	  <table width="100%" id="mod_table" border="0" cellspacing="0" cellpadding="0">
 	  <tr>
-		<th style="width:30px;">
+		<th class="line_l">
 			<input type="checkbox" id="checkbox_handle" onclick="select_all(this,'mod_table','checkbox')" value="0">
 			<label for="checkbox"></label>
 		</th>
@@ -59,7 +59,7 @@
 		<th class="line_l">类型</th>
 		<th class="line_l">用户</th>
 		<th class="line_l">标题</th>
-		<th class="line_l" style="width:40%;">内容</th>
+		<th class="line_l"  width="40%">内容</th>
 	
 		<th class="line_l">状态</th>
 		<!--
@@ -81,7 +81,7 @@
 			<td>{$vo.message_type}</td>
 			<td>{$vo.uid}</td>
 			<td>{$vo.message_title}</td>
-			<td>长度：{$vo.msg_len}<br />{$vo.message_content}<br />
+			<td style="word-break:break-all;" width="40%">长度：{$vo.msg_len}<br />{$vo.message_content}<br />
 			<hr>
 			token:{$vo.devices_token}
 			</td>
