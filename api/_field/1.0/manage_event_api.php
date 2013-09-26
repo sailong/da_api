@@ -950,6 +950,10 @@ if($ac == 'free_ticket2')
 	$user_ticket_code = get_randmod_str();//$_G['company_post'];//随机唯一窜
 	$user_ticket_addtime = time();//$_G['company_post'];//随机唯一窜
 	
+	
+	print_r($_POST);
+	print_r($_GET);
+	
 	//没有uid则生成
 	if(empty($uid)){
 		$sql = "select uid,mobile from pre_common_member_profile where mobile='{$user_ticket_mobile}' order by uid desc";

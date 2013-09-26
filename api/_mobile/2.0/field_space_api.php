@@ -13,6 +13,7 @@ if($ac=="field_space"){
 	$top_pic="http://www.bwvip.com/images/wap/field_space/top.jpg";
 	$mlh_pic="http://www.bwvip.com/images/wap/field_space/meilanhu.jpg";
 	$ns_pic="http://www.bwvip.com/images/wap/field_space/nanshan.jpg";
+	$hb_pic="http://www.bwvip.com/images/wap/field_space/huabin.png";
 	
 	
 	$mlh_list = array(
@@ -27,33 +28,47 @@ if($ac=="field_space"){
 		'jingdu' => '120.48',
 		'weidu'  => '37.591306'
 	);
+	$hb_list = array(
+		'name' => '华彬庄园',
+		'pic' => $hb_pic,
+		'jingdu' => '116.125',
+		'weidu'  => '40.219'
+	);
 
 	//$list['dz_down_url_ios'] = DB::fetch_first("select * from tbl_app_version where app_version_type='ios' and field_uid=0 order by app_version_addtime desc limit 1 ");
 	$ios_mlh = DB::fetch_first("select app_version_file from tbl_app_version where app_version_type='ios' and field_uid=1186 order by app_version_addtime desc limit 1 ");
 	$ios_ns = DB::fetch_first("select app_version_file from tbl_app_version where app_version_type='ios' and field_uid=1160 order by app_version_addtime desc limit 1 ");
+	$ios_hb = DB::fetch_first("select app_version_file from tbl_app_version where app_version_type='ios' and field_uid=3803491 order by app_version_addtime desc limit 1 ");
 
 	//$list['dz_down_url_android'] = DB::fetch_first("select * from tbl_app_version where app_version_type='android' and field_uid=0 order by app_version_addtime desc limit 1 ");
 	$android_mlh = DB::fetch_first("select app_version_file from tbl_app_version where app_version_type='android' and field_uid=1186 order by app_version_addtime desc limit 1 ");
 	$android_ns = DB::fetch_first("select app_version_file from tbl_app_version where app_version_type='android' and field_uid=1160 order by app_version_addtime desc limit 1 ");
+	$android_hb = DB::fetch_first("select app_version_file from tbl_app_version where app_version_type='android' and field_uid=3803491 order by app_version_addtime desc limit 1 ");
 	
 	if(!empty($ios_mlh)){
 		$mlh_list['down_url'] = $ios_mlh['app_version_file'];
 		$ios_list[] = $mlh_list;
 	}
-	
 	if(!empty($ios_ns)){
 		$ns_list['down_url'] = $ios_ns['app_version_file'];
 		$ios_list[] = $ns_list;
+	}
+	if(!empty($ios_hb)){
+		$hb_list['down_url'] = $ios_hb['app_version_file'];
+		$ios_list[] = $hb_list;
 	}
 	
 	if(!empty($android_mlh)){
 		$mlh_list['down_url'] = $android_mlh['app_version_file'];
 		$android_list[] = $mlh_list;
 	}
-	
 	if(!empty($android_ns)){
 		$ns_list['down_url'] = $android_ns['app_version_file'];
 		$android_list[] = $ns_list;
+	}
+	if(!empty($android_hb)){
+		$hb_list['down_url'] = $android_hb['app_version_file'];
+		$android_list[] = $hb_list;
 	}
 	
 	$data['title'] = 'data';
