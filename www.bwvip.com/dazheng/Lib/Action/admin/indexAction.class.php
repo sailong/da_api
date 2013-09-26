@@ -208,6 +208,7 @@ class indexAction extends AdminAuthAction
 
 		$data["admin_role_name"]=post("admin_role_name");
 		$data["admin_role_content"]=post("admin_role_content");
+		$data["event_ids"]=post("event_ids");
 		$list=M("admin_role")->add($data);
 
 		if($list!=false)
@@ -276,6 +277,7 @@ class indexAction extends AdminAuthAction
 		$data["admin_role_id"]=post("admin_role_id");
 		$data["admin_role_name"]=post("admin_role_name");
 		$data["admin_role_content"]=post("admin_role_content");
+		$data["event_ids"]=post("event_ids");
 		
 		$list=M("admin_role")->save($data);
 		if($list!=false)

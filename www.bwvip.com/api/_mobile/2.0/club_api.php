@@ -18,6 +18,7 @@ if(!$page_size)
 {
 	$page_size=10;
 }
+
 if($page==1)
 {
 	$page_start=0;
@@ -1040,6 +1041,17 @@ if($ac=="golf_news")
 {
 	$field_uid=$_G['gp_field_uid'];
 	$page_size=9;
+	
+	if($page==1)
+	{
+		$page_start=0;
+	}
+	else
+	{
+		$page_start=($page-1)*($page_size);
+	}
+
+
 	$total=DB::result_first("select count(arc_id) from tbl_arc where arc_model='arc' and arc_state=1 and arc_viewstatus=1  and (arctype_id=2 or arc_type='Q') and arc_viewtype='normal' $language_sql ");
 	$max_page=intval($total/$page_size);
 	if($max_page<$total/$page_size)
@@ -1091,6 +1103,18 @@ if($ac=="golf_news")
 
 
 	$page_size=3;
+	
+	if($page==1)
+	{
+		$page_start=0;
+	}
+	else
+	{
+		$page_start=($page-1)*($page_size);
+	}
+
+	
+	
 	$total=DB::result_first("select count(arc_id) from tbl_arc where arc_model='arc' and arc_state=1 and arc_viewstatus=1 and arc_viewtype='pic' and arc_state=1 and (arctype_id=2 or arc_type='Q')  ");
 	$max_page=intval($total/$page_size);
 	if($max_page<$total/$page_size)

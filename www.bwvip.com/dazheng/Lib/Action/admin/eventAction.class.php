@@ -16,7 +16,12 @@ class eventAction extends AdminAuthAction
 
 	public function event()
 	{
-		$list=D("event")->event_list_pro("  ");
+		if($_SESSION['event_ids'])
+		{
+			$sql=" and event_id in (".$_SESSION['event_ids'].") ";
+		}
+		
+		$list=D("event")->event_list_pro("  ".$sql);
 
 		$this->assign("list",$list["item"]);
 		$this->assign("pages",$list["pages"]);

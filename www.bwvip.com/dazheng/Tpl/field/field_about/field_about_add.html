@@ -46,6 +46,9 @@
 					<th>图片1：</th>
 					<td><input type="file" name="about_pic_0" id="about_pic1"  class="mod_input" style="width:300px;"></td>
 				</tr>
+				<php>
+				if(get('about_type') != 'qiudaotu'){
+				</php>
 				<tr>
 					<th>图片2：</th>
 					<td><input type="file" name="about_pic_1" id="about_pic2"  class="mod_input" style="width:300px;"></td>
@@ -82,10 +85,12 @@
 					<th>图片10：</th>
 					<td><input type="file" name="about_pic_9" id="about_pic10"  class="mod_input" style="width:300px;"></td>
 				</tr>
-				
+				<php>
+				}
+				</php>
 				<tr>
 					<th>排序：</th>
-					<td><input type="text" name="about_sort" id="about_sort" class="mod_input2" style="width:66px;" ></td>
+					<td><input type="text" name="about_sort" id="about_sort" class="mod_input2" style="width:66px;" ><span style="padding-left:10px;"><font style="color:red;">数越小越靠前</font></span></td>
 				</tr>
 				<tr>
 					<th>语言：</th>
@@ -110,6 +115,7 @@
 							<option value="{$vo.category_id}">{$vo.category_name}</option>
 							</volist>
 						</select>
+						<span style="padding-left:10px;"><font style="color:red;">没有分类，请到分类管理添加</font></span>
 					</td>
 				</tr>
 				<tr>

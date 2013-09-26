@@ -54,8 +54,8 @@
 			<input type="checkbox" id="checkbox_handle" onclick="select_all(this,'mod_table','checkbox')" value="0">
 			<label for="checkbox"></label>
 		</th>
-		<th class="line_l">ID</th>
-		<th class="line_l">所属球场UID</th>
+		<th class="line_l">编号</th>
+		<!-- <th class="line_l">所属球场UID</th> -->
 		<th class="line_l">分类名称</th>
 		<th class="line_l">分类类型</th>
 		<th class="line_l">排序</th>
@@ -66,9 +66,9 @@
 	<tr overstyle="on"  id=ids_{$vo["category_id"]}>
 		<td><input type="checkbox" name="checkbox" onclick="select_one(this)" value="{$vo.category_id}" ></td>
 		<td>{$vo.category_id}</th>
-		<td>{$vo.field_uid}</th>
+		<!-- <td>{$vo.field_uid}</th> -->
 		<td><a href="{:U('field/category/category_detail', array('category_id'=>$vo['category_id']))}'">{$vo.category_name}</a></td>
-		<td>{$vo.category_type}</td>
+		<td>{$category_father[$vo['category_type']]}</td>
 		<td>{$vo.category_sort}</td>
 		<td>{$vo.category_addtime|format_to_time}</td>
 		<td>

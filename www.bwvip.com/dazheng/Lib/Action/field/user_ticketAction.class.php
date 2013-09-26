@@ -22,11 +22,8 @@ class user_ticketAction extends field_publicAction
 		$field_uid = $_SESSION['field_uid'];
 		
 		$event_ids = array();
-		$event_ids_sql = '';
-		if($event_ids){
-			$event_ids_sql = " or event_id in('".implode("','",(array)$event_ids)."')";
-		}
-		$event_list = M('event')->where("field_uid='{$field_uid}' {$event_ids_sql}")->select();
+		
+		$event_list = M('event')->where("field_uid='{$field_uid}'")->select();
 		foreach($event_list as $key=>$val){
 			unset($event_list[$key]);
 			$event_list[$val['event_id']] = $val;
@@ -35,11 +32,12 @@ class user_ticketAction extends field_publicAction
 		if($event_id){
 			$event_ids = $event_id;
 		}
+		
 		//$event_ids_sql = '';
 		if($event_ids){
 			//$event_ids_sql = " and event_id in('".implode("','",$event_ids)."')";
 			$ticket_list = M('ticket')->where("event_id in('".implode("','",(array)$event_ids)."')")->select();
-			//echo M()->getLastSql();
+			//echo M()->getLastSql();die;
 			foreach($ticket_list as $key=>$val){
 				unset($ticket_list[$key]);
 				$ticket_list[$val['ticket_id']] = $val;
@@ -64,8 +62,10 @@ class user_ticketAction extends field_publicAction
 		{
 			$user_ticket_status_sql = " and user_ticket_status='{$user_ticket_status}'";
 		}
-		$list=D("user_ticket")->user_ticket_list_pro("{$ticket_id_sql}{$user_ticket_status_sql}");
 		
+		if($ticket_id_sql){
+			$list=D("user_ticket")->user_ticket_list_pro("{$ticket_id_sql}{$user_ticket_status_sql}");
+		}
 		
 		$this->assign("event_list",$event_list);
 		$this->assign("ticket_list",$ticket_list);

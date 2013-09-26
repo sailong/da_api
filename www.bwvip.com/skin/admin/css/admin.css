@@ -22,11 +22,11 @@ a.actuator:link, a.actuator:visited, a.actuator:hover, a.actuator:active { color
 .so_main { text-align:left; margin:0 10px; }
 .page_tit { font-size:20px; font-weight:bold; color:#222; line-height:40px; font-weight:bold;}
 
-.page_tit_top {float:left; font-size:20px; background:#D2DBEA url(../images/page_tit_top_bg2.jpg) repeat-x; font-family:'microsoft yahei'; color:#fff; font-weight:bold; line-height:50px; text-indent:30px; padding-right:30px; margin-right:1px; }
-.tit_tab_top {  border-bottom:3px solid #3980A3; background:#D2DBEA url(../images/page_tit_top_bg.jpg) repeat-x; height:50px;   margin-bottom:10px; }
+.page_tit_top {float:left; font-size:15px; background:#D2DBEA url(../images/page_tit_top_bg2.jpg) repeat-x; font-family:'microsoft yahei'; color:#fff; font-weight:bold; line-height:50px; text-indent:10px; padding-right:10px; margin-right:1px; }
+.tit_tab_top {border-bottom:3px solid #3980A3; background:#D2DBEA url(../images/page_tit_top_bg.jpg) repeat-x; height:50px; margin-bottom:10px; }
 .tit_tab_top ul {float:left;}
 .tit_tab_top li { float:left; border-right:1px solid #3980A3;}
-.tit_tab_top li a { padding:0 6px; line-height:50px; display:block; font-size:14px; }
+.tit_tab_top li a { padding:0 6px; line-height:50px; display:block; font-size:12px; }
 .tit_tab_top li a.on { background:#3980A3; color:#fff }
 
 
