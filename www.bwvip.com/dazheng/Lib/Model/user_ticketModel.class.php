@@ -18,7 +18,7 @@ class user_ticketModel extends Model{
 
 		if(get("k")!="")
 		{
-			$where .=" and ticket_id=".get("k");
+			$where .=" and ( user_ticket_realname like '%".get("k")."%' or user_ticket_mobile like '%".get("k")."%' )";
 		}
 
 		if(get("starttime")!="")

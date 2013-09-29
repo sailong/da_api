@@ -917,7 +917,7 @@ function get_randmod_str(){
 }
 
 
-//用户预定门票信息  start
+//用户预定门票信息
 if($ac == 'free_ticket2')
 {
 	//post: user_ticket_mobile *user_ticket_imei* ticket_id ticket_type user_ticket_realname user_ticket_sex user_ticket_age  user_ticket_address *user_ticket_company user_ticket_company_post*
@@ -930,11 +930,16 @@ if($ac == 'free_ticket2')
 	{
 		api_json_result(1,1,"缺少参数ticket_id",null);
 	}
+	if(empty($_G['gp_ticket_type']))
+	{
+		api_json_result(1,1,"缺少参数ticket_type",null);
+	}
 	
 	$user_ticket_mobile = $_G['gp_phone'];//手机号
 	$uid = $_G['gp_uid'];
 	$user_ticket_imei = $_G['gp_phone_imei'];//手机窜号
 	$ticket_id = $_G['gp_ticket_id'];//门票ID
+	$ticket_type = $_G['gp_ticket_type'];//门票类型
 	$ticket_nums = empty($_G['gp_ticket_nums']) ? 1 : $_G['gp_ticket_nums'];//门票数量
 	$user_ticket_realname = urldecode($_G['gp_realname']);//订票人真实姓名
 	$user_ticket_sex = urldecode($_G['gp_sex']);//性别
@@ -945,6 +950,10 @@ if($ac == 'free_ticket2')
 	$user_ticket_code = get_randmod_str();//$_G['company_post'];//随机唯一窜
 	$user_ticket_addtime = time();//$_G['company_post'];//随机唯一窜
 	
+	
+	print_r($_POST);
+	print_r($_GET);
+	
 	//没有uid则生成
 	if(empty($uid)){
 		$sql = "select uid,mobile from pre_common_member_profile where mobile='{$user_ticket_mobile}' order by uid desc";
@@ -952,7 +961,7 @@ if($ac == 'free_ticket2')
 		if(!empty($rs)){
 			$uid=$rs['uid'];
 		}else{
-			$uid = user_add_return($user_ticket_realname,$user_ticket_sex,$user_ticket_mobile);
+			$uid = user_add_return($user_ticket_realname,$user_ticket_mobile);
 		}
 	}
 	$ticket_info=DB::fetch_first("select event_id,ticket_times,ticket_type,ticket_price,ticket_starttime,ticket_endtime from tbl_ticket where ticket_id='".$ticket_id."' limit 1 ");
@@ -963,23 +972,19 @@ if($ac == 'free_ticket2')
 	$ticket_price = $ticket_info['ticket_price'];
 	$ticket_type = $ticket_info['ticket_type'];
 	//检查用户是否已提交申请
-    $sql = "select user_ticket_id,ticket_id,user_ticket_code,user_ticket_codepic,ticket_price,user_ticket_status from tbl_user_ticket where ticket_id='{$ticket_id}' and ticket_type='".$ticket_type."' and (user_ticket_mobile='{$user_ticket_mobile}' or user_ticket_imei='{$user_ticket_imei}')";
+    $sql = "select user_ticket_id,ticket_id,user_ticket_codepic,ticket_price,user_ticket_status from tbl_user_ticket where ticket_id='{$ticket_id}' and ticket_type='".$ticket_type."' and (user_ticket_mobile='{$user_ticket_mobile}' or user_ticket_imei='{$user_ticket_imei}')";
     $list = DB::fetch_first($sql);
 	
 	$ticket_detail = DB::fetch_first("select ticket_name,ticket_price,ticket_ren_num,ticket_num,ticket_pic,ticket_starttime,ticket_endtime,ticket_times,ticket_content from tbl_ticket where ticket_id='{$ticket_id}' limit 1");
 	$return_detail['ticket_name'] = $ticket_detail['ticket_name'];
 	//$return_detail['ticket_starttime'] = date('Y年m月d日',$ticket_detail['ticket_starttime']);
 	//$return_detail['ticket_endtime'] = date('Y年m月d日',$ticket_detail['ticket_endtime']);
-	
 	$data['title'] = 'erweima';
-	
-	$phone = mt_rand(1000000000,9999999999);
 	//已经索取过
 	if($list)
 	{
-		$erweima_path = erweima($list['user_ticket_code']);
-		if(empty($erweima_path))
-		{
+		$erweima_path = erweima($user_ticket_mobile);
+		if(empty($erweima_path)) {
 			api_json_result(1,1,"二维码生成失败",null);
 		}
 		$sql = "update tbl_user_ticket set user_ticket_codepic='{$erweima_path}' where user_ticket_id='".$list['user_ticket_id']."'";
@@ -988,41 +993,25 @@ if($ac == 'free_ticket2')
 		{
 			api_json_result(1,1,"索取二维码失败",null);
 		}
-		
-		if($ticket_price<1)
-		{
-			//发系统消息
-			$user_ticket_info = array(
-				'event_id' => $event_id,
-				'uid'      => $uid,
-				'user_ticket_codepic' =>$return_detail['ticket_pic']
-			);
-			sys_message_add_return($user_ticket_info);
-			
-
-			
+		if($ticket_type == 'BASE'){
 			if(empty($list['user_ticket_codepic'])) 
 			{
 				$return_detail['ticket_pic'] = $site_url.$erweima_path;
+				$data['data'] =$return_detail;
+				api_json_result(1,0,"索取门票成功",$data);
 			}
 			else 
 			{
 				$return_detail['ticket_pic'] = $site_url.$list['user_ticket_codepic'];
-				
+				$data['data'] =$return_detail;
+				api_json_result(1,0,"索取门票成功",$data);
 			}
-			
-			$return_detail['ticket_pic']=(string)$list['user_ticket_code'];
-			$data['data'] =$return_detail;
-			api_json_result(1,0,"索取门票成功",$data);
 		}
-		else
-		{
+		if($ticket_type == 'VIP'){
 			$data['title'] = 'erweima';
 			$data['data'] = null;
-			if($list['user_ticket_status'] == 1)
-			{
+			if($list['user_ticket_status'] == 1){
 				$return_detail['ticket_pic'] = $site_url.$erweima_path;
-				$return_detail['apply_code'] = (string)$list['user_ticket_code'];
 				$data['data'] =$return_detail;
 				api_json_result(1,0,"门票索取成功",$data);
 			}
@@ -1030,192 +1019,172 @@ if($ac == 'free_ticket2')
 			api_json_result(1,0,"门票索取成功，等待审核",$data);
 		}
 	}
-	else
-	{
     
-		
-		//生成二维码
-		$erweima_path = erweima($phone);
-		$user_ticket_codepic = $erweima_path;
-		
-		$row=explode("/",$user_ticket_codepic);
-		$user_ticket_code=str_replace(".png","",$row[4]);
-		
-		
-		if($ticket_price > 0)
-		{
-			$user_ticket_status = 0;
-			$return_detail['ticket_pic'] = "";
-			$return_detail['apply_code'] = "";
-			$data['data'] =$return_detail;
-		}else
-		{
-			$user_ticket_status = 1;
-			
-			$return_detail['ticket_pic'] = $site_url.$erweima_path;
-			$return_detail['apply_code'] = (string)$phone;
-			$data['data'] =$return_detail;
-		
-			//发系统消息
-			$user_ticket_info = array(
-				'event_id' => $event_id,
-				'uid'      => $uid,
-				'user_ticket_codepic' => $user_ticket_codepic
-			);
-			sys_message_add_return($user_ticket_info);
-				
-		}
-		
-		$sql = "insert into tbl_user_ticket(uid,ticket_id,event_id,ticket_type,user_ticket_code,user_ticket_codepic,user_ticket_realname,user_ticket_sex,user_ticket_age,user_ticket_address,user_ticket_mobile,user_ticket_imei,user_ticket_company,user_ticket_company_post,user_ticket_status,user_ticket_addtime,ticket_times,ticket_starttime,ticket_endtime,ticket_price) values('{$uid}','{$ticket_id}','{$event_id}','{$ticket_type}','{$user_ticket_code}','{$user_ticket_codepic}','{$user_ticket_realname}','{$user_ticket_sex}','{$user_ticket_age}','{$user_ticket_address}','{$user_ticket_mobile}','{$user_ticket_imei}','{$user_ticket_company}','{$user_ticket_company_post}','{$user_ticket_status}','{$user_ticket_addtime}','{$ticket_times}','{$ticket_starttime}','{$ticket_endtime}','{$ticket_price}')";
+    
+	//生成二维码
+	$erweima_path = erweima($user_ticket_mobile);
+	$user_ticket_codepic = $erweima_path;
+	
+	$row=explode("/",$user_ticket_codepic);
+    $user_ticket_code=str_replace(".png","",$row[4]);
+	//普通票
+	if($ticket_type=='BASE')
+	{
+		$user_ticket_status = 1;
+		$sql = "insert into tbl_user_ticket(uid,ticket_id,event_id,ticket_type,user_ticket_code,user_ticket_codepic,user_ticket_nums,user_ticket_realname,user_ticket_sex,user_ticket_age,user_ticket_address,user_ticket_mobile,user_ticket_imei,user_ticket_company,user_ticket_company_post,user_ticket_status,user_ticket_addtime,ticket_times,ticket_starttime,ticket_endtime,ticket_price) values('{$uid}','{$ticket_id}','{$event_id}','{$ticket_type}','{$user_ticket_code}','{$user_ticket_codepic}','{$ticket_nums}','{$user_ticket_realname}','{$user_ticket_sex}','{$user_ticket_age}','{$user_ticket_address}','{$user_ticket_mobile}','{$user_ticket_imei}','{$user_ticket_company}','{$user_ticket_company_post}','{$user_ticket_status}','{$user_ticket_addtime}','{$ticket_times}','{$ticket_starttime}','{$ticket_endtime}','{$ticket_price}')";
 		$res = DB::query($sql);
-		
-		
-		//自动关注 start
-		$list=DB::query("select uid from tbl_user_ticket where event_id='".$event_id."' and uid<>'".$uid."'  ");
-		while($user = DB::fetch($list) )
+		if($res)
 		{
-			
-			$aaa=DB::fetch_first("select id from jishigou_buddys where uid='".$uid."' and buddyid='".$user['uid']."' ");
-			if(empty($aaa))
-			{
-				$res=DB::query("insert into jishigou_buddys (uid,buddyid,grade,remark,dateline,description,buddy_lastuptime) values ('".$uid."','".$user['uid']."','1','','".time()."','','".time()."') ");
+			$return_detail['ticket_pic'] = $site_url.$erweima_path;
+			$data['data'] =$return_detail;
+			if($ticket_price=='0'){
+				//发系统消息
+				$user_ticket_info = array(
+					'event_id' => $event_id,
+					'uid'      => $uid,
+					'user_ticket_codepic' => $user_ticket_codepic
+				);
+				sys_message_add_return($user_ticket_info);
 			}
-
-			$bbb=DB::fetch_first("select id from jishigou_buddys where uid='".$user['uid']."' and buddyid='".$uid."' ");
-			if(empty($bbb))
-			{
-				$res=DB::query("insert into jishigou_buddys (uid,buddyid,grade,remark,dateline,description,buddy_lastuptime) values ('".$user['uid']."','".$uid."','1','','".time()."','','".time()."') ");
+			api_json_result(1,0,"门票索取成功",$data);
+		}
+		api_json_result(1,1,"门票索取失败",null);
+	}
+	
+	//VIP票
+	if($ticket_type=='VIP')
+	{
+		$user_ticket_status = 0;
 		
+		$sql = "insert into tbl_user_ticket(uid,ticket_id,event_id,ticket_type,user_ticket_code,user_ticket_codepic,user_ticket_nums,user_ticket_realname,user_ticket_sex,user_ticket_age,user_ticket_address,user_ticket_mobile,user_ticket_imei,user_ticket_company,user_ticket_company_post,user_ticket_status,user_ticket_addtime,ticket_times,ticket_starttime,ticket_endtime,ticket_price) values('{$uid}','{$ticket_id}','{$event_id}','{$ticket_type}','{$user_ticket_code}','{$user_ticket_codepic}','{$ticket_nums}','{$user_ticket_realname}','{$user_ticket_sex}','{$user_ticket_age}','{$user_ticket_address}','{$user_ticket_mobile}','{$user_ticket_imei}','{$user_ticket_company}','{$user_ticket_company_post}','{$user_ticket_status}','{$user_ticket_addtime}','{$ticket_times}','{$ticket_starttime}','{$ticket_endtime}','{$ticket_price}')";
+		
+		$res = DB::query($sql);
+		if($res)
+		{
+			/* $data['title'] = 'data_list';
+			$ticket_detail = DB::fetch_first("select ticket_name,ticket_price,ticket_ren_num,ticket_num,ticket_pic,ticket_starttime,ticket_endtime,ticket_times,ticket_content from tbl_ticket where ticket_id='{$ticket_id}' limit 1");
+			$ticket_detail['ticket_pic'] = $site_url.'/'.$ticket_detail['ticket_pic'];
+			$ticket_detail['ticket_starttime'] = date('Y年m月d日',$ticket_detail['ticket_starttime']);
+			$ticket_detail['ticket_endtime'] = date('Y年m月d日',$ticket_detail['ticket_endtime']);
+			$data['data'] = array(
+						'erweima_path' => $site_url.$erweima_path;
+						'ticket_detail'=>$ticket_detail
+					); */
+			$data['title'] = 'erweima';
+			$data['data'] = null;
+			api_json_result(1,0,"门票索取成功，等待审核",$data);
+		}
+		api_json_result(1,1,"门票索取失败",null);
+	}
+}
+
+	/*
+	*  添加用户注册
+	*/
+	function user_add_return($username,$phone,$email='')
+	{
+		if(empty($username)){
+			$username=time(). mt_rand(1000,9999);
+		}
+		
+		$password_tmp = $password=mt_rand(100000,999999);
+		$salt = substr(uniqid(rand()), -6);
+		$password = md5(md5($password).$salt);
+		$salt=$salt;
+		$password=$password;
+		$email=$email.'@bw.com'; 
+		$mobile=$phone; 
+		$regip=time();
+		$regdate=time();
+		$gender = '';
+		//生成ucenter会员
+		$sql = "insert into pre_ucenter_members(username,salt,password,email,regip,regdate) values('{$username}','{$salt}','{$password}','{$email}','{$regip}','{$regdate}')";
+		$rs = DB::query($sql);
+		$ucuid=DB::insert_id();
+		$groupid=10;  
+		//生成社区会员
+		$sql = "insert into pre_common_member(uid,username,password,email,regdate,groupid) values('{$ucuid}','{$username}','{$password}','{$email}','{$regdate}','{$groupid}')";
+		$rs = DB::query($sql);
+		
+		$sql = "insert into pre_common_member_profile(uid,realname,gender,mobile,regdate) values('{$ucuid}','{$username}','{$gender}','{$mobile}','{$regdate}')";
+		//生成真实姓名
+		$rs = DB::query($sql);
+		
+		$role_id = 3;
+		$sql = "insert into jishigou_members(uid,username,nickname,password,email,phone,regip,regdate,gender,role_id) values('{$ucuid}','{$username}','{$username}','{$password}','{$email}','{$mobile}','{$regip}','{$regdate}','{$gender}','{$role_id}')";
+		///生成微博记录
+		$rs = DB::query($sql);
+		if($rs!=false)
+		{
+			//发送短信
+			if($mobile){
+				$msg_content="您的门票已购买成功并成为大正网用户,请您下载并登录大正网客户端 个人中心，我的门票中查看具体信息。您的大正登录名为:".$mobile."，密码为:".$password_tmp."，大正客户端下载地址：http://www.bwvip.com/app ";
+				$msg_content=iconv('UTF-8', 'GB2312', $msg_content);
+				send_msg($mobile,$msg_content);
 			}
-			
+			return $ucuid;
 		}
-		//自动关注 end
-		
-		
-		
-		
-		api_json_result(1,0,"门票索取成功",$data);
-	}
-}
-
-/*
-*  添加用户注册
-*/
-function user_add_return($username,$sex='男',$phone,$email='')
-{
-	
-	if(empty($username)){
-		$username=time(). mt_rand(1000,9999);
-	}
-	
-	$password_tmp = $password=mt_rand(100000,999999);
-	$salt = substr(uniqid(rand()), -6);
-	$password = md5(md5($password).$salt);
-	$salt=$salt;
-	$password=$password;
-	$email=time().'@bw.com'; 
-	$mobile=$phone; 
-	$regip=time();
-	$regdate=time();
-	if($sex=='男')
-	{
-		$gender=1;
-	}else{
-		$gender=0;
-	}
-	//生成ucenter会员
-	$sql = "insert into pre_ucenter_members(username,salt,password,email,regip,regdate) values('{$username}','{$salt}','{$password}','{$email}','{$regip}','{$regdate}')";
-	$rs = DB::query($sql);
-	$ucuid=DB::insert_id();
-	$groupid=10;  
-	//生成社区会员
-	$sql = "insert into pre_common_member(uid,username,password,email,regdate,groupid) values('{$ucuid}','{$username}','{$password}','{$email}','{$regdate}','{$groupid}')";
-	$rs = DB::query($sql);
-	
-	$sql = "insert into pre_common_member_profile(uid,realname,gender,mobile,regdate) values('{$ucuid}','{$username}','{$gender}','{$mobile}','{$regdate}')";
-	//生成真实姓名
-	$rs = DB::query($sql);
-	
-	$role_id = 3;
-	$sql = "insert into jishigou_members(uid,username,nickname,password,email,phone,regip,regdate,gender,role_id) values('{$ucuid}','{$username}','{$username}','{$password}','{$email}','{$mobile}','{$regip}','{$regdate}','{$gender}','{$role_id}')";
-	///生成微博记录
-	$rs = DB::query($sql);
-	if($rs!=false)
-	{
-		//发送短信
-		if($mobile){
-			$msg_content="您的门票已购买成功并成为大正网用户,请您下载并登录大正网客户端 个人中心，我的门票中查看具体信息。您的大正登录名为:".$mobile."，密码为:".$password_tmp."，大正客户端下载地址：http://www.bwvip.com/app ";
-			$msg_content=iconv('UTF-8', 'GB2312', $msg_content);
-			send_msg($mobile,$msg_content);
+		else
+		{
+			return false;
 		}
-		return $ucuid;
 	}
-	else
+	//添加系统消息
+	function sys_message_add_return($user_ticket_info)
 	{
-		return false;
-	}
-}
-
-
-
-
-
-//添加系统消息
-function sys_message_add_return($user_ticket_info)
-{
-	$sys_event_id = $user_ticket_info['event_id'];
+		$sys_event_id = $user_ticket_info['event_id'];
+		
+		$sql = "select field_uid,event_name from tbl_event where event_id='{$sys_event_id}'";
 	
-	$sql = "select field_uid,event_name from tbl_event where event_id='{$sys_event_id}'";
+		$sys_event_info = DB::fetch_first($sql);
+		$sys_field_uid=$sys_event_info['field_uid'];
+		if(empty($sys_field_uid)){
+			$sys_field_uid = 0;
+		}
+		$field_uid=$sys_field_uid;
+		if($user_ticket_info["uid"])
+		{
+			$sys_uid=$user_ticket_info["uid"];
+		}
+		else
+		{
+			$sys_uid=0;
+		}
+		$uid=$sys_uid;
+		$message_title=$sys_event_info['event_name']."门票申请成功";
 
-	$sys_event_info = DB::fetch_first($sql);
-	$sys_field_uid=$sys_event_info['field_uid'];
-	if(empty($sys_field_uid)){
-		$sys_field_uid = 0;
-	}
-	$field_uid=$sys_field_uid;
-	if($user_ticket_info["uid"])
-	{
-		$sys_uid=$user_ticket_info["uid"];
-	}
-	else
-	{
-		$sys_uid=0;
-	}
-	$uid=$sys_uid;
-	$message_title=$sys_event_info['event_name']."门票申请成功";
+		$n_title=$message_title;
+		$n_content=$message_title;
+		
+		$message_extinfo=array('action'=>"system_msg");	
+		
+		$msg_content = json_encode(array('n_title'=>urlencode($n_title), 'n_content'=>urlencode($n_content),'n_extras'=>$message_extinfo));
 
-	$n_title=$message_title;
-	$n_content=$message_title;
+		$smessage_content=$msg_content;
+		$receiver_type=3;//3:指定用户
+		$message_pic=$user_ticket_info['user_ticket_codepic'];
+		
 	
-	$message_extinfo=array('action'=>"system_msg");	
-	
-	$msg_content = json_encode(array('n_title'=>urlencode($n_title), 'n_content'=>urlencode($n_content),'n_extras'=>$message_extinfo));
+		
+		$message_totalnum=0;
+		$message_sendnum=0;
+		$message_errorcode="";
+		$message_errormsg="";
+		$message_addtime=time();
+		
+		$sql = "insert into tbl_sys_message(field_uid,uid,message_title,message_content,receiver_type,message_pic,message_totalnum,message_sendnum,message_errorcode,message_errormsg,message_addtime) values('{$field_uid}','{$uid}','{$message_title}','{$message_content}','{$receiver_type}','{$message_pic}','{$message_sendnum}','{$message_errorcode}','{$message_errormsg}','{$field_uid}','{$message_addtime}')";
+		$rs = DB::query($sql);
 
-	$smessage_content=$msg_content;
-	$receiver_type=3;//3:指定用户
-	$message_pic=$user_ticket_info['user_ticket_codepic'];
+		if($rs!=false)
+		{
+			return true;
+		}
+		else
+		{				
+			return false;
+		}
 	
-
-	
-	$message_totalnum=0;
-	$message_sendnum=0;
-	$message_errorcode="";
-	$message_errormsg="";
-	$message_addtime=time();
-	
-	$sql = "insert into tbl_sys_message(field_uid,uid,message_title,message_content,receiver_type,message_pic,message_totalnum,message_sendnum,message_errorcode,message_errormsg,message_addtime) values('{$field_uid}','{$uid}','{$message_title}','{$message_content}','{$receiver_type}','{$message_pic}','{$message_sendnum}','{$message_errorcode}','{$message_errormsg}','{$field_uid}','{$message_addtime}')";
-	$rs = DB::query($sql);
-
-	if($rs!=false)
-	{
-		return true;
 	}
-	else
-	{				
-		return false;
-	}
-
-}
 
 
 //获取比赛门票

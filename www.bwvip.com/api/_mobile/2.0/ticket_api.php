@@ -711,7 +711,7 @@ if($ac == 'ticket_apply')
 	$ticket_price = $ticket_info['ticket_price'];
 	$ticket_type = $ticket_info['ticket_type'];
 	//检查用户是否已提交申请
-    $sql = "select user_ticket_id,ticket_id,user_ticket_code,user_ticket_codepic,ticket_price,user_ticket_status from tbl_user_ticket where ticket_id='{$ticket_id}' and ticket_type='".$ticket_type."' and (user_ticket_mobile='{$user_ticket_mobile}' or user_ticket_imei='{$user_ticket_imei}')";
+    $sql = "select user_ticket_id,ticket_id,user_ticket_code,user_ticket_codepic,ticket_price,user_ticket_status from tbl_user_ticket where ticket_id='{$ticket_id}' and ticket_type='".$ticket_type."' and user_ticket_imei='{$user_ticket_imei}'";//user_ticket_mobile='{$user_ticket_mobile}' or 
     $list = DB::fetch_first($sql);
 	
 	$ticket_detail = DB::fetch_first("select ticket_name,ticket_price,ticket_ren_num,ticket_num,ticket_pic,ticket_starttime,ticket_endtime,ticket_times,ticket_content from tbl_ticket where ticket_id='{$ticket_id}' limit 1");
@@ -759,7 +759,7 @@ if($ac == 'ticket_apply')
 				
 			}
 			
-			$return_detail['ticket_pic']=(string)$list['user_ticket_code'];
+			$return_detail['apply_code']=(string)$list['user_ticket_code'];
 			$data['data'] =$return_detail;
 			api_json_result(1,0,"索取门票成功",$data);
 		}
@@ -816,6 +816,31 @@ if($ac == 'ticket_apply')
 		
 		$sql = "insert into tbl_user_ticket(uid,ticket_id,event_id,ticket_type,user_ticket_code,user_ticket_codepic,user_ticket_realname,user_ticket_sex,user_ticket_age,user_ticket_address,user_ticket_mobile,user_ticket_imei,user_ticket_company,user_ticket_company_post,user_ticket_status,user_ticket_addtime,ticket_times,ticket_starttime,ticket_endtime,ticket_price) values('{$uid}','{$ticket_id}','{$event_id}','{$ticket_type}','{$user_ticket_code}','{$user_ticket_codepic}','{$user_ticket_realname}','{$user_ticket_sex}','{$user_ticket_age}','{$user_ticket_address}','{$user_ticket_mobile}','{$user_ticket_imei}','{$user_ticket_company}','{$user_ticket_company_post}','{$user_ticket_status}','{$user_ticket_addtime}','{$ticket_times}','{$ticket_starttime}','{$ticket_endtime}','{$ticket_price}')";
 		$res = DB::query($sql);
+		
+		
+		
+		//自动关注 start
+		$list=DB::query("select uid from tbl_user_ticket where event_id='".$event_id."' and uid<>'".$uid."'  ");
+		while($user = DB::fetch($list) )
+		{
+			
+			$aaa=DB::fetch_first("select id from jishigou_buddys where uid='".$uid."' and buddyid='".$user['uid']."' ");
+			if(empty($aaa))
+			{
+				$res=DB::query("insert into jishigou_buddys (uid,buddyid,grade,remark,dateline,description,buddy_lastuptime) values ('".$uid."','".$user['uid']."','1','','".time()."','','".time()."') ");
+			}
+
+			$bbb=DB::fetch_first("select id from jishigou_buddys where uid='".$user['uid']."' and buddyid='".$uid."' ");
+			if(empty($bbb))
+			{
+				$res=DB::query("insert into jishigou_buddys (uid,buddyid,grade,remark,dateline,description,buddy_lastuptime) values ('".$user['uid']."','".$uid."','1','','".time()."','','".time()."') ");
+		
+			}
+			
+		}
+		//自动关注 end
+		
+		
 		
 		api_json_result(1,0,"门票索取成功",$data);
 	}
