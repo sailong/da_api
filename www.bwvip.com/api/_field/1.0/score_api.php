@@ -995,6 +995,7 @@ if($ac=="score_list")
 if($ac=="chadian_rank")
 {
 	$uid=$_G['gp_uid'];
+	$field_uid=$_G['gp_field_uid'];
 	if(!$_G['gp_page'])
 	{
 		$chadian=DB::result_first("select chadian from ".DB::table("common_member_profile")." where uid='".$uid."' ");
@@ -1006,7 +1007,7 @@ if($ac=="chadian_rank")
 		}
 	}
 	
-	$total=DB::result_first("select count(uid) from ".DB::table("common_member_profile")." where chadian>0  ");
+	$total=DB::result_first("select count(uid) from ".DB::table("common_member_profile")." where chadian>0 and reg_source='".$field_uid."' ");
 	$max_page=intval($total/$page_size);
 	if($max_page<$total/$page_size)
 	{
@@ -1014,10 +1015,10 @@ if($ac=="chadian_rank")
 	}
 	if($max_page>=$page)
 	{
-		$list=DB::query("select uid,realname,chadian from ".DB::table("common_member_profile")." where chadian>0 order by chadian asc limit $page_start,$page_size ");
+		$list=DB::query("select uid,realname,chadian from ".DB::table("common_member_profile")." where chadian>0 and reg_source='".$field_uid."' order by chadian asc limit $page_start,$page_size ");
 		while($row=DB::fetch($list))
 		{
-			$row['rank_number']=DB::result_first("select count(uid) from ".DB::table("common_member_profile")." where chadian<'".$row['chadian']."' and chadian>0 ");
+			$row['rank_number']=DB::result_first("select count(uid) from ".DB::table("common_member_profile")." where chadian<'".$row['chadian']."' and chadian>0 and reg_source='".$field_uid."' ");
 			$row['rank_number']=(string)($row['rank_number']+1);
 			//echo "select count(uid) from ".DB::table("common_member_profile")." where chadian<'".$row['chadian']."' and chadian>0 ";
 			//echo "<hr>";
@@ -1028,7 +1029,7 @@ if($ac=="chadian_rank")
     if(empty($list_data)) {
         $list_data = null;
     }
-	$list_data = null;
+	//$list_data = null;
 	$data['title']='list_data';
 	$data['data']=$list_data;
 	//print_r($data);

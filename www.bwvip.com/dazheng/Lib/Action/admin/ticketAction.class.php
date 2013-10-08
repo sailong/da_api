@@ -239,6 +239,104 @@ class ticketAction extends AdminAuthAction
 		}
 
 	}
+	public function ticket_tj()
+	{
+		$event_id_list = array(51,25);
+		
+		$start_date = $start_time = post('start_time');
+		if(empty($start_date)){
+			$start_date =  $start_time =  date('Y-m-d',time());
+		}
+		$start_time = strtotime($start_time);
+		$end_date = $end_time = post('end_time');
+		if(empty($end_time)){
+			$end_date = $end_time = date('Y-m-d',time());
+		}
+		$end_time = intval(strtotime($end_time)) + 86400;
+		//echo $end_date,$start_date;
+		//宝马门票申请统计
+		$sql = "SELECT count(id) as total FROM `tbl_user_ticket_bmw` where bwm_addtime<$end_time";// WHERE event_id=25and user_ticket_addtime>=$start_time and user_ticket_addtime<=$end_time
+		
+		$bm_total_rs = M()->query($sql); 
+		$bm_total_rs = $bm_total_rs[0];
+		
+		$bm_info['total'] = $bm_total_rs['total'];
+		
+		
+		$today_date = date('Y-m-d',time());
+		$today_start = intval(strtotime($today_date));
+		$today_end = $today_start + 86400;
+		$sql = "SELECT count( DISTINCT `user_ticket_mobile` ) as total FROM `tbl_user_ticket` WHERE event_id=25 and user_ticket_addtime>$start_time and user_ticket_addtime<=$end_time";
+		//echo $sql;die;
+		$bm_today_rs = M()->query($sql);
+		$bm_today_rs = $bm_today_rs[0];
+		$bm_info['today'] = $bm_today_rs['total'];
+		
+		//华彬门票申请统计
+		$sql = "SELECT count( DISTINCT `user_ticket_imei` ) as total FROM `tbl_user_ticket` WHERE event_id=51 and user_ticket_addtime<$end_time";// and user_ticket_addtime>=$start_time and user_ticket_addtime<=$end_time
+		
+		$hb_total_rs = M()->query($sql); 
+		$hb_total_rs = $hb_total_rs[0];
+		$hb_info['total'] = $hb_total_rs['total'];
+		
+		$sql = "SELECT count( DISTINCT `user_ticket_imei` ) as total FROM `tbl_user_ticket` WHERE event_id=51 and user_ticket_addtime>=$start_time and user_ticket_addtime<=$end_time";
+		$hb_today_rs = M()->query($sql);
+		$hb_today_rs = $hb_today_rs[0];
+		$hb_info['today'] = $hb_today_rs['total'];
+		
+		$tj_info['hb'] = $hb_info;
+		$tj_info['bm'] = $bm_info;
+		
+		echo '<script language="javascript" type="text/javascript" src="/skin/js/jquery-1.4.4.min.js"></script>
+			<script language="javascript" type="text/javascript" src="/skin/js/My97DatePicker/WdatePicker.js"></script>
+			<form name="search_form" action="/default.php?g=admin&m=ticket&a=ticket_tj" method="post"><table width="800" border="0" bgcolor="#cccccc">
+			  <tr>
+				<td colspan="3" style="line-height:50px; text-align:center; font-size:18px; font-weight:bold;" bgcolor="#FFFFFF">查询</td>
+			  </tr>
+			  <tr>
+				<td width="25%" rowspan="6" bgcolor="#FFFFFF" align="center">选择时间</td>
+				<td width="35%" bgcolor="#FFFFFF"><input type="text" name="start_time" class="search_input_date" style="width:120px;" value="'.$start_date.'" onFocus="WdatePicker({isShowClear:false,readOnly:true})"> 至 
+				<input type="text" name="end_time" class="search_input_date" style="width:120px;" value="'.$end_date.'" onFocus="WdatePicker({isShowClear:false,readOnly:true})"></td>
+				<td bgcolor="#FFFFFF"><input type="submit" value="搜索" class="btn_b" style="margin-right:8px;" ></td>
+			  </tr>
+			</table></form>';
+					
+			echo "<br />";
+		foreach($tj_info as $key=>$val)
+		{
+			$field_name = '';
+			if($key=='hb'){
+				$field_name = '华彬门票申请统计';
+			}elseif($key=='bm'){
+				$field_name = '宝马门票申请统计';
+			}
+			echo '<table width="800" border="0" bgcolor="#cccccc">
+			  <tr>
+				<td colspan="3" style="line-height:50px; text-align:center; font-size:18px; font-weight:bold;" bgcolor="#FFFFFF">'.$field_name.'</td>
+			  </tr>
+			  <tr>
+				<td width="25%" rowspan="6" bgcolor="#FFFFFF" align="center">统计</td>
+				<td width="35%" bgcolor="#FFFFFF">&nbsp;</td>
+				<td bgcolor="#FFFFFF">&nbsp;</td>
+			  </tr>
+			  <tr>
+				<td bgcolor="#FFFFFF">总数</td>
+				<td bgcolor="#FFFFFF">'.$val['total'].'人</td>
+			  </tr>
+			  <tr>
+				<td bgcolor="#FFFFFF">'.$today_date.'(今天)</td>
+				<td bgcolor="#FFFFFF">'.$val['today'].' 人</td>
+			  </tr>
+			</table>';
+					
+			echo "<br />";
+		}
+		
+		
+		/* $this->assign('tj_info',$tj_info);
+		
+		$this->display(); */
+	}
 
 
 	

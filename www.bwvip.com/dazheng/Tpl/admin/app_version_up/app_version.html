@@ -1,0 +1,118 @@
+<include file="../public/_header" />
+<div class="so_main">
+
+  <div class="page_tit">客户端版本管理，主要用于IOS审核中版本取消token</div>
+  <div class="tit_tab">
+	<ul>
+		<li><a <php> if(get("app_version_type")==''){ echo " class=on ";}</php> href="{:U('admin/app_version_up/app_version',array('app_version_type'=>''))}">全部</a></li>
+		<li><a <php> if(get("app_version_type")=='android'){ echo " class=on ";}</php> href="{:U('admin/app_version_up/app_version',array('app_version_type'=>'android'))}">Android</a></li>
+		<li><a <php> if(get("app_version_type")=='ios'){ echo " class=on ";}</php> href="{:U('admin/app_version_up/app_version',array('app_version_type'=>'ios'))}">IOS</a></li>
+		
+	</ul>
+  </div>
+
+  <div class="search_box">
+		<form name="search_form" action="/default.php" method="get">
+		<input type="hidden" name="g" value="admin">
+		<input type="hidden" name="m" value="app_version_up">
+		<input type="hidden" name="a" value="app_version">
+
+		<table border="0" cellspacing="0" cellpadding="0">
+			<th>名称：</th>
+			<td><input type="text" name="k" class="search_input" style="width:120px;" value="<php> echo  get('k');</php>"></td>
+			<th>添加时间：</th>
+			<td>
+				<input type="text" name="starttime" class="search_input_date" style="width:120px;" value="<php> echo  get('starttime');</php>" onFocus="WdatePicker({isShowClear:false,readOnly:true})"> 至 
+				<input type="text" name="endtime" class="search_input_date" style="width:120px;" value="<php> echo  get('endtime');</php>" onFocus="WdatePicker({isShowClear:false,readOnly:true})">
+			</td>
+			<td class="btn">
+				<input type="submit" value="搜索" class="btn_b" style="margin-right:8px;" >
+				<input type="button" value="查看全部" class="btn_b" onclick="javascript:location='{:U('admin/app_version_up/app_version',array('state'=>get('state')))}';">
+			</td>
+		</table>
+	</form>
+  </div><!--/search_box-->
+
+  <!--------list -------->
+  <div class="Toolbar_inbox">
+  	<div class="page right">{$pages}</div>
+
+	<a href="{:U('admin/app_version_up/app_version_add')}" class="btn_a"><span>添加客户端版本</span></a>
+	<a href="javascript:void(0);" class="btn_a"  onclick="mod_delete_batch('{:U('admin/app_version_up/app_version_delete_action')}','mod_table');"><span>批量删除</span></a>
+
+	<div class="clear"></div>
+  </div>
+  <div class="list">
+	<php>if($total>0){</php>
+	  <table width="100%" id="mod_table" border="0" cellspacing="0" cellpadding="0">
+	  <tr>
+		<th style="width:30px;">
+			<input type="checkbox" id="checkbox_handle" onclick="select_all(this,'mod_table','checkbox')" value="0">
+			<label for="checkbox"></label>
+		</th>
+		<th class="line_l">球场UID</th>
+		<th class="line_l">类型</th>
+		<th class="line_l">版本号</th>
+		<th class="line_l">版本名</th>
+		<!--
+		<th class="line_l">更新内容</th>
+		-->
+		<th class="line_l">下载链接</th>
+		<th class="line_l">是否重要更新</th>
+		<th class="line_l">添加时间</th>
+		<th class="line_l">操作</th>
+	</tr>
+	<volist id="vo" name="list">
+	<tr overstyle="on"  id=ids_{$vo["app_version_id"]}>
+		<td><input type="checkbox" name="checkbox" onclick="select_one(this)" value="{$vo.app_version_id}" ></td>
+		<td>{$vo.field_uid}</th>
+		<td>{$vo.app_version_type}</th>
+			<td><a href="javascript:void(0);" onclick="mod_dialog('查看详细','{:U('admin/app_version_up/app_version_detail', array('app_version_id'=>$vo['app_version_id']))}');">{$vo.app_version_number}</a></td>
+			<td>{$vo.app_version_name}</td>
+			<!--
+			<td>{$vo.app_version_content}</td>
+			-->
+			<td>{$vo.app_version_file}</td>
+			<td>{$vo.app_version_is_important}</td>
+			<td>{$vo.app_version_addtime|format_to_time}</td>
+		<td>
+			<a href="{:U('admin/app_version_up/app_version_edit', array('app_version_id'=>$vo['app_version_id']))})">修改</a> | 
+			<a href="javascript:void(0);" onclick="mod_delete_one('{:U('admin/app_version_up/app_version_delete_action')}','{$vo['app_version_id']}');">删除</a>
+		</td>
+	</tr>
+	</volist>
+    </table>
+	  <php>}else{</php>
+			<div class="no_data">
+				<img src="/skin/images/no_data.gif" align="absmiddle"> <span>没有客户端版本... </span>
+			</div>
+	 <php>}</php>
+  </div>
+
+  <div class="Toolbar_inbox">
+	<div class="page right">{$pages}</div>
+
+	<a href="{:U('admin/app_version_up/app_version_add')}" class="btn_a"><span>添加客户端版本</span></a>
+	<a href="javascript:void(0);" class="btn_a"  onclick="mod_delete_batch('{:U('admin/app_version_up/app_version_delete_action')}','mod_table');"><span>批量删除</span></a>
+
+
+	<div class="clear"></div>
+  </div>
+</div>
+
+<script>
+	$(document).ready(function(){
+		$("tr[overstyle='on']").hover(
+		  function ()
+		  {
+		    $(this).addClass("bg_hover");
+		  },
+		  function (){
+		    $(this).removeClass("bg_hover");
+		  }
+		);
+	});
+</script>
+
+
+<include file="../public/_footer" />

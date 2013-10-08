@@ -963,7 +963,8 @@ if($ac == 'free_ticket2')
 	$ticket_price = $ticket_info['ticket_price'];
 	$ticket_type = $ticket_info['ticket_type'];
 	//检查用户是否已提交申请
-    $sql = "select user_ticket_id,ticket_id,user_ticket_code,user_ticket_codepic,ticket_price,user_ticket_status from tbl_user_ticket where ticket_id='{$ticket_id}' and ticket_type='".$ticket_type."' and (user_ticket_mobile='{$user_ticket_mobile}' or user_ticket_imei='{$user_ticket_imei}')";
+    //$sql = "select user_ticket_id,ticket_id,user_ticket_code,user_ticket_codepic,ticket_price,user_ticket_status from tbl_user_ticket where ticket_id='{$ticket_id}' and ticket_type='".$ticket_type."' and (user_ticket_mobile='{$user_ticket_mobile}' or user_ticket_imei='{$user_ticket_imei}')";
+    $sql = "select user_ticket_id,ticket_id,user_ticket_code,user_ticket_codepic,ticket_price,user_ticket_status from tbl_user_ticket where ticket_id='{$ticket_id}' and ticket_type='".$ticket_type."' and  user_ticket_imei='{$user_ticket_imei}' ";
     $list = DB::fetch_first($sql);
 	
 	$ticket_detail = DB::fetch_first("select ticket_name,ticket_price,ticket_ren_num,ticket_num,ticket_pic,ticket_starttime,ticket_endtime,ticket_times,ticket_content from tbl_ticket where ticket_id='{$ticket_id}' limit 1");

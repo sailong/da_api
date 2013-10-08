@@ -441,5 +441,62 @@ class tongjiAction extends AdminAuthAction
 		
 	}
 	
+	
+	
+	
+	public function topic_tongji()
+	{
+	
+		$page = intval(get("p"))?get("p"):1;
+		$page_size=20;
+
+		$sort=" dateline desc ";
+		
+		if(get('k'))
+		{
+			$where = " 1 and content like '%#".get('k')."#%' ";
+		}
+		else
+		{
+			$where = " 1 and content like '%LPGA%' ";
+		}
+		//$where = " 1 and content like '%#华彬LPGA中国精英赛#%' ";
+		
+
+		if(get("starttime")!="")
+		{
+			$where .=" and dateline>".strtotime(get("starttime"))." ";
+		}
+		if(get("endtime")!="")
+		{
+			$where .=" and dateline<".strtotime(get("endtime"))." ";
+		}
+
+		$data["item"]=M("topic","jishigou_")->where($where.$bigwhere)->order($sort)->page($page.",".$page_size)->select();
+		
+
+		for($i=0; $i<count($data["item"]); $i++)
+		{
+			if($data["item"][$i]["uid"]!="")
+			{
+				$user=M()->query("select realname,mobile from pre_common_member_profile where uid='".$data["item"][$i]["uid"]."' ");
+				$data["item"][$i]["realname"]=$user[0]["realname"];
+				$data["item"][$i]["mobile"]=$user[0]["mobile"];
+			}
+		}
+		
+		$data["total"] = M("topic","jishigou_")->where($where.$bigwhere)->count();
+		
+		import ("@.ORG.Page");
+		$page = new page ($data["total"], $page_size );
+		$data["pages"] = $page->show();
+		
+		$this->assign("list",$data["item"]);
+		$this->assign("pages",$data["pages"]);
+		$this->assign("total",$data["total"]);
+	
+		$this->display();
+	}
+	
 }
 ?>

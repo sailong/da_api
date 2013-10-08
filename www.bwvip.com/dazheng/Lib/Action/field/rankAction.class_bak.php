@@ -25,44 +25,29 @@ class rankAction extends field_publicAction
             $language = 'cn';
         }
         $field_uid = $_SESSION["field_uid"];
-        //$where = "a.field_uid='{$field_uid}' and a.field_event_id=b.event_id and a.uid=c.uid";
-		$where = "a.field_uid='{$field_uid}' and a.field_event_id=b.event_id";
+        $where = "a.field_uid='{$field_uid}' and a.field_event_id=b.event_id and a.uid=c.uid";
 	    if(!empty($event_id)) {
 	        $where .= " and b.event_id='{$event_id}'";
 	    }
-	    /* if(!empty($uid)) {
+	    if(!empty($uid)) {
 	        $where .= " a.uid='{$uid}'";
-	    } */
+	    }
 	    $offset = ($page-1)*$page_size;
 		
-        //$sql = "select a.field_event_rank_id,a.field_event_rank_name,a.field_event_rank_name_en,a.uid,a.field_uid,a.field_event_rank_score,a.field_event_rank_sort,a.field_event_rank_addtime,b.event_id,b.event_name,c.realname from tbl_field_event_rank a,tbl_event b,pre_common_member_profile c where $where order by a.field_event_rank_sort asc limit $offset,$page_size";
-		$sql = "select a.field_event_rank_id,a.field_event_rank_name,a.field_event_rank_name_en,a.uid,a.field_uid,a.field_event_rank_score,a.field_event_rank_sort,a.field_event_rank_addtime,b.event_id,b.event_name from tbl_field_event_rank a,tbl_event b where $where order by a.field_event_rank_sort asc limit $offset,$page_size";
-		
-	    $list = M()->query($sql);
+        $sql = "select a.field_event_rank_id,a.field_event_rank_name,a.field_event_rank_name_en,a.uid,a.field_uid,a.field_event_rank_score,a.field_event_rank_sort,a.field_event_rank_addtime,b.event_id,b.event_name,c.realname from tbl_field_event_rank a,tbl_event b,pre_common_member_profile c where $where order by a.field_event_rank_sort asc limit $offset,$page_size";
+	    $list = M()->query($sql);//D('field_event_rank a,tbl_field_event b,pre_common_member_profile c')->where($where)->field('a.field_event_rank_id,a.field_event_rank_name,a.field_event_rank_name_en,a.uid,a.field_uid,a.field_event_rank_score,a.field_event_rank_sort,a.field_event_rank_addtime,b.field_event_id,b.field_event_name,c.realname')->page($page.",".$page_size)->order('a.field_event_rank_sort asc' )->select();
+
+//	    	    echo '<pre>';
+//	    var_dump($list);
 //echo M()->getLastSql();
 		
 	    foreach($list as $key=>&$val) {
 	        if($language == 'en') {
 	            $val['field_event_rank_name'] = $val['field_event_rank_name_en'];
 	        }
-			$uid_arr[$val['uid']] = $val['uid'];
 	        unset($val['field_event_rank_name_en']);
 	    }
-		 $sql1 = "select * from pre_common_member_profile where uid in(".implode(",",(array)$uid_arr).")";
-		$user_list_tmp = M()->query($sql1);
-		
-		$user_list = array();
-		foreach($user_list_tmp as $user_key=>$user_val)
-		{
-			$user_list[$user_val['uid']]=$user_val['realname'];
-		}
-		unset($user_list_tmp);
-		
-		foreach($list as $key=>&$val) {
-	       $val['realname']=$user_list[$val['uid']];
-	    } 
-	    //$total =  M()->query("select count(a.field_event_rank_id) as total from tbl_field_event_rank a,tbl_event b,pre_common_member_profile c where $where");//M('field_event a,tbl_field_event_rank b,pre_common_member_profile c')->where($where)->count();
-		$total =  M()->query("select count(a.field_event_rank_id) as total from tbl_field_event_rank a,tbl_event b where $where");
+	    $total =  M()->query("select count(a.field_event_rank_id) as total from tbl_field_event_rank a,tbl_event b,pre_common_member_profile c where $where");//M('field_event a,tbl_field_event_rank b,pre_common_member_profile c')->where($where)->count();
 	    //echo M()->getLastSql();
 		//var_dump($total);
 	    import ("@.ORG.Page");

@@ -21,7 +21,7 @@ class eventAction extends AdminAuthAction
 			$sql=" and event_id in (".$_SESSION['event_ids'].") ";
 		}
 		
-		$list=D("event")->event_list_pro("  ".$sql);
+		$list=D("event")->event_list_pro("  ".$sql,20," event_addtime desc ");
 
 		$this->assign("list",$list["item"]);
 		$this->assign("pages",$list["pages"]);

@@ -71,7 +71,7 @@ $hot_2013district=array(
 //选择 赛事
 if($ac=="select_event")
 {
-	$list3=DB::query("select event_id,event_name,event_uid,event_is_zhutui,event_zhutui_pic,event_content,event_url,event_type,event_logo from tbl_event where event_is_zhutui='Y' and (event_viewtype='B' or event_viewtype='A' or event_viewtype='S') order by event_sort desc limit 1 ");
+	$list3=DB::query("select event_id,event_name,event_uid,event_is_zhutui,event_zhutui_pic,event_content,event_url,event_type,event_logo from tbl_event where event_is_zhutui='Y' and field_uid=0 order by event_sort desc limit 1 ");
 	while($row3 = DB::fetch($list3))
 	{
 		if($row3['event_zhutui_pic'])
@@ -83,7 +83,7 @@ if($ac=="select_event")
 			$row3['event_url']=null;
 		}
 		$row3['event_pic']=$site_url."/uc_server/avatar.php?uid=".$row['event_uid']."&size=middle";
-		$row3['uid']=$row3['event_uid'];
+		$row3['uid']=$row3['event_id'];
 		$row3['event_content']=msubstr(cutstr_html($row3['event_content']),0,30);
 		$list_data3[]=$row3;
 	}
