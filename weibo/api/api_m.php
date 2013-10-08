@@ -590,7 +590,7 @@ if($ac=="add_topic_v2")
 			}
         	
 			$sql3 = "update `jishigou_topic` set `uid`='{$uid}',`username`='{$realname}',`fuid`='{$fuid}',`roottid`='{$roottid}',`from`='{$client_from}',`item`='{$client_from}' where tid='".$tid."' ";
-			echo $sql3;
+			//echo $sql3;
 			$dsql->ExecuteNoneQuery($sql3);
 		}
         
