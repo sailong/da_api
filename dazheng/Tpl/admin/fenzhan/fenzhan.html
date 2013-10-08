@@ -64,7 +64,7 @@
 		<td><input type="checkbox" name="checkbox" onclick="select_one(this)" value="{$vo.fenzhan_id}" ></td>
 		<td>{$vo.fenzhan_id}</th>
 			<td><a href="javascript:void(0);" onclick="mod_dialog('查看详细','{:U('admin/fenzhan/fenzhan_detail', array('fenzhan_id'=>$vo['fenzhan_id']))}');">{$vo.fenzhan_name}</a></td>
-			<td>{$vo.field_id}</td>
+			<td>{$field_list[$vo['field_id']]}</td>
 			<td>{$vo.year}</td>
 			<!--
 			<td>{$vo.timepic}</td>

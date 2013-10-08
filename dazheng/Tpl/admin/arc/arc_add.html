@@ -85,6 +85,29 @@
 					<td><input type="text" name="field_uid" id="field_uid" class="mod_input2" style="width:100px;" > </td>
 				</tr>
 				<tr>
+					<th>显示视频链接：</th>
+					<td><select name="is_video">
+							<option value="">请选择</option>
+							<option value="Y">是</option>
+							<option value="N" selected>否</option>
+						</select>
+						<script>set_select_value(document.act_form.is_video,"{$data.is_video}");</script>
+					</td>
+				</tr>
+				<tr>
+					<th>显示格式：</th>
+					<td><select name="is_span">
+							<option value="">请选择</option>
+							<option value="Y">是</option>
+							<option value="N"  selected>否</option>
+						</select>
+						<script>set_select_value(document.act_form.is_span,"{$data.is_span}");</script>
+						
+						(在客户端显示加粗、标红、大小等格式)
+					</td>
+				</tr>
+				
+				<tr>
 					<th>语言：</th>
 					<td><select name="language">
 							<option value="">请选择</option>

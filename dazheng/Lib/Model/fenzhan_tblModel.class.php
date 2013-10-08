@@ -15,7 +15,10 @@ class fenzhan_tblModel extends Model{
 		$page = intval(get("p"))?get("p"):1;
 
 		$where = " 1 ";
-		
+		if(get('k'))
+		{
+			$where .=" and fenzhan_name like '%".get('k')."%' ";
+		}
 		if(get('event_id'))
 		{
 			$where .=" and event_id='".get('event_id')."' ";
@@ -32,6 +35,7 @@ class fenzhan_tblModel extends Model{
 		}
 
 		$data["item"]=M("fenzhan")->where($where.$bigwhere)->order($sort)->page($page.",".$page_size)->select();
+		//echo M()->getLastSql();die;
 		for($i=0; $i<count($data["item"]); $i++)
 		{
 			if($data["item"][$i]["event_id"]!="")

@@ -22,12 +22,13 @@ class publicAction extends Action
 		{
 			if($_SESSION['verify']==md5(post("code")))
 			{
-				$user=M()->query("select admin_id,admin_name,admin_role_id from tbl_admin where admin_name='".post("username")."' and admin_password='".md5(post("password"))."' ");
+				$user=M()->query("select admin_id,admin_name,admin_role_id,(select event_ids from tbl_admin_role where admin_role_id=tbl_admin.admin_role_id)as event_ids from tbl_admin where admin_name='".post("username")."' and admin_password='".md5(post("password"))."' ");
 				if($user[0]['admin_id'])
 				{
 					$_SESSION['admin_id']=$user[0]['admin_id'];
 					$_SESSION['admin_name']=$user[0]['admin_name'];
 					$_SESSION['admin_role_id']=$user[0]['admin_role_id'];
+					$_SESSION['event_ids']=$user[0]['event_ids'];
 
 					$up=M()->execute("update tbl_admin set admin_lastip='".get_ip()."' , admin_lasttime='".time()."' where admin_id='".$user[0]['admin_id']."' ");
 					$this->success("登录成功",U('admin/index/index'));

@@ -33,7 +33,8 @@ class adAction extends AdminAuthAction
 		$this->assign("page_list",$page_list);
 		$action_list=select_dict(16,"select");
 		$this->assign("action_list",$action_list);
-		$event=D('event')->event_select_pro(" and field_uid='".$_SESSION['field_uid']."' ");
+		
+		$event=D('event')->event_select_pro("  ");
 		$this->assign('event',$event['item']);
 
 		$this->assign("page_title","添加广告");
@@ -133,7 +134,7 @@ class adAction extends AdminAuthAction
 			$data=M("ad")->where("ad_id=".intval(get("ad_id")))->find();
 			$this->assign("data",$data);
 			
-			$event=D('event')->event_select_pro(" and field_uid='".$_SESSION['field_uid']."' ");
+			$event=D('event')->event_select_pro("  ");
 			$this->assign('event',$event['item']);
 
 			$page_list=select_dict(3,"select");

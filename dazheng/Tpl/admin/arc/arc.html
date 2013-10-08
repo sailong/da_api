@@ -69,7 +69,6 @@
 	<php>if(get('arc_state')=='1'){</php>
 	<a href="javascript:void(0);" class="btn_a"  onclick="mod_post_batch('{:U('admin/arc/arc_tj_action')}','mod_table');"><span>推荐</span></a>
 	<a href="javascript:void(0);" class="btn_a"  onclick="mod_post_batch('{:U('admin/arc/arc_tjno_action')}','mod_table');"><span>取消推荐</span></a>
-
 	<a href="javascript:void(0);" class="btn_a"  onclick="mod_post_batch('{:U('admin/arc/arc_pic_action')}','mod_table');"><span>首页图片</span></a>
 	<a href="javascript:void(0);" class="btn_a"  onclick="mod_post_batch('{:U('admin/arc/arc_picno_action')}','mod_table');"><span>取消首页图片</span></a>
 	<php>}</php>
@@ -96,6 +95,7 @@
 		<th class="line_l">图片</th>
 
 		<th class="line_l">置顶</th>
+		<th class="line_l">视频</th>
 		<th class="line_l">排序</th>
 		<th class="line_l">状态</th>
 		<th class="line_l">添加时间</th>
@@ -108,18 +108,19 @@
 		<td width="40">{$vo.arc_id}</td>
 		<td class="title"><a href="javascript:void(0);" onclick="mod_dialog('查看详细','{:U('admin/arc/arc_detail', array('arc_id'=>$vo['arc_id']))}');">{$vo.arc_name}</a> <php>if($vo['arc_is_tj']=="Y"){ echo "<font color='red'>[荐]</font>";}</php> <php>if($vo['arc_is_pic']=="Y"){ echo "<font color='green'>[首页图片]</font>";}</php></th>
 		<!--
-			<td><a href="javascript:void(0);" onclick="mod_dialog('查看详细','{:U('admin/arc/arc_detail', array('arc_id'=>$vo['arc_id']))}');">{$vo.staff_id}</a></td>
-			-->
-			<td>{$vo.arctype_name}</td>
-			<td>{$vo.arc_viewtype}</td>
+		<td><a href="javascript:void(0);" onclick="mod_dialog('查看详细','{:U('admin/arc/arc_detail', array('arc_id'=>$vo['arc_id']))}');">{$vo.staff_id}</a></td>
+		-->
+		<td>{$vo.arctype_name}</td>
+		<td>{$vo.arc_viewtype}</td>
 
-			<td><php>if($vo['arc_pic']){</php><img src="/{$vo.arc_pic}" class="pic" style="max-width:150px; max-height:80px;"><php>}</php></td>
+		<td><php>if($vo['arc_pic']){</php><img src="/{$vo.arc_pic}" class="pic" style="max-width:150px; max-height:80px;"><php>}</php></td>
 
-			<td>{$vo.arc_top}</td>
-			<td>{$vo.arc_sort}</td>
-			<td><php>if($vo['arc_state']==1){ echo "审核通过";}else if($vo['arc_state']==2){ echo "审核未通过";}else{ echo "待审核";}</php>{$vo.}</td>
-			<td>{$vo.arc_addtime|format_to_time}</td>
-			<td>{$vo.arc_statetime|format_to_time}</td>
+		<td>{$vo.arc_top}</td>
+		<td><php>if($vo['is_video']==1){ echo "显示";}else{ echo "隐藏";}</php></td>
+		<td>{$vo.arc_sort}</td>
+		<td><php>if($vo['arc_state']==1){ echo "审核通过";}else if($vo['arc_state']==2){ echo "审核未通过";}else{ echo "待审核";}</php>{$vo.}</td>
+		<td>{$vo.arc_addtime|format_to_time}</td>
+		<td>{$vo.arc_statetime|format_to_time}</td>
 		<td>
 			<a href="{:U('admin/arc/arc_edit', array('arc_id'=>$vo['arc_id']))}">修改</a> | 
 			<!--

@@ -20,12 +20,22 @@ class fenzhanAction extends AdminAuthAction
 		$event_info=M("event")->where("event_id=".intval(get("event_id")))->find();
 		$this->assign('event_name',$event_info['event_name']);
 		$this->assign('event_id',$event_info['event_id']);
-			
-		$event=D('event')->event_select_pro(" and field_uid='".$_SESSION['field_uid']."' ");
-		$this->assign('event',$event['item']);
+		
+		/* $event=D('event')->event_select_pro(" and field_uid='".$_SESSION['field_uid']."' ");
+		$this->assign('event',$event['item']); */
 		
 		$list=D("fenzhan_tbl")->fenzhan_list_pro();
-
+		
+		$field_list_tmp=M()->table('pre_common_field')->select();
+		$field_list = array();
+		foreach($field_list_tmp as $key=>$val)
+		{
+			$field_list[$val['uid']] = $val['fieldname'];
+		}
+		unset($field_list_tmp);
+		$this->assign('field_list',$field_list);
+		
+		
 		$this->assign("list",$list["item"]);
 		$this->assign("pages",$list["pages"]);
 		$this->assign("total",$list["total"]);
@@ -63,6 +73,7 @@ class fenzhanAction extends AdminAuthAction
 		{
 			$data["event_id"]=post("event_id");
 			$data["fenzhan_name"]=post("fenzhan_name");
+			$data["fenzhan_rule"]=post("fenzhan_rule");
 			$data["field_id"]=post("field_id");
 			//获取前九洞			 
 			$data["fenzhan_a"]=post("fenzhan_a"); 			 
@@ -127,6 +138,7 @@ class fenzhanAction extends AdminAuthAction
 			$this->assign('fenzhan_on',1);
 			$this->assign('fenzhan_on',1);
 			$event_info=M("event")->where("event_id=".intval(get("event_id")))->find();
+			$this->assign('event_id',intval(get("event_id")));
 			$this->assign('event_name',$event_info['event_name']);
 			$this->assign("page_title","修改分站");
 			$this->display();
@@ -142,7 +154,8 @@ class fenzhanAction extends AdminAuthAction
 		if(M()->autoCheckToken($_POST))
 		{
 			$data["fenzhan_id"]=post("fenzhan_id");
-			$data["fenzhan_name"]=post("fenzhan_name"); 
+			$data["fenzhan_name"]=post("fenzhan_name");
+			$data["fenzhan_rule"]=post("fenzhan_rule");			
 			$data["fenzhan_lun"]=post("fenzhan_lun");			
 			//获取前九洞			 
 			$data["fenzhan_a"]=post("fenzhan_a"); 			 
@@ -412,6 +425,7 @@ class fenzhanAction extends AdminAuthAction
 		$fenzhan_info = array();
 		foreach($fenzhan as $key=>$val) {
 			$fenzhan_info[$val['fenzhan_id']] = $val;
+			$default_fenzhan_id = $val['fenzhan_id'];
 		}
 		unset($fenzhan);
 		
@@ -426,17 +440,30 @@ class fenzhanAction extends AdminAuthAction
 		//}
 		//unset($fenzu_list);
 		//$this->assign('fenzu',$fenzu);
+		if(empty($fenzhan_id))
+		{
+			$fenzhan_id = $default_fenzhan_id;
+		}
+		$event_apply_list=M('event_apply')->where("fenzhan_id='{$fenzhan_id}' and parent_id='0'")->select();//query("select * from tbl_event_apply where fenzhan_id='".$fenzhan_id."' and parent_id='0' order by fenzu_id asc ");
+		//echo M()->getLastSql();die;
+		//var_dump($event_apply_list);
 		
-		
+		$parent_apply_list = array();
+		foreach($event_apply_list as $key=>$val)
+		{
+			$parent_apply_list[$val['event_apply_id']] = $val;
+		}
+		unset($event_apply_list);
+		$this->assign("parent_apply_list",$parent_apply_list);
 		//$list=D("fenzu_mingxi")->fenzu_mingxi_list_pro(" ");
 		if($fenzhan_id)
 		{
 			$list=M()->query("select * from tbl_baofen where fenzhan_id='".$fenzhan_id."' order by fenzu_id asc ");
 		}else
 		{		
-			$list=M()->query("select * from tbl_baofen where event_id='".get("event_id")."' order by baofen_id desc ");
+			//$list=M()->query("select * from tbl_baofen where event_id='".get("event_id")."' order by baofen_id desc ");
 		}
-	  
+		$this->assign("fenzhan_id",$fenzhan_id);
 		$this->assign("list",$list);
 		$this->assign("pages",$list["pages"]);
 		$this->assign("total",count($list));
@@ -779,6 +806,11 @@ class fenzhanAction extends AdminAuthAction
 	
 	public function jinji()
 	{
+		
+		$event_info=M("event")->where("event_id=".intval(get("event_id")))->find();
+		$this->assign('event_name',$event_info['event_name']);
+		$this->assign('event_id',$event_info['event_id']);
+		
 		$this->assign('fenzhan_on',1);
 		
 		$fenzhan=D('fenzhan_tbl')->fenzhan_list_pro(" and event_id='".get("event_id")."' "); 
@@ -795,8 +827,7 @@ class fenzhanAction extends AdminAuthAction
 		
 		if(post('next_fenzhan_id') && post('fenzhan_id') && post('jinji_par'))
 		{
-			print_r($_POST);
-			echo "<hr>";
+		
 			//del old
 			$ress=M()->query("delete from tbl_event_apply where fenzhan_id='".post('next_fenzhan_id')."' ");
 			$sql="insert tbl_event_apply(parent_id,event_id,fenzhan_id,field_uid,uid,event_user_id,event_apply_realname,event_apply_sex,event_apply_card,event_apply_chadian,event_apply_state,event_apply_addtime) select parent_id,event_id,".post('next_fenzhan_id').",field_uid,uid,event_user_id,event_apply_realname,event_apply_sex,event_apply_card,event_apply_chadian,event_apply_state,event_apply_addtime from tbl_event_apply where fenzhan_id ='".post('fenzhan_id')."' ";
@@ -811,23 +842,23 @@ class fenzhanAction extends AdminAuthAction
 				if($ju_par[0]['baofen_id'])
 				{
 					$up=M()->query("update tbl_event_apply set total_sum_ju='".$ju_par[0]['total_sum_ju']."' where event_apply_id='".$list[$i]['event_apply_id']."' ");
-					echo "update tbl_event_apply set total_sum_ju='".$ju_par[0]['total_sum_ju']."' where event_apply_id='".$list[$i]['event_apply_id']."' ";
-					echo "<hr>";
+					//echo "update tbl_event_apply set total_sum_ju='".$ju_par[0]['total_sum_ju']."' where event_apply_id='".$list[$i]['event_apply_id']."' ";
+					//echo "<hr>";
 				}
 				else
 				{
 					$up=M()->query("delete from tbl_event_apply where event_apply_id='".$list[$i]['event_apply_id']."' ");
-					echo "delete from tbl_event_apply where event_apply_id='".$list[$i]['event_apply_id']."' ";
-					echo "<hr>";
+					//echo "delete from tbl_event_apply where event_apply_id='".$list[$i]['event_apply_id']."' ";
+					//echo "<hr>";
 				}
 				
 			}
 			
-			/*
+			
 			$fenzhan_info=M()->query("select fenzhan_id,fenzhan_lun from tbl_fenzhan where fenzhan_id='".post('next_fenzhan_id')."' ");
-			$sql="insert tbl_event_apply(parent_id,event_id,fenzhan_id,field_uid,uid,event_user_id,event_apply_realname,event_apply_sex,event_apply_card,zong_score,total_sum_ju,addtime,dateline,source,lun,status ) select uid,event_user_id,realname,event_id,sid,par,".post('next_fenzhan_id').",field_id,fenzu_id,zong_score,total_sum_ju,addtime,dateline,source,".$fenzhan_info[0]['fenzhan_lun'].",0 from tbl_baofen where total_sum_ju<='".post('jinji_par')."' and fenzhan_id='".post('fenzhan_id')."' and status>=0 ;";
-			*/
-			$ress=M()->query("update tbl_baofen set status='-4' where total_sum_ju>'".post('jinji_par')."' and fenzhan_id='".post('fenzhan_id')."' and status>=0 ");
+			$up=M()->query("insert tbl_baofen(uid,event_user_id,realname,event_id,sid,par,fenzhan_id,field_id,fenzu_id,zong_score,total_sum_ju,addtime,dateline,source,lun,status ) select uid,event_user_id,realname,event_id,sid,par,".post('next_fenzhan_id').",field_id,fenzu_id,zong_score,total_sum_ju,addtime,dateline,source,".$fenzhan_info[0]['fenzhan_lun'].",0 from tbl_baofen where total_sum_ju<='".post('jinji_par')."' and fenzhan_id='".post('fenzhan_id')."' and status>=0 ");
+			
+			$ress=M()->query("update tbl_baofen set status='-1' where total_sum_ju>'".post('jinji_par')."' and fenzhan_id='".post('fenzhan_id')."' and status>=0 ");
 			
 			$this->success("处理成功",U('admin/fenzhan/fenzhan',array('event_id'=>post('event_id'))));
 			

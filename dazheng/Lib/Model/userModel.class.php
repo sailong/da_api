@@ -9,7 +9,7 @@
 class userModel extends Model{
 
 	//list and page
-	function user_list_pro($bigwhere="", $page_size=20, $sort=" user_addtime desc ") 
+	function user_list_pro($bigwhere="", $page_size=20, $sort=" pre_common_member.uid desc ") 
 	{
 		$page = intval(get("p"))?get("p"):1;
 
@@ -17,23 +17,33 @@ class userModel extends Model{
 
 		if(get("starttime")!="")
 		{
-			$where .=" and user_addtime>".strtotime(get("starttime"))." ";
+			$where .=" and pre_common_member.regdate>=".strtotime(get("starttime"))." ";
+		}
+		if(get("k")!="")
+		{
+			$where .=" and pre_common_member_profile.realname like '%".get("k")."%' ";
+		}if(get("mobile")!="")
+		{$m=get("mobile");
+			$where .=" and pre_common_member_profile.mobile = '$m' ";
 		}
 		if(get("endtime")!="")
 		{
-			$where .=" and user_addtime<".strtotime(get("endtime"))." ";
+			$endtime=strtotime(get("endtime"))+24*3600;;
+			$where .=" and pre_common_member.regdate<=$endtime ";
 		}
 
-		$data["item"]=M("user")->where($where.$bigwhere)->order($sort)->page($page.",".$page_size)->select();
-		for($i=0; $i<count($data["item"]); $i++)
-		{
-			if($data["item"][$i]["user_id"]!="")
-			{
-				$user=M()->query("select uname from ".C("db_prefix")."user where  uid='".$data["item"][$i]["user_id"]."' ");
-				$data["item"][$i]["uname"]=$user[0]["uname"];
-			}
-		}
-		$data["total"] = M("user")->where($where.$bigwhere)->count();
+ //联表查询信息
+		$db = M( "common_member","pre_" );
+		$fix ="pre_";
+		$table = $fix."common_member";
+		$table2 = $fix."common_member_profile";
+		 $data["item"] = $db -> field( "$table.*,$table2.*,$table.regdate as regdate" ) ->
+         join( "$table2 on $table.uid=$table2.uid" ) ->
+         where($where.$bigwhere)->order($sort)->page($page.",".$page_size)->select(); 
+		 //print_r($db -> field()); 
+		$data["total"] = $db -> field( "$table.*,$table2.*,$table.regdate as regdate" ) ->
+         join( "$table2 on $table.uid=$table2.uid" ) ->
+         where($where.$bigwhere)->count();
 		
 		import ("@.ORG.Page");
 		$page = new page ($data["total"], $page_size );
@@ -44,13 +54,13 @@ class userModel extends Model{
 
 
 	//nopage select limit 
-	function user_select_pro($bigwhere="",$limit=999999, $sort=" user_addtime desc ") 
+	function user_select_pro($bigwhere="",$limit=999999, $sort=" regdate desc ") 
 	{
 		
 		$where = " 1 ";
 
-		$data["item"]=M("user")->where($where.$bigwhere)->order($sort)->limit($limit)->select();
-		$data["total"]=M("user")->where($where.$bigwhere)->count();
+		$data["item"]=M("common_member","pre_")->where($where.$bigwhere)->order($sort)->limit($limit)->select();
+		$data["total"]=M("common_member","pre_")->where($where.$bigwhere)->count();
 
 		return $data;
 	}

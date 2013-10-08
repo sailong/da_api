@@ -51,13 +51,11 @@ class eventAction extends field_publicAction
 			$data["event_left"]=post("event_left");
 			$data["event_left_flag"]=post("event_left_flag").time();
 			$data["event_left_intro"]=post("event_left_intro");
-			//$data["event_left_pic"]=post("event_left_pic");
+			$data["event_left_pic"]=post("event_left_pic");
 			$data["event_right"]=post("event_right");
 			$data["event_right_flag"]=post("event_right_flag").time();
 			$data["event_right_intro"]=post("event_right_intro");
-			
-			
-			//$data["event_right_pic"]=post("event_right_pic");
+			$data["event_right_pic"]=post("event_right_pic");
 			
 			if($_FILES["event_logo"]["error"]==0 || $_FILES["event_timepic"]["error"]==0 || $_FILES["event_zhutui_pic"]["error"]==0 || $_FILES["event_left_pic"]["error"]==0 || $_FILES["event_right_pic"]["error"]==0)
 			{

@@ -13,20 +13,21 @@
   <div class="logo lf"><a href="/default.php?g=admin" ><span class="invisible">内容管理系统</span></a></div>
   <div class="rt">
     <div class="tab_style white cut_line text-r">
-		<!--
+	<!--
 		<a href="javascript:;" onclick="lock_screen()"><img src="/skin/admin/images/lockscreen.png"> 锁屏</a><span>|</span>
 		-->
-		您好！<php> echo $_SESSION['admin_name'];</php>  [<php> echo get_role_name($_SESSION['admin_role_id']);</php>]<span>|</span><a href="?g=admin&m=public&a=logout">[退出]</a>
 		<a href="/" target="_blank"><img src="/skin/admin/images/lockscreen.png"> 返回首页</a>
 	</div>
     <div class="style_but"></div>
   </div>
   <div class="col-auto" style="overflow: visible">
-    
-
+    <div class="log white cut_line">您好！<php> echo $_SESSION['admin_name'];</php>  [<php> echo get_role_name($_SESSION['admin_role_id']);</php>]<span>|</span><a href="?g=admin&m=public&a=logout">[退出]</a>
+	<!--
+	<span>|</span> <a href="" target="_blank" id="site_homepage">站点首页</a><span>|</span> <a href="?m=member" target="_blank">会员中心</a>
+	-->
+</div>
     <ul class="nav white" id="top_menu">
-	
-		<li id="_M0" class="on top_menu"><a href="javascript:_M(0,'{:U('admin/index/welcome')}');" hidefocus="true" style="outline:none;">常用操作</a></li>
+		<li id="_M0" class="on top_menu"><a href="javascript:_M(0,'{:U('admin/index/welcome')}');" hidefocus="true" style="outline:none;">首页</a></li>
 	<volist id="m" name="menu">
       <li id="_M{$m.admin_menu_id}" class="top_menu"><a href="javascript:_M({$m.admin_menu_id},'{$m.admin_menu_url}');" hidefocus="true" style="outline:none;">{$m.admin_menu_name}</a></li>
 	</volist>
@@ -39,29 +40,34 @@
 <div id="content">
   <div class="col-left left_menu">
     <div id="leftMain"> </div>
-  </div>
-  <div class="col-1 lf cat-menu" id="display_center_id" style="display:none" height="100%" >
+    <a href="javascript:;" id="openClose" style="outline-style: none; outline-color: invert; outline-width: medium;" hideFocus="hidefocus" class="open" title="展开与关闭"><span class="hidden">展开</span></a> </div>
+  <div class="col-1 lf cat-menu" id="display_center_id" style="display:none" height="100%">
     <div class="content">
       <iframe name="center_frame" id="center_frame" src="{:U('admin/index/load_left_menu')}" frameborder="false" scrolling="auto" style="border:none" width="100%" height="auto" allowtransparency="true"></iframe>
     </div>
   </div>
   <div class="col-auto mr8">
-    <!--
-	<div class="crumbs">
-      <div class="shortcut cu-span">
+    <div class="crumbs">
+      <div class="shortcut cu-span"> 
+	  <!--
 		<a href="#" target="right"><span>生成首页</span></a> 
 		<a href="?m=admin&c=cache_all&a=init" target="right"><span>更新缓存</span></a> 
 		<a href="#"><span>后台地图</span></a>
-		</div>
-    </div>
-	-->
+		-->
+	</div>
+      当前位置：<span id="current_pos"></span></div>
     <div class="col-1">
       <div class="content" style="position:relative; overflow:hidden">
-			<frameset rows="100" frameborder="no" border="0" framespacing="0">
-			<iframe name="right" id="rightMain" src="{:U('admin/index/welcome')}" frameborder="false" scrolling="auto" style="overflow-x:hidden; border:none; margin-bottom:30px" width="100%" height="auto" allowtransparency="true">
+	  <frameset rows="100" frameborder="no" border="0" framespacing="0">
+			<iframe name="right" id="rightMain" src="{:U('admin/index/welcome')}" frameborder="false" scrolling="auto" style="overflow-x:hidden;border:none; margin-bottom:30px" width="100%" height="auto" allowtransparency="true">
 			</iframe>
 		</frameset>
-
+        <div class="fav-nav">
+          <div id="panellist"></div>
+		  <!--
+          <div id="paneladd"><a class="panel-add" href="javascript:add_panel();"><em>添加</em></a></div>
+		  -->
+        </div>
       </div>
     </div>
   </div>
@@ -88,9 +94,8 @@ $(window).resize(function(){
 		
 	}
 });
-window.onresize = function()
-{
-	var heights = document.documentElement.clientHeight-90;document.getElementById('rightMain').height = heights;
+window.onresize = function(){
+	var heights = document.documentElement.clientHeight-150;document.getElementById('rightMain').height = heights;
 	var openClose = $("#rightMain").height()+39;
 	$('#center_frame').height(openClose+9);
 	$("#openClose").height(openClose+30);	

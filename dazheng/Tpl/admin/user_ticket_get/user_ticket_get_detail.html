@@ -17,53 +17,54 @@
 
 	<table class="add_table" border="0" cellspacing="0" cellpadding="0" >
 		<tbody>
-			<tr>
+		<tr>
 				<th>姓名：</th>
-				<td>{$data.family_name}{$data.name}</td>
-			</tr>
-			<tr>
-				<th>所属赛事：</th>
-				<td>{$event_info.event_name}</td>
-			</tr>
-			<!-- <tr>
-				<th>出生日期：</th>
-					<td>{$data.year}年{$data.month}月{$data.day}日</td>
-			</tr> -->
-			<tr>
-				<th>手机号码：</th>
-				<td>{$data.phone}</td>
-			</tr>
-			<tr>
-				<th>地址：</th>
-				<td>{$data.province}{$data.city}{$data.address}</td>
-			</tr>
-			<tr>
-				<th>购票信息：</th>
-				<td>{$data.order_detail}</td>
-			</tr>
-			<tr>
-				<th>审核状态：</th>
-				<td>
-					<php>
-					switch($data['check_status']){
-						case 0:
-							echo '待审核';
-							break;
-						case 1:
-							echo '审核通过';
-							break;
-						case 2:
-							echo '审核不通过';
-							break;
-					}
-					</php>
-				</td>
-			</tr>
-			<tr>
-				<th>添加时间：</th>
-				<td>{$data.bwm_addtime|format_to_time}</td>
-			</tr>
-			
+						<td>{$data.family_name}{$data.name}</td>
+				</tr>
+				<tr>
+					<th>所属赛事：</th>
+						<td>{$event_info.event_name}</td>
+				</tr>
+				<!-- <tr>
+					<th>出生日期：</th>
+						<td>{$data.year}年{$data.month}月{$data.day}日</td>
+				</tr> -->
+				<tr>
+					<th>手机号码：</th>
+						<td>{$data.phone}</td>
+				</tr>
+				<tr>
+					<th>地址：</th>
+						<td>{$data.province}{$data.city}{$data.address}</td>
+				</tr>
+				<tr>
+					<th>购票信息：</th>
+					<td>{$data.order_detail}</td>
+				</tr>
+				<tr>
+					<th>审核状态：</th>
+						<td>
+						<php>
+						switch($data['check_status']){
+							case 0:
+								echo '待审核';
+								break;
+							case 1:
+								echo '审核通过';
+								break;
+							case 2:
+								echo '审核不通过';
+								break;
+						}
+						</php>
+						</td>
+				</tr>
+				<tr>
+					<th>添加时间：</th>
+					<td>{$data.bwm_addtime|format_to_time}</td>
+					
+				</tr>
+				
 		</tbody>
 		<tfoot>
 			<tr>

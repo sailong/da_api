@@ -34,9 +34,9 @@
   <div class="Toolbar_inbox">
   	<div class="page right">{$pages}</div>
 
-	<a href="{:U('admin/event_user/event_user_add',array('event_id'=>get('event_id')))}" class="btn_a"><span>添加赛事用户</span></a>
+	<a href="{:U('admin/event_user/event_user_add',array('event_id'=>get('event_id'),'event_user_parent_id'=>0))}" class="btn_a"><span>添加赛事用户</span></a>
 	<a href="javascript:void(0);" class="btn_a"  onclick="mod_delete_batch('{:U('admin/event_user/event_user_delete_action')}','mod_table');"><span>批量删除</span></a>
-	<a href="javascript:void(0);" class="btn_a"  onclick="mod_batch_dialog('{:U('admin/event_user/batch_apply',array('event_id'=>get('event_id')))}','mod_table','批量添加报名');"><span>批量添加报名</span></a>
+	<a href="javascript:void(0);" style="color:red;" class="btn_a"  onclick="mod_batch_dialog('{:U('admin/event_user/batch_apply',array('event_id'=>get('event_id')))}','mod_table','批量导入到赛事报名');"><span>批量导入到赛事报名</span></a>
 	
 
 	<div class="clear"></div>
@@ -49,35 +49,62 @@
 			<input type="checkbox" id="checkbox_handle" onclick="select_all(this,'mod_table','checkbox')" value="0">
 			<label for="checkbox"></label>
 		</th>
-		<th class="line_l">所属赛事</th>
+		<th class="line_l">编号</th>
 		<th class="line_l">所属用户</th>
+		<th class="line_l">队别</th>
 		<th class="line_l">姓名</th>
 		<th class="line_l">姓别</th>
 		<th class="line_l">证件类型</th>
 		<th class="line_l">证件号码</th>
 		<th class="line_l">差点</th>
+		<!--
 		<th class="line_l">状态</th>
+		-->
 		<th class="line_l">添加时间</th>
 		<th class="line_l">操作</th>
 	</tr>
 	<volist id="vo" name="list">
 	<tr overstyle="on"  id=ids_{$vo["event_user_id"]}>
 		<td><input type="checkbox" name="checkbox" onclick="select_one(this)" value="{$vo.event_user_id}" ></td>
-		<td>{$vo.event_id}</th>
+		<td>{$vo.event_user_id}</th>
 			<td><a href="{:U('admin/event_user/event_user_detail', array('event_user_id'=>$vo['event_user_id']))}">{$vo.uid}</a></td>
+			<td>{$vo.event_user_team}</td>
 			<td>{$vo.event_user_realname}</td>
 			<td>{$vo.event_user_sex}</td>
 			<td>{$vo.event_user_card_type}</td>
 			<td>{$vo.event_user_card}</td>
 			<td>{$vo.event_user_chadian}</td>
+			<!--
 			<td>{$vo.event_user_state}</td>
+			-->
 			<td>{$vo.event_user_addtime|format_to_time}</td>
-			
 		<td>
+			<a href="{:U('admin/event_user/event_user_add', array('event_user_parent_id'=>$vo['event_user_id'],'event_user_team'=>$vo['event_user_team'],'event_id'=>$vo['event_id']))}">添加下级</a> | 
 			<a href="{:U('admin/event_user/event_user_edit', array('event_user_id'=>$vo['event_user_id']))}">修改</a> | 
 			<a href="javascript:void(0);" onclick="mod_delete_one('{:U('admin/event_user/event_user_delete_action')}','{$vo['event_user_id']}');">删除</a>
 		</td>
 	</tr>
+		<volist name="vo['sub']" id="sub">
+		<tr overstyle="on"  id=ids_{$sub["event_user_id"]}>
+			<td><input type="checkbox" name="checkbox" onclick="select_one(this)" value="{$sub.event_user_id}" ></td>
+			<td>{$sub.event_user_id}</th>
+				<td><a href="{:U('admin/event_user/event_user_detail', array('event_user_id'=>$sub['event_user_id']))}">{$sub.uid}</a></td>
+				<td>{$vo.event_user_team}</td>
+				<td>&nbsp;&nbsp;&nbsp;&nbsp;|-- {$sub.event_user_realname}</td>
+				<td>{$sub.event_user_sex}</td>
+				<td>{$sub.event_user_card_type}</td>
+				<td>{$sub.event_user_card}</td>
+				<td>{$sub.event_user_chadian}</td>
+				<!--
+				<td>{$sub.event_user_state}</td>
+				-->
+				<td>{$sub.event_user_addtime|format_to_time}</td>
+			<td>
+				<a href="{:U('admin/event_user/event_user_edit', array('event_user_id'=>$sub['event_user_id']))}">修改</a> | 
+				<a href="javascript:subid(0);" onclick="mod_delete_one('{:U('admin/event_user/event_user_delete_action')}','{$sub['event_user_id']}');">删除</a>
+			</td>
+		</tr>
+		</volist>
 	</volist>
     </table>
 	  <php>}else{</php>
@@ -92,6 +119,8 @@
 
 	<a href="{:U('admin/event_user/event_user_add',array('event_id'=>get('event_id')))}" class="btn_a"><span>添加赛事用户</span></a>
 	<a href="javascript:void(0);" class="btn_a"  onclick="mod_delete_batch('{:U('admin/event_user/event_user_delete_action')}','mod_table');"><span>批量删除</span></a>
+	
+	<a href="javascript:void(0);" style="color:red;" class="btn_a"  onclick="mod_batch_dialog('{:U('admin/event_user/batch_apply',array('event_id'=>get('event_id')))}','mod_table','批量导入到赛事报名');"><span>批量导入到赛事报名</span></a>
 
 
 	<div class="clear"></div>

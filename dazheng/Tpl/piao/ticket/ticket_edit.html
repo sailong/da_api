@@ -58,15 +58,15 @@
 				</tr>
 				<tr>
 					<th>图片：</th>
-					<td><php>if($vo['ticket_pic']){</php><img src="{$vo['ticket_pic']}" style="max-width:300px;max-height:200px;"/><php>}</php><br/><input type="file" name="ticket_pic" id="ticket_pic"  class="mod_input"></td>
+					<td><img src="/{$data.ticket_pic}" style="max-width:300px;max-height:200px;"/><br/><input type="file" name="ticket_pic" id="ticket_pic"  class="mod_input"></td>
 				</tr>
-	<tr>
+				<tr>
 					<th>开始时间：</th>
-					<td><input type="text" name="ticket_starttime" id="ticket_starttime" readonly class="mod_input_date" style="width:200px;"  onFocus="WdatePicker({startDate:'%y-%M-%d 07:00:00',dateFmt:'yyyy-MM-dd HH:mm:ss',alwaysUseStartDate:true})" value="{$data.ticket_starttime|format_to_fulltime}"  ></td>
+					<td><input type="text" name="ticket_starttime" id="ticket_starttime" readonly class="mod_input_date" style="width:200px;" value="{$data.ticket_starttime|format_to_time}" onFocus="WdatePicker({isShowClear:false,readOnly:true})" ></td>
 				</tr>
 				<tr>
 					<th>结束时间：</th>
-					<td><input type="text" name="ticket_endtime" id="ticket_endtime" readonly class="mod_input_date" style="width:200px;"  onFocus="WdatePicker({startDate:'%y-%M-%d 18:00:00',dateFmt:'yyyy-MM-dd HH:mm:ss',alwaysUseStartDate:true})"  value="{$data.ticket_endtime|format_to_fulltime}"  /> </td>
+					<td><input type="text" name="ticket_endtime" id="ticket_endtime" readonly class="mod_input_date" style="width:200px;" value="{$data.ticket_endtime|format_to_time}" onFocus="WdatePicker({isShowClear:false,readOnly:true})" ></td>
 				</tr>
 				<tr>
 					<th>类型：</th>

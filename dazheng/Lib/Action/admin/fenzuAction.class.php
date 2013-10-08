@@ -342,7 +342,11 @@ class fenzuAction extends AdminAuthAction
 	public function tiaopei()
 	{
 		 
-		 $data=M()->query("SELECT baofen_id,uid,realname,fenzu_id,tee,start_time   from tbl_baofen  where baofen_id='".get("baofen_id")."'");  
+		$event_info=M("event")->where("event_id=".intval(get("event_id")))->find();
+		$this->assign('event_name',$event_info['event_name']);
+		$this->assign('event_id',$event_info['event_id']);
+		
+		$data=M()->query("SELECT baofen_id,uid,realname,fenzu_id,tee,start_time   from tbl_baofen  where baofen_id='".get("baofen_id")."'");  
 		 
 		$this->assign("data",$data[0]); 
 		
@@ -353,11 +357,13 @@ class fenzuAction extends AdminAuthAction
 		$this->assign('fenzhan',$fenzhan['item']);
 		
 		
-		
+		$this->assign("event_id",intval(get("event_id")));
 		$this->assign("page_title","赛事分组");
     	$this->display();
 	}
-public function tiaopei_edit()
+	
+	
+	public function tiaopei_edit()
 	{
 		if(M()->autoCheckToken($_POST))
 		{
@@ -369,7 +375,6 @@ public function tiaopei_edit()
 			$data["tee"]=post("tee");
 			$data["event_id"]=post("event_id");
 			$data["fenzhan_id"]=post("fenzhan_id");
-			$data["lun"]=post("lun");  
 			$list=M("baofen")->save($data); 
 			$this->success("修改成功",U('admin/fenzhan/fenzhan_user',array('event_id'=>$data['event_id'],'fenzhan_id'=>$data['fenzhan_id'])));
 		}
@@ -390,6 +395,7 @@ public function tiaopei_edit()
 		
 	    $this->assign('start_time',time());
 		
+		$this->assign("event_id",intval(get("event_id")));
 		$this->assign("page_title","赛事分组");
     	$this->display();
 	}

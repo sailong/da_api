@@ -149,8 +149,6 @@ $.formValidator.initConfig({formID:"act_form",theme:'ArrowSolidBox',mode:'AutoTi
 	$("#ad_app").formValidator({onShow:"请输入广告分类",onFocus:"请输入广告分类",onCorrect:"输入正确"}).inputValidator({min:1,max:50,onError:"请输入广告分类"});
 	
 	$("#ad_file").formValidator({onShow:"请输入文件地址",onFocus:"请输入文件地址",onCorrect:"输入正确"}).inputValidator({min:1,max:300,onError:"请输入文件地址"});
-	$("#ad_url").formValidator({onShow:"请输入广告链接",onFocus:"请输入广告链接",onCorrect:"输入正确"}).inputValidator({min:1,max:200,onError:"请输入广告链接"});
-	
 	$.formValidator.reloadAutoTip();
 });
 

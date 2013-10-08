@@ -18,18 +18,17 @@
 				<input type="text" name="starttime" class="search_input_date" style="width:120px;" value="<php> echo  get('starttime');</php>" onFocus="WdatePicker({isShowClear:false,readOnly:true})"> 至 
 				<input type="text" name="endtime" class="search_input_date" style="width:120px;" value="<php> echo  get('endtime');</php>" onFocus="WdatePicker({isShowClear:false,readOnly:true})">
 			</td>
-			
-			<th>赛事：</th>
+			<!--
+			<th>类型：</th>
 			<td>
-				<select name="event_id" style="width:120px;"  class="search_select">
+				<select name="course_type" style="width:120px;"  class="search_select">
 					<option value="">请选择</option>
-					<volist id="vo" name="event_select">
-					<option value="{$vo.event_id}">{$vo.event_name}</option>
-					</volist>
+					<option value="1">课件课程</option>
+					<option value="2">辅导课程</option>
 				</select>
-				<script>set_select_value(document.search_form.event_id,"<php> echo  get("event_id");</php>");</script>
+				<script>set_select_value(document.search_form.course_type,"<php> echo  get("course_type");</php>");</script>
 			</td>
-			
+			-->
 			<td class="btn">
 				<input type="submit" value="搜索" class="btn_b" style="margin-right:8px;" >
 				<input type="button" value="查看全部" class="btn_b" onclick="javascript:location='{:U('field/ticket/ticket',array('state'=>get('state')))}';">
@@ -81,10 +80,10 @@
 		<td>{$vo.ticket_price}</td>
 		<td>{$vo.ticket_ren_num}</td>
 		<td>{$vo.ticket_num}</td>
-		<td><php>if($vo['ticket_pic']){</php><img src="{$vo['ticket_pic']}" style="max-height:60px; max-width:100px;"/><php>}</php></td>
-		<td>{$vo.ticket_starttime|format_to_fulltime}</td>
-		<td>{$vo.ticket_endtime|format_to_fulltime}</td>
-		<td><php>if($vo['ticket_type']=='BASE'){echo "普通";}if($vo['ticket_type']=='VIP'){echo $vo['ticket_type'];}</php></td>
+		<td><img src="{$vo.ticket_pic}" style="max-height:60px; max-width:100px;"/></td>
+		<td>{$vo.ticket_starttime|format_to_time}</td>
+		<td>{$vo.ticket_endtime|format_to_time}</td>
+		<td><php>if($vo['ticket_type']=='BASE'){echo "普遍";}if($vo['ticket_type']=='VIP'){echo "VIP";}</php></td>
 		<td>{$vo.ticket_times}</td>
 		<td>{$vo.ticket_content}</td>
 		<td>{$vo.ticket_addtime|format_to_time}</td>

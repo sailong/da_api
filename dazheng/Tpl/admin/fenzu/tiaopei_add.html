@@ -21,10 +21,10 @@
 	  <form method="post" id="act_form" name="act_form" action="{:U('admin/fenzu/tiaopei_addaction')}" enctype="multipart/form-data">
 	<table class="add_table" border="0" cellspacing="0" cellpadding="0" >
 		<tbody>
-				<tr>
+				<!-- <tr>
 					<th>用户ID ：</th>
 					<td><input type="text" name="uid" id="uid" class="mod_input2" style="width:200px;"  value=""  onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')"></td>
-				</tr>
+				</tr> -->
 				<tr>
 					<th>姓名：</th>
 					<td><input type="text" name="realname" id="realname" class="mod_input2" style="width:300px;"  value=""></td>
@@ -44,6 +44,7 @@
 						<input type="text" name="tee" id="tee" class="mod_input2" style="width:60px;" value="<php> echo $data['tee'];</php>" >
 					</td>
 				</tr>
+				
 				 
 		</tbody>
 		<tfoot>

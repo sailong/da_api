@@ -2,12 +2,20 @@
 <div class="so_main">
 
   <include file="../event/event_manage_header" />
-  
+ 
   <div class="tit_tab">
 	<ul>
 		<li><a <php> if(get("event_apply_state")=='0'){ echo " class=on ";}</php> href="{:U('admin/event_apply/event_apply',array('event_apply_state'=>0,'event_id'=>get('event_id')))}">待审核</a></li>
 		<li><a <php> if(get("event_apply_state")=='1'){ echo " class=on ";}</php> href="{:U('admin/event_apply/event_apply',array('event_apply_state'=>1,'event_id'=>get('event_id')))}">审核通过</a></li>
 		<li><a <php> if(get("event_apply_state")=='2'){ echo " class=on ";}</php> href="{:U('admin/event_apply/event_apply',array('event_apply_state'=>2,'event_id'=>get('event_id')))}">审核未通过</a></li>
+	</ul>
+   </div>
+    <div class="tit_tab">
+	<ul>
+		<li style="line-height:40px; padding-left:30px;">选择分站：</li>
+		<volist id="vo" name="fenzhan">
+		<li><a <php> if(get("fenzhan_id")==$vo['fenzhan_id'] || $fenzhan_id==$vo['fenzhan_id']){ echo " class=on ";}</php> href="{:U('admin/event_apply/event_apply',array('event_id'=>$event_id,'fenzhan_id'=>$vo['fenzhan_id'],'event_apply_state'=>get('event_apply_state')))}">{$vo['fenzhan_name']}</a></li>
+		</volist>
 	</ul>
    </div>
 
@@ -17,6 +25,8 @@
 		<input type="hidden" name="m" value="event_apply">
 		<input type="hidden" name="a" value="event_apply">
 		<input type="hidden" name="event_id" value="<php> echo  get('event_id');</php>">
+		<input type="hidden" name="event_apply_state" value="<php> echo  get('event_apply_state');</php>">
+		<input type="hidden" name="fenzhan_id" value="<php> echo  get('fenzhan_id');</php>">
 		<table border="0" cellspacing="0" cellpadding="0">
 			<th>报名时间：</th>
 			<td>
@@ -38,12 +48,14 @@
 
 	
 	
-	<a href="javascript:void(0);" class="btn_a"  onclick="mod_post_batch('{:U('admin/event_apply/event_apply_check_action')}','mod_table');"><span>审核通过</span></a>
-	<a href="javascript:void(0);" class="btn_a"  onclick="mod_post_batch('{:U('admin/event_apply/event_apply_no_check_action')}','mod_table');"><span>驳回申请</span></a>
+	<!-- <a href="javascript:void(0);" class="btn_a"  onclick="mod_post_batch('{:U('admin/event_apply/event_apply_check_action')}','mod_table');"><span>审核通过</span></a>
+	<a href="javascript:void(0);" class="btn_a"  onclick="mod_post_batch('{:U('admin/event_apply/event_apply_no_check_action')}','mod_table');"><span>驳回申请</span></a> -->
 	
 	<a href="javascript:void(0);" class="btn_a"  onclick="mod_delete_batch('{:U('admin/event_apply/event_apply_delete_action')}','mod_table');"><span>批量删除</span></a>
 	
-	<a href="{:U('admin/event_apply/event_apply_add')}" class="btn_a"><span>添加赛事报名</span></a>
+	<a href="javascript:void(0);" style="color:red;" class="btn_a"  onclick="mod_post_batch('{:U('admin/event_apply/batch_apply_to_baofen_action',array('event_id'=>get('event_id')))}','mod_table','批量导入到分组');"><span>批量导入到分组</span></a>
+	
+	<!-- <a href="{:U('admin/event_apply/event_apply_add')}" class="btn_a"><span>添加赛事报名</span></a> -->
 
 	<div class="clear"></div>
   </div>
@@ -56,9 +68,10 @@
 			<label for="checkbox"></label>
 		</th>
 		<th class="line_l">编号</th>
-		<th class="line_l">赛事</th>
+		<!-- <th class="line_l">赛事</th> -->
 		<th class="line_l">分站</th>
 		<th class="line_l">报名人</th>
+		<th class="line_l">队别</th>
 		<th class="line_l">姓名</th>
 		<th class="line_l">姓别</th>
 		<th class="line_l">身份证号</th>
@@ -67,13 +80,14 @@
 		<th class="line_l">报名时间</th>
 		<th class="line_l">操作</th>
 	</tr>
-	<volist id="vo" name="list">
+	<volist id="vo" name="list1">
 	<tr overstyle="on"  id=ids_{$vo["event_apply_id"]}>
 			<td><input type="checkbox" name="checkbox" onclick="select_one(this)" value="{$vo.event_apply_id}" ></td>
 			<td>{$vo.event_apply_id}</th>
-			<td>{$vo.event_name}({$vo.event_id})</th>
-			<td>{$vo.fenzhan_name}({$vo.fenzhan_id})</th>
+			<!-- <td>{$vo.event_name}({$vo.event_id})</th> -->
+			<td>{$vo.fenzhan_name}</th>
 			<td>{$vo.uid}</td>
+			<td>{$vo.event_user_team}</td>
 			<td>{$vo.event_apply_realname}</td>
 			<td>{$vo.event_apply_sex}</td>
 			<td>{$vo.event_apply_card}</td>
@@ -81,10 +95,32 @@
 			<td><php>if($vo['event_apply_state']==0){ echo '待审核';}if($vo['event_apply_state']==1){ echo '审核通过';}if($vo['event_apply_state']==2){ echo '审核未通过';}</php></td>
 			<td>{$vo.event_apply_addtime|format_to_time}</td>
 		<td>
-			<a href="{:U('admin/event_apply/event_apply_edit', array('event_apply_id'=>$vo['event_apply_id']))})">修改</a> | 
+			<a href="{:U('admin/event_apply/event_apply_edit', array('event_apply_id'=>$vo['event_apply_id'],'event_apply_id'=>$vo['event_apply_id'],'fenzhan_id'=>$vo['fenzhan_id'],'event_apply_state'=>get('event_apply_state')))}">修改</a> |  
 			<a href="javascript:void(0);" onclick="mod_delete_one('{:U('admin/event_apply/event_apply_delete_action')}','{$vo['event_apply_id']}');">删除</a>
 		</td>
 	</tr>
+	
+	<volist id="vo1" name="vo['child_list']">
+	<tr overstyle="on"  id=ids_{$vo1["event_apply_id"]}>
+			<td><input type="checkbox" name="checkbox" onclick="select_one(this)" value="{$vo1.event_apply_id}" ></td>
+			<td>{$vo1.event_apply_id}</th>
+			<!-- <td>{$vo1.event_name}({$vo.event_id})</th> -->
+			<td>{$vo1.fenzhan_name}</th>
+			<td>{$vo1.uid}</td>
+			<td>{$vo1.event_user_team}</td>
+			<td>&nbsp;&nbsp;&nbsp;&nbsp;|--{$vo1.event_apply_realname}</td>
+			<td>{$vo1.event_apply_sex}</td>
+			<td>{$vo1.event_apply_card}</td>
+			<td>{$vo1.event_apply_chadian}</td>
+			<td><php>if($vo1['event_apply_state']==0){ echo '待审核';}if($vo1['event_apply_state']==1){ echo '审核通过';}if($vo1['event_apply_state']==2){ echo '审核未通过';}</php></td>
+			<td>{$vo1.event_apply_addtime|format_to_time}</td>
+		<td>
+			<a href="{:U('admin/event_apply/event_apply_edit', array('event_apply_id'=>$vo1['event_apply_id'],'fenzhan_id'=>$vo1['fenzhan_id'],'event_apply_state'=>get('event_apply_state')))}">修改</a> | 
+			<a href="javascript:void(0);" onclick="mod_delete_one('{:U('admin/event_apply/event_apply_delete_action')}','{$vo1['event_apply_id']}');">删除</a>
+		</td>
+	</tr>
+	</volist>
+	
 	</volist>
     </table>
 	  <php>}else{</php>
@@ -97,8 +133,8 @@
   <div class="Toolbar_inbox">
 	<div class="page right">{$pages}</div>
 
-	<a href="javascript:void(0);" class="btn_a"  onclick="mod_post_batch('{:U('admin/event_apply/event_apply_check_action')}','mod_table');"><span>审核通过</span></a>
-	<a href="javascript:void(0);" class="btn_a"  onclick="mod_post_batch('{:U('admin/event_apply/event_apply_no_check_action')}','mod_table');"><span>驳回申请</span></a>
+	<!-- <a href="javascript:void(0);" class="btn_a"  onclick="mod_post_batch('{:U('admin/event_apply/event_apply_check_action')}','mod_table');"><span>审核通过</span></a>
+	<a href="javascript:void(0);" class="btn_a"  onclick="mod_post_batch('{:U('admin/event_apply/event_apply_no_check_action')}','mod_table');"><span>驳回申请</span></a> -->
 	
 	<a href="javascript:void(0);" class="btn_a"  onclick="mod_delete_batch('{:U('admin/event_apply/event_apply_delete_action')}','mod_table');"><span>批量删除</span></a>
 

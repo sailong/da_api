@@ -74,7 +74,7 @@
                 <td height="30" style="width:50px;">{$v.realname}</td>
                 <volist id="d" name="dongs">
 				<php>
-				$cj=M()->query("select cave_".$d." from tbl_baofen where event_user_id='".$v['event_user_id']."' and fenzhan_id in(51,54,57,60) ");
+				$cj=M()->query("select cave_".$d." from tbl_baofen where event_user_id='".$v['event_user_id']."' $str");
 				$dong_cj=$cj[0]['cave_'.$d];
 				</php>
                 <td>
@@ -113,8 +113,7 @@
               </volist>
             </table>
 			<p>
-			参赛状态：-4:CUT  -2:WD   -1:DQ
-			</p>
+			参赛状态：-1:CUT  -2:WD   -3:RTD			   -4:DQ			</p>
           </DIV>
           <table width="250" cellpadding="0" cellspacing="0">
             <tr>

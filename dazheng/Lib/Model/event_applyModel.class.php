@@ -43,6 +43,8 @@ class event_applyModel extends Model{
 		}
 
 		$data["item"]=M("event_apply")->where($where.$bigwhere)->order($sort)->page($page.",".$page_size)->select();
+		/* echo '<pre>';
+		var_dump($data["item"]);die; */
 		for($i=0; $i<count($data["item"]); $i++)
 		{
 			if($data["item"][$i]["event_id"]!="")

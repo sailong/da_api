@@ -28,41 +28,49 @@ class publicAction extends Action
 
 	public function login_action()
 	{
-
-		if(post("username") && post("password") && post("field_uid"))
+		
+		if($_SESSION['verify']==md5(post("code")))
 		{
-			
-			$res=M()->query("select admin_id,field_uid,admin_name,admin_password from tbl_field_admin where field_uid='".post("field_uid")."' and admin_name='".post("username")."' ");
-			//print_r($res);
-			if($res[0]['admin_password']==md5(post("password")))
+		
+			if(post("username") && post("password") && post("field_uid"))
 			{
-				$field_info=M()->query("select realname from pre_common_member_profile where uid='".$res[0]['field_uid']."' ");
 				
-				$_SESSION['field_admin_id']=$res[0]['admin_id'];
-				$_SESSION['uid']=$res[0]['field_uid'];
-				$_SESSION['field_uid']=$res[0]['field_uid'];
-				$_SESSION['field_name']=$field_info[0]['realname'];
-				$_SESSION['realname']=$res[0]['admin_realname'];
-				$_SESSION['username']=$res[0]['admin_name'];
-				$_SESSION['email']=$res[0]['admin_email'];
 				
-				//print_r($_SESSION);
-				$this->success("登录成功",U('field/index/index'));
-				
+				$res=M()->query("select admin_id,field_uid,admin_name,admin_password from tbl_field_admin where field_uid='".post("field_uid")."' and admin_name='".post("username")."' ");
+				//print_r($res);
+				if($res[0]['admin_password']==md5(post("password")))
+				{
+					$field_info=M()->query("select realname from pre_common_member_profile where uid='".$res[0]['field_uid']."' ");
+					
+					$_SESSION['field_admin_id']=$res[0]['admin_id'];
+					$_SESSION['uid']=$res[0]['field_uid'];
+					$_SESSION['field_uid']=$res[0]['field_uid'];
+					$_SESSION['field_name']=$field_info[0]['realname'];
+					$_SESSION['realname']=$res[0]['admin_realname'];
+					$_SESSION['username']=$res[0]['admin_name'];
+					$_SESSION['email']=$res[0]['admin_email'];
+					
+					//print_r($_SESSION);
+					$this->success("登录成功",U('field/index/index'));
+					
+				}
+				else
+				{
+					//echo "用户名或密码错误，请重试";
+					$this->error("用户名或密码错误，请重试",U('field/public/login',array('field_uid'=>post('field_uid'))));
+				}
+				//echo "lsdjkfsdlfjsdlfksdf<hr>";
+			
 			}
 			else
 			{
-				//echo "用户名或密码错误，请重试";
-				$this->error("用户名或密码错误，请重试",U('field/public/login',array('field_uid'=>post('field_uid'))));
+				$this->error("必须输入 用户名密码",U('field/public/login',array('field_uid'=>post('field_uid'))));
 			}
-			//echo "lsdjkfsdlfjsdlfksdf<hr>";
-		
 		}
 		else
 		{
-			$this->error("必须输入 用户名密码",U('field/public/login',array('field_uid'=>post('field_uid'))));
+			$this->error("验证码错误，请修改后重试");
 		}
-	
 
 		
 	}

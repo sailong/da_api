@@ -17,7 +17,7 @@ class albumAction extends AdminAuthAction
 
 	public function album()
 	{
-		$list=D("album")->album_list_pro();
+		$list=D("album")->album_list_pro("",20," album_addtime desc ");
 
 		$this->assign("list",$list["item"]);
 		$this->assign("pages",$list["pages"]);

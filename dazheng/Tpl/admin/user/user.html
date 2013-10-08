@@ -5,27 +5,23 @@
   <include file="_tab" />
 
   <div class="search_box">
-		<form name="search_form" action="/index.php" method="get">
+		<form name="search_form"   method="get">
 		<input type="hidden" name="g" value="admin">
 		<input type="hidden" name="m" value="user">
 		<input type="hidden" name="a" value="user">
 
 		<table border="0" cellspacing="0" cellpadding="0">
-			<th>名称：</th>
+			<th>姓名：</th>
 			<td><input type="text" name="k" class="search_input" style="width:120px;" value="<php> echo  get('k');</php>"></td>
+            <th>手机：</th>
+			<td><input type="text" name="mobile" class="search_input" style="width:120px;" value="<php> echo  get('mobile');</php>"></td>
 			<th>开始时间：</th>
 			<td>
 				<input type="text" name="starttime" class="search_input_date" style="width:120px;" value="<php> echo  get('starttime');</php>" onFocus="WdatePicker({isShowClear:false,readOnly:true})"> 至 
 				<input type="text" name="endtime" class="search_input_date" style="width:120px;" value="<php> echo  get('endtime');</php>" onFocus="WdatePicker({isShowClear:false,readOnly:true})">
 			</td>
 			<th>类型：</th>
-			<td>
-				<select name="course_type" style="width:120px;"  class="search_select">
-					<option value="">请选择</option>
-					<option value="1">课件课程</option>
-					<option value="2">辅导课程</option>
-				</select>
-				<script>set_select_value(document.search_form.course_type,"<php> echo  get("course_type");</php>");</script>
+			<td><script>set_select_value(document.search_form.course_type,"<php> echo  get("course_type");</php>");</script>
 			</td>
 			<td class="btn">
 				<input type="submit" value="搜索" class="btn_b" style="margin-right:8px;" >
@@ -40,8 +36,6 @@
   	<div class="page right">{$pages}</div>
 
 	<a href="{:U('admin/user/user_add')}" class="btn_a"><span>添加用户</span></a>
-	<a href="javascript:void(0);" class="btn_a"  onclick="mod_delete_batch('{:U('admin/user/user_delete_action')}','mod_table');"><span>批量删除</span></a>
-
 	<div class="clear"></div>
   </div>
   <div class="list">
@@ -54,71 +48,29 @@
 		</th>
 		<th class="line_l">用户名</th>
 		<th class="line_l">姓名</th>
-		<th class="line_l">角色</th>
-		<th class="line_l">所属公司</th>
 		<th class="line_l">性别</th>
 		<th class="line_l">邮箱</th>
-		<th class="line_l">民族</th>
-		<th class="line_l">籍贯</th>
-		<th class="line_l">单位名称</th>
-		<th class="line_l">单位地址</th>
-		<th class="line_l">单位邮编</th>
-		<th class="line_l">联系地址</th>
-		<th class="line_l">邮编</th>
-		<th class="line_l">学历</th>
-		<th class="line_l">学位</th>
-		<th class="line_l">专业</th>
-		<th class="line_l">方向</th>
-		<th class="line_l">职务</th>
-		<th class="line_l">职称</th>
-		<th class="line_l">QQ</th>
-		<th class="line_l">联系电话</th>
 		<th class="line_l">手机号</th>
-		<th class="line_l">介绍</th>
-		<th class="line_l">上次登录时间</th>
-		<th class="line_l">上次登录IP</th>
 		<th class="line_l">添加时间</th>
 		<th class="line_l">操作</th>
 	</tr>
 	<volist id="vo" name="list">
-	<tr overstyle="on"  id=ids_{$vo["user_id"]}>
-		<td><input type="checkbox" name="checkbox" onclick="select_one(this)" value="{$vo.user_id}" ></td>
-		<td><a href="javascript:void(0);" onclick="mod_dialog('查看详细','{:U('admin/user/user_detail', array('user_id'=>$vo['user_id']))}');">{$vo.user_name}</a></th>
+	<tr overstyle="on"  id=ids_{$vo["uid"]}>
+		<td><input type="checkbox" name="checkbox" onclick="select_one(this)" value="{$vo.uid}" ></td>
+		<td><a href="javascript:void(0);" onclick="mod_dialog('查看详细','{:U('admin/user/user_detail', array('uid'=>$vo['uid']))}');">{$vo.username}</a></th>
 
-			<td>{$vo.user_realname}</td>
-			<td>{$vo.role_id}</td>
-			<td>{$vo.company_id}</td>
-			<td>{$vo.user_sex}</td>
-			<td>{$vo.user_email}</td>
-			<td>{$vo.user_nation}</td>
-			<td>{$vo.user_jiguan}</td>
-			<td>{$vo.user_company}</td>
-			<td>{$vo.user_company_address}</td>
-			<td>{$vo.user_company_post}</td>
-			<td>{$vo.user_address}</td>
-			<td>{$vo.user_post}</td>
-			<td>{$vo.user_xueli}</td>
-			<td>{$vo.user_xuewei}</td>
-			<td>{$vo.user_zhuanye}</td>
-			<td>{$vo.user_fangxiang}</td>
-			<td>{$vo.user_duty}</td>
-			<td>{$vo.user_zhicheng}</td>
-			<td>{$vo.user_qq}</td>
-			<td>{$vo.user_tel}</td>
-			<td>{$vo.user_mobile}</td>
-			<td>{$vo.user_content}</td>
-			<td>{$vo.user_lasttime|format_to_time}</td>
-			<td>{$vo.user_lastip}</td>
-			<td>{$vo.user_addtime|format_to_time}</td>
+			<td>{$vo.realname}</td>
+			<td> <php>if($vo['gender']=="1"){ echo " 男 ";} if($vo['gender']=="0"){ echo " 女 ";}</php></td>
+			<td>{$vo.email}</td>
+			<td>{$vo.mobile}</td>
+			<td>{$vo.regdate|format_to_time}</td>
 			
 		<td>
-			<a href="{:U('admin/user/user_edit', array('user_id'=>$vo['user_id']))}">修改</a> | 
-			<a href="javascript:void(0);" onclick="mod_delete_one('{:U('admin/user/user_delete_action')}','{$vo['user_id']}');">删除</a>
-		</td>
+		  <a href="{:U('admin/user/user_edit', array('uid'=>$vo['uid']))}">修改</a></td>
 	</tr>
 	</volist>
     </table>
-	  <php>}else{</php>
+<php>}else{</php>
 			<div class="no_data">
 				<img src="/skin/images/no_data.gif" align="absmiddle"> <span>没有用户... </span>
 			</div>
@@ -129,9 +81,6 @@
 	<div class="page right">{$pages}</div>
 
 	<a href="{:U('admin/user/user_add')}" class="btn_a"><span>添加用户</span></a>
-	<a href="javascript:void(0);" class="btn_a"  onclick="mod_delete_batch('{:U('admin/user/user_delete_action')}','mod_table');"><span>批量删除</span></a>
-
-
 	<div class="clear"></div>
   </div>
 </div>
