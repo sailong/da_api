@@ -14,7 +14,9 @@ if(!$android_url)
 }
 
 $ios_url=DB::result_first("select app_version_file from tbl_app_version where app_version_type='ios' and field_uid=1160 order by app_version_addtime desc limit 1 ");
-
+if(empty($ios_url)){
+$ios_url = "https://itunes.apple.com/us/app/nan-shan-qiu-hui/id687240067?ls=1&mt=8";
+}
 /*
 $userAgent = $_SERVER['HTTP_USER_AGENT'];
 if(strpos($userAgent,"iPhone") || strpos($userAgent,"iPad") || strpos($userAgent,"iPod") || strpos($userAgent,"iOS"))

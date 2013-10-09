@@ -46,6 +46,26 @@
 				</tr>
 				
 				<tr>
+					<th>队别：</th>
+					<td>{$data.event_user_team}</td>
+				</tr>
+				
+				<tr>
+					<th>上级：</th>
+					<td>
+						<select name="parent_id" id="parent_id">
+							<option value="">请选择</option>
+							<option value="0">一级</option>
+							<volist id="vo2" name="event_apply_list">
+							<option value="{$vo2.event_apply_id}">{$vo2.event_apply_realname}</option>
+							</volist>
+						</select>
+						<script>set_select_value(document.act_form.parent_id,'{$data.parent_id}');</script>
+					</td>
+				</tr>
+				
+				
+				<tr>
 					<th>报名人UID：</th>
 					<td><input type="text" name="uid" id="uid" class="mod_input2" style="width:66px;"  value="{$data.uid}" onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')"></td>
 				</tr>
@@ -89,12 +109,12 @@ $(document).ready(function(){
 $.formValidator.initConfig({formID:"act_form",theme:'ArrowSolidBox',mode:'AutoTip',onError:function(msg){msg_error(msg)},inIframe:true});
 
 	$("#event_id").formValidator({empty:true,onShow:"请输入所属赛事",onFocus:"请输入所属赛事",onCorrect:"输入正确"}).inputValidator({min:1,max:11,onError:"请输入所属赛事"});
-		$("#uid").formValidator({empty:true,onShow:"请输入报名人",onFocus:"请输入报名人",onCorrect:"输入正确"}).inputValidator({min:1,max:11,onError:"请输入报名人"});
-		$("#event_apply_realname").formValidator({empty:true,onShow:"请输入姓名",onFocus:"请输入姓名",onCorrect:"输入正确"}).inputValidator({min:1,max:50,onError:"请输入姓名"});
-		$("#event_apply_sex").formValidator({empty:true,onShow:"请输入姓别",onFocus:"请输入姓别",onCorrect:"输入正确"}).inputValidator({min:1,max:50,onError:"请输入姓别"});
-		$("#event_apply_card").formValidator({empty:true,onShow:"请输入身份证号",onFocus:"请输入身份证号",onCorrect:"输入正确"}).inputValidator({min:1,max:50,onError:"请输入身份证号"});
-		$("#event_apply_chadian").formValidator({empty:true,onShow:"请输入差点",onFocus:"请输入差点",onCorrect:"输入正确"}).inputValidator({min:1,max:50,onError:"请输入差点"});
-		$("#event_apply_state").formValidator({empty:true,onShow:"请输入状态",onFocus:"请输入状态",onCorrect:"输入正确"}).inputValidator({min:1,max:50,onError:"请输入状态"});
+	$("#uid").formValidator({empty:true,onShow:"请输入报名人",onFocus:"请输入报名人",onCorrect:"输入正确"}).inputValidator({min:1,max:11,onError:"请输入报名人"});
+	$("#event_apply_realname").formValidator({empty:true,onShow:"请输入姓名",onFocus:"请输入姓名",onCorrect:"输入正确"}).inputValidator({min:1,max:50,onError:"请输入姓名"});
+	$("#event_apply_sex").formValidator({empty:true,onShow:"请输入姓别",onFocus:"请输入姓别",onCorrect:"输入正确"}).inputValidator({min:1,max:50,onError:"请输入姓别"});
+	$("#event_apply_card").formValidator({empty:true,onShow:"请输入身份证号",onFocus:"请输入身份证号",onCorrect:"输入正确"}).inputValidator({min:1,max:50,onError:"请输入身份证号"});
+	$("#event_apply_chadian").formValidator({empty:true,onShow:"请输入差点",onFocus:"请输入差点",onCorrect:"输入正确"}).inputValidator({min:1,max:50,onError:"请输入差点"});
+	$("#event_apply_state").formValidator({empty:true,onShow:"请输入状态",onFocus:"请输入状态",onCorrect:"输入正确"}).inputValidator({min:1,max:50,onError:"请输入状态"});
 		
 
 	$.formValidator.reloadAutoTip();

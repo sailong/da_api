@@ -241,38 +241,71 @@ class ticketAction extends AdminAuthAction
 	}
 	public function ticket_tj()
 	{
-		$event_id_list = array(51,25);
+		$event_id_list = array(41,25);
 		
-		$start_date = $start_time = post('start_time');
-		if(empty($start_date)){
-			$start_date =  $start_time =  date('Y-m-d',time());
+		$start_date = $ss_start_time = post('start_time');
+		if(empty($ss_start_time)){
+			$start_date =  $ss_start_time =  date('Y-m-d',time());
 		}
-		$start_time = strtotime($start_time);
-		$end_date = $end_time = post('end_time');
-		if(empty($end_time)){
-			$end_date = $end_time = date('Y-m-d',time());
+		$ss_start_time = strtotime($ss_start_time);
+		$end_date = $ss_end_time = post('end_time');
+		if(empty($ss_end_time)){
+			$end_date = $ss_end_time = date('Y-m-d',time());
 		}
-		$end_time = intval(strtotime($end_time)) + 86400;
+		$ss_end_time = intval(strtotime($ss_end_time)) + 86400;
+		
+		
+		$start_time = strtotime(date('Y-m-d',time()));
+		$end_time = $start_time + 86400;
+		$yesterday_start_time = $start_time - 86400;
+		$yesterday_end_time = $end_time - 86400;
 		//echo $end_date,$start_date;
 		//宝马门票申请统计
+		//今天start
 		$sql = "SELECT count(id) as total FROM `tbl_user_ticket_bmw` where bwm_addtime<$end_time";// WHERE event_id=25and user_ticket_addtime>=$start_time and user_ticket_addtime<=$end_time
 		
 		$bm_total_rs = M()->query($sql); 
 		$bm_total_rs = $bm_total_rs[0];
 		
-		$bm_info['total'] = $bm_total_rs['total'];
+		$bm_info['today_total'] = $bm_total_rs['total'];
 		
 		
-		$today_date = date('Y-m-d',time());
-		$today_start = intval(strtotime($today_date));
-		$today_end = $today_start + 86400;
 		$sql = "SELECT count( DISTINCT `user_ticket_mobile` ) as total FROM `tbl_user_ticket` WHERE event_id=25 and user_ticket_addtime>$start_time and user_ticket_addtime<=$end_time";
 		//echo $sql;die;
 		$bm_today_rs = M()->query($sql);
 		$bm_today_rs = $bm_today_rs[0];
 		$bm_info['today'] = $bm_today_rs['total'];
+		//今天end
+		//昨天start
+		$sql = "SELECT count(id) as total FROM `tbl_user_ticket_bmw` where bwm_addtime<$yesterday_end_time";// WHERE event_id=25and user_ticket_addtime>=$start_time and user_ticket_addtime<=$end_time
 		
-		//华彬门票申请统计
+		$bm_total_rs = M()->query($sql); 
+		$bm_total_rs = $bm_total_rs[0];
+		
+		$bm_info['yesterday_total'] = $bm_total_rs['total'];
+		
+		
+		$sql = "SELECT count( DISTINCT `user_ticket_mobile` ) as total FROM `tbl_user_ticket` WHERE event_id=25 and user_ticket_addtime>$yesterday_start_time and user_ticket_addtime<=$yesterday_end_time";
+		//echo $sql;die;
+		$bm_today_rs = M()->query($sql);
+		$bm_today_rs = $bm_today_rs[0];
+		$bm_info['yesterday'] = $bm_today_rs['total'];
+		//昨天end
+		//搜索start
+		/* $sql = "SELECT count(id) as total FROM `tbl_user_ticket_bmw` where bwm_addtime<$yesterday_end_time";// WHERE event_id=25and user_ticket_addtime>=$start_time and user_ticket_addtime<=$end_time
+		
+		$bm_total_rs = M()->query($sql); 
+		$bm_total_rs = $bm_total_rs[0];
+		
+		$bm_info['yesterday_total'] = $bm_total_rs['total']; */
+		
+		$sql = "SELECT count(id) as total FROM `tbl_user_ticket_bmw` where bwm_addtime>$ss_start_time and bwm_addtime<=$ss_end_time";
+		//echo $sql;die;
+		$bm_today_rs = M()->query($sql);
+		$bm_today_rs = $bm_today_rs[0];
+		$bm_info['ss_total'] = $bm_today_rs['total'];
+		//搜索end
+		/* //华彬门票申请统计
 		$sql = "SELECT count( DISTINCT `user_ticket_imei` ) as total FROM `tbl_user_ticket` WHERE event_id=51 and user_ticket_addtime<$end_time";// and user_ticket_addtime>=$start_time and user_ticket_addtime<=$end_time
 		
 		$hb_total_rs = M()->query($sql); 
@@ -284,7 +317,41 @@ class ticketAction extends AdminAuthAction
 		$hb_today_rs = $hb_today_rs[0];
 		$hb_info['today'] = $hb_today_rs['total'];
 		
-		$tj_info['hb'] = $hb_info;
+		$tj_info['hb'] = $hb_info; */
+		//南山中国大师赛 门票申请统计
+		//今天start
+		$sql = "SELECT count( DISTINCT `user_ticket_imei` ) as total FROM `tbl_user_ticket` WHERE event_id=41 and user_ticket_addtime<$end_time";// and user_ticket_addtime>=$start_time and user_ticket_addtime<=$end_time
+		
+		$ns_total_rs = M()->query($sql); 
+		$ns_total_rs = $ns_total_rs[0];
+		$ns_info['today_total'] = $ns_total_rs['total'];
+		
+		$sql = "SELECT count( DISTINCT `user_ticket_imei` ) as total FROM `tbl_user_ticket` WHERE event_id=41 and user_ticket_addtime>=$start_time and user_ticket_addtime<=$end_time";
+		$ns_today_rs = M()->query($sql);
+		$ns_today_rs = $ns_today_rs[0];
+		$ns_info['today'] = $ns_today_rs['total'];
+		//今天end
+		//昨天start
+		
+		$sql = "SELECT count( DISTINCT `user_ticket_imei` ) as total FROM `tbl_user_ticket` WHERE event_id=41 and user_ticket_addtime<$yesterday_end_time";// and user_ticket_addtime>=$start_time and user_ticket_addtime<=$end_time
+		
+		$ns_total_rs = M()->query($sql); 
+		$ns_total_rs = $ns_total_rs[0];
+		$ns_info['yesterday_total'] = $ns_total_rs['total'];
+		
+		$sql = "SELECT count( DISTINCT `user_ticket_imei` ) as total FROM `tbl_user_ticket` WHERE event_id=41 and user_ticket_addtime>=$yesterday_start_time and user_ticket_addtime<=$yesterday_end_time";
+		$ns_today_rs = M()->query($sql);
+		$ns_today_rs = $ns_today_rs[0];
+		$ns_info['yesterday'] = $ns_today_rs['total'];
+		//昨天end
+		//搜索start
+		$sql = "SELECT count( DISTINCT `user_ticket_mobile` ) as total FROM `tbl_user_ticket` WHERE event_id=41 and user_ticket_addtime>$ss_start_time and user_ticket_addtime<=$ss_end_time";
+		//echo $sql;die;
+		$ns_today_rs = M()->query($sql);
+		$ns_today_rs = $ns_today_rs[0];
+		$ns_info['ss_total'] = $ns_today_rs['total'];
+		//搜索end
+		$tj_info['ns'] = $ns_info;
 		$tj_info['bm'] = $bm_info;
 		
 		echo '<script language="javascript" type="text/javascript" src="/skin/js/jquery-1.4.4.min.js"></script>
@@ -309,23 +376,26 @@ class ticketAction extends AdminAuthAction
 				$field_name = '华彬门票申请统计';
 			}elseif($key=='bm'){
 				$field_name = '宝马门票申请统计';
+			}elseif($key=='ns'){
+				$field_name = '南山中国大师赛门票申请统计';
 			}
 			echo '<table width="800" border="0" bgcolor="#cccccc">
 			  <tr>
 				<td colspan="3" style="line-height:50px; text-align:center; font-size:18px; font-weight:bold;" bgcolor="#FFFFFF">'.$field_name.'</td>
 			  </tr>
 			  <tr>
-				<td width="25%" rowspan="6" bgcolor="#FFFFFF" align="center">统计</td>
-				<td width="35%" bgcolor="#FFFFFF">&nbsp;</td>
-				<td bgcolor="#FFFFFF">&nbsp;</td>
+				<td width="25%" rowspan="0" bgcolor="#FFFFFF" align="center">查询统计</td>
+				<td colspan="2" bgcolor="#FFFFFF">'.$start_date.'至'.$end_date.'：'.$val['ss_total'].'人</td>
 			  </tr>
 			  <tr>
-				<td bgcolor="#FFFFFF">总数</td>
-				<td bgcolor="#FFFFFF">'.$val['total'].'人</td>
+				<td width="25%" rowspan="0" bgcolor="#FFFFFF" align="center">昨天</td>
+				<td bgcolor="#FFFFFF">当天：'.$val['yesterday'].'人</td>
+				<td bgcolor="#FFFFFF">总数：'.$val['yesterday_total'].'人</td>
 			  </tr>
 			  <tr>
-				<td bgcolor="#FFFFFF">'.$today_date.'(今天)</td>
-				<td bgcolor="#FFFFFF">'.$val['today'].' 人</td>
+				<td width="25%" rowspan="0" bgcolor="#FFFFFF" align="center">今天</td>
+				<td bgcolor="#FFFFFF">当天：'.$val['today'].'人</td>
+				<td bgcolor="#FFFFFF">总数：'.$val['today_total'].'人</td>
 			  </tr>
 			</table>';
 					

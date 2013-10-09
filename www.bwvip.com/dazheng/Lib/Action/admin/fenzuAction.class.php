@@ -357,7 +357,7 @@ class fenzuAction extends AdminAuthAction
 		$this->assign('fenzhan',$fenzhan['item']);
 		
 		
-		
+		$this->assign("event_id",intval(get("event_id")));
 		$this->assign("page_title","赛事分组");
     	$this->display();
 	}
@@ -395,6 +395,7 @@ class fenzuAction extends AdminAuthAction
 		
 	    $this->assign('start_time',time());
 		
+		$this->assign("event_id",intval(get("event_id")));
 		$this->assign("page_title","赛事分组");
     	$this->display();
 	}

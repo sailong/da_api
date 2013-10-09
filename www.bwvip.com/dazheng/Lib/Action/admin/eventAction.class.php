@@ -21,7 +21,7 @@ class eventAction extends AdminAuthAction
 			$sql=" and event_id in (".$_SESSION['event_ids'].") ";
 		}
 		
-		$list=D("event")->event_list_pro("  ".$sql,20," event_addtime desc ");
+		$list=D("event")->event_list_pro("  ".$sql);
 
 		$this->assign("list",$list["item"]);
 		$this->assign("pages",$list["pages"]);
@@ -50,8 +50,18 @@ class eventAction extends AdminAuthAction
 		if(M()->autoCheckToken($_POST))
 		{
 			$data["event_uid"]=post("event_uid");
-			$data["field_uid"]=0;
+			$data["field_uid"]=post("field_uid");;
 			$data["event_name"]=post("event_name");
+			$data["event_team_level"]=post("event_team_level");
+			
+			$data["event_type"]=post("event_type");
+			$data["event_left"]=post("event_left");
+			$data["event_left_flag"]=post("event_left_flag");
+			$data["event_left_intro"]=post("event_left_intro");
+			//$data["event_left_pic"]=post("event_left_pic");
+			$data["event_right"]=post("event_right");
+			$data["event_right_flag"]=post("event_right_flag");
+			$data["event_right_intro"]=post("event_right_intro");
 		
 			if($_FILES["event_logo"]["error"]==0 || $_FILES["event_timepic"]["error"]==0 || $_FILES["event_zhutui_pic"]["error"]==0)
 			{
@@ -159,10 +169,21 @@ class eventAction extends AdminAuthAction
 			$data["field_uid"]=post("field_uid");
 			$data["event_uid"]=post("event_uid");
 			$data["event_name"]=post("event_name");
-
-			if($_FILES["event_logo"]["error"]==0 || $_FILES["event_timepic"]["error"]==0 || $_FILES["event_zhutui_pic"]["error"]==0)
+			$data["event_type"]=post("event_type");
+			$data["event_team_level"]=post("event_team_level");
+			
+			$data["event_left"]=post("event_left");
+			$data["event_left_flag"]=post("event_left_flag");
+			$data["event_left_intro"]=post("event_left_intro");
+			//$data["event_left_pic"]=post("event_left_pic");
+			$data["event_right"]=post("event_right");
+			$data["event_right_flag"]=post("event_right_flag");
+			$data["event_right_intro"]=post("event_right_intro");
+			
+			if($_FILES["event_logo"]["error"]==0 || $_FILES["event_timepic"]["error"]==0 || $_FILES["event_zhutui_pic"]["error"]==0 || $_FILES["event_left_pic"]["error"]==0 || $_FILES["event_right_pic"]["error"]==0)
 			{
 				$uploadinfo=upload_file("upload/event/");
+				
 				foreach($uploadinfo as $key=>$val){
 					$uploadinfo[$val['up_name']] = $val;
 					unset($uploadinfo[$key]);
@@ -171,6 +192,7 @@ class eventAction extends AdminAuthAction
 				if(!empty($uploadinfo["event_logo"]))
 				{
 					$data["event_logo"]=$uploadinfo["event_logo"]["savepath"] . $uploadinfo["event_logo"]["savename"];
+					$data["event_logo_small"]=$data["event_logo"];
 				}
 
 				//event_timepic
@@ -194,9 +216,6 @@ class eventAction extends AdminAuthAction
 				}
 			
 			}
-
-			
-
 			
 			$data["event_starttime"]=strtotime(post("event_starttime"));
 			$data["event_endtime"]=strtotime(post("event_endtime"));
@@ -321,6 +340,12 @@ class eventAction extends AdminAuthAction
 			
 			$this->assign('event_name',$data['event_name']);
 			$this->assign('event_id',$data['event_id']);
+			
+			$fenzhan=D('fenzhan_tbl')->fenzhan_list_pro(" and event_id='".get("event_id")."' ");
+			//echo '<pre>';
+			
+			//var_dump($data);
+			$this->assign('fenzhan',$fenzhan['item']);
 
 			import("@.ORG.editor");  //导入类
 			$editor=new editor("400px","700px",$data['event_content'],"event_content");     //创建一个对象

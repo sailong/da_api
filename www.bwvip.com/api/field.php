@@ -227,7 +227,8 @@ function yanzheng_token($token)
 	$time=time()-strtotime(date("Y-m-d",time()));
 	if($time>1800 && $time<84600)
 	{
-		if($code<>md5(date("Ymd",time())."bwvip.com"))
+		//if($code<>md5(date("Ymd",time())."bwvip.com"))
+		if($code<>md5(date("Ymd",time())."bwvip.com") && $code<>md5(date("Ymd",(time()+86400))."bwvip.com") && $code<>md5(date("Ymd",(time()-86400))."bwvip.com"))
 		{
 			return false;
 		}

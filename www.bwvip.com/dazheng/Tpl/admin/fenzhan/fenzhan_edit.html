@@ -64,8 +64,18 @@
 				<tr>
 					<th>分站名称：</th>
 					<td><input type="text" name="fenzhan_name" id="fenzhan_name" class="mod_input2" style="width:300px;"  value="{$data.fenzhan_name}"></td>
-				</tr> 
-                
+				</tr>
+				<tr>
+					<th>分站规则：</th>
+					<td><select name='fenzhan_rule' id='fenzhan_rule'  >
+							<option value="0">请选择</option>
+							<option value="11">个人对抗</option>
+							<option value="42">4人2球</option>
+							<option value="44">4人4球</option>
+                        </select>
+						<script>set_select_value(document.act_form.fenzhan_rule,{$data.fenzhan_rule});</script>
+						<!-- <input type="text" name="fenzhan_rule" id="fenzhan_rule" class="mod_input2" style="width:300px;"  value="{$data.fenzhan_rule}"></td> -->
+				</tr>
                 <tr>
 					<th>所在球场：</th>
 					<td>{$data.field_id}
@@ -127,7 +137,7 @@
 				
 				<tr>
 					<th>时间表：</th>
-					<td><input type="file" name="timepic" id="timepic"  class="mod_input"></td>
+					<td><php>if($data['timepic']){</php><img src="/{$data.timepic}" style="max-height:100px; max-width:200px;"><br/><php>}</php><input type="file" name="timepic" id="timepic"  class="mod_input"></td>
 				</tr>
 				<tr>
 					<th>开始时间：</th>

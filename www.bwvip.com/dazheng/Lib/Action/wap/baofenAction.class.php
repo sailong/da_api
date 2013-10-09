@@ -548,6 +548,7 @@ class baofenAction extends wap_publicAction
 							{
 								$lun_4=0;
 							}
+							$total_ju_par4=$lun_info[0]['total_ju_par'];
 						}
 					
 					
@@ -567,6 +568,12 @@ class baofenAction extends wap_publicAction
 					if($total_ju_par3<>'')
 					{
 						$up_sql .=" ,total_ju_par3='".$total_ju_par3."' ";
+					}
+					
+					
+					if($total_ju_par4<>'')
+					{
+						$up_sql .=" ,total_ju_par4='".$total_ju_par4."' ";
 					}
 					
 					
@@ -1033,6 +1040,7 @@ class baofenAction extends wap_publicAction
 							{
 								$lun_4=0;
 							}
+							$total_ju_par4=$lun_info[0]['total_ju_par'];
 						}
 					
 					
@@ -1052,6 +1060,11 @@ class baofenAction extends wap_publicAction
 					if($total_ju_par3)
 					{
 						$up_sql .=" ,total_ju_par3='".$total_ju_par3."' ";
+					}
+					
+					if($total_ju_par4)
+					{
+						$up_sql .=" ,total_ju_par4='".$total_ju_par4."' ";
 					}
 					
 					

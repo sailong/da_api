@@ -9,6 +9,9 @@ $discuz->init();
 $android_url=DB::result_first("select app_version_file from tbl_app_version where app_version_type='android' and field_uid=3803491 order by app_version_addtime desc limit 1 ");
 $ios_url=DB::result_first("select app_version_file from tbl_app_version where app_version_type='ios' and field_uid=3803491 order by app_version_addtime desc limit 1 ");
 
+if(empty($ios_url)){
+$ios_url = "https://itunes.apple.com/us/app/hua-binlpga/id705699906?ls=1&mt=8";
+}
 /*
 $userAgent = $_SERVER['HTTP_USER_AGENT'];
 if(strpos($userAgent,"iPhone") || strpos($userAgent,"iPad") || strpos($userAgent,"iPod") || strpos($userAgent,"iOS"))
@@ -55,11 +58,11 @@ img{border:0;}
 <body>
 <table width="100%" height="650" border="0" cellspacing="0" cellpadding="0" style="background:url(images/pic1.png) center top no-repeat;">
   <tr>
-    <td align="center"  style="height:200px;"></td>
+    <td align="center"  style="height:400px;"></td>
   </tr>
-  <!--<tr>
+  <tr>
     <td align="center" style="height:120px;"><a href="<? echo $ios_url;?>" target="_blank"><img src="images/iphone.gif" alt="" width="379" height="103" /></a></td>
-  </tr>-->
+  </tr>
 
   <tr>
     <td align="center"><a href="<? echo $android_url;?>" target="_blank"><img src="images/android.gif" width="379" height="103" /></a></td>
