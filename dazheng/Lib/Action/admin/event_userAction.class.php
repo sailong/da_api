@@ -24,11 +24,11 @@ class event_userAction extends AdminAuthAction
 		{
 			$sql =" and event_id='".get('event_id')."'";
 		}
-		$list=D("event_user")->event_user_list_pro($sql,150," event_user_addtime desc ");
-$event_info=M("event")->where("event_id=".intval(get("event_id")))->find();
+		$list=D("event_user")->event_user_list_pro(" and event_user_parent_id=0 ".$sql,150," event_user_addtime desc ");
+		$event_info=M("event")->where("event_id=".intval(get("event_id")))->find();
 		$this->assign('event_name',$event_info['event_name']);
 		$this->assign('event_id',$event_info['event_id']);
-		
+		$this->assign('event_type',$event_info['event_type']);
 
 		$this->assign("list",$list["item"]);
 		$this->assign("pages",$list["pages"]);
@@ -47,6 +47,15 @@ $event_info=M("event")->where("event_id=".intval(get("event_id")))->find();
 		$event=D('event')->event_select_pro();
 		$this->assign('event_list',$event['item']);
 		
+		$event_user_list=D("event_user")->event_user_select_pro(" and event_id=".get("event_id")." and event_user_parent_id=0  ");
+		$this->assign("event_user_list",$event_user_list['item']);
+		
+		$event_info=M('event')->where("event_id=".get("event_id")." ")->field("event_left_flag,event_right_flag,event_type")->find();
+		$team_list[]=$event_info['event_left_flag'];
+		$team_list[]=$event_info['event_right_flag'];
+		
+		$this->assign("event_info",$event_info);
+		$this->assign("team_list",$team_list);
 		$this->assign("page_title","添加赛事用户");
     	$this->display();
 	}
@@ -64,6 +73,16 @@ $event_info=M("event")->where("event_id=".intval(get("event_id")))->find();
 			$data["event_user_card"]=post("event_user_card");
 			$data["event_user_chadian"]=post("event_user_chadian");
 			$data["event_user_state"]=1;
+			
+			if(post("event_user_team")!="")
+			{
+				$data["event_user_team"]=post("event_user_team");
+			}
+			if(post("event_user_parent_id")!="")
+			{
+				$data["event_user_parent_id"]=post("event_user_parent_id");
+			}
+			
 			$data["event_user_addtime"]=time();
 			
 			$list=M("event_user")->add($data);
@@ -84,10 +103,22 @@ $event_info=M("event")->where("event_id=".intval(get("event_id")))->find();
 			$data=M("event_user")->where("event_user_id=".intval(get("event_user_id")))->find();
 			$this->assign("data",$data);
 			
+			
+			
 			$event=D('event')->event_select_pro();
 			$this->assign('event_list',$event['item']);
-						
 			
+			
+			
+			$event_user_list=D("event_user")->event_user_select_pro(" and event_id=".$data["event_id"]." and event_user_parent_id=0  ");
+			$this->assign("event_user_list",$event_user_list['item']);
+			
+			$event_info=M('event')->where(" event_id=".$data["event_id"]." ")->field("event_left_flag,event_right_flag,event_type")->find();
+			$team_list[]=$event_info['event_left_flag'];
+			$team_list[]=$event_info['event_right_flag'];
+			
+			$this->assign("event_info",$event_info);
+			$this->assign("team_list",$team_list);
 			$this->assign("page_title","修改赛事用户");
 			$this->display();
 		}
@@ -112,6 +143,15 @@ $event_info=M("event")->where("event_id=".intval(get("event_id")))->find();
 			$data["event_user_chadian"]=post("event_user_chadian");
 			$data["event_user_state"]=post("event_user_state");
 			
+			if(post("event_user_team")!="")
+			{
+				$data["event_user_team"]=post("event_user_team");
+			}
+			if(post("event_user_parent_id")!="")
+			{
+				$data["event_user_parent_id"]=post("event_user_parent_id");
+			}
+
 			$list=M("event_user")->save($data);
 			$this->success("修改成功",U('admin/event_user/event_user',array('event_id'=>post('event_id'))));			
 		}
@@ -198,6 +238,7 @@ $event_info=M("event")->where("event_id=".intval(get("event_id")))->find();
 		if(post('event_id'))
 		{
 			$arr=explode(",",post('ids'));
+
 			for($i=0; $i<count($arr); $i++)
 			{
 				//获取报名信息
@@ -210,15 +251,20 @@ $event_info=M("event")->where("event_id=".intval(get("event_id")))->find();
 					
 					if(!$baoming_info[0]["event_apply_id"])
 					{
-					if($_SESSION['field_uid']==null){$field_uid=0;}
-					
-					
+						if($_SESSION['field_uid']==null)
+						{
+							$field_uid=0;
+						}
+						
+						
+						$data=array();
 						$data['parent_id']=0;
 						$data['event_id']=post('event_id');
 						$data['fenzhan_id']=post('fenzhan_id');
 						$data['field_uid']=$field_uid;
 						$data['uid']=$user_info['uid'];
 						$data['event_user_id']=$user_info['event_user_id'];
+						$data['event_user_team']=$user_info['event_user_team'];
 						$data['code_pic']=null;
 						$data['event_apply_realname']=$user_info['event_user_realname'];
 						$data['event_apply_sex']=$user_info['event_user_sex'];
@@ -226,7 +272,36 @@ $event_info=M("event")->where("event_id=".intval(get("event_id")))->find();
 						$data['event_apply_chadian']=$user_info['event_user_chadian'];
 						$data['event_apply_state']=1;
 						$data['event_apply_addtime']=time();
-						$res=M('event_apply')->add($data); 
+						$res=M('event_apply')->add($data);
+					
+					}
+					
+				}
+			}
+				
+				
+			//更新parent_id
+			for($i=0; $i<count($arr); $i++)
+			{
+				//获取报名信息
+				$event_user_id=$arr[$i];
+				$user_info=M('event_user')->where(" event_user_id='".$event_user_id."' ")->find();
+				if($arr[$i] && $user_info['event_user_id'])
+				{
+					
+					if($user_info['event_user_parent_id']>0)
+					{
+						$baoming_info_parent=M()->query("select event_apply_id from tbl_event_apply where event_user_id='".$user_info['event_user_parent_id']."' and fenzhan_id='".post('fenzhan_id')."' ");
+						
+						$baoming_info=M()->query("select event_apply_id from tbl_event_apply where event_user_id='".$event_user_id."' and fenzhan_id='".post('fenzhan_id')."' ");
+						
+						if($baoming_info[0]["event_apply_id"])
+						{
+							$data=array();
+							$data['event_apply_id']=$baoming_info[0]['event_apply_id'];
+							$data['parent_id']=$baoming_info_parent[0]['event_apply_id'];
+							$res=M('event_apply')->save($data);
+						}
 					}
 					
 				}

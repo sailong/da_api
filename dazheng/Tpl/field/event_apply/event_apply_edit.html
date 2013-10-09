@@ -17,7 +17,7 @@
 
 <form method="post" id="act_form" name="act_form" action="{:U('field/event_apply/event_apply_edit_action')}" enctype="multipart/form-data">
 	<table class="add_table" border="0" cellspacing="0" cellpadding="0" >
-		<tbody overstyle="on">
+		<tbody>
 				<!-- <tr>
 					<th>所属赛事：</th>
 					<td>
@@ -28,13 +28,12 @@
 							</volist>
 						</select>
 						<script>set_select_value(document.act_form.event_id,'{$data.event_id}');</script>
-						
 					</td>
 				</tr> -->
 
 				
 				<tr>
-					<th width="15%">所属分站：</th>
+					<th>所属分站：</th>
 					<td>
 						<select name="fenzhan_id" id="fenzhan_id">
 							<option value="">请选择</option>
@@ -43,92 +42,65 @@
 							</volist>
 						</select>
 						<script>set_select_value(document.act_form.fenzhan_id,'{$data.fenzhan_id}');</script>
-						（若无分站信息，可以到分站管理添加分站信息）
 					</td>
 				</tr>
-				<php>if($event_type == 'T'){</php>
-				<tr id="tuanti_name_id" style="display:none;">
-					<th>团体名称：</th>
-					<td>{$data.event_apply_realname}</td>
+				<php>if($event_info['event_type'] == 'T'){</php>
+				<tr>
+					<th>队别：</th>
+					<td>{$data.event_user_team}</td>
 				</tr>
-				<volist id="event_apply" name="event_apply_list">
-				<tr overstyle="on">
-					<td colspan="2">
-						<table class="add_table" border="0" cellspacing="0" cellpadding="0">
-							<tr style="display:none;">
-								<th width="15%">event_apply_id：</th>
-								<td><input type="hidden" name="event_apply_id[]" id="event_apply_id" class="mod_input2" value="{$event_apply.event_apply_id}"></td>
-							</tr>
-							<tr>
-								<th width="15%">报名人UID：</th>
-								<td><input type="text" name="uid[]" id="uid" class="mod_input2" value="0" onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')"></td>
-							</tr>
-							<tr>
-								<th width="15%">姓名：</th>
-								<td><input type="text" name="event_apply_realname[]" id="event_apply_realname" class="mod_input2" style="width:300px;float:left;"  value="{$event_apply.event_apply_realname}"><input type="button" id="delete_id" class="btn_b" event_apply_id="{$event_apply.event_apply_id}" value="删除队员" style="display:none;float:right;"/></td>
-							</tr>
-							 
-							<tr>
-								<th>性别{$event_apply['event_apply_sex']}：</th>
-								<td><input name="event_apply_sex[]" type="checkbox" value="男"  <php> if($event_apply['event_apply_sex']=='男'){echo "checked='checked'";} </php>/>男 <input name="event_apply_sex[]" type="checkbox" value="女" <php> if($event_apply['event_apply_sex']=='女'){echo "checked='checked'";} </php>/>女</td>
-							</tr>
-							<tr>
-								<th>身份证号：</th>
-								<td><input type="text" name="event_apply_card[]" id="event_apply_card" class="mod_input2" style="width:300px;"  value="{$event_apply.event_apply_card}"></td>
-							</tr>
-							<tr>
-								<th>差点：</th>
-								<td><input type="text" name="event_apply_chadian[]" id="event_apply_chadian" class="mod_input2" style="width:300px;"  value="{$event_apply.event_apply_chadian}"></td>
-							</tr>
-						</table>
+				
+				<tr>
+					<th>上级：</th>
+					<td>
+						<select name="parent_id" id="parent_id">
+							<option value="">请选择</option>
+							<option value="0">一级</option>
+							<volist id="vo2" name="event_apply_list">
+							<option value="{$vo2.event_apply_id}">{$vo2.event_apply_realname}</option>
+							</volist>
+						</select>
+						<script>set_select_value(document.act_form.parent_id,'{$data.parent_id}');</script>
 					</td>
 				</tr>
-				</volist>
-				<php>}else{</php>
+				<php>}</php>
+				
 				<tr>
 					<th>报名人UID：</th>
-					<td><input type="text" name="uid[]" id="uid" class="mod_input2" style="width:66px;"  value="{$data.uid}" onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')"></td>
+					<td><input type="text" name="uid" id="uid" class="mod_input2" style="width:66px;"  value="{$data.uid}" onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')"></td>
 				</tr>
 				<tr>
 					<th>姓名：</th>
-					<td><input type="text" name="event_apply_realname[]" id="event_apply_realname" class="mod_input2" style="width:300px;"  value="{$data.event_apply_realname}"></td>
+					<td><input type="text" name="event_apply_realname" id="event_apply_realname" class="mod_input2" style="width:300px;"  value="{$data.event_apply_realname}"></td>
 				</tr>
 				 
                 <tr>
 					<th>性别：</th>
-					<td><input name="event_apply_sex[]" type="checkbox" value="男"  <php> if($data['event_apply_sex']=='男'){echo "checked='checked'";} </php>/>男 <input name="event_apply_sex[]" type="checkbox" value="女" <php> if($data['event_apply_sex']=='女'){echo "checked='checked'";} </php>/>女</td>
+					<td><input name="event_apply_sex" type="radio" value="男"  <php> if($data['event_apply_sex']=='男'){echo "checked='checked'";} </php>/>男 <input name="event_apply_sex" type="radio" value="女" <php> if($data['event_apply_sex']=='女'){echo "checked='checked'";} </php>/>女</td>
 				</tr>
 				<tr>
 					<th>身份证号：</th>
-					<td><input type="text" name="event_apply_card[]" id="event_apply_card" class="mod_input2" style="width:300px;"  value="{$data.event_apply_card}"></td>
+					<td><input type="text" name="event_apply_card" id="event_apply_card" class="mod_input2" style="width:300px;"  value="{$data.event_apply_card}"></td>
 				</tr>
 				<tr>
 					<th>差点：</th>
-					<td><input type="text" name="event_apply_chadian[]" id="event_apply_chadian" class="mod_input2" style="width:300px;"  value="{$data.event_apply_chadian}"></td>
+					<td><input type="text" name="event_apply_chadian" id="event_apply_chadian" class="mod_input2" style="width:300px;"  value="{$data.event_apply_chadian}"></td>
 				</tr>
-				<php>}</php>
 				<!-- <tr>
 					<th>状态：</th>
 					<td><input type="text" name="event_apply_state" id="event_apply_state" class="mod_input2" style="width:300px;"  value="{$data.event_apply_state}"></td>
 				</tr> -->
-				<tr id="tr_end" style="display:none;">
-					<th>&nbsp;&nbsp;</th>
-					<td>&nbsp;&nbsp;</td>
-				</tr>
+				<input type="hidden" name="event_apply_state" id="event_apply_state" value="1">
+				
 		</tbody>
 		<tfoot>
 			<tr>
 				<th></th>
 				<td>
-					<input type="hidden" id="num" value="{$num}">
-					<input type="hidden" name="tuanti_event_apply_id" value="{$tuanti_event_apply_id}">
-					<input type="hidden" name="tuanti_flag" value="{$tuanti_flag}">
-					<input type="hidden" name="event_id" value="{$event_id}">
-					<input type="hidden" name="event_type" id="event_type" value="{$event_type}"/>
-					<input type="hidden" name="event_apply_state" id="event_apply_state" class="mod_input2" style="width:300px;" value="1" >
+					<input type="hidden" name="event_id" id="event_id" value="{$data.event_id}">
+					<input type="hidden" name="event_apply_id" value="{$data.event_apply_id}">
 					<input type="submit" class="btn_b" value="保存" style="margin-right:10px;"/>
-					<input type="button" class="btn_w" onclick="javascript:history.back(-1);" value="返回" style="margin-right:10px;"/>
-					<input type="button" class="btn_b" id="add_one_people" style="display:none;" value="添加队员" />
+					<input type="button" class="btn_w" onclick="javascript:history.back(-1);" value="返回" />
 				</td>
 		</tfoot>
 	</table><!--/add_table-->
@@ -136,107 +108,19 @@
 
 <script>
 $(document).ready(function(){
-var enent_type = $("#event_type").val();
-if(enent_type == 'T') {
-	$("#tuanti_name_id").show();
-	$("#add_one_people").show();
-};
-$("input[name='event_apply_sex[]']").live('click',function(){
-	var input_parent_obj = $(this).parents('tr:first');
-	$("input[name='event_apply_sex[]']",input_parent_obj).attr("checked",false);
-	$(this).attr("checked",true);
-});
-var num = $("#num").val();
-    num = parseInt(num);
-$("#add_one_people").click(function(){
-	add_one_people();
-	num = num+1;
-});
-$("#delete_id").live('click',function(){
-	var event_apply_id = $(this).attr("event_apply_id");
-	var table_obj = $(this).parents('table:first');
-	table_obj.parents('tr:first').remove();
-	num = num-1;
-	if(event_apply_id!="undefined"){
-		$.ajax({
-			type: 'GET',
-			url: "default.php?g=field&m=event_apply&a=event_apply_delete&event_apply_id="+event_apply_id,
-			dataType:'json',
-			success:function(data) {    
-				//if(data.msg =="true" ){    
-				//	// view("修改成功！");    
-				//	alert("修改成功！");    
-				//	window.location.reload();    
-				//}else{    
-				//	view(data.msg);    
-				//}    
-			 }
-		});
-	}
-	
-});
-$("tr[overstyle='on']").live("mouseenter",function(){
-		$("tr",$(this)).addClass("bg_hover");
-		if(num>1){
-			$("#delete_id",$(this)).show();
-		}
-});
-$("tr[overstyle='on']").live("mouseleave ",function(){
-		  
-		$("tr",$(this)).removeClass("bg_hover");
-		$("#delete_id",$(this)).hide();
-});
-/* $.formValidator.initConfig({formID:"act_form",theme:'ArrowSolidBox',mode:'AutoTip',onError:function(msg){msg_error(msg)},inIframe:true});
+$.formValidator.initConfig({formID:"act_form",theme:'ArrowSolidBox',mode:'AutoTip',onError:function(msg){msg_error(msg)},inIframe:true});
 
 	$("#event_id").formValidator({empty:true,onShow:"请输入所属赛事",onFocus:"请输入所属赛事",onCorrect:"输入正确"}).inputValidator({min:1,max:11,onError:"请输入所属赛事"});
-		$("#uid").formValidator({empty:true,onShow:"请输入报名人",onFocus:"请输入报名人",onCorrect:"输入正确"}).inputValidator({min:1,max:11,onError:"请输入报名人"});
-		$("#event_apply_realname").formValidator({empty:true,onShow:"请输入姓名",onFocus:"请输入姓名",onCorrect:"输入正确"}).inputValidator({min:1,max:50,onError:"请输入姓名"});
-		$("#event_apply_sex").formValidator({empty:true,onShow:"请输入姓别",onFocus:"请输入姓别",onCorrect:"输入正确"}).inputValidator({min:1,max:50,onError:"请输入姓别"});
-		$("#event_apply_card").formValidator({empty:true,onShow:"请输入身份证号",onFocus:"请输入身份证号",onCorrect:"输入正确"}).inputValidator({min:1,max:50,onError:"请输入身份证号"});
-		$("#event_apply_chadian").formValidator({empty:true,onShow:"请输入差点",onFocus:"请输入差点",onCorrect:"输入正确"}).inputValidator({min:1,max:50,onError:"请输入差点"});
-		$("#event_apply_state").formValidator({empty:true,onShow:"请输入状态",onFocus:"请输入状态",onCorrect:"输入正确"}).inputValidator({min:1,max:50,onError:"请输入状态"});
+	$("#uid").formValidator({empty:true,onShow:"请输入报名人",onFocus:"请输入报名人",onCorrect:"输入正确"}).inputValidator({min:1,max:11,onError:"请输入报名人"});
+	$("#event_apply_realname").formValidator({empty:true,onShow:"请输入姓名",onFocus:"请输入姓名",onCorrect:"输入正确"}).inputValidator({min:1,max:50,onError:"请输入姓名"});
+	$("#event_apply_sex").formValidator({empty:true,onShow:"请输入姓别",onFocus:"请输入姓别",onCorrect:"输入正确"}).inputValidator({min:1,max:50,onError:"请输入姓别"});
+	$("#event_apply_card").formValidator({empty:true,onShow:"请输入身份证号",onFocus:"请输入身份证号",onCorrect:"输入正确"}).inputValidator({min:1,max:50,onError:"请输入身份证号"});
+	$("#event_apply_chadian").formValidator({empty:true,onShow:"请输入差点",onFocus:"请输入差点",onCorrect:"输入正确"}).inputValidator({min:1,max:50,onError:"请输入差点"});
+	$("#event_apply_state").formValidator({empty:true,onShow:"请输入状态",onFocus:"请输入状态",onCorrect:"输入正确"}).inputValidator({min:1,max:50,onError:"请输入状态"});
 		
 
-	$.formValidator.reloadAutoTip(); */
+	$.formValidator.reloadAutoTip();
 });
-
-function add_one_people(num){
-	var str ='<tr overstyle="on"><td colspan="2"><table class="add_table" border="0" cellspacing="0" cellpadding="0">';
-	    str +='<tr style="display:none;">';
-		str +='         <th>event_apply_id：</th>';
-		str +='			<td>';
-		str +='<input type="hidden" name="event_apply_id[]" id="event_apply_id" class="mod_input2" style="width:66px;"  value="0">';
-		str +='		    </td>';	
-		str +='</tr>';
-		str +='<tr>';
-		str +='			<th>报名人UID：</th>';
-		str +='			<td><input type="text" name="uid[]" id="uid" class="mod_input2" style="width:66px;"  value="0"></td>';
-		str +='		</tr>';
-		str +='<tr>';
-		str +='			<th width="15%">姓名：</th>';
-		str +='				<td><input type="text" name="event_apply_realname[]" id="event_apply_realname" class="mod_input2" style="width:300px;float:left;"><input type="button" id="delete_id" class="btn_b" value="删除队员" style="display:none;float:right;"/></td>';
-		str +='			</tr>';
-		str +='			<tr>';
-		str +='				<th>性别：</th>';
-		str +='				<td><input name="event_apply_sex[]" type="checkbox" value="男" checked="checked" />男 <input name="event_apply_sex[]" type="checkbox" value="女" />女</td>';
-		str +='			</tr>';
-		str +='			<tr>';
-		str +='				<th>身份证号：</th>';
-		str +='				<td><input type="text" name="event_apply_card[]" id="event_apply_card" class="mod_input2" style="width:300px;" ></td>';
-		str +='			</tr>';
-		str +='			<tr>';
-		str +='				<th>差点：</th>';
-		str +='				<td><input type="text" name="event_apply_chadian[]" id="event_apply_chadian" class="mod_input2" style="width:300px;" ></td>';
-		str +='			</tr>';
-		str +='         <tr>';
-		str +='				<th>&nbsp;&nbsp;</th>';
-		str +='				<td>&nbsp;&nbsp;</td>';
-		str +='			</tr>';
-		str +='</table></td></tr>';
-		
-		
-		$("#tr_end").before($(str));
-}
 
 function reloadAutoTip()
 {

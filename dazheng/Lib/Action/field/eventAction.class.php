@@ -16,7 +16,15 @@ class eventAction extends field_publicAction
 
 	public function event()
 	{
-		$list=D("event")->event_list_pro(" and field_uid='".$_SESSION['field_uid']."' ");
+		if($_SESSION['event_ids'])
+		{
+			$sql=" and event_id in (".$_SESSION['event_ids'].") ";
+		}
+		if($_SESSION['field_uid']){
+			$sql=" and field_uid='".$_SESSION['field_uid']."'";
+		}
+		
+		$list=D("event")->event_list_pro("  ".$sql);
 
 		$this->assign("list",$list["item"]);
 		$this->assign("pages",$list["pages"]);
@@ -47,17 +55,18 @@ class eventAction extends field_publicAction
 			$data["event_uid"]=post("event_uid");
 			$data["field_uid"]=$_SESSION['field_uid'];
 			$data["event_name"]=post("event_name");
+			$data["event_team_level"]=post("event_team_level");
+			
 			$data["event_type"]=post("event_type");
 			$data["event_left"]=post("event_left");
-			$data["event_left_flag"]=post("event_left_flag").time();
+			$data["event_left_flag"]=post("event_left_flag");
 			$data["event_left_intro"]=post("event_left_intro");
-			$data["event_left_pic"]=post("event_left_pic");
+			//$data["event_left_pic"]=post("event_left_pic");
 			$data["event_right"]=post("event_right");
-			$data["event_right_flag"]=post("event_right_flag").time();
+			$data["event_right_flag"]=post("event_right_flag");
 			$data["event_right_intro"]=post("event_right_intro");
-			$data["event_right_pic"]=post("event_right_pic");
-			
-			if($_FILES["event_logo"]["error"]==0 || $_FILES["event_timepic"]["error"]==0 || $_FILES["event_zhutui_pic"]["error"]==0 || $_FILES["event_left_pic"]["error"]==0 || $_FILES["event_right_pic"]["error"]==0)
+		
+			if($_FILES["event_logo"]["error"]==0 || $_FILES["event_timepic"]["error"]==0 || $_FILES["event_zhutui_pic"]["error"]==0)
 			{
 				$uploadinfo=upload_file("upload/event/");
 				
@@ -101,18 +110,23 @@ class eventAction extends field_publicAction
 			$data["event_content"]=stripslashes($_POST["event_content"]);
 			$data["event_state"]=0;
 			$data["event_is_tj"]=post("event_is_tj");
+			
 			$data["event_sort"]=post("event_sort");
 			$data["event_fenzhan_id"]=post("event_fenzhan_id");
 			$data["event_is_zhutui"]=post("event_is_zhutui");
 			$data["event_is_baoming"]=post("event_is_baoming");
 			$data["event_url"]=post("event_url");
-			$data["event_ticket_status"]=post("event_ticket_status");
-			$data["event_ticket_wapurl"]=post("event_ticket_wapurl");
 			$data["event_go_action"]=post("event_go_action");
 			$data["event_go_value"]=post("event_go_value");
 			$data["event_lun_num"]=post("event_lun_num");
 			$data["event_is_viewscore"]=post("event_is_viewscore");
 			$data["event_sort_fenzhan_id"]=post("event_sort_fenzhan_id");
+			$data["event_viewtype"]=post("event_viewtype");
+			$data["event_is_ticket"]=post("event_is_ticket");
+			$data["event_is_bbs"]=post("event_is_bbs");
+			$data["event_ticket_status"]=post("event_ticket_status");
+			$data["event_ticket_wapurl"]=post("event_ticket_wapurl");
+			
 			$data["event_addtime"]=time();
 			$list=M("event")->add($data);
 			$this->success("添加成功",U('field/event/event'));
@@ -131,19 +145,13 @@ class eventAction extends field_publicAction
 		{
 			$data=M("event")->where("event_id=".intval(get("event_id")))->find();
 			$this->assign("data",$data);
-            
+
 			import("@.ORG.editor");  //导入类
 			$editor=new editor("400px","700px",$data['event_content'],"event_content");     //创建一个对象
 			$a=$editor->createEditor();   //返回编辑器
 			$b=$editor->usejs();             //js代码
 			$this->assign('usejs',$b);     //输出到html
 			$this->assign('editor',$a);
-			
-			$fenzhan=D('fenzhan_tbl')->fenzhan_list_pro(" and event_id='".get("event_id")."' ");
-			//echo '<pre>';
-			
-			//var_dump($data);
-			$this->assign('fenzhan',$fenzhan['item']);
 			
 			$this->assign("page_title","修改赛事");
 			$this->display();
@@ -161,19 +169,24 @@ class eventAction extends field_publicAction
 		if(M()->autoCheckToken($_POST))
 		{
 			$data["event_id"]=post("event_id");
+			$data["field_uid"]=$_SESSION['field_uid'];
 			$data["event_uid"]=post("event_uid");
 			$data["event_name"]=post("event_name");
+			$data["event_type"]=post("event_type");
+			$data["event_team_level"]=post("event_team_level");
+			
 			$data["event_left"]=post("event_left");
+			$data["event_left_flag"]=post("event_left_flag");
 			$data["event_left_intro"]=post("event_left_intro");
 			//$data["event_left_pic"]=post("event_left_pic");
 			$data["event_right"]=post("event_right");
+			$data["event_right_flag"]=post("event_right_flag");
 			$data["event_right_intro"]=post("event_right_intro");
-			//$data["event_right_pic"]=post("event_right_pic");
-			
 			
 			if($_FILES["event_logo"]["error"]==0 || $_FILES["event_timepic"]["error"]==0 || $_FILES["event_zhutui_pic"]["error"]==0 || $_FILES["event_left_pic"]["error"]==0 || $_FILES["event_right_pic"]["error"]==0)
 			{
 				$uploadinfo=upload_file("upload/event/");
+				
 				foreach($uploadinfo as $key=>$val){
 					$uploadinfo[$val['up_name']] = $val;
 					unset($uploadinfo[$key]);
@@ -182,6 +195,7 @@ class eventAction extends field_publicAction
 				if(!empty($uploadinfo["event_logo"]))
 				{
 					$data["event_logo"]=$uploadinfo["event_logo"]["savepath"] . $uploadinfo["event_logo"]["savename"];
+					$data["event_logo_small"]=$data["event_logo"];
 				}
 
 				//event_timepic
@@ -205,9 +219,6 @@ class eventAction extends field_publicAction
 				}
 			
 			}
-
-			
-
 			
 			$data["event_starttime"]=strtotime(post("event_starttime"));
 			$data["event_endtime"]=strtotime(post("event_endtime"));
@@ -229,10 +240,24 @@ class eventAction extends field_publicAction
 				$data["event_is_baoming"]=post("event_is_baoming");
 			}
 			$data["event_url"]=post("event_url");
-			$data["event_ticket_status"]=post("event_ticket_status");
-			$data["event_ticket_wapurl"]=post("event_ticket_wapurl");
 			$data["event_go_action"]=post("event_go_action");
 			$data["event_go_value"]=post("event_go_value");
+			$data["event_lun_num"]=post("event_lun_num");
+			$data["event_is_viewscore"]=post("event_is_viewscore");
+			$data["event_sort_fenzhan_id"]=post("event_sort_fenzhan_id");
+			$data["event_viewtype"]=post("event_viewtype");
+			$data["event_ticket_status"]=post("event_ticket_status");
+			$data["event_ticket_wapurl"]=post("event_ticket_wapurl");
+			
+			if(post("event_is_ticket"))
+			{
+				$data["event_is_ticket"]=post("event_is_ticket");
+			}
+			
+			if(post("event_is_bbs"))
+			{
+				$data["event_is_bbs"]=post("event_is_bbs");
+			}
 			
 			
 			$list=M("event")->save($data);
@@ -318,6 +343,12 @@ class eventAction extends field_publicAction
 			
 			$this->assign('event_name',$data['event_name']);
 			$this->assign('event_id',$data['event_id']);
+			
+			$fenzhan=D('fenzhan_tbl')->fenzhan_list_pro(" and event_id='".get("event_id")."' ");
+			//echo '<pre>';
+			
+			//var_dump($data);
+			$this->assign('fenzhan',$fenzhan['item']);
 
 			import("@.ORG.editor");  //导入类
 			$editor=new editor("400px","700px",$data['event_content'],"event_content");     //创建一个对象
@@ -325,9 +356,6 @@ class eventAction extends field_publicAction
 			$b=$editor->usejs();             //js代码
 			$this->assign('usejs',$b);     //输出到html
 			$this->assign('editor',$a);
-			
-			$fenzhan=D('fenzhan_tbl')->fenzhan_list_pro(" and event_id='".get("event_id")."' ");
-			$this->assign('fenzhan',$fenzhan['item']);
 			
 			$this->assign('event_on',1);
 			
@@ -339,5 +367,9 @@ class eventAction extends field_publicAction
 			$this->error("您该问的信息不存在");
 		}
 	}
+
+
+	
+
 }
 ?>

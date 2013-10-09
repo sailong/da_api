@@ -10,7 +10,7 @@
 		<input type="hidden" name="m" value="user_ticket">
 		<input type="hidden" name="a" value="user_ticket">
 		<input type="hidden" name="price" value="<php> echo  get('price');</php>">
-		<input type="hidden" name="get_k" id="get_k" value="<php> echo  get('k');</php>">
+		<input type="hidden" name="get_k" id="get_k" value="<php> echo  get('ticket_id');</php>">
 
 		<table border="0" cellspacing="0" cellpadding="0">
 			<th>赛事：</th>
@@ -26,7 +26,7 @@
 			<th>门票列表：</th>
 			<!-- <td><input type="text" name="k" class="search_input" style="width:120px;" value="<php> echo  get('k');</php>"></td> -->
 			<td>
-				<select name="k" id="ticket_id">
+				<select name="ticket_id" id="ticket_id">
 					<option value=''>请选择</option>
 				</select>
 			</td>

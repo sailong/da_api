@@ -6,7 +6,7 @@
 
 	<table class="add_table" border="0" cellspacing="0" cellpadding="0" >
 		<tbody>
-				<tr>
+		<tr>
 					<th>赛事UID：</th>
 						<td>{$data.event_uid}</td>
 				</tr>
@@ -20,7 +20,7 @@
 				</tr>
 				<tr>
 					<th>时间表图片：</th>
-						<td>{$data.event_timepic}</td>
+					<td>{$data.event_timepic}</td>
 				</tr>
 				<tr>
 					<th>开始时间：</th>
@@ -30,7 +30,10 @@
 				<tr>
 					<th>结束时间：</th>
 					<td>{$data.event_endtime|format_to_time}</td>
-					
+				</tr>
+				<tr>
+					<th>跳转网址：</th>
+					<td>{$data.event_url}</td>
 				</tr>
 				<tr>
 					<th>详细介绍：</th>
@@ -45,23 +48,8 @@
 						<td>{$data.event_is_tj}</td>
 				</tr>
 				<tr>
-					<th>门票申请页面：</th>
-					<td>
-						<php>if($data['event_ticket_status'] == 1){echo '正常申请页';}</php>
-						<php>if($data['event_ticket_status'] == 2){echo 'wap页';}</php>
-						<php>if($data['event_ticket_status'] == 3){echo '宝马大师赛';}</php>
-					</td>
-				</tr>
-				<tr>
-					<th>门票申请地址：</th>
-					<td>
-						{$data.event_ticket_wapurl}
-					</td>
-				</tr>
-				<tr>
 					<th>添加时间：</th>
 					<td>{$data.event_addtime|format_to_time}</td>
-					
 				</tr>
 				
 		</tbody>

@@ -18,10 +18,13 @@ class user_ticketAction extends AdminAuthAction
 	public function user_ticket()
 	{
 		$event_id = get('event_id');
-		
+		$ticket_id = get('ticket_id');
 		$event_id_sql = '';
 		if($event_id){
 			$event_id_sql = " and event_id='{$event_id}'";
+		}
+		if($ticket_id){
+			$event_id_sql .= " and ticket_id='{$ticket_id}'";
 		}
 		
 		$user_ticket_status = get('user_ticket_status');
@@ -50,6 +53,7 @@ class user_ticketAction extends AdminAuthAction
 		}elseif($price == 'no_free'){
 			$price_sql = " and ticket_price!='0'";
 		}
+		
 		//$list=D("user_ticket")->user_ticket_list_pro(" and event_id='{$event_id}' {$price_sql}");
 		$list=D("user_ticket")->user_ticket_list_pro("{$event_id_sql}{$price_sql}{$user_ticket_status_sql}");
 		//$ticket_lists = M('ticket')->where("event_id='{$event_id}'")->select();

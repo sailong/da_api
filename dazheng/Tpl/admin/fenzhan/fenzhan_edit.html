@@ -20,9 +20,9 @@
 	<table class="add_table" border="0" cellspacing="0" cellpadding="0" >
 		<tbody>
 		<tr>
-					<th>所属赛事：</th>
+					<!-- <th>所属赛事：</th>
 					<td><input type="text" name="event_id" id="event_id" class="mod_input2" style="width:66px;"  value="{$data.event_id}"></td>
-				</tr>
+				</tr> -->
                      <tr>
 					<th>所属分站：</th>
 					<td> 
@@ -65,6 +65,7 @@
 					<th>分站名称：</th>
 					<td><input type="text" name="fenzhan_name" id="fenzhan_name" class="mod_input2" style="width:300px;"  value="{$data.fenzhan_name}"></td>
 				</tr>
+				<php>if($event_type=='T'){</php>
 				<tr>
 					<th>分站规则：</th>
 					<td><select name='fenzhan_rule' id='fenzhan_rule'  >
@@ -76,6 +77,9 @@
 						<script>set_select_value(document.act_form.fenzhan_rule,{$data.fenzhan_rule});</script>
 						<!-- <input type="text" name="fenzhan_rule" id="fenzhan_rule" class="mod_input2" style="width:300px;"  value="{$data.fenzhan_rule}"></td> -->
 				</tr>
+				<php>}else{</php>
+				<input type='hidden' name='fenzhan_rule' value='11'>
+				<php>}</php>
                 <tr>
 					<th>所在球场：</th>
 					<td>{$data.field_id}
