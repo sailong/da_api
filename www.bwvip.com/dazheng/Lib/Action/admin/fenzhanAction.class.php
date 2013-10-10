@@ -62,7 +62,7 @@ class fenzhanAction extends AdminAuthAction
 		$event_info=M("event")->where("event_id=".intval(get("event_id")))->find();
 		$this->assign('event_name',$event_info['event_name']);
 		$this->assign('event_id',$event_info['event_id']);
-		
+		$this->assign('event_type',$event_info['event_type']);
 		$this->assign("page_title","添加分站");
     	$this->display();
 	}
@@ -140,6 +140,7 @@ class fenzhanAction extends AdminAuthAction
 			$event_info=M("event")->where("event_id=".intval(get("event_id")))->find();
 			$this->assign('event_id',intval(get("event_id")));
 			$this->assign('event_name',$event_info['event_name']);
+			$this->assign('event_type',$event_info['event_type']);
 			$this->assign("page_title","修改分站");
 			$this->display();
 		}
@@ -418,7 +419,7 @@ class fenzhanAction extends AdminAuthAction
 		$event_info=M("event")->where("event_id=".intval(get("event_id")))->find();
 		$this->assign('event_name',$event_info['event_name']);
 		$this->assign('event_id',$event_info['event_id']);
-		
+		$this->assign('event_type',$event_info['event_type']);
 		//$fenzhan=D('fenzhan_tbl')->fenzhan_list_pro(" and event_id='".get("event_id")."' ");
 		
 		$fenzhan=M('fenzhan')->where("event_id='".get("event_id")."'")->select();

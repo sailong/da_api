@@ -70,8 +70,10 @@
 		<th class="line_l">编号</th>
 		<!-- <th class="line_l">赛事</th> -->
 		<th class="line_l">分站</th>
-		<th class="line_l">报名人</th>
+		<!-- <th class="line_l">报名人</th> -->
+		<php>if($event_type=='T'){</php>
 		<th class="line_l">队别</th>
+		<php>}</php>
 		<th class="line_l">姓名</th>
 		<th class="line_l">姓别</th>
 		<th class="line_l">身份证号</th>
@@ -86,8 +88,10 @@
 			<td>{$vo.event_apply_id}</th>
 			<!-- <td>{$vo.event_name}({$vo.event_id})</th> -->
 			<td>{$vo.fenzhan_name}</th>
-			<td>{$vo.uid}</td>
+			<!-- <td>{$vo.uid}</td> -->
+			<php>if($event_type=='T'){</php>
 			<td>{$vo.event_user_team}</td>
+			<php>}</php>
 			<td>{$vo.event_apply_realname}</td>
 			<td>{$vo.event_apply_sex}</td>
 			<td>{$vo.event_apply_card}</td>
@@ -95,19 +99,21 @@
 			<td><php>if($vo['event_apply_state']==0){ echo '待审核';}if($vo['event_apply_state']==1){ echo '审核通过';}if($vo['event_apply_state']==2){ echo '审核未通过';}</php></td>
 			<td>{$vo.event_apply_addtime|format_to_time}</td>
 		<td>
-			<a href="{:U('admin/event_apply/event_apply_edit', array('event_apply_id'=>$vo['event_apply_id'],'event_apply_id'=>$vo['event_apply_id'],'fenzhan_id'=>$vo['fenzhan_id'],'event_apply_state'=>get('event_apply_state')))}">修改</a> |  
+			<a href="{:U('admin/event_apply/event_apply_edit', array('event_apply_id'=>$vo['event_apply_id'],'event_apply_id'=>$vo['event_apply_id'],'fenzhan_id'=>$vo['fenzhan_id'],'event_apply_state'=>get('event_apply_state'),'event_id'=>get('event_id')))}">修改</a> |  
 			<a href="javascript:void(0);" onclick="mod_delete_one('{:U('admin/event_apply/event_apply_delete_action')}','{$vo['event_apply_id']}');">删除</a>
 		</td>
 	</tr>
-	
+	<php>if($event_type=='T'){</php>
 	<volist id="vo1" name="vo['child_list']">
 	<tr overstyle="on"  id=ids_{$vo1["event_apply_id"]}>
 			<td><input type="checkbox" name="checkbox" onclick="select_one(this)" value="{$vo1.event_apply_id}" ></td>
 			<td>{$vo1.event_apply_id}</th>
 			<!-- <td>{$vo1.event_name}({$vo.event_id})</th> -->
 			<td>{$vo1.fenzhan_name}</th>
-			<td>{$vo1.uid}</td>
+			<!-- <td>{$vo1.uid}</td> -->
+			<php>if($event_type=='T'){</php>
 			<td>{$vo1.event_user_team}</td>
+			<php>}</php>
 			<td>&nbsp;&nbsp;&nbsp;&nbsp;|--{$vo1.event_apply_realname}</td>
 			<td>{$vo1.event_apply_sex}</td>
 			<td>{$vo1.event_apply_card}</td>
@@ -115,12 +121,12 @@
 			<td><php>if($vo1['event_apply_state']==0){ echo '待审核';}if($vo1['event_apply_state']==1){ echo '审核通过';}if($vo1['event_apply_state']==2){ echo '审核未通过';}</php></td>
 			<td>{$vo1.event_apply_addtime|format_to_time}</td>
 		<td>
-			<a href="{:U('admin/event_apply/event_apply_edit', array('event_apply_id'=>$vo1['event_apply_id'],'fenzhan_id'=>$vo1['fenzhan_id'],'event_apply_state'=>get('event_apply_state')))}">修改</a> | 
+			<a href="{:U('admin/event_apply/event_apply_edit', array('event_apply_id'=>$vo1['event_apply_id'],'fenzhan_id'=>$vo1['fenzhan_id'],'event_apply_state'=>get('event_apply_state'),'event_id'=>get('event_id')))}">修改</a> | 
 			<a href="javascript:void(0);" onclick="mod_delete_one('{:U('admin/event_apply/event_apply_delete_action')}','{$vo1['event_apply_id']}');">删除</a>
 		</td>
 	</tr>
 	</volist>
-	
+	<php>}</php>
 	</volist>
     </table>
 	  <php>}else{</php>

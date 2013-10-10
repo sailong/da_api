@@ -1136,13 +1136,13 @@ if($ac=="event_baoming_action")
 }
 
 
-
+//索取门票
 if($ac=='dz_ticket_event_list')
 {
 	$field_uid = $_G['gp_field_uid'];
 	if($field_uid)
 	{
-		$big_where=" and (event_viewtype='B' or (event_viewtype='A'  and field_uid='".$field_uid."') or (event_viewtype='Q' and field_uid='".$field_uid."'))  and event_is_ticket='Y' ";
+		$big_where=" and (event_viewtype='B' or (event_viewtype='A' and field_uid='".$field_uid."') or (event_viewtype='Q' and field_uid='".$field_uid."'))  and event_is_ticket='Y' and event_is_ticket_bwvip='N' ";
 	}
 	else
 	{

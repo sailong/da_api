@@ -19,13 +19,13 @@
 <form method="post" id="act_form" name="act_form" action="{:U('admin/fenzhan/fenzhan_add_action')}" enctype="multipart/form-data">
 	<table class="add_table" border="0" cellspacing="0" cellpadding="0" >
 		<tbody>
-				<tr>
+				<!-- <tr>
 					<th>所属赛事：</th>
 					<td>
 						<input type="hidden" name="event_id" value="{$event_id}">
 						{$event_id}
 					</td>
-				</tr>
+				</tr> -->
                 <tr>
 					<th>所属分站：</th>
 					<td>
@@ -53,6 +53,7 @@
 					<th>分站名称：</th>
 					<td><input type="text" name="fenzhan_name" id="fenzhan_name" class="mod_input2" style="width:300px;" ></td>
 				</tr>
+				<php>if($event_type=='T'){</php>
 				 <tr>
 					<th>分站规则：</th>
 					<td><select name='fenzhan_rule' id='fenzhan_rule'  >
@@ -64,6 +65,9 @@
 						<script>set_select_value(document.act_form.fenzhan_rule,{$data.fenzhan_rule});</script>
 						<!-- <input type="text" name="fenzhan_rule" id="fenzhan_rule" class="mod_input2" style="width:300px;"  value="{$data.fenzhan_rule}"></td> -->
 				</tr>
+				<php>}else{</php>
+				<input type='hidden' name='fenzhan_rule' value='11'>
+				<php>}</php>
 				 <tr>
 					<th>所在球场：</th>
 					<td>{$data.field_id}
@@ -159,7 +163,7 @@ $.formValidator.initConfig({formID:"act_form",theme:'ArrowSolidBox',mode:'AutoTi
 
 	$("#event_id").formValidator({empty:true,onShow:"请输入所属赛事",onFocus:"请输入所属赛事",onCorrect:"输入正确"}).inputValidator({min:1,max:11,onError:"请输入所属赛事"});
 		$("#fenzhan_name").formValidator({empty:true,onShow:"请输入分站名称",onFocus:"请输入分站名称",onCorrect:"输入正确"}).inputValidator({min:1,max:50,onError:"请输入分站名称"});
-		//$("#field_id").formValidator({empty:true,onShow:"请输入所在球场",onFocus:"请输入所在球场",onCorrect:"输入正确"}).inputValidator({min:1,max:11,onError:"请输入所在球场"});
+		$("#field_id").formValidator({empty:true,onShow:"请输入所在球场",onFocus:"请输入所在球场",onCorrect:"输入正确"}).inputValidator({min:1,max:11,onError:"请输入所在球场"});
 		$("#year").formValidator({empty:true,onShow:"请输入年份",onFocus:"请输入年份",onCorrect:"输入正确"}).inputValidator({min:1,max:50,onError:"请输入年份"});
 		$("#timepic").formValidator({empty:true,onShow:"请输入时间表",onFocus:"请输入时间表",onCorrect:"输入正确"}).inputValidator({min:1,max:300,onError:"请输入时间表"});
 		$("#starttime").formValidator({empty:true,onShow:"请输入开始时间",onFocus:"请输入开始时间",onCorrect:"输入正确"}).inputValidator({min:1,max:10,onError:"请输入开始时间"});

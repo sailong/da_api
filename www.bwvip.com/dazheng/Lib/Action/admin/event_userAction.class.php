@@ -28,7 +28,7 @@ class event_userAction extends AdminAuthAction
 		$event_info=M("event")->where("event_id=".intval(get("event_id")))->find();
 		$this->assign('event_name',$event_info['event_name']);
 		$this->assign('event_id',$event_info['event_id']);
-		
+		$this->assign('event_type',$event_info['event_type']);
 
 		$this->assign("list",$list["item"]);
 		$this->assign("pages",$list["pages"]);
@@ -50,11 +50,12 @@ class event_userAction extends AdminAuthAction
 		$event_user_list=D("event_user")->event_user_select_pro(" and event_id=".get("event_id")." and event_user_parent_id=0  ");
 		$this->assign("event_user_list",$event_user_list['item']);
 		
-		$event_info=M('event')->where(" event_id=".get("event_id")." ")->field("event_left_flag,event_right_flag")->find();
+		$event_info=M('event')->where("event_id=".get("event_id")." ")->field("event_left_flag,event_right_flag,event_type")->find();
 		$team_list[]=$event_info['event_left_flag'];
 		$team_list[]=$event_info['event_right_flag'];
-		$this->assign("team_list",$team_list);
 		
+		$this->assign("event_info",$event_info);
+		$this->assign("team_list",$team_list);
 		$this->assign("page_title","添加赛事用户");
     	$this->display();
 	}
@@ -112,12 +113,12 @@ class event_userAction extends AdminAuthAction
 			$event_user_list=D("event_user")->event_user_select_pro(" and event_id=".$data["event_id"]." and event_user_parent_id=0  ");
 			$this->assign("event_user_list",$event_user_list['item']);
 			
-			$event_info=M('event')->where(" event_id=".$data["event_id"]." ")->field("event_left_flag,event_right_flag")->find();
+			$event_info=M('event')->where(" event_id=".$data["event_id"]." ")->field("event_left_flag,event_right_flag,event_type")->find();
 			$team_list[]=$event_info['event_left_flag'];
 			$team_list[]=$event_info['event_right_flag'];
-			$this->assign("team_list",$team_list);
-						
 			
+			$this->assign("event_info",$event_info);
+			$this->assign("team_list",$team_list);
 			$this->assign("page_title","修改赛事用户");
 			$this->display();
 		}

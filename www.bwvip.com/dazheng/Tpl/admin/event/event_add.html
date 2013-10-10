@@ -185,11 +185,20 @@
 				<tr>
 					<th>门票申请：</th>
 					<td>
-						<input type="radio" name="event_is_ticket" id="event_is_ticket" value="Y" <php> if($data['event_is_ticket']=="Y"){ echo " checked ";}</php> >是  
-						<input type="radio" name="event_is_ticket" id="event_is_ticket" value="N" <php> if($data['event_is_ticket']=="N"){ echo " checked ";}</php>>否
+						<input type="radio" name="event_is_ticket" id="event_is_ticket" value="Y"  >是  
+						<input type="radio" name="event_is_ticket" id="event_is_ticket" value="N" checked>否
 						(赛事门票页面，是则显示，否不显示)
 					</td>
 				</tr>
+				<tr>
+					<th>门票申请显示：</th>
+					<td>
+						<input type="radio" name="event_is_ticket_bwvip" id="event_is_ticket_bwvip" value="Y" >是  
+						<input type="radio" name="event_is_ticket_bwvip" id="event_is_ticket_bwvip" value="N" checked >否
+						(门票申请是否只在大正显示，是则显示，否不显示)
+					</td>
+				</tr>
+				
 				<tr>
 					<th>门票申请页面：</th>
 					<td>
