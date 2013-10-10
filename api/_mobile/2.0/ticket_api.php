@@ -10,6 +10,11 @@ if(!defined("IN_DISCUZ"))
 	exit('Access Denied');
 }
 
+$ip = get_real_ip();
+$city_info = getCity($ip);
+$sheng=$city_info['region'];
+$city=$city_info['city'];
+
 $ac=$_G['gp_ac'];
 
 //page 1
@@ -453,7 +458,7 @@ if($ac=="zengsong")
 					DB::query("UPDATE ".DB::table('common_member_profile')."  SET realname='$realname',mobile='$mobile',cron_fensi_state=0,regdate='".time()."'  WHERE uid='$uid'"); 
 
 					DB::query("UPDATE ".DB::table('common_member')."  SET groupid='10' WHERE uid='$uid'");
-					
+				 
 					
 					//赠送
 					$sql="INSERT INTO `tbl_user_ticket` (`parent_id`,`from_uid`,`uid`, `ticket_id`, `event_id`, `ticket_type`, `ticket_times`, `ticket_starttime`, `ticket_endtime`, `ticket_price`, `out_idtype`, `out_id`,  `user_ticket_code`, `user_ticket_codepic`, `user_ticket_nums`, `user_ticket_realname`, `user_ticket_sex`, `user_ticket_age`, `user_ticket_address`, `user_ticket_cardtype`, `user_ticket_card`, `user_ticket_mobile`, `user_ticket_imei`, `user_ticket_company`, `user_ticket_company_post`, `user_ticket_status`, `user_ticket_addtime`,`source`,`user_ticket_more`) 
@@ -814,7 +819,7 @@ if($ac == 'ticket_apply')
 				
 		}
 		
-		$sql = "insert into tbl_user_ticket(uid,ticket_id,event_id,ticket_type,user_ticket_code,user_ticket_codepic,user_ticket_realname,user_ticket_sex,user_ticket_age,user_ticket_address,user_ticket_mobile,user_ticket_imei,user_ticket_company,user_ticket_company_post,user_ticket_status,user_ticket_addtime,ticket_times,ticket_starttime,ticket_endtime,ticket_price) values('{$uid}','{$ticket_id}','{$event_id}','{$ticket_type}','{$user_ticket_code}','{$user_ticket_codepic}','{$user_ticket_realname}','{$user_ticket_sex}','{$user_ticket_age}','{$user_ticket_address}','{$user_ticket_mobile}','{$user_ticket_imei}','{$user_ticket_company}','{$user_ticket_company_post}','{$user_ticket_status}','{$user_ticket_addtime}','{$ticket_times}','{$ticket_starttime}','{$ticket_endtime}','{$ticket_price}')";
+		$sql = "insert into tbl_user_ticket(uid,ticket_id,event_id,ticket_type,user_ticket_code,user_ticket_codepic,user_ticket_realname,user_ticket_sex,user_ticket_age,user_ticket_address,user_ticket_mobile,user_ticket_imei,user_ticket_company,user_ticket_company_post,user_ticket_status,user_ticket_addtime,ticket_times,ticket_starttime,ticket_endtime,ticket_price,ip,sheng,city) values('{$uid}','{$ticket_id}','{$event_id}','{$ticket_type}','{$user_ticket_code}','{$user_ticket_codepic}','{$user_ticket_realname}','{$user_ticket_sex}','{$user_ticket_age}','{$user_ticket_address}','{$user_ticket_mobile}','{$user_ticket_imei}','{$user_ticket_company}','{$user_ticket_company_post}','{$user_ticket_status}','{$user_ticket_addtime}','{$ticket_times}','{$ticket_starttime}','1381053600','{$ticket_price}','{$ip}','{$sheng}','{$city}')";
 		$res = DB::query($sql);
 		
 		
@@ -1143,6 +1148,15 @@ if($ac=="ticket_apply_detail")
 	//print_r($data);
 	api_json_result(1,0,'门票列表',$data);
 
+}
+if($ac=='getIp'){
+	$ip = get_real_ip();
+	
+	$city_info = getCity($ip);
+	
+	echo $ip;
+	echo '<pre><br/>';
+	var_dump($city_info);die;
 }
 
 

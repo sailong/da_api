@@ -14,16 +14,30 @@ if(!defined('IN_DISCUZ')) {
  * uc_authcode()	可选，借用用户中心的函数加解密 Cookie
  */
 
+ 
 
+$field_uid=$_G['gp_field_uid'];
+if(!$field_uid)
+{
+	$field_uid=1186;
+}
+
+
+$username=urldecode($_G['gp_realname']).mt_rand(1,9);
+$mobile=$_G['gp_username'];
+ 
+ 
 //在UCenter注册用户信息
 $t=time();
 $email=$_G['gp_email']?$_G['gp_email']:$t.'@bw.com';
 
-if($_G['gp_username'] && $_G['gp_password'] &&  $email && $_G['gp_realname'])
-{
-    $uid = uc_user_register($_G['gp_username'], $_G['gp_password'], $email);
 
-}else{
+if($username && $_G['gp_password'] &&  $email && $_G['gp_realname'])
+{
+    $uid = uc_user_register($username,$_G['gp_password'],$email);
+}
+else
+{
     api_json_result(1,10018,$api_error['register']['10018'],null);
 }
 
@@ -65,13 +79,11 @@ if($uid <= 0) {
 
     //注册成功，设置 Cookie，加密直接用 uc_authcode 函数，用户使用自己的函数
 
-         $post_string = "&username=".$_G['gp_username']."&password=".$_G['gp_password']."";
-         $info = request_by_curl_new($site_url.'/member.php?mod=logging&action=login&loginsubmit=yes',$post_string);
+		$post_string = "&username=".$username."&password=".$_G['gp_password']."";
+		$info = request_by_curl_new($site_url.'/member.php?mod=logging&action=login&loginsubmit=yes',$post_string);
 
-		$mobile =$_G['gp_username'];
+		
 		$realname =urldecode($_G['gp_realname']);
-		//$realname =iconv("gb2312","UTF-8",$realname); 
-		//$realname =iconv("gb2312","UTF-8",$realname); 
 		$is_auto_guanzhu =$_G['gp_is_auto_guanzhu'];		
 
 		$sheng=get_city_bymobile($mobile);
@@ -109,9 +121,9 @@ if($uid <= 0) {
 		*/
  
 		 DB::query("UPDATE ultrax.jishigou_members SET nickname='$realname',validate=1 WHERE ucuid='$uid'"); 
-		 DB::query("UPDATE ".DB::table('common_member_profile')."  SET realname='$realname',mobile='$mobile',resideprovince='$sheng',cron_fensi_state=0,reg_source=1186,regdate='".time()."'  WHERE uid='$uid'"); 
+		 DB::query("UPDATE ".DB::table('common_member_profile')."  SET realname='$realname',mobile='$mobile',resideprovince='$sheng',cron_fensi_state=0,reg_source='".$field_uid."',regdate='".time()."'  WHERE uid='$uid' "); 
 				 
-		setcookie('Example_auth', uc_authcode($uid."\t".$_POST['username'], 'ENCODE'));
+		setcookie('Example_auth', uc_authcode($uid."\t".$username, 'ENCODE'));
 		api_json_result(1,0,$api_error['login']['10010'],$data);
 }
 
