@@ -314,21 +314,21 @@ public function ticket_tj()
 		//宝马门票申请统计
 		//今天start
 		//$sql = "SELECT count(id) as total FROM `tbl_user_ticket_bmw` where bwm_addtime<$end_time";// WHERE event_id=25and user_ticket_addtime>=$start_time and user_ticket_addtime<=$end_time
-		$sql = "SELECT count( DISTINCT `user_ticket_mobile` ) as total FROM `tbl_user_ticket` WHERE event_id=25 and ticket_id=47 and user_ticket_addtime<=$end_time";
-		$bm_total_rs = M()->query($sql); 
+		$sql = "SELECT count(`user_ticket_id`) as total FROM `tbl_user_ticket` WHERE event_id=25 and ticket_id=47 and user_ticket_addtime<=$end_time";
+		$bm_total_rs = M()->query($sql); // DISTINCT `user_ticket_mobile` 
 		$bm_total_rs = $bm_total_rs[0];
 		
 		$bm_info['today_total'] = $bm_total_rs['total'];
 		
 		
-		$sql = "SELECT count( DISTINCT `user_ticket_mobile` ) as total FROM `tbl_user_ticket` WHERE event_id=25 and ticket_id=47 and user_ticket_addtime>$start_time and user_ticket_addtime<=$end_time";
+		$sql = "SELECT count(`user_ticket_id`) as total FROM `tbl_user_ticket` WHERE event_id=25 and ticket_id=47 and user_ticket_addtime>$start_time and user_ticket_addtime<=$end_time";
 		//echo $sql;die;
 		$bm_today_rs = M()->query($sql);
 		$bm_today_rs = $bm_today_rs[0];
 		$bm_info['today'] = $bm_today_rs['total'];
 		//今天end
 		//昨天start
-		$sql = "SELECT count( DISTINCT `user_ticket_mobile` ) as total FROM `tbl_user_ticket` WHERE event_id=25 and ticket_id=47 and user_ticket_addtime<$yesterday_end_time";// WHERE event_id=25and user_ticket_addtime>=$start_time and user_ticket_addtime<=$end_time
+		$sql = "SELECT count(`user_ticket_id`) as total FROM `tbl_user_ticket` WHERE event_id=25 and ticket_id=47 and user_ticket_addtime<$yesterday_end_time";// WHERE event_id=25and user_ticket_addtime>=$start_time and user_ticket_addtime<=$end_time
 		
 		$bm_total_rs = M()->query($sql); 
 		$bm_total_rs = $bm_total_rs[0];
@@ -336,7 +336,7 @@ public function ticket_tj()
 		$bm_info['yesterday_total'] = $bm_total_rs['total'];
 		
 		
-		$sql = "SELECT count( DISTINCT `user_ticket_mobile` ) as total FROM `tbl_user_ticket` WHERE event_id=25 and ticket_id=47 and user_ticket_addtime>$yesterday_start_time and user_ticket_addtime<=$yesterday_end_time";
+		$sql = "SELECT count(`user_ticket_id`) as total FROM `tbl_user_ticket` WHERE event_id=25 and ticket_id=47 and user_ticket_addtime>$yesterday_start_time and user_ticket_addtime<=$yesterday_end_time";
 		//echo $sql;die;
 		$bm_today_rs = M()->query($sql);
 		$bm_today_rs = $bm_today_rs[0];
@@ -351,7 +351,7 @@ public function ticket_tj()
 		$bm_info['yesterday_total'] = $bm_total_rs['total']; */
 		
 		//$sql = "SELECT count(id) as total FROM `tbl_user_ticket_bmw` where bwm_addtime>$ss_start_time and bwm_addtime<=$ss_end_time";
-		$sql = "SELECT count( DISTINCT `user_ticket_mobile` ) as total FROM `tbl_user_ticket` WHERE event_id=25 and ticket_id=47 and user_ticket_addtime>$ss_start_time and user_ticket_addtime<=$ss_end_time";
+		$sql = "SELECT count(`user_ticket_id`) as total FROM `tbl_user_ticket` WHERE event_id=25 and ticket_id=47 and user_ticket_addtime>$ss_start_time and user_ticket_addtime<=$ss_end_time";
 		//echo $sql;die;
 		$bm_today_rs = M()->query($sql);
 		$bm_today_rs = $bm_today_rs[0];
@@ -375,40 +375,78 @@ public function ticket_tj()
 		$tj_info['hb'] = $hb_info; */
 		//南山中国大师赛 门票申请统计
 		//今天start
-		$sql = "SELECT count( DISTINCT `user_ticket_mobile` ) as total FROM `tbl_user_ticket` WHERE event_id=41 and user_ticket_addtime<$end_time";// and user_ticket_addtime>=$start_time and user_ticket_addtime<=$end_time
+		$sql = "SELECT count(`user_ticket_id`) as total FROM `tbl_user_ticket` WHERE event_id=41 and user_ticket_addtime<$end_time";// and user_ticket_addtime>=$start_time and user_ticket_addtime<=$end_time
 		
 		$ns_total_rs = M()->query($sql); 
 		$ns_total_rs = $ns_total_rs[0];
 		$ns_info['today_total'] = $ns_total_rs['total'];
 		
-		$sql = "SELECT count( DISTINCT `user_ticket_mobile` ) as total FROM `tbl_user_ticket` WHERE event_id=41 and user_ticket_addtime>=$start_time and user_ticket_addtime<=$end_time";
+		$sql = "SELECT count(`user_ticket_id`) as total FROM `tbl_user_ticket` WHERE event_id=41 and user_ticket_addtime>=$start_time and user_ticket_addtime<=$end_time";
 		$ns_today_rs = M()->query($sql);
 		$ns_today_rs = $ns_today_rs[0];
 		$ns_info['today'] = $ns_today_rs['total'];
 		//今天end
 		//昨天start
 		
-		$sql = "SELECT count( DISTINCT `user_ticket_mobile` ) as total FROM `tbl_user_ticket` WHERE event_id=41 and user_ticket_addtime<$yesterday_end_time";// and user_ticket_addtime>=$start_time and user_ticket_addtime<=$end_time
+		$sql = "SELECT count(`user_ticket_id`) as total FROM `tbl_user_ticket` WHERE event_id=41 and user_ticket_addtime<$yesterday_end_time";// and user_ticket_addtime>=$start_time and user_ticket_addtime<=$end_time
 		
 		$ns_total_rs = M()->query($sql); 
 		$ns_total_rs = $ns_total_rs[0];
 		$ns_info['yesterday_total'] = $ns_total_rs['total'];
 		
-		$sql = "SELECT count( DISTINCT `user_ticket_mobile` ) as total FROM `tbl_user_ticket` WHERE event_id=41 and user_ticket_addtime>=$yesterday_start_time and user_ticket_addtime<=$yesterday_end_time";
+		$sql = "SELECT count(`user_ticket_id`) as total FROM `tbl_user_ticket` WHERE event_id=41 and user_ticket_addtime>=$yesterday_start_time and user_ticket_addtime<=$yesterday_end_time";
 		$ns_today_rs = M()->query($sql);
 		$ns_today_rs = $ns_today_rs[0];
 		$ns_info['yesterday'] = $ns_today_rs['total'];
 		//昨天end
 		//搜索start
-		$sql = "SELECT count( DISTINCT `user_ticket_mobile` ) as total FROM `tbl_user_ticket` WHERE event_id=41 and user_ticket_addtime>$ss_start_time and user_ticket_addtime<=$ss_end_time";
+		$sql = "SELECT count(`user_ticket_id`) as total FROM `tbl_user_ticket` WHERE event_id=41 and user_ticket_addtime>$ss_start_time and user_ticket_addtime<=$ss_end_time";
 		//echo $sql;die;
 		$ns_today_rs = M()->query($sql);
 		$ns_today_rs = $ns_today_rs[0];
 		$ns_info['ss_total'] = $ns_today_rs['total'];
 		//搜索end
+		
+		
+		//赠送汇丰冠军赛套票
+		//今天start
+		$sql = "SELECT count(`user_ticket_id`) as total FROM `tbl_user_ticket` WHERE event_id=56 and ticket_id=88 and user_ticket_addtime<$end_time";// and user_ticket_addtime>=$start_time and user_ticket_addtime<=$end_time
+		
+		$zshf_total_rs = M()->query($sql); 
+		$zshf_total_rs = $zshf_total_rs[0];
+		$zshf_info['today_total'] = $zshf_total_rs['total'];
+		
+		$sql = "SELECT count(`user_ticket_id`) as total FROM `tbl_user_ticket` WHERE event_id=56 and ticket_id=88 and user_ticket_addtime>=$start_time and user_ticket_addtime<=$end_time";
+		$zshf_today_rs = M()->query($sql);
+		$zshf_today_rs = $zshf_today_rs[0];
+		$zshf_info['today'] = $zshf_today_rs['total'];
+		//今天end
+		//昨天start
+		
+		$sql = "SELECT count(`user_ticket_id`) as total FROM `tbl_user_ticket` WHERE event_id=56 and ticket_id=88 and user_ticket_addtime<$yesterday_end_time";// and user_ticket_addtime>=$start_time and user_ticket_addtime<=$end_time
+		
+		$zshf_total_rs = M()->query($sql); 
+		$zshf_total_rs = $zshf_total_rs[0];
+		$zshf_info['yesterday_total'] = $zshf_total_rs['total'];
+		
+		$sql = "SELECT count(`user_ticket_id`) as total FROM `tbl_user_ticket` WHERE event_id=56 and ticket_id=88 and user_ticket_addtime>=$yesterday_start_time and user_ticket_addtime<=$yesterday_end_time";
+		$zshf_today_rs = M()->query($sql);
+		$zshf_today_rs = $zshf_today_rs[0];
+		$zshf_info['yesterday'] = $zshf_today_rs['total'];
+		//昨天end
+		//搜索start
+		$sql = "SELECT count(`user_ticket_id`) as total FROM `tbl_user_ticket` WHERE event_id=56 and ticket_id=88 and user_ticket_addtime>$ss_start_time and user_ticket_addtime<=$ss_end_time";
+		//echo $sql;die;
+		$zshf_today_rs = M()->query($sql);
+		$zshf_today_rs = $zshf_today_rs[0];
+		$zshf_info['ss_total'] = $zshf_today_rs['total'];
+		//搜索end
+		
+		$tj_info['zshf'] = $zshf_info;
 		$tj_info['ns'] = $ns_info;
 		$tj_info['bm'] = $bm_info;
 		$tj_info['bm1'] = $bm1_info;
+		
 		
 		
 		echo '<script language="javascript" type="text/javascript" src="/skin/js/jquery-1.4.4.min.js"></script>
@@ -432,12 +470,15 @@ public function ticket_tj()
 			if($key=='hb'){
 				$field_name = '华彬门票申请统计';
 			}elseif($key=='bm'){
-				$field_name = '宝马门票申请统计';
+				$field_name = '宝马大师赛四天套票';
 			}elseif($key=='bm1'){
 				$field_name = '宝马门票申请统计10.9以前';
 			}elseif($key=='ns'){
 				$field_name = '南山中国大师赛门票申请统计';
+			}elseif($key=='zshf'){
+				$field_name = '赠送汇丰冠军赛套票';
 			}
+			
 			echo '<table width="800" border="0" bgcolor="#cccccc">
 			  <tr>
 				<td colspan="3" style="line-height:50px; text-align:center; font-size:18px; font-weight:bold;" bgcolor="#FFFFFF">'.$field_name.'</td>
