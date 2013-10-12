@@ -17,8 +17,17 @@ class user_ticketAction extends piao_publicAction
 
 	public function user_ticket()
 	{
-		
+		/* echo '<pre>';
+		var_dump($_SESSION); */
 		$event_id = $_SESSION['event_id'];
+		if($_SESSION['piao_admin_id']>1){
+			$field_uid_sql = " and field_uid='1186'";
+		}
+		$ticket_id = get('ticket_id');
+		$ticket_id_sql = '';
+		if($ticket_id){
+			$ticket_id_sql = "and ticket_id='{$ticket_id}'";
+		}
 		$price = get('price');
 		$price_sql = '';
 		if($price == 'free'){
@@ -35,7 +44,8 @@ class user_ticketAction extends piao_publicAction
 			$user_ticket_status_sql = " and user_ticket_status='{$user_ticket_status}'";
 		}
 		
-		$list=D("user_ticket")->user_ticket_list_pro(" and event_id='{$event_id}' {$price_sql} {$user_ticket_status_sql}");
+		$list=D("user_ticket")->user_ticket_list_pro("{$field_uid_sql} and event_id='{$event_id}' {$ticket_id_sql} {$price_sql} {$user_ticket_status_sql}");
+		
 		$ticket_lists = M('ticket')->where("event_id='{$event_id}'")->select();
 		
 		foreach($list["item"] as $key=>$val)

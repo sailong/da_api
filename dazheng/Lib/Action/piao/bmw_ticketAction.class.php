@@ -7,7 +7,7 @@
  *    @E-mail			123695069@qq.com
  *    @Date			2013-08-06
  */
-class bmw_ticketAction extends field_publicAction
+class bmw_ticketAction extends piao_publicAction
 {
 
 	public function _basic()	
@@ -17,13 +17,15 @@ class bmw_ticketAction extends field_publicAction
 
 	public function bmw_ticket()
 	{
-		if($_SESSION['field_uid'] == 1186){
-			$list=D("bmw_ticket")->bmw_ticket_list_pro(" and field_uid='".$_SESSION['field_uid']."'");
-		
-			$this->assign("list",$list["item"]);
-			$this->assign("pages",$list["pages"]);
-			$this->assign("total",$list["total"]);
+		$field_uid_sql = '';
+		if($_SESSION['piao_admin_id']>1){
+			$field_uid_sql = " and field_uid='1186'";
 		}
+		$list=D("bmw_ticket")->bmw_ticket_list_pro($field_uid_sql);
+	
+		$this->assign("list",$list["item"]);
+		$this->assign("pages",$list["pages"]);
+		$this->assign("total",$list["total"]);
 		
 
 		$this->assign("page_title","门票领取");
@@ -98,11 +100,11 @@ class bmw_ticketAction extends field_publicAction
 			$data["user_ticket_addtime"]=time();
 			
 			$list=M("user_ticket")->add($data);
-			$this->success("添加成功",U('field/bmw_ticket/bmw_ticket'));
+			$this->success("添加成功",U('piao/bmw_ticket/bmw_ticket'));
 		}
 		else
 		{
-			$this->error("不能重复提交",U('field/bmw_ticket/bmw_ticket_add'));
+			$this->error("不能重复提交",U('piao/bmw_ticket/bmw_ticket_add'));
 		}
 
 	}
@@ -159,11 +161,11 @@ class bmw_ticketAction extends field_publicAction
 			$data["user_ticket_status"]=post("user_ticket_status");
 			
 			$list=M("user_ticket")->save($data);
-			$this->success("修改成功",U('field/bmw_ticket/user_ticket'));			
+			$this->success("修改成功",U('piao/bmw_ticket/user_ticket'));			
 		}
 		else
 		{
-			$this->error("不能重复提交",U('field/bmw_ticket/user_ticket'));
+			$this->error("不能重复提交",U('piao/bmw_ticket/user_ticket'));
 		}
 
 	}

@@ -15,30 +15,22 @@
 			<th>门票列表：</th>
 			<!-- <td><input type="text" name="k" class="search_input" style="width:120px;" value="<php> echo  get('k');</php>"></td> -->
 			<td>
-				<select name="k" id="ticket_id">
+				<select name="ticket_id" id="ticket_id">
 					<option value="">请选择</option>
 				<volist id="vo" name="ticket_lists">
 					<option value="{$vo.ticket_id}">{$vo.ticket_name}</option>
 				</volist>
 				</select>
-				<script>set_select_value(document.search_form.ticket_id,"<php> echo  get('k');</php>");</script>
+				<script>set_select_value(document.search_form.ticket_id,"<php> echo  get('ticket_id');</php>");</script>
 			</td>
+			<th>姓名或手机：</th>
+			<td><input type="text" name="k" class="search_input" style="width:120px;" value="<php> echo  get('k');</php>"></td>
 			<th>开始时间：</th>
 			<td>
 				<input type="text" name="starttime" class="search_input_date" style="width:120px;" value="<php> echo  get('starttime');</php>" onFocus="WdatePicker({isShowClear:false,readOnly:true})"> 至 
 				<input type="text" name="endtime" class="search_input_date" style="width:120px;" value="<php> echo  get('endtime');</php>" onFocus="WdatePicker({isShowClear:false,readOnly:true})">
 			</td>
-			<!--
-			<th>类型：</th>
-			<td>
-				<select name="course_type" style="width:120px;"  class="search_select">
-					<option value="">请选择</option>
-					<option value="1">课件课程</option>
-					<option value="2">辅导课程</option>
-				</select>
-				<script>set_select_value(document.search_form.course_type,"<php> echo  get("course_type");</php>");</script>
-			</td>
-			-->
+
 			<td class="btn">
 				<input type="submit" value="搜索" class="btn_b" style="margin-right:8px;" >
 				<input type="button" value="查看全部" class="btn_b" onclick="javascript:location='{:U('piao/user_ticket/user_ticket',array('state'=>get('state')))}';">
@@ -61,23 +53,27 @@
   </div>
   <div class="list">
 	<php>if($total>0){</php>
-	  <table width="100%" id="mod_table" border="0" cellspacing="0" cellpadding="0">
+	 <table width="100%" id="mod_table" border="0" cellspacing="0" cellpadding="0">
 	  <tr>
 		<th style="width:30px;">
 			<input type="checkbox" id="checkbox_handle" onclick="select_all(this,'mod_table','checkbox')" value="0">
 			<label for="checkbox"></label>
 		</th>
 		<th class="line_l">编号</th>
-		<th class="line_l">所属用户</th>
+		<th class="line_l">用户</th>
+		
+		
 		<th class="line_l">门票名称</th>
-		<th class="line_l">门票类型</th>
+		<th class="line_l">类型</th>
+		<!--
 		<th class="line_l">领取码</th>
 		<th class="line_l">二维码图片</th>
-		<th class="line_l">订票张数</th>
+		-->
+		<th class="line_l">张数</th>
 		<th class="line_l">姓名</th>
 		<!-- <th class="line_l">证件类型</th>
-		<th class="line_l">证件号码</th> -->
-		<th class="line_l">手机号</th>
+		<th class="line_l">证件号码</th> 
+		<th class="line_l">手机号</th>-->
 		<!-- <th class="line_l">手机串号</th> -->
 		<th class="line_l">状态</th>
 		<th class="line_l">添加时间</th>
@@ -88,18 +84,21 @@
 		<td><input type="checkbox" name="checkbox" onclick="select_one(this)" value="{$vo.user_ticket_id}" ></td>
 		<td>{$vo.user_ticket_id}</th>
 		<td>{$vo.uid}</th>
-			<td>{$ticket_list[$vo['ticket_id']]}</td>
-			<td>{$vo.ticket_type}</td>
-			<td>{$vo.user_ticket_code}</td>
-			<td><img src="{$vo.user_ticket_codepic}" style="max-width:60px;max-height:60px;"></td>
-			<td>{$vo.user_ticket_nums}</td>
-			<td>{$vo.user_ticket_realname}</td>
-			<!-- <td><php>if($vo['user_ticket_cardtype'] == 0){echo '身份证';}</php></td>
-			<td>{$vo.user_ticket_card}</td> -->
-			<td>{$vo.user_ticket_mobile}</td>
-			<!-- <td>{$vo.user_ticket_imei}</td> -->
-			<td><php>switch($vo['user_ticket_status']){case 0: echo '待审核';break;case 1: echo '审核通过';break;case 2: echo '审核不通过';break;}</php></td>
-			<td>{$vo.user_ticket_addtime|format_to_time}</td>
+	
+		<td>{$ticket_list[$vo['ticket_id']]}</td>
+		<td>{$vo.ticket_type}</td>
+		<!--
+		<td>{$vo.user_ticket_code}</td>
+		<td><php>if($vo['user_ticket_codepic']){</php><img src="{$vo['user_ticket_codepic']}" style="max-width:60px;max-height:60px;"><php>}</php></td>
+		-->
+		<td>{$vo.user_ticket_nums}张</td>
+		<td>{$vo.user_ticket_realname}<br />{$vo.user_ticket_mobile}</td>
+		<!-- <td><php>if($vo['user_ticket_cardtype'] == 0){echo '身份证';}</php></td>
+		<td>{$vo.user_ticket_card}</td> -->
+		
+		<!-- <td>{$vo.user_ticket_imei}</td> -->
+		<td><php>switch($vo['user_ticket_status']){case 0: echo '待审核';break;case 1: echo '审核通过';break;case 2: echo '审核不通过';break;}</php></td>
+		<td>{$vo.user_ticket_addtime|format_to_time}</td>
 			
 		<td>
 			<a href="{:U('piao/user_ticket/user_ticket_detail', array('user_ticket_id'=>$vo['user_ticket_id']))}'">详情</a> | 

@@ -30,7 +30,7 @@ class publicAction extends Action
 		if(post("username") && post("password") && post("event_id"))
 		{
 			
-			$res=M()->query("select admin_id,event_id,admin_name,admin_password from tbl_piao_admin where event_id='".post("event_id")."' and admin_name='".post("username")."' ");
+			$res=M()->query("select admin_id,event_id,admin_name,admin_password,admin_role_id from tbl_piao_admin where event_id='".post("event_id")."' and admin_name='".post("username")."' ");
 			//print_r($res);
 			if($res[0]['admin_password']==md5(post("password")))
 			{
@@ -38,6 +38,7 @@ class publicAction extends Action
 				
 				$_SESSION['piao_admin_id']=$res[0]['admin_id'];
 				$_SESSION['uid']=$res[0]['event_id'];
+				$_SESSION['admin_role_id']=$res[0]['admin_role_id'];
 				$_SESSION['event_id']=$res[0]['event_id'];
 				$_SESSION['event_name']=$field_info[0]['event_name'];
 				$_SESSION['realname']=$res[0]['admin_realname'];

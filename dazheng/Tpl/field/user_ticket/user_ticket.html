@@ -9,15 +9,15 @@
 		<input type="hidden" name="g" value="field">
 		<input type="hidden" name="m" value="user_ticket">
 		<input type="hidden" name="a" value="user_ticket">
-		<input type="hidden" name="get_k" id="get_k" value="<php> echo  get('k');</php>">
+		<input type="hidden" name="price" value="<php> echo  get('price');</php>">
+		<input type="hidden" name="get_k" id="get_k" value="<php> echo  get('ticket_id');</php>">
 
 		<table border="0" cellspacing="0" cellpadding="0">
 			<th>赛事：</th>
-			<!-- <td><input type="text" name="k" class="search_input" style="width:120px;" value="<php> echo  get('k');</php>"></td> -->
 			<td>
 				<select name="event_id" id="event_id" style="width:120px;"  class="search_select">
 					<option value="">请选择</option>
-					<volist id="vo" name="event_list">
+					<volist id="vo" name="event_select">
 					<option value="{$vo.event_id}">{$vo.event_name}</option>
 					</volist>
 				</select>
@@ -26,15 +26,19 @@
 			<th>门票列表：</th>
 			<!-- <td><input type="text" name="k" class="search_input" style="width:120px;" value="<php> echo  get('k');</php>"></td> -->
 			<td>
-				<select name="k" id="ticket_id">
+				<select name="ticket_id" id="ticket_id">
 					<option value=''>请选择</option>
 				</select>
 			</td>
+			<th>姓名或手机：</th>
+			<td><input type="text" name="k" class="search_input" style="width:120px;" value="<php> echo  get('k');</php>"></td>
+			
 			<th>开始时间：</th>
 			<td>
 				<input type="text" name="starttime" class="search_input_date" style="width:120px;" value="<php> echo  get('starttime');</php>" onFocus="WdatePicker({isShowClear:false,readOnly:true})"> 至 
 				<input type="text" name="endtime" class="search_input_date" style="width:120px;" value="<php> echo  get('endtime');</php>" onFocus="WdatePicker({isShowClear:false,readOnly:true})">
 			</td>
+			
 			<!--
 			<th>类型：</th>
 			<td>
@@ -75,16 +79,19 @@
 			<label for="checkbox"></label>
 		</th>
 		<th class="line_l">编号</th>
-		<th class="line_l">所属用户</th>
-		<th class="line_l">所属门票</th>
-		<th class="line_l">门票类型</th>
+		<th class="line_l">用户</th>
+		<th class="line_l">所属赛事</th>
+		<th class="line_l">门票名称</th>
+		<th class="line_l">类型</th>
+		<!--
 		<th class="line_l">领取码</th>
 		<th class="line_l">二维码图片</th>
-		<th class="line_l">订票张数</th>
+		-->
+		<th class="line_l">张数</th>
 		<th class="line_l">姓名</th>
 		<!-- <th class="line_l">证件类型</th>
-		<th class="line_l">证件号码</th> -->
-		<th class="line_l">手机号</th>
+		<th class="line_l">证件号码</th> 
+		<th class="line_l">手机号</th>-->
 		<!-- <th class="line_l">手机串号</th> -->
 		<th class="line_l">状态</th>
 		<th class="line_l">添加时间</th>
@@ -95,23 +102,29 @@
 		<td><input type="checkbox" name="checkbox" onclick="select_one(this)" value="{$vo.user_ticket_id}" ></td>
 		<td>{$vo.user_ticket_id}</th>
 		<td>{$vo.uid}</th>
-			<td>{$ticket_list[$vo['ticket_id']]['ticket_name']}</td>
-			<td>{$vo.ticket_type}</td>
-			<td>{$vo.user_ticket_code}</td>
-			<td><img src="{$vo.user_ticket_codepic}" style="max-width:60px;max-height:60px;"></td>
-			<td>{$vo.user_ticket_nums}</td>
-			<td>{$vo.user_ticket_realname}</td>
-			<!-- <td><php>if($vo['user_ticket_cardtype'] == 0){echo '身份证';}</php></td>
-			<td>{$vo.user_ticket_card}</td> -->
-			<td>{$vo.user_ticket_mobile}</td>
-			<!-- <td>{$vo.user_ticket_imei}</td> -->
-			<td><php>switch($vo['user_ticket_status']){case 0: echo '待审核';break;case 1: echo '审核通过';break;case 2: echo '审核不通过';break;}</php></td>
-			<td>{$vo.user_ticket_addtime|format_to_time}</td>
+		<td>{$event_select[$vo['event_id']]['event_name']}</th>
+		<td>{$ticket_list[$vo['ticket_id']]}</td>
+		<td>{$vo.ticket_type}</td>
+		<!--
+		<td>{$vo.user_ticket_code}</td>
+		<td><php>if($vo['user_ticket_codepic']){</php><img src="{$vo['user_ticket_codepic']}" style="max-width:60px;max-height:60px;"><php>}</php></td>
+		-->
+		<td>{$vo.user_ticket_nums}张</td>
+		<td>{$vo.user_ticket_realname}<br />{$vo.user_ticket_mobile}</td>
+		<!-- <td><php>if($vo['user_ticket_cardtype'] == 0){echo '身份证';}</php></td>
+		<td>{$vo.user_ticket_card}</td> -->
+		
+		<!-- <td>{$vo.user_ticket_imei}</td> -->
+		<td><php>switch($vo['user_ticket_status']){case 0: echo '待审核';break;case 1: echo '审核通过';break;case 2: echo '审核不通过';break;}</php></td>
+		<td>{$vo.user_ticket_addtime|format_to_time}</td>
 			
 		<td>
-			<a href="{:U('field/user_ticket/user_ticket_detail', array('user_ticket_id'=>$vo['user_ticket_id']))}'">详细</a> |
+			<a href="{:U('field/user_ticket/user_ticket_detail', array('user_ticket_id'=>$vo['user_ticket_id']))}'">详情</a> | 
 			<a href="{:U('field/user_ticket/user_ticket_edit', array('event_id'=>$vo['event_id'],'user_ticket_id'=>$vo['user_ticket_id']))})">修改</a> | 
 			<a href="javascript:void(0);" onclick="mod_delete_one('{:U('field/user_ticket/user_ticket_delete_action')}','{$vo['user_ticket_id']}');">删除</a>
+			<php>if($vo['out_id'] != 0){</php>
+			 | <a href="{:U('field/user_ticket/user_ticket_detail_ext', array('out_idtype'=>$vo['out_idtype'],'out_id'=>$vo['out_id']))}'">附加信息</a>
+			<php>}</php>
 		</td>
 	</tr>
 	</volist>
@@ -158,6 +171,7 @@
 			ticket_list(event_id);
 		});
 	});
+
 function ticket_list(event_id)
 {
 	var event_id = event_id|{};
@@ -191,6 +205,51 @@ function ticket_list(event_id)
 		 }
 		});
 }
+	//批量修改
+function mod_modify_batch(action_url,obj)
+{
+	var length = 0;
+	ids    = getInputChecked(obj);
+	length = ids.length;
+	ids    = ids.toString();
+
+	if(ids=='') 
+	{
+		art.dialog({
+				icon: 'error',
+				time: 2,
+				content: '请至少选择一个'
+			});
+		return ;
+	}
+
+	if(ids == '' || !confirm('修改成功后将无法恢复，确认继续？')) return false;
+	
+	$.post(action_url, {ids:ids}, function(res){
+		if(res.split('^')[0]=='succeed')
+		{
+			ids = ids.toString().split(',');
+			for(i = 0; i < ids.length; i++)
+			{
+				//$('#ids_'+ids[i]).remove();
+			}
+			art.dialog({
+				icon: ''+res.split('^')[0]+'',
+				time: 2,
+				content: ''+res.split('^')[1]+''
+			});
+		}
+		else
+		{
+			art.dialog({
+				icon: ''+res.split('^')[0]+'',
+				time: 2,
+				content: ''+res.split('^')[1]+''
+			});
+		}
+	});
+}
+
 </script>
 
 
