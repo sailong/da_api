@@ -864,7 +864,7 @@ function erweima()
     //如果没有就生成二维码
 	$path_erweima_core = dirname(dirname(dirname(dirname(__FILE__))));
 	
-	include $path_erweima_core."/tool/phpqrcode/qrlib.php";
+	require_once($path_erweima_core."/tool/phpqrcode/qrlib.php");
 	$prefix = $path_erweima_core;
 	$save_path="/upload/erweima/";
 	$now_date = date("Ymd",time());

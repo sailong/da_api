@@ -22,90 +22,101 @@ $versions = $_G['gp_versions'] ? $_G['gp_versions'] : '1.0';
 
 
 /*接口mod 对应的 接口文件*/
-$modarray = array('register', 'login','field','ad','club','system','user','finance','message','score','event','manage_event','manage_event1','wap','go','reg_activate','card','tool','category');
+$modarray = array('register', 'login','field','ad','club','club1','system','user','finance','message','score','event','manage_event','manage_event1','wap','go','reg_activate','card','tool','category','login_new','ticket');
 $mod = !in_array($discuz->var['mod'], $modarray) ? 'error' : $discuz->var['mod'];
 if($mod=='error') api_json_result(0,99999,'你访问的接口不存在 或者 参数mod值不匹配',null);
 
 
 $ac=$_G['gp_ac'];
+
 //token口令
 $no_token=$_G['gp_no_token'];
 if(!$no_token)
 {
 	$token=$_G['gp_token'];
-	if(!yanzheng_token($token))
+	$v=$_G['gp_v'];
+	$field_uid=$_G['gp_field_uid'];
+	$v_info=DB::result_first("select app_version_id from tbl_app_version_up where app_version_name='".$v."' and field_uid='".$field_uid."' order by app_version_id desc limit 1 ");
+	if(!$v_info)
 	{
-		api_json_result(0,88888,'token error！请尝试修改正确的系统时间',null);
+		if(!yanzheng_token($token))
+		{
+			api_json_result(0,88888,'token error！请尝试修改正确的系统时间',null);
+		}
 	}
 	
+	
 	//tj_start
-if(strpos($_SERVER['HTTP_USER_AGENT'],"iPhone"))
-{
-	$userAgent="iPhone";
-}
-else if(strpos($_SERVER['HTTP_USER_AGENT'],"iPad"))
-{
-	$userAgent="iPad";
-}
-else if(strpos($_SERVER['HTTP_USER_AGENT'],"iPod"))
-{
-	$userAgent="iPod";
-}
-else if(strpos($_SERVER['HTTP_USER_AGENT'],"iOS"))
-{
-	$userAgent="iOS";
-}
-else if(strpos($_SERVER['HTTP_USER_AGENT'],"Android"))
-{
-	$userAgent="Android";
-}
-else
-{
-	$userAgent='other';
-}
+	if(strpos($_SERVER['HTTP_USER_AGENT'],"iPhone"))
+	{
+		$userAgent="iPhone";
+	}
+	else if(strpos($_SERVER['HTTP_USER_AGENT'],"iPad"))
+	{
+		$userAgent="iPad";
+	}
+	else if(strpos($_SERVER['HTTP_USER_AGENT'],"iPod"))
+	{
+		$userAgent="iPod";
+	}
+	else if(strpos($_SERVER['HTTP_USER_AGENT'],"iOS"))
+	{
+		$userAgent="iOS";
+	}
+	else if(strpos($_SERVER['HTTP_USER_AGENT'],"Android"))
+	{
+		$userAgent="Android";
+	}
+	else
+	{
+		$userAgent='other';
+	}
 
-if($_G['gp_uid'])
-{
-	$log_uid=$_G['gp_uid'];
-}
-else
-{
-	$log_uid=0;
-}
-if($_G['gp_field_uid'])
-{
-	$log_field_uid=$_G['gp_field_uid'];
-}
-else
-{
-	$log_field_uid=0;
-}
+	if($_G['gp_uid'])
+	{
+		$log_uid=$_G['gp_uid'];
+	}
+	else
+	{
+		$log_uid=0;
+	}
+	if($_G['gp_field_uid'])
+	{
+		$log_field_uid=$_G['gp_field_uid'];
+	}
+	else
+	{
+		$log_field_uid=0;
+	}
+	$sn=$_G['gp_sn'];
 
-$tj_sql .=" insert into tbl_app_log ( ";
-$tj_sql .=" uid, ";
-$tj_sql .=" field_uid, ";
-$tj_sql .=" app_log_mod, ";
-$tj_sql .=" ac, ";
-$tj_sql .=" ip, ";
-$tj_sql .=" province, ";
-$tj_sql .=" user_agent, ";
-$tj_sql .=" versions, ";
-$tj_sql .=" url, ";
-$tj_sql .=" app_log_addtime ";
-$tj_sql .=" ) values( ";
-$tj_sql .=" '".$log_uid."', ";
-$tj_sql .=" '".$log_field_uid."', ";
-$tj_sql .=" '".$mod."', ";
-$tj_sql .=" '".$ac."', ";
-$tj_sql .=" '".get_real_ip()."', ";
-$tj_sql .=" '".$province."', ";
-$tj_sql .=" '".$userAgent."', ";
-$tj_sql .=" '".$versions."', ";
-$tj_sql .=" '".$_SERVER['REQUEST_URI']."', ";
-$tj_sql .=" '".time()."' ";
-$tj_sql .=" ) ";
-$tj_up=DB::query($tj_sql);
-//tj_end
+	$tj_sql .=" insert into tbl_app_log ( ";
+	$tj_sql .=" uid, ";
+	$tj_sql .=" field_uid, ";
+	$tj_sql .=" app_log_mod, ";
+	$tj_sql .=" ac, ";
+	$tj_sql .=" ip, ";
+	$tj_sql .=" province, ";
+	$tj_sql .=" user_agent, ";
+	$tj_sql .=" versions, ";
+	$tj_sql .=" url, ";
+	$tj_sql .=" sn, ";
+	$tj_sql .=" app_log_addtime ";
+	$tj_sql .=" ) values( ";
+	$tj_sql .=" '".$log_uid."', ";
+	$tj_sql .=" '".$log_field_uid."', ";
+	$tj_sql .=" '".$mod."', ";
+	$tj_sql .=" '".$ac."', ";
+	$tj_sql .=" '".get_real_ip()."', ";
+	$tj_sql .=" '".$province."', ";
+	$tj_sql .=" '".$userAgent."', ";
+	$tj_sql .=" '".$versions."', ";
+	$tj_sql .=" '".$_SERVER['REQUEST_URI']."', ";
+	$tj_sql .=" '".$sn."', ";
+	$tj_sql .=" '".time()."' ";
+	$tj_sql .=" ) ";
+	$tj_up=DB::query($tj_sql);
+	//tj_end
 
 
 	
@@ -216,7 +227,8 @@ function yanzheng_token($token)
 	$time=time()-strtotime(date("Y-m-d",time()));
 	if($time>1800 && $time<84600)
 	{
-		if($code<>md5(date("Ymd",time())."bwvip.com"))
+		//if($code<>md5(date("Ymd",time())."bwvip.com"))
+		if($code<>md5(date("Ymd",time())."bwvip.com") && $code<>md5(date("Ymd",(time()+86400))."bwvip.com") && $code<>md5(date("Ymd",(time()-86400))."bwvip.com"))
 		{
 			return false;
 		}
