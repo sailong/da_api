@@ -21,7 +21,7 @@ class eventAction extends AdminAuthAction
 			$sql=" and event_id in (".$_SESSION['event_ids'].") ";
 		}
 		
-		$list=D("event")->event_list_pro("  ".$sql);
+		$list=D("event")->event_list_pro("  ".$sql,20," event_addtime desc ");
 
 		$this->assign("list",$list["item"]);
 		$this->assign("pages",$list["pages"]);
@@ -40,6 +40,9 @@ class eventAction extends AdminAuthAction
 		$b=$editor->usejs();             //js代码
 		$this->assign('usejs',$b);     //输出到html
 		$this->assign('editor',$a);
+		
+		$app_list=select_dict(15,"select");
+		$this->assign("app_list",$app_list);
 
 		$this->assign("page_title","添加赛事");
     	$this->display();
@@ -150,6 +153,9 @@ class eventAction extends AdminAuthAction
 			$b=$editor->usejs();             //js代码
 			$this->assign('usejs',$b);     //输出到html
 			$this->assign('editor',$a);
+			
+			$app_list=select_dict(15,"select");
+			$this->assign("app_list",$app_list);
 			
 			$this->assign("page_title","修改赛事");
 			$this->display();
@@ -343,6 +349,9 @@ class eventAction extends AdminAuthAction
 			
 			$data=M("event")->where("event_id=".intval(get("event_id")))->find();
 			$this->assign("data",$data);
+			
+			$app_list=select_dict(15,"select");
+			$this->assign("app_list",$app_list);
 			
 			
 			$this->assign('event_name',$data['event_name']);

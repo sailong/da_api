@@ -9,7 +9,7 @@
 class adAction extends AdminAuthAction
 {
 
-	public function _basic()	
+	public function _basic()
 	{
 		parent::_basic();
 	}
@@ -36,6 +36,9 @@ class adAction extends AdminAuthAction
 		
 		$event=D('event')->event_select_pro("  ");
 		$this->assign('event',$event['item']);
+		
+		$app_list=select_dict(15,"select");
+		$this->assign("app_list",$app_list);
 
 		$this->assign("page_title","添加广告");
     	$this->display();
@@ -143,6 +146,9 @@ class adAction extends AdminAuthAction
 			$action_list=select_dict(16,"select");
 			$this->assign("action_list",$action_list);
 			//print_r($page_list);
+			
+			$app_list=select_dict(15,"select");
+			$this->assign("app_list",$app_list);
 			
 			$this->assign("page_title","修改广告");
 			$this->display();

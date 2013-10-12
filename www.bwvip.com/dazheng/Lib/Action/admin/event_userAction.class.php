@@ -153,6 +153,10 @@ class event_userAction extends AdminAuthAction
 			}
 
 			$list=M("event_user")->save($data);
+			$event_id=$data["event_id"];
+			$event_user_id=$data["event_user_id"];
+			$uid=$data["uid"];
+			$res=M()->execute("update tbl_baofen set uid=$uid where event_user_id=".$event_user_id." and event_id=".$event_id."  ");
 			$this->success("修改成功",U('admin/event_user/event_user',array('event_id'=>post('event_id'))));			
 		}
 		else

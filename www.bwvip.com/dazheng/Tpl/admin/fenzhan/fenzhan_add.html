@@ -35,7 +35,7 @@
 							<option value="{$vo2.fenzhan_id}">{$vo2.fenzhan_name}</option>
 							</volist>
 						</select> 
-						默认留空/有分轮时请选择此项
+						<span class="help_info">(默认留空/有分轮时请选择此项)</span>
 					</td>
 				</tr>
                 <tr>
@@ -47,7 +47,9 @@
                          <option value="3"  >第三轮</option>
                          <option value="4"  >第四轮</option>
                          <option value="5"  >第五轮</option>
-                        </select></td>
+                        </select>
+						<span class="help_info">(分站属于第几轮)</span>
+						</td>
 				</tr>
 				<tr>
 					<th>分站名称：</th>
@@ -138,12 +140,17 @@
 				</tr>
 				<tr>
 					<th>排序：</th>
-					<td><input type="text" name="orderby" id="orderby" class="mod_input2" style="width:60px;" ></td>
+					<td>
+						<input type="text" name="orderby" id="orderby" class="mod_input2" style="width:60px;" >
+						<span class="help_info">(数值越大，显示排名越靠前)</span>
+					</td>
 				</tr>
+				<!--
 				<tr>
 					<th>状态：</th>
 					<td><input type="text" name="is_delete" id="is_delete" class="mod_input2" style="width:60px;" ></td>
 				</tr>
+				-->
 				
 		</tbody>
 		<tfoot>

@@ -4,6 +4,12 @@ if(!defined("IN_DISCUZ"))
 	exit('Access Denied');
 }
 
+$ip = get_real_ip();
+$city_info = getCity($ip);
+$sheng=$city_info['region'];
+$city=$city_info['city'];
+
+
 $ac=$_G['gp_ac'];
 if($ac == 'erweima'){
 echo user_add_return(time());
@@ -13,7 +19,7 @@ $field_uid = $_G['gp_field_uid'];//球场编号
 $language=$_G['gp_language'];
 $now_time = time();
 //是否检查field_uid
-if(!in_array($ac,array('free_ticket','free_ticket2'))) {
+if(!in_array($ac,array('free_ticket','free_ticket2','getIp'))) {
     if(empty($ac) || empty($field_uid)) 
     {
         api_json_result(1,1,"参数不完整",'');
@@ -915,6 +921,15 @@ function get_randmod_str(){
    return $serial;
 
 }
+if($ac=='getIp'){
+	$ip = get_real_ip();
+	
+	$city_info = getCity($ip);
+	
+	echo $ip;
+	echo '<pre><br/>';
+	var_dump($city_info);die;
+}
 
 
 //用户预定门票信息  start
@@ -1067,7 +1082,7 @@ if($ac == 'free_ticket2')
 				
 		}
 		
-		$sql = "insert into tbl_user_ticket(uid,ticket_id,event_id,ticket_type,user_ticket_code,user_ticket_codepic,user_ticket_realname,user_ticket_sex,user_ticket_age,user_ticket_address,user_ticket_mobile,user_ticket_imei,user_ticket_company,user_ticket_company_post,user_ticket_status,user_ticket_addtime,ticket_times,ticket_starttime,ticket_endtime,ticket_price) values('{$uid}','{$ticket_id}','{$event_id}','{$ticket_type}','{$user_ticket_code}','{$user_ticket_codepic}','{$user_ticket_realname}','{$user_ticket_sex}','{$user_ticket_age}','{$user_ticket_address}','{$user_ticket_mobile}','{$user_ticket_imei}','{$user_ticket_company}','{$user_ticket_company_post}','{$user_ticket_status}','{$user_ticket_addtime}','{$ticket_times}','{$ticket_starttime}','{$ticket_endtime}','{$ticket_price}')";
+		$sql = "insert into tbl_user_ticket(uid,ticket_id,event_id,ticket_type,user_ticket_code,user_ticket_codepic,user_ticket_realname,user_ticket_sex,user_ticket_age,user_ticket_address,user_ticket_mobile,user_ticket_imei,user_ticket_company,user_ticket_company_post,user_ticket_status,user_ticket_addtime,ticket_times,ticket_starttime,ticket_endtime,ticket_price,ip,sheng,city) values('{$uid}','{$ticket_id}','{$event_id}','{$ticket_type}','{$user_ticket_code}','{$user_ticket_codepic}','{$user_ticket_realname}','{$user_ticket_sex}','{$user_ticket_age}','{$user_ticket_address}','{$user_ticket_mobile}','{$user_ticket_imei}','{$user_ticket_company}','{$user_ticket_company_post}','{$user_ticket_status}','{$user_ticket_addtime}','{$ticket_times}','{$ticket_starttime}','{$ticket_endtime}','{$ticket_price}','{$ip}','{$sheng}','{$city}')";
 		$res = DB::query($sql);
 		
 		
@@ -1333,11 +1348,8 @@ if($ac == 'up_menupic')
 		api_json_result(1,2,"图片上传失败",$data);
 	}
 }
-if($ac == 'curl_post') {
-    $a = $_G['sssss'];
-    $b = $_POST['sssss'];
-    echo '4444a'.$a.'b'.$b;
-}
+
+
 //    $uid = $_G['gp_uid'];
 //    if(empty($uid)) 
 //    {

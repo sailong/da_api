@@ -59,15 +59,17 @@
 		<th class="line_l">所属赛事</th>
 		<!-- <th class="line_l">所属分站</th> -->
 		<th class="line_l">价格</th>
-		<th class="line_l">票面人数</th>
+		
 		<th class="line_l">总数</th>
 		<!--
 		<th class="line_l">图片</th>
 		-->
-		<th class="line_l">开始时间</th>
-		<th class="line_l">结束时间</th>
+		<th class="line_l">时间段</th>
 		<th class="line_l">类型</th>
+		<!--
+		<th class="line_l">票面人数</th>
 		<th class="line_l">入场次数</th>
+		-->
 		<th class="line_l">排序</th>
 		<th class="line_l">可赠送</th>
 		<!--
@@ -84,15 +86,18 @@
 		<td>{$vo.event_name} </td>
 		<!-- <td>{$vo.fenzhan_id}</td> -->
 		<td>{$vo.ticket_price}元</td>
-		<td>{$vo.ticket_ren_num}人</td>
-		<td>{$vo.ticket_num}</td>
+		
+		<td>{$vo.ticket_num}张</td>
 		<!--
 		<td><php>if($vo['ticket_pic']){</php><img src="{$vo.ticket_pic}" style="max-height:60px; max-width:100px;"/><php>}</php></td>
 		-->
-		<td>{$vo.ticket_starttime|format_to_time}</td>
-		<td>{$vo.ticket_endtime|format_to_time}</td>
+		<td>{$vo.ticket_starttime|format_to_time}<br />{$vo.ticket_endtime|format_to_time}</td>
+		
 		<td><php>if($vo['ticket_type']=='BASE'){echo "普通";}if($vo['ticket_type']=='VIP'){echo $vo['ticket_type'];}</php></td>
+		<!--
+		<td>{$vo.ticket_ren_num}人</td>
 		<td>{$vo.ticket_times}</td>
+		-->
 		<td>{$vo.ticket_sort}</td>
 		<td><php>if($vo['ticket_is_zengsong']=='Y'){echo "是";}if($vo['ticket_is_zengsong']=='N'){echo '否';}</php></td>
 		<!--
