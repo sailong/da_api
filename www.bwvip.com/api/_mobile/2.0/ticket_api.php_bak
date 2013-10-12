@@ -667,144 +667,7 @@ if($ac=="youji")
 }
 
 
-//2013-10-11批量门票申请
-if($ac == 'ticket_apply_batch')
-{
-	//post: user_ticket_mobile *user_ticket_imei* ticket_id ticket_type user_ticket_realname user_ticket_sex user_ticket_age  user_ticket_address *user_ticket_company user_ticket_company_post*
-	//api生成: user_ticket_code user_ticket_codepic user_ticket_status
-	if(empty($_G['gp_phone']) || !preg_match("/^13[0-9]{1}[0-9]{8}$|15[0-9]{1}[0-9]{8}$|18[0-9]{1}[0-9]{8}$/",$_G['gp_phone']))
-	{
-		api_json_result(1,1,"手机号格式不正确",null);
-	}
-	if(empty($_G['gp_ticket_id']))
-	{
-		api_json_result(1,1,"缺少参数ticket_id",null);
-	}
-	
-	$user_ticket_mobile = $_G['gp_phone'];//手机号
-	$uid = $_G['gp_uid'];
-	$user_ticket_imei = $_G['gp_phone_imei'];//手机窜号
-	$ticket_id_str = $_G['gp_ticket_id'];//门票ID
-	$ticket_nums = empty($_G['gp_ticket_nums']) ? 1 : $_G['gp_ticket_nums'];//门票数量
-	$user_ticket_realname = urldecode($_G['gp_realname']);//订票人真实姓名
-	$user_ticket_sex = urldecode($_G['gp_sex']);//性别
-	$user_ticket_age = $_G['gp_age'];//年龄
-	$user_ticket_address = urldecode($_G['gp_address']);//所在区域
-	$user_ticket_company = urldecode($_G['gp_company']);//所在公司
-	$user_ticket_company_post = urldecode($_G['gp_company_post']);//公司职位
-	$user_ticket_code = get_randmod_str();//$_G['company_post'];//随机唯一窜
-	$user_ticket_addtime = time();
-	
-	//没有uid则生成
-	if(empty($uid)){
-		$sql = "select uid,mobile from pre_common_member_profile where mobile='{$user_ticket_mobile}' order by uid desc";
-		$rs=DB::fetch_first($sql);
-		if(!empty($rs)){
-			$uid=$rs['uid'];
-		}else{
-			$uid = user_add_return($user_ticket_realname,$user_ticket_sex,$user_ticket_mobile);
-		}
-	}
-	$ticket_ids = explode(',',$ticket_id_str);
-	$apply_suc_nums = 0;
-	$apply_suc_ticket_names = array();
-	$apply_already_ticket_names = array();
-	foreach((array)$ticket_ids as $key=>$val){
-		$user_ticket_code = get_randmod_str();
-		$ticket_id = $val;
-		$ticket_info=DB::fetch_first("select event_id,ticket_name,ticket_times,ticket_type,ticket_price,ticket_starttime,ticket_endtime from tbl_ticket where ticket_id='".$ticket_id."' limit 1 ");
-		$apply_suc_ticket_name .= $ticket_info['event_id'];
-		$event_id=$ticket_info['event_id'];
-		$ticket_times=$ticket_info['ticket_times'];
-		$ticket_starttime=$ticket_info['ticket_starttime'];
-		$ticket_endtime=$ticket_info['ticket_endtime']; 
-		$ticket_price = $ticket_info['ticket_price'];
-		$ticket_type = $ticket_info['ticket_type'];
-		//检查用户是否已提交申请
-		$sql = "select user_ticket_id,ticket_id,user_ticket_code,user_ticket_codepic,ticket_price,user_ticket_status from tbl_user_ticket where ticket_id='{$ticket_id}' and ticket_type='".$ticket_type."' and user_ticket_imei='{$user_ticket_imei}'";//user_ticket_mobile='{$user_ticket_mobile}' or 
-		$list = DB::fetch_first($sql);
-		
-		$phone = mt_rand(1000000000,9999999999);
-		//已经索取过
-		if(!$list)
-		{
-			//生成二维码
-			$erweima_path = erweima($phone);
-			$user_ticket_codepic = $erweima_path;
-			
-			$row=explode("/",$user_ticket_codepic);
-			$user_ticket_code=str_replace(".png","",$row[4]);
-			
-			
-			if($ticket_price > 0)
-			{
-				$user_ticket_status = 0;
-				$return_detail['ticket_pic'] = "";
-				$return_detail['apply_code'] = "";
-				$data['data'] =$return_detail;
-			}else
-			{
-				$user_ticket_status = 1;
-				
-				$return_detail['ticket_pic'] = $site_url.$erweima_path;
-				$return_detail['apply_code'] = (string)$phone;
-				$data['data'] =$return_detail;
-			
-				//发系统消息
-				$user_ticket_info = array(
-					'event_id' => $event_id,
-					'uid'      => $uid,
-					'user_ticket_codepic' => $user_ticket_codepic
-				);
-				sys_message_add_return($user_ticket_info);
-					
-			}
-			
-			$sql = "insert into tbl_user_ticket(uid,ticket_id,event_id,ticket_type,user_ticket_code,user_ticket_codepic,user_ticket_realname,user_ticket_sex,user_ticket_age,user_ticket_address,user_ticket_mobile,user_ticket_imei,user_ticket_company,user_ticket_company_post,user_ticket_status,user_ticket_addtime,ticket_times,ticket_starttime,ticket_endtime,ticket_price,ip,sheng,city) values('{$uid}','{$ticket_id}','{$event_id}','{$ticket_type}','{$user_ticket_code}','{$user_ticket_codepic}','{$user_ticket_realname}','{$user_ticket_sex}','{$user_ticket_age}','{$user_ticket_address}','{$user_ticket_mobile}','{$user_ticket_imei}','{$user_ticket_company}','{$user_ticket_company_post}','{$user_ticket_status}','{$user_ticket_addtime}','{$ticket_times}','{$ticket_starttime}','1381053600','{$ticket_price}','{$ip}','{$sheng}','{$city}')";
-			$res = DB::query($sql);
-			if($res){
-				$apply_suc_nums += 1;
-				$apply_suc_ticket_names[] = $ticket_info['ticket_name'];
-			}
-		}else{
-			$apply_already_ticket_names[] = $ticket_info['ticket_name'];
-		}
-	}
-	//自动关注 start
-	$list=DB::query("select uid from tbl_user_ticket where event_id='".$event_id."' and uid<>'".$uid."'  ");
-	while($user = DB::fetch($list) )
-	{
-		
-		$aaa=DB::fetch_first("select id from jishigou_buddys where uid='".$uid."' and buddyid='".$user['uid']."' ");
-		if(empty($aaa))
-		{
-			$res=DB::query("insert into jishigou_buddys (uid,buddyid,grade,remark,dateline,description,buddy_lastuptime) values ('".$uid."','".$user['uid']."','1','','".time()."','','".time()."') ");
-		}
 
-		$bbb=DB::fetch_first("select id from jishigou_buddys where uid='".$user['uid']."' and buddyid='".$uid."' ");
-		if(empty($bbb))
-		{
-			$res=DB::query("insert into jishigou_buddys (uid,buddyid,grade,remark,dateline,description,buddy_lastuptime) values ('".$user['uid']."','".$uid."','1','','".time()."','','".time()."') ");
-	
-		}
-		
-	}
-	//自动关注 end
-	$ticket_name_str = '';
-	if(!empty($apply_suc_ticket_names)){
-		$ticket_name_str = '('.implode("、",$apply_suc_ticket_names).')';
-	}
-	$apply_already_str = '';
-	if(!empty($apply_already_ticket_names)){
-		$apply_already_str = '，已经申请过的门票不可再次申请('.implode("、",$apply_already_ticket_names).')';
-	}
-	if($apply_suc_nums>0){
-		api_json_result(1,0,"您成功申请了{$apply_suc_nums}张门票{$ticket_name_str}{$apply_already_str}",null);
-	}else{
-		api_json_result(1,1,"申请失败{$apply_already_str}",null);
-	}
-	
-}
 
 
 //用户预定门票信息
@@ -998,7 +861,7 @@ function erweima($phone)
     //如果没有就生成二维码
 	$path_erweima_core = dirname(dirname(dirname(dirname(__FILE__))));
 	
-	require_once($path_erweima_core."/tool/phpqrcode/qrlib.php");
+	include $path_erweima_core."/tool/phpqrcode/qrlib.php";
 	$prefix = $path_erweima_core;
 	$save_path="/upload/erweima/";
 	$now_date = date("Ymd",time());
