@@ -433,6 +433,22 @@ function menu_is_can($menu_id,$role_id)
 	}
 }
 
+
+function menu_is_can_piao($menu_id,$role_id)
+{
+	$res=M()->query("select admin_role_menu_id from tbl_piao_admin_role_menu where admin_role_id='".$role_id."' and event_id='".$_SESSION['event_id']."' and admin_menu_id='".$menu_id."' ");
+	if($res[0]['admin_role_menu_id'])
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+}
+
+
+
 function get_ip() //获取用户IP
 {
 	 if(getenv('HTTP_CLIENT_IP') && strcasecmp(getenv('HTTP_CLIENT_IP'), 'unknown'))

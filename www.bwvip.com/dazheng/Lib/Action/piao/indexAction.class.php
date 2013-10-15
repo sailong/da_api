@@ -18,7 +18,8 @@ class indexAction extends piao_publicAction
 	
 	public function index()
 	{
-		$menu=D("piao_admin_menu")->piao_admin_menu_select_pro(" and piao_admin_menu_parent_id=0 and piao_admin_menu_state=1 ");
+		$menu=D("piao_admin_menu")->piao_admin_menu_select_pro(" and piao_admin_menu_parent_id=0 and piao_admin_menu_state=1 and piao_admin_menu_id in (select admin_menu_id from tbl_piao_admin_role_menu where admin_role_id='".$_SESSION['piao_admin_role_id']."') ");
+		
 		for($i=0; $i<count($menu['item']); $i++)
 		{
 			$url=M()->query("select piao_admin_menu_url from tbl_piao_admin_menu where piao_admin_menu_parent_id='".$menu['item'][$i]['piao_admin_menu_id']."' ");
@@ -38,7 +39,7 @@ class indexAction extends piao_publicAction
 		{
 			$parent_id=0;
 		}
-		$sub_menu=D("piao_admin_menu")->piao_admin_menu_select_pro(" and piao_admin_menu_parent_id=".$parent_id." and piao_admin_menu_state=1  ");
+		$sub_menu=D("piao_admin_menu")->piao_admin_menu_select_pro(" and piao_admin_menu_parent_id=".$parent_id." and piao_admin_menu_state=1 and piao_admin_menu_id in (select admin_menu_id from tbl_piao_admin_role_menu where admin_role_id='".$_SESSION['piao_admin_role_id']."')");
 		$this->assign("sub_menu",$sub_menu['item']);
 		
 		//print_r($sub_menu);
@@ -278,9 +279,8 @@ class indexAction extends piao_publicAction
 		$this->assign("role",$role);
 		
 		
-		$list=D("piao_admin_menu")->piao_admin_menu_select_pro(" and piao_admin_menu_parent_id=0 and event_id='".$_SESSION['event_id']."'  ");
+		$list=D("piao_admin_menu")->piao_admin_menu_select_pro(" and piao_admin_menu_parent_id=0    ");
 	
-		
 		$this->assign("list",$list["item"]);
 		$this->assign("total",$list["total"]);
 		
@@ -299,10 +299,12 @@ class indexAction extends piao_publicAction
 			{
 				$res=M()->execute("insert into tbl_piao_admin_role_menu (admin_role_id,admin_menu_id,event_id) values ('".post("canshu")."','".$ids[$i]."','".$_SESSION['event_id']."')");
 			}
+			//echo "succeed^insert into tbl_piao_admin_role_menu (admin_role_id,admin_menu_id,event_id) values ('".post("canshu")."','".$ids[$i]."','".$_SESSION['event_id']."')";
 			echo "succeed^保存成功";
 		}
 		else
 		{
+			//echo "insert into tbl_piao_admin_role_menu (admin_role_id,admin_menu_id,event_id) values ('".post("canshu")."','".$ids[$i]."','".$_SESSION['event_id']."')";
 			echo "error^保存失败2";
 		}
 	}

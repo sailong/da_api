@@ -64,7 +64,8 @@ class user_ticketAction extends field_publicAction
 		}
 		
 		if($ticket_id_sql){
-			$list=D("user_ticket")->user_ticket_list_pro("{$ticket_id_sql}{$user_ticket_status_sql}");
+			$list=D("user_ticket")->user_ticket_list_pro(" and field_uid={$field_uid} {$ticket_id_sql}{$user_ticket_status_sql}");
+			
 		}
 		
 		$this->assign("event_list",$event_list);

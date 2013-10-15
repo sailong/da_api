@@ -48,7 +48,7 @@ else
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>南山庄园高尔夫俱乐部</title>
+<title>南山国际高尔夫球会</title>
 <style type="text/css">
 body{margin:0;padding:0;}
 img{border:0;}

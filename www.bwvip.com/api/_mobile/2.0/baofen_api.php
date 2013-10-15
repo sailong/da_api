@@ -608,6 +608,7 @@ if($ac=='rank')
 			'first_fenzhan_id'=>$first_fenzhan_id,
 			'lun'=>(string)$lun,
 			'lun_num'=>(string)$lun_num,
+			'lun_ing'=>(string)$now_fenzhan_info['fenzhan_lun'],
 			'event_pic'=>$event_info['event_timepic'],
 			'event_logo'=>$event_info['event_logo'],
 			'event_logo_small'=>$event_info['event_logo_small'],

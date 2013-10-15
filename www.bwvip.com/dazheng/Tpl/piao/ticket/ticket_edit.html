@@ -22,18 +22,7 @@
 					<th>门票名称：</th>
 					<td><input type="text" name="ticket_name" id="ticket_name" class="mod_input2" style="width:300px;"  value="{$data.ticket_name}"></td>
 				</tr>
-				<tr>
-					<th>所属赛事：</th>
-					<td>
-						<select name="event_id">
-							<option value="">请选择</option>
-							<volist id="list" name="event_list">
-							<option value="{$list.event_id}">{$list.event_name}</option>
-							</volist>
-						</select>
-						<script>set_select_value(document.act_form.event_id,"{$data.event_id}");</script>
-					</td>
-				</tr>
+				
 				<!-- <tr>
 					<th>所属分站：</th>
 					<td>
@@ -46,27 +35,45 @@
 				</tr> -->
 				<tr>
 					<th>门票价格：</th>
-					<td><input type="text" name="ticket_price" id="ticket_price" class="mod_input2" style="width:66px;"  value="{$data.ticket_price}"></td>
+					<td>
+					<input type="text" name="ticket_price" id="ticket_price" class="mod_input2" style="width:66px;"  value="{$data.ticket_price}">元
+					<span class="help_info">(免费赠送门票价格为0,申请后可直接获取;收费门票价格大于0，会有审核流程。)</span>
+					</td>
 				</tr>
 				<tr>
 					<th>票面人数：</th>
-					<td><input type="text" name="ticket_ren_num" id="ticket_ren_num" class="mod_input2" style="width:66px;"  value="{$data.ticket_ren_num}"></td>
+					<td>
+						<input type="text" name="ticket_ren_num" id="ticket_ren_num" class="mod_input2" style="width:66px;"  value="{$data.ticket_ren_num}">人
+						<span class="help_info">(同一张票可以进场人数。比如一个旅行团刷一次票，可以进30人)</span>
+					
+					</td>
 				</tr>
 				<tr>
 					<th>总数：</th>
-					<td><input type="text" name="ticket_num" id="ticket_num" class="mod_input2" style="width:66px;"  value="{$data.ticket_num}"></td>
+					<td>
+						<input type="text" name="ticket_num" id="ticket_num" class="mod_input2" style="width:66px;"  value="{$data.ticket_num}">
+						<span class="help_info">(门票的总数量)</span>
+					</td>
 				</tr>
+				<!--
 				<tr>
 					<th>图片：</th>
 					<td><img src="/{$data.ticket_pic}" style="max-width:300px;max-height:200px;"/><br/><input type="file" name="ticket_pic" id="ticket_pic"  class="mod_input"></td>
 				</tr>
+				-->
 				<tr>
 					<th>开始时间：</th>
-					<td><input type="text" name="ticket_starttime" id="ticket_starttime" readonly class="mod_input_date" style="width:200px;" value="{$data.ticket_starttime|format_to_time}" onFocus="WdatePicker({isShowClear:false,readOnly:true})" ></td>
+					<td>
+						<input type="text" name="ticket_starttime" id="ticket_starttime" readonly class="mod_input_date" style="width:200px;" value="{$data.ticket_starttime|format_to_fulltime}" onFocus="WdatePicker({startDate:'%y-%M-%d 08:00:00',dateFmt:'yyyy-MM-dd HH:mm:ss',alwaysUseStartDate:true})" >
+						<span class="help_info">(开始入场时间)</span>
+						</td>
 				</tr>
 				<tr>
 					<th>结束时间：</th>
-					<td><input type="text" name="ticket_endtime" id="ticket_endtime" readonly class="mod_input_date" style="width:200px;" value="{$data.ticket_endtime|format_to_time}" onFocus="WdatePicker({isShowClear:false,readOnly:true})" ></td>
+					<td>
+						<input type="text" name="ticket_endtime" id="ticket_endtime" readonly class="mod_input_date" style="width:200px;" value="{$data.ticket_endtime|format_to_fulltime}" onFocus="WdatePicker({startDate:'%y-%M-%d 08:00:00',dateFmt:'yyyy-MM-dd HH:mm:ss',alwaysUseStartDate:true})" >
+						<span class="help_info">(结束入场时间)</span>
+						</td>
 				</tr>
 				<tr>
 					<th>类型：</th>
@@ -77,11 +84,33 @@
 							<option value="VIP">VIP</option>
 						</select>
 						<script>set_select_value(document.act_form.ticket_type,"{$data.ticket_type}");</script>
+						
 					</td>
 				</tr>
 				<tr>
-					<th>销费次数：</th>
-					<td><input type="text" name="ticket_times" id="ticket_times" class="mod_input2" style="width:66px;"  value="{$data.ticket_times}"></td>
+					<th>入场次数：</th>
+					<td>
+						<input type="text" name="ticket_times" id="ticket_times" class="mod_input2" style="width:66px;"  value="{$data.ticket_times}">
+						<span class="help_info">(同一张门票，可以入场的次数)</span>
+						</td>
+				</tr>
+				<tr>
+					<th>排序：</th>
+					<td><input type="text" name="ticket_sort" id="ticket_sort" class="mod_input2" style="width:66px;"  value="{$data.ticket_sort}">
+					<span class="help_info">(数值越大，越靠前)</span>
+					</td>
+				</tr>
+				<tr>
+					<th>是否赠送：</th>
+					<td>
+						<select name="ticket_is_zengsong" id="ticket_is_zengsong">
+							<option value="">请选择</option>
+							<option value="Y">是</option>
+							<option value="N">否</option>
+						</select>
+						<script>set_select_value(document.act_form.ticket_is_zengsong,"{$data.ticket_is_zengsong}");</script>
+						<span class="help_info">(设置门票是否可以赠送，选否时，我的门票详细页，没有“赠送”按钮)</span>
+					</td>
 				</tr>
 				<tr>
 					<th>介绍：</th>
