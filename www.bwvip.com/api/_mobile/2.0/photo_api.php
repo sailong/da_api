@@ -117,6 +117,7 @@ if($ac=="photo_list")
 		$list=DB::query("select photo_id,photo_name,photo_url,photo_url_small,photo_addtime from tbl_photo where 1 ".$sql." order by photo_addtime asc limit $page_start2,$page_size2  ");
 		while($row = DB::fetch($list))
 		{
+			
 			if($row['photo_url'])
 			{
 				$row['photo_url']=$site_url."/".$row['photo_url'];
