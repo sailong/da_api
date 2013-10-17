@@ -114,7 +114,7 @@ if($ac=="photo_list")
 	}
 	if($max_page>=$page2)
 	{
-		$list=DB::query("select photo_id,photo_name,photo_url,photo_url_small,photo_addtime from tbl_photo where 1 ".$sql." order by photo_addtime asc limit $page_start2,$page_size2  ");
+		$list=DB::query("select photo_id,photo_name,photo_url,photo_url_small,photo_addtime,albumid from tbl_photo where 1 ".$sql." order by photo_addtime asc limit $page_start2,$page_size2  ");
 		while($row = DB::fetch($list))
 		{
 			
@@ -143,6 +143,82 @@ if($ac=="photo_list")
 				$row['photo_url_small_info']=null;
 			}
 			$row['photo_addtime']=date("Y-m-d",$row['photo_addtime']);
+			$row['wap_url']="http://wap.bwvip.com/album.php?id=".$row['albumid'];
+			$list_data[]=array_default_value($row,array('photo_url_info','photo_url_small_info'));
+		}
+	}
+	
+	
+	$data['title']	="list_data";
+	$data['data'] =$list_data;
+	api_json_result(1,0,$app_error['event']['10502'],$data);
+	
+}
+
+
+
+if($ac=="photo_list2")
+{
+	$album_id=$_G['gp_album_id'];
+	if($album_id)
+	{
+		$sql =" and album_id='".$album_id."' ";
+	}
+	
+	$total=DB::result_first("select count(photo_id) from tbl_photo where 1 ".$sql." ");
+	$max_page=intval($total/$page_size2);
+	if($max_page<$total/$page_size2)
+	{
+		$max_page=$max_page+1;
+	}
+	if($max_page>=$page2)
+	{
+		$list=DB::query("select photo_id,photo_name,photo_url,photo_url_small,photo_addtime,albumid,photo_width,photo_height,photo_width_small,photo_height_small from tbl_photo where 1 ".$sql." order by photo_addtime asc limit $page_start2,$page_size2  ");
+		while($row = DB::fetch($list))
+		{
+			
+			if($row['photo_url'])
+			{
+				$row['photo_url']=$site_url."/".$row['photo_url'];
+				
+				if($row['photo_width'] && $row['photo_height'])
+				{
+					$row['photo_url_info']=array(0=>$row['photo_width'],1=>$row['photo_height']);
+				}
+				else
+				{
+					$row['photo_url_info']=getimagesize($row['photo_url']);
+				}
+				
+				
+				if($row['photo_url_small'])
+				{
+					$row['photo_url_small']=$site_url.'/'.$row['photo_url_small'];
+					if($row['photo_width_small'] && $row['photo_height_small'])
+					{
+						$row['photo_url_small_info']=array(0=>$row['photo_width_small'],1=>$row['photo_height_small']);
+					}
+					else
+					{
+						$row['photo_url_small_info']=getimagesize($row['photo_url_small']);
+					}
+				}
+				else
+				{
+					$row['photo_url_small']="";
+					$row['photo_url_small_info']=null;
+				}
+				
+			}
+			else
+			{
+				$row['photo_url']="";
+				$row['photo_url_info']=null;
+				$row['photo_url_small']="";
+				$row['photo_url_small_info']=null;
+			}
+			$row['photo_addtime']=date("Y-m-d",$row['photo_addtime']);
+			$row['wap_url']="http://wap.bwvip.com/album.php?id=".$row['albumid'];
 			$list_data[]=array_default_value($row,array('photo_url_info','photo_url_small_info'));
 		}
 	}

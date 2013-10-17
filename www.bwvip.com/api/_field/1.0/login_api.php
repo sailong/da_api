@@ -28,6 +28,7 @@ list($uid, $username, $password, $email) = uc_user_login($username,$_G['gp_passw
 
 
 $row['touxiang']="".$site_url."/uc_server/avatar.php?uid=".$row['uid']."&size=small";
+$user_info=DB::fetch_first("select mobile from pre_common_member_profile where uid='{$uid}' ");
 
 /*初始化接口返回的参数*/
 $response         = 0;
@@ -37,6 +38,7 @@ $data['data'] = array(
 					'uid'=>$uid,
 					//'username'=>$realname,
 					'password'=>$password,
+					'mobile'=>$user_info['mobile'],
 					'touxiang'=>"".$site_url."/uc_server/avatar.php?uid=".$uid."&size=middle",
 					//'email'   =>$email,
 					 );
