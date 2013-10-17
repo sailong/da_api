@@ -71,7 +71,7 @@ $hot_2013district=array(
 //选择 赛事
 if($ac=="select_event")
 {
-	$list3=DB::query("select event_id,event_name,event_uid,event_is_zhutui,event_zhutui_pic,event_content,event_url,event_type,event_logo from tbl_event where event_is_zhutui='Y' and (event_viewtype='B' or event_viewtype='A' or event_viewtype='S') order by event_sort desc limit 1 ");
+	$list3=DB::query("select event_id,event_name,event_uid,event_is_zhutui,event_zhutui_pic,event_content,event_url,event_type,event_logo from tbl_event where event_is_zhutui='Y' and field_uid=0 order by event_sort desc limit 1 ");
 	while($row3 = DB::fetch($list3))
 	{
 		if($row3['event_zhutui_pic'])
@@ -83,7 +83,7 @@ if($ac=="select_event")
 			$row3['event_url']=null;
 		}
 		$row3['event_pic']=$site_url."/uc_server/avatar.php?uid=".$row['event_uid']."&size=middle";
-		$row3['uid']=$row3['event_uid'];
+		$row3['uid']=$row3['event_id'];
 		$row3['event_content']=msubstr(cutstr_html($row3['event_content']),0,30);
 		$list_data3[]=$row3;
 	}
@@ -293,18 +293,49 @@ if($ac=="event_blog_detail")
 	$pic_width=$_G['gp_pic_width'];
 	if($blogid)
 	{
-		$detail_data=DB::fetch_first("select uid,field_uid,arc_type,arc_id as blogid,arc_name as subject,arc_replynum as replynum,arc_viewtype as view_type,arc_pic as pic ,arc_addtime as dateline,arc_content as content from tbl_arc where arc_id='".$blogid."' ");
+		$detail_data=DB::fetch_first("select uid,field_uid,arc_type,arc_id as blogid,arc_name as subject,arc_replynum as replynum,arc_viewtype as view_type,arc_pic as pic ,arc_addtime as dateline,arc_content as content,is_video,is_span,(arc_share_qq+arc_share_sina) as arc_share_total,arc_share_qq,arc_share_sina,arc_video_pic,arc_video_url from tbl_arc where arc_id='".$blogid."' ");
 		$detail_data['username']="";
 		$detail_data['uid']="0";
-
 		
-		if($blogid==26990)
+		//video about
+		if($detail_data['arc_video_pic'])
 		{
-			$detail_data['content']=strip_tags($detail_data['content'],"<p><img><a><br><div>");
+			$detail_data['arc_video_pic']=$site_url."/".$detail_data['arc_video_pic'];
+			$detail_data['arc_video_pic_info']=getimagesize($detail_data['arc_video_pic']);
 		}
 		else
 		{
-			$detail_data['content']=strip_tags($detail_data['content'],"<p><img><br><div>");
+			$detail_data['arc_video_pic_info']=null;
+		}
+		
+		if($detail_data['arc_video_url'])
+		{
+			$detail_data['arc_video_url']=$site_url."/".$detail_data['arc_video_url'];
+		}
+
+		
+		if($detail_data['is_video']=="Y")
+		{
+			if($detail_data['is_span']=="Y")
+			{
+				$detail_data['content']=strip_tags($detail_data['content'],"<p><img><a><span><strong><br><div>");
+			}
+			else
+			{
+				$detail_data['content']=strip_tags($detail_data['content'],"<p><img><a><br><div>");
+			}
+		}
+		else
+		{
+			if($detail_data['is_span']=="Y")
+			{
+				$detail_data['content']=strip_tags($detail_data['content'],"<p><img><span><strong><br><div>");
+			}
+			else
+			{
+				$detail_data['content']=strip_tags($detail_data['content'],"<p><img><br><div>");
+			}
+
 		}
 		
 		$detail_data['content']=str_replace("<img ","<div style=\"text-align:center; width:100%; \"><a href=\"http://www.bwvip.com/news_detail_pic\"><changsailong><img ",$detail_data['content']);
@@ -433,6 +464,9 @@ if($ac=="event_blog_detail")
 
 		if($detail_data)
 		{
+		
+			$detail_data=array_default_value($detail_data,array('arc_video_pic_info'));
+			
 			$data['title']="detail_data";
 			$data['data']=array(
 							  'detail_info'=>$detail_data,
@@ -1121,13 +1155,13 @@ if($ac=="event_baoming_action")
 }
 
 
-
+//索取门票
 if($ac=='dz_ticket_event_list')
 {
 	$field_uid = $_G['gp_field_uid'];
 	if($field_uid)
 	{
-		$big_where=" and (event_viewtype='B' or (event_viewtype='A'  and field_uid='".$field_uid."') or (event_viewtype='Q' and field_uid='".$field_uid."'))  and event_is_ticket='Y' ";
+		$big_where=" and (event_viewtype='B' or (event_viewtype='A' and field_uid='".$field_uid."') or (event_viewtype='Q' and field_uid='".$field_uid."'))  and event_is_ticket='Y' and event_is_ticket_bwvip='N' ";
 	}
 	else
 	{
