@@ -6,16 +6,11 @@ $discuz = & discuz_core::instance();
 
 $discuz->init();
 
+$android_url=DB::result_first("select app_version_file from tbl_app_version where app_version_type='android' and field_uid=3803491 order by app_version_addtime desc limit 1 ");
+$ios_url=DB::result_first("select app_version_file from tbl_app_version where app_version_type='ios' and field_uid=3803491 order by app_version_addtime desc limit 1 ");
 
-$android_url=DB::result_first("select app_version_url from tbl_app_version where app_version_type='android' and field_uid=1160 order by app_version_addtime desc limit 1 ");
-if(!$android_url)
-{
-	$android_url=DB::result_first("select app_version_file from tbl_app_version where app_version_type='android' and field_uid=1160 order by app_version_addtime desc limit 1 ");
-}
-
-$ios_url=DB::result_first("select app_version_file from tbl_app_version where app_version_type='ios' and field_uid=1160 order by app_version_addtime desc limit 1 ");
 if(empty($ios_url)){
-$ios_url = "https://itunes.apple.com/us/app/nan-shan-qiu-hui/id687240067?ls=1&mt=8";
+$ios_url = "https://itunes.apple.com/us/app/hua-binlpga/id705699906?ls=1&mt=8";
 }
 /*
 $userAgent = $_SERVER['HTTP_USER_AGENT'];
@@ -48,7 +43,7 @@ else
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>南山国际高尔夫球会</title>
+<title>华彬庄园</title>
 <style type="text/css">
 body{margin:0;padding:0;}
 img{border:0;}
