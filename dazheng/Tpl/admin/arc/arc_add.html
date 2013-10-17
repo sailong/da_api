@@ -56,9 +56,9 @@
 					<td>
 						<select name="arc_viewtype">
 							<option value="">请选择</option>
-							<option value="normal">normal</option>
+							<option value="pic">大图(pic)</option>
+							<option value="normal">小图(normal)</option>
 							<option value="banner">banner</option>
-							<option value="pic">pic</option>
 						</select>
 						<script>set_select_value(document.act_form.arc_viewtype,"{$data.arc_viewtype}");</script>
 					</td>
@@ -75,6 +75,25 @@
 						<b>责任编辑：</b>
 						<input type="text" name="arc_editor" id="arc_editor" class="mod_input2" style="width:150px;"  value="{$data.arc_editor}">
 					</td>
+				</tr>
+				<tr>
+					<th>图片分享：</th>
+					<td>
+						<php>if($data['arc_video_pic']){</php><img src="/{$data.arc_video_pic}" style="max-height:100px; max-width:200px;"><br/><php>}</php>
+						<input type="file" name="arc_video_pic" id="arc_video_pic"  class="mod_input" style="width:300px;">
+					</td>
+				</tr>
+				<tr>
+					<th>视频分享：</th>
+					<td><input type="text" name="arc_video_url" id="arc_video_url" class="mod_input2" style="width:300px;"> </td>
+				</tr>
+				<tr>
+					<th>腾讯微博分享数：</th>
+					<td><input type="text" name="arc_share_qq" id="arc_share_qq" class="mod_input2" style="width:100px;" value="0"> </td>
+				</tr>
+				<tr>
+					<th>新浪微博分享数：</th>
+					<td><input type="text" name="arc_share_sina" id="arc_share_sina" class="mod_input2" style="width:100px;" value="0"> </td>
 				</tr>
 				<tr>
 					<th>排序：</th>

@@ -21,7 +21,7 @@ class eventAction extends AdminAuthAction
 			$sql=" and event_id in (".$_SESSION['event_ids'].") ";
 		}
 		
-		$list=D("event")->event_list_pro("  ".$sql);
+		$list=D("event")->event_list_pro("  ".$sql,20," event_addtime desc ");
 
 		$this->assign("list",$list["item"]);
 		$this->assign("pages",$list["pages"]);
@@ -35,11 +35,15 @@ class eventAction extends AdminAuthAction
 	{
 
 		import("@.ORG.editor");  //导入类
-		$editor=new editor("400px","700px",$data['event_content'],"event_content");     //创建一个对象
-		$a=$editor->createEditor();   //返回编辑器
-		$b=$editor->usejs();             //js代码
+		$event_editor=new editor("400px","700px",$data['event_content'],"event_content[]");     //创建一个对象
+		$a=$event_editor->createEditor();   //返回编辑器
+		$b=$event_editor->usejs();             //js代码
 		$this->assign('usejs',$b);     //输出到html
 		$this->assign('editor',$a);
+		$this->assign('event_ad_editor',$a);
+		
+		$app_list=select_dict(15,"select");
+		$this->assign("app_list",$app_list);
 
 		$this->assign("page_title","添加赛事");
     	$this->display();
@@ -63,40 +67,41 @@ class eventAction extends AdminAuthAction
 			$data["event_right_flag"]=post("event_right_flag");
 			$data["event_right_intro"]=post("event_right_intro");
 		
-			if($_FILES["event_logo"]["error"]==0 || $_FILES["event_timepic"]["error"]==0 || $_FILES["event_zhutui_pic"]["error"]==0)
-			{
-				$uploadinfo=upload_file("upload/event/");
+			$uploadinfo=upload_file("upload/event/");
 				
-				foreach($uploadinfo as $key=>$val){
-					$uploadinfo[$val['up_name']] = $val;
-					unset($uploadinfo[$key]);
-				}
-				if(!empty($uploadinfo["event_logo"]))
-				{
-					$data["event_logo"]=$uploadinfo["event_logo"]["savepath"] . $uploadinfo["event_logo"]["savename"];
-					$data["event_logo_small"]=$data["event_logo"];
-				}
+			foreach($uploadinfo as $key=>$val){
+				$uploadinfo[$val['up_name']] = $val;
+				unset($uploadinfo[$key]);
+			}
+			if(!empty($uploadinfo["event_logo"]))
+			{
+				$data["event_logo"]=$uploadinfo["event_logo"]["savepath"] . $uploadinfo["event_logo"]["savename"];
+				$data["event_logo_small"]=$data["event_logo"];
+			}
 
-				//event_timepic
-				if(!empty($uploadinfo["event_timepic"]))
-				{
-					$data["event_timepic"]=$uploadinfo["event_timepic"]["savepath"] . $uploadinfo["event_timepic"]["savename"];
-				}
+			//event_timepic
+			if(!empty($uploadinfo["event_timepic"]))
+			{
+				$data["event_timepic"]=$uploadinfo["event_timepic"]["savepath"] . $uploadinfo["event_timepic"]["savename"];
+			}
 
-				//event_zhutui_pic
-				if(!empty($uploadinfo["event_zhutui_pic"]))
-				{
-					$data["event_zhutui_pic"]=$uploadinfo["event_zhutui_pic"]["savepath"] . $uploadinfo["event_zhutui_pic"]["savename"];
-				}
-				//event_left_pic
-				if(!empty($uploadinfo["event_left_pic"])) {
-					$data["event_left_pic"]=$uploadinfo["event_left_pic"]["savepath"] . $uploadinfo["event_left_pic"]["savename"];
-				}
-				//event_right_pic
-				if(!empty($uploadinfo["event_right_pic"])) {
-					$data["event_right_pic"]=$uploadinfo["event_right_pic"]["savepath"] . $uploadinfo["event_right_pic"]["savename"];
-				}
+			//event_zhutui_pic
+			if(!empty($uploadinfo["event_zhutui_pic"]))
+			{
+				$data["event_zhutui_pic"]=$uploadinfo["event_zhutui_pic"]["savepath"] . $uploadinfo["event_zhutui_pic"]["savename"];
+			}
+			//event_left_pic
+			if(!empty($uploadinfo["event_left_pic"])) {
+				$data["event_left_pic"]=$uploadinfo["event_left_pic"]["savepath"] . $uploadinfo["event_left_pic"]["savename"];
+			}
+			//event_right_pic
+			if(!empty($uploadinfo["event_right_pic"])) {
+				$data["event_right_pic"]=$uploadinfo["event_right_pic"]["savepath"] . $uploadinfo["event_right_pic"]["savename"];
+			}
 			
+			//event_ticket_ad_pic
+			if(!empty($uploadinfo["event_ticket_ad_pic"])) {
+				$data["event_ticket_ad_pic"]=$uploadinfo["event_ticket_ad_pic"]["savepath"] . $uploadinfo["event_ticket_ad_pic"]["savename"];
 			}
 			
 
@@ -104,7 +109,9 @@ class eventAction extends AdminAuthAction
 			$data["event_endtime"]=strtotime(post("event_endtime"));
 			$data["event_baoming_starttime"]=strtotime(post("event_baoming_starttime"));
 			$data["event_baoming_endtime"]=strtotime(post("event_baoming_endtime"));
-			$data["event_content"]=stripslashes($_POST["event_content"]);
+			$content_list = $_POST["event_content"];
+			$data["event_content"]=stripslashes($content_list[1]);
+			$data["event_ticket_ad_content"]=stripslashes($content_list[0]);
 			$data["event_state"]=0;
 			$data["event_is_tj"]=post("event_is_tj");
 			
@@ -123,6 +130,9 @@ class eventAction extends AdminAuthAction
 			$data["event_is_bbs"]=post("event_is_bbs");
 			$data["event_ticket_status"]=post("event_ticket_status");
 			$data["event_ticket_wapurl"]=post("event_ticket_wapurl");
+			$data["event_is_ticket_bwvip"]=post("event_is_ticket_bwvip");
+			
+			
 			
 			$data["event_addtime"]=time();
 			$list=M("event")->add($data);
@@ -149,6 +159,9 @@ class eventAction extends AdminAuthAction
 			$b=$editor->usejs();             //js代码
 			$this->assign('usejs',$b);     //输出到html
 			$this->assign('editor',$a);
+			
+			$app_list=select_dict(15,"select");
+			$this->assign("app_list",$app_list);
 			
 			$this->assign("page_title","修改赛事");
 			$this->display();
@@ -180,48 +193,50 @@ class eventAction extends AdminAuthAction
 			$data["event_right_flag"]=post("event_right_flag");
 			$data["event_right_intro"]=post("event_right_intro");
 			
-			if($_FILES["event_logo"]["error"]==0 || $_FILES["event_timepic"]["error"]==0 || $_FILES["event_zhutui_pic"]["error"]==0 || $_FILES["event_left_pic"]["error"]==0 || $_FILES["event_right_pic"]["error"]==0)
-			{
-				$uploadinfo=upload_file("upload/event/");
-				
-				foreach($uploadinfo as $key=>$val){
-					$uploadinfo[$val['up_name']] = $val;
-					unset($uploadinfo[$key]);
-				}
-				
-				if(!empty($uploadinfo["event_logo"]))
-				{
-					$data["event_logo"]=$uploadinfo["event_logo"]["savepath"] . $uploadinfo["event_logo"]["savename"];
-					$data["event_logo_small"]=$data["event_logo"];
-				}
-
-				//event_timepic
-				if(!empty($uploadinfo["event_timepic"]))
-				{
-					$data["event_timepic"]=$uploadinfo["event_timepic"]["savepath"] . $uploadinfo["event_timepic"]["savename"];
-				}
-
-				//event_zhutui_pic
-				if(!empty($uploadinfo["event_zhutui_pic"]))
-				{
-					$data["event_zhutui_pic"]=$uploadinfo["event_zhutui_pic"]["savepath"] . $uploadinfo["event_zhutui_pic"]["savename"];
-				}
-				//event_left_pic
-				if(!empty($uploadinfo["event_left_pic"])) {
-					$data["event_left_pic"]=$uploadinfo["event_left_pic"]["savepath"] . $uploadinfo["event_left_pic"]["savename"];
-				}
-				//event_right_pic
-				if(!empty($uploadinfo["event_right_pic"])) {
-					$data["event_right_pic"]=$uploadinfo["event_right_pic"]["savepath"] . $uploadinfo["event_right_pic"]["savename"];
-				}
+			$uploadinfo=upload_file("upload/event/");
 			
+			foreach($uploadinfo as $key=>$val){
+				$uploadinfo[$val['up_name']] = $val;
+				unset($uploadinfo[$key]);
+			}
+			
+			if(!empty($uploadinfo["event_logo"]))
+			{
+				$data["event_logo"]=$uploadinfo["event_logo"]["savepath"] . $uploadinfo["event_logo"]["savename"];
+				$data["event_logo_small"]=$data["event_logo"];
+			}
+
+			//event_timepic
+			if(!empty($uploadinfo["event_timepic"]))
+			{
+				$data["event_timepic"]=$uploadinfo["event_timepic"]["savepath"] . $uploadinfo["event_timepic"]["savename"];
+			}
+
+			//event_zhutui_pic
+			if(!empty($uploadinfo["event_zhutui_pic"]))
+			{
+				$data["event_zhutui_pic"]=$uploadinfo["event_zhutui_pic"]["savepath"] . $uploadinfo["event_zhutui_pic"]["savename"];
+			}
+			//event_left_pic
+			if(!empty($uploadinfo["event_left_pic"])) {
+				$data["event_left_pic"]=$uploadinfo["event_left_pic"]["savepath"] . $uploadinfo["event_left_pic"]["savename"];
+			}
+			//event_right_pic
+			if(!empty($uploadinfo["event_right_pic"])) {
+				$data["event_right_pic"]=$uploadinfo["event_right_pic"]["savepath"] . $uploadinfo["event_right_pic"]["savename"];
+			}
+			//event_ticket_ad_pic
+			if(!empty($uploadinfo["event_ticket_ad_pic"])) {
+				$data["event_ticket_ad_pic"]=$uploadinfo["event_ticket_ad_pic"]["savepath"] . $uploadinfo["event_ticket_ad_pic"]["savename"];
 			}
 			
 			$data["event_starttime"]=strtotime(post("event_starttime"));
 			$data["event_endtime"]=strtotime(post("event_endtime"));
 			$data["event_baoming_starttime"]=strtotime(post("event_baoming_starttime"));
 			$data["event_baoming_endtime"]=strtotime(post("event_baoming_endtime"));
-			$data["event_content"]=stripslashes($_POST["event_content"]);
+			$content_list = $_POST["event_content"];
+			$data["event_content"]=stripslashes($content_list[1]);
+			$data["event_ticket_ad_content"]=stripslashes($content_list[0]);
 			$data["event_sort"]=post("event_sort");
 			$data["event_fenzhan_id"]=post("event_fenzhan_id");
 			if(post("event_is_tj"))
@@ -251,6 +266,12 @@ class eventAction extends AdminAuthAction
 				$data["event_is_ticket"]=post("event_is_ticket");
 			}
 			
+			if(post("event_is_ticket_bwvip"))
+			{
+				$data["event_is_ticket_bwvip"]=post("event_is_ticket_bwvip");
+			}
+			
+
 			if(post("event_is_bbs"))
 			{
 				$data["event_is_bbs"]=post("event_is_bbs");
@@ -337,6 +358,9 @@ class eventAction extends AdminAuthAction
 			$data=M("event")->where("event_id=".intval(get("event_id")))->find();
 			$this->assign("data",$data);
 			
+			$app_list=select_dict(15,"select");
+			$this->assign("app_list",$app_list);
+			
 			
 			$this->assign('event_name',$data['event_name']);
 			$this->assign('event_id',$data['event_id']);
@@ -348,11 +372,15 @@ class eventAction extends AdminAuthAction
 			$this->assign('fenzhan',$fenzhan['item']);
 
 			import("@.ORG.editor");  //导入类
-			$editor=new editor("400px","700px",$data['event_content'],"event_content");     //创建一个对象
+			$editor=new editor("400px","700px",$data['event_content'],"event_content[]");     //创建一个对象
 			$a=$editor->createEditor();   //返回编辑器
 			$b=$editor->usejs();             //js代码
 			$this->assign('usejs',$b);     //输出到html
 			$this->assign('editor',$a);
+			
+			$editor1=new editor("400px","700px",$data['event_ticket_ad_content'],"event_content[]");     //创建一个对象
+			$a1=$editor1->createEditor();   //返回编辑器
+			$this->assign('event_ad_editor',$a1);
 			
 			$this->assign('event_on',1);
 			

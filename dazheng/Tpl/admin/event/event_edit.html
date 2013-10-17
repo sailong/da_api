@@ -19,9 +19,16 @@
 	<table class="add_table" border="0" cellspacing="0" cellpadding="0" >
 		<tbody>
 				<tr>
-					<th>所属球场：</th>
-					<td><input type="text" name="field_uid" id="field_uid" class="mod_input2" style="width:66px;"  value="{$data.field_uid}"></td>
+					<th><font color="red">*</font>所属客户端：</th>
+					<td>
+						<select name="field_uid" id="field_uid" class="mod_select">
+							<option value="">请选择</option>
+							{$app_list}
+						</select>
+						<script>set_select_value(document.act_form.field_uid,"{$data.field_uid}");</script>
+					</td>
 				</tr>
+				
 				<tr>
 					<th>赛事UID：</th>
 					<td><input type="text" name="event_uid" id="event_uid" class="mod_input2" style="width:66px;"  value="{$data.event_uid}"></td>

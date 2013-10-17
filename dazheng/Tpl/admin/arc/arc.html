@@ -86,20 +86,21 @@
 			<label for="checkbox"></label>
 		</th>
 		<th class="line_l">编号</th>
-		<th class="line_l">新闻主标题</th>
+		<th class="line_l" style="width:200px;">新闻标题</th>
 		<!--
 		<th class="line_l">发布人</th>
 		-->
-		<th class="line_l">所属栏目</th>
-		<th class="line_l">显示方式</th>
+		<th class="line_l">栏目</th>
+		<th class="line_l">显示</th>
 		<th class="line_l">图片</th>
-
 		<th class="line_l">置顶</th>
 		<th class="line_l">视频</th>
 		<th class="line_l">排序</th>
 		<th class="line_l">状态</th>
 		<th class="line_l">添加时间</th>
+		<!--
 		<th class="line_l">审核时间</th>
+		-->
 		<th class="line_l">操作</th>
 	</tr>
 	<volist id="vo" name="list">
@@ -113,14 +114,16 @@
 		<td>{$vo.arctype_name}</td>
 		<td>{$vo.arc_viewtype}</td>
 
-		<td><php>if($vo['arc_pic']){</php><img src="/{$vo.arc_pic}" class="pic" style="max-width:150px; max-height:80px;"><php>}</php></td>
+		<td><php>if($vo['arc_pic']){</php><img src="/{$vo.arc_pic}" class="pic" style="max-width:80px; max-height:40px;"><php>}</php></td>
 
 		<td>{$vo.arc_top}</td>
 		<td><php>if($vo['is_video']==1){ echo "显示";}else{ echo "隐藏";}</php></td>
 		<td>{$vo.arc_sort}</td>
 		<td><php>if($vo['arc_state']==1){ echo "审核通过";}else if($vo['arc_state']==2){ echo "审核未通过";}else{ echo "待审核";}</php>{$vo.}</td>
 		<td>{$vo.arc_addtime|format_to_time}</td>
+		<!--
 		<td>{$vo.arc_statetime|format_to_time}</td>
+		-->
 		<td>
 			<a href="{:U('admin/arc/arc_edit', array('arc_id'=>$vo['arc_id']))}">修改</a> | 
 			<!--

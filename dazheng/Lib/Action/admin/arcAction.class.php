@@ -58,10 +58,25 @@ class arcAction extends AdminAuthAction
 			$data["arc_note"]=post("arc_note");
 			$data["arc_type"]=post("arc_type");
 			$data["arc_viewtype"]=post("arc_viewtype");
-			if($_FILES["arc_pic"]["error"]==0)
+			$data["arc_share_qq"]=post("arc_share_qq");
+			$data["arc_share_sina"]=post("arc_share_sina");
+			$data["arc_video_url"]=post("arc_video_url");
+			if($_FILES["arc_pic"]["error"]==0 || $_FILES["arc_video_pic"]["error"]==0)
 			{
+				
 				$uploadinfo=upload_file("upload/arc","png,jpg,jpeg,gif,bmp,tiff,psd");
-				$data["arc_pic"]=$uploadinfo[0]["savepath"] . $uploadinfo[0]["savename"];
+				foreach($uploadinfo as $key=>$val){
+					$uploadinfo[$val['up_name']] = $val;
+					unset($uploadinfo[$key]);
+				}
+				if(!empty($uploadinfo["arc_pic"]))
+				{
+					$data["arc_pic"]=$uploadinfo['arc_pic']["savepath"] . $uploadinfo['arc_pic']["savename"];
+				}
+				if(!empty($uploadinfo["arc_video_pic"]))
+				{
+					$data["arc_video_pic"]=$uploadinfo['arc_video_pic']["savepath"] . $uploadinfo['arc_video_pic']["savename"];
+				}
 			}
 			$data["arc_source"]=post("arc_source");
 			$data["arc_sort"]=post("arc_sort");
@@ -140,10 +155,25 @@ class arcAction extends AdminAuthAction
 			$data["arc_note"]=post("arc_note");
 			$data["arc_type"]=post("arc_type");
 			$data["arc_viewtype"]=post("arc_viewtype");
-			if($_FILES["arc_pic"]["error"]==0)
+			$data["arc_share_qq"]=post("arc_share_qq");
+			$data["arc_share_sina"]=post("arc_share_sina");
+			$data["arc_video_url"]=post("arc_video_url");
+			
+			if($_FILES["arc_pic"]["error"]==0 || $_FILES["arc_video_pic"]["error"]==0)
 			{
 				$uploadinfo=upload_file("upload/arc","png,jpg,jpeg,gif,bmp,tiff,psd");
-				$data["arc_pic"]=$uploadinfo[0]["savepath"] . $uploadinfo[0]["savename"];
+				foreach($uploadinfo as $key=>$val){
+					$uploadinfo[$val['up_name']] = $val;
+					unset($uploadinfo[$key]);
+				}
+				if(!empty($uploadinfo["arc_pic"]))
+				{
+					$data["arc_pic"]=$uploadinfo['arc_pic']["savepath"] . $uploadinfo['arc_pic']["savename"];
+				}
+				if(!empty($uploadinfo["arc_video_pic"]))
+				{
+					$data["arc_video_pic"]=$uploadinfo['arc_video_pic']["savepath"] . $uploadinfo['arc_video_pic']["savename"];
+				}
 			}
 			$data["arc_source"]=post("arc_source");
 			$data["arc_sort"]=post("arc_sort");
