@@ -443,9 +443,9 @@ public function ticket_tj()
 		//搜索end
 		
 		$tj_info['zshf'] = $zshf_info;
-		$tj_info['ns'] = $ns_info;
+		//$tj_info['ns'] = $ns_info;
 		$tj_info['bm'] = $bm_info;
-		$tj_info['bm1'] = $bm1_info;
+		//$tj_info['bm1'] = $bm1_info;
 		
 		
 		
