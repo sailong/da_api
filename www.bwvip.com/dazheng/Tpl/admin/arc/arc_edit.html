@@ -90,6 +90,25 @@
 					</td>
 				</tr>
 				<tr>
+					<th>图片分享：</th>
+					<td>
+						<php>if($data['arc_video_pic']){</php><img src="/{$data.arc_video_pic}" style="max-height:100px; max-width:200px;"><br/><php>}</php>
+						<input type="file" name="arc_video_pic" id="arc_video_pic"  class="mod_input" style="width:300px;">
+					</td>
+				</tr>
+				<tr>
+					<th>视频分享：</th>
+					<td><input type="text" name="arc_video_url" id="arc_video_url" class="mod_input2" style="width:300px;" value="{$data.arc_video_url}"> </td>
+				</tr>
+				<tr>
+					<th>腾讯微博分享数：</th>
+					<td><input type="text" name="arc_share_qq" id="arc_share_qq" class="mod_input2" style="width:100px;" value="{$data.arc_share_qq}"> </td>
+				</tr>
+				<tr>
+					<th>新浪微博分享数：</th>
+					<td><input type="text" name="arc_share_sina" id="arc_share_sina" class="mod_input2" style="width:100px;" value="{$data.arc_share_sina}"> </td>
+				</tr>
+				<tr>
 					<th>排序：</th>
 					<td><input type="text" name="arc_sort" id="arc_sort" class="mod_input2" style="width:100px;" value="{$data.arc_sort}" > （数值越大，排序越靠前）</td>
 				</tr>

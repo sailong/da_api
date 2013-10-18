@@ -3,28 +3,18 @@
 
   <include file="../event/event_manage_header" />
   
-  <div class="tit_tab">
+  <div class="tit_tab_sub">
 	<ul>
 		<li style="line-height:30px;">1> 选择分站：</li>
-		
-		<!-- <li>
-		<form name="search_form">
-		<select name="fenzhan_id" id="fenzhan_id" style="width:120px;"  class="search_select">
-			<option value="">请选择</option>
-			<volist id="vo2" name="fenzhan">
-			<option value="{$vo2.fenzhan_id}">{$vo2.fenzhan_name}</option>
-			</volist>
-		</select>
-		<script>set_select_value(document.search_form.fenzhan_id,"<php> echo  get("fenzhan_id");</php>");</script>
-		</form>
-		<input type="hidden" name="event_id" id="event_id" value="{$event_id}"/>
-		</li> -->
+
 		<volist id="vo" name="fenzhan">
 		<li><a <php> if(get("fenzhan_id")==$vo['fenzhan_id'] || $fenzhan_id==$vo['fenzhan_id']){ echo " class=on ";}</php> href="{:U('admin/fenzhan/fenzhan_user',array('event_id'=>$event_id,'fenzhan_id'=>$vo['fenzhan_id']))}">{$vo['fenzhan_name']}</a></li>
 		</volist>
         <li style="float:right;"><a style="color:red;"   href="{:U('admin/fenzu/daochu',array('event_id'=>get('event_id'),'fenzhan_id'=>get('fenzhan_id')))}">导出Excel</a></li>
 	</ul>
    </div>
+   
+   <div style="clear:both;"></div>
     
  
 

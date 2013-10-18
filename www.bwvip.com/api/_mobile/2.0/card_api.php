@@ -1050,7 +1050,7 @@ if($ac=="fenzhan_list")
 	{
 		$sql=" and event_id='".$sid."'  ";
 	}
-	$list=DB::query("select fenzhan_id,fenzhan_id as fz_id,sid,fenzhan_name as fenz_name,starttime,endtime,field_id,(select fieldname from ".DB::table("common_field")." where uid=tbl_fenzhan.field_id ) as field_name from tbl_fenzhan where year='".$year."' ".$sql." ");
+	$list=DB::query("select fenzhan_id,fenzhan_id as fz_id,sid,fenzhan_name as fenz_name,starttime,endtime,field_id,(select fieldname from ".DB::table("common_field")." where uid=tbl_fenzhan.field_id ) as field_name from tbl_fenzhan where year='".$year."' and fenzhan_id not in (115,116,117) ".$sql." ");
 	$i=0;
 	while($row=DB::fetch($list))
 	{

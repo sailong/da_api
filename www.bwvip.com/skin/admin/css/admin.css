@@ -40,6 +40,13 @@ a.actuator:link, a.actuator:visited, a.actuator:hover, a.actuator:active { color
 .tit_tab li a { padding:0 26px; color:#6A6A6A; border-top:1px solid #B9C4CF; border-right:1px solid #B9C4CF;  line-height:31px; display:block; font-size:14px; }
 .tit_tab li a.on { background:url(../images/tab_bg_on.jpg); color:#fff; border:1px solid #135AA4;  border-bottom:none;  line-height:32px;}
 
+.tit_tab_sub { background:url(../images/tab_bg.jpg); border-left:1px solid #B9C4CF; height:31px;  border-bottom:4px solid #135AA4;  }
+.tit_tab_sub ul { }
+.tit_tab_sub li { float:left; }
+.tit_tab_sub li a { padding:0 5px; color:#6A6A6A; border-top:1px solid #B9C4CF; border-right:1px solid #B9C4CF;  line-height:31px; display:block; font-size:12px; }
+.tit_tab_sub li a.on { background:url(../images/tab_bg_on.jpg); color:#fff; border:1px solid #135AA4;  border-bottom:none;  line-height:32px;}
+
+
 .tit_tab_small { background:#D2DBEA; height:30px; padding:5px 5px 0; margin-bottom:10px; }
 .tit_tab_small ul { }
 .tit_tab_small li { float:left; }

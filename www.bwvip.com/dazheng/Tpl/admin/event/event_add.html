@@ -270,6 +270,14 @@
 					</td>
 				</tr>
 				<tr>
+					<th>赛事广告：</th>
+					<td><php>if($data['event_ticket_ad_pic']){</php><img src="/{$data.event_ticket_ad_pic}" style="max-height:100px; max-width:200px;"><br/><php>}</php><input type="file" name="event_ticket_ad_pic" id="event_ticket_ad_pic"  class="mod_input">  (如需修改，请重新上传)</td>
+				</tr>
+				<tr>
+					<th>赛事广告信息：</th>
+					<td>{$event_ad_editor}</td>
+				</tr>
+				<tr>
 					<th>详细介绍：</th>
 					<td>{$editor}</td>
 				</tr>

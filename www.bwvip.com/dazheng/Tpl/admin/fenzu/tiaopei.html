@@ -1,4 +1,4 @@
-<include file="../public/_header" />
+﻿<include file="../public/_header" />
 <div class="so_main">
   
   <include file="../event/event_manage_header" />
@@ -39,7 +39,14 @@
 				</tr>
 				<tr>
 					<th>开始比赛时间：</th>
-					<td><input type="text" name="start_time" id="start_time" readonly class="mod_input_date" style="width:200px;" value="{$data.start_time|format_to_fulltime}" onFocus="WdatePicker({startDate:'%y-%M-%d 08:00:00',dateFmt:'yyyy-MM-dd HH:mm:ss',alwaysUseStartDate:true})" ></td>
+					<td>
+					<input type="text" name="start_time_1" class="mod_input2" style="width:50px;" value="<php> echo date('Y',$data['start_time']);</php>" >- 
+					<input type="text" name="start_time_2" class="mod_input2" style="width:50px;" value="<php> echo date('m',$data['start_time']);</php>" >- 
+					<input type="text" name="start_time_3" class="mod_input2" style="width:50px;" value="<php> echo date('d',$data['start_time']);</php>" >  
+					<input type="text" name="start_time_4" class="mod_input2" style="width:50px;" value="<php> echo date('G',$data['start_time']);</php>" >: 
+					<input type="text" name="start_time_5" class="mod_input2" style="width:50px;" value="<php> echo date('i',$data['start_time']);</php>" >:
+					<input type="text" name="start_time_6" class="mod_input2" style="width:50px;" value="<php> echo date('s',$data['start_time']);</php>" > 
+					 </td>
 				</tr>
 				 
 				<tr>
