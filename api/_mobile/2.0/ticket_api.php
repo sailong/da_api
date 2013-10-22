@@ -1181,11 +1181,30 @@ if($ac=="ticket_apply_detail")
 
 	$event_id = $_G['gp_event_id'];
 	$user_ticket_imei = $_G['gp_sn'];
+	$pic_width = $_G['gp_pic_width'];
 	if(empty($event_id))
 	{
 		api_json_result(1,1,"缺少参数event_id",$data);
 		exit;
 	}
+	
+	$event_info=DB::fetch_first("select event_id,event_name,event_ticket_ad_pic,event_ticket_ad_content from tbl_event where event_id='".$event_id."' order by event_addtime desc limit 1 ");
+	
+	if($event_info['event_ticket_ad_pic'])
+	{
+		$event_info['event_ticket_ad_pic']=$site_url."/".$event_info['event_ticket_ad_pic'];
+	}
+	if($event_info['event_ticket_ad_content'])
+	{
+		$event_info['event_ticket_ad_content']=str_replace("http://192.168.1.151:806","",$event_info['event_ticket_ad_content']);
+	}
+	if($pic_width)
+	{
+		$event_info['event_ticket_ad_content']=str_replace("<img ","<img width=\"".$pic_width."\" ",$event_info['event_ticket_ad_content']);
+	}
+		
+		
+		
 	
 	$get_info=DB::fetch_first("select user_ticket_id,user_ticket_status,user_ticket_code,user_ticket_codepic,(select ticket_name from tbl_ticket where ticket_id=tbl_user_ticket.ticket_id) ticket_name from tbl_user_ticket where user_ticket_imei='".$user_ticket_imei."' and
 	event_id='".$event_id."' order by user_ticket_addtime desc limit 1 ");
@@ -1272,6 +1291,7 @@ if($ac=="ticket_apply_detail")
 		
 	$data['title'] = "data";
 	$data['data']=array(
+		
 		'apply_status'=>$apply_status,
 		'apply_message'=>$apply_message,
 		'apply_pic'=>$apply_pic,
@@ -1279,6 +1299,7 @@ if($ac=="ticket_apply_detail")
 		'ticket_name'=>$ticket_name,
 		'list_data'=>$list_data,
 		'ad_list'=>$ad_list,
+		'event_info'=>array_default_value($event_info),
 		
 	);
 	
