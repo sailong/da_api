@@ -1,0 +1,14 @@
+<include file="../public/_header" />
+
+
+<form name="search_form" action="{:U('admin/push_message/user_tool_action')}" method="post">
+
+<table border="0" cellspacing="0" cellpadding="0">
+	<th>用户名：</th>
+	<td><input type="text" name="k" class="search_input" style="width:120px;" value="<php> echo get('k');</php>"></td>
+	<td class="btn">
+		<input type="submit" value="搜索" class="btn_b" style="margin-right:8px;" >
+	</td>
+</table>
+</form>
+

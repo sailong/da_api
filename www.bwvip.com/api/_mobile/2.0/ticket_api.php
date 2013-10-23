@@ -1193,11 +1193,19 @@ if($ac=="ticket_apply_detail")
 	if($event_info['event_ticket_ad_pic'])
 	{
 		$event_info['event_ticket_ad_pic']=$site_url."/".$event_info['event_ticket_ad_pic'];
+		$event_info['event_ticket_ad_pic_info']=getimagesize($event_info['event_ticket_ad_pic']);
 	}
+	else
+	{
+		$event_info['event_ticket_ad_pic_info']=null;
+	}
+	
 	if($event_info['event_ticket_ad_content'])
 	{
 		$event_info['event_ticket_ad_content']=str_replace("http://192.168.1.151:806","",$event_info['event_ticket_ad_content']);
+		$event_info['event_ticket_ad_content']=str_replace("\"/Public/editor","\"".$site_url."/Public/editor",$event_info['event_ticket_ad_content']);
 	}
+	
 	if($pic_width)
 	{
 		$event_info['event_ticket_ad_content']=str_replace("<img ","<img width=\"".$pic_width."\" ",$event_info['event_ticket_ad_content']);
@@ -1299,7 +1307,7 @@ if($ac=="ticket_apply_detail")
 		'ticket_name'=>$ticket_name,
 		'list_data'=>$list_data,
 		'ad_list'=>$ad_list,
-		'event_info'=>array_default_value($event_info),
+		'event_info'=>array_default_value($event_info,array('event_ticket_ad_pic_info')),
 		
 	);
 	

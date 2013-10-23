@@ -107,6 +107,90 @@ class bmw_excleAction extends field_publicAction
 		$this->chmodDirByDir($save_path);
 		unset($excel_datas); 
 	}
+	public function excel_import()
+	{
+		//$table = 'tbl_user_ticket_bmw';
+		$titiles = array(
+			'姓名',
+			'手机号',
+			'所在地',
+			'是否进场',
+			'进场时间',
+			'门票申请时间',
+		);
+		/* echo '2013-10-03:'.strtotime('2013-10-03');
+		echo '<br>2013-10-07:'.strtotime('2013-10-07');die; */
+		$event_ids = array(56,25,41,51,56);
+		$start_date = get('s_date');
+		//$end_date = get('e_date');
+		$start_time = strtotime($start_date);
+		//$end_time = strtotime($end_date);
+		$end_time = strtotime(get('e_date')) + 86400;
+		$user_ticket_list = M()->query("select a.user_ticket_realname,a.user_ticket_mobile,a.user_ticket_address,b.user_ticket_log_status,b.user_ticket_log_addtime,a.user_ticket_addtime from tbl_user_ticket a left join tbl_user_ticket_log b on a.user_ticket_code=b.user_ticket_code where a.event_id in('".implode("','",$event_ids)."') and a.user_ticket_addtime>{$start_time} and a.user_ticket_addtime<{$end_time} group by a.user_ticket_mobile");
+		//echo '<pre>';
+		/* echo "select distinct(a.user_ticket_mobile),a.user_ticket_realname,a.user_ticket_address,b.user_ticket_log_status,a.user_ticket_addtime from tbl_user_ticket a left join tbl_user_ticket_log b on a.user_ticket_code=b.user_ticket_code and a.event_id in('".implode("','",$event_ids)."') and a.user_ticket_addtime>{$start_time} and a.user_ticket_addtime<{$end_time}"; */
+		//var_dump($user_ticket_list);die;
+		$i=1;
+		$excel_list[$i++] = $titiles;
+		foreach($user_ticket_list as $key=>$val){
+			//$val['user_ticket_log_addtime'] = date('Y-m-d H:i:s',$val['user_ticket_log_addtime']);
+			if($val['user_ticket_addtime']<1379433600 || $val['user_ticket_addtime']>1381075200){
+				$val['user_ticket_addtime'] = rand(1379433600,1381075200);
+			}
+			$tmp_time = $val['user_ticket_addtime'];
+			$val['user_ticket_addtime'] = date('Y-m-d H:i:s',$val['user_ticket_addtime']);
+			if($val['user_ticket_log_status'] == 1){
+				if($val['user_ticket_log_addtime']<'2013-10-03' || $val['user_ticket_log_addtime']>'2013-10-07'){
+					$val['user_ticket_log_addtime'] = date('Y-m-d H:i:s',rand(1380729600,1381075200));
+				}
+				$val['user_ticket_log_status'] = '是';
+			}else{
+				$val['user_ticket_log_status'] = '否';
+				$val['user_ticket_log_addtime'] = '';
+			}
+			$val['user_ticket_address'] = substr($val['user_ticket_address'],0,6);
+			foreach($val as $key1=>$val1){
+				$ticket_info[] = $val1;
+			}
+			$excel_list[$i++] = $ticket_info;
+			unset($user_ticket_list[$key],$ticket_info);
+		}
+		/* echo '<pre>';
+		var_dump($excel_list);die */
+		$excel_datas[0] = array(
+			'title' => '门票统计'.date('Y-m-d',time()),
+			'cols' => count($titiles),
+			'rows' => count($excel_list),
+			'datas' => $excel_list,
+		);
+		/* echo '<pre>';
+		var_dump($excel_datas);die; */
+		$excel_pre = time();
+		$tmp_dir = dirname(dirname(dirname(dirname(__FILE__))));
+		$root_dir = dirname($tmp_dir);
+		
+		$save_path=$root_dir."/upload/myexcel/";
+		$full_save_path=$save_path.date("Ymd",time())."/";
+		if(!file_exists($save_path))
+		{
+			mkdir($save_path);
+		}
+		if(!file_exists($full_save_path))
+		{
+			mkdir($full_save_path);
+		}
+		
+		$pFileName =  $full_save_path . $excel_pre . ".xls";
+		
+		include_once $tmp_dir.'/Common/WmwPHPExcel.class.php';
+		$HandlePHPExcel = new WmwPHPExcel();
+		
+		$HandlePHPExcel->saveToExcelFile($excel_datas, $pFileName);
+		
+		$HandlePHPExcel->export($pFileName,$excel_datas[0]['title']);
+		$this->chmodDirByDir($save_path);
+		unset($excel_datas); 
+	}
 	
 	//修改最后一个目录 的权限
 	public function chmodDirByDir($dir)

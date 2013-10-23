@@ -394,6 +394,29 @@ class push_messageAction extends AdminAuthAction
 		}
 		$this->ajaxReturn($data,"分站列表！",1);
 	}
+	
+	
+	
+	public function user_tool_action()
+	{
+	
+		
+		$user=M()->query("select uid from pre_common_member where username like '".post('k')."' ");
+		
+		if($user[0]['uid'])
+		{
+			echo "<div style='text-align:center;'>";
+			echo $user[0]['uid'];
+			echo "</div>";
+		}
+		else
+		{
+			echo "<div style='text-align:center;'>";
+			echo "没找到该用户，<a href='".U('field/push_message/user_tool')."'>点击此处</a>重新搜索";
+			echo "</div>";
+		}
+		
+	}
 
 	
 

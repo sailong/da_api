@@ -88,7 +88,7 @@ if($ac=="select_event")
 		$list_data3[]=$row3;
 	}
 
-	$list=DB::query("select event_id,event_name,event_id as event_uid,event_is_zhutui,event_content,event_url,event_type,event_logo from tbl_event where event_is_tj='Y' and (event_viewtype='B' or event_viewtype='A' or event_viewtype='S') order by event_sort desc  ");
+	$list=DB::query("select event_id,event_name,event_id as event_uid,event_is_zhutui,event_content,event_url,event_type,event_logo,event_starttime,event_endtime from tbl_event where event_is_tj='Y' and (event_viewtype='B' or event_viewtype='A' or event_viewtype='S') order by event_sort desc  ");
 	while($row = DB::fetch($list))
 	{
 		
@@ -99,6 +99,9 @@ if($ac=="select_event")
 		$row['event_pic']=$row['event_logo'];
 		$row['uid']=$row['event_uid'];
 		$row['event_content']=msubstr(cutstr_html($row['event_content']),0,30);
+		
+		$row['event_content']=date('Y年m月d日',$row['event_starttime'])." ~ ".date('m月d日',$row['event_endtime']);
+		
 		if(!$row['event_url'])
 		{
 			$row['event_url']=null;
@@ -613,15 +616,18 @@ if($ac=="delete_comment")
 if($ac=="event_room")
 {
 
-	$list=DB::query("select event_id,event_uid,event_logo,event_name,event_content from tbl_event where event_is_bbs='Y' and (event_viewtype='B' or event_viewtype='A' or event_viewtype='S') order by event_sort desc,event_addtime desc ");
+	$list=DB::query("select event_id,event_uid,event_logo,event_name,event_content,event_starttime,event_endtime from tbl_event where event_is_bbs='Y' and (event_viewtype='B' or event_viewtype='A' or event_viewtype='S') order by event_sort desc,event_addtime desc ");
 	while($row = DB::fetch($list))
 	{
-		//$row['event_pic']=$site_url."/uc_server/avatar.php?uid=".$row['event_uid']."&size=middle";
+		
 		$row['event_pic']="http://www.bwvip.com/".$row['event_logo'];
 		$row['uid']=$row['event_uid'];
 		$row['event_content']=msubstr(cutstr_html($row['event_content']),0,70);
 		$row['event_content']=str_replace("\r","",$row['event_content']);
 		$row['event_content']=str_replace("\n","",$row['event_content']);
+		
+		$row['event_content']=date('Y年m月d日',$row['event_starttime'])." ~ ".date('m月d日',$row['event_endtime']);
+		
 		$list_data[]=$row;
 	}
 	if($list_data)
@@ -643,19 +649,21 @@ if($ac=="event_detail")
 	{
 		if($event_id)
 		{
-			$detail_data=DB::fetch_first("select event_id,event_name,event_uid,event_logo as event_pic,event_content,event_is_zhutui from tbl_event where event_id='".$event_id."'  ");
+			$detail_data=DB::fetch_first("select event_id,event_name,event_uid,event_logo as event_pic,event_content,event_is_zhutui,event_starttime,event_endtime from tbl_event where event_id='".$event_id."'  ");
 		}
 		else
 		{
-			$detail_data=DB::fetch_first("select event_id,event_name,event_uid,event_logo as event_pic,event_content,event_is_zhutui from tbl_event where event_uid='".$sid."' ");
+			$detail_data=DB::fetch_first("select event_id,event_name,event_uid,event_logo as event_pic,event_content,event_is_zhutui,event_starttime,event_endtime from tbl_event where event_uid='".$sid."' ");
 		}
 		
 		if($detail_data)
 		{
 			$detail_data['uid']=$detail_data['event_uid'];
-			//$detail_data['event_pic']=$site_url."/uc_server/avatar.php?uid=".$detail_data['event_uid']."&size=middle";
 			$detail_data['event_pic']=$site_url."/".$detail_data['event_pic'];
 			$detail_data['event_content']=cutstr_html($detail_data['event_content']);
+			
+			
+			$detail_data['event_content']=date('Y年m月d日',$detail_data['event_starttime'])." ~ ".date('m月d日',$detail_data['event_endtime']);
 			
 			$total=DB::result_first("select count(tid) from jishigou_topic where type<>'reply' and content like '%".$tag."%' ");
 			$max_page=intval($total/$page_size);

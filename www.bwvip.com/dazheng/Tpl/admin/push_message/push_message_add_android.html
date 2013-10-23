@@ -87,7 +87,16 @@
 				<table class="add_table" border="0" cellspacing="0" cellpadding="0" id="type_3" <php>if($data['receiver_type']=="3"){ echo " style='display:block;' ";}else { echo " style='display:none;' ";}</php> >
 				<tr>
 					<th>目标用户：</th>
-					<td><input type="text" name="uid" id="uid" class="mod_input2" style="width:100px;"  value="{$data.uid}"> (用户UID)</td>
+					<td>
+					<input type="text" name="uid" id="uid" class="mod_input2" style="width:100px;"  value="{$data.uid}"> (用户UID)
+					<br />
+					<br />
+					根据用户名搜索UID：
+					<br />
+					<iframe src="{:U('admin/push_message/user_tool')}" style="border:1px solid #ccc;" width="300" height="50">
+					</iframe>
+					
+					</td>
 				</tr>
 				</table>
 
