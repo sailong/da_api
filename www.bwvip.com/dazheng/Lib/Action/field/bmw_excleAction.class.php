@@ -126,7 +126,7 @@ class bmw_excleAction extends field_publicAction
 		$start_time = strtotime($start_date);
 		//$end_time = strtotime($end_date);
 		$end_time = strtotime(get('e_date')) + 86400;
-		$user_ticket_list = M()->query("select a.user_ticket_realname,a.user_ticket_mobile,a.user_ticket_address,b.user_ticket_log_status,b.user_ticket_log_addtime,a.user_ticket_addtime from tbl_user_ticket a left join tbl_user_ticket_log b on a.user_ticket_code=b.user_ticket_code where a.event_id in('".implode("','",$event_ids)."') and a.user_ticket_addtime>{$start_time} and a.user_ticket_addtime<{$end_time} group by a.user_ticket_mobile");
+		$user_ticket_list = M()->query("select a.user_ticket_realname,a.user_ticket_mobile,a.user_ticket_address,b.user_ticket_log_status,b.user_ticket_log_addtime,a.user_ticket_addtime from tbl_user_ticket a left join tbl_user_ticket_log b on a.user_ticket_code=b.user_ticket_code where a.event_id in('".implode("','",$event_ids)."') and a.user_ticket_addtime>{$start_time} and a.user_ticket_addtime<{$end_time}");
 		//echo '<pre>';
 		/* echo "select distinct(a.user_ticket_mobile),a.user_ticket_realname,a.user_ticket_address,b.user_ticket_log_status,a.user_ticket_addtime from tbl_user_ticket a left join tbl_user_ticket_log b on a.user_ticket_code=b.user_ticket_code and a.event_id in('".implode("','",$event_ids)."') and a.user_ticket_addtime>{$start_time} and a.user_ticket_addtime<{$end_time}"; */
 		//var_dump($user_ticket_list);die;
@@ -191,7 +191,99 @@ class bmw_excleAction extends field_publicAction
 		$this->chmodDirByDir($save_path);
 		unset($excel_datas); 
 	}
-	
+	//地区分布和比例，一共多少人完成注册，注册的人里面来看比赛的所占比例，现场注册多少人
+	public function ratio_statistics()
+	{
+		//地区统计数
+		//select count()
+		$event_ids = array(56,25,41,51,56);
+		$start_date = get('s_date');
+		//$end_date = get('e_date');
+		$start_time = strtotime($start_date);
+		//$end_time = strtotime($end_date);
+		$end_time = strtotime(get('e_date')) + 86400;
+		$user_ticket_list = M()->query("select a.user_ticket_realname,a.user_ticket_mobile,a.user_ticket_address,b.user_ticket_log_status,b.user_ticket_log_addtime,a.user_ticket_addtime from tbl_user_ticket a left join tbl_user_ticket_log b on a.user_ticket_code=b.user_ticket_code where a.event_id in('".implode("','",$event_ids)."') and a.user_ticket_addtime>{$start_time} and a.user_ticket_addtime<{$end_time} group by a.user_ticket_mobile");
+		
+		$total_count = count($user_ticket_list);
+		$area_arr = array();
+		$is_true = 0;
+		foreach($user_ticket_list as $key=>$val)
+		{
+			//地区统计数
+			$area_name = substr($val['user_ticket_address'],0,6);
+			if(in_array($area_name,array('北京','上海','浙江','山东','天津','广东','江苏'))){
+				$area_arr[$area_name][] = $area_name;
+			}else{
+				$area_arr['其它'][] = $area_name;
+			}
+			
+			//到场人数统计
+			if($val['user_ticket_log_status'] == 1){
+				$is_true += 1;
+			}
+		}
+		$area_count_arr = array();
+		foreach($area_arr as $key=>$val){
+			$area_count_arr[$key] = count($val);
+		}
+		$area_table = '<table width="800" border="0" bgcolor="#cccccc">';
+		$area_table.= '<tr>
+				<td style="line-height:50px; text-align:center; font-size:18px; font-weight:bold;" bgcolor="#FFFFFF" width="40%">总共注册人数</td>
+				<td  bgcolor="#FFFFFF" width="30%">'.$total_count.'人</td>
+				<td  bgcolor="#FFFFFF" width="30%">100%</td>
+			  </tr>
+			 ';
+		$count_pit =  round(($is_true/$total_count)*100);
+		$area_table.= '<tr>
+				<td style="line-height:50px; text-align:center; font-size:18px; font-weight:bold;" bgcolor="#FFFFFF" width="40%">到场人数统计</td>
+				<td  bgcolor="#FFFFFF" width="30%">'.$is_true.'人</td>
+				<td  bgcolor="#FFFFFF" width="30%">约'.$count_pit.'%</td>
+			  </tr>
+			 ';
+		$area_table .= '<table>';
+		echo $area_table;
+		
+		
+		$area_table = '<table width="800" border="0" bgcolor="#cccccc">';
+		foreach($area_count_arr as $key=>$val){
+		
+			$count_pit =  round(($val/$total_count)*100);
+			$area_table.= '<tr>
+				<td style="line-height:50px; text-align:center; font-size:18px; font-weight:bold;" bgcolor="#FFFFFF" width="40%">'.$key.'</td>
+				<td  bgcolor="#FFFFFF" width="30%">'.$val.'人</td>
+				<td  bgcolor="#FFFFFF" width="30%">约'.$count_pit.'%</td>
+			  </tr>
+			 ';
+		}
+		$area_table .= '<table>';
+		echo $area_table;
+		
+		/* '
+			  <tr>
+				<td colspan="3" style="line-height:50px; text-align:center; font-size:18px; font-weight:bold;" bgcolor="#FFFFFF">'.$field_name.'</td>
+			  </tr>
+			  <tr>
+				<td width="25%" rowspan="0" bgcolor="#FFFFFF" align="center">查询统计</td>
+				<td colspan="2" bgcolor="#FFFFFF">'.$start_date.'至'.$end_date.'：'.$val['ss_total'].'人</td>
+			  </tr>
+			  <tr>
+				<td width="25%" rowspan="0" bgcolor="#FFFFFF" align="center">昨天</td>
+				<td bgcolor="#FFFFFF">当天：'.$val['yesterday'].'人</td>
+				<td bgcolor="#FFFFFF">总数：'.$val['yesterday_total'].'人</td>
+			  </tr>
+			  <tr>
+				<td width="25%" rowspan="0" bgcolor="#FFFFFF" align="center">今天</td>
+				<td bgcolor="#FFFFFF">当天：'.$val['today'].'人</td>
+				<td bgcolor="#FFFFFF">总数：'.$val['today_total'].'人</td>
+			  </tr>
+			</table>'
+		echo '<pre>';
+		echo $is_true;
+		var_dump($area_count_arr); */
+		die;
+		
+		
+	}
 	//修改最后一个目录 的权限
 	public function chmodDirByDir($dir)
 	{
