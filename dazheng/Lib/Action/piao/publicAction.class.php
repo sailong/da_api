@@ -37,8 +37,8 @@ class publicAction extends Action
 				$field_info=M()->query("select event_name from tbl_event where event_id='".$res[0]['event_id']."' ");
 				
 				$_SESSION['piao_admin_id']=$res[0]['admin_id'];
+				$_SESSION['piao_admin_role_id']=$res[0]['admin_role_id'];
 				$_SESSION['uid']=$res[0]['event_id'];
-				$_SESSION['admin_role_id']=$res[0]['admin_role_id'];
 				$_SESSION['event_id']=$res[0]['event_id'];
 				$_SESSION['event_name']=$field_info[0]['event_name'];
 				$_SESSION['realname']=$res[0]['admin_realname'];

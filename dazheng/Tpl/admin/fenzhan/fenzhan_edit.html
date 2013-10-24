@@ -19,10 +19,7 @@
 <form method="post" id="act_form" name="act_form" action="{:U('admin/fenzhan/fenzhan_edit_action')}" enctype="multipart/form-data">
 	<table class="add_table" border="0" cellspacing="0" cellpadding="0" >
 		<tbody>
-		<tr>
-					<!-- <th>所属赛事：</th>
-					<td><input type="text" name="event_id" id="event_id" class="mod_input2" style="width:66px;"  value="{$data.event_id}"></td>
-				</tr> -->
+	
                      <tr>
 					<th>所属分站：</th>
 					<td> 
@@ -47,19 +44,23 @@
                             
                      </volist>
 						</select> 
-						默认留空/有分轮时请选择此项<input type="hidden" name="parent_id1" value="{$data.parent_id}">
+						<span class="help_info">(默认留空/有分轮时请选择此项)</span>
+						<input type="hidden" name="parent_id1" value="{$data.parent_id}">
 					</td>
 				</tr>
                  <tr>
 					<th>分站轮数：</th>
-					<td><select name='fenzhan_lun' id='fenzhan_lun' >
-                        <option value='0'>选择分站轮数</option>
-                         <option value="1" <php> if($data['fenzhan_lun']==1){echo "selected";} </php> >第一轮</option>
-                         <option value="2" <php> if($data['fenzhan_lun']==2){echo "selected";} </php> >第二轮</option>
-                         <option value="3" <php> if($data['fenzhan_lun']==3){echo "selected";} </php> >第三轮</option>
-                         <option value="4" <php> if($data['fenzhan_lun']==4){echo "selected";} </php> >第四轮</option>
-                         <option value="5" <php> if($data['fenzhan_lun']==5){echo "selected";} </php> >第五轮</option>
-                        </select></td>
+					<td>
+						<select name='fenzhan_lun' id='fenzhan_lun' >
+							<option value='0'>选择分站轮数</option>
+							 <option value="1" <php> if($data['fenzhan_lun']==1){echo "selected";} </php> >第一轮</option>
+							 <option value="2" <php> if($data['fenzhan_lun']==2){echo "selected";} </php> >第二轮</option>
+							 <option value="3" <php> if($data['fenzhan_lun']==3){echo "selected";} </php> >第三轮</option>
+							 <option value="4" <php> if($data['fenzhan_lun']==4){echo "selected";} </php> >第四轮</option>
+							 <option value="5" <php> if($data['fenzhan_lun']==5){echo "selected";} </php> >第五轮</option>
+                        </select>
+						<span class="help_info">(分站属于第几轮)</span>
+					</td>
 				</tr>
 				<tr>
 					<th>分站名称：</th>
@@ -153,12 +154,17 @@
 				</tr>
 				<tr>
 					<th>排序：</th>
-					<td><input type="text" name="orderby" id="orderby" class="mod_input2" style="width:60px;"  value="{$data.orderby}"></td>
+					<td>
+						<input type="text" name="orderby" id="orderby" class="mod_input2" style="width:60px;"  value="{$data.orderby}">
+						<span class="help_info">(数值越大，显示排名越靠前)</span>
+					</td>
 				</tr>
+				<!--
 				<tr>
 					<th>状态：</th>
 					<td><input type="text" name="is_delete" id="is_delete" class="mod_input2" style="width:60px;"  value="{$data.is_delete}"></td>
 				</tr>
+				-->
 				
 		</tbody>
 		<tfoot>

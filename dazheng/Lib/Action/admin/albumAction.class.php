@@ -79,6 +79,7 @@ class albumAction extends AdminAuthAction
 			$data["album_id"]=post("album_id");
 			$data["album_name"]=post("album_name");
 			$data["album_sort"]=post("album_sort");
+			$data["album_addtime"]=strtotime(post("album_addtime"));
 			
 			$list=M("album")->save($data);
 			$this->success("修改成功",U('admin/album/album'));			

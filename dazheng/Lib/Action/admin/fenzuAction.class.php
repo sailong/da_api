@@ -371,10 +371,15 @@ class fenzuAction extends AdminAuthAction
 			$data["baofen_id"]=post("baofen_id");
 			$data["uid"]=post("uid");
 			$data["realname"]=post("realname");
-			$data["start_time"]=strtotime(post("start_time"));
+			
+			
+			$starttime=post("start_time_1")."-".post("start_time_2")."-".post("start_time_3")." ".post("start_time_4").":".post("start_time_5").":".post("start_time_6");
+			$data["start_time"]=strtotime($starttime);
 			$data["tee"]=post("tee");
 			$data["event_id"]=post("event_id");
 			$data["fenzhan_id"]=post("fenzhan_id");
+			
+			
 			$list=M("baofen")->save($data); 
 			$this->success("修改成功",U('admin/fenzhan/fenzhan_user',array('event_id'=>$data['event_id'],'fenzhan_id'=>$data['fenzhan_id'])));
 		}

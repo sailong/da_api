@@ -441,5 +441,143 @@ class tongjiAction extends AdminAuthAction
 		
 	}
 	
+	
+	
+	
+	public function topic_tongji()
+	{
+	
+		$page = intval(get("p"))?get("p"):1;
+		$page_size=20;
+
+		$sort=" dateline desc ";
+		
+		if(get('k'))
+		{
+			$where = " 1 and content like '%#".get('k')."#%' ";
+		}
+		else
+		{
+			$where = " 1 and content like '%LPGA%' ";
+		}
+		//$where = " 1 and content like '%#华彬LPGA中国精英赛#%' ";
+		
+
+		if(get("starttime")!="")
+		{
+			$where .=" and dateline>".strtotime(get("starttime"))." ";
+		}
+		if(get("endtime")!="")
+		{
+			$where .=" and dateline<".strtotime(get("endtime"))." ";
+		}
+
+		$data["item"]=M("topic","jishigou_")->where($where.$bigwhere)->order($sort)->page($page.",".$page_size)->select();
+		
+
+		for($i=0; $i<count($data["item"]); $i++)
+		{
+			if($data["item"][$i]["uid"]!="")
+			{
+				$user=M()->query("select realname,mobile from pre_common_member_profile where uid='".$data["item"][$i]["uid"]."' ");
+				$data["item"][$i]["realname"]=$user[0]["realname"];
+				$data["item"][$i]["mobile"]=$user[0]["mobile"];
+			}
+		}
+		
+		$data["total"] = M("topic","jishigou_")->where($where.$bigwhere)->count();
+		
+		import ("@.ORG.Page");
+		$page = new page ($data["total"], $page_size );
+		$data["pages"] = $page->show();
+		
+		$this->assign("list",$data["item"]);
+		$this->assign("pages",$data["pages"]);
+		$this->assign("total",$data["total"]);
+	
+		$this->display();
+	}
+	
+	
+	
+	
+	public function ticket_login()
+	{
+		$event_id=get('event_id');
+	
+		$user_ticket_list=M()->query("select * from tbl_user_ticket where event_id='".$event_id."' and ip is null group by uid limit 700");
+	
+		echo "select * from tbl_user_ticket where event_id='".$event_id."' group by uid  ";
+		echo "<hr>";
+		for($i=0; $i<count($user_ticket_list); $i++)
+		{
+			$ip=M()->query("select ip from tbl_app_log where uid='".$user_ticket_list[$i]['uid']."' order by app_log_addtime desc limit 1 ");
+			$ip=$ip[0]['ip'];
+			
+			
+
+			//$city_info =get_city($ip);
+			
+			
+			if($ip)
+			{
+				$url="http://ip.taobao.com/service/getIpInfo.php?ip=".$ip;
+				$ip_data=json_decode(file_get_contents($url));
+				if((string)$ip_data->code=='1')
+				{
+				  //return false;
+				}
+				$city_info = (array)$ip_data->data;
+			
+				$sheng=$city_info['region'];
+				$city=$city_info['city'];
+				
+				$up=M()->query("update tbl_user_ticket set ip='".$ip."',sheng='".$sheng."',city='".$city."' where user_ticket_id='".$user_ticket_list[$i]['user_ticket_id']."' ");
+				echo "update tbl_user_ticket set ip='".$ip."',sheng='".$sheng."',city='".$city."' where user_ticket_id='".$user_ticket_list[$i]['user_ticket_id']."' ";
+				echo "<hr>";
+			}
+		}
+		
+		
+		
+	}
+	
+	
+	
+	public function ticket_city()
+	{
+		$event_id=get('event_id');
+	
+		$user_ticket_list=M()->query("select * from tbl_user_ticket where event_id='".$event_id."' group by sheng");
+
+		for($i=0; $i<count($user_ticket_list); $i++)
+		{
+			if($user_ticket_list[$i]['sheng'])
+			{
+				echo $user_ticket_list[$i]['sheng'];
+				
+				$num=M("user_ticket")->where(" sheng='".$user_ticket_list[$i]['sheng']."' and  event_id='".$event_id."' ")->count();
+				
+				echo $num."人";
+				
+
+				echo "<br >";
+			}
+		}
+		
+		
+		
+	}
+	
+	
+	function get_city($ip)
+	{
+		
+		return $data;
+	}
+	
+
+
+	
 }
 ?>

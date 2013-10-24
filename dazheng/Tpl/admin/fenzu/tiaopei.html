@@ -1,4 +1,4 @@
-<include file="../public/_header" />
+﻿<include file="../public/_header" />
 <div class="so_main">
   
   <include file="../event/event_manage_header" />
@@ -26,6 +26,10 @@
 					<td><input type="text" name="uid" id="uid" class="mod_input2" style="width:200px;"  value="{$data.uid}"  onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')"></td>
 				</tr> -->
 				<tr>
+				  <th> 大正用户ID </th>
+				  <td><input type="text" name="uid" id="uid" class="mod_input2" style="width:300px;"  value="{$data.uid}" /></td>
+		  </tr>
+				<tr>
 					<th>姓名：</th>
 					<td><input type="text" name="realname" id="realname" class="mod_input2" style="width:300px;"  value="{$data.realname}"></td>
 				</tr>
@@ -35,7 +39,14 @@
 				</tr>
 				<tr>
 					<th>开始比赛时间：</th>
-					<td><input type="text" name="start_time" id="start_time" readonly class="mod_input_date" style="width:200px;" value="{$data.start_time|format_to_fulltime}" onFocus="WdatePicker({startDate:'%y-%M-%d 08:00:00',dateFmt:'yyyy-MM-dd HH:mm:ss',alwaysUseStartDate:true})" ></td>
+					<td>
+					<input type="text" name="start_time_1" class="mod_input2" style="width:50px;" value="<php> echo date('Y',$data['start_time']);</php>" >- 
+					<input type="text" name="start_time_2" class="mod_input2" style="width:50px;" value="<php> echo date('m',$data['start_time']);</php>" >- 
+					<input type="text" name="start_time_3" class="mod_input2" style="width:50px;" value="<php> echo date('d',$data['start_time']);</php>" >  
+					<input type="text" name="start_time_4" class="mod_input2" style="width:50px;" value="<php> echo date('G',$data['start_time']);</php>" >: 
+					<input type="text" name="start_time_5" class="mod_input2" style="width:50px;" value="<php> echo date('i',$data['start_time']);</php>" >:
+					<input type="text" name="start_time_6" class="mod_input2" style="width:50px;" value="<php> echo date('s',$data['start_time']);</php>" > 
+					 </td>
 				</tr>
 				 
 				<tr>
@@ -59,7 +70,7 @@
 				</td>
 		</tfoot>
 	</table><!--/add_table-->
-</form>
+    </form>
 	   
   </div>
 

@@ -6,7 +6,7 @@
   <div class="page_tit">赛事用户管理</div>
   <div class="tit_tab">
 	<ul>
-		<li><a class=on href="{:U('admin/event_user/event_user_add')}">添加赛事用户</a></li>
+		<li><a class=on href="{:U('admin/event_user/event_user_add')}">添加赛事用户{$event_info['event_type']}</a></li>
 	</ul>
   </div>
 
@@ -68,7 +68,12 @@
 				<td><input type="text" name="event_user_realname" id="event_user_realname" class="mod_input2" style="width:300px;" ></td>
 			</tr>
 			<tr>
-				<th>姓别：</th>
+			  <th>英文姓名：</th>
+			  <td><input type="text" name="event_user_enrealname" id="event_user_enrealname" class="mod_input2" style="width:300px;" />
+			  (与其他赛事名字相同，方便后台报分使用)</td>
+		    </tr>
+			<tr>
+				<th>性别：</th>
 				<td>
 					<select name="event_user_sex" id="event_user_sex">
 						<option value="">请选择</option>

@@ -1,12 +1,13 @@
 <include file="Public:_header"/>
-            <h3 class="f14"><span class="switchs cu on" title="相关设置"></span>相关设置</h3>
-            <ul>
-			<volist id="sub" name="sub_menu">
-                <li id="_MP{$sub.admin_menu_id}" class="sub_menu">
-                	<a href="javascript:_MP('{$sub.admin_menu_id}','{$sub.admin_menu_url}');" hidefocus="true" style="outline:none;">{$sub.admin_menu_name}</a>
-				</li>
-			</volist>
-            </ul>
+<h3 class="f14"><span class="switchs cu on" title="{$parent_name}"></span>{$parent_name}</h3>
+
+<ul>
+<volist id="sub" name="sub_menu">
+	<li id="_MP{$sub.admin_menu_id}" class="sub_menu <php> if($i=="1"){ echo 'on';}</php>">
+		<a href="javascript:_MP('{$sub.admin_menu_id}','{$sub.admin_menu_url}');" hidefocus="true" style="outline:none;">{$sub.admin_menu_name}</a>
+	</li>
+</volist>
+</ul>
 
 <script type="text/javascript">
 $(".switchs").each(function(i){

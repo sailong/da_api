@@ -32,10 +32,11 @@
 	<tr overstyle="on"  id=ids_{$vo["admin_role_id"]}>
 		<td><input type="checkbox" name="checkbox" onclick="select_one(this)" value="{$vo.admin_role_id}" ></td>
 		<td>{$vo.admin_role_id}</th>
-			<td><a href="javascript:void(0);" onclick="mod_dialog('查看详细','{:U('admin/index/admin_role_detail', array('admin_role_id'=>$vo['admin_role_id']))}');">{$vo.admin_role_name}</a></td>
+			<td>{$vo.admin_role_name}</td>
 			<td>{$vo.admin_content}</td>
 			
 		<td>
+			<a href="?g=admin&m=index&a=admin_role_menu&admin_role_id={$vo.admin_role_id}" >权限管理</a> | 
 			<a href="javascript:void(0);"  onclick="mod_dialog('修改角色','{:U('admin/index/admin_role_edit', array('admin_role_id'=>$vo['admin_role_id']))}')">修改</a> | 
 			<a href="javascript:void(0);" onclick="mod_delete_one('{:U('admin/index/admin_role_delete_action')}','{$vo['admin_role_id']}');">删除</a>
 		</td>

@@ -32,18 +32,17 @@
 			</tr> -->
 			<php>if($event_info['event_type'] == 'T'){</php>
 			<tr>
-				<th>所属团队：</th>
-				<td>
-					<select name="event_user_team">
-						<option value="">请选择</option>
-						<volist id="vo" name="team_list">
-						<option value="{$vo}">{$vo}</option>
-						</volist>
-					</select>
-					<script>set_select_value(document.act_form.event_user_team,'<php> echo get('event_user_team');</php>');</script>
-				</td>
-			</tr>
-			
+					<th>所属团队：</th>
+					<td>
+						<select name="event_user_team">
+							<option value="">请选择</option>
+							<volist id="vo" name="team_list">
+							<option value="{$vo}">{$vo}</option>
+							</volist>
+						</select>
+						<script>set_select_value(document.act_form.event_user_team,'<php> echo get('event_user_team');</php>');</script>
+					</td>
+				</tr>
 				<tr>
 					<th>上一级：</th>
 					<td>

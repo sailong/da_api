@@ -42,6 +42,7 @@ class piao_admin_menuModel extends Model{
 		$where = " 1 ";
 
 		$data["item"]=M("piao_admin_menu")->where($where.$bigwhere)->order($sort)->limit($limit)->select();
+	
 		
 		for($i=0;  $i<count($data['item']); $i++)
 		{

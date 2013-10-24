@@ -48,48 +48,78 @@ class arcAction extends field_publicAction
 	{
 		if(M()->autoCheckToken($_POST))
 		{
-			$data["arc_name"]=post("arc_name");
-			$data["staff_id"]=post("staff_id");
-			$data["field_uid"]=$_SESSION["field_uid"];
-			$data["language"]=post("language");
-			$data["arc_note"]=post("arc_note");
-			$data["arc_type"]='Q';
-			$data["arc_viewtype"]=post("arc_viewtype");
+		
 			if($_FILES["arc_pic"]["error"]==0)
 			{
 				$uploadinfo=upload_file("upload/arc","png,jpg,jpeg,gif,bmp,tiff,psd");
-				$data["arc_pic"]=$uploadinfo[0]["savepath"] . $uploadinfo[0]["savename"];
-			}
-			$data["arc_source"]=post("arc_source");
-			$data["arc_sort"]=post("arc_sort");
-			$data["arc_editor"]=post("arc_editor");
-			$data["arc_content"]=stripslashes($_POST["arc_content"]);
-			$data["arc_is_tj"]=post("arc_is_tj");
-			$data["arc_state"]=1;
-			$data["arc_path"]=post("arc_path");
-			$data["arc_addtime"]=time();
-			$data["arc_statetime"]=strtotime(post("arc_statetime"));
-			
-			$list=M("arc")->add($data);
-			if($list!=false)
-			{
+				$data["arc_pic"]=$uploadinfo[0]["savepath"].$uploadinfo[0]["savename"];
+				$pic_info=getimagesize($data["arc_pic"]);
 				
-				//blog
-				$new_id=$list;
-				$res=M()->query("insert into pre_home_blog (blogid,uid,subject,replynum,dateline) values ('".$new_id."','".$row['uid']."','".$data["arc_name"]."','0','".time()."')");
+				$if_add=0;
+				if(post("arc_viewtype")=='pic' && $pic_info[0]==639 && $pic_info[1]==265)
+				{
+					$if_add=1;
+				}
 				
-				$res2=M()->query("insert into pre_home_blogfield (blogid,uid,message,pic) values ('".$new_id."','".$row['uid']."','".$data["arc_content"]."','".$data["arc_pic"]."')");
-			
-			
-				$table_info=M()->query("show table status where name ='tbl_arc'");
-				$up=m()->query("ALTER TABLE `pre_home_blog` AUTO_INCREMENT=".$table_info[0]['Auto_increment']." ");
+				if(post("arc_viewtype")=='normal' && $pic_info[0]==160 && $pic_info[1]==160)
+				{
+					$if_add=1;
+				}
 				
-				$this->success("添加成功",U('field/arc/arc',array('arctype_id'=>post("arctype_id"),'language'=>post("language"))));
+				if($if_add)
+				{
+					
+					$data["arc_name"]=post("arc_name");
+					$data["staff_id"]=post("staff_id");
+					$data["field_uid"]=$_SESSION["field_uid"];
+					$data["language"]=post("language");
+					$data["arc_note"]=post("arc_note");
+					$data["arc_type"]='Q';
+					$data["arc_viewtype"]=post("arc_viewtype");
+					$data["arc_source"]=post("arc_source");
+					$data["arc_sort"]=post("arc_sort");
+					$data["arc_editor"]=post("arc_editor");
+					$data["arc_content"]=stripslashes($_POST["arc_content"]);
+					$data["arc_is_tj"]=post("arc_is_tj");
+					$data["arc_state"]=1;
+					$data["arc_path"]=post("arc_path");
+					$data["arc_addtime"]=time();
+					$data["arc_statetime"]=strtotime(post("arc_statetime"));
+					
+
+					$list=M("arc")->add($data);
+					if($list!=false)
+					{
+						
+						//blog
+						$new_id=$list;
+						$res=M()->query("insert into pre_home_blog (blogid,uid,subject,replynum,dateline) values ('".$new_id."','".$row['uid']."','".$data["arc_name"]."','0','".time()."')");
+						
+						$res2=M()->query("insert into pre_home_blogfield (blogid,uid,message,pic) values ('".$new_id."','".$row['uid']."','".$data["arc_content"]."','".$data["arc_pic"]."')");
+					
+						$table_info=M()->query("show table status where name ='tbl_arc'");
+						$up=m()->query("ALTER TABLE `pre_home_blog` AUTO_INCREMENT=".$table_info[0]['Auto_increment']." ");
+						
+						$this->success("添加成功",U('field/arc/arc',array('arctype_id'=>post("arctype_id"),'language'=>post("language"))));
+					}
+					else
+					{
+						$this->error("添加失败",U('field/arc/arc_add',array('arctype_id'=>post("arctype_id"),'language'=>post("language"))));
+					}
+				
+				}
+				else
+				{
+					$this->error("缩略图尺寸不对，请重新上传",U('field/arc/arc_add',array('arctype_id'=>post("arctype_id"),'language'=>post("language"))));
+				}
+				
+				
 			}
 			else
 			{
-				$this->error("添加失败");
+				$this->error("缩略图必须上传",U('field/arc/arc_add',array('arctype_id'=>post("arctype_id"),'language'=>post("language"))));
 			}
+			
 		}
 		else
 		{
@@ -130,6 +160,34 @@ class arcAction extends field_publicAction
 	{
 		if(M()->autoCheckToken($_POST))
 		{
+		
+			if($_FILES["arc_pic"]["error"]==0)
+			{
+				$uploadinfo=upload_file("upload/arc","png,jpg,jpeg,gif,bmp,tiff,psd");
+				$data["arc_pic"]=$uploadinfo[0]["savepath"].$uploadinfo[0]["savename"];
+				$pic_info=getimagesize($data["arc_pic"]);
+				
+				
+				$if_add=0;
+				if(post("arc_viewtype")=='pic' && $pic_info[0]==639 && $pic_info[1]==265)
+				{
+					$if_add=1;
+				}
+				
+				if(post("arc_viewtype")=='normal' && $pic_info[0]==160 && $pic_info[1]==160)
+				{
+					$if_add=1;
+				}
+				
+				
+				if($if_add==0)
+				{
+					$this->error("缩略图尺寸不对，请重新上传",U('field/arc/arc_add',array('arctype_id'=>post("arctype_id"),'language'=>post("language"))));
+				}
+				
+			}
+			
+			
 			$data["arc_id"]=post("arc_id");
 			$data["arc_name"]=post("arc_name");
 			$data["language"]=post("language");
@@ -137,19 +195,12 @@ class arcAction extends field_publicAction
 			
 			$data["arc_note"]=post("arc_note");
 			$data["arc_viewtype"]=post("arc_viewtype");
-			if($_FILES["arc_pic"]["error"]==0)
-			{
-				$uploadinfo=upload_file("upload/arc","png,jpg,jpeg,gif,bmp,tiff,psd");
-				$data["arc_pic"]=$uploadinfo[0]["savepath"] . $uploadinfo[0]["savename"];
-			}
 			$data["arc_source"]=post("arc_source");
 			$data["arc_sort"]=post("arc_sort");
 			$data["arc_editor"]=post("arc_editor");
 			$data["arc_content"]=stripslashes($_POST["arc_content"]);
 			$data["arc_is_tj"]=post("arc_is_tj");
 			$data["arc_path"]=post("arc_path");
-			
-			
 			$list=M("arc")->save($data);
 			if($list!=false)
 			{

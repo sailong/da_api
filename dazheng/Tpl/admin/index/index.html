@@ -16,7 +16,8 @@
 		<!--
 		<a href="javascript:;" onclick="lock_screen()"><img src="/skin/admin/images/lockscreen.png"> 锁屏</a><span>|</span>
 		-->
-		您好！<php> echo $_SESSION['admin_name'];</php>  [<php> echo get_role_name($_SESSION['admin_role_id']);</php>]<span>|</span><a href="?g=admin&m=public&a=logout">[退出]</a>
+		您好！<php> echo $_SESSION['admin_name'];</php>  [<php> echo get_role_name($_SESSION['admin_role_id']);</php>]<span>|</span><a href="?g=admin&m=public&a=logout">[退出]</a><br />
+		<a href="/admin.php" target="_blank"><img src="/skin/admin/images/lockscreen.png"> 论坛后台</a>
 		<a href="/" target="_blank"><img src="/skin/admin/images/lockscreen.png"> 返回首页</a>
 	</div>
     <div class="style_but"></div>
@@ -26,7 +27,7 @@
 
     <ul class="nav white" id="top_menu">
 	
-		<li id="_M0" class="on top_menu"><a href="javascript:_M(0,'{:U('admin/index/welcome')}');" hidefocus="true" style="outline:none;">常用操作</a></li>
+		<li id="_M0" class="on top_menu"><a href="javascript:_M(0,'{:U('admin/index/welcome')}');" hidefocus="true" style="outline:none;">首页</a></li>
 	<volist id="m" name="menu">
       <li id="_M{$m.admin_menu_id}" class="top_menu"><a href="javascript:_M({$m.admin_menu_id},'{$m.admin_menu_url}');" hidefocus="true" style="outline:none;">{$m.admin_menu_name}</a></li>
 	</volist>

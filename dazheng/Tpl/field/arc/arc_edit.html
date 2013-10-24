@@ -25,16 +25,20 @@
 					<td><input type="text" name="arc_name" id="arc_name" class="mod_input2" style="width:500px;" value="{$data.arc_name}"></td>
 				</tr>
 				
-				
-				
 				<tr>
 					<th>缩略图：</th>
 					<td>
 						<php>if($data['arc_pic']){</php>
 						<a href="{$data.arc_pic}" target="_blank" title="查看原图"><img src="{$data.arc_pic}"  style="max-width:200px; max-height:100px; "></a>
 						<php>}</php><br /><br />
-						<input type="file" name="arc_pic" id="arc_pic"  class="mod_input" style="width:300px;"> (需要修改，请重新上传)
-						
+						<input type="file" name="arc_pic" id="arc_pic"  class="mod_input" style="width:300px;">
+						<br />
+						<font color=red>(
+							需要修改，请重新上传<br />
+							图片大小是有严格要求的，否则客户端就会变形。<br />
+							大图(pic)： 639*265，单位：像素<br>
+							小图(normal)： 160*160，单位：像素<br>
+						)</font>
 					</td>
 				</tr>
 				<tr>
@@ -60,9 +64,8 @@
 					<td>
 						<select name="arc_viewtype">
 							<option value="">请选择</option>
-							<option value="normal">normal</option>
-							<option value="banner">banner</option>
-							<option value="pic">pic</option>
+							<option value="pic">大图(pic)</option>
+							<option value="normal">小图(normal)</option>
 						</select>
 						<script>set_select_value(document.act_form.arc_viewtype,"{$data.arc_viewtype}");</script>
 					</td>

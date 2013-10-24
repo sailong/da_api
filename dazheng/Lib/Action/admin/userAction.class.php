@@ -85,7 +85,7 @@ class userAction extends AdminAuthAction
 			
 			if($list!=false)
 			{
-				$this->success("添加成功");
+					$this->success("添加成功",U('admin/user/user',array('event_id'=>post('event_id'))));
 			}
 			else
 			{
@@ -176,12 +176,13 @@ class userAction extends AdminAuthAction
 			//生成微博记录   
 			$res3=M()->execute("update jishigou_members set $updj where uid=".$uid." ");   
 			if($res!=false||$res1!=false||$res2!=false||$res3!=false)
-			{
-				$this->success("修改成功");
+			{ 
+				
+					$this->success("修改成功",U('admin/user/user',array('event_id'=>post('event_id'))));
 			}
 			else
-			{
-				$this->error("修改失败");
+			{ 
+					$this->success("修改失败",U('admin/user/user',array('event_id'=>post('event_id'))));
 			}
 		}
 		else

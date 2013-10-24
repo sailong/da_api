@@ -68,6 +68,7 @@ class event_userAction extends AdminAuthAction
 			$data["field_uid"]=$_SESSION['field_uid'];
 			$data["uid"]=post("uid");
 			$data["event_user_realname"]=post("event_user_realname");
+			$data["event_user_enrealname"]=post("event_user_enrealname");
 			$data["event_user_sex"]=post("event_user_sex");
 			$data["event_user_card_type"]=post("event_user_card_type");
 			$data["event_user_card"]=post("event_user_card");
@@ -137,6 +138,7 @@ class event_userAction extends AdminAuthAction
 			$data["field_uid"]=$_SESSION['field_uid'];
 			$data["uid"]=post("uid");
 			$data["event_user_realname"]=post("event_user_realname");
+			$data["event_user_enrealname"]=post("event_user_enrealname");
 			$data["event_user_sex"]=post("event_user_sex");
 			$data["event_user_card_type"]=post("event_user_card_type");
 			$data["event_user_card"]=post("event_user_card");
@@ -153,6 +155,22 @@ class event_userAction extends AdminAuthAction
 			}
 
 			$list=M("event_user")->save($data);
+			$event_id=$data["event_id"];
+			$event_user_id=$data["event_user_id"];
+			$uid=$data["uid"];
+			
+			$upwhere='';
+			if($data["event_user_enrealname"])
+			{
+				$event_user_enrealname=$data["event_user_enrealname"];
+				$upwhere.=" ,enrealname='$event_user_enrealname' ";
+			}
+			if($data["event_user_realname"])
+			{
+				$event_user_realname=$data["event_user_realname"];
+				$upwhere.=" ,realname='$event_user_realname' ";
+			}
+			$res=M()->execute("update tbl_baofen set uid=$uid $upwhere where event_user_id=".$event_user_id." and event_id=".$event_id."  "); 
 			$this->success("修改成功",U('admin/event_user/event_user',array('event_id'=>post('event_id'))));			
 		}
 		else
@@ -267,6 +285,7 @@ class event_userAction extends AdminAuthAction
 						$data['event_user_team']=$user_info['event_user_team'];
 						$data['code_pic']=null;
 						$data['event_apply_realname']=$user_info['event_user_realname'];
+			            $data["event_apply_enrealname"]=post("event_user_enrealname");
 						$data['event_apply_sex']=$user_info['event_user_sex'];
 						$data['event_apply_card']=$user_info['event_user_card'];
 						$data['event_apply_chadian']=$user_info['event_user_chadian'];

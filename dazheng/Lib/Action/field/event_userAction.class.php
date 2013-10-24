@@ -249,10 +249,16 @@ class event_userAction extends field_publicAction
 				{
 					
 					$baoming_info=M()->query("select * from tbl_event_apply where event_user_id='".$event_user_id."' and fenzhan_id='".post('fenzhan_id')."' ");
-					
+				
 					if(!$baoming_info[0]["event_apply_id"])
 					{
-						if($_SESSION['field_uid']==null)
+					
+						
+						if($_SESSION['field_uid'])
+						{
+							$field_uid=$_SESSION['field_uid'];
+						}
+						else
 						{
 							$field_uid=0;
 						}
@@ -274,7 +280,7 @@ class event_userAction extends field_publicAction
 						$data['event_apply_state']=1;
 						$data['event_apply_addtime']=time();
 						$res=M('event_apply')->add($data);
-					
+						
 					}
 					
 				}

@@ -47,6 +47,7 @@
 			<label for="checkbox"></label>
 		</th>
 		<th class="line_l">用户名</th>
+		<th class="line_l">UID</th>
 		<th class="line_l">姓名</th>
 		<th class="line_l">性别</th>
 		<th class="line_l">邮箱</th>
@@ -57,8 +58,10 @@
 	<volist id="vo" name="list">
 	<tr overstyle="on"  id=ids_{$vo["uid"]}>
 		<td><input type="checkbox" name="checkbox" onclick="select_one(this)" value="{$vo.uid}" ></td>
-		<td><a href="javascript:void(0);" onclick="mod_dialog('查看详细','{:U('admin/user/user_detail', array('uid'=>$vo['uid']))}');">{$vo.username}</a></th>
+        <td><a href="javascript:void(0);" onclick="mod_dialog('查看详细','{:U('admin/user/user_detail', array('uid'=>$vo['uid']))}');">{$vo.username}</a></th>
 
+		<td>{$vo.uid}</td>
+		
 			<td>{$vo.realname}</td>
 			<td> <php>if($vo['gender']=="1"){ echo " 男 ";} if($vo['gender']=="0"){ echo " 女 ";}</php></td>
 			<td>{$vo.email}</td>
