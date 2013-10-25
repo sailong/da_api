@@ -37,8 +37,6 @@ if($ac=="import_photo_form_dz")
 			$res=DB::query("insert into tbl_album (albumid,uid,album_name,album_addtime) values ('".$row['albumid']."','".$row['uid']."','".$row['albumname']."','".$row['updatetime']."') ");
 			//echo "insert into tbl_album (albumid,uid,album_name,album_addtime) values ('".$row['albumid']."','".$row['uid']."','".$row['albumname']."','".$row['updatetime']."') ";
 			//echo "<hr>";
-			
-			
 			$album_id=DB::result_first("select album_id from tbl_album where albumid='".$row['albumid']."' ");
 		}
 		/* else
@@ -103,6 +101,10 @@ if($ac=="import_photo_form_dz")
 				DB::query("insert into tbl_photo (uid,album_id,albumid,picid,photo_name,photo_url,photo_url_small,photo_addtime) values ('".$row_pic['uid']."','".$album_id."','".$pic_list['albumid']."','".$row_pic['picid']."','".$row_pic['title']."','".$filepath."','".$filepath_small."','".$row_pic['dateline']."')");
 				
 			}
+			
+			//更新相册
+			DB::query("update tbl_album set album_addtime='".time()."' where album_id='{$album_id}'");
+			
 			unset($row_pic);
 		}
 		

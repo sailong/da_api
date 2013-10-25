@@ -70,7 +70,7 @@
               </tr>
               <volist id="v" name="fenzu_user">
               <tr overstyle="on" >
-                <td height="30" style="width:80px; text-align:left;">{$v.realname}</td>
+                <td height="30" style="width:80px; text-align:left;">{$v.realname} <font color="#FF0000">{$v.enrealname}</font></td>
                 <volist id="d" name="dongs">
 				<php>
 				$cj=M()->query("select cave_".$d." from tbl_baofen where event_user_id='".$v['event_user_id']."' and fenzhan_id='".$fenzhan_id."' ");
