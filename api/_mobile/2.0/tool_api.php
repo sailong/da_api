@@ -7,40 +7,69 @@ if(!defined("IN_DISCUZ"))
 
 $ac=$_G['gp_ac'];
 
+if($ac=="daoru_score")
+{
+	$from_fenzhan_id=120;
+	$to_fenzhan_id=122;
+	echo "select baofen_id,fenzhan_id,event_user_id,zong_score,total_sum_ju from tbl_baofen where fenzhan_id='".$from_fenzhan_id."' order by baofen_id asc ";
+	$list=DB::query("select baofen_id,fenzhan_id,event_user_id,zong_score,total_sum_ju from tbl_baofen where fenzhan_id='".$from_fenzhan_id."' order by baofen_id asc ");
+	while($row=DB::fetch($list))
+	{
+		$res=DB::query("update tbl_baofen set zong_score='".$row['zong_score']."',total_sum_ju='".$row['total_sum_ju']."' where event_user_id='".$row['event_user_id']."' and fenzhan_id='".$to_fenzhan_id."'  " );
+		echo "update tbl_baofen set zong_score='".$row['zong_score']."',total_sum_ju='".$row['total_sum_ju']."' where event_user_id='".$row['event_user_id']."' and fenzhan_id='".$to_fenzhan_id."'  ";
+		echo "<hr>";
+	}
+	
+}
+
+
 
 //图片处理
 if($ac=="import_photo_form_dz")
 {
 	$page = $_G['gp_page'];
 	$page_size = $_G['gp_page_size'];
-	if(empty($page)){
+	if(empty($page))
+	{
 		$page = 1;
-		$page_size = 100;
+		$page_size = 1500;
 	}
 	$offset = ($page-1)*$page_size;
-	$ids="1000333,1889013,1000399,1889200,1888967,1888969,1899210,1899209,3801823,3801790,1899463";
+	$ids="1000333,1889013,1000399,1889200,1888967,1888969,1899210,1899209,3801823,3801790,1899463,1888968,3805346";
 
-	$list=DB::query("select albumid,albumname,uid,updatetime from pre_home_album where uid in (".$ids.") order by albumid asc limit {$offset},{$page_size}");
+	$list=DB::query("select albumid,albumname,uid,updatetime from pre_home_album where uid in (".$ids.") order by albumid desc limit {$offset},{$page_size}");
+	
+	//echo "select albumid,albumname,uid,updatetime from pre_home_album where uid in (".$ids.") order by albumid asc limit {$offset},{$page_size}";
+	//echo "<hr>";
 	
 	while($row=DB::fetch($list))
 	{
 		$album_id=DB::result_first("select album_id from tbl_album where albumid='".$row['albumid']."' ");
+		//echo "select album_id from tbl_album where albumid='".$row['albumid']."' ";
+		//echo "<hr>";
 		if(!$album_id)
 		{
 			//添加相册
 			$res=DB::query("insert into tbl_album (albumid,uid,album_name,album_addtime) values ('".$row['albumid']."','".$row['uid']."','".$row['albumname']."','".$row['updatetime']."') ");
-			
-			
+			//echo "insert into tbl_album (albumid,uid,album_name,album_addtime) values ('".$row['albumid']."','".$row['uid']."','".$row['albumname']."','".$row['updatetime']."') ";
+			//echo "<hr>";
 			$album_id=DB::result_first("select album_id from tbl_album where albumid='".$row['albumid']."' ");
 		}
 		/* else
 		{
 			continue;
 		} */
-		$pic_list=DB::query("select picid,albumid,uid,title,dateline,filepath from pre_home_pic where albumid='".$row['albumid']."' ");
+		$pic_list=DB::query("select picid,albumid,uid,title,dateline,filepath,filename from pre_home_pic where albumid='".$row['albumid']."' ");
 		
 		while($row_pic=DB::fetch($pic_list))
 		{
+			
+			if($row_pic['title']=='')
+			{
+				$new_title=explode(".".$row_pic['filename']);
+				$row_pic['title']=$new_title[0];
+			}
+		
 			//echo "相册".$row_pic['albumid'].'---相片'.$row_pic['picid'].'<br>';
 			$file_url=dirname(dirname(dirname(dirname(__FILE__)))).'/data/attachment/album/'.$row_pic['filepath'];
 			
@@ -85,9 +114,13 @@ if($ac=="import_photo_form_dz")
 			}
 			else
 			{
-				DB::query("insert into tbl_photo (uid,album_id,picid,photo_name,photo_url,photo_url_small,photo_addtime) values ('".$row_pic['uid']."','".$album_id."','".$row_pic['picid']."','".$row_pic['title']."','".$filepath."','".$filepath_small."','".$row_pic['dateline']."')");
+				DB::query("insert into tbl_photo (uid,album_id,albumid,picid,photo_name,photo_url,photo_url_small,photo_addtime) values ('".$row_pic['uid']."','".$album_id."','".$pic_list['albumid']."','".$row_pic['picid']."','".$row_pic['title']."','".$filepath."','".$filepath_small."','".$row_pic['dateline']."')");
 				
 			}
+			
+			//更新相册
+			DB::query("update tbl_album set album_addtime='".time()."' where album_id='{$album_id}'");
+			
 			unset($row_pic);
 		}
 		

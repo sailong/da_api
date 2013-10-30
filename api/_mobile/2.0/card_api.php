@@ -156,8 +156,7 @@ if($ac=='rank')
 				$sub_arr[]=$sub_row['fenzhan_id'];
 			}
 		}
-		
-		
+		 
 		
 		if(count($sub_arr)>=1)
 		{
@@ -191,6 +190,7 @@ if($ac=='rank')
 		
 		//选择成绩
 		$lun_num = DB::result_first("select max(lun) from tbl_baofen where 1=1 ".$baofen_sql." and event_id<>0 limit 1 ");
+	 
 		if($lun_num)
 		{
 			$query = DB::query(" SELECT id,uid,lun,event_id,total_score,zong_score,score,par,tianshu,total_sum_ju,event_apply_id,username,event_user_id ,status,dateline,jiadong_status FROM (select event_id,baofen_id as id,uid,lun,total_score,zong_score,score,par,to_days(FROM_UNIXTIME(dateline))-to_days(now()) as tianshu,total_sum_ju ,total_ju_par,total_ju_par1,total_ju_par2,total_ju_par3,event_apply_id,realname,realname as username,event_user_id,status,dateline,jiadong_status from tbl_baofen where 1=1 ".$baofen_sql." and source='ndong' order by status asc,total_sum_ju asc,jiadong_status desc) as t2 group by event_user_id order by status desc,total_sum_ju asc,jiadong_status desc limit 0,$limit");
@@ -676,7 +676,7 @@ if($ac=="fenzhan_detail")
 		$event_info['event_is_baoming']='N';
 		//分站外卡成绩列表
 		$lun_num = DB::result_first("select max(lun) from tbl_baofen where fenzhan_id='$fz_id' and source='".$source."' and uid >0 and total_score>60  limit 1 ");
-		$query = DB::query("select id,uid,username,lun,total_score,score,par,tianshu from (select baofen_id as id,uid,realname as username,lun,total_score,score,par,to_days(FROM_UNIXTIME(dateline))-to_days(now()) as tianshu from tbl_baofen where fenzhan_id='$fz_id' and source='".$source."' and uid >0 and total_score>60 order by total_score asc) as t2 group by uid order by lun desc,total_score asc,tianshu asc limit 0,$limit");
+		$query = DB::query("select id,uid,username,lun,is_end,total_score,score,par,tianshu from (select baofen_id as id,uid,realname as username,lun,total_score,score,par,to_days(FROM_UNIXTIME(dateline))-to_days(now()) as tianshu from tbl_baofen where fenzhan_id='$fz_id' and source='".$source."' and uid >0 and total_score>60 order by total_score asc) as t2 group by uid order by lun desc,total_score asc,tianshu asc limit 0,$limit");
 
 		$i=0;
 		while($row = DB::fetch($query))
@@ -717,7 +717,10 @@ if($ac=="fenzhan_detail")
 			{
 				$row['total_score']='-';
 			}
+			if($row['is_end']==1){
+			
 			$row['score_status']="F";
+			}
 
 			$s_arr=explode("|",$row['score']);
 			unset($s_arr[9]);
@@ -794,7 +797,11 @@ if($ac=="fenzhan_detail")
 			$row ['par'] = $par [0] . '|' . $par [1] . '|' . $par [2] . '|' . $par [3] . '|' . $par [4] . '|' . $par [5] . '|' . $par [6] . '|' . $par [7] . '|' . $par [8] . '|' . $POUT . '|' . $par [9] . '|' . $par [10] . '|' . $par [11] . '|' . $par [12] . '|' . $par [13] . '|' . $par [14] . '|' . $par [15] . '|' . $par [16] . '|' . $par [17] . '|' . $PIN . '|' . $PTL;
 			 
 			//$row['par']=str_replace(",","|","4,4,3,5,4,4,3,5,4,36,4,4,5,4,4,4,5,3,4,36,72");
+			if($row['is_end']==1){
+			
 			$row['score_status']="F";
+			}
+			
 			$out=$row['cave_1']+$row['cave_2']+$row['cave_3']+$row['cave_4']+$row['cave_5']+$row['cave_6']+$row['cave_7']+$row['cave_8']+$row['cave_9'];
 			$in=$row['cave_10']+$row['cave_11']+$row['cave_12']+$row['cave_13']+$row['cave_14']+$row['cave_15']+$row['cave_16']+$row['cave_17']+$row['cave_18'];
 			$total=$out+$in;
@@ -1035,7 +1042,15 @@ if($ac=="fenzhan_list")
 {
 	$sid=$_G['gp_sid'];
 	$year=$_G['gp_year'];
-	$list=DB::query("select fenzhan_id,fenzhan_id as fz_id,sid,fenzhan_name as fenz_name,starttime,endtime,field_id,(select fieldname from ".DB::table("common_field")." where uid=tbl_fenzhan.field_id ) as field_name from tbl_fenzhan where sid='".$sid."' and year='".$year."' ");
+	if($sid>1000)
+	{
+		$sql=" and sid='".$sid."'  ";
+	}
+	else
+	{
+		$sql=" and event_id='".$sid."'  ";
+	}
+	$list=DB::query("select fenzhan_id,fenzhan_id as fz_id,sid,fenzhan_name as fenz_name,starttime,endtime,field_id,(select fieldname from ".DB::table("common_field")." where uid=tbl_fenzhan.field_id ) as field_name from tbl_fenzhan where year='".$year."' and fenzhan_id not in (115,116,117) ".$sql." ");
 	$i=0;
 	while($row=DB::fetch($list))
 	{

@@ -6,29 +6,26 @@ if(!defined('IN_DISCUZ'))
 
 
 //get username by mobile     jack add 20130916
-
+/*
 $username = $_G['gp_username'];
 preg_match_all("/13[0-9]{9}|15[0|1|2|3|5|6|7|8|9]\d{8}|18[0|5|6|7|8|9]\d{8}/",$_G['gp_username'], $if_mobile);
-
 if(!empty($if_mobile[0]))
 {
 	$sql = "select uid,mobile from pre_common_member_profile where mobile='{$username}' order by uid desc";
 	$rs=DB::fetch_first($sql);
-
 	$sql = "select uid,username from pre_common_member where uid='".$rs['uid']."' order by uid desc";
 	$rs=DB::fetch_first($sql);
 	$username=$rs['username'];
-
 }
+*/
 
 
 //通过接口判断登录帐号的正确性，返回值为数组
 
-list($uid, $username, $password, $email) = uc_user_login($username,$_G['gp_password']);
+list($uid, $username, $password, $email) = uc_user_login($_G['gp_username'],$_G['gp_password']);
 
 
 $row['touxiang']="".$site_url."/uc_server/avatar.php?uid=".$row['uid']."&size=small";
-$user_info=DB::fetch_first("select mobile from pre_common_member_profile where uid='{$uid}' ");
 
 /*初始化接口返回的参数*/
 $response         = 0;
@@ -38,7 +35,6 @@ $data['data'] = array(
 					'uid'=>$uid,
 					//'username'=>$realname,
 					'password'=>$password,
-					'mobile'=>$user_info['mobile'],
 					'touxiang'=>"".$site_url."/uc_server/avatar.php?uid=".$uid."&size=middle",
 					//'email'   =>$email,
 					 );
@@ -66,41 +62,6 @@ if($uid > 0)
 	  setcookie('Example_auth', uc_authcode($uid."\t".$username, 'ENCODE'));
 	 //生成同步登录的代码
 	 $ucsynlogin = uc_user_synlogin($uid);
-	 
-	 
-	 
-	//添加日志
-	$tj_sql="";
-	$tj_sql .=" insert into tbl_app_log ( ";
-	$tj_sql .=" uid, ";
-	$tj_sql .=" field_uid, ";
-	$tj_sql .=" app_log_mod, ";
-	$tj_sql .=" ac, ";
-	$tj_sql .=" ip, ";
-	$tj_sql .=" province, ";
-	$tj_sql .=" user_agent, ";
-	$tj_sql .=" versions, ";
-	$tj_sql .=" url, ";
-	$tj_sql .=" sn, ";
-	$tj_sql .=" app_log_addtime ";
-	$tj_sql .=" ) values( ";
-	$tj_sql .=" '".$uid."', ";
-	$tj_sql .=" '".$log_field_uid."', ";
-	$tj_sql .=" '".$mod."', ";
-	$tj_sql .=" '".$ac."', ";
-	$tj_sql .=" '".get_real_ip()."', ";
-	$tj_sql .=" '".$province."', ";
-	$tj_sql .=" '".$userAgent."', ";
-	$tj_sql .=" '".$versions."', ";
-	$tj_sql .=" '".$_SERVER['REQUEST_URI']."', ";
-	$tj_sql .=" '".$sn."', ";
-	$tj_sql .=" '".time()."' ";
-	$tj_sql .=" ) ";
-	$tj_up=DB::query($tj_sql);
-
-		
-		
-		
 	 api_json_result(1,0,$api_error['login']['10000'],$data);
 }
 elseif($uid == -1)

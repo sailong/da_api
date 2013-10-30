@@ -1,6 +1,86 @@
 <?php
 
+//4人2球计算方法
+function get_score_44($arr1,$arr2)
+{
+	$arr=array($arr1['cave_1'],$arr2['cave_1']);
+	rsort($arr);
+	$cave_1=end($arr);
+	
+	$arr=array($arr1['cave_2'],$arr2['cave_2']);
+	rsort($arr);
+	$cave_2=end($arr);
+	
+	$arr=array($arr1['cave_3'],$arr2['cave_3']);
+	rsort($arr);
+	$cave_3=end($arr);
+	
+	
+	$arr=array($arr1['cave_4'],$arr2['cave_4']);
+	rsort($arr);
+	$cave_4=end($arr);
+	
+	$arr=array($arr1['cave_5'],$arr2['cave_5']);
+	rsort($arr);
+	$cave_5=end($arr);
+	
+	$arr=array($arr1['cave_6'],$arr2['cave_6']);
+	rsort($arr);
+	$cave_6=end($arr);
+	
+	$arr=array($arr1['cave_7'],$arr2['cave_7']);
+	rsort($arr);
+	$cave_7=end($arr);
+	
+	$arr=array($arr1['cave_8'],$arr2['cave_8']);
+	rsort($arr);
+	$cave_8=end($arr);
+	
+	$arr=array($arr1['cave_9'],$arr2['cave_9']);
+	rsort($arr);
+	$cave_9=end($arr);
+	
+	$arr=array($arr1['cave_10'],$arr2['cave_10']);
+	rsort($arr);
+	$cave_10=end($arr);
+	
+	$arr=array($arr1['cave_11'],$arr2['cave_11']);
+	rsort($arr);
+	$cave_11=end($arr);
+	
+	$arr=array($arr1['cave_12'],$arr2['cave_12']);
+	rsort($arr);
+	$cave_12=end($arr);
+	
+	$arr=array($arr1['cave_13'],$arr2['cave_13']);
+	rsort($arr);
+	$cave_13=end($arr);
+	
+	$arr=array($arr1['cave_14'],$arr2['cave_14']);
+	rsort($arr);
+	$cave_14=end($arr);
+	
+	$arr=array($arr1['cave_15'],$arr2['cave_15']);
+	rsort($arr);
+	$cave_15=end($arr);
+	
+	$arr=array($arr1['cave_16'],$arr2['cave_16']);
+	rsort($arr);
+	$cave_16=end($arr);
+	
+	$arr=array($arr1['cave_17'],$arr2['cave_17']);
+	rsort($arr);
+	$cave_17=end($arr);
+	
+	$arr=array($arr1['cave_18'],$arr2['cave_18']);
+	rsort($arr);
+	$cave_18=end($arr);
+	
+	$score_arr=array($cave_1,$cave_2,$cave_3,$cave_4,$cave_5,$cave_6,$cave_7,$cave_8,$cave_9,$cave_10,$cave_11,$cave_12,$cave_13,$cave_14,$cave_15,$cave_16,$cave_17,$cave_18);
+	
+	return $score_arr;
 
+}
 
 
 function get_thru($event_id,$fenzhan_id,$uid,$event_user_id,$fenzhan_ing_status=0,$lun,$fenzhan_num)
@@ -28,7 +108,7 @@ function get_thru($event_id,$fenzhan_id,$uid,$event_user_id,$fenzhan_ing_status=
 	
 	if($fenzhan_id)
 	{
-		$score_info=DB::fetch_first("select total_score,score,status,cave_1,cave_2,cave_3,cave_4,cave_5,cave_6,cave_7,cave_8,cave_9,cave_10,cave_11,cave_12,cave_13,cave_14,cave_15,cave_16,cave_17,cave_18 from tbl_baofen where source='ndong' and fenzhan_id='".$fenzhan_id."' ".$user_sql." order by lun desc limit 1 ");
+		$score_info=DB::fetch_first("select total_score,score,status,cave_1,cave_2,cave_3,cave_4,cave_5,cave_6,cave_7,cave_8,cave_9,cave_10,cave_11,cave_12,cave_13,cave_14,cave_15,cave_16,cave_17,cave_18 ,is_end from tbl_baofen where source='ndong' and fenzhan_id='".$fenzhan_id."' ".$user_sql." order by lun desc limit 1 ");
 		$total_score=$score_info['total_score'];
 
 		if($score_info['cave_1'] && !$score_info['cave_2'])
@@ -101,11 +181,20 @@ function get_thru($event_id,$fenzhan_id,$uid,$event_user_id,$fenzhan_ing_status=
 		}
 		else if($score_info['cave_18'] && !$score_info['cave_1'])
 		{
-			$next_dong='F';
+			if($score_info['is_end'])
+			{
+				$next_dong='F';
+			}else{
+				$next_dong='1';
+			}
 		}
 		else
 		{
-			$next_dong='F';
+			if($score_info['is_end'])
+			{
+				$next_dong='F';
+			}
+			
 		}
 		
 		/*

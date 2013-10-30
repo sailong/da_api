@@ -18,7 +18,6 @@ if(!$page_size)
 {
 	$page_size=10;
 }
-
 if($page==1)
 {
 	$page_start=0;
@@ -763,20 +762,9 @@ if($ac=="member_detail")
 	$login_uid=$_G['gp_login_uid'];
 	if($get_uid)
 	{
-		$detail_data=DB::fetch_first("select uid,(select realname from ".DB::table("common_member_profile")." where uid=".DB::table('common_member').".uid) as username,(select enrealname from ".DB::table("common_member_profile")." where uid=".DB::table('common_member').".uid) as enrealname,(select count(id) from jishigou_buddys where uid=".DB::table("common_member").".uid ) as guanzhu_num,(select count(id) from jishigou_buddys where buddyid=".DB::table("common_member").".uid ) as fensi_num,(select count(tid) from jishigou_topic where uid=".DB::table("common_member").".uid and type='first' ) as dongtai_num,(select count(id) from jishigou_buddys where uid='".$login_uid."' and  buddyid='".$get_uid."' ) as is_guanzhu,groupid,(select bio from ".DB::table("common_member_profile")." where uid=".DB::table('common_member').".uid) as content from ".DB::table("common_member")." where uid='".$get_uid."' ");
+		$detail_data=DB::fetch_first("select uid,(select realname from ".DB::table("common_member_profile")." where uid=".DB::table('common_member').".uid) as username,(select count(id) from jishigou_buddys where uid=".DB::table("common_member").".uid ) as guanzhu_num,(select count(id) from jishigou_buddys where buddyid=".DB::table("common_member").".uid ) as fensi_num,(select count(tid) from jishigou_topic where uid=".DB::table("common_member").".uid and type='first' ) as dongtai_num,(select count(id) from jishigou_buddys where uid='".$login_uid."' and  buddyid='".$get_uid."' ) as is_guanzhu,groupid,(select bio from ".DB::table("common_member_profile")." where uid=".DB::table('common_member').".uid) as content from ".DB::table("common_member")." where uid='".$get_uid."' ");
 		$detail_data['touxiang']=$site_url."/uc_server/avatar.php?uid=".$detail_data['uid']."&size=middle";
 		$detail_data['msg_num']=1;
-		
-		if($detail_data['username']!=$detail_data['enrealname'])
-		{
-			$detail_data['username']=$detail_data['username']."\n".$detail_data['enrealname'];
-		}
-		else
-		{
-			$detail_data['username']=$detail_data['username'];
-		}
-		
-		
 		if(!$detail_data['content'])
 		{
 			if($detail_data['groupid']==24)
@@ -805,8 +793,7 @@ if($ac=="member_detail")
 			if($max_page2>=$page2)
 			{
 			
-				$query = DB::query("select baofen_id as id,event_id,uid,fuid,fz_id,par,score,pars,total_score,lun,dateline,event_name,start_time from (select baofen_id,field_id,baofen_id as id,uid,field_id as fuid,event_id,fenzhan_id as fz_id,sid,par,score,pars,total_score,lun,FROM_UNIXTIME(dateline, '%Y-%m-%d') as dateline,addtime,(select event_name from tbl_event where event_id=tbl_baofen.event_id) as event_name,start_time from tbl_baofen where start_time>'".strtotime("2013-04-01")."' and uid=$get_uid $strwhere ) as t2 group by event_id order by total_score asc,start_time desc limit $page_start2,$page_size2");
-
+				$query = DB::query("select baofen_id as id,uid,fuid,fz_id,par,score,pars,total_score,lun,dateline,event_name from (select baofen_id,field_id,baofen_id as id,uid,field_id as fuid,fenzhan_id as fz_id,sid,par,score,pars,total_score,lun,FROM_UNIXTIME(dateline, '%Y-%m-%d') as dateline,addtime,(select realname from ".DB::table("common_member_profile")." where uid=tbl_baofen.sid) as event_name from tbl_baofen where addtime>'".strtotime("2013-04-01")."' and uid=$get_uid $strwhere ) as t2 group by sid order by total_score asc,addtime desc limit $page_start2,$page_size2");
 				while($row = DB::fetch($query))
 				{
 					$row['ndid']=$row['id'];
@@ -815,6 +802,7 @@ if($ac=="member_detail")
 					$score_list[] = array_default_value($row); 
 				}
 				/*
+				
 				$query = DB::query("select id,uid,fuid,fz_id,par,score,pars,total_score,lun,onlymark,dateline,event_name,addtime from (select id,uid,fuid,fz_id,par,score,sais_id,pars,total_score,lun,onlymark,FROM_UNIXTIME(dateline, '%Y-%m-%d') as dateline,addtime,(select realname from ".DB::table("common_member_profile")." where uid=".DB::table('common_score').".sais_id) as event_name from ".DB::table('common_score')."  where addtime>'".strtotime("2013-04-01")."' and uid=$get_uid $strwhere order by total_score asc) as t2 group by sais_id order by total_score asc,addtime desc limit $page_start2,$page_size2");
 
 				//echo "select id,uid,fuid,par,score,pars,total_score,FROM_UNIXTIME(dateline, '%Y-%m-%d') as dateline,(select realname from ".DB::table("common_member_profile")." where uid=".DB::table('common_score').".uid) as event_name from ".DB::table('common_score')."  where uid=$get_uid $strwhere order by addtime desc limit $page_start2,$page_size2";
@@ -1052,18 +1040,7 @@ if($ac=="golf_news")
 {
 	$field_uid=$_G['gp_field_uid'];
 	$page_size=9;
-	
-	if($page==1)
-	{
-		$page_start=0;
-	}
-	else
-	{
-		$page_start=($page-1)*($page_size);
-	}
-
-
-	$total=DB::result_first("select count(arc_id) from tbl_arc where arc_model='arc' and arc_state=1 and arc_viewstatus=1  and (arctype_id=2 or arc_type='Q') and arc_viewtype='normal' $language_sql ");
+	$total=DB::result_first("select count(arc_id) from tbl_arc where arc_model='arc' and arc_state=1 and (arctype_id=2 or arc_type='Q') and arc_viewtype='normal' $language_sql ");
 	$max_page=intval($total/$page_size);
 	if($max_page<$total/$page_size)
 	{
@@ -1072,7 +1049,7 @@ if($ac=="golf_news")
 	if($max_page>=$page)
 	{
 
-		$list=DB::query("select field_uid,arc_id as blogid,arc_name as subject,arc_replynum as replynum,arc_viewtype as view_type,arc_pic as pic ,arc_addtime as dateline,arc_content as content,FROM_UNIXTIME(arc_addtime,'%Y%m%d') as today,arc_top from tbl_arc where  arc_model='arc' and arc_state=1 and arc_viewtype='normal' and arc_state=1 and arc_viewstatus=1 and (arctype_id=2 or arc_type='Q')  $language_sql order by arc_top desc,today desc,arc_sort desc limit $page_start,$page_size");
+		$list=DB::query("select arc_id as blogid,arc_name as subject,arc_replynum as replynum,arc_viewtype as view_type,arc_pic as pic ,arc_addtime as dateline,arc_content as content,FROM_UNIXTIME(arc_addtime,'%Y%m%d') as today from tbl_arc where  arc_model='arc' and arc_state=1 and arc_viewtype='normal' and arc_state=1 and (arctype_id=2 or arc_type='Q')  $language_sql order by today desc,arc_sort desc limit $page_start,$page_size");
 		$i=0;
 		while($row = DB::fetch($list))
 		{
@@ -1084,20 +1061,6 @@ if($ac=="golf_news")
 			}
 			$row['dateline']=date("Y-m-d G:i:s",$row['dateline']);
 			$row['content']=msubstr(cutstr_html($row['content']),0,30);
-			
-			if($row['field_uid']==1186)
-			{
-				$row['replynum']=$row['replynum']." - 来自美兰湖球场";
-			}
-			else if($row['field_uid']==1160)
-			{
-				$row['replynum']=$row['replynum']." - 来自南山球会";
-			}
-			else
-			{
-				
-			}
-			
 			$row = array_default_value($row);
 			//$row = check_field_to_relace($row, array('replynum'=>'0'));
 			$list_data[]=$row;
@@ -1114,19 +1077,7 @@ if($ac=="golf_news")
 
 
 	$page_size=3;
-	
-	if($page==1)
-	{
-		$page_start=0;
-	}
-	else
-	{
-		$page_start=($page-1)*($page_size);
-	}
-
-	
-	
-	$total=DB::result_first("select count(arc_id) from tbl_arc where arc_model='arc' and arc_state=1 and arc_viewstatus=1 and arc_viewtype='pic' and arc_state=1 and (arctype_id=2 or arc_type='Q')  ");
+	$total=DB::result_first("select count(arc_id) from tbl_arc where arc_model='arc' and arc_state=1 and arc_viewtype='pic' and arc_state=1 and (arctype_id=2 or arc_type='Q')  ");
 	$max_page=intval($total/$page_size);
 	if($max_page<$total/$page_size)
 	{
@@ -1134,7 +1085,7 @@ if($ac=="golf_news")
 	}
 	if($max_page>=$page)
 	{
-		$list=DB::query("select field_uid,arc_id as blogid,arc_name as subject,arc_replynum as replynum,arc_viewtype as view_type,arc_pic as pic ,arc_addtime as dateline,arc_content as content,FROM_UNIXTIME(arc_addtime,'%Y%m%d') as today,arc_top from tbl_arc where  arc_model='arc' and arc_state=1 and arc_viewstatus=1  and arc_viewtype='pic' and (arctype_id=2 or arc_type='Q') $language_sql order by arc_top desc,today desc,arc_sort desc limit $page_start,$page_size");
+		$list=DB::query("select arc_id as blogid,arc_name as subject,arc_replynum as replynum,arc_viewtype as view_type,arc_pic as pic ,arc_addtime as dateline,arc_content as content,FROM_UNIXTIME(arc_addtime,'%Y%m%d') as today from tbl_arc where  arc_model='arc' and arc_state=1  and arc_viewtype='pic' and (arctype_id=2 or arc_type='Q') $language_sql order by today desc,arc_sort desc limit $page_start,$page_size");
 		$i=0;
 		while($row = DB::fetch($list))
 		{
@@ -1146,19 +1097,6 @@ if($ac=="golf_news")
 			}
 			$row['dateline']=date("Y-m-d G:i:s",$row['dateline']);
 			$row['content']=msubstr(cutstr_html($row['content']),0,30);
-			if($row['field_uid']==1186)
-			{
-				$row['replynum']=$row['replynum']." - 来自美兰湖球场";
-			}
-			else if($row['field_uid']==1160)
-			{
-				$row['replynum']=$row['replynum']." - 来自南山球会";
-			}
-			else
-			{
-				
-			}
-			
 			$row = array_default_value($row);
 			//$row = check_field_to_relace($row, array('replynum'=>'0'));
 			$pic_list[]=$row;
@@ -1655,8 +1593,7 @@ if($ac=="comment_me")
 	
 
 	$uid=$_G['gp_uid'];
-	$username=$_G['gp_username'];
-	if($uid && $username)
+	if($uid)
 	{
 		$res=DB::query("update jishigou_members set topic_new=0 where uid='".$uid."' ");
 		if($_G['gp_is_hulue'])
@@ -1675,7 +1612,7 @@ if($ac=="comment_me")
 			if($max_page>=$page)
 			{
 
-					$list=DB::query("select tid,uid,(select realname from ".DB::table("common_member_profile")." where uid=jishigou_topic.uid) as username,content,content2,(select `longtext` from jishigou_topic_longtext where tid=jishigou_topic.tid) as full_content,replys,forwards,dateline,imageid,voice,voice_timelong from jishigou_topic where type<>'reply' and content like '%<M ".$username.">%' order by dateline desc limit $page_start,$page_size ");
+					$list=DB::query("select tid,uid,(select realname from ".DB::table("common_member_profile")." where uid=jishigou_topic.uid) as username,content,content2,(select `longtext` from jishigou_topic_longtext where tid=jishigou_topic.tid) as full_content,replys,forwards,dateline,imageid,voice,voice_timelong from jishigou_topic where type<>'reply' and totid='".$uid."' and type='reply' order by dateline desc limit $page_start,$page_size ");
 					while($row = DB::fetch($list) )
 					{
 						$imageids_arr = explode(',',$row['imageid']);
@@ -1824,43 +1761,26 @@ if($ac=="system_msg")
 if($ac=="push_msg_list")
 {
 	$uid=$_G['gp_uid'];
-	$field_uid=$_G['gp_field_uid'];
-	$type=$_G['gp_type'];
-	if($field_uid!="")
-	{
-		$sql .=" and field_uid='".$field_uid."' ";
-	}
-	
-	if($type!="")
-	{
-		$sql .=" and message_type='".$type."' ";
-	}
     
-	$list=DB::query("select message_id,message_number,message_type,uid,message_title,message_content,message_pic,message_addtime from tbl_push_message where (uid='{$uid}' or uid=0) ".$sql." ");
-	
-	//echo "select message_id,message_number,message_type,uid,message_title,message_content,message_pic,message_addtime from tbl_push_message where uid='{$uid}' ".$sql." ";
+	//$list=DB::query("select message_id,message_number,message_type,uid,message_title,message_content,message_addtime from tbl_push_message where uid='".$uid."' and uid=0 ");
+	$list=DB::query("select message_id,message_number,message_type,uid,message_title,message_content,message_pic,message_addtime from tbl_push_message where uid='$uid'");
     
 	while($row=DB::fetch($list))
 	{
-		/*
 	    if(!json_parser($row['message_content']))
 		{
 	        continue;
 	    }
-		*/
 	    $msg=json_decode($row['message_content'],true);
-		//print_r($msg);
 		$msg['n_title'] = urldecode($msg['n_title']);
 		$msg['n_content'] = urldecode($msg['n_content']);
-		if($msg['n_extras']['title'])
-		{
+		if($msg['n_extras']['title']) {
 			$msg['n_extras']['title'] = urldecode($msg['n_extras']['title']);
 		}
 		$row['pic_width'] = '';
 		$row['pic_height'] = '';
 	    $row['message_info']=$msg;
-		if(!empty($row['message_pic']))
-		{
+		if(!empty($row['message_pic'])) {
 			if(stripos($row['message_pic'],"http://") === false) {
 				$row['message_pic']=$site_url.'/'.$row['message_pic'];
 			}
@@ -1871,7 +1791,7 @@ if($ac=="push_msg_list")
 		}
 		
 		$row['message_sendtime']=date("Y-m-d",$row['message_addtime']);
-		//unset($row['message_content']);
+		unset($row['message_content']);
 		$list_data[]=array_default_value($row,message_content);
 		
 	}
@@ -1929,104 +1849,6 @@ if($ac=="msg_detail")
 	api_json_result(1,0,$app_error['event']['10502'],$data);
 	
 }
-
-/*系统消息start*/
-//推送消息列表
-if($ac=="sys_msg_list")
-{
-	$uid=$_G['gp_uid'];
-	//$list=DB::query("select message_id,message_number,message_type,uid,message_title,message_content,message_addtime from tbl_push_message where uid='".$uid."' and uid=0 ");
-	$list=DB::query("select message_id,uid,message_title,message_content,message_pic,message_addtime from tbl_sys_message where uid in('$uid','0')");
-    
-	while($row=DB::fetch($list))
-	{
-	    if(!json_parser($row['message_content']))
-		{
-	        continue;
-	    }
-	    $msg=json_decode($row['message_content'],true);
-		$msg['n_title'] = urldecode($msg['n_title']);
-		$msg['n_content'] = urldecode($msg['n_content']);
-		if($msg['n_extras']['title']) {
-			$msg['n_extras']['title'] = urldecode($msg['n_extras']['title']);
-		}
-		$row['pic_width'] = '';
-		$row['pic_height'] = '';
-	    $row['message_info']=$msg;
-		if(!empty($row['message_pic'])) {
-			if(stripos($row['message_pic'],"http://") === false) {
-				$row['message_pic']=$site_url.'/'.$row['message_pic'];
-			}
-			
-			$message_pic_info = (array)getimagesize($row['message_pic']);
-			$row['pic_width'] = $message_pic_info[0];
-			$row['pic_height'] = $message_pic_info[1];
-		}
-		
-		$row['message_sendtime']=date("Y-m-d",$row['message_addtime']);
-		unset($row['message_content']);
-		$list_data[]=array_default_value($row,message_content);
-		
-	}
-	/*
-    if(empty($list_data))
-	{
-        $list_data = null;
-    }
-	*/
-	$data['title']		= "list_data";
-	$data['data']		= $list_data;
-	//print_r($data);
-	api_json_result(1,0,$app_error['event']['10502'],$data);
-	
-}
-//推送消息详情
-if($ac=="sys_msg_detail")
-{
-	$message_id=$_G['gp_message_id'];
-	
-	$message_info=DB::fetch_first("select message_id,uid,message_title,message_content,message_pic,message_addtime from tbl_sys_message where message_id='$message_id'");
-    if(empty($message_info)){
-		api_json_result(1,1,$app_error['event']['10502'],$data);exit;
-	}
-
-	if(!json_parser($message_info['message_content']))
-	{
-		continue;
-	}
-	$msg=json_decode($message_info['message_content'],true);
-	
-	$msg['n_title'] = urldecode($msg['n_title']);
-	$msg['n_content'] = urldecode($msg['n_content']);
-	if($msg['n_extras']['title']) {
-		$msg['n_extras']['title'] = urldecode($msg['n_extras']['title']);
-	}
-	
-	$message_info['pic_width'] = '';
-	$message_info['pic_height'] = '';
-	$message_info['message_info']=$msg;
-	if(!empty($message_info['message_pic'])) {
-		if(stripos($message_info['message_pic'],"http://") === false) {
-			$message_info['message_pic']=$site_url.'/'.$message_info['message_pic'];
-		}
-		$message_pic_info = (array)getimagesize($message_info['message_pic']);
-		$message_info['pic_width'] = $message_pic_info[0];
-		$message_info['pic_height'] = $message_pic_info[1];
-	}
-	
-	$message_info['message_sendtime']=date("Y-m-d",$message_info['message_addtime']);
-	unset($message_info['message_content']);
-	$message_info =array_default_value($message_info,message_content);
-	
-	$data['title']		= "msg_detail";
-	$data['data']		= $message_info;
-	
-	api_json_result(1,0,$app_error['event']['10502'],$data);
-	
-}
-
-/*系统消息end*/
-
 
 //我的首页 动态展示  当前登录人
 if($ac=="my_index")

@@ -88,9 +88,8 @@ if($ac=="shuban")
 if($ac=="heng")
 {
 	
-	
-	
-	$event_info=DB::fetch_first("select event_id,event_name,event_uid,event_fenzhan_id,event_logo,event_left,event_left_flag,event_left_intro,event_left_pic,event_right,event_right_flag,event_right_intro,event_right_pic,event_timepic,event_starttime,event_endtime,event_content,event_state,event_is_tj,event_is_baoming,event_addtime from tbl_event where 1=1 and event_id='".$event_id."' order by event_addtime desc limit 1 ");
+
+	$event_info=DB::fetch_first("select event_id,event_name,event_uid,event_fenzhan_id,event_logo,event_left,event_left_flag,event_left_intro,event_left_pic,event_right,event_right_flag,event_right_intro,event_right_pic,event_timepic,event_starttime,event_endtime,event_content,event_state,event_is_tj,event_is_baoming,event_addtime,event_team_level from tbl_event where 1=1 and event_id='".$event_id."' order by event_addtime desc limit 1 ");
 	//echo '<pre>';
 	//var_dump($event_info);die;
 	$list_info['event_name']=$event_info['event_name'];
@@ -104,7 +103,7 @@ if($ac=="heng")
 	$list_info['event_logo']=$site_url."/".$event_info['event_logo'];
 	$list_info['event_logo_info']=getimagesize($list_info['event_logo']);
 	
-	$big_where= " and is_end=1 ";
+	//$big_where= " and is_end=1 ";
 	if($event_info['event_fenzhan_id'])
 	{
 		$big_where .=" and fenzhan_id='".$event_info['event_fenzhan_id']."' ";
@@ -112,6 +111,7 @@ if($ac=="heng")
 	
 	
 	$fenzhan_info=DB::fetch_first("select * from tbl_fenzhan where fenzhan_id='".$event_info['event_fenzhan_id']."' ");
+	$fenzhan_rule=$fenzhan_info['fenzhan_rule'];
 
 	//球场标准杆
 	$qc_par_result = DB::fetch_first ( " select `par` from " . DB::table ( "common_field" ) . " where uid='$qc_id'" );
@@ -120,45 +120,158 @@ if($ac=="heng")
 	$PIN = $par [9] + $par [10] + $par [11] + $par [12] + $par [13] + $par [14] + $par [15] + $par [16] + $par [17];
 	$PTL = $POUT + $PIN;
 	
-	
+	//取分组列表
 	$sql="select fenzu_id,total_ju_par,total_ju_par as tlcave from tbl_baofen where 1=1 $big_where group by fenzu_id ORDER BY fenzu_id asc "; 
 	$bf = DB::query ($sql); 
 	while($row=DB::fetch($bf))
 	{
 		$row['par']=$par;
+		$row['team_num']=$row['fenzu_id'];
 		
-		$sub_list=DB::query("select baofen_id,sid,event_apply_id,fenzhan_id,uid,realname,total_ju_par,total_ju_par as tlcave,start_time,fenzu_id,cave_1,cave_2,cave_3,cave_4,cave_5,cave_6,cave_7,cave_8,cave_9,cave_10,cave_11,cave_12,cave_13,cave_14,cave_15,cave_16,cave_17,cave_18,(cave_1+cave_2+cave_3+cave_4+cave_5+cave_6+cave_7+cave_8+cave_9) as lout,(cave_10+cave_11+cave_12+cave_13+cave_14+cave_15+cave_16+cave_17 +cave_18) as lin,total_ju_par+total_ju_par1 as ttlcave from tbl_baofen where 1=1 and fenzu_id='".$row['fenzu_id']."' $big_where order by fenzu_id asc ");
+		
+		//取成员
+		if($fenzhan_rule==11)
+		{
+			//个人对抗
+			$sub_list=DB::query("select baofen_id,sid,event_apply_id,fenzhan_id,uid,realname,total_ju_par,total_ju_par as tlcave,start_time,fenzu_id,cave_1,cave_2,cave_3,cave_4,cave_5,cave_6,cave_7,cave_8,cave_9,cave_10,cave_11,cave_12,cave_13,cave_14,cave_15,cave_16,cave_17,cave_18,(cave_1+cave_2+cave_3+cave_4+cave_5+cave_6+cave_7+cave_8+cave_9) as lout,(cave_10+cave_11+cave_12+cave_13+cave_14+cave_15+cave_16+cave_17 +cave_18) as lin,total_ju_par+total_ju_par1 as ttlcave,event_user_id,event_user_team,event_apply_parent_id from tbl_baofen where 1=1 and fenzu_id='".$row['fenzu_id']."' $big_where order by event_user_team desc  ");
+			
+		}
+		else if($fenzhan_rule==42)
+		{
+			//4人2球
+			$sub_list=DB::query("select baofen_id,sid,event_apply_id,fenzhan_id,uid,realname,total_ju_par,total_ju_par as tlcave,start_time,fenzu_id,cave_1,cave_2,cave_3,cave_4,cave_5,cave_6,cave_7,cave_8,cave_9,cave_10,cave_11,cave_12,cave_13,cave_14,cave_15,cave_16,cave_17,cave_18,(cave_1+cave_2+cave_3+cave_4+cave_5+cave_6+cave_7+cave_8+cave_9) as lout,(cave_10+cave_11+cave_12+cave_13+cave_14+cave_15+cave_16+cave_17 +cave_18) as lin,total_ju_par+total_ju_par1 as ttlcave,event_user_id,event_user_team,event_apply_parent_id from tbl_baofen where 1=1 and fenzu_id='".$row['fenzu_id']."' $big_where order by event_user_team desc  ");
+			
+		}
+		else
+		{
+			$sub_list=DB::query("select baofen_id,sid,event_apply_id,fenzhan_id,uid,realname,total_ju_par,total_ju_par as tlcave,start_time,fenzu_id,cave_1,cave_2,cave_3,cave_4,cave_5,cave_6,cave_7,cave_8,cave_9,cave_10,cave_11,cave_12,cave_13,cave_14,cave_15,cave_16,cave_17,cave_18,(cave_1+cave_2+cave_3+cave_4+cave_5+cave_6+cave_7+cave_8+cave_9) as lout,(cave_10+cave_11+cave_12+cave_13+cave_14+cave_15+cave_16+cave_17 +cave_18) as lin,total_ju_par+total_ju_par1 as ttlcave,event_user_id,event_user_team,event_apply_parent_id from tbl_baofen where 1=1 and fenzu_id='".$row['fenzu_id']."' $big_where group by event_user_team order by event_user_team desc  ");
+		}
+		
+		
 		$row_sub=array();
-		$i=0;
+		$duiyuan = array();
 		while($row_sub_arr=DB::fetch($sub_list))
 		{
 			
+			//两个人
+			$event_apply_info=DB::fetch_first("select event_apply_id,event_user_id,event_apply_realname,parent_id,parent_id as event_apply_parent_id from tbl_event_apply where event_apply_id='".$row_sub_arr['event_apply_id']."' ");
+			
+			if($fenzhan_rule==11)
+			{
+				//个人对抗
+				if($event_apply_info['event_apply_parent_id']>0)
+				{
+					$event_apply_info_parent=DB::fetch_first("select event_apply_realname from tbl_event_apply where event_apply_id='".$event_apply_info['event_apply_parent_id']."' ");
+
+					$user_sub_list=DB::query("select event_apply_realname from tbl_event_apply where 1=1 and event_user_parent_id='".$event_apply_info['event_apply_parent_id']."' and fenzhan_id='".$fenzhan_info['fenzhan_id']."' ");
+					$user_sub_list_array=array();
+					while($user_sub_list_arr=DB::fetch($user_sub_list))
+					{
+						$user_sub_list_array[]=$user_sub_list_arr['event_apply_realname'];
+					}
+					$row_sub_arr['realname']=$event_apply_info_parent['event_apply_realname'];
+				}
+				else
+				{
+					$user_sub_list_array=array($event_apply_info['event_apply_realname']);
+					$row_sub_arr['realname']="";
+				}
+			}
+			else if($fenzhan_rule==42)
+			{
+				//4人2球
+				$row_sub_arr['realname']=$event_apply_info['event_apply_realname'];
+				
+				$user_sub_list=DB::query("select event_apply_realname from tbl_event_apply where 1=1 and parent_id='".$event_apply_info['event_apply_id']."' and fenzhan_id='".$fenzhan_info['fenzhan_id']."' ");
+				$user_sub_list_array=array();
+				while($user_sub_list_arr=DB::fetch($user_sub_list))
+				{
+					$user_sub_list_array[]=$user_sub_list_arr['event_apply_realname'];
+				}
+				if(count($user_sub_list_array)<1)
+				{
+					$user_sub_list_array=array();
+				}
+				
+			}
+			else if($fenzhan_rule==44)
+			{
+				//4人4球
+				$event_apply_info_parent=DB::fetch_first("select event_apply_realname from tbl_event_apply where event_apply_id='".$event_apply_info['event_apply_parent_id']."' ");
+				$user_sub_list=DB::query("select event_apply_realname from tbl_event_apply where 1=1 and parent_id='".$event_apply_info['event_apply_parent_id']."' and fenzhan_id='".$fenzhan_info['fenzhan_id']."' ");
+				$user_sub_list_array=array();
+				while($user_sub_list_arr=DB::fetch($user_sub_list))
+				{
+					$user_sub_list_array[]=$user_sub_list_arr['event_apply_realname'];
+				}
+				$row_sub_arr['realname']=$event_apply_info_parent['event_apply_realname'];
+			}
+			else
+			{
+				$user_sub_list_array=array($event_apply_info['event_apply_realname']);
+				$row_sub_arr['realname']="";
+				
+			}
+		
+		
 			$row_sub_arr['start_time']=date("Y年m月d日",$row_sub_arr['start_time']);
-			$row_sub_arr['duiyuan']=str_replace("|",",",$dyarray[$row_sub_arr['event_apply_id']]);
-			$row_sub_arr['country']=$country_array[$row_sub_arr['event_apply_id']];
+			$row_sub_arr['country']=$row_sub_arr['event_user_team'];
+			$row_sub_arr['duiyuan']=implode(",",$user_sub_list_array);
 			
 			$row_sub_arr['chj'] = $row_sub_arr['tlcave']-$PTL; 
 			//$row_sub_arr['defen'] = (string)1;
 			
-			$row_sub_arr['color_1']=get_dong_color($row_sub_arr['cave_1'],$par[0]);
-			$row_sub_arr['color_2']=get_dong_color($row_sub_arr['cave_2'],$par[1]);
-			$row_sub_arr['color_3']=get_dong_color($row_sub_arr['cave_3'],$par[2]);
-			$row_sub_arr['color_4']=get_dong_color($row_sub_arr['cave_4'],$par[3]);
-			$row_sub_arr['color_5']=get_dong_color($row_sub_arr['cave_5'],$par[4]);
-			$row_sub_arr['color_6']=get_dong_color($row_sub_arr['cave_6'],$par[5]);
-			$row_sub_arr['color_7']=get_dong_color($row_sub_arr['cave_7'],$par[6]);
-			$row_sub_arr['color_8']=get_dong_color($row_sub_arr['cave_8'],$par[7]);
-			$row_sub_arr['color_9']=get_dong_color($row_sub_arr['cave_9'],$par[8]);
-			$row_sub_arr['color_10']=get_dong_color($row_sub_arr['cave_10'],$par[9]);
-			$row_sub_arr['color_11']=get_dong_color($row_sub_arr['cave_11'],$par[10]);
-			$row_sub_arr['color_12']=get_dong_color($row_sub_arr['cave_12'],$par[11]);
-			$row_sub_arr['color_13']=get_dong_color($row_sub_arr['cave_13'],$par[12]);
-			$row_sub_arr['color_14']=get_dong_color($row_sub_arr['cave_14'],$par[13]);
-			$row_sub_arr['color_15']=get_dong_color($row_sub_arr['cave_15'],$par[14]);
-			$row_sub_arr['color_16']=get_dong_color($row_sub_arr['cave_16'],$par[15]);
-			$row_sub_arr['color_17']=get_dong_color($row_sub_arr['cave_17'],$par[16]);
-			$row_sub_arr['color_18']=get_dong_color($row_sub_arr['cave_18'],$par[17]);
-			
+			if($fenzhan_rule==44)
+			{
+				$sub_score_list_1=DB::fetch_first("select baofen_id,cave_1,cave_2,cave_3,cave_4,cave_5,cave_6,cave_7,cave_8,cave_9,cave_10,cave_11,cave_12,cave_13,cave_14,cave_15,cave_16,cave_17,cave_18 from tbl_baofen where event_apply_parent_id='".$event_apply_info['event_apply_parent_id']."' and fenzhan_id='".$fenzhan_info['fenzhan_id']."'  order by baofen_id desc limit 1 ");
+				$sub_score_list_2=DB::fetch_first("select baofen_id,cave_1,cave_2,cave_3,cave_4,cave_5,cave_6,cave_7,cave_8,cave_9,cave_10,cave_11,cave_12,cave_13,cave_14,cave_15,cave_16,cave_17,cave_18 from tbl_baofen where event_apply_parent_id='".$event_apply_info['event_apply_parent_id']."' and fenzhan_id='".$fenzhan_info['fenzhan_id']."'   order by baofen_id desc limit 1 ");
+				$sub_score_list=get_score_44($sub_score_list_1,$sub_score_list_2);
+				
+				$row_sub_arr['tlcave']=array_sum($sub_score_list)-array_sum($par);
+				$row_sub_arr['tlcave_new']=array_sum($sub_score_list)-array_sum($par);
+				
+				$row_sub_arr['color_1']=get_dong_color($sub_score_list[0],$par[0]);
+				$row_sub_arr['color_2']=get_dong_color($sub_score_list[1],$par[1]);
+				$row_sub_arr['color_3']=get_dong_color($sub_score_list[2],$par[2]);
+				$row_sub_arr['color_4']=get_dong_color($sub_score_list[3],$par[3]);
+				$row_sub_arr['color_5']=get_dong_color($sub_score_list[4],$par[4]);
+				$row_sub_arr['color_6']=get_dong_color($sub_score_list[5],$par[5]);
+				$row_sub_arr['color_7']=get_dong_color($sub_score_list[6],$par[6]);
+				$row_sub_arr['color_8']=get_dong_color($sub_score_list[7],$par[7]);
+				$row_sub_arr['color_9']=get_dong_color($sub_score_list[8],$par[8]);
+				$row_sub_arr['color_10']=get_dong_color($sub_score_list[9],$par[9]);
+				$row_sub_arr['color_11']=get_dong_color($sub_score_list[10],$par[10]);
+				$row_sub_arr['color_12']=get_dong_color($sub_score_list[11],$par[11]);
+				$row_sub_arr['color_13']=get_dong_color($sub_score_list[12],$par[12]);
+				$row_sub_arr['color_14']=get_dong_color($sub_score_list[13],$par[13]);
+				$row_sub_arr['color_15']=get_dong_color($sub_score_list[14],$par[14]);
+				$row_sub_arr['color_16']=get_dong_color($sub_score_list[15],$par[15]);
+				$row_sub_arr['color_17']=get_dong_color($sub_score_list[16],$par[16]);
+				$row_sub_arr['color_18']=get_dong_color($sub_score_list[17],$par[17]);
+				
+			}
+			else
+			{
+				$row_sub_arr['color_1']=get_dong_color($row_sub_arr['cave_1'],$par[0]);
+				$row_sub_arr['color_2']=get_dong_color($row_sub_arr['cave_2'],$par[1]);
+				$row_sub_arr['color_3']=get_dong_color($row_sub_arr['cave_3'],$par[2]);
+				$row_sub_arr['color_4']=get_dong_color($row_sub_arr['cave_4'],$par[3]);
+				$row_sub_arr['color_5']=get_dong_color($row_sub_arr['cave_5'],$par[4]);
+				$row_sub_arr['color_6']=get_dong_color($row_sub_arr['cave_6'],$par[5]);
+				$row_sub_arr['color_7']=get_dong_color($row_sub_arr['cave_7'],$par[6]);
+				$row_sub_arr['color_8']=get_dong_color($row_sub_arr['cave_8'],$par[7]);
+				$row_sub_arr['color_9']=get_dong_color($row_sub_arr['cave_9'],$par[8]);
+				$row_sub_arr['color_10']=get_dong_color($row_sub_arr['cave_10'],$par[9]);
+				$row_sub_arr['color_11']=get_dong_color($row_sub_arr['cave_11'],$par[10]);
+				$row_sub_arr['color_12']=get_dong_color($row_sub_arr['cave_12'],$par[11]);
+				$row_sub_arr['color_13']=get_dong_color($row_sub_arr['cave_13'],$par[12]);
+				$row_sub_arr['color_14']=get_dong_color($row_sub_arr['cave_14'],$par[13]);
+				$row_sub_arr['color_15']=get_dong_color($row_sub_arr['cave_15'],$par[14]);
+				$row_sub_arr['color_16']=get_dong_color($row_sub_arr['cave_16'],$par[15]);
+				$row_sub_arr['color_17']=get_dong_color($row_sub_arr['cave_17'],$par[16]);
+				$row_sub_arr['color_18']=get_dong_color($row_sub_arr['cave_18'],$par[17]);
+			}
+
 			$row_sub[]=array_default_value($row_sub_arr,array('par'));
 			$i++;
 		}
@@ -196,7 +309,6 @@ if($ac=="heng")
 		$list_info['event_left_score']=(string)($list_info['event_left_score']+$row_sub[0]['defen']);
 		$list_info['event_right_score']=(string)($list_info['event_right_score']+$row_sub[1]['defen']);
 		
-		
 		$row['sub_member']=$row_sub;
 
 		$nblist[]=array_default_value($row,array('duiyuan','sub_member'));
@@ -227,7 +339,7 @@ if($ac=="heng")
 if($ac=="small")
 {
 
-	$event_info=DB::fetch_first("select event_id,event_name,event_uid,event_fenzhan_id,event_logo,event_left,event_left_flag,event_left_intro,event_left_pic,event_right,event_right_flag,event_right_intro,event_right_pic,event_timepic,event_starttime,event_endtime,event_content,event_state,event_is_tj,event_is_baoming,event_addtime from tbl_event where 1=1 and event_id='".$event_id."' order by event_addtime desc limit 1 ");
+	$event_info=DB::fetch_first("select event_id,event_name,event_uid,event_fenzhan_id,event_logo,event_left,event_left_flag,event_left_intro,event_left_pic,event_right,event_right_flag,event_right_intro,event_right_pic,event_timepic,event_starttime,event_endtime,event_content,event_state,event_is_tj,event_is_baoming,event_addtime,event_team_level from tbl_event where 1=1 and event_id='".$event_id."' order by event_addtime desc limit 1 ");
 	//echo '<pre>';
 	//var_dump($event_info);die;
 	$list_info['event_name']=$event_info['event_name'];
@@ -242,45 +354,167 @@ if($ac=="small")
 	$list_info['event_logo_info']=getimagesize($list_info['event_logo']);
 	
 	
-	$big_where= " and is_end=1 ";
+	//$big_where= " and is_end=1 ";
 	if($event_info['event_fenzhan_id'])
 	{
 		$big_where .=" and fenzhan_id='".$event_info['event_fenzhan_id']."' ";
 	}
-
+	$fenzhan_info=DB::fetch_first("select * from tbl_fenzhan where fenzhan_id='".$event_info['event_fenzhan_id']."' ");
+	$fenzhan_rule=$fenzhan_info['fenzhan_rule'];
+	
+	
+	//分组列表
 	$sql="select fenzu_id,total_ju_par as tlcave,(cave_1+cave_2+cave_3+cave_4+cave_5+cave_6+cave_7+cave_8+cave_9) as lout,(cave_10+cave_11+cave_12+cave_13+cave_14+cave_15+cave_16+cave_17 +cave_18) as lin,total_ju_par+total_ju_par1 as ttlcave,event_user_id,event_user_team from tbl_baofen where 1=1 $big_where group by fenzu_id ORDER BY fenzu_id asc "; 
 	$bf = DB::query ($sql); 
-	
 	while($row=DB::fetch($bf))
 	{
 		$row['team_num']=$row['fenzu_id'];
-			
-		$sub_list=DB::query("select baofen_id,event_user_id,event_user_team,event_apply_id,sid,fenzhan_id,uid,realname,total_ju_par as tlcave,start_time,fenzu_id,(cave_1+cave_2+cave_3+cave_4+cave_5+cave_6+cave_7+cave_8+cave_9) as lout,(cave_10+cave_11+cave_12+cave_13+cave_14+cave_15+cave_16+cave_17 +cave_18) as lin,total_ju_par+total_ju_par1 as ttlcave from tbl_baofen where 1=1 and fenzu_id='".$row['fenzu_id']."' $big_where group by event_user_team order by fenzu_id asc ");
-
+		
+		//取成员
+		if($fenzhan_rule==11)
+		{
+			//个人对抗
+			$sub_list=DB::query("select baofen_id,event_user_id,event_user_team,event_apply_id,sid,fenzhan_id,uid,realname,total_ju_par,total_ju_par as tlcave,start_time,fenzu_id,(cave_1+cave_2+cave_3+cave_4+cave_5+cave_6+cave_7+cave_8+cave_9) as lout,(cave_10+cave_11+cave_12+cave_13+cave_14+cave_15+cave_16+cave_17 +cave_18) as lin,total_ju_par+total_ju_par1 as ttlcave,event_apply_parent_id from tbl_baofen where 1=1 and fenzu_id='".$row['fenzu_id']."' $big_where order by event_user_team desc ");
+		}
+		else if($fenzhan_rule==42)
+		{
+			//4人2球
+			$sub_list=DB::query("select baofen_id,event_user_id,event_user_team,event_apply_id,sid,fenzhan_id,uid,realname,total_ju_par,total_ju_par as tlcave,start_time,fenzu_id,(cave_1+cave_2+cave_3+cave_4+cave_5+cave_6+cave_7+cave_8+cave_9) as lout,(cave_10+cave_11+cave_12+cave_13+cave_14+cave_15+cave_16+cave_17 +cave_18) as lin,total_ju_par+total_ju_par1 as ttlcave,event_apply_parent_id from tbl_baofen where 1=1 and fenzu_id='".$row['fenzu_id']."' $big_where order by event_user_team desc ");
+		}
+		else
+		{
+			$sub_list=DB::query("select baofen_id,event_user_id,event_user_team,event_apply_id,sid,fenzhan_id,uid,realname,total_ju_par,total_ju_par as tlcave,start_time,fenzu_id,(cave_1+cave_2+cave_3+cave_4+cave_5+cave_6+cave_7+cave_8+cave_9) as lout,(cave_10+cave_11+cave_12+cave_13+cave_14+cave_15+cave_16+cave_17 +cave_18) as lin,total_ju_par+total_ju_par1 as ttlcave,event_apply_parent_id from tbl_baofen where 1=1 and fenzu_id='".$row['fenzu_id']."' $big_where group by event_user_team order by event_user_team desc ");
+		}
 		$row_sub=array();
 		$duiyuan = array();
 		while($row_sub_arr=DB::fetch($sub_list))
 		{
 			
 			//两个人
-			$event_user_info=DB::fetch_first("select event_user_realname,event_user_parent_id from tbl_event_user where event_user_id='".$row_sub_arr['event_user_id']."' ");
-			$event_user_info_parent=DB::fetch_first("select event_user_realname from tbl_event_user where event_user_id='".$event_user_info['event_user_parent_id']."' ");
-		
-			$user_sub_list=DB::query("select event_user_realname from tbl_event_user where 1=1 and event_user_parent_id='".$event_user_info['event_user_parent_id']."'");
-			$user_sub_list_array=array();
-			while($user_sub_list_arr=DB::fetch($user_sub_list))
-			{
-				$user_sub_list_array[]=$user_sub_list_arr['event_user_realname'];
-			}
+			$event_apply_info=DB::fetch_first("select event_apply_id,event_user_id,event_apply_realname,parent_id,parent_id as event_apply_parent_id from tbl_event_apply where event_apply_id='".$row_sub_arr['event_apply_id']."' ");
 			
-			$row_sub_arr['realname']=$event_user_info_parent['event_user_realname'];
+			if($fenzhan_rule==11)
+			{
+				//个人对抗
+				if($event_apply_info['event_apply_parent_id']>0)
+				{
+					$event_apply_info_parent=DB::fetch_first("select event_apply_realname from tbl_event_apply where event_apply_id='".$event_apply_info['event_apply_parent_id']."' ");
+
+					$user_sub_list=DB::query("select event_apply_realname from tbl_event_apply where 1=1 and event_user_parent_id='".$event_apply_info['event_apply_parent_id']."' and fenzhan_id='".$fenzhan_info['fenzhan_id']."' ");
+					$user_sub_list_array=array();
+					while($user_sub_list_arr=DB::fetch($user_sub_list))
+					{
+						$user_sub_list_array[]=$user_sub_list_arr['event_apply_realname'];
+					}
+					$row_sub_arr['realname']=$event_apply_info_parent['event_apply_realname'];
+				}
+				else
+				{
+					$user_sub_list_array=array($event_apply_info['event_apply_realname']);
+					$row_sub_arr['realname']="";
+				}
+			}
+			else if($fenzhan_rule==42)
+			{
+				//4人2球
+				$row_sub_arr['realname']=$event_apply_info['event_apply_realname'];
+			
+				$user_sub_list=DB::query("select event_apply_realname from tbl_event_apply where 1=1 and parent_id='".$event_apply_info['event_apply_id']."' and fenzhan_id='".$fenzhan_info['fenzhan_id']."'  ");
+				
+				$user_sub_list_array=array();
+				while($user_sub_list_arr=DB::fetch($user_sub_list))
+				{
+					$user_sub_list_array[]=$user_sub_list_arr['event_apply_realname'];
+				}
+				if(count($user_sub_list_array)<1)
+				{
+					$user_sub_list_array=array();
+				}
+				
+			}
+			else if($fenzhan_rule==44)
+			{
+				//4人4球
+				$event_apply_info_parent=DB::fetch_first("select event_apply_realname from tbl_event_apply where event_apply_id='".$event_apply_info['event_apply_parent_id']."' ");
+				$user_sub_list=DB::query("select event_apply_realname from tbl_event_apply where 1=1 and parent_id='".$event_apply_info['event_apply_parent_id']."' and fenzhan_id='".$fenzhan_info['fenzhan_id']."' ");
+				$user_sub_list_array=array();
+				while($user_sub_list_arr=DB::fetch($user_sub_list))
+				{
+					$user_sub_list_array[]=$user_sub_list_arr['event_apply_realname'];
+				}
+				$row_sub_arr['realname']=$event_apply_info_parent['event_apply_realname'];
+			}
+			else
+			{
+				$user_sub_list_array=array($event_apply_info['event_apply_realname']);
+				$row_sub_arr['realname']="";
+				
+			}
+		
 			$row_sub_arr['start_time']=date("Y年m月d日",$row_sub_arr['start_time']);
 			$row_sub_arr['country']=$row_sub_arr['event_user_team'];
 			$row_sub_arr['duiyuan']=$user_sub_list_array;
 			
-		
+			
+			
+			
+			if($fenzhan_rule==44)
+			{
+				$sub_score_list_1=DB::fetch_first("select baofen_id,cave_1,cave_2,cave_3,cave_4,cave_5,cave_6,cave_7,cave_8,cave_9,cave_10,cave_11,cave_12,cave_13,cave_14,cave_15,cave_16,cave_17,cave_18 from tbl_baofen where event_apply_parent_id='".$event_apply_info['event_apply_parent_id']."' and fenzhan_id='".$fenzhan_info['fenzhan_id']."'  order by baofen_id desc limit 1 ");
+				$sub_score_list_2=DB::fetch_first("select baofen_id,cave_1,cave_2,cave_3,cave_4,cave_5,cave_6,cave_7,cave_8,cave_9,cave_10,cave_11,cave_12,cave_13,cave_14,cave_15,cave_16,cave_17,cave_18 from tbl_baofen where event_apply_parent_id='".$event_apply_info['event_apply_parent_id']."' and fenzhan_id='".$fenzhan_info['fenzhan_id']."'   order by baofen_id desc limit 1 ");
+				$sub_score_list=get_score_44($sub_score_list_1,$sub_score_list_2);
+				
+				$row_sub_arr['tlcave']=array_sum($sub_score_list)-array_sum($par);
+				$row_sub_arr['tlcave_new']=array_sum($sub_score_list)-array_sum($par);
+				
+				$row_sub_arr['color_1']=get_dong_color($sub_score_list[0],$par[0]);
+				$row_sub_arr['color_2']=get_dong_color($sub_score_list[1],$par[1]);
+				$row_sub_arr['color_3']=get_dong_color($sub_score_list[2],$par[2]);
+				$row_sub_arr['color_4']=get_dong_color($sub_score_list[3],$par[3]);
+				$row_sub_arr['color_5']=get_dong_color($sub_score_list[4],$par[4]);
+				$row_sub_arr['color_6']=get_dong_color($sub_score_list[5],$par[5]);
+				$row_sub_arr['color_7']=get_dong_color($sub_score_list[6],$par[6]);
+				$row_sub_arr['color_8']=get_dong_color($sub_score_list[7],$par[7]);
+				$row_sub_arr['color_9']=get_dong_color($sub_score_list[8],$par[8]);
+				$row_sub_arr['color_10']=get_dong_color($sub_score_list[9],$par[9]);
+				$row_sub_arr['color_11']=get_dong_color($sub_score_list[10],$par[10]);
+				$row_sub_arr['color_12']=get_dong_color($sub_score_list[11],$par[11]);
+				$row_sub_arr['color_13']=get_dong_color($sub_score_list[12],$par[12]);
+				$row_sub_arr['color_14']=get_dong_color($sub_score_list[13],$par[13]);
+				$row_sub_arr['color_15']=get_dong_color($sub_score_list[14],$par[14]);
+				$row_sub_arr['color_16']=get_dong_color($sub_score_list[15],$par[15]);
+				$row_sub_arr['color_17']=get_dong_color($sub_score_list[16],$par[16]);
+				$row_sub_arr['color_18']=get_dong_color($sub_score_list[17],$par[17]);
+				
+			}
+			else
+			{
+				$row_sub_arr['color_1']=get_dong_color($row_sub_arr['cave_1'],$par[0]);
+				$row_sub_arr['color_2']=get_dong_color($row_sub_arr['cave_2'],$par[1]);
+				$row_sub_arr['color_3']=get_dong_color($row_sub_arr['cave_3'],$par[2]);
+				$row_sub_arr['color_4']=get_dong_color($row_sub_arr['cave_4'],$par[3]);
+				$row_sub_arr['color_5']=get_dong_color($row_sub_arr['cave_5'],$par[4]);
+				$row_sub_arr['color_6']=get_dong_color($row_sub_arr['cave_6'],$par[5]);
+				$row_sub_arr['color_7']=get_dong_color($row_sub_arr['cave_7'],$par[6]);
+				$row_sub_arr['color_8']=get_dong_color($row_sub_arr['cave_8'],$par[7]);
+				$row_sub_arr['color_9']=get_dong_color($row_sub_arr['cave_9'],$par[8]);
+				$row_sub_arr['color_10']=get_dong_color($row_sub_arr['cave_10'],$par[9]);
+				$row_sub_arr['color_11']=get_dong_color($row_sub_arr['cave_11'],$par[10]);
+				$row_sub_arr['color_12']=get_dong_color($row_sub_arr['cave_12'],$par[11]);
+				$row_sub_arr['color_13']=get_dong_color($row_sub_arr['cave_13'],$par[12]);
+				$row_sub_arr['color_14']=get_dong_color($row_sub_arr['cave_14'],$par[13]);
+				$row_sub_arr['color_15']=get_dong_color($row_sub_arr['cave_15'],$par[14]);
+				$row_sub_arr['color_16']=get_dong_color($row_sub_arr['cave_16'],$par[15]);
+				$row_sub_arr['color_17']=get_dong_color($row_sub_arr['cave_17'],$par[16]);
+				$row_sub_arr['color_18']=get_dong_color($row_sub_arr['cave_18'],$par[17]);
+			}
+
+			
+			
+
 			$row_sub[]=array_default_value($row_sub_arr);
 		}
+		
 		//var_dump($row_sub);
 		
 		//$row['sub_member']=(array_sort_by_field($row_sub,'guoqi',true));

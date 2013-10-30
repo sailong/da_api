@@ -11,6 +11,7 @@ $ac=$_G['gp_ac'];
 //广告接口 新
 if($ac=="ad")
 {
+	$field_uid=$_G['gp_field_uid'];
 	$page=$_G['gp_page'];
 	$apptype=$_G['gp_apptype'];
 	
@@ -22,8 +23,7 @@ if($ac=="ad")
 	{
 		$apptype_sql=" and (ad_apptype='".$apptype."' or ad_apptype='all' )";
 	}
-	
-	$field_uid=$_G['gp_field_uid'];
+
 	if($page)
 	{
 		$sql=" and ad_page='".$page."' ";
@@ -59,7 +59,50 @@ if($ac=="ad")
 		{
 			$row['ad_file_iphone5']="".$site_url."/".$row['ad_file_iphone5'];
 		}
-		$list_data[]=array_default_value($row);
+		
+		
+		
+		
+		
+		
+		if($row['ad_action']!='apply_ticket_detail')
+		{
+			$row['ad_action_id']=51;
+			if($row['ad_action_id'])
+			{
+			
+				$row2 = DB::fetch_first("select ad_url,ad_file,ad_file_iphone4,ad_file_iphone5,ad_width,ad_height from tbl_ad where event_id='".$row['ad_action_id']."' and ad_page='ticket' order by ad_sort desc limit 1");
+				$arr=explode("|",$row2['ad_url']);
+				if(count($arr)>1)
+				{
+					$row2['ad_action']=$arr[0];
+					$row2['ad_action_id']=$arr[1];
+					$row2['ad_action_text']=$arr[2];
+					$row2['event_url']=$arr[3];
+				}
+				if($row2['ad_file'])
+				{
+					$row2['ad_file']="".$site_url."/".$row2['ad_file'];
+				}
+				if($row2['ad_file_iphone4'])
+				{
+					$row2['ad_file_iphone4']="".$site_url."/".$row2['ad_file_iphone4'];
+				}
+				if($row2['ad_file_iphone5'])
+				{
+					$row2['ad_file_iphone5']="".$site_url."/".$row2['ad_file_iphone5'];
+				}
+				
+				
+			}
+			
+			
+		}
+		
+		$row['apply_ad_list']=array_default_value($row2,array('event_url'));
+		
+		$list_data[]=array_default_value($row,array('event_url','apply_ad_list'));
+
 	}
 		$data['title']		= "data";
 		$data['data']     =  $list_data;
@@ -130,7 +173,42 @@ if($ac=="ad_list")
 		{
 			$ad['ad_file_iphone5']=$site_url."/".$ad['ad_file_iphone5'];
 		}
-		$list_data[]=$ad;
+		
+		if($ad['ad_action']=='apply_ticket_detail')
+		{
+			if($ad['ad_action_id'])
+			{
+			
+				$row2 = DB::fetch_first("select ad_url,ad_file,ad_file_iphone4,ad_file_iphone5,ad_width,ad_height from tbl_ad where event_id='".$ad['ad_action_id']."' and ad_page='ticket' order by ad_sort desc limit 1");
+				$arr=explode("|",$row2['ad_url']);
+				if(count($arr)>1)
+				{
+					$row2['ad_action']=$arr[0];
+					$row2['ad_action_id']=$arr[1];
+					$row2['ad_action_text']=$arr[2];
+					$row2['event_url']=$arr[3];
+				}
+				if($row2['ad_file'])
+				{
+					$row2['ad_file']="".$site_url."/".$row2['ad_file'];
+				}
+				if($row2['ad_file_iphone4'])
+				{
+					$row2['ad_file_iphone4']="".$site_url."/".$row2['ad_file_iphone4'];
+				}
+				if($row2['ad_file_iphone5'])
+				{
+					$row2['ad_file_iphone5']="".$site_url."/".$row2['ad_file_iphone5'];
+				}
+				
+				
+			}
+			
+			
+		}
+		$ad['apply_ad_list']=array_default_value($row2,array('event_url'));
+		
+		$list_data[]=array_default_value($ad,array('event_url','apply_ad_list'));
 	}
 	
 	$data['title']		= "data";

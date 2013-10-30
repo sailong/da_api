@@ -995,7 +995,6 @@ if($ac=="score_list")
 if($ac=="chadian_rank")
 {
 	$uid=$_G['gp_uid'];
-	$field_uid=$_G['gp_field_uid'];
 	if(!$_G['gp_page'])
 	{
 		$chadian=DB::result_first("select chadian from ".DB::table("common_member_profile")." where uid='".$uid."' ");
@@ -1007,7 +1006,7 @@ if($ac=="chadian_rank")
 		}
 	}
 	
-	$total=DB::result_first("select count(uid) from ".DB::table("common_member_profile")." where chadian>0 and reg_source='".$field_uid."' ");
+	$total=DB::result_first("select count(uid) from ".DB::table("common_member_profile")." where chadian>0  ");
 	$max_page=intval($total/$page_size);
 	if($max_page<$total/$page_size)
 	{
@@ -1015,10 +1014,10 @@ if($ac=="chadian_rank")
 	}
 	if($max_page>=$page)
 	{
-		$list=DB::query("select uid,realname,chadian from ".DB::table("common_member_profile")." where chadian>0 and reg_source='".$field_uid."' order by chadian asc limit $page_start,$page_size ");
+		$list=DB::query("select uid,realname,chadian from ".DB::table("common_member_profile")." where chadian>0 order by chadian asc limit $page_start,$page_size ");
 		while($row=DB::fetch($list))
 		{
-			$row['rank_number']=DB::result_first("select count(uid) from ".DB::table("common_member_profile")." where chadian<'".$row['chadian']."' and chadian>0 and reg_source='".$field_uid."' ");
+			$row['rank_number']=DB::result_first("select count(uid) from ".DB::table("common_member_profile")." where chadian<'".$row['chadian']."' and chadian>0 ");
 			$row['rank_number']=(string)($row['rank_number']+1);
 			//echo "select count(uid) from ".DB::table("common_member_profile")." where chadian<'".$row['chadian']."' and chadian>0 ";
 			//echo "<hr>";
@@ -1029,12 +1028,87 @@ if($ac=="chadian_rank")
     if(empty($list_data)) {
         $list_data = null;
     }
-	//$list_data = null;
 	$data['title']='list_data';
 	$data['data']=$list_data;
 	//print_r($data);
 	api_json_result(1,0,$app_error['event']['10502'],$data);
 
+}
+
+
+
+
+//waika_list
+if($ac=="waika_list")
+{
+	$uid=$_G['gp_uid'];
+	$total=DB::result_first("select count(baofen_id) from tbl_baofen where uid='".$uid."' and source='waika' and score='' ");
+	$max_page=intval($total/$page_size);
+	if($max_page<$total/$page_size)
+	{
+		$max_page=$max_page+1;
+	}
+	if($max_page>=$page)
+	{
+		$list=DB::query("select baofen_id,baofen_id as id,uid,event_id,event_id as sais_id,(select event_name from tbl_event where event_id=tbl_baofen.event_id) as sais_name,field_id,field_id as fuid,(select realname from ".DB::table("common_member_profile")." where uid=tbl_field.field_id) as field_name,addtime from tbl_baofen where uid='".$uid."' and source='waika' and score='' order by addtime desc limit $page_start,$page_size  ");
+		while($row =DB::fetch($list))
+		{
+			if($row['sais_name']==null)
+			{
+				$row['sais_name']="";
+			}
+			if($row['field_name']==null)
+			{
+				$row['field_name']="";
+			}
+
+			$row['icon']=$site_url."/uc_server/avatar.php?uid=".$row['fuid']."&size=middle";
+
+			$row['addtime']=date("Y年m月d日",$row['addtime']);
+			$list_data[]=$row;
+		}
+	}
+
+	//	
+	$list=DB::query("select baofen_id,baofen_id as id,uid,event_id,event_id as sais_id,(select event_name from tbl_event where event_id=tbl_baofen.event_id) as sais_name,field_id,field_id as fuid,(select realname from ".DB::table("common_member_profile")." where uid=tbl_baofen.field_id) as field_name,addtime from tbl_baofen where source='waika' and score<>'' and event_id='27' order by addtime desc limit $page_start,$page_size  ");
+	//$list=DB::query("select id,uid,sais_id,(select realname from ".DB::table("common_member_profile")." where uid=".DB::table("common_score").".sais_id) as sais_name,fuid,(select realname from ".DB::table("common_member_profile")." where uid=".DB::table("common_score").".fuid) as field_name,par,score,pars,total_score,addtime,dong_names,uploadimg,is_edit from ".DB::table("common_score")." where source='waika' and score<>'' and sais_id='1000333' order by addtime desc limit $page_start,$page_size  ");
+	while($row =DB::fetch($list))
+	{
+		$row['par']=explode("|",$row['par']);
+		$row['score']=explode("|",$row['score']);
+		if($row['sais_name']==null)
+		{
+			$row['sais_name']="";
+		}
+		if($row['field_name']==null)
+		{
+			$row['field_name']="";
+		}
+
+		$row['icon']=$site_url."/uc_server/avatar.php?uid=".$row['fuid']."&size=middle";
+
+		if($row['uploadimg'])
+		{
+			$row['uploadimg']=$site_url."/".$row['uploadimg'];
+			$row['uploadimg_small']=$row['uploadimg']."_small.jpg";
+		}
+		else
+		{
+			$row['uploadimg']='';
+			$row['uploadimg_small']="";
+		}
+
+		$row['addtime']=date("Y年m月d日",$row['addtime']);
+		$list_data2[]=$row;
+	}
+
+
+	$data['title']='list_data';
+	$data['data']=array(
+		'score_list'=>$list_data,	
+		'event_list'=>$list_data2	
+	);
+	api_json_result(1,0,$app_error['event']['10502'],$data);
 }
 
 
@@ -1053,7 +1127,7 @@ if($ac=="qiuyou_list")
 	}
 	if($max_page>=$page)
 	{
-		$list=DB::query("select baofen_id as id,baofen_id,uid,(select realname from ".DB::table("common_member_profile")." where uid=tbl_baofen.uid) as realname,sais_id,(select event_name from tbl_event where uid=tbl_baofen.event_id) as sais_name,field_id as fuid,(select realname from ".DB::table("common_member_profile")." where uid=tbl_baofen.field_id) as field_name,addtime,uploadimg,lun from tbl_baofen where uid in (select uid from (select buddyid from jishigou_buddys where uid='".$uid."') as t2) and uid<>'".$uid."'  order by addtime desc limit $page_start,$page_size  ");
+		$list=DB::query("select baofen_id as id,baofen_id,uid,(select realname from ".DB::table("common_member_profile")." where uid=tbl_baofen.uid) as realname,event_id as sais_id,(select event_name from tbl_event where uid=tbl_baofen.event_id) as sais_name,field_id as fuid,(select realname from ".DB::table("common_member_profile")." where uid=tbl_baofen.field_id) as field_name,addtime,uploadimg,lun from tbl_baofen where uid in (select uid from (select buddyid from jishigou_buddys where uid='".$uid."') as t2) and uid<>'".$uid."'  order by addtime desc limit $page_start,$page_size  ");
 		while($row =DB::fetch($list))
 		{
 			

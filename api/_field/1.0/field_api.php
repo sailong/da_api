@@ -140,7 +140,7 @@ if($ac=="field_intro_list")
 	$type=$_G['gp_type'];
 	if($field_uid && $type)
 	{
-		$list=DB::query("select about_id,about_id as blogid,about_name as arc_name,about_replynum as arc_replynum,about_addtime as dateline,about_content as content,about_tel as tel,about_tel2,about_pic,about_more from tbl_field_about where about_type='".$type."' and field_uid='".$field_uid."'  ".$category_sql." ".$language_sql." ");
+		$list=DB::query("select about_id,about_id as blogid,about_name as arc_name,about_replynum as arc_replynum,about_addtime as dateline,about_content as content,about_tel as tel,about_tel2,about_pic,about_more,about_sort from tbl_field_about where about_type='".$type."' and field_uid='".$field_uid."'  ".$category_sql." ".$language_sql." order by about_sort desc ");
 		while($row=DB::fetch($list))
 		{
 			$row['content']=strip_tags($row['content'],"");
@@ -488,8 +488,25 @@ if($ac=="news_detail")
 	$pic_width=$_G['gp_pic_width'];
 	if($blogid)
 	{
-		$detail_data=DB::fetch_first("select uid,arc_type,arc_id as blogid,arc_name as subject,arc_replynum as replynum,arc_viewtype as view_type,arc_pic as pic ,arc_addtime as dateline,arc_content as content from tbl_arc where arc_id='".$blogid."'  ");
+		$detail_data=DB::fetch_first("select uid,arc_type,arc_id as blogid,arc_name as subject,arc_replynum as replynum,arc_viewtype as view_type,arc_pic as pic ,arc_addtime as dateline,arc_content as content,is_video,is_span,(arc_share_qq+arc_share_sina+arc_share_other) as arc_share_total,arc_share_qq,arc_share_sina,arc_share_other,arc_video_pic,arc_video_url from tbl_arc where arc_id='".$blogid."'  ");
 		$detail_data['username']="";
+		
+		
+		//video about
+		if($detail_data['arc_video_pic'])
+		{
+			$detail_data['arc_video_pic']=$site_url."/".$detail_data['arc_video_pic'];
+			$detail_data['arc_video_pic_info']=getimagesize($detail_data['arc_video_pic']);
+		}
+		else
+		{
+			$detail_data['arc_video_pic_info']=null;
+		}
+		
+		if($detail_data['arc_video_url'])
+		{
+			$detail_data['arc_video_url']=$site_url."/".$detail_data['arc_video_url'];
+		}
 		
 		
 		$detail_data['content']=strip_tags($detail_data['content'],"<p><img><br><div>");
