@@ -1,0 +1,74 @@
+<include file="../public/header_dialog" />
+  <div class="tit_tab">
+	<ul>
+		<li><a class=on href="#">修改客户端</a></li>
+	</ul>
+  </div>
+<table border="0" cellspacing="0" cellpadding="0" style="width:600px;">
+<tr>
+<td>
+<!--/dialog_start-->
+
+<form method="post" id="act_form" name="act_form" action="{:U('admin/field_manage/field_edit_action')}" enctype="multipart/form-data">
+	<div class="add_dialog" style="width:600px;">
+		<dl class="lineD">
+			<dt>球场UID：</dt>
+			<dd><input type="text" name="field_uid" id="field_uid" class="mod_input2" style="width:300px;" value="{$data.field_uid}"></dd>
+			<div class="clear"></div>
+		</dl>
+		<dl class="lineD">
+			<dt>球场名称：</dt>
+			<dd><input type="text" name="field_name" id="field_name" class="mod_input2" style="width:300px;"  value="{$data.field_name}"></dd>
+			<div class="clear"></div>
+		</dl>
+		<dl class="lineD">
+			<dt>球场图片：</dt>
+			<dd>
+				<php>if($data['field_pic']){</php>
+				<a href="{$data.field_pic}" target="_blank" title="查看原图"><img src="{$data.field_pic}"  style="max-width:200px; max-height:100px; "></a>
+				<php>}</php><br/>
+				<input type="file" name="field_pic" id="field_pic"  class="mod_input" style="width:300px;">
+			</dd>
+			<div class="clear"></div>
+		</dl>
+		<dl class="lineD">
+			<dt>球场状态：</dt>
+			<dd><span style="padding-right:10px;"><input type="radio" name="field_status"  class="mod_input2" value="1" <php>if($data['field_status'] == 1){echo 'checked';}</php>>正常</span><span><input type="radio" name="field_status" class="mod_input2"  value="2" <php>if($data['field_status'] == 2){echo 'checked';}</php>>暂停</span></dd>
+			<div class="clear"></div>
+		</dl>
+		
+	</div><!--/add_dialog-->
+
+	<div class="page_btm">
+		<input type="hidden" class="btn_b"  name="field_id" value="{$data.field_id}"/>
+		<input type="submit" class="btn_b"  value="保存" style="margin-right:10px;"/>
+		<input type="button" class="btn_w"  onclick="javascript:history.back(-1);" value="取消" />
+	</div><!--/page_btm-->
+</form>
+
+<script>
+$(document).ready(function(){
+$.formValidator.initConfig({formID:"act_form",theme:'ArrowSolidBox',mode:'AutoTip',onError:function(msg){msg_error(msg)},inIframe:true});
+
+		/* $("#dict_name").formValidator({empty:true,onShow:"请输入名称",onFocus:"请输入名称",onCorrect:"输入正确"}).inputValidator({min:1,max:50,onError:"请输入名称"});
+		$("#dict_parent_id").formValidator({empty:true,onShow:"请输入上级分类",onFocus:"请输入上级分类",onCorrect:"输入正确"}).inputValidator({min:1,max:11,onError:"请输入上级分类"});
+		$("#dict_type").formValidator({empty:true,onShow:"请输入类型",onFocus:"请输入类型",onCorrect:"输入正确"}).inputValidator({min:1,max:50,onError:"请输入类型"});
+		$("#dict_sort").formValidator({empty:true,onShow:"请输入排序",onFocus:"请输入排序",onCorrect:"输入正确"}).inputValidator({min:1,max:11,onError:"请输入排序"});
+		 */
+
+	$.formValidator.reloadAutoTip();
+});
+
+function reloadAutoTip()
+{
+	$.formValidator.reloadAutoTip();
+}
+
+</script>
+
+<!--/dialog_end-->
+</td>
+</tr>
+</table>
+
+<include file="../public/_footer" />
