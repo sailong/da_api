@@ -108,7 +108,7 @@ function get_thru($event_id,$fenzhan_id,$uid,$event_user_id,$fenzhan_ing_status=
 	
 	if($fenzhan_id)
 	{
-		$score_info=DB::fetch_first("select total_score,score,status,cave_1,cave_2,cave_3,cave_4,cave_5,cave_6,cave_7,cave_8,cave_9,cave_10,cave_11,cave_12,cave_13,cave_14,cave_15,cave_16,cave_17,cave_18 from tbl_baofen where source='ndong' and fenzhan_id='".$fenzhan_id."' ".$user_sql." order by lun desc limit 1 ");
+		$score_info=DB::fetch_first("select total_score,score,status,cave_1,cave_2,cave_3,cave_4,cave_5,cave_6,cave_7,cave_8,cave_9,cave_10,cave_11,cave_12,cave_13,cave_14,cave_15,cave_16,cave_17,cave_18 ,is_end from tbl_baofen where source='ndong' and fenzhan_id='".$fenzhan_id."' ".$user_sql." order by lun desc limit 1 ");
 		$total_score=$score_info['total_score'];
 
 		if($score_info['cave_1'] && !$score_info['cave_2'])
@@ -181,11 +181,20 @@ function get_thru($event_id,$fenzhan_id,$uid,$event_user_id,$fenzhan_ing_status=
 		}
 		else if($score_info['cave_18'] && !$score_info['cave_1'])
 		{
-			$next_dong='F';
+			if($score_info['is_end'])
+			{
+				$next_dong='F';
+			}else{
+				$next_dong='1';
+			}
 		}
 		else
 		{
-			$next_dong='F';
+			if($score_info['is_end'])
+			{
+				$next_dong='F';
+			}
+			
 		}
 		
 		/*

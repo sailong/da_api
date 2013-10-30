@@ -763,20 +763,9 @@ if($ac=="member_detail")
 	$login_uid=$_G['gp_login_uid'];
 	if($get_uid)
 	{
-		$detail_data=DB::fetch_first("select uid,(select realname from ".DB::table("common_member_profile")." where uid=".DB::table('common_member').".uid) as username,(select enrealname from ".DB::table("common_member_profile")." where uid=".DB::table('common_member').".uid) as enrealname,(select count(id) from jishigou_buddys where uid=".DB::table("common_member").".uid ) as guanzhu_num,(select count(id) from jishigou_buddys where buddyid=".DB::table("common_member").".uid ) as fensi_num,(select count(tid) from jishigou_topic where uid=".DB::table("common_member").".uid and type='first' ) as dongtai_num,(select count(id) from jishigou_buddys where uid='".$login_uid."' and  buddyid='".$get_uid."' ) as is_guanzhu,groupid,(select bio from ".DB::table("common_member_profile")." where uid=".DB::table('common_member').".uid) as content from ".DB::table("common_member")." where uid='".$get_uid."' ");
+		$detail_data=DB::fetch_first("select uid,(select realname from ".DB::table("common_member_profile")." where uid=".DB::table('common_member').".uid) as username,(select count(id) from jishigou_buddys where uid=".DB::table("common_member").".uid ) as guanzhu_num,(select count(id) from jishigou_buddys where buddyid=".DB::table("common_member").".uid ) as fensi_num,(select count(tid) from jishigou_topic where uid=".DB::table("common_member").".uid and type='first' ) as dongtai_num,(select count(id) from jishigou_buddys where uid='".$login_uid."' and  buddyid='".$get_uid."' ) as is_guanzhu,groupid,(select bio from ".DB::table("common_member_profile")." where uid=".DB::table('common_member').".uid) as content from ".DB::table("common_member")." where uid='".$get_uid."' ");
 		$detail_data['touxiang']=$site_url."/uc_server/avatar.php?uid=".$detail_data['uid']."&size=middle";
 		$detail_data['msg_num']=1;
-		
-		if($detail_data['username']!=$detail_data['enrealname'])
-		{
-			$detail_data['username']=$detail_data['username']."\n".$detail_data['enrealname'];
-		}
-		else
-		{
-			$detail_data['username']=$detail_data['username'];
-		}
-		
-		
 		if(!$detail_data['content'])
 		{
 			if($detail_data['groupid']==24)

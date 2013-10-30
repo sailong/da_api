@@ -296,7 +296,7 @@ if($ac=="event_blog_detail")
 	$pic_width=$_G['gp_pic_width'];
 	if($blogid)
 	{
-		$detail_data=DB::fetch_first("select uid,field_uid,arc_type,arc_id as blogid,arc_name as subject,arc_replynum as replynum,arc_viewtype as view_type,arc_pic as pic ,arc_addtime as dateline,arc_content as content,is_video,is_span,(arc_share_qq+arc_share_sina) as arc_share_total,arc_share_qq,arc_share_sina,arc_video_pic,arc_video_url from tbl_arc where arc_id='".$blogid."' ");
+		$detail_data=DB::fetch_first("select uid,field_uid,arc_type,arc_id as blogid,arc_name as subject,arc_replynum as replynum,arc_viewtype as view_type,arc_pic as pic ,arc_addtime as dateline,arc_content as content,is_video,is_span,(arc_share_qq+arc_share_sina+arc_share_other) as arc_share_total,arc_share_qq,arc_share_sina,arc_video_pic,arc_video_url from tbl_arc where arc_id='".$blogid."' ");
 		$detail_data['username']="";
 		$detail_data['uid']="0";
 		

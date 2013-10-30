@@ -30,6 +30,14 @@ class user_ticketModel extends Model{
 			$endtime = strtotime(get("endtime")) + 86400;
 			$where .=" and user_ticket_addtime<".$endtime." ";
 		}
+		if(get("code")!="")
+		{
+			$user_ticket_code = get("code");
+			$user_ticket_code = substr($user_ticket_code,0,10);
+
+			$where .=" and user_ticket_code ='".$user_ticket_code."' ";
+		}
+		
 		
 		$data["item"]=M("user_ticket")->where($where.$bigwhere)->field("user_ticket_id,uid,ticket_id,event_id,ticket_type,user_ticket_code,user_ticket_codepic,user_ticket_realname,user_ticket_nums,user_ticket_sex,user_ticket_age,user_ticket_address,user_ticket_cardtype,user_ticket_card,user_ticket_mobile,user_ticket_imei,user_ticket_company,user_ticket_company_post,user_ticket_status,user_ticket_addtime,out_id,out_idtype")->order($sort)->page($page.",".$page_size)->select();
 		

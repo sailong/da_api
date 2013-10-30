@@ -7,6 +7,22 @@ if(!defined("IN_DISCUZ"))
 
 $ac=$_G['gp_ac'];
 
+if($ac=="daoru_score")
+{
+	$from_fenzhan_id=120;
+	$to_fenzhan_id=122;
+	echo "select baofen_id,fenzhan_id,event_user_id,zong_score,total_sum_ju from tbl_baofen where fenzhan_id='".$from_fenzhan_id."' order by baofen_id asc ";
+	$list=DB::query("select baofen_id,fenzhan_id,event_user_id,zong_score,total_sum_ju from tbl_baofen where fenzhan_id='".$from_fenzhan_id."' order by baofen_id asc ");
+	while($row=DB::fetch($list))
+	{
+		$res=DB::query("update tbl_baofen set zong_score='".$row['zong_score']."',total_sum_ju='".$row['total_sum_ju']."' where event_user_id='".$row['event_user_id']."' and fenzhan_id='".$to_fenzhan_id."'  " );
+		echo "update tbl_baofen set zong_score='".$row['zong_score']."',total_sum_ju='".$row['total_sum_ju']."' where event_user_id='".$row['event_user_id']."' and fenzhan_id='".$to_fenzhan_id."'  ";
+		echo "<hr>";
+	}
+	
+}
+
+
 
 //图片处理
 if($ac=="import_photo_form_dz")

@@ -254,7 +254,7 @@ function yanzheng_token($token)
 //获取所在城市
 function get_real_ip()
 {
-	$ip=false;
+	/* $ip=false;
 	if(!empty($_SERVER["HTTP_CLIENT_IP"])){
 	$ip = $_SERVER["HTTP_CLIENT_IP"];
 	}
@@ -268,7 +268,9 @@ function get_real_ip()
 	}
 	}
 	}
-	return ($ip ? $ip : $_SERVER['REMOTE_ADDR']);
+	return ($ip ? $ip : $_SERVER['REMOTE_ADDR']); */
+	$user_ip = $_SERVER["HTTP_CDN_SRC_IP"];
+	return $user_ip;
 }
  
 function getCity($ip)

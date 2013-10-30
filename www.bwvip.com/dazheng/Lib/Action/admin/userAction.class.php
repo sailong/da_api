@@ -72,7 +72,8 @@ class userAction extends AdminAuthAction
 			
 			$data["uid"]=$ucuid; 
 			$data["gender"]=post("gender"); 
-			$data["realname"]=post("realname"); 
+			$data["realname"]=post("realname");
+			$data["enrealname"]=post("enrealname"); 
 			
 			//生成真实姓名
 			$list=M("common_member_profile","pre_")->add($data); 
@@ -132,6 +133,7 @@ class userAction extends AdminAuthAction
 			$uid=post("uid");	 
 			$username=post("username");
 			$realname=post("realname");
+			$enrealname=post("enrealname");
 			$password=post("password");
 			$gender=post("gender"); 
 			$mobile=post("mobile"); 
@@ -156,6 +158,10 @@ class userAction extends AdminAuthAction
 			if($realname){	
 			$updp.="realname='$realname',";
 			$updj.="nickname='$realname',";
+			}
+			if($enrealname){	
+			$updp.="enrealname='$enrealname',";
+			$updj.="enrealname='$enrealname',";
 			}
 			if($gender){	
 			$updp.="gender='$gender',";
