@@ -20,7 +20,9 @@ class publicAction extends Action
 	
 	public function login()
 	{
-
+		$field_list=M('field')->where("field_status='1' and field_uid!=0")->order('field_addtime desc')->select();
+		
+		$this->assign("field_list",$field_list);
 		$this->assign("title","登录");
 		$this->display();
 	}

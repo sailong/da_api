@@ -42,7 +42,7 @@ class eventAction extends AdminAuthAction
 		$this->assign('editor',$a);
 		$this->assign('event_ad_editor',$a);
 		
-		$app_list=select_dict(15,"select");
+		$app_list=select_field(1,"select");
 		$this->assign("app_list",$app_list);
 
 		$this->assign("page_title","添加赛事");
@@ -160,7 +160,7 @@ class eventAction extends AdminAuthAction
 			$this->assign('usejs',$b);     //输出到html
 			$this->assign('editor',$a);
 			
-			$app_list=select_dict(15,"select");
+			$app_list=select_field(1,"select");
 			$this->assign("app_list",$app_list);
 			
 			$this->assign("page_title","修改赛事");
@@ -358,7 +358,7 @@ class eventAction extends AdminAuthAction
 			$data=M("event")->where("event_id=".intval(get("event_id")))->find();
 			$this->assign("data",$data);
 			
-			$app_list=select_dict(15,"select");
+			$app_list=select_field(1,"select");
 			$this->assign("app_list",$app_list);
 			
 			

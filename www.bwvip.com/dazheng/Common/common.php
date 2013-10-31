@@ -391,6 +391,26 @@ function select_dict($type_id,$to="")
 		
 }
 
+function select_field($field_stauts=1,$to="")
+{
+	$field_list=M('field')->where("field_status='{$field_stauts}'")->order('field_addtime desc')->select();
+	if($to=="select")
+	{
+		foreach($field_list as $key=>$val)
+		{
+			$str .='<option value="'.$val['field_uid'].'">'.$val['field_name'].'</option>';
+			
+		}
+		return $str;
+	}
+	else
+	{
+		return $field_list;
+	}
+
+		
+}
+
 
 
 function staff_auth_can($auth_id,$staff_id)

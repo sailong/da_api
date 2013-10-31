@@ -37,7 +37,7 @@ class adAction extends AdminAuthAction
 		$event=D('event')->event_select_pro("  ");
 		$this->assign('event',$event['item']);
 		
-		$app_list=select_dict(15,"select");
+		$app_list=select_field(1,"select");
 		$this->assign("app_list",$app_list);
 
 		$this->assign("page_title","添加广告");
@@ -147,7 +147,7 @@ class adAction extends AdminAuthAction
 			$this->assign("action_list",$action_list);
 			//print_r($page_list);
 			
-			$app_list=select_dict(15,"select");
+			$app_list=select_field(1,"select");
 			$this->assign("app_list",$app_list);
 			
 			$this->assign("page_title","修改广告");

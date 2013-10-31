@@ -13,20 +13,21 @@
 	
 
   <div class="search_box">
-		<form name="search_form" action="/index.php" method="get">
+		<form name="search_form" action="/default.php" method="get">
 		<input type="hidden" name="g" value="admin">
 		<input type="hidden" name="m" value="push_message">
 		<input type="hidden" name="a" value="push_message">
+		<input type="hidden" name="message_type" value=<php>echo get('message_type');</php> />
 
 		<table border="0" cellspacing="0" cellpadding="0">
-			<th>名称：</th>
-			<td><input type="text" name="k" class="search_input" style="width:120px;" value="<php> echo  get('k');</php>"></td>
-			<th>开始时间：</th>
+			<!-- <th>名称：</th>
+			<td><input type="text" name="k" class="search_input" style="width:120px;" value="<php> echo  get('k');</php>"></td> -->
+			<th>发送时间：</th>
 			<td>
 				<input type="text" name="starttime" class="search_input_date" style="width:120px;" value="<php> echo  get('starttime');</php>" onFocus="WdatePicker({isShowClear:false,readOnly:true})"> 至 
 				<input type="text" name="endtime" class="search_input_date" style="width:120px;" value="<php> echo  get('endtime');</php>" onFocus="WdatePicker({isShowClear:false,readOnly:true})">
 			</td>
-			<th>类型：</th>
+			<!-- <th>类型：</th>
 			<td>
 				<select name="course_type" style="width:120px;"  class="search_select">
 					<option value="">请选择</option>
@@ -34,7 +35,7 @@
 					<option value="2">辅导课程</option>
 				</select>
 				<script>set_select_value(document.search_form.course_type,"<php> echo  get("course_type");</php>");</script>
-			</td>
+			</td> -->
 			<td class="btn">
 				<input type="submit" value="搜索" class="btn_b" style="margin-right:8px;" >
 				<input type="button" value="查看全部" class="btn_b" onclick="javascript:location='{:U('admin/push_message/push_message',array('state'=>get('state')))}';">
@@ -49,8 +50,10 @@
 	<!--
 	<a href="{:U('admin/push_message/push_message_add')}" class="btn_a"><span>添加消息推送</span></a>
 	-->
-	<a href="{:U('admin/push_message/push_message_add_android',array('message_type'=>'android'))}" class="btn_a"><span>添加Android消息推送</span></a>
-	<a href="{:U('admin/push_message/push_message_add_android',array('message_type'=>'ios'))}" class="btn_a"><span>添加IOS消息推送</span></a>
+	<php> if(get("message_type")=='android'){</php><a href="{:U('admin/push_message/push_message_add_android',array('message_type'=>'android'))}" class="btn_a"><span>添加Android消息推送</span></a><php>}elseif(get("message_type")=='ios'){</php>
+	<a href="{:U('admin/push_message/push_message_add_android',array('message_type'=>'ios'))}" class="btn_a"><span>添加IOS消息推送</span></a><php>}else{</php>
+	</php><a href="{:U('admin/push_message/push_message_add_android',array('message_type'=>'android'))}" class="btn_a"><span>添加Android消息推送</span></a>
+	<a href="{:U('admin/push_message/push_message_add_android',array('message_type'=>'ios'))}" class="btn_a"><span>添加IOS消息推送</span></a><php>}</php>
 	<a href="javascript:void(0);" class="btn_a"  onclick="mod_delete_batch('{:U('admin/push_message/push_message_delete_action')}','mod_table');"><span>批量删除</span></a>
 
 	<div class="clear"></div>
@@ -68,17 +71,17 @@
 		<th class="line_l">球场UID</th>
 		<th class="line_l">推送平台</th>
 		<th class="line_l">目标用户</th>
-		<th class="line_l">消息标题</th>
+		<!-- <th class="line_l">消息标题</th> -->
 		<!--
 		<th class="line_l">消息内容</th>
 		-->
-		<th class="line_l">设备编号</th>
+		<!-- <th class="line_l">设备编号</th> -->
 		<th class="line_l">消息状态</th>
 		<th class="line_l">发送范围</th>
-		<th class="line_l">共需发送</th>
+		<!-- <th class="line_l">共需发送</th>
 		<th class="line_l">总发送数</th>
 		<th class="line_l">错误代码</th>
-		<th class="line_l">错误信息</th>
+		<th class="line_l">错误信息</th> -->
 		<th class="line_l">添加人</th>
 		<th class="line_l">发送时间</th>
 		<th class="line_l">添加时间</th>
@@ -91,18 +94,18 @@
 		<td>{$vo.message_number}</th>
 		<td>{$vo.field_uid}</th>
 			<td><a href="javascript:void(0);" onclick="mod_dialog('查看详细','{:U('admin/push_message/push_message_detail', array('message_id'=>$vo['message_id']))}');">{$vo.message_type}</a></td>
-			<td>{$vo.uid}</td>
-			<td>{$vo.message_title}</td>
+			<td><php>if($vo['uid']==0){echo '所有用户';}else{echo $vo['uid'];}</php></td>
+			<!-- <td>{$vo.message_title}</td> -->
 			<!--
 			<td>{$vo.message_content}</td>
 			-->
-			<td>{$vo.devices_token}</td>
+			<!-- <td>{$vo.devices_token}</td> -->
 			<td>{$vo.message_state}</td>
 			<td>{$vo.receiver_type}</td>
-			<td>{$vo.message_totalnum}</td>
+			<!-- <td>{$vo.message_totalnum}</td>
 			<td>{$vo.message_sendnum}</td>
 			<td>{$vo.message_errorcode}</td>
-			<td>{$vo.message_errormsg}</td>
+			<td>{$vo.message_errormsg}</td> -->
 			<td><php>if($vo['message_is_sys']){ echo "系统生成";}else{ echo "管理员";}</php></td>
 			<td>{$vo.message_sendtime|format_to_time}</td>
 			<td>{$vo.message_addtime|format_to_time}</td>

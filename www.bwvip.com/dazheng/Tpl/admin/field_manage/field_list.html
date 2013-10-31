@@ -1,0 +1,98 @@
+<include file="../public/_header" />
+<div class="so_main">
+
+  <div class="page_tit">{$page_title}</div>
+
+  <div class="search_box">
+		<form name="search_form" action="/default.php" method="get">
+		<input type="hidden" name="g" value="admin">
+		<input type="hidden" name="m" value="field_manage">
+		<input type="hidden" name="a" value="field_list">
+
+		<table border="0" cellspacing="0" cellpadding="0">
+			<th>客户端名称：</th>
+			<td><input type="text" name="k" class="search_input" style="width:120px;" value="<php> echo  get('k');</php>"></td>
+			
+			<td class="btn">
+				<input type="submit" value="搜索" class="btn_b" style="margin-right:8px;" >
+				<input type="button" value="查看全部" class="btn_b" onclick="javascript:location='{:U('admin/field_manage/field_list',array('state'=>get('state')))}';">
+			</td>
+		</table>
+	</form>
+  </div><!--/search_box-->
+
+  <!--------list -------->
+  <div class="Toolbar_inbox">
+  	<div class="page right">{$pages}</div>
+
+	<a href="/default.php?g=admin&m=field_manage&a=field_add" class="btn_a"><span>添加客户端</span></a>
+	<a href="javascript:void(0);" class="btn_a"  onclick="mod_delete_batch('{:U('admin/field_manage/field_delete_action')}','mod_table');"><span>批量删除</span></a>
+
+	<div class="clear"></div>
+  </div>
+  <div class="list">
+	<php>if($total>0){</php>
+	  <table width="100%" id="mod_table" border="0" cellspacing="0" cellpadding="0">
+	  <tr>
+		<th style="width:30px;">
+			<input type="checkbox" id="checkbox_handle" onclick="select_all(this,'mod_table','checkbox')" value="0">
+			<label for="checkbox"></label>
+		</th>
+		<th class="line_l">ID</th>
+		<th class="line_l">球场UID</th>
+		<th class="line_l">名称</th>
+		<th class="line_l">球场图片</th>
+		<th class="line_l">状态</th>
+		<th class="line_l">添加时间</th>
+		<th class="line_l">操作</th>
+	</tr>
+	<volist id="vo" name="list">
+	<tr overstyle="on"  id=ids_{$vo["field_id"]}>
+			<td><input type="checkbox" name="checkbox" onclick="select_one(this)" value="{$vo.field_id}" ></td>
+			<td width="40">{$vo.field_id}</th>
+			<td>{$vo.field_uid}</th>
+			<td>{$vo.field_name}</th>
+			<td><php>if($vo['field_pic']){echo '<img style="max-height:60px; max-width:100px;" src="'.$vo['field_pic'].'">';}</php></td>
+			<td><php>if($vo['field_status'] == 1){echo '正常';}else{echo '暂停';}</php></td>
+			<td>{$vo.field_addtime|format_to_fulltime}</td>
+		<td>
+			<a href="/default.php?g=admin&m=field_manage&a=field_edit&field_id={$vo.field_id}">修改</a> | 
+			<a href="javascript:void(0);" onclick="mod_delete_one('{:U('admin/field_manage/field_delete_action')}','{$vo['field_id']}');">删除</a>
+		</td>
+	</tr>
+	</volist>
+    </table>
+	  <php>}else{</php>
+			<div class="no_data">
+				<img src="/skin/images/no_data.gif" align="absmiddle"> <span>没有客户端... </span>
+			</div>
+	 <php>}</php>
+  </div>
+
+  <div class="Toolbar_inbox">
+	<div class="page right">{$pages}</div>
+
+	<a href="/default.php?g=admin&m=field_manage&a=field_add" class="btn_a"><span>添加客户端</span></a>
+	<a href="javascript:void(0);" class="btn_a"  onclick="mod_delete_batch('{:U('admin/field_manage/field_delete_action')}','mod_table');"><span>批量删除</span></a>
+
+
+	<div class="clear"></div>
+  </div>
+</div>
+
+<script>
+	$(document).ready(function(){
+		$("tr[overstyle='on']").hover(
+		  function ()
+		  {
+		    $(this).addClass("bg_hover");
+		  },
+		  function (){
+		    $(this).removeClass("bg_hover");
+		  }
+		);
+	});
+</script>
+
+
+<include file="../public/_footer" />
