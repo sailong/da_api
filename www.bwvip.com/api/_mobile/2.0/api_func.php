@@ -110,92 +110,21 @@ function get_thru($event_id,$fenzhan_id,$uid,$event_user_id,$fenzhan_ing_status=
 	{
 		$score_info=DB::fetch_first("select total_score,score,status,cave_1,cave_2,cave_3,cave_4,cave_5,cave_6,cave_7,cave_8,cave_9,cave_10,cave_11,cave_12,cave_13,cave_14,cave_15,cave_16,cave_17,cave_18 ,is_end from tbl_baofen where source='ndong' and fenzhan_id='".$fenzhan_id."' ".$user_sql." order by lun desc limit 1 ");
 		$total_score=$score_info['total_score'];
-
-		if($score_info['cave_1'] && !$score_info['cave_2'])
+		
+		$next_dong=0;
+		for($i=1; $i<19; $i++)
 		{
-			$next_dong=1;
-		}
-		else if($score_info['cave_2'] && !$score_info['cave_3'])
-		{
-			$next_dong=2;
-		}
-		else if($score_info['cave_3'] && !$score_info['cave_4'])
-		{
-			$next_dong=3;
-		}
-		else if($score_info['cave_4'] && !$score_info['cave_5'])
-		{
-			$next_dong=4;
-		}
-		else if($score_info['cave_5'] && !$score_info['cave_6'])
-		{
-			$next_dong=5;
-		}
-		else if($score_info['cave_6'] && !$score_info['cave_7'])
-		{
-			$next_dong=6;
-		}
-		else if($score_info['cave_7'] && !$score_info['cave_8'])
-		{
-			$next_dong=7;
-		}
-		else if($score_info['cave_8'] && !$score_info['cave_9'])
-		{
-			$next_dong=8;
-		}
-		else if($score_info['cave_9'] && !$score_info['cave_10'])
-		{
-			$next_dong=9;
-		}
-		else if($score_info['cave_10'] && !$score_info['cave_11'])
-		{
-			$next_dong=10;
-		}
-		else if($score_info['cave_11'] && !$score_info['cave_12'])
-		{
-			$next_dong=11;
-		}
-		else if($score_info['cave_12'] && !$score_info['cave_13'])
-		{
-			$next_dong=12;
-		}
-		else if($score_info['cave_13'] && !$score_info['cave_14'])
-		{
-			$next_dong=13;
-		}
-		else if($score_info['cave_14'] && !$score_info['cave_15'])
-		{
-			$next_dong=14;
-		}
-		else if($score_info['cave_15'] && !$score_info['cave_16'])
-		{
-			$next_dong=15;
-		}
-		else if($score_info['cave_16'] && !$score_info['cave_17'])
-		{
-			$next_dong=16;
-		}
-		else if($score_info['cave_17'] && !$score_info['cave_18'])
-		{
-			$next_dong=17;
-		}
-		else if($score_info['cave_18'] && !$score_info['cave_1'])
-		{
-			if($score_info['is_end'])
+			if(intval($score_info['cave_'.$i])>0)
 			{
-				$next_dong='F';
-			}else{
-				$next_dong='1';
+				$next_dong=$next_dong+1;
 			}
 		}
-		else
+		
+		if($next_dong==18)
 		{
-			if($score_info['is_end'])
-			{
-				$next_dong='F';
-			}
-			
+			$next_dong="F";
 		}
+		
 		
 		/*
 

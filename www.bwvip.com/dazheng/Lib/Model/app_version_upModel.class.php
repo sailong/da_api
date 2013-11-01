@@ -20,7 +20,10 @@ class app_version_upModel extends Model{
 			$where .=" and app_version_type='".get("app_version_type")."' ";
 		}
 		
-
+		if(get("k")!="")
+		{
+			$where .=" and app_version_name like '%".get("k")."%' ";
+		}
 		if(get("starttime")!="")
 		{
 			$where .=" and app_version_addtime>".strtotime(get("starttime"))." ";

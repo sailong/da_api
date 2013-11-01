@@ -31,6 +31,7 @@ class photoModel extends Model{
 		}
 
 		$data["item"]=M("photo")->where($where.$bigwhere)->field("photo_id,uid,album_id,photo_name,photo_url,photo_addtime")->order($sort)->page($page.",".$page_size)->select();
+		//echo M()->getLastSql();
 		for($i=0; $i<count($data["item"]); $i++)
 		{
 			if($data["item"][$i]["album_id"]!="")

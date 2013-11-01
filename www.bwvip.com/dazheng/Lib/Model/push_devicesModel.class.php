@@ -18,7 +18,7 @@ class push_devicesModel extends Model{
 
 		if(get("k")!="")
 		{
-			$where .=" and push_devices_name like '%".get("k")."%' ";
+			$where .=" and devices_name like '%".get("k")."%' ";
 		}
 
 		if(get("starttime")!="")

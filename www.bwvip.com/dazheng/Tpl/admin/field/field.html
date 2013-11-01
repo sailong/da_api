@@ -20,7 +20,7 @@
 				<input type="text" name="endtime" class="search_input_date" style="width:120px;" value="<php> echo  get('endtime');</php>" onFocus="WdatePicker({isShowClear:false,readOnly:true})">
 			</td>
 			-->
-			<th>类型：</th>
+			<!-- <th>类型：</th>
 			<td>
 				<select name="course_type" style="width:120px;"  class="search_select">
 					<option value="">请选择</option>
@@ -28,7 +28,7 @@
 					<option value="2">辅导课程</option>
 				</select>
 				<script>set_select_value(document.search_form.course_type,"<php> echo  get("course_type");</php>");</script>
-			</td>
+			</td> -->
 			<td class="btn">
 				<input type="submit" value="搜索" class="btn_b" style="margin-right:8px;" >
 				<input type="button" value="查看全部" class="btn_b" onclick="javascript:location='{:U('admin/field/field',array('state'=>get('state')))}';">
