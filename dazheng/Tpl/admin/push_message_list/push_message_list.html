@@ -11,7 +11,7 @@
 		<input type="hidden" name="a" value="push_message_list">
 
 		<table border="0" cellspacing="0" cellpadding="0">
-			<th>名称：</th>
+			<th>用户：</th>
 			<td><input type="text" name="k" class="search_input" style="width:120px;" value="<php> echo  get('k');</php>"></td>
 			<th>开始时间：</th>
 			<td>
@@ -55,20 +55,20 @@
 			<label for="checkbox"></label>
 		</th>
 		<th class="line_l">消息ID</th>
-		<th class="line_l">编号</th>
+		<!-- <th class="line_l">编号</th> -->
 		<th class="line_l">类型</th>
 		<th class="line_l">用户</th>
-		<th class="line_l">标题</th>
+		<!-- <th class="line_l">标题</th> -->
 		<th class="line_l"  width="40%">内容</th>
 	
 		<th class="line_l">状态</th>
 		<!--
 		<th class="line_l">receiver_type</th>
 		-->
-		<th class="line_l">总数</th>
+		<!-- <th class="line_l">总数</th>
 		<th class="line_l">发送数</th>
 		<th class="line_l">错误码</th>
-		<th class="line_l">错误信息</th>
+		<th class="line_l">错误信息</th> -->
 		<th class="line_l">发送时间</th>
 		<th class="line_l">添加时间</th>
 		<th class="line_l">操作</th>
@@ -77,10 +77,10 @@
 	<tr overstyle="on"  id=ids_{$vo["message_list_id"]}>
 		<td><input type="checkbox" name="checkbox" onclick="select_one(this)" value="{$vo.message_list_id}" ></td>
 		<td>{$vo.message_id}</th>
-			<td><a href="{:U('admin/push_message_list/push_message_list_detail', array('message_list_id'=>$vo['message_list_id']))}'">{$vo.message_number}</a></td>
+			<!-- <td><a href="{:U('admin/push_message_list/push_message_list_detail', array('message_list_id'=>$vo['message_list_id']))}'">{$vo.message_number}</a></td> -->
 			<td>{$vo.message_type}</td>
 			<td>{$vo.uid}</td>
-			<td>{$vo.message_title}</td>
+			<!-- <td>{$vo.message_title}</td> -->
 			<td style="word-break:break-all;" width="40%">长度：{$vo.msg_len}<br />{$vo.message_content}<br />
 			<hr>
 			token:{$vo.devices_token}
@@ -90,10 +90,10 @@
 			<!--
 			<td>{$vo.receiver_type}</td>
 			-->
-			<td>{$vo.message_totalnum}</td>
+			<!-- <td>{$vo.message_totalnum}</td>
 			<td>{$vo.message_sendnum}</td>
 			<td>{$vo.message_errorcode}</td>
-			<td>{$vo.message_errormsg}</td>
+			<td>{$vo.message_errormsg}</td> -->
 			<td>{$vo.message_sendtime|format_to_time}</td>
 			<td>{$vo.message_addtime|format_to_time}</td>
 		<td>

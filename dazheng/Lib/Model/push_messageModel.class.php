@@ -9,12 +9,12 @@
 class push_messageModel extends Model{
 
 	//list and page
-	function push_message_list_pro($bigwhere="", $page_size=20, $sort=" message_addtime desc ") 
+	function push_message_list_pro($bigwhere="", $page_size=20, $sort=" message_sendtime desc ") 
 	{
 		$page = intval(get("p"))?get("p"):1;
 
 		$where = " 1 ";
-
+		
 		if(get("message_type"))
 		{
 			$where .=" and message_type='".get("message_type")."' ";
@@ -22,15 +22,17 @@ class push_messageModel extends Model{
 
 		if(get("starttime")!="")
 		{
-			$where .=" and push_message_addtime>".strtotime(get("starttime"))." ";
+			$where .=" and message_sendtime>".strtotime(get("starttime"))." ";
 		}
 		if(get("endtime")!="")
 		{
-			$where .=" and push_message_addtime<".strtotime(get("endtime"))." ";
+			$end_time = strtotime(get("endtime")) + 86400;
+			$where .=" and message_sendtime<".$end_time." ";
 		}
 
 
 		$data["item"]=M("push_message")->where($where.$bigwhere)->order($sort)->page($page.",".$page_size)->select();
+		//echo M()->getLastSql();
 		for($i=0; $i<count($data["item"]); $i++)
 		{
 			if($data["item"][$i]["user_id"]!="")

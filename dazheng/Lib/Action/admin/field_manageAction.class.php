@@ -17,7 +17,7 @@ class field_manageAction extends AdminAuthAction
 	public function field_list()
 	{
 		$list=D("field_manage")->field_list_pro();
-
+		
 		$this->assign("list",$list["item"]);
 		$this->assign("pages",$list["pages"]);
 		$this->assign("total",$list["total"]);

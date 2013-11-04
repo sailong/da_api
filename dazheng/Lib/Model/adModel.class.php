@@ -28,6 +28,10 @@ class adModel extends Model{
 		{
 			$where .=" and ad_type='".get("ad_type")."' ";
 		}
+		if(get("k"))
+		{
+			$where .=" and ad_name like '%".get("k")."%' ";
+		}
 
 		if(get("starttime")!="")
 		{
@@ -39,6 +43,7 @@ class adModel extends Model{
 		}
 
 		$data["item"]=M("ad")->where($where.$bigwhere)->order($sort)->page($page.",".$page_size)->select();
+		//echo M()->getLastSql();
 		for($i=0; $i<count($data["item"]); $i++)
 		{
 			if($data["item"][$i]["user_id"]!="")

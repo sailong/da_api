@@ -1,83 +1,135 @@
 <include file="../public/header_dialog" />
-<table border="0" cellspacing="0" cellpadding="0" style="width:500px;">
+{$usejs}
+
+<div class="so_main">
+
+  <div class="page_tit">消息推送管理</div>
+  <div class="tit_tab">
+	<ul>
+		<li><a class=on href="#">添加消息推送</a></li>
+	</ul>
+  </div>
+
+<table border="0" cellspacing="0" cellpadding="0" style="width:900px;">
 <tr>
 <td>
 <!--/dialog_start-->
 
+<form method="post" id="act_form" name="act_form" action="{:U('admin/push_message/push_message_add_action')}" enctype="multipart/form-data">
 	<table class="add_table" border="0" cellspacing="0" cellpadding="0" >
 		<tbody>
-		<tr>
-					<th>消息编号：</th>
-						<td>{$data.message_number}</td>
-				</tr>
+				
 				<tr>
-					<th>推送平台：</th>
-						<td>{$data.message_type}</td>
+					<th width="15%">推送平台：</th>
+					<td width="80%">
+						<span>{$data['field_name']}</span>
+					</td>
 				</tr>
+
 				<tr>
-					<th>目标用户：</th>
-						<td>{$data.uid}</td>
-				</tr>
-				<tr>
-					<th>消息标题：</th>
-						<td>{$data.message_title}</td>
-				</tr>
-				<tr>
-					<th>消息内容：</th>
-						<td>{$data.message_content}</td>
-				</tr>
-				<tr>
-					<th>设备编号：</th>
-						<td>{$data.devices_token}</td>
-				</tr>
-				<tr>
-					<th>消息状态：</th>
-						<td>{$data.message_state}</td>
+					<th>客户端类型：</th>
+					<td>
+						<span>{$data['message_type']}</span>
+					</td>
 				</tr>
 				<tr>
 					<th>发送范围：</th>
-						<td>{$data.receiver_type}</td>
+					<td>
+						<span>
+							<php>if($data['receiver_type'] == 3){echo '指定用户';
+							}elseif($data['receiver_type'] == 4){echo '所有用户';
+							}elseif($data['receiver_type'] == 5){echo '指定赛事';
+							}else{echo '暂无';}
+							</php>
+						</span>
+					</td>
+				</tr>
+				<tr class="select_event" <php>if($data['receiver_type'] == 5){echo 'style="display:block;"';}else{echo 'style="display:none;"';}</php>>
+					<th>赛事信息：</th>
+					<td>
+						<span>{$data['event_name']}</span>
+					</td>
+				</tr>
+				<tr class="select_fenzhan"  <php>if($data['receiver_type'] == 5){echo 'style="display:block;"';}else{echo 'style="display:none;"';}</php>>
+					<th>分站信息：</th>
+					<td>
+						<span>{$data['fenzhan_name']}</span>
+					</td>
+				</tr>
+				<!--
+				<tr>
+					<th>消息标题：</th>
+					<td><input type="text" name="message_title" id="message_title" class="mod_input2" style="width:300px;"  value="{$data.message_title}"></td>
+				</tr>
+				-->
+				<tr>
+					<th>消息内容：</th>
+					<td><p>{$data.n_content}</p></td>
 				</tr>
 				<tr>
-					<th>共需发送：</th>
-						<td>{$data.message_totalnum}</td>
+					<th>消息图片：</th>
+					<td><php>if($data['message_pic']){echo '<img style="max-height:100px; max-width:150px;" src="'.$data['message_pic'].'">';}</php></td>
 				</tr>
-				<tr>
-					<th>总发送数：</th>
-						<td>{$data.message_sendnum}</td>
-				</tr>
-				<tr>
-					<th>错误代码：</th>
-						<td>{$data.message_errorcode}</td>
-				</tr>
-				<tr>
-					<th>错误信息：</th>
-						<td>{$data.message_errormsg}</td>
-				</tr>
-				<tr>
-					<th>发送时间：</th>
-					<td>{$data.message_sendtime|format_to_time}</td>
+				<!-- <tr id="type_3" <php>if($data['receiver_type']=="3"){ echo " style='display:block;' ";}else { echo " style='display:none;' ";}</php> >
+					<th>目标用户：</th>
+					<td>
+					<input type="text" name="uid" id="uid" class="mod_input2" style="width:100px;"  value="{$data.uid}"> (用户UID)
+					<br />
+					<br />
+					根据用户名搜索UID：
+					<br />
+					<iframe src="{:U('admin/push_message/user_tool')}" style="border:1px solid #ccc;" width="300" height="50">
+					</iframe>
 					
+					</td>
+				</tr> -->
+				<tr id="type_3">
+					<th>目标用户：</th>
+					<td style="width:500px;">
+						<div>
+							<span>用户UID：{$data.uid}
+						</div>
+					</td>
+				</tr>
+				<tr class="type_4">
+					<th>扩展信息：</th>
+					<td>
+						{$data.action_name}
+					</td>
+				</tr>
+				<tr class="type_4">
+					<th></th>
+					<td>
+						<span>{$data.ext_id}</span>（相应ID：赛事直播sid   /  博客blogid / 论坛详细event_id / 图片库详细 album_id）
+					</td>
+				</tr>
+				<tr class="type_4">
+					<th></th>
+					<td>
+						<span>{$data.ext_title}</span>（相应TITLE，当扩展信息为WAP是此处填写wap地址）
+					</td>
 				</tr>
 				<tr>
-					<th>添加时间：</th>
-					<td>{$data.message_addtime|format_to_time}</td>
-					
+					<th>添加时间</th>
+					<td>
+						<span>{$data.message_addtime|format_to_fulltime}</span>
+					</td>
 				</tr>
-				
-		</tbody>
+				</tbody>
 		<tfoot>
 			<tr>
 				<th></th>
 				<td>
-					<input type="button" class="btn_w" onclick="close_dialog(this)" value="关闭" />
+					<input type="button" class="btn_w" onclick="javascript:history.back(-1);" value="取消" />
 				</td>
 		</tfoot>
 	</table><!--/add_table-->
+</form>
 
 <!--/dialog_end-->
 </td>
 </tr>
 </table>
 
+</div>
 <include file="../public/_footer" />

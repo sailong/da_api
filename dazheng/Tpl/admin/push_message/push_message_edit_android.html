@@ -44,6 +44,7 @@
 							<option value="">请选择</option>
 							<option value="4">所有用户</option>
 							<option value="3">指定用户</option>
+							<option value="5">指定赛事</option>
 						</select>
 						<script>set_select_value(document.act_form.receiver_type,"{$data.receiver_type}");</script>
 					</td>
@@ -57,18 +58,11 @@
 					<td><textarea name="n_content" id="n_content" class="mod_input2" style="width:400px; height:100px;">{$data.n_content}</textarea></td>
 				</tr>
 
-				</tbody>
-				</table>
-
-				<table class="add_table" border="0" cellspacing="0" cellpadding="0" id="type_3" <php>if($data['receiver_type']=="3"){ echo " style='display:block;' ";}else { echo " style='display:none;' ";}</php> >
-				<tr>
+				<tr id="type_3" <php>if($data['receiver_type']=="3"){ echo " style='display:block;' ";}else { echo " style='display:none;' ";}</php> >
 					<th>目标用户：</th>
 					<td><input type="text" name="uid" id="uid" class="mod_input2" style="width:100px;"  value="{$data.uid}"></td>
 				</tr>
-				</table>
-
-				<table class="add_table" border="0" cellspacing="0" cellpadding="0"  id="type_4" <php>if($data['receiver_type']=="4"){ echo " style='display:block;' ";}else { echo " style='display:none;' ";}</php>>
-				<tr>
+				<tr class="type_4" <php>if($data['receiver_type']=="4"){ echo " style='display:block;' ";}else { echo " style='display:none;' ";}</php>>
 					<th>扩展信息：</th>
 					<td>
 						<select name="ext_action" style="width:100px;">
@@ -78,13 +72,13 @@
 						<script>set_select_value(document.act_form.ext_action,"{$data.ext_action}");</script>
 					</td>
 				</tr>
-				<tr>
+				<tr class="type_4">
 					<th></th>
 					<td>
 						<input type="text" name="ext_id" id="ext_id" class="mod_input2" style="width:100px;"  value="{$data.ext_id}">（相应ID：赛事直播sid   /  博客blogid / 论坛详细event_id / 图片库详细 album_id）
 					</td>
 				</tr>
-				<tr>
+				<tr class="type_4">
 					<th></th>
 					<td>
 
@@ -92,36 +86,6 @@
 					
 					</td>
 				</tr>
-				</table>
-
-				<table class="add_table" border="0" cellspacing="0" cellpadding="0" >
-
-				<tr>
-					<th>消息状态：</th>
-					<td><input type="text" name="message_state" id="message_state" class="mod_input2" style="width:66px;"  value="{$data.message_state}"></td>
-				</tr>
-				
-				<tr>
-					<th>共需发送：</th>
-					<td><input type="text" name="message_totalnum" id="message_totalnum" class="mod_input2" style="width:66px;"  value="{$data.message_totalnum}"></td>
-				</tr>
-				<tr>
-					<th>总发送数：</th>
-					<td><input type="text" name="message_sendnum" id="message_sendnum" class="mod_input2" style="width:66px;"  value="{$data.message_sendnum}"></td>
-				</tr>
-				<tr>
-					<th>错误代码：</th>
-					<td><input type="text" name="message_errorcode" id="message_errorcode" class="mod_input2" style="width:300px;"  value="{$data.message_errorcode}"></td>
-				</tr>
-				<tr>
-					<th>错误信息：</th>
-					<td><input type="text" name="message_errormsg" id="message_errormsg" class="mod_input2" style="width:300px;"  value="{$data.message_errormsg}"></td>
-				</tr>
-				<tr>
-					<th>发送时间：</th>
-					<td><input type="text" name="message_sendtime" id="message_sendtime" readonly class="mod_input_date" style="width:200px;" value="{$data.message_sendtime|format_to_time}" onFocus="WdatePicker({isShowClear:false,readOnly:true})" ></td>
-				</tr>
-				
 		</tbody>
 		<tfoot>
 			<tr>
@@ -129,7 +93,7 @@
 				<td>
 					<input type="hidden" name="message_id" value="{$data.message_id}">
 					<input type="submit" class="btn_b" value="保存" style="margin-right:10px;"/>
-					<input type="button" class="btn_w" onclick="close_dialog(this)" value="取消" />
+					<input type="button" class="btn_w" onclick="javascript:history.back(-1);" value="取消" />
 				</td>
 		</tfoot>
 	</table><!--/add_table-->
@@ -169,13 +133,13 @@ function load_type_info(obj)
 	//alert(obj);
 	if(obj==4)
 	{
-		$("#type_4").css("display","block");
-		$("#type_3").css("display","none");
+		$(".type_4").show();
+		$("#type_3").hide();
 	}
 	else
 	{
-		$("#type_3").css("display","block");
-		$("#type_4").css("display","none");
+		$("#type_3").show();
+		$(".type_4").hide();
 	}
 	
 }
