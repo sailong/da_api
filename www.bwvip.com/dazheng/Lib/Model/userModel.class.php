@@ -22,7 +22,12 @@ class userModel extends Model{
 		if(get("k")!="")
 		{
 			$where .=" and pre_common_member_profile.realname like '%".get("k")."%' ";
-		}if(get("mobile")!="")
+		}
+		if(get("username")!="")
+		{
+			$where .=" and pre_common_member.username like '%".get("username")."%' ";
+		}
+		if(get("mobile")!="")
 		{$m=get("mobile");
 			$where .=" and pre_common_member_profile.mobile = '$m' ";
 		}
