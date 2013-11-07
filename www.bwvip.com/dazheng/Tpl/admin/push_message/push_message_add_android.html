@@ -6,7 +6,7 @@
   <div class="page_tit">消息推送管理</div>
   <div class="tit_tab">
 	<ul>
-		<li><a class=on href="{:U('admin/push_message/push_message_add')}">添加消息推送</a></li>
+		<li><a class=on href="#">添加消息推送</a></li>
 	</ul>
   </div>
 
@@ -20,14 +20,13 @@
 		<tbody>
 				
 				<tr>
-					<th>推送平台：</th>
-					<td>
+					<th width="15%">推送平台：</th>
+					<td width="80%">
 						<select name="field_uid" id="field_uid"  style="width:100px;">
 							<option value="">请选择</option>
-							<option value="0" selected >大正</option>
-							<option value="1186">美兰湖</option>
+							{$app_list}
 						</select>
-						
+						<script>set_select_value(document.act_form.field_uid,"{$data.field_uid}");</script>
 					</td>
 				</tr>
 
@@ -80,12 +79,7 @@
 					<th>消息图片：</th>
 					<td><input type="file" name="message_pic" id="message_pic" class="mod_input2" style="width:300px;" "></td>
 				</tr>
-
-				</tbody>
-				</table>
-
-				<table class="add_table" border="0" cellspacing="0" cellpadding="0" id="type_3" <php>if($data['receiver_type']=="3"){ echo " style='display:block;' ";}else { echo " style='display:none;' ";}</php> >
-				<tr>
+				<!-- <tr id="type_3" <php>if($data['receiver_type']=="3"){ echo " style='display:block;' ";}else { echo " style='display:none;' ";}</php> >
 					<th>目标用户：</th>
 					<td>
 					<input type="text" name="uid" id="uid" class="mod_input2" style="width:100px;"  value="{$data.uid}"> (用户UID)
@@ -97,11 +91,23 @@
 					</iframe>
 					
 					</td>
+				</tr> -->
+				<tr id="type_3">
+					<th>目标用户：</th>
+					<td style="width:500px;">
+						<div>
+							<span>用户UID：</span><input type="text" name="uid" id="uid" class="mod_input2" style="width:100px;"  value="{$data.uid}">
+						</div>
+						<div style="padding-top:10px;">
+							<p>根据用户名搜索UID：</p>
+							<p>
+							<iframe src="{:U('admin/push_message/user_tool')}" style="border:1px solid #ccc;" width="300" height="50">
+							</iframe>
+							</p>
+						</div>
+					</td>
 				</tr>
-				</table>
-
-				<table class="add_table" border="0" cellspacing="0" cellpadding="0"  id="type_4" <php>if($data['receiver_type']=="4"){ echo " style='display:block;' ";}</php>>
-				<tr>
+				<tr class="type_4">
 					<th>扩展信息：</th>
 					<td>
 						<select name="ext_action" style="width:100px;">
@@ -110,31 +116,26 @@
 						</select>
 					</td>
 				</tr>
-				<tr>
+				<tr class="type_4">
 					<th></th>
 					<td>
 						<input type="text" name="ext_id" id="ext_id" class="mod_input2" style="width:100px;"  value="{$data.ext_id}">（相应ID：赛事直播sid   /  博客blogid / 论坛详细event_id / 图片库详细 album_id）
 					</td>
 				</tr>
-				<tr>
+				<tr class="type_4">
 					<th></th>
 					<td>
 						<input type="text" name="ext_title" id="ext_title" class="mod_input2" style="width:100px;"  value="{$data.ext_title}">（相应TITLE，当扩展信息为WAP是此处填写wap地址）
 					</td>
 				</tr>
-				</table>
-
-				<table class="add_table" border="0" cellspacing="0" cellpadding="0" >
-				<tbody>
-
-		</tbody>
+				</tbody>
 		<tfoot>
 			<tr>
 				<th></th>
 				<td>
 					<input type="hidden" name="message_id" value="{$data.message_id}">
 					<input type="submit" class="btn_b" value="保存" style="margin-right:10px;"/>
-					<input type="button" class="btn_w" onclick="close_dialog(this)" value="取消" />
+					<input type="button" class="btn_w" onclick="javascript:history.back(-1);" value="取消" />
 				</td>
 		</tfoot>
 	</table><!--/add_table-->
@@ -171,16 +172,16 @@ function reloadAutoTip()
 function load_type_info(obj)
 {
 	//alert(obj);
-	$("#type_4").css("display","block");
+	$(".type_4").show();
 	$(".select_event").hide();
 	$(".select_fenzhan").hide();
 	$(".select_event td").html('');
 	$(".select_fenzhan td").html('');
 	if(obj==4)
 	{
-		$("#type_3").css("display","none");
+		$("#type_3").hide();
 	}else if(obj==5){
-		$("#type_3").css("display","none");
+		$("#type_3").hide();
 		var field_uid = $("#field_uid").val();
 		if(field_uid == ''){
 			alert('请选择球场');
@@ -207,7 +208,7 @@ function load_type_info(obj)
 	}
 	else
 	{
-		$("#type_3").css("display","block");
+		$("#type_3").show();
 		//$("#type_4").css("display","none");
 	}
 	

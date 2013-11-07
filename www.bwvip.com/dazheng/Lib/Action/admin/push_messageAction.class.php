@@ -18,7 +18,14 @@ class push_messageAction extends AdminAuthAction
 	{
 
 		$list=D("push_message")->push_message_list_pro();
-
+		
+		$field_list = select_field(1);
+		$field_data = array();
+		foreach($field_list as $key=>$val){
+			$field_data[$val['field_uid']] = $val['field_name'];
+		}
+		unset($field_list);
+		$this->assign("field_data",$field_data);
 		$this->assign("list",$list["item"]);
 		$this->assign("pages",$list["pages"]);
 		$this->assign("total",$list["total"]);
@@ -32,6 +39,10 @@ class push_messageAction extends AdminAuthAction
 
 		$action_list=select_dict(16,"select");
 		$this->assign("action_list",$action_list);
+		
+		$app_list=select_field(1,"select");
+		$this->assign("app_list",$app_list);
+		
 		$this->assign("page_title","添加消息推送");
     	$this->display();
 	}
@@ -41,6 +52,9 @@ class push_messageAction extends AdminAuthAction
 
 		$action_list=select_dict(16,"select");
 		$this->assign("action_list",$action_list);
+		
+		$app_list=select_field(1,"select");
+		$this->assign("app_list",$app_list);
 		$this->assign("page_title","添加消息推送");
     	$this->display();
 	}
@@ -347,9 +361,45 @@ class push_messageAction extends AdminAuthAction
 			$data=M("push_message")->where("message_id=".intval(get("message_id")))->find();
 			if(!empty($data))
 			{
-				$this->assign("data",$data);
+				/* $this->assign("data",$data);
 
-				$this->assign("page_title",$data["push_message_name"]."消息推送");
+				$this->assign("page_title",$data["push_message_name"]."消息推送"); */
+				
+				$content=json_decode($data['message_content'],true);
+				//print_r($content);
+				//echo $content->n_content;
+				
+				$data['n_content']=$content['n_content'];
+				$data['ext_action']=$content['n_extras']['action'];
+				$data['ext_id']=$content['n_extras']['id'];
+				$data['ext_title']=urldecode($content['n_extras']['title']);
+				
+				if($data['event_id'])
+				{
+					$event_info=M("event")->where("event_id=".$data['event_id'])->find();
+					$data['event_name'] = $event_info['event_name'];
+					
+					if($data['fenzhan_id']){
+						$fenzhan_info=M("fenzhan")->where("fenzhan_id=".$data['fenzhan_id'])->find();
+						$data['fenzhan_name'] = $event_info['fenzhan_name'];
+					}
+				}
+				
+				$action_list=select_dict(16);
+				foreach($action_list as $key=>$val){
+					if($data['ext_action'] == $val['dict_value']){
+						$data['action_name'] = $val['dict_name'];
+					}
+				}
+				
+				$app_list=select_field(1);
+				foreach($app_list as $key=>$val){
+					if($data['field_uid'] == $val['field_uid']){
+						$data['field_name'] = $val['field_name'];
+					}
+				}
+
+				$this->assign("data",$data);
 				$this->display();
 			}
 			else
@@ -412,7 +462,7 @@ class push_messageAction extends AdminAuthAction
 		else
 		{
 			echo "<div style='text-align:center;'>";
-			echo "没找到该用户，<a href='".U('field/push_message/user_tool')."'>点击此处</a>重新搜索";
+			echo "没找到该用户，<a href='".U('admin/push_message/user_tool')."'>点击此处</a>重新搜索";
 			echo "</div>";
 		}
 		
