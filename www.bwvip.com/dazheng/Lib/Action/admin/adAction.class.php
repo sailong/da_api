@@ -6,6 +6,7 @@
  *    @author		Zhang Long
  *    @E-mail		68779953@qq.com
  */
+ 
 class adAction extends AdminAuthAction
 {
 

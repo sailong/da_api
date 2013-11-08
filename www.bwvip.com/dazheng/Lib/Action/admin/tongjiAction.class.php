@@ -576,6 +576,70 @@ class tongjiAction extends AdminAuthAction
 		return $data;
 	}
 	
+	
+	
+	public function login()
+	{
+	
+		$first_time=M('app_log')->where(" app_log_mod='login' and (user_agent='iPhone' or user_agent='Android') ".$field_sql."  ")->order('app_log_addtime asc')->find();
+		
+		$tip_str ="<br /><br />第一条登录记录开始于：".date('Y-m-d G:i:s',$first_time['app_log_addtime'])."<br />";
+		
+		$tongji_str  .="<br /><br />时间用法举例： 2013-10-05 ~ 2013-10-07 这是3天。<br /><br /><br /><br /><table width='100%'  border=\"0\" cellspacing=\"1\" bgcolor=\"#666666\">";
+		
+		
+		$field_sql=" and field_uid=0 ";
+		
+		$starttime=strtotime(get('starttime'));
+		$endtime=strtotime(get('endtime'));
+		$endtime=$endtime+86400;
+		
+		
+		$timelong=($endtime-$starttime)/86400;
+		
+		$total_num=M('app_log')->where(" app_log_mod='login' and ( app_log_addtime>'".$starttime."' and app_log_addtime<'".$endtime."' ) and (user_agent='iPhone' or user_agent='Android') ".$field_sql."  ")->count();
+		
+		$tongji_str  .="<tr><th colspan=12 bgcolor='#ffffff' >总登录次数：".$total_num."</th></tr><tr>";
+		
+		for($i=0; $i<24; $i++)
+		{
+			
+			$c_num=0;
+			for($j=0; $j<($timelong+1); $j++)
+			{
+			
+				$s_time=$starttime+(86400*($j))+(3600*$i);
+				$e_time=$starttime+(86400*($j))+(3600*($i+1));
+				
+				$time_arr[$i][$j]=date("Y-m-d G:i:s",$s_time)." -- ".date("Y-m-d G:i:s",$e_time);
+				$time_sql_arr[$i][$j]=" ( app_log_addtime>'".$s_time."' and app_log_addtime<'".$e_time."' ) ";
+				//$tongji_str .= "<hr>";
+				
+			}
+			
+			$sql_str=implode(" or ",$time_sql_arr[$i]);
+			$c_num=M('app_log')->where(" app_log_mod='login' and ( ".$sql_str." ) and (user_agent='iPhone' or user_agent='Android') ".$field_sql."  ")->count();
+			$c_lv=number_format(($c_num/$total_num)*100,1);
+			
+			if($i==12)
+			{
+				$tongji_str .='</tr><tr><td  bgcolor="#ffffff" style="padding:10px 0;" align="center" ><b>'.$i. '时~'.($i+1). '时	'.$c_num.'	'.$c_lv.'%</td>';
+			}
+			else
+			{
+				$tongji_str .='<td  bgcolor="#ffffff"  style="padding:10px 0;"  align="center" ><b>'.$i. '时~'.($i+1). '时</b>	'.$c_num.'	'.$c_lv.'%</td>';
+			}
+			
+			
+		}
+		
+		$tongji_str .='</tr></table>';
+		
+		$this->assign('tip_str',$tip_str);
+		$this->assign('tongji_str',$tongji_str);
+		$this->display();
+	}
+	
 
 
 	
