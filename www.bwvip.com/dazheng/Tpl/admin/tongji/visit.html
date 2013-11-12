@@ -1,0 +1,93 @@
+<include file="../public/_header" />
+<div class="so_main">
+
+  <div class="page_tit">大正登录统计</div>
+  <include file="_tab" />
+
+  <div class="search_box">
+		<form name="search_form" action="/default.php" method="get">
+		<input type="hidden" name="g" value="admin">
+		<input type="hidden" name="m" value="tongji">
+		<input type="hidden" name="a" value="visit">
+		<table border="0" cellspacing="0" cellpadding="0">
+			<th>相关页：</th>
+			<td>
+				<select name="mod_ac" id="mod_ac" style="width:120px;"  class="search_select">
+					<option value="">请选择</option>
+					<option value="event=event_blog_detail&club=golf_news">新闻资讯</option>
+					<option value="event=dz_ticket_event_list&ticket=ticket_apply_detail">赛事门票</option>
+					<option value="event=event_blog_detail&club=golf_news">个人中心</option>
+					<option value="event=event_room&event=event_detail">高球论坛</option>
+					<option value="photo=album_list&photo=photo_list">图片库</option>
+					<option value="event=select_event&baofen=rank">赛事直播</option>
+					<option value="event=apply_ing&event=event_baoming">赛事报名</option>
+					<option value="field_space=field_space">球会空间</option>
+				</select>
+				<script>set_select_value(document.search_form.mod_ac,"<php> echo  get("mod_ac");</php>");</script>
+			</td>
+			<th>时间：</th>
+			<td>
+				<input type="text" name="starttime" class="search_input_date" style="width:120px;" value="<php> echo  get('starttime');</php>" onFocus="WdatePicker({isShowClear:false,readOnly:true})"> 至 
+				<input type="text" name="endtime" class="search_input_date" style="width:120px;" value="<php> echo  get('endtime');</php>" onFocus="WdatePicker({isShowClear:false,readOnly:true})">
+			</td>
+			
+			<td class="btn">
+				<input type="submit" value="开始统计" class="btn_b" style="margin-right:8px;" >
+				<!-- <input type="button" value="清空检索" class="btn_b" onclick="javascript:location='{:U('admin/tongji/login',array('state'=>get('state')))}';"> -->
+			</td>
+		</table>
+	</form>
+  </div><!--/search_box-->
+  <div class="list">
+	<php>if($total_num>0){</php>
+	  <table width="100%" id="mod_table" align="center" border="0" cellspacing="0" cellpadding="0">
+	  <tr>
+		<!-- <th style="width:30px;">
+			<input type="checkbox" id="checkbox_handle" onclick="select_all(this,'mod_table','checkbox')" value="0">
+			<label for="checkbox"></label>
+		</th> -->
+		<th class="line_l">时间</th>
+		<th class="line_l">0~1</th>
+		<th class="line_l">1~2</th>
+		<th class="line_l">2~3</th>
+		<th class="line_l">3~4</th>
+		<th class="line_l">4~5</th>
+		<th class="line_l">5~6</th>
+		<th class="line_l">6~7</th>
+		<th class="line_l">7~8</th>
+		<th class="line_l">8~9</th>
+		<th class="line_l">9~10</th>
+		<th class="line_l">10~11</th>
+		<th class="line_l">11~12</th>
+		<th class="line_l">12~13</th>
+		<th class="line_l">13~14</th>
+		<th class="line_l">14~15</th>
+		<th class="line_l">15~16</th>
+		<th class="line_l">16~17</th>
+		<th class="line_l">17~18</th>
+		<th class="line_l">18~19</th>
+		<th class="line_l">19~20</th>
+		<th class="line_l">20~21</th>
+		<th class="line_l">21~22</th>
+		<th class="line_l">22~23</th>
+		<th class="line_l">23~24</th>
+	</tr>
+	<volist id="vo" name="visit_count_arr">
+	<tr overstyle="on">
+	<td>{$vo['date']}</td>
+	<volist id="vo2" name="vo['hour']">
+	<td>{$vo2}</td>
+	</volist>
+	</tr>
+	</volist>
+    </table>
+	  <php>}else{</php>
+			<div class="no_data">
+				<img src="/skin/images/no_data.gif" align="absmiddle"> <span>暂无信息。。。 </span>
+			</div>
+	 <php>}</php>
+  </div>
+  
+  
+
+<include file="../public/_footer" />

@@ -1,0 +1,133 @@
+<include file="../public/_header" />
+<div class="so_main">
+
+  <div class="page_tit">大正登录统计</div>
+  <include file="_tab" />
+
+  <div class="search_box">
+		<form name="search_form" action="/default.php" method="get">
+		<input type="hidden" name="g" value="admin">
+		<input type="hidden" name="m" value="tongji">
+		<input type="hidden" name="a" value="zhu_img">
+		<table border="0" cellspacing="0" cellpadding="0">
+			<th>相关页：</th>
+			<td>
+				<select name="mod_ac" id="mod_ac" style="width:120px;"  class="search_select">
+					<option value="">请选择</option>
+					<option value="event=event_blog_detail&club=golf_news">新闻资讯</option>
+					<option value="event=dz_ticket_event_list&ticket=ticket_apply_detail">赛事门票</option>
+					<option value="event=event_blog_detail&club=golf_news">个人中心</option>
+					<option value="event=event_room&event=event_detail">高球论坛</option>
+					<option value="photo=album_list&photo=photo_list">图片库</option>
+					<option value="event=select_event&baofen=rank">赛事直播</option>
+					<option value="event=apply_ing&event=event_baoming">赛事报名</option>
+					<option value="field_space=field_space">球会空间</option>
+				</select>
+				<script>set_select_value(document.search_form.mod_ac,"<php> echo  get("mod_ac");</php>");</script>
+			</td>
+			<th>时间：</th>
+			<td>
+				<input type="text" name="starttime" class="search_input_date" style="width:120px;" value="<php> echo  get('starttime');</php>" onFocus="WdatePicker({isShowClear:false,readOnly:true})"> 至 
+				<input type="text" name="endtime" class="search_input_date" style="width:120px;" value="<php> echo  get('endtime');</php>" onFocus="WdatePicker({isShowClear:false,readOnly:true})">
+			</td>
+			
+			<td class="btn">
+				<input type="submit" value="开始统计" class="btn_b" style="margin-right:8px;" >
+				<!-- <input type="button" value="清空检索" class="btn_b" onclick="javascript:location='{:U('admin/tongji/login',array('state'=>get('state')))}';"> -->
+			</td>
+		</table>
+	</form>
+  </div><!--/search_box-->
+  	{$tip_str}
+	
+  <php>if(get('starttime') && get('endtime')){</php>
+  
+  {$tongji_str}
+  
+  <php>}else{</php>
+  
+  请先选择时间范围
+  
+  <php>}</php>
+  <style>
+    body{margin:0;padding:0;}
+	ul,li,dl,dd,dt,p{margin:0;padding:0;}
+	ul,li{list-style:none;}
+	/*柱状图样式*/
+	.histogram-container{position:relative;margin-left:60px;margin-top:10px;margin-bottom:25px;height:300px;}
+	.histogram-bg-line{border:#999 solid;border-width:0 1px 1px 1px;border-right-color:#eee;overflow:hidden;width:99%;height:300px;}
+	.histogram-bg-line ul{overflow:hidden;border:#eee solid;border-width:1px 0 0 0;}
+	.histogram-bg-line li{float:left;width:10%;/*根据.histogram-bg-line下的ul里面li标签的个数来控制比例*/overflow:hidden;}
+	.histogram-bg-line li div{border-right:1px #eee solid;}
+	.histogram-content{position:absolute;left:0px;top:0;width:99%;height:100%;height:300px;}
+	.histogram-content ul{height:100%;}
+	.histogram-content li{float:left;height:100%;/*根据直方图的个数来控制这个width比例*/text-align:center;position:relative;}
+	.histogram-box{position:relative;display:inline-block;height:100%;width:10px;height:300px;}
+	.histogram-content li a{position:absolute;bottom:0;right:0;display:block;width:20px;}
+	.histogram-content li .name{position:absolute;bottom:-20px;left:0px;white-space:nowrap;display:inline-block;width:100%;font-size:12px;}
+	.histogram-y{position:absolute;left:-60px;top:-10px;font:12px/1.8 verdana,arial;height:300px;}
+	.histogram-y li{text-align:right;width:55px;padding-right:5px;color:#333;}
+	.histogram-bg-line li div,.histogram-y li{height:60px;/*控制单元格的高度及百分比的高度，使百分数与线条对齐*/}
+  </style>
+  <div class="histogram-container" id="histogram-container">
+    <!--背景方格-->
+    <div class="histogram-bg-line">
+		<volist id="vo" name="image_data">
+        <ul>
+			<!-- <volist id="vo" name="image_data">
+            <li><div></div></li>
+			</volist> -->
+        </ul>
+		</volist>
+        
+    </div>
+    <!--柱状条-->
+    <div class="histogram-content">
+        <ul>
+            <!-- <li>
+                <span class="histogram-box"><a style="height:30%;background:#2f87d9;" title="30%"><span style="text-size:18px;">30</span></a></span>
+                <span class="name">百度一下</span>
+            </li> -->
+			<volist id="vo" name="image_data">
+			<li style="width:{$content_li_width};">
+                <span class="histogram-box"><a style="height:{$vo.bfb}%;background:#2f87d9;" title="{$vo.num}"><span style="text-size:18px;">{$vo.num}</span></a></span>
+                <span class="name">{$vo.name}</span>
+            </li>
+			</volist>
+            <!-- <li>
+                <span class="histogram-box"><a style="height:40%;background:green;" title="40%"></a></span>
+                <span class="name">夜深风竹敲秋韵</span>
+            </li>
+            <li>
+                <span class="histogram-box"><a style="height:50%;background:orange;" title="50%"></a></span>
+                <span class="name">腾讯</span>
+            </li>
+            <li>
+                <span class="histogram-box"><a style="height:80%;background:gray;" title="80%"></a></span>
+                <span class="name">小虾虎鱼一下</span>
+            </li>
+			<li>
+                <span class="histogram-box"><a style="height:80%;background:gray;" title="80%"></a></span>
+                <span class="name">小虾虎鱼一下</span>
+            </li> -->
+        </ul>
+    </div>
+    <!--百分比 y轴-->
+    <div class="histogram-y">
+        <ul>
+            <!-- <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li> -->
+        </ul>
+    </div>
+</div>
+  <div class="list">
+
+  </div>
+  
+  
+
+<include file="../public/_footer" />

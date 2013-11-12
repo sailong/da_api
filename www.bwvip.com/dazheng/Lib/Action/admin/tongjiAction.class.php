@@ -640,6 +640,427 @@ class tongjiAction extends AdminAuthAction
 		$this->display();
 	}
 	
+	public function visit()
+	{
+		$mod_ac = get('mod_ac');
+		$get_arr = explode('&',$mod_ac);
+		foreach($get_arr as $key=>$val){
+			$tmp = explode('=',$val);
+			$mod[] = $tmp[0];
+			$ac[] = $tmp[1];
+		}
+		$field_sql=" and field_uid=0 ";
+		$first_time=M('app_log')->where(" app_log_mod in('".implode("','",$mod)."') and ac in('".implode("','",$ac)."') and (user_agent='iPhone' or user_agent='Android') {$field_sql}")->order('app_log_addtime asc')->find();
+		
+		$tip_str ="<br /><br />第一条登录记录开始于：".date('Y-m-d G:i:s',$first_time['app_log_addtime'])."<br />";
+		
+		$tongji_str  .="<br /><br />时间用法举例： 2013-10-05 ~ 2013-10-07 这是3天。<br /><br /><br /><br /><table width='100%'  border=\"0\" cellspacing=\"1\" bgcolor=\"#666666\">";
+		
+		
+		
+		$starttime=strtotime(get('starttime'));
+		$endtime=strtotime(get('endtime'));
+		
+		if($starttime && $endtime){
+			$endtime=$endtime+86400;
+			$time_sql =  "and (app_log_addtime>{$starttime} and app_log_addtime<{$endtime})";
+		}
+		
+		
+		//$timelong=($endtime-$starttime)/86400;
+		
+		$data_list=M('app_log')->field('app_log_addtime')->where(" app_log_mod in('".implode("','",$mod)."') and ac in('".implode("','",$ac)."') {$time_sql} and (user_agent='iPhone' or user_agent='Android') {$field_sql}")->select();
+		
+		$total_num = count($data_list);
+		$visit_count_arr = array();
+		foreach($data_list as $key=>$val)
+		{
+			$ymd = date('Y-m-d',$val['app_log_addtime']);
+			$hour = date('H',$val['app_log_addtime']);
+			$hour++;
+			if(!$visit_count_arr[$ymd])
+			{
+				for($i=1;$i<=24;$i++){
+					$visit_count_arr[$ymd]['hour'][$i]=0;
+				}
+			}
+			$visit_count_arr[$ymd]['date'] = $ymd;
+			$visit_count_arr[$ymd]['hour'][$hour]++;
+		}
+		
+		$this->assign('total_num',$total_num);
+		$this->assign('visit_count_arr',$visit_count_arr);
+		
+		//echo '<pre>';
+		//var_dump($data_list);
+		//var_dump($visit_count_arr);
+		/* $tongji_str  .="<tr><th colspan=12 bgcolor='#ffffff' >总登录次数：".$total_num."</th></tr><tr>";
+		
+		for($i=0; $i<24; $i++)
+		{
+			
+			$c_num=0;
+			for($j=0; $j<($timelong+1); $j++)
+			{
+			
+				$s_time=$starttime+(86400*($j))+(3600*$i);
+				$e_time=$starttime+(86400*($j))+(3600*($i+1));
+				
+				$time_arr[$i][$j]=date("Y-m-d G:i:s",$s_time)." -- ".date("Y-m-d G:i:s",$e_time);
+				$time_sql_arr[$i][$j]=" ( app_log_addtime>'".$s_time."' and app_log_addtime<'".$e_time."' ) ";
+				//$tongji_str .= "<hr>";
+				
+			}
+			
+			$sql_str=implode(" or ",$time_sql_arr[$i]);
+			$c_num=M('app_log')->where(" app_log_mod='login' and ( ".$sql_str." ) and (user_agent='iPhone' or user_agent='Android') ".$field_sql."  ")->count();
+			$c_lv=number_format(($c_num/$total_num)*100,1);
+			
+			if($i==12)
+			{
+				$tongji_str .='</tr><tr><td  bgcolor="#ffffff" style="padding:10px 0;" align="center" ><b>'.$i. '时~'.($i+1). '时	'.$c_num.'	'.$c_lv.'%</td>';
+			}
+			else
+			{
+				$tongji_str .='<td  bgcolor="#ffffff"  style="padding:10px 0;"  align="center" ><b>'.$i. '时~'.($i+1). '时</b>	'.$c_num.'	'.$c_lv.'%</td>';
+			}
+			
+			
+		}
+		
+		$tongji_str .='</tr></table>';
+		
+		$this->assign('tip_str',$tip_str);
+		$this->assign('tongji_str',$tongji_str); */
+		$this->display();
+	}
+	
+	public function view_count()
+	{
+		$mod_ac = get('mod_ac');
+		if($mod_ac){
+			$get_arr = explode('&',$mod_ac);
+			foreach($get_arr as $key=>$val){
+				$tmp = explode('=',$val);
+				$mod[] = $tmp[0];
+				$ac[] = $tmp[1];
+			}
+			//$field_sql=" and field_uid=0 ";
+			$first_time=M('app_log')->field('')->where(" app_log_mod in('".implode("','",$mod)."') and ac in('".implode("','",$ac)."') and (user_agent='iPhone' or user_agent='Android') {$field_sql}")->order('app_log_addtime asc')->find();
+			
+			$tip_str ="<br /><br />第一条登录记录开始于：".date('Y-m-d G:i:s',$first_time['app_log_addtime'])."<br />";
+			
+			$tongji_str  .="<br /><br />时间用法举例： 2013-10-05 ~ 2013-10-07 这是3天。<br /><br /><br /><br /><table width='100%'  border=\"0\" cellspacing=\"1\" bgcolor=\"#fff\">";
+			
+			$starttime=strtotime(get('starttime'));
+			$endtime=strtotime(get('endtime'));
+			if($starttime && $endtime){
+				$endtime=$endtime+86400;
+				$time_sql =  "and (app_log_addtime>{$starttime} and app_log_addtime<{$endtime})";
+			}
+			
+			
+			$timelong=($endtime-$starttime)/86400;
+			
+			$rs_data=M('app_log')->field('app_log_addtime')->where(" field_uid=0 and app_log_mod in('".implode("','",$mod)."') and ac in('".implode("','",$ac)."') {$time_sql} and (user_agent='iPhone' or user_agent='Android')")->select();
+			$total_num = count($rs_data);
+			$tongji_str  .="<tr><th colspan=12 bgcolor='#fff' >总登录次数：".$total_num."</th></tr><tr>";
+			
+			$image_data = array();
+			$visit_count_arr = array();
+			foreach($rs_data as $key=>$val)
+			{
+				//$ymd = date('Y-m-d',$val['app_log_addtime']);
+				$hour = date('H',$val['app_log_addtime']);
+				$hour++;
+				if(!$visit_count_arr)
+				{
+					for($i=1;$i<=24;$i++){
+						$visit_count_arr[$i]=0;
+					}
+				}
+				$visit_count_arr[$hour]++;
+			}
+			$image_data = $visit_count_arr;
+			
+			foreach($image_data as $key=>$val){
+				$c_lv = number_format(($val/$total_num)*100,1);
+				
+				if($key%8==1)
+				{
+					$tongji_str .='</tr><tr>';
+				}
+				
+				$tongji_str .='<td style="padding:10px 0;"  align="center" ><b>'.($key-1). '时~'.$key. '时	'.$val.'	'.$c_lv.'%</td>';
+			}
+			
+			
+			
+			
+/* 			for($i=0; $i<24; $i++)
+			{
+				
+				$c_num=0;
+				for($j=0; $j<($timelong+1); $j++)
+				{
+				
+					$s_time=$starttime+(86400*($j))+(3600*$i);
+					$e_time=$starttime+(86400*($j))+(3600*($i+1));
+					
+					$time_arr[$i][$j]=date("Y-m-d G:i:s",$s_time)." -- ".date("Y-m-d G:i:s",$e_time);
+					$time_sql_arr[$i][$j]=" ( app_log_addtime>'".$s_time."' and app_log_addtime<'".$e_time."' ) ";
+					//$tongji_str .= "<hr>";
+					
+				}
+				
+				$sql_str=implode(" or ",$time_sql_arr[$i]);
+				$c_num=M('app_log')->where("  app_log_mod in('".implode("','",$mod)."') and ac in('".implode("','",$ac)."') and ( ".$sql_str." ) and (user_agent='iPhone' or user_agent='Android') ".$field_sql."  ")->count();
+				$c_lv=number_format(($c_num/$total_num)*100,1);
+				
+				if($i==12)
+				{
+					$tongji_str .='</tr><tr><td  bgcolor="#ffffff" style="padding:10px 0;" align="center" ><b>'.$i. '时~'.($i+1). '时	'.$c_num.'	'.$c_lv.'%</td>';
+				}
+				else
+				{
+					$tongji_str .='<td  bgcolor="#ffffff"  style="padding:10px 0;"  align="center" ><b>'.$i. '时~'.($i+1). '时</b>	'.$c_num.'	'.$c_lv.'%</td>';
+				}
+				$next_i = $i+1;
+				$image_data["{$next_i}"] = $c_num;
+				
+			}
+			
+			*/
+			
+			$tongji_str .='</tr></table>'; 
+			$twidth = 30;
+			$tspace = 15;
+			$unit = '次';
+			$this->assign('y_z',"单位：时");
+		}else{
+		
+			$mod_ac = array(
+				'新闻资讯'=>'event=event_blog_detail&club=golf_news',
+				'赛事门票'=>'event=dz_ticket_event_list&ticket=ticket_apply_detail',
+				'个人中心'=>'club=my_detail',
+				'高球论坛'=>'event=event_room&event=event_detail',
+				'图片库'=>'photo=album_list&photo=photo_list',
+				'赛事直播'=>'event=select_event&baofen=rank',
+				'赛事报名'=>'event=apply_ing&event=event_baoming',
+				'球会空间'=>'field_space=field_space'
+			);
+			
+			foreach($mod_ac as $key=>$val){
+				$get_arr = explode('&',$val);
+				foreach($get_arr as $key1=>$val1){
+					$tmp = explode('=',$val1);
+					$mod[] = $tmp[0];
+					$ac[] = $tmp[1];
+				}
+				$field_sql=" and field_uid=0 ";
+				
+				$starttime=strtotime(get('starttime'));
+				$endtime=strtotime(get('endtime'));
+				if($starttime && $endtime){
+					$endtime=$endtime+86400;
+					$time_sql =  "and (app_log_addtime>{$starttime} and app_log_addtime<{$endtime})";
+				}
+				
+				$total_num=M('app_log')->field('app_log_addtime')->where(" app_log_mod in('".implode("','",$mod)."') and ac in('".implode("','",$ac)."') {$time_sql} and (user_agent='iPhone' or user_agent='Android') {$field_sql}")->count();
+				//$key = iconv("utf-8","gb2312",$key);
+				$image_data[$key] = $total_num/10000;
+				//var_dump($total_num);
+			}
+			$twidth = 40;
+			$tspace = 40;
+			$unit = '万次';
+		}
+		$img_count = $this->createImage($image_data,$twidth,$tspace,200);
+		//var_dump($img_count);
+		$this->assign('unit',$unit);
+		$this->assign('tip_str',$tip_str);
+		$this->assign('tongji_str',$tongji_str);
+		$this->assign('img_count',$img_count);
+		$this->display();
+	}
+	public function zhu_img()
+	{
+	
+			$mod_ac = get('mod_ac');
+		if($mod_ac){
+			$get_arr = explode('&',$mod_ac);
+			foreach($get_arr as $key=>$val){
+				$tmp = explode('=',$val);
+				$mod[] = $tmp[0];
+				$ac[] = $tmp[1];
+			}
+			//$field_sql=" and field_uid=0 ";
+			$first_time=M('app_log')->field('')->where(" app_log_mod in('".implode("','",$mod)."') and ac in('".implode("','",$ac)."') and (user_agent='iPhone' or user_agent='Android') {$field_sql}")->order('app_log_addtime asc')->find();
+			
+			$tip_str ="<br /><br />第一条登录记录开始于：".date('Y-m-d G:i:s',$first_time['app_log_addtime'])."<br />";
+			
+			$tongji_str  .="<br /><br />时间用法举例： 2013-10-05 ~ 2013-10-07 这是3天。<br /><br /><br /><br /><table width='100%'  border=\"0\" cellspacing=\"1\" bgcolor=\"#fff\">";
+			
+			$starttime=strtotime(get('starttime'));
+			$endtime=strtotime(get('endtime'));
+			if($starttime && $endtime){
+				$endtime=$endtime+86400;
+				$time_sql =  "and (app_log_addtime>{$starttime} and app_log_addtime<{$endtime})";
+			}
+			
+			
+			$timelong=($endtime-$starttime)/86400;
+			
+			$rs_data=M('app_log')->field('app_log_addtime')->where(" field_uid=0 and app_log_mod in('".implode("','",$mod)."') and ac in('".implode("','",$ac)."') {$time_sql} and (user_agent='iPhone' or user_agent='Android')")->select();
+			$total_num = count($rs_data);
+			$tongji_str  .="<tr><th colspan=12 bgcolor='#fff' >总登录次数：".$total_num."</th></tr><tr>";
+			
+			$image_data = array();
+			$visit_count_arr = array();
+			foreach($rs_data as $key=>$val)
+			{
+				//$ymd = date('Y-m-d',$val['app_log_addtime']);
+				$hour = date('H',$val['app_log_addtime']);
+				$hour++;
+				if(!$visit_count_arr)
+				{
+					for($i=1;$i<=24;$i++){
+						$visit_count_arr[$i]=0;
+					}
+				}
+				$visit_count_arr[$hour]++;
+			}
+
+			foreach($visit_count_arr as $key=>$val){
+				$c_lv = number_format(($val/$total_num)*100,1);
+				
+				if($key%8==1)
+				{
+					$tongji_str .='</tr><tr>';
+				}
+				
+				$tongji_str .='<td style="padding:10px 0;"  align="center" ><b>'.($key-1). '时~'.$key. '时	'.$val.'	'.$c_lv.'%</td>';
+				$image_data[$key]['num'] = $val;
+				$image_data[$key]['name'] = $key;
+				$image_data[$key]['bfb'] = $c_lv;
+			}
+			
+			$tongji_str .='</tr></table>'; 
+			$this->assign('height','300px');
+			$this->assign('content_li_width','50px');
+		}else{
+		
+			$mod_ac = array(
+				'新闻资讯'=>'event=event_blog_detail&club=golf_news',
+				'赛事门票'=>'event=dz_ticket_event_list&ticket=ticket_apply_detail',
+				'个人中心'=>'club=my_detail',
+				'高球论坛'=>'event=event_room&event=event_detail',
+				'图片库'=>'photo=album_list&photo=photo_list',
+				'赛事直播'=>'event=select_event&baofen=rank',
+				'赛事报名'=>'event=apply_ing&event=event_baoming',
+				'球会空间'=>'field_space=field_space'
+			);
+			
+			foreach($mod_ac as $key=>$val){
+				$get_arr = explode('&',$val);
+				foreach($get_arr as $key1=>$val1){
+					$tmp = explode('=',$val1);
+					$mod[] = $tmp[0];
+					$ac[] = $tmp[1];
+				}
+				
+				$starttime=strtotime(get('starttime'));
+				$endtime=strtotime(get('endtime'));
+				if($starttime && $endtime){
+					$endtime=$endtime+86400;
+					$time_sql =  "and (app_log_addtime>{$starttime} and app_log_addtime<{$endtime})";
+				}
+				
+				$total_num=M('app_log')->field('app_log_addtime')->where(" field_uid=0 and app_log_mod in('".implode("','",$mod)."') and ac in('".implode("','",$ac)."') {$time_sql} and (user_agent='iPhone' or user_agent='Android')")->count();
+				$image_data[$key]['num'] = $total_num;
+				$image_data[$key]['name'] = $key;
+				$c_lv = number_format(($total_num/100000)*100,1);
+				$image_data[$key]['bfb'] = $c_lv;
+			}
+			
+			$this->assign('height','300px');
+			$this->assign('content_li_width','10%');
+		}
+		
+		$this->assign('tip_str',$tip_str);
+		$this->assign('tongji_str',$tongji_str);
+		$this->assign('image_data',$image_data);
+	
+	
+		$this->display();
+	}
+	public function createImage($data,$twidth,$tspace,$height){
+	  //define("DEFAULT_FONT_PATH", WEB_ROOT_PATH."/Common/fonts/simhei.ttf");
+	 
+	  header("Content-Type:image/jpeg");
+	  $font_path = WEB_ROOT_PATH."/dazheng/Common/fonts/simhei.ttf";
+	  
+	  $dataname=array();
+
+	  $datavalue=array();//data里面的值
+
+	  $i=0;
+
+	  $j=0;
+
+	  $k=0;
+	   
+	  $num=sizeof($data);
+	  foreach($data as $key=>$val){
+
+		  $dataname[]=$key;
+
+		  $datavalue[]=$val;
+
+	  }
+
+	  $width=$num*($twidth+$tspace)+100 ;//获取图像的宽度
+
+	  $im=imagecreate($width,$height);//创建图像
+
+	  $bgcolor=imagecolorallocate($im,255,255,255);//背景色
+
+	  $jcolor=imagecolorallocate($im,255,0,0);//矩形的背景色
+
+	  $acolor=imagecolorallocate($im,0,0,0);//线的颜色
+
+	  imageline($im,30,$height-30,$width-5,$height-30,$acolor);//X轴
+
+	  imageline($im,30,$height-30,30,2,$acolor);//Y轴
+
+	  while($i<$num){
+
+		  imagefilledrectangle($im,$i*($tspace+$twidth)+40,$height-$datavalue[$i]-30,$i*($twidth+$tspace)+$tspace+40,$height-30,$jcolor);//画矩形
+
+		  //imagestring($im,3,$i*($tspace+$twidth)+20+$twidth/2,$height-$datavalue[$i]-35,$datavalue[$i],$acolor);//在柱子上面写出值
+		  imagettftext($im,12,0,$i*($tspace+$twidth)+25+$twidth/2,$height-$datavalue[$i]-35,$acolor,$font_path,$datavalue[$i]);
+		  //imagestring($im,3,$i*($tspace+$twidth)+10+$twidth/2,$height-15,$dataname[$i],$acolor);//在柱子下面写出值
+		  
+		  imagettftext($im, 12, 0, $i*($tspace+$twidth)+30+$twidth/2, $height-15, $acolor, $font_path, $dataname[$i]);
+
+		  $i++;
+
+	  }
+
+	  while($j<($height)/10){
+		  $y_z = $j*10;
+		  imageline($im,30,($height-30)-$j*10,28,($height-30)-$j*10,$acolor);//画出刻度
+
+		  imagestring($im,2,10,($height-35)-$j*10,$y_z,$acolor);//标出刻度值
+
+		  $j=$j+10;
+
+	  }
+	//echo WEB_ROOT_PATH.'/image/img_count.jpg';
+	imagejpeg($im,WEB_ROOT_PATH.'/images/img_count/img_count.png');
+	imagedestroy($im);
+	return '/images/img_count/img_count.png';
+}
 
 
 	
