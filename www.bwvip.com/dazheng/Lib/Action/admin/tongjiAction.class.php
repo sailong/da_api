@@ -749,7 +749,7 @@ class tongjiAction extends AdminAuthAction
 			//$field_sql=" and field_uid=0 ";
 			$first_time=M('app_log')->field('app_log_addtime')->where(" app_log_mod in('".implode("','",$mod)."') and ac in('".implode("','",$ac)."') and (user_agent='iPhone' or user_agent='Android') {$field_sql}")->order('app_log_addtime asc')->find();
 			
-			$tip_str ="<br /><br />第一条登录记录开始于：".date('Y-m-d G:i:s',$first_time['app_log_addtime'])."<br />";
+			$tip_str ="<br /><br />第一条浏览记录开始于：".date('Y-m-d G:i:s',$first_time['app_log_addtime'])."<br />";
 			
 			$tongji_str  .="<br /><br />时间用法举例： 2013-10-05 ~ 2013-10-07 这是3天。<br /><br /><br /><br /><table width='100%'  border=\"0\" cellspacing=\"1\">";
 			
@@ -766,7 +766,7 @@ class tongjiAction extends AdminAuthAction
 			$rs_data=M('app_log')->field('app_log_addtime')->where(" field_uid=0 and app_log_mod in('".implode("','",$mod)."') and ac in('".implode("','",$ac)."') {$time_sql} and (user_agent='iPhone' or user_agent='Android')")->select();
 			//echo M()->getLastSql();
 			$total_num = count($rs_data);
-			$tongji_str  .="<tr><th colspan=12>总登录次数：".$total_num."</th></tr><tr>";
+			$tongji_str  .="<tr><th colspan=12>总浏览次数：".$total_num."</th></tr><tr>";
 			
 			$image_data = array();
 			$visit_count_arr = array();
@@ -918,7 +918,7 @@ class tongjiAction extends AdminAuthAction
 			//$field_sql=" and field_uid=0 ";
 			$first_time=M('app_log')->field('')->where(" app_log_mod in('".implode("','",$mod)."') and ac in('".implode("','",$ac)."') and (user_agent='iPhone' or user_agent='Android') {$field_sql}")->order('app_log_addtime asc')->find();
 			
-			$tip_str ="<br /><br />第一条登录记录开始于：".date('Y-m-d G:i:s',$first_time['app_log_addtime'])."<br />";
+			$tip_str ="<br /><br />第一条浏览记录开始于：".date('Y-m-d G:i:s',$first_time['app_log_addtime'])."<br />";
 			
 			$tongji_str  .="<br /><br />时间用法举例： 2013-10-05 ~ 2013-10-07 这是3天。<br /><br /><br /><br /><table width='100%'  border=\"0\" cellspacing=\"1\" bgcolor=\"#fff\">";
 			
