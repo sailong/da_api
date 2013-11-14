@@ -1,0 +1,142 @@
+<include file="../public/_header" />
+<div class="so_main">
+
+  <div class="page_tit">订单</div>
+  <include file="_tab" />
+
+  <div class="search_box">
+		<form name="search_form" action="/default.php" method="get">
+		<input type="hidden" name="g" value="admin">
+		<input type="hidden" name="m" value="order">
+		<input type="hidden" name="a" value="order">
+
+		<table border="0" cellspacing="0" cellpadding="0">
+			<th>名称：</th>
+			<td><input type="text" name="k" class="search_input" style="width:120px;" value="<php> echo  get('k');</php>"></td>
+			<th>开始时间：</th>
+			<td>
+				<input type="text" name="starttime" class="search_input_date" style="width:120px;" value="<php> echo  get('starttime');</php>" onFocus="WdatePicker({isShowClear:false,readOnly:true})"> 至 
+				<input type="text" name="endtime" class="search_input_date" style="width:120px;" value="<php> echo  get('endtime');</php>" onFocus="WdatePicker({isShowClear:false,readOnly:true})">
+			</td>
+			<!--
+			<th>类型：</th>
+			<td>
+				<select name="type" style="width:120px;"  class="search_select">
+					<option value="">请选择</option>
+					<option value="1">1</option>
+				</select>
+				<script>set_select_value(document.search_form.course_type,"<php> echo  get("type");</php>");</script>
+			</td>
+			-->
+			<td class="btn">
+				<input type="submit" value="搜索" class="btn_b" style="margin-right:8px;" >
+				<input type="button" value="查看全部" class="btn_b" onclick="javascript:location='{:U('admin/order/order',array('state'=>get('state')))}';">
+			</td>
+		</table>
+	</form>
+  </div><!--/search_box-->
+
+  <!--------list -------->
+  <div class="Toolbar_inbox">
+  	<div class="page right">{$pages}</div>
+
+	<!-- <a href="{:U('admin/order/order_add')}" class="btn_a"><span>添加订单</span></a> -->
+	<a href="javascript:void(0);" class="btn_a"  onclick="mod_delete_batch('{:U('admin/order/order_delete_action')}','mod_table');"><span>批量删除</span></a>
+
+	<div class="clear"></div>
+  </div>
+  <div class="list">
+	<php>if($total>0){</php>
+	  <table width="100%" id="mod_table" border="0" cellspacing="0" cellpadding="0">
+	  <tr>
+		<th style="width:30px;">
+			<input type="checkbox" id="checkbox_handle" onclick="select_all(this,'mod_table','checkbox')" value="0">
+			<label for="checkbox"></label>
+		</th>
+		<th class="line_l">所属客户端</th>
+		<th class="line_l">所属用户</th>
+		<th class="line_l">订单编号</th>
+		<th class="line_l">支付编号</th>
+		<th class="line_l">商品</th>
+		<th class="line_l">商品名称</th>
+		<th class="line_l">总金额</th>
+		<th class="line_l">状态</th>
+		<th class="line_l">支付时间</th>
+		<th class="line_l">姓名</th>
+		<th class="line_l">手机号</th>
+		<th class="line_l">邮编</th>
+		<th class="line_l">地址</th>
+		<th class="line_l">添加时间</th>
+		<th class="line_l">操作</th>
+	</tr>
+	<volist id="vo" name="list">
+	<tr overstyle="on"  id=ids_{$vo["order_id"]}>
+		<td><input type="checkbox" name="checkbox" onclick="select_one(this)" value="{$vo.order_id}" ></td>
+		<td>{$fields[$vo['field_uid']]}</td>
+		<td>{$vo.uid}</td><!-- <a href="{:U('admin/order/order_detail', array('order_id'=>$vo['order_id']))}'"></a> -->
+		<td>{$vo.order_number}</td>
+		<td>{$vo.order_sn}</td>
+		<td>{$vo.item_ids}</td>
+		<td>{$vo.item_names}</td>
+		<td>{$vo.order_money}</td>
+		<td>
+			<php>
+				if($vo['order_status'] == 0)
+				{echo '待支付';}
+				elseif($vo['order_status'] == 1)
+				{echo '支付成功';}
+				elseif($vo['order_status'] == 2)
+				{echo '审核中';}
+				elseif($vo['order_status'] == 3)
+				{echo '支付失败';}
+			</php>
+		</td>
+		<td><php>if($vo['order_paytime']){</php>{$vo.order_paytime|format_to_time}<php>}</php></td>
+		<td>{$vo.order_realname}</td>
+		<td>{$vo.order_mobile}</td>
+		<td>{$vo.order_post}</td>
+		<td>{$vo.order_address}</td>
+		<td><php>if($vo['order_addtime']){</php>{$vo.order_addtime|format_to_time}<php>}</php></td>
+			
+		<td>
+			<a href="{:U('admin/order/order_edit', array('order_id'=>$vo['order_id']))}">修改</a> |
+			<a href="{:U('admin/order/order_detail', array('order_id'=>$vo['order_id']))}">详细</a> |
+			<a href="javascript:void(0);" onclick="mod_delete_one('{:U('admin/order/order_delete_action')}','{$vo['order_id']}');">删除</a>
+		</td>
+	</tr>
+	</volist>
+    </table>
+	  <php>}else{</php>
+			<div class="no_data">
+				<img src="/skin/images/no_data.gif" align="absmiddle"> <span>没有订单... </span>
+			</div>
+	 <php>}</php>
+  </div>
+
+  <div class="Toolbar_inbox">
+	<div class="page right">{$pages}</div>
+
+	<!-- <a href="{:U('admin/order/order_add')}" class="btn_a"><span>添加订单</span></a> -->
+	<a href="javascript:void(0);" class="btn_a"  onclick="mod_delete_batch('{:U('admin/order/order_delete_action')}','mod_table');"><span>批量删除</span></a>
+
+
+	<div class="clear"></div>
+  </div>
+</div>
+
+<script>
+	$(document).ready(function(){
+		$("tr[overstyle='on']").hover(
+		  function ()
+		  {
+		    $(this).addClass("bg_hover");
+		  },
+		  function (){
+		    $(this).removeClass("bg_hover");
+		  }
+		);
+	});
+</script>
+
+
+<include file="../public/_footer" />

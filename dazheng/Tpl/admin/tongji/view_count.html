@@ -1,0 +1,68 @@
+<include file="../public/_header" />
+<div class="so_main">
+
+  <div class="page_tit">大正登录统计</div>
+  <include file="_tab" />
+<script>
+
+function check_time()
+{
+	if(!$("#starttime").val() || !$("#endtime").val()){
+		alert('请选择时间');
+		return false;
+	}
+	$("#search_form").submit();
+}
+</script>
+  <div class="search_box">
+		<form name="search_form" id="search_form" action="/default.php" method="get">
+		<input type="hidden" name="g" value="admin">
+		<input type="hidden" name="m" value="tongji">
+		<input type="hidden" name="a" value="view_count">
+		<table border="0" cellspacing="0" cellpadding="0">
+			<th>相关页：</th>
+			<td>
+				<select name="mod_ac" id="mod_ac" style="width:120px;"  class="search_select">
+					<option value="">请选择</option>
+					<option value="event=event_blog_detail&club=golf_news">新闻资讯</option>
+					<option value="event=dz_ticket_event_list&ticket=ticket_apply_detail">赛事门票</option>
+					<option value="club=my_detail">个人中心</option>
+					<option value="event=event_room&event=event_detail">高球论坛</option>
+					<option value="photo=album_list&photo=photo_list">图片库</option>
+					<option value="event=select_event&baofen=rank">赛事直播</option>
+					<option value="event=apply_ing&event=event_baoming">赛事报名</option>
+					<option value="field_space=field_space">球会空间</option>
+				</select>
+				<script>set_select_value(document.search_form.mod_ac,"<php> echo  get("mod_ac");</php>");</script>
+			</td>
+			<th>时间：</th>
+			<td>
+				<input type="text" name="starttime" id="starttime" class="search_input_date" style="width:120px;" value="<php> echo  get('starttime');</php>" onFocus="WdatePicker({isShowClear:false,readOnly:true})"> 至 
+				<input type="text" name="endtime" id="endtime" class="search_input_date" style="width:120px;" value="<php> echo  get('endtime');</php>" onFocus="WdatePicker({isShowClear:false,readOnly:true})">
+			</td>
+			
+			<td class="btn">
+				<input type="button" value="开始统计" onclick="check_time()" class="btn_b" style="margin-right:8px;" >
+				<input type="button" value="清空检索" class="btn_b" onclick="javascript:location='{:U('admin/tongji/view_count',array('state'=>get('state')))}';">
+			</td>
+		</table>
+	</form>
+  </div><!--/search_box-->
+
+	
+	{$tip_str}
+	
+  <php>if(get('starttime') && get('endtime')){</php>
+  
+  {$tongji_str}
+  
+  <php>}else{</php>
+  
+  请先选择时间范围
+  
+  <php>}</php>
+  
+  <div>单位：{$unit}</div>
+  <div><img src="{$img_count}"/><span style="padding-bottom:0px;">{$y_z}</span></div>
+
+<include file="../public/_footer" />

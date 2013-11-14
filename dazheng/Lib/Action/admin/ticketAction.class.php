@@ -239,6 +239,99 @@ class ticketAction extends AdminAuthAction
 		}
 
 	}
+	
+	public function ticket_to_item()
+	{
+		$tickets = M('ticket')->order('ticket_addtime desc')->select();
+		echo '<pre>';
+		foreach($tickets as $key=>$val){
+			$ticket_list[$val['event_id']][$val['ticket_id']] = $val;
+			$event_ids[$val['event_id']] = $val['event_id'];
+		}
+		unset($tickets);
+		$events = M('event')->field('event_id,field_uid,event_name,event_logo,event_logo_small,event_starttime,event_endtime')->where("event_id in('".implode("','",(array)$event_ids)."')")->select();
+		//var_dump($tickets);
+		//var_dump($ticket_list);
+		//var_dump($events);
+		foreach($events as $key=>$val)
+		{
+			$event_list[$val['event_id']] = $val;
+		}
+		$add_items = array();
+		foreach($ticket_list as $key=>$val)
+		{
+			//一级
+			$item_par = array(
+				'field_uid'=>$event_list[$key]['field_uid'],
+				'event_id'=>$key,
+				'fenzhan_id'=>'',
+				'parent_id'=>0,
+				'ticket_id'=>0,
+				'ticket_starttime'=>$event_list[$key]['event_starttime'],
+				'ticket_endtime'=>$event_list[$key]['event_endtime'],
+				'ticket_type'=>'',
+				'ticket_times'=>'',
+				'ticket_is_zengsong'=>'',
+				'ticket_ren_num'=>'',
+				'item_cats_id'=>3,
+				'item_type'=>'ticket',
+				'item_type_id'=>0,
+				'item_name'=>$event_list[$key]['event_name'],
+				'item_price'=>0,
+				'item_price_old'=>0,
+				'item_num'=>0,
+				'item_num_canbuy'=>0,
+				'item_num_total'=>0,
+				'item_pic'=>$event_list[$key]['event_logo'],
+				'item_pic_small'=>$event_list[$key]['event_logo_small'],
+				'item_pic_bottom'=>'',
+				'item_intro'=>$event_list[$key]['event_name'],
+				'item_content'=>$event_list[$key]['event_name'],
+				'item_sort'=>0,
+				'item_addtime'=>time()
+			);
+			$a[] = $parent_id = M('item')->add($item_par);
+			
+			//二级
+			foreach($val as $key1=>$val2){
+				$add_items=array(
+					'field_uid'=>$val2['field_uid']?$val2['field_uid']:0,
+					'event_id'=>$val2['event_id'],
+					'fenzhan_id'=>$val2['fenzhan_id'],
+					'parent_id'=>$parent_id,
+					'ticket_id'=>$val2['ticket_id'],
+					'ticket_starttime'=>$val2['ticket_starttime'],
+					'ticket_endtime'=>$val2['ticket_endtime'],
+					'ticket_type'=>$val2['ticket_type'],
+					'ticket_times'=>$val2['ticket_times'],
+					'ticket_is_zengsong'=>$val2['ticket_is_zengsong'],
+					'ticket_ren_num'=>$val2['ticket_ren_num'],
+					'item_cats_id'=>3,
+					'item_type'=>'ticket',
+					'item_type_id'=>$val2['ticket_id'],
+					'item_name'=>$val2['ticket_name'],
+					'item_price'=>$val2['ticket_price']*100,
+					'item_price_old'=>$val2['ticket_price']*100,
+					'item_num'=>$val2['ticket_num'],
+					'item_num_canbuy'=>1,
+					'item_num_total'=>$val2['ticket_num'],
+					'item_pic'=>$val2['ticket_pic'],
+					'item_pic_small'=>$val2['ticket_pic'],
+					'item_pic_bottom'=>'',
+					'item_intro'=>$val2['ticket_content'],
+					'item_content'=>$val2['ticket_content'],
+					'item_sort'=>0,
+					'item_addtime'=>time()
+				);
+				$a[] = M('item')->add($add_items);
+			}
+			//var_dump($add_items);
+		}
+		echo "in('".implode("','",$a)."')";
+		/* $fields = "field_uid,event_id,fenzhan_id,parent_id,ticket_id,ticket_starttime,ticket_endtime,ticket_type,ticket_times,ticket_is_zengsong,ticket_ren_num";
+		$item_sql = "insert into tbl_item({$fields}) values()" */;
+		
+	}
 public function ticket_tj()
 	{
 		$event_id_list = array(41,25);

@@ -737,6 +737,7 @@ class tongjiAction extends AdminAuthAction
 	
 	public function view_count()
 	{
+		
 		$mod_ac = get('mod_ac');
 		if($mod_ac){
 			$get_arr = explode('&',$mod_ac);
@@ -746,11 +747,11 @@ class tongjiAction extends AdminAuthAction
 				$ac[] = $tmp[1];
 			}
 			//$field_sql=" and field_uid=0 ";
-			$first_time=M('app_log')->field('')->where(" app_log_mod in('".implode("','",$mod)."') and ac in('".implode("','",$ac)."') and (user_agent='iPhone' or user_agent='Android') {$field_sql}")->order('app_log_addtime asc')->find();
+			$first_time=M('app_log')->field('app_log_addtime')->where(" app_log_mod in('".implode("','",$mod)."') and ac in('".implode("','",$ac)."') and (user_agent='iPhone' or user_agent='Android') {$field_sql}")->order('app_log_addtime asc')->find();
 			
-			$tip_str ="<br /><br />第一条登录记录开始于：".date('Y-m-d G:i:s',$first_time['app_log_addtime'])."<br />";
+			$tip_str ="<br /><br />第一条浏览记录开始于：".date('Y-m-d G:i:s',$first_time['app_log_addtime'])."<br />";
 			
-			$tongji_str  .="<br /><br />时间用法举例： 2013-10-05 ~ 2013-10-07 这是3天。<br /><br /><br /><br /><table width='100%'  border=\"0\" cellspacing=\"1\" bgcolor=\"#fff\">";
+			$tongji_str  .="<br /><br />时间用法举例： 2013-10-05 ~ 2013-10-07 这是3天。<br /><br /><br /><br /><table width='100%'  border=\"0\" cellspacing=\"1\">";
 			
 			$starttime=strtotime(get('starttime'));
 			$endtime=strtotime(get('endtime'));
@@ -763,8 +764,9 @@ class tongjiAction extends AdminAuthAction
 			$timelong=($endtime-$starttime)/86400;
 			
 			$rs_data=M('app_log')->field('app_log_addtime')->where(" field_uid=0 and app_log_mod in('".implode("','",$mod)."') and ac in('".implode("','",$ac)."') {$time_sql} and (user_agent='iPhone' or user_agent='Android')")->select();
+			//echo M()->getLastSql();
 			$total_num = count($rs_data);
-			$tongji_str  .="<tr><th colspan=12 bgcolor='#fff' >总登录次数：".$total_num."</th></tr><tr>";
+			$tongji_str  .="<tr><th colspan=12>总浏览次数：".$total_num."</th></tr><tr>";
 			
 			$image_data = array();
 			$visit_count_arr = array();
@@ -780,6 +782,24 @@ class tongjiAction extends AdminAuthAction
 					}
 				}
 				$visit_count_arr[$hour]++;
+			}
+			$unit = '次';
+			$max_num = max($visit_count_arr);
+			
+			if($max_num>=200&&$max_num<2000){
+				foreach($visit_count_arr as $key=>$val){
+					$visit_count_arr[$key] = $val/10;
+				}
+				$unit = '次';
+				$percent = 2;
+			}elseif($max_num>=2000&&$max_num<20000){
+				foreach($visit_count_arr as $key=>$val){
+					$visit_count_arr[$key] = $val/10000;
+				}
+				$unit = '万次';
+				$percent = -1;
+			}else{
+				$percent = 1;
 			}
 			$image_data = $visit_count_arr;
 			
@@ -819,11 +839,11 @@ class tongjiAction extends AdminAuthAction
 				
 				if($i==12)
 				{
-					$tongji_str .='</tr><tr><td  bgcolor="#ffffff" style="padding:10px 0;" align="center" ><b>'.$i. '时~'.($i+1). '时	'.$c_num.'	'.$c_lv.'%</td>';
+					$tongji_str .='</tr><tr><td  bgcolor="#000" style="padding:10px 0;" align="center" ><b>'.$i. '时~'.($i+1). '时	'.$c_num.'	'.$c_lv.'%</td>';
 				}
 				else
 				{
-					$tongji_str .='<td  bgcolor="#ffffff"  style="padding:10px 0;"  align="center" ><b>'.$i. '时~'.($i+1). '时</b>	'.$c_num.'	'.$c_lv.'%</td>';
+					$tongji_str .='<td  bgcolor="#000"  style="padding:10px 0;"  align="center" ><b>'.$i. '时~'.($i+1). '时</b>	'.$c_num.'	'.$c_lv.'%</td>';
 				}
 				$next_i = $i+1;
 				$image_data["{$next_i}"] = $c_num;
@@ -835,7 +855,7 @@ class tongjiAction extends AdminAuthAction
 			$tongji_str .='</tr></table>'; 
 			$twidth = 30;
 			$tspace = 15;
-			$unit = '次';
+			
 			$this->assign('y_z',"单位：时");
 		}else{
 		
@@ -874,8 +894,9 @@ class tongjiAction extends AdminAuthAction
 			$twidth = 40;
 			$tspace = 40;
 			$unit = '万次';
+			$percent = 1;
 		}
-		$img_count = $this->createImage($image_data,$twidth,$tspace,200);
+		$img_count = $this->createImage($image_data,$twidth,$tspace,250,$percent);
 		//var_dump($img_count);
 		$this->assign('unit',$unit);
 		$this->assign('tip_str',$tip_str);
@@ -897,7 +918,7 @@ class tongjiAction extends AdminAuthAction
 			//$field_sql=" and field_uid=0 ";
 			$first_time=M('app_log')->field('')->where(" app_log_mod in('".implode("','",$mod)."') and ac in('".implode("','",$ac)."') and (user_agent='iPhone' or user_agent='Android') {$field_sql}")->order('app_log_addtime asc')->find();
 			
-			$tip_str ="<br /><br />第一条登录记录开始于：".date('Y-m-d G:i:s',$first_time['app_log_addtime'])."<br />";
+			$tip_str ="<br /><br />第一条浏览记录开始于：".date('Y-m-d G:i:s',$first_time['app_log_addtime'])."<br />";
 			
 			$tongji_str  .="<br /><br />时间用法举例： 2013-10-05 ~ 2013-10-07 这是3天。<br /><br /><br /><br /><table width='100%'  border=\"0\" cellspacing=\"1\" bgcolor=\"#fff\">";
 			
@@ -994,9 +1015,16 @@ class tongjiAction extends AdminAuthAction
 	
 		$this->display();
 	}
-	public function createImage($data,$twidth,$tspace,$height){
+	public function createImage($data,$twidth,$tspace,$height,$percent=1){
 	  //define("DEFAULT_FONT_PATH", WEB_ROOT_PATH."/Common/fonts/simhei.ttf");
-	 
+	  $tmp_per=$percent;
+	  if($percent==2){
+		$tmp_per = 10;
+	  }elseif($percent==-1){
+		$tmp_per = 10000;
+	  }
+	  
+	  $percent = pow(10,$percent);
 	  header("Content-Type:image/jpeg");
 	  $font_path = WEB_ROOT_PATH."/dazheng/Common/fonts/simhei.ttf";
 	  
@@ -1038,7 +1066,7 @@ class tongjiAction extends AdminAuthAction
 		  imagefilledrectangle($im,$i*($tspace+$twidth)+40,$height-$datavalue[$i]-30,$i*($twidth+$tspace)+$tspace+40,$height-30,$jcolor);//画矩形
 
 		  //imagestring($im,3,$i*($tspace+$twidth)+20+$twidth/2,$height-$datavalue[$i]-35,$datavalue[$i],$acolor);//在柱子上面写出值
-		  imagettftext($im,12,0,$i*($tspace+$twidth)+25+$twidth/2,$height-$datavalue[$i]-35,$acolor,$font_path,$datavalue[$i]);
+		  imagettftext($im,12,0,$i*($tspace+$twidth)+25+$twidth/2,$height-$datavalue[$i]-35,$acolor,$font_path,$datavalue[$i]*$tmp_per);
 		  //imagestring($im,3,$i*($tspace+$twidth)+10+$twidth/2,$height-15,$dataname[$i],$acolor);//在柱子下面写出值
 		  
 		  imagettftext($im, 12, 0, $i*($tspace+$twidth)+30+$twidth/2, $height-15, $acolor, $font_path, $dataname[$i]);
@@ -1048,18 +1076,66 @@ class tongjiAction extends AdminAuthAction
 	  }
 
 	  while($j<($height)/10){
-		  $y_z = $j*10;
+		  $y_z = $j*$percent;
 		  imageline($im,30,($height-30)-$j*10,28,($height-30)-$j*10,$acolor);//画出刻度
 
-		  imagestring($im,2,10,($height-35)-$j*100,$y_z,$acolor);//标出刻度值
+		  imagestring($im,2,0,($height-35)-$j*10,$y_z,$acolor);//标出刻度值
 
 		  $j=$j+10;
 
 	  }
 	//echo WEB_ROOT_PATH.'/image/img_count.jpg';
-	imagejpeg($im,WEB_ROOT_PATH.'/images/img_count/img_count.png');
+	$this->chmodFileByDir(WEB_ROOT_PATH.'/images/img_count/');
+	$this->delDirByDir(WEB_ROOT_PATH.'/images/img_count');
+	$img_time = time();
+	imagejpeg($im,WEB_ROOT_PATH.'/images/img_count/'.$img_time.'.jpg');
 	imagedestroy($im);
-	return '/images/img_count/img_count.png';
+	return '/images/img_count/'.$img_time.'.jpg';
+}
+
+public function chmodFileByDir($dir)
+{
+	if(is_dir($dir))
+	{
+		$list = scandir($dir);
+		if($list)
+		{
+			foreach($list as $file)
+			{
+				if(($file != ".") && ($file != ".."))
+				{
+					$tmp = $dir."/".$file;
+					@chmod($tmp,0777);
+				}
+				else
+				{
+					continue;
+				}
+			}
+		}
+		else
+		{
+			@chmod($dir,0777);
+		}
+	}
+}
+
+public function delDirByDir($dir)
+{
+	$list = scandir($dir);
+	if($list)
+	{
+		foreach($list as $file)
+		{
+			
+			if(($file != ".") && ($file != ".."))
+			{
+				$tmp = $dir."/".$file;
+				@unlink($tmp);
+			}
+		}
+	}
+	
 }
 
 

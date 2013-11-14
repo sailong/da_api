@@ -1,0 +1,107 @@
+<include file="../public/header_dialog" />
+{$usejs}
+
+<div class="so_main">
+
+  <div class="page_tit">商品管理</div>
+  <div class="tit_tab">
+	<ul>
+		<li><a class=on href="#">查看详细商品</a></li>
+	</ul>
+  </div>
+
+<table border="0" cellspacing="0" cellpadding="0" style="width:900px;">
+<tr>
+<td>
+<!--/dialog_start-->
+
+	<table class="add_table" border="0" cellspacing="0" cellpadding="0" >
+		<tbody>
+		<tr>
+					<th>所属客户端：</th>
+					<td>{$fields[$data['field_uid']]}</td>
+				</tr>
+				<tr>
+					<th>所属商品：</th>
+					<td><php>if($parent_items[$data['parent_id']]){</php>{$parent_items[$data['parent_id']]}<php>}else{echo '一级商品';}</php></td>
+				</tr>
+				<tr>
+					<th>所属分类：</th>
+					<td><php>if($parent_items[$data['item_cats_id']]){</php>{$parent_items[$data['item_cats_id']]}<php>}else{echo '暂无';}</php></td>
+				</tr>
+				<tr>
+					<th>商品类型：</th>
+					<td>{$data.item_type}</td>
+				</tr>
+				<tr>
+					<th>商品类型ID：</th>
+					<td>{$data.item_type_id}</td>
+				</tr>
+				<tr>
+					<th>商品名称：</th>
+					<td>{$data.item_name}</td>
+				</tr>
+				<tr>
+					<th>现价：</th>
+					<td>{$data.item_price}</td>
+				</tr>
+				<tr>
+					<th>原价：</th>
+					<td>{$data.item_price_old}</td>
+				</tr>
+				<tr>
+					<th>剩余数量：</th>
+						<td>{$data.item_num}</td>
+				</tr>
+				<tr>
+					<th>每人限制数量：</th>
+						<td>{$data.item_num_canbuy}</td>
+				</tr>
+				<tr>
+					<th>总数量：</th>
+					<td>{$data.item_num_total}</td>
+				</tr>
+				<tr>
+					<th>商品图片：</th>
+					<td><p><php>if($data['item_pic']){</php><img src="{$data.item_pic}" style="max-height:180px; max-width:300px;"><php>}</php></p></td>
+				</tr>
+				<tr>
+					<th>合作商图片：</th>
+					<td><p><php>if($data['item_pic_bottom']){</php><img src="{$data.item_pic_bottom}" style="max-height:180px; max-width:300px;"><php>}</php></p></td>
+				</tr>
+				<tr>
+					<th>简介：</th>
+					<td>{$data.item_intro}</td>
+				</tr>
+				<tr>
+					<th>详细介绍：</th>
+					<td>{$data.item_content}</td>
+				</tr>
+				<tr>
+					<th>排序：</th>
+					<td>{$data.item_sort}</td>
+				</tr>
+				<tr>
+					<th>添加时间：</th>
+					<td>{$data.item_addtime|format_to_time}</td>
+					
+				</tr>
+				
+		</tbody>
+		<tfoot>
+			<tr>
+				<th></th>
+				<td>
+					<input type="button" class="btn_w" onclick="javascript:history.back(-1);" value="返回" />
+				</td>
+		</tfoot>
+	</table><!--/add_table-->
+
+
+<!--/dialog_end-->
+</td>
+</tr>
+</table>
+
+</div>
+<include file="../public/_footer" />

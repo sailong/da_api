@@ -1,0 +1,96 @@
+<include file="../public/header_dialog" />
+{$usejs}
+
+<div class="so_main">
+
+  <div class="page_tit">订单管理</div>
+  <div class="tit_tab">
+	<ul>
+		<li><a class=on href="#">查看详细订单</a></li>
+	</ul>
+  </div>
+
+<table border="0" cellspacing="0" cellpadding="0" style="width:900px;">
+<tr>
+<td>
+<!--/dialog_start-->
+
+	<table class="add_table" border="0" cellspacing="0" cellpadding="0" >
+		<tbody>
+		<tr>
+					<th>所属客户端：</th>
+						<td>{$fields[$data['field_uid']]}</td>
+				</tr>
+				<tr>
+					<th>所属用户：</th>
+						<td>{$data.uid}</td>
+				</tr>
+				<tr>
+					<th>订单编号：</th>
+						<td>{$data.order_number}</td>
+				</tr>
+				<tr>
+					<th>支付编号：</th>
+						<td>{$data.order_sn}</td>
+				</tr>
+				<tr>
+					<th>商品：</th>
+						<td>{$data.item_ids}</td>
+				</tr>
+				<tr>
+					<th>商品名称：</th>
+						<td>{$data.item_names}</td>
+				</tr>
+				<tr>
+					<th>总金额：</th>
+						<td>{$data.order_money}</td>
+				</tr>
+				<tr>
+					<th>状态：</th>
+						<td>{$data.order_status}</td>
+				</tr>
+				<tr>
+					<th>支付时间：</th>
+					<td><php>if($data['order_paytime']){</php>{$data.order_paytime|format_to_time}<php>}</php></td>
+					
+				</tr>
+				<tr>
+					<th>姓名：</th>
+						<td>{$data.order_realname}</td>
+				</tr>
+				<tr>
+					<th>手机号：</th>
+						<td>{$data.order_mobile}</td>
+				</tr>
+				<tr>
+					<th>邮编：</th>
+						<td>{$data.order_post}</td>
+				</tr>
+				<tr>
+					<th>地址：</th>
+						<td>{$data.order_address}</td>
+				</tr>
+				<tr>
+					<th>添加时间：</th>
+					<td>{$data.order_addtime|format_to_time}</td>
+					
+				</tr>
+				
+		</tbody>
+		<tfoot>
+			<tr>
+				<th></th>
+				<td>
+					<input type="button" class="btn_w" onclick="javascript:history.back(-1);" value="返回" />
+				</td>
+		</tfoot>
+	</table><!--/add_table-->
+
+
+<!--/dialog_end-->
+</td>
+</tr>
+</table>
+
+</div>
+<include file="../public/_footer" />

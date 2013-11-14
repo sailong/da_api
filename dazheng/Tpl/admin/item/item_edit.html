@@ -1,0 +1,173 @@
+<include file="../public/header_dialog" />
+{$usejs}
+
+<div class="so_main">
+
+  <div class="page_tit">商品管理</div>
+  <div class="tit_tab">
+	<ul>
+		<li><a class=on href="#">修改商品</a></li>
+	</ul>
+  </div>
+
+<table border="0" cellspacing="0" cellpadding="0" style="width:900px;">
+<tr>
+<td>
+<!--/dialog_start-->
+
+<form method="post" id="act_form" name="act_form" action="{:U('admin/item/item_edit_action')}" enctype="multipart/form-data">
+	<table class="add_table" border="0" cellspacing="0" cellpadding="0" >
+		<tbody>
+		<tr>
+					<th>所属客户端：</th>
+					<td>
+						<select name="field_uid">
+							<option value="">请选择</option>
+							{$app_list}
+						</select>
+						<script>set_select_value(document.act_form.field_uid,"{$data.field_uid}");</script>
+					</td>
+				</tr>
+				<tr>
+					<th>所属商品：</th>
+					<td>
+						<select name="parent_id">
+							<option value="0">一级商品</option>
+							<volist id="vo" name="parent_item_list">
+							<option value="{$vo.item_id}">{$vo.item_name}</option>
+							</volist>
+						</select>
+						<script>set_select_value(document.act_form.parent_id,"{$data.parent_id}");</script>
+					</td>
+				</tr>
+				<tr>
+					<th>所属分类：</th>
+					<td>
+						<select name="item_cats_id">
+							<option value="">请选择</option>
+							<volist id="vo" name="parent_cats_list">
+							<option value="{$vo.item_cats_id}">{$vo.item_cats_name}</option>
+								<volist name="vo['sub']" id="sub">
+								<option value="{$sub.item_cats_id}"> |-    {$sub.item_cats_name}</option>
+								</volist>
+							</volist>
+						</select>
+						<script>set_select_value(document.act_form.item_cats_id,"{$data.item_cats_id}");</script>
+					</td>
+				</tr>
+				<tr>
+					<th>商品类型：</th>
+					<td>
+						<select name="item_type">
+							<option value="">请选择</option>
+							<option value="ticket">门票</option>
+						</select>
+						<script>set_select_value(document.act_form.item_type,"{$data.item_type}");</script>
+					</td>
+				</tr>
+				<tr>
+					<th>商品类型ID：</th>
+					<td><input type="text" name="item_type_id" id="item_type_id" class="mod_input2" style="width:66px;"  value="{$data.item_type_id}"></td>
+				</tr>
+				<tr>
+					<th>商品名称：</th>
+					<td><input type="text" name="item_name" id="item_name" class="mod_input2" style="width:300px;"  value="{$data.item_name}"></td>
+				</tr>
+				<tr>
+					<th>现价：</th>
+					<td><input type="text" name="item_price" id="item_price" class="mod_input2" style="width:66px;"  value="{$data.item_price}"></td>
+				</tr>
+				<tr>
+					<th>原价：</th>
+					<td><input type="text" name="item_price_old" id="item_price_old" class="mod_input2" style="width:66px;"  value="{$data.item_price_old}"></td>
+				</tr>
+				<tr>
+					<th>剩余数量：</th>
+					<td><input type="text" name="item_num" id="item_num" class="mod_input2" style="width:66px;"  value="{$data.item_num}"></td>
+				</tr>
+				<tr>
+					<th>每人限制数量：</th>
+					<td><input type="text" name="item_num_canbuy" id="item_num_canbuy" class="mod_input2" style="width:66px;"  value="{$data.item_num_canbuy}"></td>
+				</tr>
+				<tr>
+					<th>总数量：</th>
+					<td><input type="text" name="item_num_total" id="item_num_total" class="mod_input2" style="width:66px;"  value="{$data.item_num_total}"></td>
+				</tr>
+				<tr>
+					<th>商品图片：</th>
+					<td>
+						<p style="padding-bottom:10px;"><php>if($data['item_pic']){</php><img src="{$data.item_pic}" style="max-height:180px; max-width:300px;"><php>}</php></p>
+						<input type="file" name="item_pic" id="item_pic"  class="mod_input"><span style="color:red;padding-left:10px;">如需修改请重新上传</span>
+				</tr>
+				<tr>
+					<th>合作商图片：</th>
+					<td>
+						<p style="padding-bottom:10px;"><php>if($data['item_pic_bottom']){</php><img src="{$data.item_pic_bottom}" style="max-height:180px; max-width:300px;"><php>}</php></p>
+						<input type="file" name="item_pic_bottom" id="item_pic_bottom"  class="mod_input"><span style="color:red;padding-left:10px;">如需修改请重新上传</span>
+				</tr>
+				<tr>
+					<th>简介：</th>
+					<td><textarea name="item_intro" id="item_intro" class="mod_input2" style="width:400px; height:100px;">{$data.item_intro}</textarea></td>
+				</tr>
+				<tr>
+					<th>详细介绍：</th>
+					<td>{$editor}</td>
+				</tr>
+				<tr>
+					<th>排序：</th>
+					<td><input type="text" name="item_sort" id="item_sort" class="mod_input2" style="width:66px;"  value="{$data.item_sort}"><span style="color:red;padding-left:10px;">数值越大越靠前</span></td>
+				</tr>
+				
+		</tbody>
+		<tfoot>
+			<tr>
+				<th></th>
+				<td>
+					<input type="hidden" name="item_id" value="{$data.item_id}">
+					<input type="submit" class="btn_b" value="保存" style="margin-right:10px;"/>
+					<input type="button" class="btn_w" onclick="javascript:history.back(-1);" value="返回" />
+				</td>
+		</tfoot>
+	</table><!--/add_table-->
+</form>
+
+<script>
+$(document).ready(function(){
+$.formValidator.initConfig({formID:"act_form",theme:'ArrowSolidBox',mode:'AutoTip',onError:function(msg){msg_error(msg)},inIframe:true});
+
+	$("#field_uid").formValidator({empty:true,onShow:"请输入所属客户端",onFocus:"请输入所属客户端",onCorrect:"输入正确"}).inputValidator({min:1,max:11,onError:"请输入所属客户端"});
+		$("#parent_id").formValidator({empty:true,onShow:"请输入上级分类",onFocus:"请输入上级分类",onCorrect:"输入正确"}).inputValidator({min:1,max:11,onError:"请输入上级分类"});
+		$("#item_cats_id").formValidator({empty:true,onShow:"请输入所属分类",onFocus:"请输入所属分类",onCorrect:"输入正确"}).inputValidator({min:1,max:11,onError:"请输入所属分类"});
+		$("#item_type").formValidator({empty:true,onShow:"请输入商品类型",onFocus:"请输入商品类型",onCorrect:"输入正确"}).inputValidator({min:1,max:11,onError:"请输入商品类型"});
+		$("#item_type_id").formValidator({empty:true,onShow:"请输入商品类型ID",onFocus:"请输入商品类型ID",onCorrect:"输入正确"}).inputValidator({min:1,max:11,onError:"请输入商品类型ID"});
+		$("#item_name").formValidator({empty:true,onShow:"请输入商品名称",onFocus:"请输入商品名称",onCorrect:"输入正确"}).inputValidator({min:1,max:50,onError:"请输入商品名称"});
+		$("#item_price").formValidator({empty:true,onShow:"请输入现价",onFocus:"请输入现价",onCorrect:"输入正确"}).inputValidator({min:1,max:11,onError:"请输入现价"});
+		$("#item_price_old").formValidator({empty:true,onShow:"请输入原价",onFocus:"请输入原价",onCorrect:"输入正确"}).inputValidator({min:1,max:11,onError:"请输入原价"});
+		$("#item_num").formValidator({empty:true,onShow:"请输入剩余数量",onFocus:"请输入剩余数量",onCorrect:"输入正确"}).inputValidator({min:1,max:11,onError:"请输入剩余数量"});
+		$("#item_num_canbuy").formValidator({empty:true,onShow:"请输入限制数量",onFocus:"请输入限制数量",onCorrect:"输入正确"}).inputValidator({min:1,max:11,onError:"请输入限制数量"});
+		$("#item_num_total").formValidator({empty:true,onShow:"请输入总数量",onFocus:"请输入总数量",onCorrect:"输入正确"}).inputValidator({min:1,max:11,onError:"请输入总数量"});
+		$("#item_pic").formValidator({empty:true,onShow:"请输入图片",onFocus:"请输入图片",onCorrect:"输入正确"}).inputValidator({min:1,max:300,onError:"请输入图片"});
+		$("#item_intro").formValidator({empty:true,onShow:"请输入简介",onFocus:"请输入简介",onCorrect:"输入正确"}).inputValidator({min:1,max:500,onError:"请输入简介"});
+		$("#item_content").formValidator({empty:true,onShow:"请输入详细介绍",onFocus:"请输入详细介绍",onCorrect:"输入正确"}).inputValidator({min:1,max:100000,onError:"请输入详细介绍"});
+		$("#item_sort").formValidator({empty:true,onShow:"请输入排序",onFocus:"请输入排序",onCorrect:"输入正确"}).inputValidator({min:1,max:11,onError:"请输入排序"});
+		
+
+	$.formValidator.reloadAutoTip();
+});
+
+function reloadAutoTip()
+{
+	$.formValidator.reloadAutoTip();
+}
+
+</script>
+
+
+<!--/dialog_end-->
+</td>
+</tr>
+</table>
+
+</div>
+
+<include file="../Public/_footer" />

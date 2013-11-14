@@ -50,7 +50,7 @@ class fieldModel extends Model{
 
 
 	//nopage select limit 
-	function field_select_pro($bigwhere="",$limit=999999, $sort=" addtime desc ") 
+	function field_select_pro($bigwhere="",$limit=999999, $sort=" field_addtime desc ") 
 	{
 		
 		$where = " 1 ";

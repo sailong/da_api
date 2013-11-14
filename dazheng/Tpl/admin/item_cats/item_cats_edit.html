@@ -1,0 +1,109 @@
+<include file="../public/header_dialog" />
+{$usejs}
+
+<div class="so_main">
+
+  <div class="page_tit">商品分类管理</div>
+  <div class="tit_tab">
+	<ul>
+		<li><a class=on href="#">修改商品分类</a></li>
+	</ul>
+  </div>
+
+<table border="0" cellspacing="0" cellpadding="0" style="width:900px;">
+<tr>
+<td>
+<!--/dialog_start-->
+
+<form method="post" id="act_form" name="act_form" action="{:U('admin/item_cats/item_cats_edit_action')}" enctype="multipart/form-data">
+	<table class="add_table" border="0" cellspacing="0" cellpadding="0" >
+		<tbody>
+		<tr>
+					<th>所属客户端：</th>
+					<td>
+						<select name="field_uid" id="field_uid" class="mod_select">
+							<option value="">请选择</option>
+							{$app_list}
+						</select>
+						<script>set_select_value(document.act_form.field_uid,"{$data.field_uid}");</script>
+					</td>
+				</tr>
+				<tr>
+					<th>上级分类：</th>
+					<td>
+						<select name="parent_id" id="parent_id">
+							<option value="0">一级分类</option>
+							<volist id='vo' name='parents'>
+							<option value="{$vo.item_cats_id}">{$vo.item_cats_name}</option>
+							</volist>
+						</select>
+						<script>set_select_value(document.act_form.parent_id,"{$data.parent_id}");</script>
+					</td>
+				</tr>
+				<tr>
+					<th>是否父级：</th>
+					<td>
+						<span><input type="radio" name="is_parent" value="1" <php>if($data['is_parent']==1){echo 'checked';}</php>>是</span>
+						<span><input type="radio" name="is_parent" value="0" <php>if($data['is_parent']==0){echo 'checked';}</php>>否</span>
+					</td>
+				</tr>
+				<tr>
+					<th>分类名称：</th>
+					<td><input type="text" name="item_cats_name" id="item_cats_name" class="mod_input2" style="width:300px;"  value="{$data.item_cats_name}"></td>
+				</tr>
+				<tr>
+					<th>图标：</th>
+					<td>
+						<p style="padding-bottom:10px;"><php>if($data['item_cats_pic']){</php><img src="{$data.item_cats_pic}" style="max-height:180px; max-width:300px;"><php>}</php></p>
+						<input type="file" name="item_cats_pic" id="item_cats_pic"  class="mod_input"><span style="color:red;padding-left:10px;">如需修改请重新上传</span>
+					</td>
+				</tr>
+				<tr>
+					<th>排序：</th>
+					<td><input type="text" name="item_cats_sort" id="item_cats_sort" class="mod_input2" style="width:300px;"  value="{$data.item_cats_sort}"><span style="color:red;padding-left:10px;">数值越大越靠前</span></td>
+				</tr>
+				
+		</tbody>
+		<tfoot>
+			<tr>
+				<th></th>
+				<td>
+					<input type="hidden" name="item_cats_id" value="{$data.item_cats_id}">
+					<input type="submit" class="btn_b" value="保存" style="margin-right:10px;"/>
+					<input type="button" class="btn_w" onclick="javascript:history.back(-1);" value="返回" />
+				</td>
+		</tfoot>
+	</table><!--/add_table-->
+</form>
+
+<script>
+$(document).ready(function(){
+$.formValidator.initConfig({formID:"act_form",theme:'ArrowSolidBox',mode:'AutoTip',onError:function(msg){msg_error(msg)},inIframe:true});
+
+	$("#field_uid").formValidator({empty:true,onShow:"请输入所属客户端",onFocus:"请输入所属客户端",onCorrect:"输入正确"}).inputValidator({min:1,max:11,onError:"请输入所属客户端"});
+		$("#parent_id").formValidator({empty:true,onShow:"请输入上级分类",onFocus:"请输入上级分类",onCorrect:"输入正确"}).inputValidator({min:1,max:11,onError:"请输入上级分类"});
+		$("#is_parent").formValidator({empty:true,onShow:"请输入是否父级",onFocus:"请输入是否父级",onCorrect:"输入正确"}).inputValidator({min:1,max:1,onError:"请输入是否父级"});
+		$("#item_cats_name").formValidator({empty:true,onShow:"请输入分类名称",onFocus:"请输入分类名称",onCorrect:"输入正确"}).inputValidator({min:1,max:50,onError:"请输入分类名称"});
+		$("#item_cats_pic").formValidator({empty:true,onShow:"请输入图标",onFocus:"请输入图标",onCorrect:"输入正确"}).inputValidator({min:1,max:300,onError:"请输入图标"});
+		$("#item_cats_sort").formValidator({empty:true,onShow:"请输入排序",onFocus:"请输入排序",onCorrect:"输入正确"}).inputValidator({min:1,max:50,onError:"请输入排序"});
+		
+
+	$.formValidator.reloadAutoTip();
+});
+
+function reloadAutoTip()
+{
+	$.formValidator.reloadAutoTip();
+}
+
+</script>
+
+
+<!--/dialog_end-->
+</td>
+</tr>
+</table>
+
+</div>
+
+<include file="../Public/_footer" />

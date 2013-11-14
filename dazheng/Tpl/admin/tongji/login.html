@@ -1,0 +1,44 @@
+<include file="../public/_header" />
+<div class="so_main">
+
+  <div class="page_tit">大正登录统计</div>
+  <include file="_tab" />
+
+  <div class="search_box">
+		<form name="search_form" action="/default.php" method="get">
+		<input type="hidden" name="g" value="admin">
+		<input type="hidden" name="m" value="tongji">
+		<input type="hidden" name="a" value="login">
+		<table border="0" cellspacing="0" cellpadding="0">
+			
+			<th>时间：</th>
+			<td>
+				<input type="text" name="starttime" class="search_input_date" style="width:120px;" value="<php> echo  get('starttime');</php>" onFocus="WdatePicker({isShowClear:false,readOnly:true})"> 至 
+				<input type="text" name="endtime" class="search_input_date" style="width:120px;" value="<php> echo  get('endtime');</php>" onFocus="WdatePicker({isShowClear:false,readOnly:true})">
+			</td>
+			
+			<td class="btn">
+				<input type="submit" value="开始统计" class="btn_b" style="margin-right:8px;" >
+				<input type="button" value="清空检索" class="btn_b" onclick="javascript:location='{:U('admin/tongji/login',array('state'=>get('state')))}';">
+			</td>
+		</table>
+	</form>
+  </div><!--/search_box-->
+
+	
+	{$tip_str}
+	
+  <php>if(get('starttime') && get('endtime')){</php>
+  
+  {$tongji_str}
+  
+  <php>}else{</php>
+  
+  请先选择时间范围
+  
+  <php>}</php>
+  
+  
+  
+
+<include file="../public/_footer" />
