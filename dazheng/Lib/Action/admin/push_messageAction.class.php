@@ -17,7 +17,7 @@ class push_messageAction extends AdminAuthAction
 	public function push_message()
 	{
 
-		$list=D("push_message")->push_message_list_pro();
+		$list=D("push_message")->push_message_list_pro('',20,'message_addtime desc');
 		
 		$field_list = select_field(1);
 		$field_data = array();
@@ -137,7 +137,7 @@ class push_messageAction extends AdminAuthAction
 			$data["message_errormsg"]="";
 			$data["message_addtime"]=time();
 			$list=M("push_message")->add($data);
-
+	
 			if($list!=false)
 			{
 				if(post("message_type")=="ios")
@@ -185,6 +185,7 @@ class push_messageAction extends AdminAuthAction
 			{				
 				$this->error("添加失败",U('admin/push_message/push_message'));
 			}
+		
 		}
 		else
 		{
