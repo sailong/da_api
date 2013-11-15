@@ -2,10 +2,10 @@
 <div class="so_main">
 
 
-<div class="page_tit">新闻管理</div>
+<div class="page_tit">直播管理</div>
   <div class="tit_tab">
 	<ul>
-		<li><a class=on href="#">修改新闻</a></li>
+		<li><a class=on href="#">修改直播</a></li>
 	</ul>
   </div>
 
@@ -21,14 +21,14 @@
 		<tbody>
 				<tr>
 					<th>赛事ID：</th>
-					<td><input type="text" name="event_id" id="event_id"  class="mod_input" style="width:300px;" value="{$data.event_id}"></td>
+					<td><input type="text" name="event_id" id="event_id"  class="mod_input" style="width:100px;" value="{$data.event_id}"></td>
 				</tr>
 				<tr>
-					<th>播音名称：</th>
+					<th>直播名称：</th>
 					<td><input type="text" name="zhibo_name" id="zhibo_name"  class="mod_input" style="width:300px;" value="{$data.zhibo_name}"></td>
 				</tr>
 				<tr>
-					<th>播音地址：</th>
+					<th>直播地址：</th>
 					<td><input type="text" name="zhibo_url" id="zhibo_url"  class="mod_input" style="width:300px;" value="{$data.zhibo_url}"></td>
 				</tr>
 				<tr>
@@ -40,12 +40,12 @@
 				</tr>
 				
 				<tr>
-					<th>播音内容：</th>
+					<th>直播内容：</th>
 					<td>{$editor}</td>
 				</tr>
 				<tr>
-					<th>播音状态：</th>
-					<td><input type="text" name="zhibo_state" id="zhibo_state"  class="mod_input" style="width:300px;" value="{$data.zhibo_state}"></td>
+					<th>直播状态：</th>
+					<td><input type="text" name="zhibo_state" id="zhibo_state"  class="mod_input" style="width:100px;" value="{$data.zhibo_state}"></td>
 				</tr>
 				
 				
@@ -55,7 +55,7 @@
 			<tr>
 				<th></th>
 				<td>
-					<input type="hidden" name="arc_id" value="{$data.arc_id}">
+					<input type="hidden" name="zhibo_id" value="{$data.zhibo_id}">
 					<input type="submit" class="btn_b" value="保存" style="margin-right:10px;"/>
 					<input type="button" class="btn_w" onclick="javascript:history.back(-1);" value="取消" />
 				</td>
@@ -70,18 +70,12 @@
 $(document).ready(function(){
 $.formValidator.initConfig({formID:"act_form",theme:'ArrowSolidBox',mode:'AutoTip',onError:function(msg){msg_error(msg)},inIframe:true});
 
-	$("#arc_name").formValidator({empty:true,onShow:"请输入新闻名称",onFocus:"请输入新闻名称",onCorrect:"输入正确"}).inputValidator({min:1,max:100,onError:"请输入新闻名称"});
-	$("#staff_id").formValidator({empty:true,onShow:"请输入发布人",onFocus:"请输入发布人",onCorrect:"输入正确"}).inputValidator({min:1,max:11,onError:"请输入发布人"});
-	//$("#arctype_id").formValidator({empty:true,onShow:"请输入所属栏目",onFocus:"请输入所属栏目",onCorrect:"输入正确"}).inputValidator({min:1,max:11,onError:"请输入所属栏目"});
-	$("#arc_note").formValidator({empty:true,onShow:"请输入新闻简介",onFocus:"请输入新闻简介",onCorrect:"输入正确"}).inputValidator({min:1,max:300,onError:"请输入新闻简介"});
-	$("#arc_pic").formValidator({empty:true,onShow:"请输入图片",onFocus:"请输入图片",onCorrect:"输入正确"}).inputValidator({min:1,max:300,onError:"请输入图片"});
-	$("#arc_source").formValidator({empty:true,onShow:"请输入来源",onFocus:"请输入来源",onCorrect:"输入正确"}).inputValidator({min:1,max:50,onError:"请输入来源"});
-	$("#arc_editor").formValidator({empty:true,onShow:"请输入编辑",onFocus:"请输入编辑",onCorrect:"输入正确"}).inputValidator({min:1,max:50,onError:"请输入编辑"});
-	$("#arc_content").formValidator({empty:true,onShow:"请输入新闻内容",onFocus:"请输入新闻内容",onCorrect:"输入正确"}).inputValidator({min:1,onError:"请输入新闻内容"});
-	$("#arc_is_tj").formValidator({empty:true,onShow:"请输入推荐",onFocus:"请输入推荐",onCorrect:"输入正确"}).inputValidator({min:1,max:10,onError:"请输入推荐"});
-	$("#arc_state").formValidator({empty:true,onShow:"请输入状态",onFocus:"请输入状态",onCorrect:"输入正确"}).inputValidator({min:1,max:10,onError:"请输入状态"});
-	$("#arc_path").formValidator({empty:true,onShow:"请输入路径",onFocus:"请输入路径",onCorrect:"输入正确"}).inputValidator({min:1,max:50,onError:"请输入路径"});
-	$("#arc_statetime").formValidator({empty:true,onShow:"请输入审核时间",onFocus:"请输入审核时间",onCorrect:"输入正确"}).inputValidator({min:1,max:10,onError:"请输入审核时间"});
+	$("#event_id").formValidator({empty:true,onShow:"请输入赛事ID",onFocus:"请输入赛事ID",onCorrect:"输入正确"}).inputValidator({min:1,max:100,onError:"请输入赛事ID"});
+	$("#zhibo_name").formValidator({empty:true,onShow:"请输入直播名称",onFocus:"请输入直播名称",onCorrect:"输入正确"}).inputValidator({min:1,max:11,onError:"请输入直播名称"});
+	
+	$("#zhibo_url").formValidator({empty:true,onShow:"请输入直播地址",onFocus:"请输入直播地址",onCorrect:"输入正确"}).inputValidator({min:1,max:300,onError:"请输入直播地址"});
+	$("#zhibo_content").formValidator({empty:true,onShow:"请输入直播内容",onFocus:"请输入直播内容",onCorrect:"输入正确"}).inputValidator({min:1,max:300,onError:"请输入直播内容"});
+	$("#zhibo_state").formValidator({empty:true,onShow:"请输入直播状态",onFocus:"请输入直播状态",onCorrect:"输入正确"}).inputValidator({min:1,max:50,onError:"请输入直播状态"});
 		
 
 	$.formValidator.reloadAutoTip();

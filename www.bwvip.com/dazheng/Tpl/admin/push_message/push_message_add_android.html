@@ -65,33 +65,16 @@
 						
 					</td>
 				</tr>
-				<!--
-				<tr>
-					<th>消息标题：</th>
-					<td><input type="text" name="message_title" id="message_title" class="mod_input2" style="width:300px;"  value="{$data.message_title}"></td>
-				</tr>
-				-->
+		
 				<tr>
 					<th>消息内容：</th>
 					<td><textarea name="n_content" id="n_content" class="mod_input2" style="width:400px; height:100px;">{$data.n_content}</textarea><br />IOS：最多26个汉字，不能超过这个长度，否则不能发送。</td>
 				</tr>
 				<tr>
 					<th>消息图片：</th>
-					<td><input type="file" name="message_pic" id="message_pic" class="mod_input2" style="width:300px;" "></td>
+					<td><input type="file" name="message_pic" id="message_pic" class="mod_input2" style="width:300px;" ></td>
 				</tr>
-				<!-- <tr id="type_3" <php>if($data['receiver_type']=="3"){ echo " style='display:block;' ";}else { echo " style='display:none;' ";}</php> >
-					<th>目标用户：</th>
-					<td>
-					<input type="text" name="uid" id="uid" class="mod_input2" style="width:100px;"  value="{$data.uid}"> (用户UID)
-					<br />
-					<br />
-					根据用户名搜索UID：
-					<br />
-					<iframe src="{:U('admin/push_message/user_tool')}" style="border:1px solid #ccc;" width="300" height="50">
-					</iframe>
-					
-					</td>
-				</tr> -->
+	
 				<tr id="type_3">
 					<th>目标用户：</th>
 					<td style="width:500px;">
