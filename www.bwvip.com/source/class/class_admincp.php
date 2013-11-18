@@ -25,7 +25,7 @@ class discuz_admincp
 
 	var $cpaccess = 0;
 
-	var $sessionlife = 1800;
+	var $sessionlife = 1800000;
 	var $sessionlimit = 0;
 
 	function &instance() {
