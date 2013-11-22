@@ -30,7 +30,8 @@ class itemModel extends Model{
 			$where .=" and item_addtime<".strtotime(get("endtime"))." ";
 		}
 
-		$data["item"]=M("item")->where($where.$bigwhere)->field("item_id,field_uid,parent_id,item_cats_id,item_type,item_type_id,item_name,item_price,item_price_old,item_num,item_num_canbuy,item_num_total,item_pic,item_pic_small,item_pic_bottom,item_intro,item_content,item_sort,item_addtime")->order($sort)->page($page.",".$page_size)->select();
+		$data["item"]=M("item")->where($where.$bigwhere)->order($sort)->page($page.",".$page_size)->select();
+		/* ->field("item_id,field_uid,parent_id,item_cats_id,item_type,item_type_id,item_name,item_price,item_price_old,item_num,item_num_canbuy,item_num_total,item_pic,item_pic_small,item_pic_bottom,item_intro,item_content,item_sort,item_addtime") */
 		/* for($i=0; $i<count($data["item"]); $i++)
 		{
 			if($data["item"][$i]["user_id"]!="")
@@ -39,6 +40,7 @@ class itemModel extends Model{
 				$data["item"][$i]["uname"]=$user[0]["uname"];
 			}
 		} */
+		
 		$data["total"] = M("item")->where($where.$bigwhere)->count();
 		
 		import ("@.ORG.Page");
@@ -55,7 +57,8 @@ class itemModel extends Model{
 		
 		$where = " 1 ";
 
-		$data["item"]=M("item")->where($where.$bigwhere)->field("item_id,field_uid,parent_id,item_cats_id,item_type,item_type_id,item_name,item_price,item_price_old,item_num,item_num_total,item_pic,item_pic_small,item_pic_bottom,item_intro,item_content,item_sort,item_addtime")->order($sort)->limit($limit)->select();
+		$data["item"]=M("item")->where($where.$bigwhere)->order($sort)->limit($limit)->select();
+		/* ->field("item_id,field_uid,parent_id,item_cats_id,item_type,item_type_id,item_name,item_price,item_price_old,item_num,item_num_total,item_pic,item_pic_small,item_pic_bottom,item_intro,item_content,item_sort,item_addtime") */
 		$data["total"]=M("item")->where($where.$bigwhere)->count();
 
 		return $data;
@@ -80,13 +83,23 @@ class itemModel extends Model{
 		{
 			$where .=" and item_addtime<".strtotime(get("endtime"))." ";
 		}
-		$data["item"]=M("item")->where($where.$bigwhere)->field("item_id,field_uid,parent_id,item_cats_id,item_type,item_type_id,item_name,item_price,item_price_old,item_num,item_num_total,item_pic,item_pic_small,item_pic_bottom,item_intro,item_content,item_sort,item_addtime")->order($sort)->limit($limit)->page($page.",".$page_size)->select();
+		$data["item"]=M("item")->where($where.$bigwhere)->order($sort)->limit($limit)->page($page.",".$page_size)->select();
+		
+		/* ->field("item_id,field_uid,parent_id,item_cats_id,item_type,item_type_id,item_name,item_price,item_price_old,item_num,item_num_total,item_pic,item_pic_small,item_pic_bottom,item_intro,item_content,item_sort,item_addtime") */
 		
 		for($i=0;  $i<count($data['item']); $i++)
 		{
 			if($data["item"][$i]['item_id']!="")
 			{
-				$data["item"][$i]['sub']=M('item')->where(' parent_id='.$data["item"][$i]['item_id'].' ')->order($sort)->select();
+				$sub_list=M('item')->where(' parent_id='.$data["item"][$i]['item_id'].' ')->order($sort)->select();
+				
+				foreach($sub_list as $key=>$val)
+				{
+					$sub_list[$key]['item_price'] = $val['item_price'] ? $val['item_price'] : 0;
+					$sub_list[$key]['item_price_old'] = $val['item_price_old'] ? $val['item_price_old'] : 0;
+					$sub_list[$key]['item_price'] = $val['item_price']/100;
+					$sub_list[$key]['item_price_old'] = $val['item_price_old']/100;
+				}
 				/*
 				for($j=0; $j<count($data["item"][$i]['sub']); $j++)
 				{
@@ -95,6 +108,8 @@ class itemModel extends Model{
 					//print_r($if_sub_select);
 				}
 				*/
+				$data["item"][$i]['sub'] = $sub_list;
+				
 
 			}
 		}

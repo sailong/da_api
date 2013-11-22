@@ -15,6 +15,7 @@ include_once VENDOR_DOWN_LOAD_DIR . "/ext/DownFile.class.php";
 class Download implements DownloadInterface {
     
      protected $mine_types = array(
+		'apk' => 'application/octet-stream',//array('application/x-zip', 'application/zip', 'application/x-zip-compressed', 'application/vnd.android.package-archive', 'application/octet-stream')
     	'ez' => 'application/andrew-inset', 
 		'hqx' => 'application/mac-binhex40', 
 		'cpt' => 'application/mac-compactpro',

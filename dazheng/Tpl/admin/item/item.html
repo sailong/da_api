@@ -54,16 +54,18 @@
 			<label for="checkbox"></label>
 		</th>
 		<th class="line_l">编号</th>
-		<th class="line_l">所属客户端</th>
-		<th class="line_l">所属商品</th>
-		<th class="line_l">所属分类</th>
-		<th class="line_l">商品类型</th>
-		<th class="line_l">商品类型ID</th>
 		<th class="line_l">商品名称</th>
-		<th class="line_l">现价</th>
-		<th class="line_l">原价</th>
+		<!-- <th class="line_l">商品类型</th> -->
+		<!-- <th class="line_l">所属客户端</th>
+		<th class="line_l">所属商品</th> -->
+		<!-- <th class="line_l">所属分类</th> -->
+		<!-- <th class="line_l">商品类型</th> -->
+		<!-- <th class="line_l">商品类型ID</th> -->
+		
+		<th class="line_l">现价(<span style="color:red;">单位：元</span>)</th>
+		<th class="line_l">原价(<span style="color:red;">单位：元</span>)</th>
 		<th class="line_l">剩余数量</th>
-		<th class="line_l">每人限制数量</th>
+		<!-- <th class="line_l">每人限制数量</th> -->
 		<th class="line_l">总数量</th>
 		<!-- <th class="line_l">图片</th>
 		<th class="line_l">简介</th>
@@ -76,17 +78,19 @@
 	<tr overstyle="on"  id=ids_{$vo["item_id"]}>
 		<td><input type="checkbox" name="checkbox" onclick="select_one(this)" value="{$vo.item_id}" ></td>
 		<td>{$vo['item_id']}</th>
-		<td>{$fields[$vo['field_uid']]}</th>
-		<td><php>if($parent_items[$vo['parent_id']]){</php>{$parent_items[$vo['parent_id']]}<php>}else{echo '一级商品';}</php></td>
-		<td><php>if($parent_cats[$vo['item_cats_id']]){</php>{$parent_cats[$vo['item_cats_id']]}<php>}else{echo '暂无分类';}</php></td>
-		<td>{$vo.item_type}</td>
-		<td>{$vo.item_type_id}</td>
 		<td>{$vo.item_name}</td>
-		<td>{$vo.item_price}</td>
-		<td>{$vo.item_price_old}</td>
-		<td>{$vo.item_num}</td>
-		<td>{$vo.item_num_canbuy}</td>
-		<td>{$vo.item_num_total}</td>
+		<!-- <td>{$vo.item_type}</td> -->
+		<!-- <td>{$fields[$vo['field_uid']]}</th>
+		<td><php>if($parent_items[$vo['parent_id']]){</php>{$parent_items[$vo['parent_id']]}<php>}else{echo '一级商品';}</php></td> -->
+		<!-- <td><php>if($parent_cats[$vo['item_cats_id']]){</php>{$parent_cats[$vo['item_cats_id']]}<php>}else{echo '暂无分类';}</php></td> -->
+		<!-- <td>{$vo.item_type}</td>
+		<td>{$vo.item_type_id}</td> -->
+		
+		<td><!-- {$vo.item_price} --></td>
+		<td><!-- {$vo.item_price_old} --></td>
+		<td><!-- {$vo.item_num} --></td>
+		<!-- <td>{$vo.item_num_canbuy}</td> -->
+		<td><!-- {$vo.item_num_total} --></td>
 		<!-- <td>{$vo.item_pic}</td>
 		<td>{$vo.item_intro}</td>
 		<td>{$vo.item_content}</td> -->
@@ -103,17 +107,17 @@
 		<volist id="sub" name="vo['sub']">
 		<tr overstyle="on"  id=ids_{$sub["item_id"]}>
 			<td><input type="checkbox" name="checkbox" onclick="select_one(this)" value="{$sub.item_id}" ></td>
-			<td>{$sub['item_id']}</th>
-			<td style="text-indent:20px;">|---   </th><!-- {$fields[$sub['field_uid']]} -->
-			<td><php>if($parent_items[$sub['parent_id']]){</php>{$parent_items[$sub['parent_id']]}<php>}else{echo '一级商品';}</php></td>
-			<td><php>if($parent_cats[$sub['item_cats_id']]){</php>{$parent_cats[$sub['item_cats_id']]}<php>}else{echo '暂无分类';}</php></td>
+			<td>&nbsp;&nbsp;&nbsp;&nbsp;{$sub['item_id']}</th>
+			<td style="text-indent:20px;">&nbsp;&nbsp;&nbsp;&nbsp;|--{$sub.item_name}</th><!-- {$fields[$sub['field_uid']]}
+			<!-- <td><php>if($parent_items[$sub['parent_id']]){</php>{$parent_items[$sub['parent_id']]}<php>}else{echo '一级商品';}</php></td>
+			<td><php>if($parent_cats[$sub['item_cats_i9d']]){</php>{$parent_cats[$sub['item_cats_id']]}<php>}else{echo '暂无分类';}</php></td>
 			<td>{$sub.item_type}</td>
 			<td>{$sub.item_type_id}</td>
-			<td>{$sub.item_name}</td>
+			<td>{$sub.item_name}</td> -->
 			<td>{$sub.item_price}</td>
 			<td>{$sub.item_price_old}</td>
 			<td>{$sub.item_num}</td>
-			<td>{$sub.item_num_canbuy}</td>
+			<!-- <td>{$sub.item_num_canbuy}</td> -->
 			<td>{$sub.item_num_total}</td>
 			<!-- <td>{$vo.item_pic}</td>
 			<td>{$vo.item_intro}</td>

@@ -17,7 +17,7 @@ class itemAction extends AdminAuthAction
 
 	public function item()
 	{
-		//球场列表
+		/* //球场列表
 		$field_list = D('field')->field_select_pro();
 		$fields = array();
 		foreach($field_list['item'] as $key=>$val)
@@ -44,7 +44,7 @@ class itemAction extends AdminAuthAction
 			$parent_cats[$val['item_cats_id']] = $val['item_cats_name'];
 		}
 		
-		$this->assign("parent_cats",$parent_cats);
+		$this->assign("parent_cats",$parent_cats); */
 		
 		$list=D("item")->item_select_page_pro(' and parent_id=0');
 		
@@ -72,6 +72,9 @@ class itemAction extends AdminAuthAction
 		//一级分类列表
 		$parent_cats_list = D("item_cats")->item_cats_select_all_pro(" and is_parent=1");
 		
+		$event_select=D('event')->event_select_pro(" ");
+		
+		$this->assign('event_select',$event_select['item']);
 		
 		$this->assign('item_id',get('item_id'));
 		$this->assign('field_uid',get('field_uid'));
@@ -91,14 +94,29 @@ class itemAction extends AdminAuthAction
 	{
 		if(M()->autoCheckToken($_POST))
 		{
-			$data["field_uid"]=post("field_uid");
+			$data["field_uid"]=0;//post("field_uid");
+			
+			if(post("item_type") == 'ticket'){
+				//门票字段start
+				$data["event_id"]=post("event_id");
+				$data["fenzhan_id"]=post("fenzhan_id");
+				$data["ticket_ren_num"]=post("ticket_ren_num");
+				$data["ticket_starttime"]=strtotime(post("ticket_starttime"));
+				$data["ticket_endtime"]=strtotime(post("ticket_endtime"));
+				$data["ticket_type"]=post("ticket_type");
+				$data["ticket_times"]=post("ticket_times");
+				$data["ticket_is_zengsong"]=post("ticket_is_zengsong");
+				//门票字段end
+			}
+			
+			
 			$data["parent_id"]=post("parent_id");
 			$data["item_cats_id"]=post("item_cats_id");
 			$data["item_type"]=post("item_type");
 			$data["item_type_id"]=post("item_type_id");
 			$data["item_name"]=post("item_name");
-			$data["item_price"]=post("item_price");
-			$data["item_price_old"]=post("item_price_old");
+			$data["item_price"]=post("item_price")*100;
+			$data["item_price_old"]=post("item_price_old")*100;
 			$data["item_num"]=post("item_num");
 			$data["item_num_canbuy"]=post("item_num_canbuy");
 			$data["item_num_total"]=post("item_num_total");
@@ -111,7 +129,7 @@ class itemAction extends AdminAuthAction
 			{
 				$data["item_pic"]=$pic_list["item_pic"]["savepath"] . $pic_list["item_pic"]["savename"];
 				
-				$img_exp = explode('.',$data["item_pic"]);
+				/* $img_exp = explode('.',$data["item_pic"]);
 				$ext_end = end($img_exp);
 				$o_img = WEB_ROOT_PATH.'/'.$data["item_pic"];
 				$m_img = $o_img.'_m.'.$ext_end;
@@ -123,23 +141,42 @@ class itemAction extends AdminAuthAction
 				com_thumb($o_img, $m_img,'', 120, 120);
 				com_thumb($o_img, $s_img,'', 60, 60);
 				$data["item_pic"] = $m_path;
-				$data["item_pic_small"]=$s_path;
+				$data["item_pic_small"]=$s_path; */
+			}
+			if($_FILES["item_pic_small"]["error"]==0)
+			{
+				$data["item_pic_small"]=$pic_list["item_pic_small"]["savepath"] . $pic_list["item_pic_small"]["savename"];
+				
+				/* $img_exp = explode('.',$data["item_pic"]);
+				$ext_end = end($img_exp);
+				$o_img = WEB_ROOT_PATH.'/'.$data["item_pic"];
+				$m_img = $o_img.'_m.'.$ext_end;
+				$s_img = $o_img.'_s.'.$ext_end;
+				
+				$m_path = $data["item_pic"].'_m.'.$ext_end;
+				
+				$s_path = $data["item_pic"].'_s.'.$ext_end;
+				com_thumb($o_img, $m_img,'', 120, 120);
+				com_thumb($o_img, $s_img,'', 60, 60);
+				$data["item_pic"] = $m_path;
+				$data["item_pic_small"]=$s_path; */
 			}
 			if($_FILES["item_pic_bottom"]["error"]==0)
 			{
 				$data["item_pic_bottom"]=$pic_list["item_pic_bottom"]["savepath"] . $pic_list["item_pic_bottom"]["savename"];
-				$img_exp = explode('.',$data["item_pic_bottom"]);
+				/* $img_exp = explode('.',$data["item_pic_bottom"]);
 				$ext_end = end($img_exp);
 				$o_img = WEB_ROOT_PATH.'/'.$data["item_pic_bottom"];
 				$s_img = $o_img.'_s.'.$ext_end;
 				$s_path = $data["item_pic_bottom"].'_s.'.$ext_end;
 				com_thumb($o_img, $s_img,'', 1280, 1280);
-				$data["item_pic_bottom"] = $s_path;
+				$data["item_pic_bottom"] = $s_path; */
 			}
 			$data["item_intro"]=post("item_intro");
 			$data["item_content"]=stripslashes($_POST["item_content"]);;
 			$data["item_sort"]=post("item_sort");
 			$data["item_addtime"]=time();
+			$data["ext_table_name"]=post("ext_table_name");
 			
 			$list=M("item")->add($data);
 			$this->success("添加成功",U('admin/item/item'));
@@ -157,6 +194,10 @@ class itemAction extends AdminAuthAction
 		if(intval(get("item_id"))>0)
 		{
 			$data=M("item")->where("item_id=".intval(get("item_id")))->find();
+			$data['item_price'] = $data['item_price'] ? $data['item_price'] : 0;
+			$data['item_price_old'] = $data['item_price_old'] ? $data['item_price_old'] : 0;
+			$data['item_price'] = $data['item_price']/100;
+			$data['item_price_old'] = $data['item_price_old']/100;
 			$this->assign("data",$data);
 			
 			import("@.ORG.editor");  //导入类
@@ -176,6 +217,9 @@ class itemAction extends AdminAuthAction
 			//一级分类列表
 			$parent_cats_list = D("item_cats")->item_cats_select_all_pro(" and is_parent=1");
 			
+			$event_select=D('event')->event_select_pro(" ");
+			$this->assign('event_select',$event_select['item']);
+			
 			$this->assign("app_list",$app_list);
 			$this->assign('parent_item_list',$parent_item_list['item']);
 			$this->assign('parent_cats_list',$parent_cats_list['item']);
@@ -193,14 +237,29 @@ class itemAction extends AdminAuthAction
 		if(M()->autoCheckToken($_POST))
 		{
 			$data["item_id"]=post("item_id");
-			$data["field_uid"]=post("field_uid");
+			
+			if(post("item_type") == 'ticket'){
+				//门票字段start
+				$data["event_id"]=post("event_id");
+				$data["fenzhan_id"]=post("fenzhan_id");
+				$data["ticket_ren_num"]=post("ticket_ren_num");
+				$data["ticket_starttime"]=strtotime(post("ticket_starttime"));
+				$data["ticket_endtime"]=strtotime(post("ticket_endtime"));
+				$data["ticket_type"]=post("ticket_type");
+				$data["ticket_times"]=post("ticket_times");
+				$data["ticket_is_zengsong"]=post("ticket_is_zengsong");
+				//门票字段end
+			}
+			
+			
+			$data["field_uid"]=0;//post("field_uid");
 			$data["parent_id"]=post("parent_id");
 			$data["item_cats_id"]=post("item_cats_id");
 			$data["item_type"]=post("item_type");
 			$data["item_type_id"]=post("item_type_id");
 			$data["item_name"]=post("item_name");
-			$data["item_price"]=post("item_price");
-			$data["item_price_old"]=post("item_price_old");
+			$data["item_price"]=post("item_price")*100;
+			$data["item_price_old"]=post("item_price_old")*100;
 			$data["item_num"]=post("item_num");
 			$data["item_num_canbuy"]=post("item_num_canbuy");
 			$data["item_num_total"]=post("item_num_total");
@@ -213,7 +272,7 @@ class itemAction extends AdminAuthAction
 			if($_FILES["item_pic"]["error"]==0)
 			{
 				$data["item_pic"]=$pic_list["item_pic"]["savepath"] . $pic_list["item_pic"]["savename"];
-				$img_exp = explode('.',$data["item_pic"]);
+				/* $img_exp = explode('.',$data["item_pic"]);
 				$ext_end = end($img_exp);
 				$o_img = WEB_ROOT_PATH.'/'.$data["item_pic"];
 				$m_img = $o_img.'_m.'.$ext_end;
@@ -225,23 +284,42 @@ class itemAction extends AdminAuthAction
 				com_thumb($o_img, $m_img,'', 120, 120);
 				com_thumb($o_img, $s_img,'', 60, 60);
 				$data["item_pic"] = $m_path;
-				$data["item_pic_small"]=$s_path;
+				$data["item_pic_small"]=$s_path; */
+			}
+			if($_FILES["item_pic_small"]["error"]==0)
+			{
+				$data["item_pic_small"]=$pic_list["item_pic_small"]["savepath"] . $pic_list["item_pic_small"]["savename"];
+				
+				/* $img_exp = explode('.',$data["item_pic"]);
+				$ext_end = end($img_exp);
+				$o_img = WEB_ROOT_PATH.'/'.$data["item_pic"];
+				$m_img = $o_img.'_m.'.$ext_end;
+				$s_img = $o_img.'_s.'.$ext_end;
+				
+				$m_path = $data["item_pic"].'_m.'.$ext_end;
+				
+				$s_path = $data["item_pic"].'_s.'.$ext_end;
+				com_thumb($o_img, $m_img,'', 120, 120);
+				com_thumb($o_img, $s_img,'', 60, 60);
+				$data["item_pic"] = $m_path;
+				$data["item_pic_small"]=$s_path; */
 			}
 			if($_FILES["item_pic_bottom"]["error"]==0)
 			{
 				$data["item_pic_bottom"]=$pic_list["item_pic_bottom"]["savepath"] . $pic_list["item_pic_bottom"]["savename"];
-				$img_exp = explode('.',$data["item_pic_bottom"]);
+				/* $img_exp = explode('.',$data["item_pic_bottom"]);
 				$ext_end = end($img_exp);
 				$o_img = WEB_ROOT_PATH.'/'.$data["item_pic_bottom"];
 				$s_img = $o_img.'_s.'.$ext_end;
 				$s_path = $data["item_pic_bottom"].'_s.'.$ext_end;
 				com_thumb($o_img, $s_img,'', 1280, 1280);
-				$data["item_pic_bottom"] = $s_path;
+				$data["item_pic_bottom"] = $s_path; */
 			}
 			$data["item_intro"]=post("item_intro");
 			$data["item_content"]=stripslashes($_POST["item_content"]);;
 			$data["item_sort"]=post("item_sort");
-			
+			$data["ext_table_name"]=post("ext_table_name");
+			M("item")->where("parent_id='".$data["item_id"]."'")->save(array('ext_table_name'=>$data["ext_table_name"]));
 			$list=M("item")->save($data);
 			$this->success("修改成功",U('admin/item/item'));			
 		}
@@ -265,7 +343,22 @@ class itemAction extends AdminAuthAction
 		}
 	}
 
-
+	public function fenzhan_list()
+	{
+		$event_id = get('event_id');
+		$fenzhan_list = M('fenzhan')->where("event_id='{$event_id}'")->select();
+		//echo M()->getLastSql();
+		/* foreach($fenzhan_list as $key=>$val){
+			$return_list[$val['fenzhan_id']] = $val['fenzhan_name'];
+		} */
+		//var_dump($fenzhan_list);
+		if($fenzhan_list){
+			$this->ajaxReturn($fenzhan_list,'成功',1);
+		}
+		
+		$this->ajaxReturn(null,'失败',0);
+		
+	}
 	public function item_check_action()
 	{
 		if(post("ids"))
@@ -294,6 +387,10 @@ class itemAction extends AdminAuthAction
 			$data=M("item")->where("item_id=".intval(get("item_id")))->find();
 			if(!empty($data))
 			{
+				$data['item_price'] = $data['item_price'] ? $data['item_price'] : 0;
+				$data['item_price_old'] = $data['item_price_old'] ? $data['item_price_old'] : 0;
+				$data['item_price'] = $data['item_price']/100;
+				$data['item_price_old'] = $data['item_price_old']/100;
 				//球场列表
 				$field_list = D('field')->field_select_pro();
 				$fields = array();

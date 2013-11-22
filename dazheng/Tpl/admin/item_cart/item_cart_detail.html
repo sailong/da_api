@@ -17,10 +17,10 @@
 
 	<table class="add_table" border="0" cellspacing="0" cellpadding="0" >
 		<tbody>
-		<tr>
+		<!-- <tr>
 					<th>所属客户端：</th>
 						<td>{$fields[$data['field_uid']]}</td>
-				</tr>
+				</tr> -->
 				<tr>
 					<th>所属用户：</th>
 						<td>{$data.uid}</td>
@@ -48,6 +48,18 @@
 				<tr>
 					<th>数量：</th>
 						<td>{$data.item_num}</td>
+				</tr>
+				<tr>
+					<th>状态：</th>
+					<td><php>
+						if($data['item_cart_status'] == 0)
+						{echo '新加入';}
+						elseif($data['item_cart_status'] == 1)
+						{echo '订单保存';}
+						elseif($data['item_cart_status'] == 2)
+						{echo '支付成功';}
+						</php>
+					</td>
 				</tr>
 				<tr>
 					<th>添加时间：</th>

@@ -12,7 +12,7 @@
 
 		<table border="0" cellspacing="0" cellpadding="0">
 			<th>名称：</th>
-			<td><input type="text" name="k" class="search_input" style="width:120px;" value="<php> echo  get('k');</php>"></td>
+			<td><input type="text" name="k" class="search_input" style="width:120px;" value="<php> echo  get('k');</php>">(订单编号，手机号)</td>
 			<th>开始时间：</th>
 			<td>
 				<input type="text" name="starttime" class="search_input_date" style="width:120px;" value="<php> echo  get('starttime');</php>" onFocus="WdatePicker({isShowClear:false,readOnly:true})"> 至 
@@ -42,7 +42,11 @@
 
 	<!-- <a href="{:U('admin/order/order_add')}" class="btn_a"><span>添加订单</span></a> -->
 	<a href="javascript:void(0);" class="btn_a"  onclick="mod_delete_batch('{:U('admin/order/order_delete_action')}','mod_table');"><span>批量删除</span></a>
-
+	<a href="{:U('admin/order/order',array('order_status'=>'0','k'=>get('k'),'starttime'=>get('starttime'),'endtime'=>get('endtime')))}" class="btn_a"><span>待支付</span></a>
+	<a href="{:U('admin/order/order',array('order_status'=>'2','k'=>get('k'),'starttime'=>get('starttime'),'endtime'=>get('endtime')))}" class="btn_a"><span>待审核</span></a>
+	<a href="{:U('admin/order/order',array('order_status'=>'1','k'=>get('k'),'starttime'=>get('starttime'),'endtime'=>get('endtime')))}" class="btn_a"><span>支付成功</span></a>
+	<a href="{:U('admin/order/order',array('order_status'=>'3','k'=>get('k'),'starttime'=>get('starttime'),'endtime'=>get('endtime')))}" class="btn_a"><span>支付失败</span></a>
+	<a href="{:U('admin/order/order',array('order_status'=>'4','k'=>get('k'),'starttime'=>get('starttime'),'endtime'=>get('endtime')))}" class="btn_a"><span>取消订单</span></a>
 	<div class="clear"></div>
   </div>
   <div class="list">
@@ -53,30 +57,32 @@
 			<input type="checkbox" id="checkbox_handle" onclick="select_all(this,'mod_table','checkbox')" value="0">
 			<label for="checkbox"></label>
 		</th>
-		<th class="line_l">所属客户端</th>
+		<th class="line_l">编号</th>
+		<!-- <th class="line_l">所属客户端</th> -->
 		<th class="line_l">所属用户</th>
 		<th class="line_l">订单编号</th>
 		<th class="line_l">支付编号</th>
-		<th class="line_l">商品</th>
-		<th class="line_l">商品名称</th>
-		<th class="line_l">总金额</th>
+		<!-- <th class="line_l">商品编号</th> -->
+		<th class="line_l"style="width: 201px;">商品名称</th>
+		<th class="line_l">总金额(<span style="color:red;">单位：元</span>)</th>
 		<th class="line_l">状态</th>
-		<th class="line_l">支付时间</th>
+		<!-- <th class="line_l">支付时间</th> -->
 		<th class="line_l">姓名</th>
 		<th class="line_l">手机号</th>
-		<th class="line_l">邮编</th>
-		<th class="line_l">地址</th>
+		<!-- <th class="line_l">邮编</th> -->
+		<!-- <th class="line_l">地址</th> -->
 		<th class="line_l">添加时间</th>
 		<th class="line_l">操作</th>
 	</tr>
 	<volist id="vo" name="list">
 	<tr overstyle="on"  id=ids_{$vo["order_id"]}>
 		<td><input type="checkbox" name="checkbox" onclick="select_one(this)" value="{$vo.order_id}" ></td>
-		<td>{$fields[$vo['field_uid']]}</td>
+		<td>{$vo.order_id}</td>
+		<!-- <td>{$fields[$vo['field_uid']]}</td> -->
 		<td>{$vo.uid}</td><!-- <a href="{:U('admin/order/order_detail', array('order_id'=>$vo['order_id']))}'"></a> -->
 		<td>{$vo.order_number}</td>
 		<td>{$vo.order_sn}</td>
-		<td>{$vo.item_ids}</td>
+		<!-- <td>{$vo.item_ids}</td> -->
 		<td>{$vo.item_names}</td>
 		<td>{$vo.order_money}</td>
 		<td>
@@ -89,13 +95,15 @@
 				{echo '审核中';}
 				elseif($vo['order_status'] == 3)
 				{echo '支付失败';}
+				elseif($vo['order_status'] == 4)
+				{echo '取消订单';}
 			</php>
 		</td>
-		<td><php>if($vo['order_paytime']){</php>{$vo.order_paytime|format_to_time}<php>}</php></td>
+		<!-- <td><php>if($vo['order_paytime']){</php>{$vo.order_paytime|format_to_time}<php>}</php></td> -->
 		<td>{$vo.order_realname}</td>
 		<td>{$vo.order_mobile}</td>
-		<td>{$vo.order_post}</td>
-		<td>{$vo.order_address}</td>
+		<!-- <td>{$vo.order_post}</td> -->
+		<!-- <td>{$vo.order_address}</td> -->
 		<td><php>if($vo['order_addtime']){</php>{$vo.order_addtime|format_to_time}<php>}</php></td>
 			
 		<td>
@@ -118,7 +126,11 @@
 
 	<!-- <a href="{:U('admin/order/order_add')}" class="btn_a"><span>添加订单</span></a> -->
 	<a href="javascript:void(0);" class="btn_a"  onclick="mod_delete_batch('{:U('admin/order/order_delete_action')}','mod_table');"><span>批量删除</span></a>
-
+	<a href="{:U('admin/order/order',array('order_status'=>'0','k'=>get('k'),'starttime'=>get('starttime'),'endtime'=>get('endtime')))}" class="btn_a"><span>待支付</span></a>
+	<a href="{:U('admin/order/order',array('order_status'=>'2','k'=>get('k'),'starttime'=>get('starttime'),'endtime'=>get('endtime')))}" class="btn_a"><span>待审核</span></a>
+	<a href="{:U('admin/order/order',array('order_status'=>'1','k'=>get('k'),'starttime'=>get('starttime'),'endtime'=>get('endtime')))}" class="btn_a"><span>支付成功</span></a>
+	<a href="{:U('admin/order/order',array('order_status'=>'3','k'=>get('k'),'starttime'=>get('starttime'),'endtime'=>get('endtime')))}" class="btn_a"><span>支付失败</span></a>
+	<a href="{:U('admin/order/order',array('order_status'=>'4','k'=>get('k'),'starttime'=>get('starttime'),'endtime'=>get('endtime')))}" class="btn_a"><span>取消订单</span></a>
 
 	<div class="clear"></div>
   </div>

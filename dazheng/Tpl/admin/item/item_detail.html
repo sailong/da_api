@@ -17,10 +17,10 @@
 
 	<table class="add_table" border="0" cellspacing="0" cellpadding="0" >
 		<tbody>
-		<tr>
+		<!-- <tr>
 					<th>所属客户端：</th>
 					<td>{$fields[$data['field_uid']]}</td>
-				</tr>
+				</tr> -->
 				<tr>
 					<th>所属商品：</th>
 					<td><php>if($parent_items[$data['parent_id']]){</php>{$parent_items[$data['parent_id']]}<php>}else{echo '一级商品';}</php></td>
@@ -33,21 +33,57 @@
 					<th>商品类型：</th>
 					<td>{$data.item_type}</td>
 				</tr>
-				<tr>
+				<!-- <tr>
 					<th>商品类型ID：</th>
 					<td>{$data.item_type_id}</td>
-				</tr>
+				</tr> -->
 				<tr>
 					<th>商品名称：</th>
 					<td>{$data.item_name}</td>
 				</tr>
+				<php>if($data['item_type']=='ticket'){</php>
+				<!--门票相关start-->
+				<tr>
+					<th>赛事ID：</th>
+					<td>{$data.event_id}</td>
+				</tr>
+				<tr>
+					<th>分站ID：</th>
+					<td>{$data.fenzhan_id}</td>
+				</tr>
+				<tr>
+					<th>票面人数：</th>
+					<td>{$data.ticket_ren_num}</td>
+				</tr>
+				<tr>
+					<th>开始时间：</th>
+					<td>{$data.ticket_starttime|format_to_fulltime}</td>
+				</tr>
+				<tr>
+					<th>结束时间：</th>
+					<td>{$data.ticket_endtime|format_to_fulltime}</td>
+				</tr>
+				<tr>
+					<th>类型：</th>
+					<td>{$data.ticket_type}</td>
+				</tr>
+				<tr>
+					<th>入场次数：</th>
+					<td>{$data.ticket_times}</td>
+				</tr>
+				<tr>
+					<th>是否赠送：</th>
+					<td>{$data.ticket_is_zengsong}</td>
+				</tr>
+				<!--门票相关end-->
+				<php>}</php>
 				<tr>
 					<th>现价：</th>
-					<td>{$data.item_price}</td>
+					<td>{$data.item_price}元</td>
 				</tr>
 				<tr>
 					<th>原价：</th>
-					<td>{$data.item_price_old}</td>
+					<td>{$data.item_price_old}元</td>
 				</tr>
 				<tr>
 					<th>剩余数量：</th>

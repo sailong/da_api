@@ -174,6 +174,50 @@ class orderAction extends AdminAuthAction
 				unset($field_list);
 				$this->assign("fields",$fields);
 				
+				
+				$data['order_money'] =$data['order_money']/100;
+				//echo '<pre>';
+				//var_dump($data['item_ids']);
+				$item_list = M('item')->where("item_id in(".$data['item_ids'].")")->select();
+				//var_dump($item_list);
+				foreach($item_list as $key=>$val){
+					$parent_item_ids[$val['parent_id']] = $val['parent_id'];
+				}
+				//var_dump($parent_item_ids);
+				$parent_item_list = M('item')->where("item_id in('".implode("','",$parent_item_ids)."')")->select();
+				//var_dump($parent_item_list);
+				foreach($parent_item_list as $key=>$val){
+					$parent_item_lists[$val['item_id']] = $val['item_name'];
+				}
+				unset($parent_item_list);
+				foreach($item_list as $key=>$val){
+					$val['parent_name'] = $parent_item_lists[$val['parent_id']];
+					$item_lists[$val['item_id']] = $val;
+				}
+				unset($parent_item_lists);
+				
+				$item_ids = explode(',',$data['item_ids']);
+				
+				$item_names = explode(',',$data['item_names']);
+				
+				$item_nums = explode(',',$data['item_nums']);
+				
+				$item_info = array();
+				//echo '<pre>';
+				for($i=0;$i<count($item_ids);$i++){
+					$item_parent_id = $item_lists[$item_ids[$i]]['parent_id'];
+					$item_info[$item_parent_id]['parent_name'] = $item_lists[$item_ids[$i]]['parent_name'];
+					$item_info[$item_parent_id]['parent_id'] = $item_parent_id;
+					$item_info[$item_parent_id]['sub_list'][$item_ids[$i]]['item_id'] = $item_ids[$i];
+					//$item_info[$item_parent_id]['sub_list'][$item_ids[$i]]['parent_item_name'] = $item_lists[$item_ids[$i]]['parent_name'];
+					$item_info[$item_parent_id]['sub_list'][$item_ids[$i]]['item_name'] = $item_names[$i];
+					$item_info[$item_parent_id]['sub_list'][$item_ids[$i]]['item_num'] = $item_nums[$i];
+				}
+				
+				//var_dump($item_info);
+				unset($item_ids,$item_names,$item_lists);
+				
+				$this->assign("item_info",$item_info);
 				$this->assign("data",$data);
 
 				$this->assign("page_title",$data["order_name"]."订单");
@@ -188,6 +232,52 @@ class orderAction extends AdminAuthAction
 		else
 		{
 			$this->error("您该问的信息不存在");
+		}
+
+	}
+	
+	public function item_detail_ext()
+	{
+		
+		if(intval(get("item_id"))>0 && get("order_id") != '')
+		{
+			$item_info = M('item')->where("item_id='".get("item_id")."'")->find();
+			
+			$ext_table_name = $item_info['ext_table_name'];
+			$ext_name = end(explode('_',$ext_table_name));
+			$data=M()->table($ext_table_name)->where("order_id=".intval(get("order_id")))->find();
+			//echo $ext_table_name;die;
+			if(!empty($data))
+			{
+				$order_item_info = explode(',',$data['watch_date']);
+				$data['order_detail'] = '';
+				foreach($order_item_info as $key=>$val){
+					$order_item_detail = explode('|',$val);
+					$item_id = $order_ticket_detail[0];
+					$item_nums = $order_ticket_detail[1];
+					$item_info = M('item')->where("item_id='{$ticket_id}'")->find();
+					$data['item_detail'] .= $item_info['item_name'].' '.$item_nums.'张<br/>';
+				}
+				$event_info = M('event')->where("event_id='".$data['event_id']."'")->find();
+				
+				/* var_dump($data);die; */
+				//echo $ext_name.'_item_detail_ext';
+				$this->assign("event_info",$event_info);
+				$this->assign("data",$data);
+
+				$this->assign("page_title","附加信息");
+				$this->display("{$ext_name}_item_detail_ext");
+			}
+			else
+			{
+				//$this->error("您该问的信息不存在1");
+				echo '您该问的信息不存在';
+			}
+			
+		}
+		else
+		{
+			echo '您该问的信息不存在';
 		}
 
 	}

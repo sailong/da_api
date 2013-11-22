@@ -54,14 +54,15 @@
 			<label for="checkbox"></label>
 		</th>
 		<th class="line_l">编号</th>
-		<th class="line_l">所属客户端</th>
+		<!-- <th class="line_l">所属客户端</th> -->
 		<th class="line_l">所属用户</th>
-		<th class="line_l">上级分类</th>
+		<th class="line_l">所属商品</th>
 		<th class="line_l">商品编号</th>
 		<th class="line_l">商品名称</th>
-		<th class="line_l">购买信息</th>
-		<th class="line_l">价格</th>
+		<!-- <th class="line_l">购买信息</th> -->
+		<th class="line_l">价格(<span style="color:red;">单位：元</span>)</th>
 		<th class="line_l">数量</th>
+		<th class="line_l">状态</th>
 		<th class="line_l">添加时间</th>
 		<th class="line_l">操作</th>
 	</tr>
@@ -69,14 +70,22 @@
 	<tr overstyle="on"  id=ids_{$vo["item_cart_id"]}>
 		<td><input type="checkbox" name="checkbox" onclick="select_one(this)" value="{$vo.item_cart_id}" ></td>
 		<td>{$vo.item_cart_id}</th>
-		<td>{$fields[$vo['field_uid']]}</th>
+		<!-- <td>{$fields[$vo['field_uid']]}</th> -->
 		<td>{$vo.uid}</td><!-- <a href="{:U('admin/item_cart/item_cart_detail', array('item_cart_id'=>$vo['item_cart_id']))}'">{$vo.uid}</a> -->
 		<td><php>if($parent_items[$vo['parent_id']]){</php>{$parent_items[$vo['parent_id']]}<php>}else{echo '一级商品';}</php></td>
 		<td>{$vo.item_id}</td>
 		<td>{$vo.item_name}</td>
-		<td>{$vo.item_buyinfo}</td>
+		<!-- <td>{$vo.item_buyinfo}</td> -->
 		<td>{$vo.item_price}</td>
 		<td>{$vo.item_num}</td>
+		<td><php>
+				if($vo['item_cart_status'] == 0)
+				{echo '新加入';}
+				elseif($vo['item_cart_status'] == 1)
+				{echo '订单保存';}
+				elseif($vo['item_cart_status'] == 2)
+				{echo '支付成功';}
+			</php></td>
 		<td>{$vo.item_cart_addtime|format_to_time}</td>
 			
 		<td>

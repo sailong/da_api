@@ -17,10 +17,10 @@
 
 	<table class="add_table" border="0" cellspacing="0" cellpadding="0" >
 		<tbody>
-		<tr>
+		<!-- <tr>
 					<th>所属客户端：</th>
 						<td>{$fields[$data['field_uid']]}</td>
-				</tr>
+				</tr> -->
 				<tr>
 					<th>所属用户：</th>
 						<td>{$data.uid}</td>
@@ -33,21 +33,53 @@
 					<th>支付编号：</th>
 						<td>{$data.order_sn}</td>
 				</tr>
-				<tr>
+				<!-- <tr>
 					<th>商品：</th>
 						<td>{$data.item_ids}</td>
-				</tr>
+				</tr> -->
 				<tr>
 					<th>商品名称：</th>
-						<td>{$data.item_names}</td>
+					<td>
+						<volist id='vo' name='item_info'>
+							<div>
+								<span>{$vo.parent_name}</span>
+								<volist id="vo1" name="vo['sub_list']">
+								<span style="padding-left:20px;">{$vo1.item_name}</span><span style="padding-left:10px;">({$vo1.item_num}张)</span>
+								</volist>
+								<a href="default.php?g=admin&m=order&a=item_detail_ext&item_id={$vo['parent_id']}&order_id={$data['order_id']}" target='bodyFrame' style="padding-left:10px;"><span>查看详细</span></a>
+							<!-- <a href="{:U('admin/order/item_detail_ext',array('item_id'=>$vo['parent_id'],'order_id'=>$data['order_id']))}" style="padding-left:10px;"><span>查看详细</span></a> -->
+							<!-- <a href="javascript:void(0);"  onclick="mod_dialog('查看详细','{:U('admin/order/item_detail_ext',array('item_id'=>$vo['parent_id'],'order_id'=>$data['order_id']))}')"><span>查看详细</span></a> --><br/>
+							</div>
+						</volist>
+						<div style="padding-top:10px;">
+							<iframe name="bodyFrame" width="100%" frameborder="0" scrolling="auto" style="display:block; overflow-x:hidden"></iframe>
+						</div>
+					</td>
 				</tr>
+				<!-- <tr>
+					<th>商品个数：</th>
+						<td>{$data.item_nums}</td>
+				</tr> -->
 				<tr>
 					<th>总金额：</th>
 						<td>{$data.order_money}</td>
 				</tr>
 				<tr>
 					<th>状态：</th>
-						<td>{$data.order_status}</td>
+					<td>
+						<php>
+						if($data['order_status'] == 0)
+						{echo '待支付';}
+						elseif($data['order_status'] == 1)
+						{echo '支付成功';}
+						elseif($data['order_status'] == 2)
+						{echo '审核中';}
+						elseif($data['order_status'] == 3)
+						{echo '支付失败';}
+						elseif($data['order_status'] == 4)
+						{echo '取消订单';}
+						</php>
+					</td>
 				</tr>
 				<tr>
 					<th>支付时间：</th>
@@ -91,6 +123,39 @@
 </td>
 </tr>
 </table>
+<script type="text/javascript"> 
+	var winWidth = 0; 
+	var winHeight = 0;
+	//函数：获取尺寸  
+	function findDimensions() { 
+		//获取窗口宽度 
+		if (window.innerWidth) {
+			winWidth = window.innerWidth;
+		} else if ((document.body) && (document.body.clientWidth)){
+			winWidth = document.body.clientWidth; 
+		}
+		//获取窗口高度 
+		if (window.innerHeight) {
+			winHeight = window.innerHeight; 
+		} else if ((document.body) && (document.body.clientHeight)) {
+			winHeight = document.body.clientHeight;
+		} 
+		//通过深入Document内部对body进行检测，获取窗口大小 
+		if (document.documentElement && document.documentElement.clientHeight && document.documentElement.clientWidth) { 
+			winHeight = document.documentElement.clientHeight; 
+			winWidth = document.documentElement.clientWidth; 
+		} 
+		//结果输出至两个文本框 
+		document.getElementById("bodcont").style.height= winHeight;
+		document.getElementById("hoho").height=winHeight-112;
+		document.getElementById("hoho2").width=winWidth-204;
+		document.getElementById("hoho2").height=winHeight-112;
+	
+	} 
+	findDimensions(); 
+	//调用函数，获取数值 
+	window.onresize=findDimensions; 
 
+</script> 
 </div>
 <include file="../public/_footer" />
