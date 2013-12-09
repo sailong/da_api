@@ -1104,6 +1104,10 @@ if($ac=="event_baoming")
 if($ac=="event_baoming_action")
 {
 	$fenzhan=array_search(urldecode($_G['gp_event_apply_fenzhan']),$hot_2013district);
+	
+	api_json_result(1,1,"该比赛已结束，不能报名",$data);
+	
+	/*
 
 	$bm=DB::fetch_first("select bm_id from pre_home_dazbm where uid='".$_G['gp_uid']."' and hot_district='".$fenzhan."' ");
 	if(!$bm['bm_id'])
@@ -1124,8 +1128,8 @@ if($ac=="event_baoming_action")
 		{
 			$is_huang=0;
 		}
-		//$fenzhan=urldecode($_G['gp_event_apply_fenzhan']);
-	
+		
+		
 		$mobile=DB::result_first("select mobile from ".DB::table("common_member_profile")." where uid='".$_G['gp_uid']."' ");
 		
 		$data_bm['uid']=$_G['gp_uid'];
@@ -1146,18 +1150,12 @@ if($ac=="event_baoming_action")
 		DB::insert('home_dazbm',$data_bm,true);
 		api_json_result(1,0,"报名成功",$data);
 		
-		//print_r($_POST);
-		//echo urldecode($arr['event_apply_realname']);
-		/*
-		$res=DB::query("insert into tbl_event_apply (event_id,uid,event_apply_realname,event_apply_sex,event_apply_card,event_apply_chadian,event_apply_state,event_apply_addtime) values ('".$arr['event_id']."','".$arr['uid']."','".$arr['event_apply_realname']."','".$arr['event_apply_sex']."','".$arr['event_apply_card']."','".$arr['event_apply_chadian']."','".$arr['event_apply_state']."','".$arr['event_apply_addtime']."')");
-		api_json_result(1,0,"报名成功",$data);
-		*/
-
 	}
 	else
 	{
 		api_json_result(1,1,"不能重复报名",$data);
 	}
+	*/
 
 	
 }

@@ -676,7 +676,7 @@ if($ac=="fenzhan_detail")
 		$event_info['event_is_baoming']='N';
 		//分站外卡成绩列表
 		$lun_num = DB::result_first("select max(lun) from tbl_baofen where fenzhan_id='$fz_id' and source='".$source."' and uid >0 and total_score>60  limit 1 ");
-		$query = DB::query("select id,uid,username,lun,is_end,total_score,score,par,tianshu from (select baofen_id as id,uid,realname as username,lun,total_score,score,par,to_days(FROM_UNIXTIME(dateline))-to_days(now()) as tianshu from tbl_baofen where fenzhan_id='$fz_id' and source='".$source."' and uid >0 and total_score>60 order by total_score asc) as t2 group by uid order by lun desc,total_score asc,tianshu asc limit 0,$limit");
+		$query = DB::query("select id,uid,username,lun,is_end,total_score,score,par,tianshu from (select is_end,baofen_id as id,uid,realname as username,lun,total_score,score,par,to_days(FROM_UNIXTIME(dateline))-to_days(now()) as tianshu from tbl_baofen where fenzhan_id='$fz_id' and source='".$source."' and uid >0 and total_score>60 order by total_score asc) as t2 group by uid order by lun desc,total_score asc,tianshu asc limit 0,$limit");
 
 		$i=0;
 		while($row = DB::fetch($query))
