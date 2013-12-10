@@ -535,9 +535,46 @@ public function ticket_tj()
 		$zshf_info['ss_total'] = $zshf_today_rs['total'];
 		//搜索end
 		
-		$tj_info['zshf'] = $zshf_info;
+		
+		//中国女子公开赛 门票申请统计
+		//今天start
+		$sql = "SELECT count(`user_ticket_id`) as total FROM `tbl_user_ticket` WHERE event_id=61 and user_ticket_addtime<$end_time";// and user_ticket_addtime>=$start_time and user_ticket_addtime<=$end_time
+		
+		$zgnzgks_total_rs = M()->query($sql); 
+		$zgnzgks_total_rs = $zgnzgks_total_rs[0];
+		$zgnzgks_info['today_total'] = $zgnzgks_total_rs['total'];
+		
+		$sql = "SELECT count(`user_ticket_id`) as total FROM `tbl_user_ticket` WHERE event_id=61 and user_ticket_addtime>=$start_time and user_ticket_addtime<=$end_time";
+		$zgnzgks_today_rs = M()->query($sql);
+		$zgnzgks_today_rs = $zgnzgks_today_rs[0];
+		$zgnzgks_info['today'] = $zgnzgks_today_rs['total'];
+		//今天end
+		//昨天start
+		
+		$sql = "SELECT count(`user_ticket_id`) as total FROM `tbl_user_ticket` WHERE event_id=61 and user_ticket_addtime<$yesterday_end_time";// and user_ticket_addtime>=$start_time and user_ticket_addtime<=$end_time
+		
+		$zgnzgks_total_rs = M()->query($sql); 
+		$zgnzgks_total_rs = $zgnzgks_total_rs[0];
+		$zgnzgks_info['yesterday_total'] = $zgnzgks_total_rs['total'];
+		
+		$sql = "SELECT count(`user_ticket_id`) as total FROM `tbl_user_ticket` WHERE event_id=61 and user_ticket_addtime>=$yesterday_start_time and user_ticket_addtime<=$yesterday_end_time";
+		$zgnzgks_today_rs = M()->query($sql);
+		$zgnzgks_today_rs = $zgnzgks_today_rs[0];
+		$zgnzgks_info['yesterday'] = $zgnzgks_today_rs['total'];
+		//昨天end
+		//搜索start
+		$sql = "SELECT count(`user_ticket_id`) as total FROM `tbl_user_ticket` WHERE event_id=61 and user_ticket_addtime>$ss_start_time and user_ticket_addtime<=$ss_end_time";
+		//echo $sql;die;
+		$zgnzgks_today_rs = M()->query($sql);
+		$zgnzgks_today_rs = $zgnzgks_today_rs[0];
+		$zgnzgks_info['ss_total'] = $zgnzgks_today_rs['total'];
+		//搜索end
+		//中国女子公开赛end
+		
+		$tj_info['zgnzgks'] = $zgnzgks_info;
+		//$tj_info['zshf'] = $zshf_info;
 		//$tj_info['ns'] = $ns_info;
-		$tj_info['bm'] = $bm_info;
+		//$tj_info['bm'] = $bm_info;
 		//$tj_info['bm1'] = $bm1_info;
 		
 		
@@ -570,6 +607,8 @@ public function ticket_tj()
 				$field_name = '南山中国大师赛门票申请统计';
 			}elseif($key=='zshf'){
 				$field_name = '赠送汇丰冠军赛套票';
+			}elseif($key=='zgnzgks'){
+				$field_name = '中国女子公开赛';
 			}
 			
 			echo '<table width="800" border="0" bgcolor="#cccccc">

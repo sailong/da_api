@@ -21,7 +21,8 @@ class field_manageModel extends Model{
 		}
 		if(get("k")!="")
 		{
-			$where .=" and field_name like '%".get("k")."%' ";
+			//$where .=" and field_name like '%".get("k")."%' ";
+			$where .=" and field_uid='".get("k")."' ";
 		}
 		if(get("endtime")!="")
 		{

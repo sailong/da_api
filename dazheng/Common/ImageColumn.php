@@ -324,8 +324,8 @@ class Bar
   return $ar;
  }
 }
-/* $bar = new Bar(500, 300, array(600, 300, 30, 500, 400, 250, 350, 360), array('AAAAA', 'BBBBB', 'CCCCC', 'DDDDD', 'EEEEEE', 'FFFFFF', 'GGGGGGG', 'HHHHHHHHH'));
+$bar = new Bar(500, 300, array(600, 300, 30, 500, 400, 250, 350, 360), array('AAAAA', 'BBBBB', 'CCCCC', 'DDDDD', 'EEEEEE', 'FFFFFF', 'GGGGGGG', 'HHHHHHHHH'));
 $titile = '打造完美柱状图!';
 $titile = iconv("gb2312","utf-8",$titile);
 $bar->setTitle($titile);
-$bar->stroke(); */
+$bar->stroke();

@@ -126,7 +126,7 @@
 			<td>{$sub.item_addtime|format_to_time}</td>
 				
 			<td>
-				<a href="{:U('admin/item/item_detail', array('item_id'=>$sub['item_id']))}">详细</a> | 
+				<!-- <a href="{:U('admin/item/item_detail', array('item_id'=>$sub['item_id']))}">详细</a> |  -->
 				<a href="{:U('admin/item/item_edit', array('item_id'=>$sub['item_id']))}">修改</a> | 
 				<a href="javascript:void(0);" onclick="mod_delete_one('{:U('admin/item/item_delete_action')}','{$sub['item_id']}');">删除</a>
 			</td>

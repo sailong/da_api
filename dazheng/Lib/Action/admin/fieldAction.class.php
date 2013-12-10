@@ -120,6 +120,10 @@ class fieldAction extends AdminAuthAction
 			$data["map_y"]=post("map_y");
 			$data["adduser"]=post("adduser");
 			$data["addtime"]=time();
+			//$data["field_content"]=post("field_content");
+			$data["field_content"]=stripslashes(post("field_content"));
+			$data["field_download_num"]=post("field_download_num");
+			$data["field_zuobiao"]=post("field_zuobiao");
 			
 			$list=M("field","pre_common_")->add($data);
 			if($list!=false)

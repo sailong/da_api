@@ -319,7 +319,7 @@ class itemAction extends AdminAuthAction
 			$data["item_content"]=stripslashes($_POST["item_content"]);;
 			$data["item_sort"]=post("item_sort");
 			$data["ext_table_name"]=post("ext_table_name");
-			M("item")->where("parent_id='".$data["item_id"]."'")->save(array('ext_table_name'=>$data["ext_table_name"]));
+			M("item")->where("parent_id='".$data["item_id"]."'")->save(array('ext_table_name'=>$data["ext_table_name"],'event_id'=>$data["event_id"],'fenzhan_id'=>$data["fenzhan_id"]));
 			$list=M("item")->save($data);
 			$this->success("修改成功",U('admin/item/item'));			
 		}
