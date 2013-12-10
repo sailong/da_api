@@ -445,16 +445,20 @@ if($ac=='new_order')
 			
 			//getlist
 			$ids=$_G['gp_ids'];
-			$item_cart_ids=array();
-			$new_cart_list=DB::query("select item_cart_id from tbl_item_cart where item_id in (".$ids.") and uid='".$uid."'  ");
-			while($row=DB::fetch($new_cart_list))
+			if($ids)
 			{
-				if($row['item_cart_id'])
+				$item_cart_ids=array();
+				$new_cart_list=DB::query("select item_cart_id from tbl_item_cart where item_id in (".$ids.") and uid='".$uid."'  ");
+				while($row=DB::fetch($new_cart_list))
 				{
-					$item_cart_ids[]=$row['item_cart_id'];
+					if($row['item_cart_id'])
+					{
+						$item_cart_ids[]=$row['item_cart_id'];
+					}
+					
 				}
-				
 			}
+			
 	
 			
 		}
@@ -478,11 +482,15 @@ if($ac=='new_order')
 		}
 		*/	
 		
+		
+		$item_cart_ids_str=implode(',',$get_item_cart_ids);
+		
 		$order_money=0;
 		//item_list
 		$order_item_ids=array();
 		$order_item_names=array();
-		$list=DB::query("select parent_id from tbl_item_cart where field_uid='".$field_uid."' and uid='".$uid."'  and item_id in (".$_G['gp_ids'].")  and item_cart_status=0  group by parent_id order by item_cart_addtime desc ");
+		$table_arr=array();
+		$list=DB::query("select parent_id from tbl_item_cart where field_uid='".$field_uid."' and uid='".$uid."'  and item_cart_id in (".$item_cart_ids_str.")  and item_cart_status=0  group by parent_id order by item_cart_addtime desc ");
 		while($row=DB::fetch($list))
 		{
 			$parent_item_info=DB::fetch_first("select item_id,item_name,item_intro,item_pic_small from tbl_item where item_id='".$row['parent_id']."' ");
@@ -504,19 +512,16 @@ if($ac=='new_order')
 			$row['sub_list']=null;
 			if($row['parent_id'])
 			{
-				$sub_list=DB::query("select item_cart_id,item_id,item_name,item_price,item_num as item_num_buy,(select item_num_canbuy from tbl_item where item_id=tbl_item_cart.item_id) as item_num_canbuy,(select item_num from tbl_item where item_id=tbl_item_cart.item_id) as item_num,(select item_intro from tbl_item where item_id=tbl_item_cart.item_id) as item_intro from tbl_item_cart where field_uid='".$field_uid."' and uid='".$uid."' and parent_id='".$row['parent_id']."' and item_id in (".$_G['gp_ids'].")  and item_cart_status=0 ");
+				$sub_list=DB::query("select item_cart_id,item_id,item_name,item_price,item_num as item_num_buy,(select item_num_canbuy from tbl_item where item_id=tbl_item_cart.item_id) as item_num_canbuy,(select item_num from tbl_item where item_id=tbl_item_cart.item_id) as item_num,(select item_intro from tbl_item where item_id=tbl_item_cart.item_id) as item_intro,(select ext_table_name from tbl_item where item_id=tbl_item_cart.item_id) as ext_table_name from tbl_item_cart where field_uid='".$field_uid."' and uid='".$uid."' and parent_id='".$row['parent_id']."' and item_cart_id in (".$item_cart_ids_str.")  and item_cart_status=0 ");
 				while($sub_row=DB::fetch($sub_list))
 				{
 				
 					$order_money =$order_money+$sub_row['item_price'];
-					
-					
 					$sub_row['item_price']=$sub_row['item_price']/100;
-					
 					$order_item_ids[]=$sub_row['item_id'];
 					$order_item_names[]=$sub_row['item_name'];
 					
-					
+					$table_arr[]=$sub_row['ext_table_name'];
 					
 					//获取数量
 					for($j=0; $j<count($get_item_cart_ids); $j++)
@@ -565,30 +570,48 @@ if($ac=='new_order')
 		$field_list[0]['name']="order_realname";
 		$field_list[0]['name_cn']="姓名";
 		$field_list[0]['type']="input";
+		$field_list[0]['type_more']=null;
 		$field_list[0]['max_size']="50";
 		$field_list[0]['value']=$order_info['order_realname'];
 		
 		$field_list[1]['name']="order_mobile";
 		$field_list[1]['name_cn']="手机";
 		$field_list[1]['type']="input";
+		$field_list[1]['type_more']=null;
 		$field_list[1]['max_size']="50";
 		$field_list[1]['value']=$order_info['order_mobile'];
 		
 		$field_list[2]['name']="order_post";
 		$field_list[2]['name_cn']="邮编";
 		$field_list[2]['type']="input";
+		$field_list[2]['type_more']=null;
 		$field_list[2]['max_size']="50";
 		$field_list[2]['value']=$order_info['order_post'];
 		
 		$field_list[3]['name']="order_address";
 		$field_list[3]['name_cn']="地址";
 		$field_list[3]['type']="input";
+		$field_list[3]['type_more']=null;
 		$field_list[3]['max_size']="50";
 		$field_list[3]['value']=$order_info['order_address'];
 		
+		
+		//这里增加外表，引入其他字段，并去重
+		$field_array=array();
+		for($i=0; $i<count($table_arr); $i++)
+		{
+			$new_arr=include('data/'.$table_arr[$i].'_array_data.php');
+			$field_array=array_merge($field_array,$new_arr);
+		}
+		$field_array=array_flip(array_flip($field_array));
+		
+		//合并在一起
+		$field_list=array_merge($field_array,$field_list);
+		
+
 		for($i=0; $i<count($field_list); $i++)
 		{
-			$field_list[$i]=array_default_value($field_list[$i]);
+			$field_list[$i]=array_default_value($field_list[$i],array('type_more'));
 		}
 	
 		$data['title']	= "data";
@@ -628,7 +651,7 @@ if($ac=='new_order_save')
 	if($order_sn)
 	{
 		
-		$order_info=DB::fetch_first("select order_id,item_ids,item_nums from tbl_order where order_sn='".$order_sn."' ");
+		$order_info=DB::fetch_first("select order_id,item_ids,item_nums,order_mobile,order_realname,order_address,order_post from tbl_order where order_sn='".$order_sn."' ");
 		$item_ids=explode(",",$order_info['item_ids']);
 		$item_nums=explode(",",$order_info['item_nums']);
 		for($i=0; $i<count($item_ids); $i++)
@@ -655,7 +678,11 @@ if($ac=='new_order_save')
 			$sql_str="";
 			for($i=0; $i<count($names); $i++)
 			{
-				$sql_str .=" ,".$names[$i]."='".$values[$i]."' ";
+				if($names[$i]!='' && $values[$i]!='')
+				{
+					$sql_str .=" ,".$names[$i]."='".$values[$i]."' ";
+				}
+				
 			}
 		}
 		
