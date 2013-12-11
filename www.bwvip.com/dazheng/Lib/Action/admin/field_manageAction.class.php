@@ -42,6 +42,9 @@ class field_manageAction extends AdminAuthAction
 			$data["field_uid"]=post("field_uid");
 			$data["field_name"]	= post('field_name');
 			$data["field_status"] = post('field_status');
+			$data["field_content"]=stripslashes(post("field_content"));
+			$data["field_download_num"]=post("field_download_num");
+			$data["field_zuobiao"]=post("field_zuobiao");
 			$data["field_addtime"]=time();
 			$uploadinfo=upload_file("upload/field_pic/");
 			if($_FILES["field_pic"]["error"]==0 && $_FILES["field_pic"]["name"])
@@ -95,6 +98,9 @@ class field_manageAction extends AdminAuthAction
 			$data["field_uid"]=post("field_uid");
 			$data["field_name"]	= post('field_name');
 			$data["field_status"] = post('field_status');
+			$data["field_content"]=stripslashes(post("field_content"));
+			$data["field_download_num"]=post("field_download_num");
+			$data["field_zuobiao"]=post("field_zuobiao");
 			$data["field_addtime"]=time();
 			$uploadinfo=upload_file("upload/field_pic/");
 			if($_FILES["field_pic"]["error"]==0 && $_FILES["field_pic"]["name"])

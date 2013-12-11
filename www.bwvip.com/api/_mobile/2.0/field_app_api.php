@@ -178,7 +178,7 @@ if($ac=="app_detail")
 		
 		
 		//下载信息
-		$download_info=DB::fetch_first("select app_version_id,app_version_type,app_version_number,app_version_name,app_version_content,app_version_file,app_version_url,app_version_language,app_version_size,app_version_addtime from tbl_app_version where app_version_type='".$app_version_type."' and field_uid='".$field_uid."' order by app_version_number desc limit 1 ");
+		$download_info=DB::fetch_first("select app_version_id,app_version_type,app_version_number,app_version_name,app_version_content,app_version_file,app_version_url,app_version_language,app_version_size,app_version_addtime,app_version_package from tbl_app_version where app_version_type='".$app_version_type."' and field_uid='".$field_uid."' order by app_version_number desc limit 1 ");
 		if($download_info['app_version_addtime'])
 		{
 			$field_app_info['app_version_addtime']=date("Y-m-d",$download_info['app_version_addtime']);
@@ -199,6 +199,9 @@ if($ac=="app_detail")
 		
 		$field_app_info['app_version_size']=$download_info['app_version_size'];
 		$field_app_info['app_version_name']=$download_info['app_version_name'];
+		$field_app_info['app_download_url']=$download_info['app_version_file'];
+		$field_app_info['app_version_package']=$download_info['app_version_package'];
+		$field_app_info['app_version_number']=$download_info['app_version_number'];
 		
 		unset($download_info);
 	

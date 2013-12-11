@@ -1,0 +1,94 @@
+<include file="../public/header_dialog" />
+<div class="page_tit">客户端图片</div>
+  <div class="tit_tab">
+	<ul>
+		<li><a class=on href="#">修改图片</a></li>
+	</ul>
+  </div>
+
+{$usejs}
+
+<table border="0" cellspacing="0" cellpadding="0" style="width:900px;">
+<tr>
+<td>
+<!--/dialog_start-->
+
+<form method="post" id="act_form" name="act_form" action="{:U('admin/field_pic/field_pic_edit_action')}" enctype="multipart/form-data">
+	<table class="add_table" border="0" cellspacing="0" cellpadding="0" >
+				<tbody>
+				<tr>
+					<th><font color="red">*</font>图片名称：</th>
+					<td>
+						<input type="text" name="field_pic_name" id="field_pic_name" class="mod_input2" style="width:300px;" value="{$data.field_pic_name}">
+						<!-- <span class="help_info">(仅用于区分、标识图片，没有实际作用)</span> -->
+					</td>
+				</tr>
+				
+				<tr>
+					<th><font color="red">*</font>所属客户端：</th>
+					<td>
+						<select name="field_uid" id="field_uid" class="mod_select">
+							<option value="">请选择</option>
+							{$app_list}
+						</select>
+						<script>set_select_value(document.act_form.field_uid,"{$data.field_uid}");</script>
+					</td>
+				</tr>
+				
+				
+				<tr>
+					<th><font color="red">*</font>图片：</th>
+					<td>
+						<php>if($data['field_pic_url']){echo '<img style="max-height:300px; max-width:300px;" src="'.$data['field_pic_url'].'">';}</php>
+						<br/>
+						<input type="file" name="field_pic_file" id="field_pic_file"  class="mod_input" style="width:300px;">
+						<br />
+						<!-- <span class="help_info">(图片图片默认传1张，也可以传3张)</span> -->
+					</td>
+				</tr>
+
+				<tr>
+					<th><font color="red">*</font>排序：</th>
+					<td><input type="text" name="field_pic_sort" id="field_pic_sort" class="mod_input2" style="width:100px;" value="{$data.field_pic_sort}">
+					<span class="help_info">(数值越大，排序越靠前)</span>
+					</td>
+				</tr>
+
+			
+		</tbody>
+		<tfoot>
+			<tr>
+				<th></th>
+				<td>
+					<input type="hidden" name="field_pic_id" value="{$data.field_pic_id}">
+					<input type="submit" class="btn_b" value="保存" style="margin-right:10px;"/>
+					<input type="button" class="btn_w" onclick="javascript:history.back(-1);" value="返回" />
+				</td>
+		</tfoot>
+	</table><!--/add_table-->
+</form>
+
+<script>
+$(document).ready(function(){
+$.formValidator.initConfig({formID:"act_form",theme:'ArrowSolidBox',mode:'AutoTip',onError:function(msg){msg_error(msg)},inIframe:true});
+
+	$("#field_pic_name").formValidator({onShow:"请输入图片名称",onFocus:"请输入图片名称",onCorrect:"输入正确"}).inputValidator({min:1,max:50,onError:"请输入图片名称"});
+	
+	$("#field_pic_file").formValidator({onShow:"请输入文件地址",onFocus:"请输入文件地址",onCorrect:"输入正确"}).inputValidator({min:1,max:300,onError:"请输入文件地址"});
+	$.formValidator.reloadAutoTip();
+});
+
+function reloadAutoTip()
+{
+	$.formValidator.reloadAutoTip();
+}
+
+</script>
+
+
+<!--/dialog_end-->
+</td>
+</tr>
+</table>
+
+<include file="../public/_footer" />

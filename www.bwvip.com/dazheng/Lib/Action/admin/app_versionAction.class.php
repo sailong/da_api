@@ -46,7 +46,10 @@ class app_versionAction extends AdminAuthAction
 			$data["app_version_file"]=post("app_version_file");
 			$data["app_version_url"]=post("app_version_url");
 			$data["app_version_is_important"]=post("app_version_is_important");
+			$data["app_version_package"] = post("app_version_package");
 			$data["field_uid"]=post("field_uid");
+			$data["app_version_language"]=post("app_version_language");
+			$data["app_version_size"]=post("app_version_size");
 			$data["app_version_addtime"]=time();
 			
 			$list=M("app_version")->add($data);
@@ -98,11 +101,13 @@ class app_versionAction extends AdminAuthAction
 			$data["app_version_file"]=post("app_version_file");
 			$data["app_version_url"]=post("app_version_url");
 			$data["field_uid"]=post("field_uid");
+			$data["app_version_language"]=post("app_version_language");
+			$data["app_version_size"]=post("app_version_size");
 			if(post("app_version_is_important"))
 			{
 				$data["app_version_is_important"]=post("app_version_is_important");
 			}
-			
+			$data["app_version_package"] = post("app_version_package");
 			$list=M("app_version")->save($data);
 			if($list!=false)
 			{
