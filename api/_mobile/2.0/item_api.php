@@ -10,6 +10,8 @@ if(!defined("IN_DISCUZ"))
 	exit('Access Denied');
 }
 
+//当前文件所在路径
+$current_path = dirname(__FILE__); 
 
 
 $ac=$_G['gp_ac'];
@@ -408,13 +410,12 @@ if($ac=='new_order')
 	$uid=$_G['gp_uid'];
 	$old_order_sn=$_G['gp_old_order_sn'];
 	
-	$item_cart_ids=explode(",",$_G['gp_item_cart_ids']);
+	$item_cart_ids=explode("','",$_G['gp_item_cart_ids']);
 	$item_ids=explode(",",$_G['gp_ids']);
 	$item_nums=explode(",",$_G['gp_nums']);
 	
 	if(count($item_ids) == count($item_nums))
 	{
-		
 		
 		//如果没有传item_cart_id，就先加入购物车
 		if(!$item_cart_ids[0])
@@ -483,14 +484,16 @@ if($ac=='new_order')
 		*/	
 		
 		
-		$item_cart_ids_str=implode(',',$get_item_cart_ids);
+		$item_cart_ids_str=implode("','",$get_item_cart_ids);
 		
 		$order_money=0;
 		//item_list
 		$order_item_ids=array();
 		$order_item_names=array();
 		$table_arr=array();
-		$list=DB::query("select parent_id from tbl_item_cart where field_uid='".$field_uid."' and uid='".$uid."'  and item_cart_id in (".$item_cart_ids_str.")  and item_cart_status=0  group by parent_id order by item_cart_addtime desc ");
+		$list=DB::query("select parent_id from tbl_item_cart where field_uid='".$field_uid."' and uid='".$uid."'  and item_cart_id in ('".$item_cart_ids_str."')  group by parent_id order by item_cart_addtime desc ");//  and item_cart_status=0 
+		/* echo "select parent_id from tbl_item_cart where field_uid='".$field_uid."' and uid='".$uid."'  and item_cart_id in ('".$item_cart_ids_str."')  and item_cart_status=0  group by parent_id order by item_cart_addtime desc";
+		var_dump($list);die; */
 		while($row=DB::fetch($list))
 		{
 			$parent_item_info=DB::fetch_first("select item_id,item_name,item_intro,item_pic_small from tbl_item where item_id='".$row['parent_id']."' ");
@@ -510,9 +513,11 @@ if($ac=='new_order')
 			}
 
 			$row['sub_list']=null;
+			
 			if($row['parent_id'])
 			{
-				$sub_list=DB::query("select item_cart_id,item_id,item_name,item_price,item_num as item_num_buy,(select item_num_canbuy from tbl_item where item_id=tbl_item_cart.item_id) as item_num_canbuy,(select item_num from tbl_item where item_id=tbl_item_cart.item_id) as item_num,(select item_intro from tbl_item where item_id=tbl_item_cart.item_id) as item_intro,(select ext_table_name from tbl_item where item_id=tbl_item_cart.item_id) as ext_table_name from tbl_item_cart where field_uid='".$field_uid."' and uid='".$uid."' and parent_id='".$row['parent_id']."' and item_cart_id in (".$item_cart_ids_str.")  and item_cart_status=0 ");
+				$sub_list=DB::query("select item_cart_id,item_id,item_name,item_price,item_num as item_num_buy,(select item_num_canbuy from tbl_item where item_id=tbl_item_cart.item_id) as item_num_canbuy,(select item_num from tbl_item where item_id=tbl_item_cart.item_id) as item_num,(select item_intro from tbl_item where item_id=tbl_item_cart.item_id) as item_intro,(select ext_table_name from tbl_item where item_id=tbl_item_cart.item_id) as ext_table_name from tbl_item_cart where field_uid='".$field_uid."' and uid='".$uid."' and parent_id='".$row['parent_id']."' and item_cart_id in ('".$item_cart_ids_str."')");//  and item_cart_status=0 
+				
 				while($sub_row=DB::fetch($sub_list))
 				{
 				
@@ -521,7 +526,7 @@ if($ac=='new_order')
 					$order_item_ids[]=$sub_row['item_id'];
 					$order_item_names[]=$sub_row['item_name'];
 					
-					$table_arr[]=$sub_row['ext_table_name'];
+					$table_arr[$sub_row['ext_table_name']]=$sub_row['ext_table_name'];
 					
 					//获取数量
 					for($j=0; $j<count($get_item_cart_ids); $j++)
@@ -556,6 +561,11 @@ if($ac=='new_order')
 		if($old_order_sn)
 		{
 			$order_info=DB::fetch_first("select * from tbl_order where order_sn='".$old_order_sn."' and uid='".$uid."' limit 1");
+			/* echo "select * from tbl_order where order_sn='".$old_order_sn."' and uid='".$uid."' limit 1";
+			echo 444;
+			echo '<pre>';
+			var_dump($order_info);
+			echo 555;die; */
 		}
 		else
 		{
@@ -567,6 +577,7 @@ if($ac=='new_order')
 		}
 		
 		//field s
+		$field_list=array();
 		$field_list[0]['name']="order_realname";
 		$field_list[0]['name_cn']="姓名";
 		$field_list[0]['type']="input";
@@ -595,20 +606,44 @@ if($ac=='new_order')
 		$field_list[3]['max_size']="50";
 		$field_list[3]['value']=$order_info['order_address'];
 		
-		
 		//这里增加外表，引入其他字段，并去重
-		$field_array=array();
-		for($i=0; $i<count($table_arr); $i++)
-		{
-			$new_arr=include('data/'.$table_arr[$i].'_array_data.php');
-			$field_array=array_merge($field_array,$new_arr);
-		}
-		$field_array=array_flip(array_flip($field_array));
-		
-		//合并在一起
-		$field_list=array_merge($field_array,$field_list);
 		
 
+		$field_array=array();
+		$new_field_array=array();
+		foreach($table_arr as $key=>$val)
+		{
+			//$new_arr=include('./api/_mobile/'.$versions.'/data/'.$table_arr[$i].'_array_data.php');
+			$new_arr=include($current_path.'/data/'.$val.'_array_data.php');
+			
+			$table_info = DB::fetch_first("select * from {$val} where order_id='".$order_info['order_id']."' limit 1");
+			foreach($new_arr as $key=>$val){
+				$val['value']=$table_info[$val['name']];
+				$new_arr[$key] = $val;
+			}
+			
+			$new_field_array=array_merge($new_field_array,$new_arr);
+		}
+		
+		foreach($new_field_array  as $key=>$val){
+			unset($new_field_array[$key]);
+			$new_field_array[$val['name']] = $val;
+		}
+		
+		foreach($new_field_array  as $key=>$val){
+			unset($new_field_array[$key]);
+			$field_array[] = $val;
+		}
+		
+		//$field_array=array_flip(array_flip($field_array));
+		//$field_array=array_del_chongfu($field_array);
+		//$field_array=unique_arr($field_array,true);
+		
+		//print_r($field_array);
+	
+		//合并在一起
+		$field_list=array_merge($field_list,$field_array);
+		
 		for($i=0; $i<count($field_list); $i++)
 		{
 			$field_list[$i]=array_default_value($field_list[$i],array('type_more'));
@@ -617,9 +652,9 @@ if($ac=='new_order')
 		$data['title']	= "data";
 		$data['data']   =  array(
 			'item_list'=>$item_list,
-			'field_list'=>$field_list,
+			'field_list'=>$item_list ? $field_list : null,
 			'order_money'=>$order_money,
-			'order_sn'=>$order_sn
+			'order_sn'=>$item_list? $order_sn : ''
 		);
 		api_json_result(1,0,$app_error['event']['10502'],$data);
 		
@@ -633,7 +668,64 @@ if($ac=='new_order')
 	
 }
 
+if($ac=='test_w_order'){
+echo '<pre>';
+ 		$field_list=array();
+		$field_list[0]['name']="order_realname";
+		$field_list[0]['name_cn']="姓名";
+		$field_list[0]['type']="input";
+		$field_list[0]['type_more']=null;
+		$field_list[0]['max_size']="50";
+		$field_list[0]['value']=$order_info['order_realname'];
+		
+		$field_list[1]['name']="order_mobile";
+		$field_list[1]['name_cn']="手机";
+		$field_list[1]['type']="input";
+		$field_list[1]['type_more']=null;
+		$field_list[1]['max_size']="50";
+		$field_list[1]['value']=$order_info['order_mobile'];
+		
+		$field_list[2]['name']="order_post";
+		$field_list[2]['name_cn']="邮编";
+		$field_list[2]['type']="input";
+		$field_list[2]['type_more']=null;
+		$field_list[2]['max_size']="50";
+		$field_list[2]['value']=$order_info['order_post'];
+		
+		$field_list[3]['name']="order_address";
+		$field_list[3]['name_cn']="地址";
+		$field_list[3]['type']="input";
+		$field_list[3]['type_more']=null;
+		$field_list[3]['max_size']="50";
+		$field_list[3]['value']=$order_info['order_address'];
+		$table_arr['tbl_item_order_bmw'] = 'tbl_item_order_bmw';
+		$table_arr['tbl_item_order_lpga'] = 'tbl_item_order_lpga';
+		echo '<pre>';
+		var_dump($field_list);
+		$field_array=array();
+		foreach($table_arr as $key=>$val)
+		{
+			//$new_arr=include('./api/_mobile/'.$versions.'/data/'.$table_arr[$i].'_array_data.php');
+			$new_arr=include($current_path.'/data/'.$val.'_array_data.php');
+			$field_array=$field_array+$new_arr;
+		}
+		var_dump($field_array);
+		//$field_array=array_flip(array_flip($field_array));
+		//$field_array=array_del_chongfu($field_array);
+		//$field_array=unique_arr($field_array,true);
+		//print_r($field_array);
+	
+		//合并在一起
+		$field_list=array_merge($field_list,$field_array);
+		var_dump($field_list);die;
 
+		for($i=0; $i<count($field_list); $i++)
+		{
+			$field_list[$i]=array_default_value($field_list[$i],array('type_more'));
+		}
+		
+		var_dump($field_list);
+}
 
 //提交订单
 if($ac=='new_order_save')
@@ -650,43 +742,98 @@ if($ac=='new_order_save')
 	
 	if($order_sn)
 	{
-		
-		$order_info=DB::fetch_first("select order_id,item_ids,item_nums,order_mobile,order_realname,order_address,order_post from tbl_order where order_sn='".$order_sn."' ");
+		$table_arr=array();
+		$order_info=DB::fetch_first("select order_id,item_ids,item_nums from tbl_order where order_sn='".$order_sn."' ");
 		$item_ids=explode(",",$order_info['item_ids']);
 		$item_nums=explode(",",$order_info['item_nums']);
 		for($i=0; $i<count($item_ids); $i++)
 		{
-			$cart_info=DB::fetch_first("select item_cart_id,item_num from tbl_item_cart where item_id='".$item_ids[$i]."' and item_cart_status=0 ");
+			$item_nums[$i] = $item_nums[$i]?$item_nums[$i]:0;
+			$cart_info=DB::fetch_first("select item_cart_id,item_num,(select ext_table_name from tbl_item where item_id=tbl_item_cart.item_id) as ext_table_name from tbl_item_cart where item_id='".$item_ids[$i]."' and item_cart_status=0 ");
 			if($cart_info['item_cart_id'])
 			{
 				$up=DB::query("update tbl_item_cart set item_num='".$item_nums[$i]."',item_cart_status=1,order_id='".$order_info['order_id']."' where item_cart_id='".$cart_info['item_cart_id']."' ");
+				
+				$table_arr[]=$cart_info['ext_table_name'];
 			}
 			
 			$up2=DB::query("update tbl_item set item_num=item_num-".$item_nums[$i]." where item_id='".$item_ids[$i]."' ");
 			
-			/*
-			if(intval($item_ids[$i]) && intval($item_nums[$i]))
-			{
-				
-			}
-			*/
-			
 		}
 	
+		$field_arr=array();
+		$field_arr[0]['name']='order_id';
+		$field_arr[0]['value']=$order_info['order_id'];
+					
 		if(count($names) == count($values))
 		{
+			$n=0;
 			$sql_str="";
+			$order_sql_str="";
 			for($i=0; $i<count($names); $i++)
 			{
-				if($names[$i]!='' && $values[$i]!='')
+				
+				if($names[$i]=="order_realname" )
 				{
-					$sql_str .=" ,".$names[$i]."='".$values[$i]."' ";
+					$order_sql_str .=" ,".$names[$i]."='".$values[$i]."' ";
+					$n=$n+1;
+					$family_name = mb_strcut($values[$i], 0, 3, 'utf-8'); 
+					$field_arr[$n]['name']='family_name';
+					$field_arr[$n]['value']=$family_name;
+					$n=$n+1;
+					$name = mb_strcut($values[$i], 3, 8, 'utf-8');
+					$field_arr[$n]['name']='name';
+					$field_arr[$n]['value']=$name;
+				}elseif($names[$i]=="order_mobile")
+				{
+					$order_sql_str .=" ,".$names[$i]."='".$values[$i]."' ";
+					$n=$n+1;
+					$field_arr[$n]['name']='phone';
+					$field_arr[$n]['value']=$values[$i];
+				}elseif($names[$i]=="order_post")
+				{
+					$order_sql_str .=" ,".$names[$i]."='".$values[$i]."' ";
+					$n=$n+1;
+					$field_arr[$n]['name']='postcode';
+					$field_arr[$n]['value']=$values[$i];
+				}elseif($names[$i]=="order_address" )
+				{
+					$order_sql_str .=" ,".$names[$i]."='".$values[$i]."' ";
+					$n=$n+1;
+					$field_arr[$n]['name']='address';
+					$field_arr[$n]['value']=$values[$i];
+				}else{
+					$n=$n+1;
+					$field_arr[$n]['name']=$names[$i];
+					$field_arr[$n]['value']=$values[$i];
 				}
 				
 			}
+			$n=$n+1;
+			$field_arr[$n]['name']='addtime';
+			$field_arr[$n]['value']=time();
 		}
 		
-		$up=DB::query("update tbl_order set order_status=0,order_lasttime='".time()."' ".$sql_str."   where order_sn='".$order_sn."' ");
+	
+		
+		//获取到的POST，保存到不同的表里
+		$table_arr=array_unique($table_arr);
+		
+		for($i=0; $i<count($table_arr); $i++)
+		{
+			//$new_sql=include('./api/_mobile/'.$versions.'/data/'.$table_arr[$i].'_sql_data.php');
+			$new_sql=include($current_path.'/data/'.$table_arr[$i].'_sql_data.php');
+			for($j=0; $j<count($field_arr); $j++)
+			{
+				$new_sql=str_replace("{value_".$field_arr[$j]['name']."}",$field_arr[$j]['value'],$new_sql);
+			}
+			$new_sql = preg_replace("/{\w*}/",'',$new_sql);
+			$ups=DB::query($new_sql);
+			
+		}
+		
+		$up=DB::query("update tbl_order set order_status=0,order_lasttime='".time()."'  ".$order_sql_str."   where order_sn='".$order_sn."' ");
+		//echo "update tbl_order set order_status=0,order_lasttime='".time()."'  ".$order_sql_str."   where order_sn='".$order_sn."' ";
 		api_json_result(1,0,'提交成功，现在跳转支付流程',$data);
 	}
 	else

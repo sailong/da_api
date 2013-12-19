@@ -71,7 +71,7 @@ $hot_2013district=array(
 //选择 赛事
 if($ac=="select_event")
 {
-	$list3=DB::query("select event_id,event_name,event_uid,event_is_zhutui,event_zhutui_pic,event_content,event_url,event_type,event_logo from tbl_event where event_is_zhutui='Y' and field_uid=0 order by event_sort desc limit 1 ");
+	$list3=DB::query("select event_id,event_name,event_uid,event_is_zhutui,event_zhutui_pic,event_content,event_url,event_type,event_logo,event_video_url,event_audio_url,event_city from tbl_event where event_is_zhutui='Y' and field_uid=0 order by event_sort desc limit 1 ");
 	while($row3 = DB::fetch($list3))
 	{
 		if($row3['event_zhutui_pic'])
@@ -85,10 +85,28 @@ if($ac=="select_event")
 		$row3['event_pic']=$site_url."/uc_server/avatar.php?uid=".$row['event_uid']."&size=middle";
 		$row3['uid']=$row3['event_id'];
 		$row3['event_content']=msubstr(cutstr_html($row3['event_content']),0,30);
+		
+		if(!$row3['event_audio_url'])
+		{
+			$row3['event_audio_url']="";
+		}
+		if(!$row3['event_video_url'])
+		{
+			$row3['event_video_url']="";
+		}
+		
+		
+		if(!$row['event_city'])
+		{
+			$row['event_city']="";
+		}
+		
+		
+		
 		$list_data3[]=$row3;
 	}
 
-	$list=DB::query("select event_id,event_name,event_id as event_uid,event_is_zhutui,event_content,event_url,event_type,event_logo,event_starttime,event_endtime from tbl_event where event_is_tj='Y' and (event_viewtype='B' or event_viewtype='A' or event_viewtype='S') order by event_sort desc  ");
+	$list=DB::query("select event_id,event_name,event_id as event_uid,event_is_zhutui,event_content,event_url,event_type,event_logo,event_starttime,event_endtime,event_video_url,event_audio_url,event_city from tbl_event where event_is_tj='Y' and (event_viewtype='B' or event_viewtype='A' or event_viewtype='S') order by event_sort desc  ");
 	while($row = DB::fetch($list))
 	{
 		
@@ -100,12 +118,38 @@ if($ac=="select_event")
 		$row['uid']=$row['event_uid'];
 		$row['event_content']=msubstr(cutstr_html($row['event_content']),0,30);
 		
-		$row['event_content']=date('Y年m月d日',$row['event_starttime'])." ~ ".date('m月d日',$row['event_endtime']);
+		
+		if(date('m',$row['event_starttime']) == date('m',$row['event_endtime']) )
+		{
+			$row['event_content']=date('Y年m月d',$row['event_starttime'])." ~ ".date('d日',$row['event_endtime']);
+		}
+		else
+		{
+			$row['event_content']=date('Y年m月d日',$row['event_starttime'])." ~ ".date('m月d日',$row['event_endtime']);
+		}
+		
+		
 		
 		if(!$row['event_url'])
 		{
 			$row['event_url']=null;
 		}
+		
+		if(!$row['event_audio_url'])
+		{
+			$row['event_audio_url']="";
+		}
+		if(!$row['event_video_url'])
+		{
+			$row['event_video_url']="";
+		}
+		
+		if(!$row['event_city'])
+		{
+			$row['event_city']="";
+		}
+		
+		
 		$list_data[]=$row;
 	}
 	
@@ -138,7 +182,7 @@ if($ac=="apply_ing")
 {
 	$login_uid=$_G['gp_login_uid'];
 
-	$list=DB::query("select event_id,field_uid,event_name,event_uid,event_is_zhutui,event_content,event_url,event_type,event_logo from tbl_event where event_baoming_starttime<=".time()." and event_baoming_endtime>=".time()." and (event_viewtype='B' or (field_uid=0) or event_viewtype='S') and event_is_baoming='Y' order by event_baoming_starttime desc  limit 100 ");
+	$list=DB::query("select event_id,field_uid,event_name,event_uid,event_is_zhutui,event_content,event_url,event_type,event_logo,event_video_url,event_audio_url,event_city from tbl_event where event_baoming_starttime<=".time()." and event_baoming_endtime>=".time()." and (event_viewtype='B' or (field_uid=0) or event_viewtype='S') and event_is_baoming='Y' order by event_baoming_starttime desc  limit 100 ");
 	while($row = DB::fetch($list))
 	{
 		if($login_uid)
@@ -199,6 +243,22 @@ if($ac=="apply_ing")
 		{
 			$row['event_url']=null;
 		}
+		
+		if(!$row['event_audio_url'])
+		{
+			$row['event_audio_url']="";
+		}
+		if(!$row['event_video_url'])
+		{
+			$row['event_video_url']="";
+		}
+		
+		
+		if(!$row['event_city'])
+		{
+			$row['event_city']="";
+		}
+		
 		
 		//$row['event_pic']=$site_url."/uc_server/avatar.php?uid=".$row['event_uid']."&size=middle";
 		$row['event_pic']=$site_url."/".$row['event_logo'];
