@@ -66,7 +66,11 @@ class eventAction extends AdminAuthAction
 			$data["event_right"]=post("event_right");
 			$data["event_right_flag"]=post("event_right_flag");
 			$data["event_right_intro"]=post("event_right_intro");
-		
+			//add2013.12.10start
+			$data["event_audio_url"]=post("event_audio_url");
+			$data["event_video_url"]=post("event_video_url");
+			$data["event_city"]=post("event_city");
+			//add2013.12.10end
 			$uploadinfo=upload_file("upload/event/");
 				
 			foreach($uploadinfo as $key=>$val){
@@ -103,7 +107,14 @@ class eventAction extends AdminAuthAction
 			if(!empty($uploadinfo["event_ticket_ad_pic"])) {
 				$data["event_ticket_ad_pic"]=$uploadinfo["event_ticket_ad_pic"]["savepath"] . $uploadinfo["event_ticket_ad_pic"]["savename"];
 			}
+			//by_top_pic
+			if(!empty($uploadinfo["by_top_pic"])) {
+				$data["by_top_pic"]=$uploadinfo["by_top_pic"]["savepath"] . $uploadinfo["by_top_pic"]["savename"];
+			}
 			
+			if(!empty($uploadinfo["event_audio_bg"])) {
+				$data["event_audio_bg"]=$uploadinfo["event_audio_bg"]["savepath"] . $uploadinfo["event_audio_bg"]["savename"];
+			}
 
 			$data["event_starttime"]=strtotime(post("event_starttime"));
 			$data["event_endtime"]=strtotime(post("event_endtime"));
@@ -192,6 +203,11 @@ class eventAction extends AdminAuthAction
 			$data["event_right"]=post("event_right");
 			$data["event_right_flag"]=post("event_right_flag");
 			$data["event_right_intro"]=post("event_right_intro");
+			//add2013.12.10start
+			$data["event_audio_url"]=post("event_audio_url");
+			$data["event_video_url"]=post("event_video_url");
+			$data["event_city"]=post("event_city");
+			//add2013.12.10end
 			
 			$uploadinfo=upload_file("upload/event/");
 			
@@ -228,6 +244,15 @@ class eventAction extends AdminAuthAction
 			//event_ticket_ad_pic
 			if(!empty($uploadinfo["event_ticket_ad_pic"])) {
 				$data["event_ticket_ad_pic"]=$uploadinfo["event_ticket_ad_pic"]["savepath"] . $uploadinfo["event_ticket_ad_pic"]["savename"];
+			}
+			
+			//by_top_pic
+			if(!empty($uploadinfo["by_top_pic"])) {
+				$data["by_top_pic"]=$uploadinfo["by_top_pic"]["savepath"] . $uploadinfo["by_top_pic"]["savename"];
+			}
+			
+			if(!empty($uploadinfo["event_audio_bg"])) {
+				$data["event_audio_bg"]=$uploadinfo["event_audio_bg"]["savepath"] . $uploadinfo["event_audio_bg"]["savename"];
 			}
 			
 			$data["event_starttime"]=strtotime(post("event_starttime"));

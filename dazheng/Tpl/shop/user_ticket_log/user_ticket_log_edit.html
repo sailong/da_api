@@ -1,0 +1,90 @@
+<include file="../public/header_dialog" />
+{$usejs}
+
+<div class="so_main">
+
+  <div class="page_tit">验票管理</div>
+  <div class="tit_tab">
+	<ul>
+		<li><a class=on href="#">修改验票</a></li>
+	</ul>
+  </div>
+
+<table border="0" cellspacing="0" cellpadding="0" style="width:900px;">
+<tr>
+<td>
+<!--/dialog_start-->
+
+<form method="post" id="act_form" name="act_form" action="{:U('piao/user_ticket_log/user_ticket_log_edit_action')}" enctype="multipart/form-data">
+	<table class="add_table" border="0" cellspacing="0" cellpadding="0" >
+		<tbody>
+		<tr>
+					<th>所属用户：</th>
+					<td><input type="text" name="uid" id="uid" class="mod_input2" style="width:66px;"  value="{$data.uid}"></td>
+				</tr>
+				<tr>
+					<th>所属门票：</th>
+					<td><input type="text" name="ticket_id" id="ticket_id" class="mod_input2" style="width:66px;"  value="{$data.ticket_id}"></td>
+				</tr>
+				<tr>
+					<th>领取码：</th>
+					<td><input type="text" name="user_ticket_code" id="user_ticket_code" class="mod_input2" style="width:300px;"  value="{$data.user_ticket_code}"></td>
+				</tr>
+				<tr>
+					<th>来源：</th>
+					<td><input type="text" name="user_ticket_log_source" id="user_ticket_log_source" class="mod_input2" style="width:300px;"  value="{$data.user_ticket_log_source}"></td>
+				</tr>
+				<tr>
+					<th>状态：</th>
+					<td>
+						<select name="user_ticket_log_status">
+							<option value="">请选择</option>
+							<option value="{$data.user_ticket_log_status}">{$data.user_ticket_log_status}</option>
+						</select>
+						<script>set_select_value(document.act_form.user_ticket_log_status,"{$data.user_ticket_log_status}");</script>
+					</td>
+				</tr>
+				
+		</tbody>
+		<tfoot>
+			<tr>
+				<th></th>
+				<td>
+					<input type="hidden" name="user_ticket_log_id" value="{$data.user_ticket_log_id}">
+					<input type="submit" class="btn_b" value="保存" style="margin-right:10px;"/>
+					<input type="button" class="btn_w" onclick="javascript:history.back(-1);" value="返回" />
+				</td>
+		</tfoot>
+	</table><!--/add_table-->
+</form>
+
+<script>
+$(document).ready(function(){
+$.formValidator.initConfig({formID:"act_form",theme:'ArrowSolidBox',mode:'AutoTip',onError:function(msg){msg_error(msg)},inIframe:true});
+
+	$("#uid").formValidator({empty:true,onShow:"请输入所属用户",onFocus:"请输入所属用户",onCorrect:"输入正确"}).inputValidator({min:1,max:11,onError:"请输入所属用户"});
+		$("#ticket_id").formValidator({empty:true,onShow:"请输入所属门票",onFocus:"请输入所属门票",onCorrect:"输入正确"}).inputValidator({min:1,max:11,onError:"请输入所属门票"});
+		$("#user_ticket_code").formValidator({empty:true,onShow:"请输入领取码",onFocus:"请输入领取码",onCorrect:"输入正确"}).inputValidator({min:1,max:50,onError:"请输入领取码"});
+		$("#user_ticket_log_source").formValidator({empty:true,onShow:"请输入来源",onFocus:"请输入来源",onCorrect:"输入正确"}).inputValidator({min:1,max:50,onError:"请输入来源"});
+		$("#user_ticket_log_status").formValidator({empty:true,onShow:"请输入状态",onFocus:"请输入状态",onCorrect:"输入正确"}).inputValidator({min:1,max:1,onError:"请输入状态"});
+		
+
+	$.formValidator.reloadAutoTip();
+});
+
+function reloadAutoTip()
+{
+	$.formValidator.reloadAutoTip();
+}
+
+</script>
+
+
+<!--/dialog_end-->
+</td>
+</tr>
+</table>
+
+</div>
+
+<include file="../Public/_footer" />
