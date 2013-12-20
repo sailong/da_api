@@ -28,7 +28,7 @@ class orderAction extends AdminAuthAction
 		unset($field_list);
 		$this->assign("fields",$fields);
 	
-		$list=D("order")->order_list_pro();
+		$list=D("order")->order_list_pro(" and order_status>-1 ");
 
 		$this->assign("list",$list["item"]);
 		$this->assign("pages",$list["pages"]);

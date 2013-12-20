@@ -16,6 +16,11 @@ class item_cartModel extends Model{
 
 		$where = " 1 ";
 
+		if(get("item_cart_status")!="")
+		{
+			$where .=" and item_cart_status='".get("item_cart_status")."' ";
+		}
+		
 		if(get("k")!="")
 		{
 			$where .=" and item_name like '%".get("k")."%' ";
@@ -30,7 +35,7 @@ class item_cartModel extends Model{
 			$where .=" and item_cart_addtime<".strtotime(get("endtime"))." ";
 		}
 
-		$data["item"]=M("item_cart")->where($where.$bigwhere)->field("item_cart_id,field_uid,uid,parent_id,item_id,item_name,item_buyinfo,item_price,item_num,item_cart_addtime")->order($sort)->page($page.",".$page_size)->select();
+		$data["item"]=M("item_cart")->where($where.$bigwhere)->field("item_cart_id,field_uid,uid,parent_id,item_id,item_name,item_buyinfo,item_price,item_num,item_cart_addtime,item_cart_status")->order($sort)->page($page.",".$page_size)->select();
 		/* for($i=0; $i<count($data["item"]); $i++)
 		{
 			if($data["item"][$i]["uid"]!="")
@@ -63,7 +68,7 @@ class item_cartModel extends Model{
 		
 		$where = " 1 ";
 
-		$data["item"]=M("item_cart")->where($where.$bigwhere)->field("item_cart_id,field_uid,uid,parent_id,item_id,item_name,item_buyinfo,item_price,item_num,item_cart_addtime")->order($sort)->limit($limit)->select();
+		$data["item"]=M("item_cart")->where($where.$bigwhere)->field("item_cart_id,field_uid,uid,parent_id,item_id,item_name,item_buyinfo,item_price,item_num,item_cart_addtime,item_cart_status")->order($sort)->limit($limit)->select();
 		$data["total"]=M("item_cart")->where($where.$bigwhere)->count();
 
 		return $data;

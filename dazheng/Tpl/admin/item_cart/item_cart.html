@@ -2,7 +2,15 @@
 <div class="so_main">
 
   <div class="page_tit">购物车</div>
-  <include file="_tab" />
+	<div class="tit_tab">
+		<ul>
+			<li><a <php> if(get("item_cart_status")==''){ echo " class=on ";}</php> href="{:U('admin/item_cart/item_cart',array('item_cart_status'=>''))}">全部</a></li>
+			<li><a <php> if(get("item_cart_status")=='0'){ echo " class=on ";}</php> href="{:U('admin/item_cart/item_cart',array('item_cart_status'=>'0'))}">购物车列表</a></li>
+			<li><a <php> if(get("item_cart_status")=='1'){ echo " class=on ";}</php> href="{:U('admin/item_cart/item_cart',array('item_cart_status'=>'1'))}">订单保存</a></li>
+			<li><a <php> if(get("item_cart_status")=='2'){ echo " class=on ";}</php> href="{:U('admin/item_cart/item_cart',array('item_cart_status'=>'2'))}">支付成功</a></li>
+			
+		</ul>
+	</div>
 
   <div class="search_box">
 		<form name="search_form" action="/default.php" method="get">
@@ -78,7 +86,8 @@
 		<!-- <td>{$vo.item_buyinfo}</td> -->
 		<td>{$vo.item_price}</td>
 		<td>{$vo.item_num}</td>
-		<td><php>
+		<td>
+		<php>
 				if($vo['item_cart_status'] == 0)
 				{echo '新加入';}
 				elseif($vo['item_cart_status'] == 1)

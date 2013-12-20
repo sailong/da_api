@@ -2,7 +2,17 @@
 <div class="so_main">
 
   <div class="page_tit">订单</div>
-  <include file="_tab" />
+	<div class="tit_tab">
+		<ul>
+			<li><a <php> if(get("order_status")==''){ echo " class=on ";}</php> href="{:U('admin/order/order',array('order_status'=>''))}">全部</a></li>
+			<li><a <php> if(get("order_status")=='0'){ echo " class=on ";}</php> href="{:U('admin/order/order',array('order_status'=>0))}">待支付</a></li>
+			<li><a <php> if(get("order_status")==1){ echo " class=on ";}</php> href="{:U('admin/order/order',array('order_status'=>1))}">支付成功</a></li>
+			<li><a <php> if(get("order_status")==2){ echo " class=on ";}</php> href="{:U('admin/order/order',array('order_status'=>2))}">审核中</a></li>
+			<li><a <php> if(get("order_status")==3){ echo " class=on ";}</php> href="{:U('admin/order/order',array('order_status'=>3))}">支付失败</a></li>
+			<li><a <php> if(get("order_status")==4){ echo " class=on ";}</php> href="{:U('admin/order/order',array('order_status'=>4))}">已取消</a></li>
+		</ul>
+	</div>
+	
 
   <div class="search_box">
 		<form name="search_form" action="/default.php" method="get">
@@ -61,7 +71,7 @@
 		<!-- <th class="line_l">所属客户端</th> -->
 		<th class="line_l">所属用户</th>
 		<th class="line_l">订单编号</th>
-		<th class="line_l">支付编号</th>
+		
 		<!-- <th class="line_l">商品编号</th> -->
 		<th class="line_l"style="width: 201px;">商品名称</th>
 		<th class="line_l">总金额(<span style="color:red;">单位：元</span>)</th>
@@ -81,7 +91,7 @@
 		<!-- <td>{$fields[$vo['field_uid']]}</td> -->
 		<td>{$vo.uid}</td><!-- <a href="{:U('admin/order/order_detail', array('order_id'=>$vo['order_id']))}'"></a> -->
 		<td>{$vo.order_number}</td>
-		<td>{$vo.order_sn}</td>
+		
 		<!-- <td>{$vo.item_ids}</td> -->
 		<td>{$vo.item_names}</td>
 		<td>{$vo.order_money}</td>
@@ -104,7 +114,7 @@
 		<td>{$vo.order_mobile}</td>
 		<!-- <td>{$vo.order_post}</td> -->
 		<!-- <td>{$vo.order_address}</td> -->
-		<td><php>if($vo['order_addtime']){</php>{$vo.order_addtime|format_to_time}<php>}</php></td>
+		<td><php>if($vo['order_addtime']){</php>{$vo.order_addtime|format_to_fulltime}<php>}</php></td>
 			
 		<td>
 			<a href="{:U('admin/order/order_edit', array('order_id'=>$vo['order_id']))}">修改</a> |
