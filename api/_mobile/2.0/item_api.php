@@ -449,14 +449,10 @@ if($ac=='new_order')
 			if($ids)
 			{
 				$item_cart_ids=array();
-				$new_cart_list=DB::query("select item_cart_id from tbl_item_cart where item_id in (".$ids.") and uid='".$uid."'  ");
+				$new_cart_list=DB::query("select item_cart_id from tbl_item_cart where item_id in (".$ids.") and uid='".$uid."' and item_cart_status=0  ");
 				while($row=DB::fetch($new_cart_list))
 				{
-					if($row['item_cart_id'])
-					{
-						$item_cart_ids[]=$row['item_cart_id'];
-					}
-					
+					$item_cart_ids[]=$row['item_cart_id'];
 				}
 			}
 			
@@ -474,28 +470,20 @@ if($ac=='new_order')
 		
 		
 		$get_item_cart_ids=$item_cart_ids;
-	
-		//change status
-		/*
-		for($i=0; $i<count($item_cart_ids); $i++)
-		{
-			$up=DB::query("update tbl_item_cart set item_cart_status=1,item_num='".$item_nums[$i]."' where item_cart_id='".$item_cart_ids[$i]."' ");
-		}
-		*/	
-		
-		
 		$item_cart_ids_str=implode("','",$get_item_cart_ids);
-		
+
 		$order_money=0;
 		//item_list
 		$order_item_ids=array();
 		$order_item_names=array();
 		$table_arr=array();
-		$list=DB::query("select parent_id from tbl_item_cart where field_uid='".$field_uid."' and uid='".$uid."'  and item_cart_id in ('".$item_cart_ids_str."')  group by parent_id order by item_cart_addtime desc ");//  and item_cart_status=0 
-		/* echo "select parent_id from tbl_item_cart where field_uid='".$field_uid."' and uid='".$uid."'  and item_cart_id in ('".$item_cart_ids_str."')  and item_cart_status=0  group by parent_id order by item_cart_addtime desc";
-		var_dump($list);die; */
+		$list=DB::query("select parent_id from tbl_item_cart where field_uid='".$field_uid."' and uid='".$uid."'  and item_cart_id in (".$item_cart_ids_str.") group by parent_id order by item_cart_addtime desc ");
+		//and item_cart_status=0 
+		
+		
 		while($row=DB::fetch($list))
 		{
+
 			$parent_item_info=DB::fetch_first("select item_id,item_name,item_intro,item_pic_small from tbl_item where item_id='".$row['parent_id']."' ");
 			$row['item_id']=$parent_item_info['item_id'];
 			$row['item_name']=$parent_item_info['item_name'];
@@ -516,11 +504,11 @@ if($ac=='new_order')
 			
 			if($row['parent_id'])
 			{
-				$sub_list=DB::query("select item_cart_id,item_id,item_name,item_price,item_num as item_num_buy,(select item_num_canbuy from tbl_item where item_id=tbl_item_cart.item_id) as item_num_canbuy,(select item_num from tbl_item where item_id=tbl_item_cart.item_id) as item_num,(select item_intro from tbl_item where item_id=tbl_item_cart.item_id) as item_intro,(select ext_table_name from tbl_item where item_id=tbl_item_cart.item_id) as ext_table_name from tbl_item_cart where field_uid='".$field_uid."' and uid='".$uid."' and parent_id='".$row['parent_id']."' and item_cart_id in ('".$item_cart_ids_str."')");//  and item_cart_status=0 
+				$sub_list=DB::query("select item_cart_id,item_id,item_name,item_price,item_num as item_num_buy,(select item_num_canbuy from tbl_item where item_id=tbl_item_cart.item_id) as item_num_canbuy,(select item_num from tbl_item where item_id=tbl_item_cart.item_id) as item_num,(select item_intro from tbl_item where item_id=tbl_item_cart.item_id) as item_intro,(select ext_table_name from tbl_item where item_id=tbl_item_cart.item_id) as ext_table_name from tbl_item_cart where field_uid='".$field_uid."' and uid='".$uid."' and parent_id='".$row['parent_id']."' and item_cart_id in (".$item_cart_ids_str.")  ");//  and item_cart_status=0
 				
 				while($sub_row=DB::fetch($sub_list))
 				{
-				
+		
 					$order_money =$order_money+$sub_row['item_price'];
 					$sub_row['item_price']=$sub_row['item_price']/100;
 					$order_item_ids[]=$sub_row['item_id'];
