@@ -13,6 +13,23 @@ class arcAction extends AdminAuthAction
 	{
 		parent::_basic();
 	}
+	
+	
+	public function arc_zimeiti()
+	{
+		$arc_type=D("arctype")->arctype_admin_tree_pro(" and arctype_parent_id=0 "," and arctype_type='A' ");
+		$this->assign("arc_type",$arc_type['item']);
+
+		$list=D("arc")->arc_admin_list_pro(" and is_zimeiti='Y' ");
+
+		$this->assign("list",$list["item"]);
+		$this->assign("pages",$list["pages"]);
+		$this->assign("total",$list["total"]);
+
+		$this->assign("page_title","新闻");
+    	$this->display();
+	}
+
 
 	public function arc()
 	{
@@ -77,6 +94,10 @@ class arcAction extends AdminAuthAction
 				{
 					$data["arc_video_pic"]=$uploadinfo['arc_video_pic']["savepath"] . $uploadinfo['arc_video_pic']["savename"];
 				}
+				if(!empty($uploadinfo["arc_ad_pic"]))
+				{
+					$data["arc_ad_pic"]=$uploadinfo['arc_ad_pic']["savepath"] . $uploadinfo['arc_ad_pic']["savename"];
+				}
 			}
 			$data["arc_source"]=post("arc_source");
 			$data["arc_sort"]=post("arc_sort");
@@ -96,7 +117,7 @@ class arcAction extends AdminAuthAction
 				//blog
 				$new_id=$list;
 				$res=M()->query("insert into pre_home_blog (blogid,uid,subject,replynum,dateline) values ('".$new_id."','".$row['uid']."','".$data["arc_name"]."','0','".time()."')");
-				$res2=M()->query("insert into pre_home_blogfield (blogid,uid,message,pic) values ('".$new_id."','".$row['uid']."','".$data["arc_content"]."','".$data["arc_pic"]."')");
+				$res2=M()->query("insert into pre_home_blogfield (blogid,uid,message,pic,ad_pic) values ('".$new_id."','".$row['uid']."','".$data["arc_content"]."','".$data["arc_pic"]."','".$data["arc_ad_pic"]."')");
 				
 				$table_info=M()->query("show table status where name ='tbl_arc'");
 				$up=m()->query("ALTER TABLE `pre_home_blog` AUTO_INCREMENT=".$table_info[0]['Auto_increment']." ");
@@ -159,7 +180,7 @@ class arcAction extends AdminAuthAction
 			$data["arc_share_sina"]=post("arc_share_sina");
 			$data["arc_video_url"]=post("arc_video_url");
 			
-			if($_FILES["arc_pic"]["error"]==0 || $_FILES["arc_video_pic"]["error"]==0)
+			if($_FILES["arc_pic"]["error"]==0 || $_FILES["arc_video_pic"]["error"]==0 || $_FILES["arc_ad_pic"]["error"]==0)
 			{
 				$uploadinfo=upload_file("upload/arc","png,jpg,jpeg,gif,bmp,tiff,psd");
 				foreach($uploadinfo as $key=>$val){
@@ -173,6 +194,10 @@ class arcAction extends AdminAuthAction
 				if(!empty($uploadinfo["arc_video_pic"]))
 				{
 					$data["arc_video_pic"]=$uploadinfo['arc_video_pic']["savepath"] . $uploadinfo['arc_video_pic']["savename"];
+				}
+				if(!empty($uploadinfo["arc_ad_pic"]))
+				{
+					$data["arc_ad_pic"]=$uploadinfo['arc_ad_pic']["savepath"] . $uploadinfo['arc_ad_pic']["savename"];
 				}
 			}
 			$data["arc_source"]=post("arc_source");
@@ -190,6 +215,9 @@ class arcAction extends AdminAuthAction
 			$list=M("arc")->save($data);
 			if($list!=false)
 			{
+				if($data['arc_ad_pic']){
+					$res2=M()->query("update pre_home_blogfield set ad_pic ='".$data["arc_ad_pic"]."' where blogid='".$data["arc_id"]."'");
+				}
 				$this->success("修改成功");
 			}
 			else

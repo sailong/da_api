@@ -65,6 +65,10 @@
 					<td><input type="text" name="event_name" id="event_name" class="mod_input2" style="width:300px;"  value="{$data.event_name}"></td>
 				</tr>
 				<tr>
+					<th>所在城市：</th>
+					<td><input type="text" name="event_city" id="event_city" class="mod_input2" style="width:300px;"  value="{$data.event_city}"></td>
+				</tr>
+				<tr>
 					<th>赛事LOGO：</th>
 					<td><php>if($data['event_logo']){</php><img src="/{$data.event_logo}" style="max-height:100px; max-width:200px;"><br/><php>}</php><input type="file" name="event_logo" id="event_logo"  class="mod_input"> (如需修改，请重新上传)</td>
 				</tr>
@@ -231,7 +235,28 @@
 						<span class="help_info">(指定该赛事是否在“高球论坛”中显示)</span>
 					</td>
 				</tr>
-				
+				<tr>
+					<th>音频直播地址：</th>
+					<td>
+						<input type="text" name="event_audio_url" id="event_audio_url" class="mod_input2" style="width:500px;"  value="{$data.event_audio_url}">
+						<!-- <span class="help_info">(门票申请为WAP时，这里填写WAP的地址，仅在WAP页时生效)</span> -->
+					</td>
+				</tr>
+				<tr>
+					<th> 视频直播地址：</th>
+					<td>
+						<input type="text" name="event_video_url" id="event_video_url" class="mod_input2" style="width:500px;"  value="{$data.event_video_url}">
+						<!-- <span class="help_info">(门票申请为WAP时，这里填写WAP的地址，仅在WAP页时生效)</span> -->
+					</td>
+				</tr>
+				<tr>
+					<th>音频顶部banner：</th>
+					<td><php>if($data['by_top_pic']){</php><img src="/{$data.by_top_pic}" style="max-height:100px; max-width:200px;"><br/><php>}</php><input type="file" name="by_top_pic" id="by_top_pic"  class="mod_input">  (如需修改，请重新上传)</td>
+				</tr>
+				<tr>
+					<th>音频背景图片：</th>
+					<td><php>if($data['event_audio_bg']){</php><img src="/{$data.event_audio_bg}" style="max-height:100px; max-width:200px;"><br/><php>}</php><input type="file" name="event_audio_bg" id="event_audio_bg"  class="mod_input">  (如需修改，请重新上传)</td>
+				</tr>
 				<tr>
 					<th>排序：</th>
 					<td><input type="text" name="event_sort" id="event_sort" class="mod_input2" style="width:66px;"  value="{$data.event_sort}">

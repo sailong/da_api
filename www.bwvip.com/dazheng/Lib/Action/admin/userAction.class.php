@@ -25,6 +25,55 @@ class userAction extends AdminAuthAction
 		$this->assign("page_title","用户");
     	$this->display();
 	}
+	
+	
+	
+	public function user_zimeiti()
+	{
+	
+		$list=D("user")->user_list_pro(" and pre_common_member_profile.is_zimeiti='Y' ");
+
+		$this->assign("list",$list["item"]);
+		$this->assign("pages",$list["pages"]);
+		$this->assign("total",$list["total"]);
+
+		$this->assign("page_title","用户");
+    	$this->display();
+	}
+	
+	
+	public function to_zimeiti_action()
+	{
+		if(post("ids"))
+		{
+			$ids_arr=explode(",",post("ids"));
+			for($i=0; $i<count($ids_arr); $i++)
+			{
+				$res=M()->execute("update pre_common_member_profile set is_zimeiti='Y' where uid=".$ids_arr[$i]." ");
+			}
+			
+			echo "succeed^恭喜，升级成功";
+			
+		}
+	}
+	
+	
+	public function cancel_zimeiti_action()
+	{
+		if(post("ids"))
+		{
+			$ids_arr=explode(",",post("ids"));
+			for($i=0; $i<count($ids_arr); $i++)
+			{
+				$res=M()->execute("update pre_common_member_profile set is_zimeiti='N' where uid=".$ids_arr[$i]." ");
+			}
+			
+			echo "succeed^操作成功";
+			
+		}
+	}
+	
+	
 
 	public function user()
 	{

@@ -24,7 +24,16 @@ class field_picAction extends AdminAuthAction
 		$this->assign("list",$list["item"]);
 		$this->assign("pages",$list["pages"]);
 		$this->assign("total",$list["total"]);
-
+		
+		$app_list=select_field(1,"select");
+		$this->assign("app_list",$app_list);
+		$field_list_data=select_field(1,"");
+		foreach($field_list_data as $key=>$val){
+			$field_list[$val['field_uid']] = $val['field_name'];
+		}
+		unset($field_list_data);
+		$this->assign("field_list",$field_list);
+		
 		$this->assign("page_title","球场客户端图片");
     	$this->display();
 	}

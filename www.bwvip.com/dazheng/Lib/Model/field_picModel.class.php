@@ -15,9 +15,13 @@ class field_picModel extends Model{
 
 		$where = " 1 ";
 		
-		if(get("field_uid"))
+		/* if(get("field_uid"))
 		{
 			$where .=" and field_uid='".get("field_uid")."' ";
+		} */
+		if(get("k") !== '')
+		{
+			$where .=" and field_uid='".get("k")."' ";
 		}
 
 	/* 	if(get("ad_app"))
@@ -28,10 +32,10 @@ class field_picModel extends Model{
 		{
 			$where .=" and ad_type='".get("ad_type")."' "; 
 		}*/
-		if(get("k"))
+		/* if(get("k"))
 		{
 			$where .=" and field_pic_name like '%".get("k")."%' ";
-		}
+		} */
 
 		if(get("starttime")!="")
 		{

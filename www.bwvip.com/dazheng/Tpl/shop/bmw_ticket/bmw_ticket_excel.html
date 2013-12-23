@@ -1,0 +1,99 @@
+<include file="../public/header_dialog" />
+{$usejs}
+
+<div class="so_main">
+
+  <div class="page_tit">导出excel</div>
+  <div class="tit_tab">
+	<ul>
+		<li><a class=on href="#">导出excel</a></li>
+	</ul>
+  </div>
+
+<table border="0" cellspacing="0" cellpadding="0" style="width:900px;">
+<tr>
+<td>
+<!--/dialog_start-->
+
+	<table class="add_table" border="0" cellspacing="0" cellpadding="0" >
+		<tbody>
+		<tr>
+				<th>开始时间:</th>
+						<td><input type="text" name="starttime" class="search_input_date" style="width:120px;" value="<php> echo  get('starttime');</php>" onFocus="WdatePicker({isShowClear:false,readOnly:true})"></td>
+				</tr>
+				<tr>
+					<th>结束时间:</th>
+						<td><input type="text" name="endtime" class="search_input_date" style="width:120px;" value="<php> echo  get('endtime');</php>" onFocus="WdatePicker({isShowClear:false,readOnly:true})"></td>
+				</tr>
+				<tr>
+					<th>手机号码：</th>
+						<td>{$data.phone}</td>
+				</tr>
+				<tr>
+					<th>电子邮件：</th>
+						<td>{$data.email}</td>
+				</tr>
+				<tr>
+					<th>地址：</th>
+						<td>{$data.province}{$data.city}{$data.address}</td>
+				</tr>
+				<tr>
+					<th>邮政编码：</th>
+					<td>{$data.postcode}</td>
+				</tr>
+				<tr>
+					<th>观看比赛的日期：</th>
+						<td>{$data.watch_date}</td>
+				</tr>
+				
+				<tr>
+					<th>是否是BMW车主：</th>
+					<td>{$data.is_owners}</php>
+				</tr>
+				<tr>
+					<th>感兴趣的BMW车系：</th>
+					<td>{$data.bwm_cars}</td>
+				</tr>
+				<tr>
+					<th>打算何时购买新车：</th>
+					<td>{$data.buy_car_date}</td>
+				</tr>
+				<!-- <tr>
+					<th>证件类型：</th>
+						<td><php>if($data['user_ticket_cardtype'] == 0){echo '身份证';}</php></td>
+				</tr>
+				<tr>
+					<th>证件号码：</th>
+						<td>{$data.user_ticket_card}</td>
+				</tr> -->
+				<tr>
+					<th>从何处得到我们的信息：</th>
+						<td>{$data.learn_channels}</td>
+				</tr>
+				<tr>
+					<th>需要当地经销商与我取得联系：</th>
+					<td>{$data.is_contact}</td>
+				</tr>
+				<tr>
+					<th>申请时间：</th>
+					<td>{$data.bwm_addtime|format_to_time}</td>
+				</tr>
+				<tr>
+		</tbody>
+		<tfoot>
+			<tr>
+				<th></th>
+				<td>
+					<input type="button" class="btn_w" onclick="javascript:history.back(-1);" value="返回" />
+				</td>
+		</tfoot>
+	</table><!--/add_table-->
+
+
+<!--/dialog_end-->
+</td>
+</tr>
+</table>
+
+</div>
+<include file="../public/_footer" />

@@ -76,6 +76,16 @@
 					</td>
 				</tr>
 				<tr>
+					<th>广告位图片：</th>
+					<td>
+						<php>if($data['arc_ad_pic']){</php>
+						<a href="{$data.arc_ad_pic}" target="_blank" title="查看原图"><img src="{$data.arc_ad_pic}"  style="max-width:200px; max-height:100px; "></a>
+						<php>}</php><br /><br />
+						<input type="file" name="arc_ad_pic" id="arc_ad_pic"  class="mod_input" style="width:300px;"> (需要修改，请重新上传)
+						
+					</td>
+				</tr>
+				<tr>
 					<th>新闻来源：</th>
 					<td>
 						<input type="text" name="arc_source" id="arc_source" class="mod_input2" style="width:200px;"  value="{$data.arc_source}">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;

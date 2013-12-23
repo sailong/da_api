@@ -96,7 +96,7 @@ while($new_blogs_result = DB::fetch($new_blogs_query)){
 
 $id = getgpc('id');
 
-$news_blog = DB::fetch_first(" SELECT b.`subject`,b.`dateline`,bf.`tag`,bf.`message`,bf.`pic` FROM ".DB::table('home_blog')." as b LEFT join ".DB::table('home_blogfield')." as bf ON b.blogid=bf.blogid where b.blogid='".$id."'");
+$news_blog = DB::fetch_first(" SELECT b.`subject`,b.`dateline`,bf.`tag`,bf.`message`,bf.`pic`,bf.`ad_pic` FROM ".DB::table('home_blog')." as b LEFT join ".DB::table('home_blogfield')." as bf ON b.blogid=bf.blogid where b.blogid='".$id."'");
 
 
 $aa=str_replace("src=\"/Public/editor/attached","src=\"http://www.bwvip.com/Public/editor/attached",$news_blog['message']);

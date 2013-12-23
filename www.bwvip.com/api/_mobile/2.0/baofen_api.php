@@ -68,7 +68,7 @@ if($ac=='rank')
 	}
 	
 	//event_info
-	$event_info=DB::fetch_first("select event_id,event_name,event_uid,event_fenzhan_id,event_logo,event_logo_small,event_timepic,event_starttime,event_endtime,event_content,event_state,event_is_tj,event_is_baoming,event_addtime,event_is_viewscore,event_lun_num,event_sort_fenzhan_id from tbl_event where 1=1 ".$event_sql." order by event_addtime desc limit 1 ");
+	$event_info=DB::fetch_first("select event_id,event_name,event_uid,event_fenzhan_id,event_logo,event_logo_small,event_timepic,event_starttime,event_endtime,event_content,event_state,event_is_tj,event_is_baoming,event_addtime,event_is_viewscore,event_lun_num,event_sort_fenzhan_id,event_video_url,event_audio_url from tbl_event where 1=1 ".$event_sql." order by event_addtime desc limit 1 ");
 	if(!empty($event_info))
 	{
 		
@@ -623,6 +623,8 @@ if($ac=='rank')
 			'event_is_baoming'=>$event_info['event_is_baoming'],
 			'event_baoming_state'=>$event_info['event_baoming_state'],
 			'event_baoming_pic'=>$event_info['event_baoming_pic'],
+			'event_video_url'=>$event_info['event_video_url'],
+			'event_audio_url'=>$event_info['event_audio_url'],
 			'score_list'=>$gscore,
 			'topic_list'=>$topic_list,
 		);

@@ -1,0 +1,86 @@
+<include file="../public/_header_dialog" />
+<table border="0" cellspacing="0" cellpadding="0" style="width:600px;">
+<tr>
+<td>
+<!--/dialog_start-->
+
+<form method="post" id="basic_setting" name="act_form" action="{:U('piao/index/admin_add_action')}" onsubmit="return checkForm();">
+	<div class="add_dialog" style="width:600px;">
+		<dl class="lineD">
+						<dt>用户名：</dt>
+						<dd><input type="text" name="admin_name" id="admin_name" class="mod_input2" style="width:300px;" ></dd>
+						<div class="clear"></div>
+					</dl>
+					<dl class="lineD">
+						<dt>密码：</dt>
+						<dd><input type="password" name="admin_password" id="admin_password" class="mod_input2" style="width:300px;" ></dd>
+						<div class="clear"></div>
+					</dl>
+					<dl class="lineD">
+						<dt>姓名：</dt>
+						<dd><input type="text" name="admin_realname" id="admin_realname" class="mod_input2" style="width:300px;" ></dd>
+						<div class="clear"></div>
+					</dl>
+					<dl class="lineD">
+						<dt>邮箱：</dt>
+						<dd><input type="text" name="admin_email" id="admin_email" class="mod_input2" style="width:300px;" ></dd>
+						<div class="clear"></div>
+					</dl>
+					<dl class="lineD">
+					<dt>角色：</dt>
+					<dd>
+						<select name="admin_role_id">
+							<option value="">请选择</option>
+							<volist id="v" name="role">
+							<option value="{$v.admin_role_id}">{$v.admin_role_name}</option>
+							</volist>
+						</select>
+					</dd>
+					<div class="clear"></div>
+				</dl>
+				
+	</div><!--/add_dialog-->
+
+	<div class="page_btm">
+		<input type="button" class="btn_b" onclick="Check_Pro()" value="添加" style="margin-right:10px;"/>
+		<input type="button" class="btn_w" onclick="close_dialog(this)" value="取消" />
+	</div><!--/page_btm-->
+</form>
+
+<script>
+function Check_Pro()
+{
+	var lobj=document.act_form;
+	if(lobj.admin_name.value=="")
+	{
+		msg_error("请填写用户名");
+	}
+	else if(lobj.admin_password.value=="")
+	{
+		msg_error("请填写密码");
+	}
+	else if(lobj.admin_realname.value=="")
+	{
+		msg_error("请填写姓名");
+	}
+	else if(lobj.admin_email.value=="")
+	{
+		msg_error("请填写邮箱");
+	}
+	else if(lobj.admin_role_id.value=="")
+	{
+		msg_error("请填写角色");
+	}
+	else
+	{
+		lobj.submit();
+	}
+}
+</script>
+
+<!--/dialog_end-->
+</td>
+</tr>
+</table>
+
+<include file="../public/_footer" />

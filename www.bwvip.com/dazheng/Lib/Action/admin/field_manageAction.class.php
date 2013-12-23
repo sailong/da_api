@@ -21,6 +21,9 @@ class field_manageAction extends AdminAuthAction
 		$this->assign("list",$list["item"]);
 		$this->assign("pages",$list["pages"]);
 		$this->assign("total",$list["total"]);
+		
+		$app_list=select_field(1,"select");
+		$this->assign("app_list",$app_list);
 
 		$this->assign("page_title","客户端");
     	$this->display();

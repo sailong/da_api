@@ -1,0 +1,115 @@
+<include file="../public/_header" />
+<div class="so_main">
+
+  <div class="page_tit">用户管理  <span style="font-size:12px; color:#f60;">(注意：自媒体用户不能直接添加，需要先添加或注册普通用户，然后”升级为自媒体“)</span></div>
+	<div class="tit_tab">
+		<ul>
+			<li><a href="{:U('admin/user/user',array('is_zimeiti'=>N))}">普通用户</a></li>
+			<li><a class=on  href="{:U('admin/user/user_zimeiti',array('is_zimeiti'=>Y))}">自媒体用户</a></li>
+		</ul>
+	</div>
+
+  <div class="search_box">
+		<form name="search_form"   method="get">
+		<input type="hidden" name="g" value="admin">
+		<input type="hidden" name="m" value="user">
+		<input type="hidden" name="a" value="user_zimeiti">
+
+		<table border="0" cellspacing="0" cellpadding="0">
+			<th>姓名：</th>
+			<td><input type="text" name="k" class="search_input" style="width:120px;" value="<php> echo  get('k');</php>"></td>
+			<th>英文名：</th>
+			<td><input type="text" name="username" class="search_input" style="width:120px;" value="<php> echo  get('username');</php>"></td>
+            <th>手机：</th>
+			<td><input type="text" name="mobile" class="search_input" style="width:120px;" value="<php> echo  get('mobile');</php>"></td>
+			<th>开始时间：</th>
+			<td>
+				<input type="text" name="starttime" class="search_input_date" style="width:120px;" value="<php> echo  get('starttime');</php>" onFocus="WdatePicker({isShowClear:false,readOnly:true})"> 至 
+				<input type="text" name="endtime" class="search_input_date" style="width:120px;" value="<php> echo  get('endtime');</php>" onFocus="WdatePicker({isShowClear:false,readOnly:true})">
+			</td>
+			
+			</td>
+			<td class="btn">
+				<input type="submit" value="搜索" class="btn_b_small" style="margin-right:8px;" >
+				<input type="button" value="查看全部" class="btn_b_small" onclick="javascript:location='{:U('admin/user/user_zimeiti',array('state'=>get('state')))}';">
+			</td>
+		</table>
+	</form>
+  </div><!--/search_box-->
+
+  <!--------list -------->
+  <div class="Toolbar_inbox">
+  	<div class="page right">{$pages}</div>
+
+	<a href="javascript:void(0);" class="btn_a"  onclick="mod_post_batch('{:U('admin/user/cancel_zimeiti_action')}','mod_table');"><span>取消自媒体</span></a>
+	
+	<div class="clear"></div>
+  </div>
+  <div class="list">
+	<php>if($total>0){</php>
+	  <table width="100%" id="mod_table" border="0" cellspacing="0" cellpadding="0">
+	  <tr>
+		<th style="width:30px;">
+			<input type="checkbox" id="checkbox_handle" onclick="select_all(this,'mod_table','checkbox')" value="0">
+			<label for="checkbox"></label>
+		</th>
+		<th class="line_l">UID</th>
+		<th class="line_l">用户名</th>
+		
+		<th class="line_l">姓名</th>
+		<th class="line_l">性别</th>
+		<th class="line_l">邮箱</th>
+		<th class="line_l">手机号</th>
+		<th class="line_l">添加时间</th>
+		<th class="line_l">操作</th>
+	</tr>
+	<volist id="vo" name="list">
+	<tr overstyle="on"  id=ids_{$vo["uid"]}>
+		<td><input type="checkbox" name="checkbox" onclick="select_one(this)" value="{$vo.uid}" ></td>
+        <td>{$vo.uid}</td>
+		<td><a href="javascript:void(0);" onclick="mod_dialog('查看详细','{:U('admin/user/user_detail', array('uid'=>$vo['uid']))}');">{$vo.username}</a></th>
+
+		
+		
+			<td>{$vo.realname}</td>
+			<td> <php>if($vo['gender']=="1"){ echo " 男 ";} if($vo['gender']=="0"){ echo " 女 ";}</php></td>
+			<td>{$vo.email}</td>
+			<td>{$vo.mobile}</td>
+			<td>{$vo.regdate|format_to_time}</td>
+			
+		<td>
+		  <a href="{:U('admin/user/user_edit', array('uid'=>$vo['uid']))}">修改</a></td>
+	</tr>
+	</volist>
+    </table>
+<php>}else{</php>
+			<div class="no_data">
+				<img src="/skin/images/no_data.gif" align="absmiddle"> <span>没有用户... </span>
+			</div>
+	 <php>}</php>
+  </div>
+
+  <div class="Toolbar_inbox">
+	<div class="page right">{$pages}</div>
+
+	
+	<div class="clear"></div>
+  </div>
+</div>
+
+<script>
+	$(document).ready(function(){
+		$("tr[overstyle='on']").hover(
+		  function ()
+		  {
+		    $(this).addClass("bg_hover");
+		  },
+		  function (){
+		    $(this).removeClass("bg_hover");
+		  }
+		);
+	});
+	
+</script>
+
+<include file="../public/_footer" />

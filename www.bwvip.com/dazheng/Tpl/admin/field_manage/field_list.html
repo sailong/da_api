@@ -11,7 +11,13 @@
 
 		<table border="0" cellspacing="0" cellpadding="0">
 			<th>客户端名称：</th>
-			<td><input type="text" name="k" class="search_input" style="width:120px;" value="<php> echo  get('k');</php>"></td>
+			<td><!-- <input type="text" name="k" class="search_input" style="width:120px;" value="<php> echo  get('k');</php>"> -->
+				<select name="k" id="k" class="mod_select">
+					<option value="">请选择</option>
+					{$app_list}
+				</select>
+				<script>set_select_value(document.search_form.k,"<php> echo  get('k');</php>");</script>
+			</td>
 			
 			<td class="btn">
 				<input type="submit" value="搜索" class="btn_b" style="margin-right:8px;" >
