@@ -1,19 +1,12 @@
 <?php
 $field_set_list=array();
 
-//is_owners
-$field_set_list[9]['name']="is_owners";
-$field_set_list[9]['name_cn']="是否是车主";
-$field_set_list[9]['type']="select";
-$field_set_list[9]['type_more']=array('是','否');
-$field_set_list[9]['max_size']="50";
-$field_set_list[9]['value']="";
-//is_contact
-$field_set_list[10]['name']="is_contact";
-$field_set_list[10]['name_cn']="是否与当地经营商取得联系";
-$field_set_list[10]['type']="select";
-$field_set_list[10]['type_more']=array('是','否');
-$field_set_list[10]['max_size']="50";
-$field_set_list[10]['value']="";
+$field_set_list[3]['name']="qiancheng";
+$field_set_list[3]['name_cn']="谦称";
+$field_set_list[3]['type']="checkbox";
+$field_set_list[3]['type_more']=array('先生','女士');
+$field_set_list[3]['max_size']="50";
+$field_set_list[3]['value']="";
+
 
 return $field_set_list;

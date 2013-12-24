@@ -25,7 +25,7 @@ if(!empty($if_mobile[0]))
 
 	$row['touxiang']=$site_url."/uc_server/avatar.php?uid=".$row['uid']."&size=small";
 	
-	$user_info=DB::fetch_first("select mobile,is_zimeiti from pre_common_member_profile where uid='{$uid}' ");
+	$user_info=DB::fetch_first("select mobile from pre_common_member_profile where uid='{$uid}' ");
 	
 
 /*初始化接口返回的参数*/
@@ -38,7 +38,6 @@ if(!empty($if_mobile[0]))
                         'password'=>$password,
                         'mobile'=>$user_info['mobile'],
                         'touxiang'=>"".$site_url."/uc_server/avatar.php?uid=".$uid."&size=middle",
-						'is_zimeiti'=>$user_info['is_zimeiti'],
                         //'email'   =>$email,
                          );
 
@@ -94,7 +93,7 @@ if(!empty($if_mobile[0]))
 		$tj_sql .=" '".$sn."', ";
 		$tj_sql .=" '".time()."' ";
 		$tj_sql .=" ) ";
-		$tj_up=DB::query($tj_sql);
+		//$tj_up=DB::query($tj_sql);
 		 
 		 
 		 
