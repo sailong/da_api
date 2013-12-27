@@ -46,73 +46,51 @@ $dguoqi1=$dguoqi*$width;
  
   
     ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
+<html xmlns="http://www.w3.org/1999/xhtml"> 
+<head> 
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0"/>
-<meta name="MobileOptimized" content="236"/>
-<meta http-equiv="Cache-Control" content="no-cache"/>
-<title><?php echo $title_name; ?></title>
-<style type="text/css">
-body{margin:0;padding:0;font-size:12pt;color:#000000; line-height:150%; font-family:"微软雅黑","宋体";}
-p,h2,h3,h4,ul,li{margin:0;padding:0;list-style:none;}
-img{margin:0;padding:0;border:none;width:100%;}
-.tuijian a:link,.tuijian a:visited{text-decoration:none; font-size:12pt;color:#000000;}
-.tuijian a:hover{text-decoration:none;color:000;}
-.wrap{width:100%;height:auto;}
-h3{width:95%;font-size:18px;line-height:25px; height:60px; background:url(images/line-bg.png) no-repeat left bottom;margin:20px 0 10px 0;}
-h2{width:95%;margin:20px auto 0;font-size:18px;height:40px;line-height:25px;background:url(images/line-bg.png) no-repeat left bottom;}
-.tuijian{width:100%;line-height:30px;margin: 20px auto 10px;}
-.tuijian .tu{width:13px;float:left;padding-top:10px;margin-right:10px;}
-.bottom{width:100%;margin:40px auto;}
 
-</style>
-</head>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+<title></title> 
+
+<style type="text/css">  
+body,div,ul,li{ 
+padding:0; 
+text-align:center; 
+} 
+img{width:90%}
+td{padding:1px;}
+ 
+ 
+td{text-align:center;font:<?php echo $dguoqi1;?>px "宋体";}
+</style>   
+</head> 
 <body>
  
-<body>
-<div class="wrap">
-	<div class="top"><img src="images/album_img/dazheng-top.png" /></div>
-    <div style="padding:0 20px;">
-<div class="content">
-	<h3><?php echo $title_name; ?></h3><br />
+  
+<table width="100%" border="0" align="center"  cellpadding="0" cellspacing="0" >
   
   <?php  
   $t=1;
   $jdt=DB::query("SELECT *   FROM  pre_home_pic WHERE albumid=".$id." ");  
 while($lib=DB::fetch($jdt)){
 	?>
-	<h4><img src="http://www.bwvip.com/data/attachment/album/<?php echo $lib['filepath'];?>"></h4>
-	<p style="margin-bottom:50px;font-weight:bold; font-size:18px;"><?php echo $lib['title'];?></p>
+ 
+     <tr>
+       <td align="center"><img src="http://www.bwvip.com/data/attachment/album/<?php echo $lib['filepath'];?>"></td> 
+     </tr>     
+     <tr>
+       <td align="center"><?php echo $lib['title'];?></td> 
+     </tr> 
+ 
 
  <?php } ?>
-
- <?php
-$userAgent = $_SERVER['HTTP_USER_AGENT'];
-if(strpos($userAgent,"iPhone") || strpos($userAgent,"iPad") || strpos($userAgent,"iPod") || strpos($userAgent,"iOS"))
-{
-	$dz_down_url = DB::result_first("select app_version_file from tbl_app_version where app_version_type='ios' and field_uid=0 order by app_version_addtime desc limit 1 ");//"https://itunes.apple.com/us/app/da-zheng-gao-er-fu-golf/id642016024?ls=1&mt=8";
-	
-	
-}
-else if(strpos($userAgent,"Android"))
-{
-	$dz_down_url = DB::result_first("select app_version_file from tbl_app_version where app_version_type='android' and field_uid=0 order by app_version_addtime desc limit 1 ");
-	
-}
-if($dz_down_url){
-?>
-
-		
-<div class="center"><a href="<? echo $dz_down_url; ?>"><img src="images/album_img/jinru-button.png" /></a></div>
-
-<?php } ?>
+ 
+   
+</table>
   
  
-</div>
 </body>
-</html>
 
 <?php	
 exit;  
@@ -132,7 +110,7 @@ if($nd_id > 0)
  $bf = DB::query ( "select  *,(cave_1+cave_2+cave_3+cave_4+cave_5+cave_6+cave_7+cave_8+cave_9) as lout,(cave_10+cave_11+cave_12+cave_13+cave_14+cave_15+cave_16+cave_17 +cave_18) as lin   from tbl_baofen  where  baofen_id=".$nd_id );}else{	
 		if ($uid > 0) {
 		
-		 $bf = DB::query ( "select  *,(cave_1+cave_2+cave_3+cave_4+cave_5+cave_6+cave_7+cave_8+cave_9) as lout,(cave_10+cave_11+cave_12+cave_13+cave_14+cave_15+cave_16+cave_17 +cave_18) as lin from tbl_baofen where sid='$sid'  and field_id='$field_id' and uid=".$uid );
+		 $bf = DB::query ( "select  *,(cave_1+cave_2+cave_3+cave_4+cave_5+cave_6+cave_7+cave_8+cave_9) as lout,(cave_10+cave_11+cave_12+cave_13+cave_14+cave_15+cave_16+cave_17 +cave_18) as lin   from tbl_baofen where sid='$sid'  and field_id='$field_id' and uid=".$uid );
 		}else{
 		 $bf = DB::query ( "select *,(cave_1+cave_2+cave_3+cave_4+cave_5+cave_6+cave_7+cave_8+cave_9) as lout,(cave_10+cave_11+cave_12+cave_13+cave_14+cave_15+cave_16+cave_17 +cave_18) as lin  from tbl_baofen  ORDER BY    total_ju_par,lin"); 
 		}

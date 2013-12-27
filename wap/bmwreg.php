@@ -10,13 +10,44 @@ require '../source/class/class_core.php';
 $discuz = & discuz_core::instance();
 
 $discuz->init();
- 
+ function get_device_type(){
+	$agent = strtolower($_SERVER['HTTP_USER_AGENT']);
+	$type = 'other';
+	if(strpos($agent, 'iphone') || strpos($agent, 'ipad')){
+		$type = 'ios';
+	}
+	if(strpos($agent, 'android')){
+		$type = 'android';
+	}
+	return $type;
+}
+
+//获取网址参数 
+$strqurey=$_SERVER["QUERY_STRING"]; 
+if(checkstr($strqurey)){ 
+$strqurey=str_replace('?','&',$strqurey);
+ header('Location: ?'.$strqurey);
+}
+
+
+function checkstr($str){
+    $needle = "?";//判断是否包含?这个字符
+    $tmparray = explode($needle,$str);
+    if(count($tmparray)>1){
+    return true;
+    } else{
+    return false;
+    }
+}
 $width = $_GET ['width'];
 if(!$width)
 {
 	$width=460;
 }
- 
+  if(get_device_type()=='ios'){
+	$width=320;
+} 
+
  //横版缩放
 $dguoqi=960/1280;
 $dguoqi1=$dguoqi*$width;
@@ -311,7 +342,7 @@ $.ajax({
          <td>&nbsp;</td>
        </tr>
        <tr>
-         <td align="center"><input type="image" name="imageField" id="imageField" src="images/button.jpg"></td>
+         <td align="center"><input type="image" name="imageField" id="imageField" src="images/button.jpg"> <input name="width" value="<?php echo $width;?>" type="hidden"></td>
        </tr>
        <tr>
          <td>&nbsp;</td>
@@ -324,6 +355,11 @@ $.ajax({
   
   <tr>
     <td><img src="images/bottom.jpg" width="<?php echo $width;?>" ></td>
+  </tr>
+  
+  
+  <tr>
+    <td style="font-size:12px; text-align:center;">购票热线:4008109966</td>
   </tr>
   
 </table>

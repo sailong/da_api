@@ -21,23 +21,7 @@ $discuz->init();
 	}
 	return $type;
 }
-//获取网址参数 
-$strqurey=$_SERVER["QUERY_STRING"]; 
-if(checkstr($strqurey)){ 
-$strqurey=str_replace('?','&',$strqurey);
- header('Location: ?'.$strqurey);
-}
 
-
-function checkstr($str){
-    $needle = "?";//判断是否包含?这个字符
-    $tmparray = explode($needle,$str);
-    if(count($tmparray)>1){
-    return true;
-    } else{
-    return false;
-    }
-}
 $width = $_GET ['width'];
 if(!$width)
 {
@@ -268,7 +252,7 @@ return  true;
        <tr>
          <td  align="right"><table width="80%" border="0" cellspacing="0" cellpadding="0">
            <tr>
-             <td width="40%" class="tptitle1">（只可使用一次）</td>
+             <td width="30%" class="tptitle1">（只可使用一次）</td>
              <td><table width="30%" border="0" align="left" cellpadding="0" cellspacing="0" ">
                <tr>
                  <td><img src="images/jiahao.png" width="32" onClick="showpicket('name3','add')"></td>
@@ -286,7 +270,7 @@ return  true;
        <tr>
          <td  align="right"><table width="80%" border="0" cellspacing="0" cellpadding="0">
            <tr>
-             <td width="40%" class="tptitle1">（只可使用一次）</td>
+             <td width="30%" class="tptitle1">（只可使用一次）</td>
              <td><table width="30%" border="0" cellspacing="0" cellpadding="0" >
                <tr>
                  <td><img src="images/jiahao.png" width="32" onClick="showpicket('name4','add')"></td>
@@ -304,7 +288,7 @@ return  true;
        <tr>
          <td  align="right"><table width="80%" border="0" cellspacing="0" cellpadding="0">
            <tr>
-             <td width="40%" class="tptitle1">（可观看所有赛事）</td>
+             <td width="30%" class="tptitle1">（可观看所有赛事）</td>
              <td><table width="30%" border="0" cellspacing="0" cellpadding="0" >
                <tr>
                  <td><img src="images/jiahao.png" width="32"  onClick="showpicket('name5','add')"></td>
@@ -343,7 +327,7 @@ return  true;
        <tr>
          <td align="right"><table width="80%" border="0" cellspacing="0" cellpadding="0">
            <tr>
-             <td width="40%" class="tptitle1">（只可使用一次）</td>
+             <td width="30%" class="tptitle1">（只可使用一次）</td>
              <td><table width="30%" border="0" cellspacing="0" cellpadding="0" >
                <tr>
                  <td><img src="images/jiahao.png" width="32"  onClick="showpicket('name6','add')"></td>
@@ -361,7 +345,7 @@ return  true;
        <tr>
          <td  align="right"><table width="80%" border="0" cellspacing="0" cellpadding="0">
               <tr>
-             <td width="40%" class="tptitle1">（只可使用一次）</td>
+             <td width="30%" class="tptitle1">（只可使用一次）</td>
              <td><table width="30%" border="0" cellspacing="0" cellpadding="0">
                <tr>
                  <td><img src="images/jiahao.png" width="32"  onClick="showpicket('name7','add')"></td>
@@ -379,7 +363,7 @@ return  true;
        <tr>
          <td  align="right"><table width="80%" border="0" cellspacing="0" cellpadding="0">
               <tr>
-             <td width="40%" class="tptitle1">（可观看所有赛事）</td>
+             <td width="30%" class="tptitle1">（可观看所有赛事）</td>
              <td><table width="30%" border="0" cellspacing="0" cellpadding="0" >
                <tr>
                  <td><img src="images/jiahao.png" width="32" onClick="showpicket('name8','add')"></td>
@@ -400,7 +384,7 @@ return  true;
        <tr>
          <td  align="right"><table width="80%" border="0" cellspacing="0" cellpadding="0">
               <tr>
-             <td width="40%" class="tptitle1">（只可使用一次）</td>
+             <td width="30%" class="tptitle1">（只可使用一次）</td>
              <td><table width="30%" border="0" cellspacing="0" cellpadding="0" >
                <tr>
                  <td><img src="images/jiahao.png" width="32"  onClick="showpicket('name9','add')"></td>
@@ -418,7 +402,7 @@ return  true;
        <tr>
          <td  align="right"><table width="80%" border="0" cellspacing="0" cellpadding="0">
               <tr>
-             <td width="40%" class="tptitle1" >（只可使用一次）</td>
+             <td width="30%" class="tptitle1" align="center">（只可使用一次）</td>
              <td><table width="30%" border="0" cellspacing="0" cellpadding="0" >
                <tr>
                  <td><img src="images/jiahao.png" width="32"  onClick="showpicket('name10','add')"></td>
@@ -436,7 +420,7 @@ return  true;
        <tr>
          <td  align="right"><table width="80%" border="0" cellspacing="0" cellpadding="0">
               <tr>
-             <td width="40%" class="tptitle1">（可观看所有赛事）</td>
+             <td width="30%" class="tptitle1">（可观看所有赛事）</td>
              <td><table width="30%" border="0" cellspacing="0" cellpadding="0" >
                <tr>
                  <td><img src="images/jiahao.png" width="32"  onClick="showpicket('name11','add')"></td>
@@ -458,7 +442,6 @@ return  true;
 饮料。<br>
 ▪ 赠送球帽。 </div></td>
        </tr>
-       <p>&nbsp;</p>
        <tr>
          <td align="left" class="centertl"><div style="padding-left:15px;">黄金贵宾票：单人票</div></td>
        </tr>
@@ -468,7 +451,7 @@ return  true;
        <tr>
          <td  align="right"><table width="80%" border="0" cellspacing="0" cellpadding="0">
               <tr>
-             <td width="40%" class="tptitle1">（只可使用一次）</td>
+             <td width="30%" class="tptitle1">（只可使用一次）</td>
              <td><table width="30%" border="0" cellspacing="0" cellpadding="0" >
                <tr>
                  <td><img src="images/jiahao.png" width="32"  onClick="showpicket('name12','add')"></td>
@@ -486,7 +469,7 @@ return  true;
        <tr>
          <td  align="right"><table width="80%" border="0" cellspacing="0" cellpadding="0">
            <tr>
-             <td width="40%" class="tptitle1">（只可使用一次）</td>
+             <td width="30%" class="tptitle1">（只可使用一次）</td>
              <td><table width="30%" border="0" cellspacing="0" cellpadding="0" >
                <tr>
                  <td><img src="images/jiahao.png" width="32"  onClick="showpicket('name13','add')"></td>
@@ -504,7 +487,7 @@ return  true;
        <tr>
          <td  align="right"><table width="80%" border="0" cellspacing="0" cellpadding="0">
            <tr>
-             <td width="40%" class="tptitle1">（可观看所有赛事）</td>
+             <td width="30%" class="tptitle1">（可观看所有赛事）</td>
              <td><table width="30%" border="0" cellspacing="0" cellpadding="0" >
                <tr>
                  <td><img src="images/jiahao.png" width="32"  onClick="showpicket('name14','add')"></td>
@@ -525,7 +508,7 @@ return  true;
        <tr>
          <td  align="right"><table width="80%" border="0" cellspacing="0" cellpadding="0">
            <tr>
-             <td width="40%" class="tptitle1">（只可使用一次）</td>
+             <td width="30%" class="tptitle1">（只可使用一次）</td>
              <td><table width="30%" border="0" cellspacing="0" cellpadding="0" >
                <tr>
                  <td><img src="images/jiahao.png" width="32"  onClick="showpicket('name15','add')"></td>
@@ -543,7 +526,7 @@ return  true;
        <tr>
          <td  align="right"><table width="80%" border="0" cellspacing="0" cellpadding="0">
            <tr>
-             <td width="40%" class="tptitle1">（只可使用一次）</td>
+             <td width="30%" class="tptitle1">（只可使用一次）</td>
              <td><table width="30%" border="0" cellspacing="0" cellpadding="0" >
                <tr>
                  <td><img src="images/jiahao.png" width="32"  onClick="showpicket('name16','add')"></td>
@@ -561,7 +544,7 @@ return  true;
        <tr>
          <td  align="right"><table width="80%" border="0" cellspacing="0" cellpadding="0">
            <tr>
-             <td width="40%" class="tptitle1">（可观看所有赛事）</td>
+             <td width="30%" class="tptitle1">（可观看所有赛事）</td>
              <td><table width="30%" border="0" cellspacing="0" cellpadding="0" >
                <tr>
                  <td><img src="images/jiahao.png" width="32"  onClick="showpicket('name17','add')"></td>
@@ -594,7 +577,7 @@ return  true;
        <tr>
          <td  align="right"><table width="80%" border="0" cellspacing="0" cellpadding="0">
            <tr>
-             <td width="40%">&nbsp;</td>
+             <td width="30%">&nbsp;</td>
              <td><table width="30%" border="0" cellspacing="0" cellpadding="0" >
                <tr>
                  <td><img src="images/jiahao.png" width="32"  onClick="showpicket('name18','add')"></td>

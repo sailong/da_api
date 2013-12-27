@@ -85,12 +85,11 @@ $ac=$_G['gp_ac'];
     $provinceArray[36]="其他";
 
 
-if($ac=="bwm_reg")
+if($ac=="hf_reg")
 { 
 	$qiancheng = $_G['gp_qiancheng'];
-	 
+	 $width = $_G['gp_width'];
 	$family_name = $_G['gp_family_name'];
-	  $width = $_G['gp_width'];
 	$name = $_G['gp_name'];	
 	$year = $_G['gp_year'];
 	$month = $_G['gp_month'];
@@ -100,13 +99,68 @@ if($ac=="bwm_reg")
 	$prov = $_G['gp_province'];	
     $province=$provinceArray[$prov];
 	$city = $_G['gp_city']; 
+	
+	
+	$name2 = $_G['gp_name2'];
+	$name3 = $_G['gp_name3'];
+	$name4 = $_G['gp_name4'];
+	$name5 = $_G['gp_name5'];
+	$name6 = $_G['gp_name6'];
+	$name7 = $_G['gp_name7'];
+	$name8 = $_G['gp_name8'];
+	$name9 = $_G['gp_name9'];
+	$name10 = $_G['gp_name10'];
+	if($name2)
+	{
+	  $str.=",59|".$name2; 
+		}
+	
+	if($name3)
+	{
+	  $str.=",60|".$name3; 
+		}
+	
+	if($name4)
+	{
+	  $str.=",61|".$name4; 
+		}
+	if($name5)
+	{
+	  $str.=",62|".$name5; 
+		}
+	
+	if($name6)
+	{
+	  $str.=",63|".$name6; 
+		}
+	
+	if($name7)
+	{
+	  $str.=",64|".$name7; 
+		}
+
+	if($name8)
+	{
+	  $str.=",65|".$name8; 
+		}
+	
+	if($name9)
+	{
+	  $str.=",66|".$name9; 
+		}
+	
+	if($name10)
+	{
+	  $str.=",67|".$name10; 
+		}
 
 	$address = $_G['gp_address'];
 	$postcode = $_G['gp_postcode'];
 	$watchdate = $_G['gp_watch_date']; 
-	 
-	$watch_date=implode(",", $watchdate );
-	//$watch_date=rtrim($watch_date, ",") ;
+	
+	 $watch_date=$str;
+	//$watch_date=implode(",", $watchdate );
+	 $watch_date=ltrim($watch_date, ",") ;
 	$is_owners = $_G['gp_is_owners'];
 	$bwm_cars = $_G['gp_bwm_cars']; 
 	$buy_car_date = $_G['gp_buy_car_date'];	 
@@ -114,21 +168,22 @@ if($ac=="bwm_reg")
 	$is_contact = $_G['gp_is_contact']; 
 	$is_readed = $_G['gp_is_readed'];	 
 	$bwm_addtime = time();
+	$event_id="31";
 	if(empty($is_readed)){
 		$is_readed = 1;
 	}
-	$sql = "insert into tbl_user_ticket_bmw(qiancheng,family_name,name,year,month,day,phone,email,province,city,address,postcode,watch_date,is_owners,bwm_cars,buy_car_date,learn_channels,is_contact,is_readed,bwm_addtime)";
-	$sql .= " values('{$qiancheng}','{$family_name}','{$name}','{$year}','{$month}','{$day}','{$phone}','{$email}','{$province}','{$city}','{$address}','{$postcode}','{$watch_date}','{$is_owners}','{$bwm_cars}','{$buy_car_date}','{$learn_channels}','{$is_contact}','{$is_readed}','{$bwm_addtime}')";
+	$sql = "insert into tbl_user_ticket_get(qiancheng,event_id,family_name,name,year,month,day,phone,email,province,city,address,postcode,watch_date,is_owners,bwm_cars,buy_car_date,learn_channels,is_contact,is_readed,bwm_addtime)";
+	$sql .= " values('{$qiancheng}','{$event_id}','{$family_name}','{$name}','{$year}','{$month}','{$day}','{$phone}','{$email}','{$province}','{$city}','{$address}','{$postcode}','{$watch_date}','{$is_owners}','{$bwm_cars}','{$buy_car_date}','{$learn_channels}','{$is_contact}','{$is_readed}','{$bwm_addtime}')";
 	
     $res = DB::query($sql);
 	
-		include "erweima.php";
+		//include "erweima.php";
 		$user_ticket_mobile = $phone;//手机号
 	$user_ticket_imei = $_G['gp_phone_imei'];//手机窜号
 	$ticket_id = empty($_G['gp_ticket_id']) ? 0 : $_G['gp_ticket_id'];//门票ID
 	$event_id = empty($_G['gp_event_id']) ? 0 : $_G['gp_event_id'];//赛事ID
 	
-	$ticket_type = 'bmw';//门票类型
+	$ticket_type = 'hf';//门票类型
 	$ticket_times = empty($_G['gp_ticket_times']) ? 1 : $_G['gp_ticket_times'];//门票数量
 	$user_ticket_realname = urldecode($family_name.$name);//订票人真实姓名
 	$user_ticket_sex = urldecode($qiancheng);//性别
@@ -138,28 +193,28 @@ if($ac=="bwm_reg")
 	$user_ticket_company_post = urldecode($_G['gp_company_post']);//公司职位
 	//$user_ticket_code = get_randmod_str();//$_G['company_post'];//随机唯一窜
 	$user_ticket_addtime = time();//$_G['company_post'];//随机唯一窜
-	$ticket_starttime=strtotime('2013-10-24 7:00');
-	$ticket_endtime=strtotime('2013-10-27 19:00');
-	$out_idtype='tbl_user_ticket_bmw';	
+	$ticket_starttime=strtotime('2013-10-30 7:00');
+	$ticket_endtime=strtotime('2013-11-3 19:00');
+	$out_idtype='tbl_user_ticket_get';	
 	$out_id = DB::insert_id(); 
 	
 //生成二维码 
-	$erweima_path = erweima();
+	//$erweima_path = erweima();
 	$user_ticket_codepic = $erweima_path;
 	
 	$row=explode("/",$user_ticket_codepic);
     $user_ticket_code=str_replace(".png","",$row[4]);	
 	
-	$user_ticket_status = 1;
+	$user_ticket_status = 0;
 		$sql = "insert into tbl_user_ticket(ticket_id,event_id,ticket_type,user_ticket_code,user_ticket_codepic,user_ticket_realname,user_ticket_sex,user_ticket_age,user_ticket_address,user_ticket_mobile,user_ticket_imei,user_ticket_company,user_ticket_company_post,user_ticket_status,user_ticket_addtime,ticket_times,ticket_starttime,ticket_endtime,out_idtype,out_id) values('{$ticket_id}','{$event_id}','{$ticket_type}','{$user_ticket_code}','{$user_ticket_codepic}','{$user_ticket_realname}','{$user_ticket_sex}','{$user_ticket_age}','{$user_ticket_address}','{$user_ticket_mobile}','{$user_ticket_imei}','{$user_ticket_company}','{$user_ticket_company_post}','{$user_ticket_status}','{$user_ticket_addtime}','{$ticket_times}','{$ticket_starttime}','{$ticket_endtime}','{$out_idtype}','{$out_id}')";
 	
-    $res = DB::query($sql);
+   // $res = DB::query($sql);
 	
 	if($res == false){
-	 	echo "<script>location='error.php?width=$width';</script>";
+	 	echo "<script>location='hferror.php?width=$width';</script>";
 	}
 
-   	echo "<script>location='success.php?width=$width';</script>";
+   	echo "<script>location='hfsuccess.php?width=$width';</script>";
 }
  
  

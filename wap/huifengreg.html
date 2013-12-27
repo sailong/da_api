@@ -1,0 +1,382 @@
+<html xmlns="http://www.w3.org/1999/xhtml"><style type="text/css">
+.centertl {
+	font-size: 14px;
+	font-weight: 600;
+}
+.tptitle {
+	font-size: 14px;
+	font-weight: 600;
+	color: #999;
+}
+p {
+	font-size: 14px; 
+	color: #000;
+}
+h3 {
+	font-size: 14px; 
+	font-weight: 600;
+	color: #000;
+}
+.title{
+	font-size: 14px;
+	font-weight: 600;
+	color: #000;
+	}
+</style> 
+<head> 
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />  
+
+<SCRIPT type=text/javascript src="images/jquery.js"></SCRIPT>
+ 
+ 
+  <link rel="stylesheet" type="text/css" href="images/golf_ticket.css">  
+<title></title> 
+  
+</head> 
+<body  onclick=checkSelectBoxStatus();>
+
+<table width="460" border="0" align="left" cellpadding="0" cellspacing="0"><tr><td><img src="images/huifengbanner.jpg" width="460" ></td>
+</tr>
+  <tr>
+    <td  style="padding: 15px;"><!-- add the info layer functionality here -->
+
+      <h3 >观看2013汇丰冠军赛。</h3>
+      <p >享有"亚洲大满贯赛"美誉的世界高尔夫锦标赛-汇丰冠军赛在观澜湖高尔夫球会奥拉沙宝成功举办一届之后，今年将重返上海并永久落户。第九届赛事将于2013年10月31日至11月3日日在上海佘山国际高尔夫俱乐部举行，该场地曾于2005年至2011年连续承办了七届汇丰冠军赛。</p>
+    </td>
+  </tr>
+  
+  <tr>
+    <td  style="padding: 15px;"><p >*必填部分</p></td>
+  </tr>
+   
+  <tr>
+     <td  style="padding: 15px;">
+     <form name="form1" method="post" action="bmwregac.php?ac=bwm_reg"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+       <tr>
+         <td align="center" class="centertl">姓名</td>
+       </tr>
+       <tr>
+         <td class="tptitle">称谓*</td>
+       </tr>
+       <tr>
+         <td>
+           <label for="qiancheng"></label>
+           <select name="qiancheng" id="qiancheng">
+             <option value="0">请选择</option>
+             <option value="先生">先生</option>
+             <option value="女士">女士</option>
+           </select>
+      </td>
+       </tr>
+       <tr>
+         <td class="tptitle">姓*</td>
+       </tr>
+       <tr>
+         <td><label for="family_name"></label>
+          <input name="family_name" id="family_name" type="text"></td>
+       </tr>
+       <tr>
+         <td class="tptitle">名*</td>
+       </tr>
+       <tr>
+         <td><label for="name"></label>
+           <input name="name" id="name" type="text"></td>
+       </tr>
+   
+       <tr>
+         <td align="center" class="centertl">联系信息</td>
+       </tr>
+       <tr>
+         <td class="tptitle">手机号码*</td>
+       </tr>
+       <tr>
+         <td><label for="phone"></label>
+           <input name="phone" id="phone" type="text"></td>
+       </tr>
+       <tr>
+         <td class="tptitle">电子邮箱*</td>
+       </tr>
+       <tr>
+         <td><label for="email"></label>
+           <input name="email" id="name" type="text"></td>
+       </tr>
+       <tr>
+         <td align="center" class="centertl">地址</td>
+       </tr>
+       <tr>
+         <td class="tptitle">省份*</td>
+       </tr>
+       <tr>
+         <td><label for="province"></label>
+           <select name="province" id="province" onchange='getarea(this.value)'>
+
+             <option value="0">请选择</option>
+                          <option value="1">北京市</option> 
+              
+             <option value="2">天津市</option> 
+              
+             <option value="3">河北省</option> 
+              
+             <option value="4">山西省</option> 
+              
+             <option value="5">内蒙古自治区</option> 
+              
+             <option value="6">辽宁省</option> 
+              
+             <option value="7">吉林省</option> 
+              
+             <option value="8">黑龙江省</option> 
+              
+             <option value="9">上海市</option> 
+              
+             <option value="10">江苏省</option> 
+              
+             <option value="11">浙江省</option> 
+              
+             <option value="12">安徽省</option> 
+              
+             <option value="13">福建省</option> 
+              
+             <option value="14">江西省</option> 
+              
+             <option value="15">山东省</option> 
+              
+             <option value="16">河南省</option> 
+              
+             <option value="17">湖北省</option> 
+              
+             <option value="18">湖南省</option> 
+              
+             <option value="19">广东省</option> 
+              
+             <option value="20">广西壮族自治区</option> 
+              
+             <option value="21">海南省</option> 
+              
+             <option value="22">重庆市</option> 
+              
+             <option value="23">四川省</option> 
+              
+             <option value="24">贵州省</option> 
+              
+             <option value="25">云南省</option> 
+              
+             <option value="26">西藏自治区</option> 
+              
+             <option value="27">陕西省</option> 
+              
+             <option value="28">甘肃省</option> 
+              
+             <option value="29">青海省</option> 
+              
+             <option value="30">宁夏回族自治区</option> 
+              
+             <option value="31">新疆维吾尔自治区</option> 
+              
+             <option value="32">台湾省</option> 
+              
+             <option value="33">香港特别行政区</option> 
+              
+             <option value="34">澳门特别行政区</option> 
+              
+             <option value="35">海外</option> 
+              
+             <option value="36">其他</option> 
+              
+           </select>
+           <script type="text/javascript">
+function getarea(val) { 
+$.ajax({
+		   type: "POST",
+		   url: "wapgetdistr.php",
+		   data: "val="+val,
+		   success: function(msg){
+			$('#city').html(msg);
+			  
+		   }
+		});
+}
+ 
+</script>
+
+           </td>
+       </tr>
+       <tr>
+         <td class="tptitle">城市/地区*</td>
+       </tr>
+       <tr>
+         <td><label for="city"></label>
+           <select name="city" id="city">
+             <option value="0">请选择</option> 
+           </select></td>
+       </tr>
+       <tr>
+         <td class="tptitle">地址*</td>
+       </tr>
+       <tr>
+         <td><label for="address"></label>
+           <input name="address" id="name" type="text"></td>
+       </tr>
+       <tr>
+         <td class="tptitle">邮政编码*（海外用户请亲临现场取票）</td>
+       </tr>
+       <tr>
+         <td><label for="postcode"></label>
+           <input name="postcode" id="name" type="text"></td>
+       </tr>
+       <tr>
+         <td align="center" class="centertl">观看比赛</td>
+       </tr>
+   
+       <tr>
+         <td class="tptitle">请选择观看比赛的日期(可多选)* 
+           <br>
+           重复提交，以最后一次提交内容为准 
+*</td>
+       </tr>
+       
+       <tr>
+       <td align="left" class="centertl">普通票：</td>
+       </tr>
+       <tr>
+       	<td align="left" class="title">职业-业余配对赛：200元，10月30日</td>
+       </tr>
+       <tr>
+       	<td height="25" align="right"><table width="100" border="0" cellspacing="0" cellpadding="0">
+       	  <tr>
+       	      <td><img src="images/jiahao.png" width="15" height="15"></td>
+       	      <td><input name="name2" type="text" id="name2" size="5" ></td>
+       	      <td><img src="images/jianhao.png" width="15" height="15"></td>
+     	      </tr>
+   	    </table></td>
+       </tr>
+       
+       
+        <tr>
+       	<td align="left" class="title">平日票：500元，10月31日或11月1日</td>
+       </tr>
+       <tr>
+       	<td height="25" align="right"><table width="100" border="0" cellspacing="0" cellpadding="0">
+       	  <tr>
+       	      <td><img src="images/jiahao.png" width="15" height="15"></td>
+       	      <td><input name="name2" type="text" id="name2" size="5" ></td>
+       	      <td><img src="images/jianhao.png" width="15" height="15"></td>
+     	      </tr>
+   	    </table></td>
+       </tr>
+       
+       <tr>
+       	<td align="left" class="title">周末票：1000元，11月2日或11月3日</td>
+       </tr>
+       <tr>
+       	<td height="25" align="right"><table width="100" border="0" cellspacing="0" cellpadding="0">
+       	  <tr>
+       	      <td><img src="images/jiahao.png" width="15" height="15"></td>
+       	      <td><input name="name2" type="text" id="name2" size="5" ></td>
+       	      <td><img src="images/jianhao.png" width="15" height="15"></td>
+     	      </tr>
+   	    </table></td>
+       </tr>
+       
+       <tr>
+       	<td align="left" class="title">套票：2000元，10月30-11月3日</td>
+       </tr>
+       <tr>
+       	<td height="25" align="right"><table width="100" border="0" cellspacing="0" cellpadding="0">
+       	  <tr>
+       	      <td><img src="images/jiahao.png" width="15" height="15"></td>
+       	      <td><input name="name2" type="text" id="name2" size="5" ></td>
+       	      <td><img src="images/jianhao.png" width="15" height="15"></td>
+     	      </tr>
+   	    </table></td>
+       </tr>
+       
+       <tr>
+       <td align="left" class="centertl">家庭票：</td>
+       </tr>
+       <tr>
+       	<td align="left" class="title">职业-业余配对赛：300元，10月30日</td>
+       </tr>
+       <tr>
+       	<td height="25" align="right"><table width="100" border="0" cellspacing="0" cellpadding="0">
+       	  <tr>
+       	      <td><img src="images/jiahao.png" width="15" height="15"></td>
+       	      <td><input name="name2" type="text" id="name2" size="5" ></td>
+       	      <td><img src="images/jianhao.png" width="15" height="15"></td>
+     	      </tr>
+   	    </table></td>
+       </tr>
+       
+       <tr>
+       	<td align="left" class="title">平日票：900元，10月31日或11月1日
+</td>
+       </tr>
+       <tr>
+       	<td height="25" align="right"><table width="100" border="0" cellspacing="0" cellpadding="0">
+       	  <tr>
+       	      <td><img src="images/jiahao.png" width="15" height="15"></td>
+       	      <td><input name="name2" type="text" id="name2" size="5" ></td>
+       	      <td><img src="images/jianhao.png" width="15" height="15"></td>
+     	      </tr>
+   	    </table></td>
+       </tr>
+       
+       <tr>
+       	<td align="left" class="title">周末票：1800元，11月2日或11月3日</td>
+       </tr>
+       <tr>
+       	<td height="25" align="right"><table width="100" border="0" cellspacing="0" cellpadding="0">
+       	  <tr>
+       	      <td><img src="images/jiahao.png" width="15" height="15"></td>
+       	      <td><input name="name2" type="text" id="name2" size="5" ></td>
+       	      <td><img src="images/jianhao.png" width="15" height="15"></td>
+     	      </tr>
+   	    </table></td>
+       </tr>
+       
+       <tr>
+       	<td align="left" class="title">套票：3500元，10月30日-11月3日</td>
+       </tr>
+       <tr>
+       	<td height="25" align="right"><table width="100" border="0" cellspacing="0" cellpadding="0">
+       	  <tr>
+       	      <td><img src="images/jiahao.png" width="15" height="15"></td>
+       	      <td><input name="name2" type="text" id="name2" size="5" ></td>
+       	      <td><img src="images/jianhao.png" width="15" height="15"></td>
+     	      </tr>
+   	    </table></td>
+       </tr>
+       
+       <tr>
+       <td align="left" class="centertl">特殊票：</td>
+       </tr>
+       
+       <tr>
+       	<td align="left" class="title">学生票：100元，10月30日或10月31日
+或11月1日</td>
+       </tr>
+       <tr>
+       	<td height="25" align="right"><table width="100" border="0" cellspacing="0" cellpadding="0">
+       	  <tr>
+       	      <td><img src="images/jiahao.png" width="15" height="15"></td>
+       	      <td><input name="name2" type="text" id="name2" size="5" ></td>
+       	      <td><img src="images/jianhao.png" width="15" height="15"></td>
+     	      </tr>
+   	    </table></td>
+       </tr>
+                 
+       
+         <td align="center"><input type="image" name="imageField" id="imageField" src="images/button.jpg"></td>
+       </tr>
+       <tr>
+         <td>&nbsp;</td>
+       </tr>
+      
+     </table>
+        </form>
+     </td>
+  </tr>
+  
+
+</table>
+</body>
