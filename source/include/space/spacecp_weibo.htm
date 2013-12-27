@@ -1,0 +1,20 @@
+ <!--{template home/space_header_comm}-->
+<div id="wtcontent">
+	<!-- 左侧 -->
+	<!--{template home/spacecp_00_left}-->
+	<!-- 右侧 -->
+	<div class="rightw">
+		<a name="maoweibo"><div class="rightlm"><h1><!--{if $option == 'refer'}-->提到我的<!--{else}--><!--{if $option == 'mywb'}-->我的微博<!--{elseif $option == 'event'}-->我的活动<!--{elseif $option == 'qun'}-->我的群组<!--{elseif $option == 'vote'}-->我的投票<!--{elseif $option == 'follow'}-->我的关注<!--{elseif $option == 'fans'}-->我的粉丝<!--{elseif $option == 'favorite'}-->我的收藏<!--{elseif $option == 'discuss'}-->我的评论<!--{elseif $option == 'tag'}-->我的标签<!--{elseif $option == 'master'}-->微博达人<!--{elseif $option == 'httopic'}-->热门话题<!--{/if}--><!--{/if}--></h1></div></a>
+		<br>
+		<div class="rcontent"> 
+			<!----------微博开始----------->
+				<!--{if $url}-->
+				<iframe src='<!--{$url}-->' width='590' height='800' scrolling='no' frameborder='0'  onload="Javascript:SetWinHeight(this)" ></iframe>
+				<!--{/if}-->
+			<!----------微博结束----------->
+ 
+		</div>
+	</div>
+	<div class="clear"></div>
+</div>
+<!--{template home/spacecp_foot_comm}-->

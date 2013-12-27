@@ -1,0 +1,877 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link rel="stylesheet" href="js/dojo-release-1.7.2/dijit/themes/claro/claro.css">
+<script src="js/dojo-release-1.7.2/dojo/dojo.js" type="text/javascript" djConfig="isDebug: true, parseOnLoad: true"></script>
+<title>
+<!--{if $album[albumname]}-->
+$album[albumname]&ndash;$getstat['spnickname']的空间_大正网_高尔夫主题社区_www.bwvip.com
+<!--{elseif $blog[subject]}-->
+$blog[subject]&ndash;$getstat['spnickname']的空间_大正网_高尔夫主题社区_www.bwvip.com
+<!--{elseif $video[0][title]}-->
+$video[0][title]&ndash;$getstat['spnickname']_大正网_高尔夫主题社区_www.bwvip.com
+<!--{elseif $_GET[tcode]}-->
+<!--{echo $tcode}-->&ndash;$getstat['spnickname']_大正网_高尔夫主题社区_www.bwvip.com
+<!--{elseif $_GET[op]=='weibo'}-->
+微博&ndash;$getstat['spnickname']_大正网_高尔夫主题社区_www.bwvip.com
+<!--{else}-->
+$getstat['spnickname'] 的空间_大正网_高尔夫主题社区_www.bwvip.com
+<!--{/if}-->
+</title>
+<meta name="keywords" content="{if !empty($metakeywords)}{echo htmlspecialchars($metakeywords)}{/if}" />
+<meta name="description" content="{if !empty($metadescription)}{echo htmlspecialchars($metadescription)} {/if}{if empty($nobbname)},$_G['setting']['bbname']{/if}" />
+<script type="text/javascript">var STYLEID = '{STYLEID}', STATICURL = '{STATICURL}', IMGDIR = '{IMGDIR}', VERHASH = '{VERHASH}', charset = '{CHARSET}', discuz_uid = '$_G[uid]', cookiepre = '{$_G[config][cookie][cookiepre]}', cookiedomain = '{$_G[config][cookie][cookiedomain]}', cookiepath = '{$_G[config][cookie][cookiepath]}', showusercard = '{$_G[setting][showusercard]}', attackevasive = '{$_G[config][security][attackevasive]}', disallowfloat = '{$_G[setting][disallowfloat]}', creditnotice = '<!--{if $_G['setting']['creditnotice']}-->$_G['setting']['creditnames']<!--{/if}-->', defaultstyle = '$_G[style][defaultextstyle]', REPORTURL = '$_G[currenturl_encode]', SITEURL = '$_G[siteurl]', JSPATH = '$_G[setting][jspath]';</script>
+<link href="http://www.bwvip.com/static/space/person/style.css" rel="stylesheet" type="text/css">
+<link href="http://www.bwvip.com/static/space/person/spaces.css" rel="stylesheet" type="text/css">
+<link href="static/home/css/jls.css" rel="stylesheet" type="text/css">
+
+<script type="text/javascript" src="{STATICURL}space/person/js/i.js"></script>
+<script type="text/javascript" src="{STATICURL}space/person/js/iepngfix_tilebg.js"></script>
+<script type="text/javascript" src="{$_G[setting][jspath]}home.js?{VERHASH}"></script>
+<script type="text/javascript" src="{$_G[setting][jspath]}common.js?{VERHASH}"></script>
+<script type="text/javascript" src='static/js/jquery.js'></script>
+
+<script type="text/javascript">
+	function guanzhu(guid) {
+		var val = jQuery('#share_space').html();
+		var gudo = '';
+		var notic = '';
+		var str = '';
+		if(val == '已关注') {
+			gudo = '0';
+			notic = '您已经取消了对此人的关注，不需要重复取消';
+		} else {
+			gudo = '1';
+			notic = '您已经关注此人了，不需要重复关注';
+		}
+		var url = 'ajax.php?do=buddys&guid='+guid+'&gudo='+gudo+'&time='+new Date().getTime();
+		if(gudo == '0') {
+			str = "+关注";
+		} else {
+			str = "已关注";
+		}
+		jQuery.get(url, {}, function(msg) {
+			if(msg == '1') {
+				jQuery('#share_space').html(str);
+			} else if(msg == '2') {
+				alert(notic);
+				jQuery('#share_space').html(str);
+				return false;
+			}
+		});
+	}
+
+	dojo.require("dijit.Dialog");
+	dojo.require("dojo.io.iframe");
+	dojo.require("dijit.Tooltip");
+
+	var score = 0;
+	var dlg_reference;
+
+	function send_data(){
+
+		
+
+		dojo.attr('submitting_microblog_content','value',dojo.attr('microblog_content','value'));
+
+		dojo.attr('submitting_score','value',score);
+
+		dojo.io.iframe.send({
+			form: "submitting_data",
+			handleAs: "html",
+			load: function(response, ioArgs){
+				console.log(response.body.outerHTML);
+
+				if(response.body.outerHTML.toLowerCase().match('ok')==null){
+					var tmp = response.body.outerHTML.toLowerCase();
+					tmp = tmp.replace("<body>","");
+					tmp = tmp.replace("</body>","");
+					dojo.byId('error_desc').innerHTML = tmp;	
+				}else{
+					dlg_reference.hide();
+				}
+				return response;
+			},
+			error: function(response, ioArgs){
+				return response;
+			}
+		});
+
+		dojo.byId('error_desc').innerHTML = '';
+		dojo.io.iframe.send({
+			url:'join.php?mod=update_microblog_source',
+			handleAs: "html",
+			load: function(response, ioArgs){
+				console.log(response.body.outerHTML);		
+				return response;
+			},
+			error: function(response, ioArgs){
+				return response;
+			}
+		});
+	}
+
+	function gen_dlg(){
+
+		
+
+		if(dlg_reference!=undefined){
+			dlg_reference.show();
+			return;
+		}
+		
+		var dlg = new dijit.Dialog({
+			title: '给教练评分',
+			style: 'width: 300px'
+		});
+
+		dlg_reference = dlg;
+
+		var avatarDivEl = dojo.doc.createElement('div');
+		var avatarImgEl = dojo.doc.createElement('img');
+		
+		
+
+		var uid = dojo.attr('hidden_uid','value'); 
+		dojo.attr(avatarImgEl,'src','uc_server/avatar.php?uid='+uid+'&size=small');
+
+		
+
+		var realnameDivEl = dojo.doc.createElement('div');
+		realnameDivEl.innerHTML = dojo.attr('hidden_realname','value');
+
+		avatarDivEl.appendChild(avatarImgEl);
+		avatarDivEl.appendChild(realnameDivEl);
+
+		var divEl = dojo.doc.createElement('div');
+		divEl.appendChild(avatarDivEl);
+
+		var imgEl2 = dojo.doc.createElement('img');
+		dojo.attr(imgEl2,'src','star1.gif');
+		divEl.appendChild(imgEl2);
+
+		var imgEl3 = dojo.doc.createElement('img');
+		dojo.attr(imgEl3,'src','star1.gif');
+		divEl.appendChild(imgEl3);
+
+		var imgEl4 = dojo.doc.createElement('img');
+		dojo.attr(imgEl4,'src','star1.gif');
+		divEl.appendChild(imgEl4);
+
+		var imgEl5 = dojo.doc.createElement('img');
+		dojo.attr(imgEl5,'src','star1.gif');
+		divEl.appendChild(imgEl5);
+
+		var imgEl6 = dojo.doc.createElement('img');
+		dojo.attr(imgEl6,'src','star1.gif');
+		divEl.appendChild(imgEl6);
+
+		
+
+		var commentDesc = dojo.doc.createElement('div');
+		commentDesc.innerHTML = '给'+dojo.attr('hidden_realname','value')+'的评价';
+		divEl.appendChild(commentDesc);
+
+		var textareaEl = dojo.doc.createElement('textarea');
+		dojo.attr(textareaEl,'value','对#'+dojo.attr('hidden_realname','value')+'#的评价是：');
+		dojo.attr(textareaEl,'id','microblog_content');
+		divEl.appendChild(textareaEl);
+
+		var errorDescDivEl = dojo.doc.createElement('div');
+		dojo.attr(errorDescDivEl,'id','error_desc');
+		divEl.appendChild(errorDescDivEl);
+
+		var inputEl = dojo.doc.createElement('input');
+		dojo.attr(inputEl,'type','button');
+		dojo.attr(inputEl,'value','发布');
+		dojo.connect(inputEl,'onclick','null',send_data);
+
+		
+
+		var releasingDivEl = dojo.doc.createElement('div');
+		releasingDivEl.appendChild(inputEl);
+		divEl.appendChild(releasingDivEl);		
+
+		
+
+		if(score==1){
+			dojo.attr(imgEl2,'src','star2.gif');
+			dojo.attr(imgEl3,'src','star1.gif');
+                	dojo.attr(imgEl4,'src','star1.gif');
+                	dojo.attr(imgEl5,'src','star1.gif');
+                	dojo.attr(imgEl6,'src','star1.gif');
+		}
+
+		
+
+		if(score==2){
+			dojo.attr(imgEl2,'src','star2.gif');
+			dojo.attr(imgEl3,'src','star2.gif');
+			dojo.attr(imgEl4,'src','star1.gif');
+                	dojo.attr(imgEl5,'src','star1.gif');
+                	dojo.attr(imgEl6,'src','star1.gif');
+		}
+
+		if(score==3){
+			dojo.attr(imgEl2,'src','star2.gif');
+                	dojo.attr(imgEl3,'src','star2.gif');
+			dojo.attr(imgEl4,'src','star2.gif');
+			dojo.attr(imgEl5,'src','star1.gif');
+                	dojo.attr(imgEl6,'src','star1.gif');
+        	}
+
+		if(score==4){
+			dojo.attr(imgEl2,'src','star2.gif');
+                	dojo.attr(imgEl3,'src','star2.gif');
+                	dojo.attr(imgEl4,'src','star2.gif');
+			dojo.attr(imgEl5,'src','star2.gif');
+			dojo.attr(imgEl6,'src','star1.gif');
+        	}
+
+		if(score==5){
+			dojo.attr(imgEl2,'src','star2.gif');
+                	dojo.attr(imgEl3,'src','star2.gif');
+                	dojo.attr(imgEl4,'src','star2.gif');
+                	dojo.attr(imgEl5,'src','star2.gif');
+			dojo.attr(imgEl6,'src','star2.gif');
+        	}
+
+
+
+dojo.connect(imgEl2,'onmouseover','null',function(){
+dojo.attr(imgEl2,'src','star2.gif');
+dojo.attr(imgEl3,'src','star1.gif');
+                dojo.attr(imgEl4,'src','star1.gif');
+                dojo.attr(imgEl5,'src','star1.gif');
+                dojo.attr(imgEl6,'src','star1.gif');
+});
+
+dojo.connect(imgEl3,'onmouseover','null',function(){
+dojo.attr(imgEl2,'src','star2.gif');
+dojo.attr(imgEl3,'src','star2.gif');
+dojo.attr(imgEl4,'src','star1.gif');
+                dojo.attr(imgEl5,'src','star1.gif');
+                dojo.attr(imgEl6,'src','star1.gif');
+});
+
+dojo.connect(imgEl4,'onmouseover','null',function(){
+                dojo.attr(imgEl2,'src','star2.gif');
+                dojo.attr(imgEl3,'src','star2.gif');
+dojo.attr(imgEl4,'src','star2.gif');
+dojo.attr(imgEl5,'src','star1.gif');
+                dojo.attr(imgEl6,'src','star1.gif');
+        });
+
+dojo.connect(imgEl5,'onmouseover','null',function(){
+                dojo.attr(imgEl2,'src','star2.gif');
+                dojo.attr(imgEl3,'src','star2.gif');
+                dojo.attr(imgEl4,'src','star2.gif');
+dojo.attr(imgEl5,'src','star2.gif');
+dojo.attr(imgEl6,'src','star1.gif');
+        });
+
+dojo.connect(imgEl6,'onmouseover','null',function(){
+                dojo.attr(imgEl2,'src','star2.gif');
+                dojo.attr(imgEl3,'src','star2.gif');
+                dojo.attr(imgEl4,'src','star2.gif');
+dojo.attr(imgEl5,'src','star2.gif');
+dojo.attr(imgEl6,'src','star2.gif');
+        });
+
+
+
+dojo.connect(imgEl2,'onmouseout','null',function(){
+
+if(score==0){
+
+                        dojo.attr(imgEl2,'src','star1.gif');
+                        dojo.attr(imgEl3,'src','star1.gif');
+                        dojo.attr(imgEl4,'src','star1.gif');
+                        dojo.attr(imgEl5,'src','star1.gif');
+                        dojo.attr(imgEl6,'src','star1.gif');
+
+                }
+
+                if(score==1){
+
+                        dojo.attr(imgEl2,'src','star2.gif');
+                        dojo.attr(imgEl3,'src','star1.gif');
+                        dojo.attr(imgEl4,'src','star1.gif');
+                        dojo.attr(imgEl5,'src','star1.gif');
+                        dojo.attr(imgEl6,'src','star1.gif');
+
+                }
+
+                if(score==2){
+
+                        dojo.attr(imgEl2,'src','star2.gif');
+                        dojo.attr(imgEl3,'src','star2.gif');
+                        dojo.attr(imgEl4,'src','star1.gif');
+                        dojo.attr(imgEl5,'src','star1.gif');
+                        dojo.attr(imgEl6,'src','star1.gif');
+
+                }
+
+                if(score==3){
+                        dojo.attr(imgEl2,'src','star2.gif');
+                        dojo.attr(imgEl3,'src','star2.gif');
+                        dojo.attr(imgEl4,'src','star2.gif');
+                        dojo.attr(imgEl5,'src','star1.gif');
+                        dojo.attr(imgEl6,'src','star1.gif');
+                }
+
+                if(score==4){
+                        dojo.attr(imgEl2,'src','star2.gif');
+                        dojo.attr(imgEl3,'src','star2.gif');
+                        dojo.attr(imgEl4,'src','star2.gif');
+                        dojo.attr(imgEl5,'src','star2.gif');
+                        dojo.attr(imgEl6,'src','star1.gif');
+                }
+
+                if(score==5){
+                        dojo.attr(imgEl2,'src','star2.gif');
+                        dojo.attr(imgEl3,'src','star2.gif');
+                        dojo.attr(imgEl4,'src','star2.gif');
+                        dojo.attr(imgEl5,'src','star2.gif');
+dojo.attr(imgEl6,'src','star2.gif');
+                }
+
+        });
+
+dojo.connect(imgEl3,'onmouseout','null',function(){
+
+if(score==0){
+
+                        dojo.attr(imgEl2,'src','star1.gif');
+                        dojo.attr(imgEl3,'src','star1.gif');
+                        dojo.attr(imgEl4,'src','star1.gif');
+                        dojo.attr(imgEl5,'src','star1.gif');
+                        dojo.attr(imgEl6,'src','star1.gif');
+
+                }
+
+                if(score==1){
+
+                        dojo.attr(imgEl2,'src','star2.gif');
+                        dojo.attr(imgEl3,'src','star1.gif');
+                        dojo.attr(imgEl4,'src','star1.gif');
+                        dojo.attr(imgEl5,'src','star1.gif');
+                        dojo.attr(imgEl6,'src','star1.gif');
+
+                }
+
+                if(score==2){
+
+                        dojo.attr(imgEl2,'src','star2.gif');
+                        dojo.attr(imgEl3,'src','star2.gif');
+                        dojo.attr(imgEl4,'src','star1.gif');
+                        dojo.attr(imgEl5,'src','star1.gif');
+                        dojo.attr(imgEl6,'src','star1.gif');
+
+                }
+
+                if(score==3){
+                        dojo.attr(imgEl2,'src','star2.gif');
+                        dojo.attr(imgEl3,'src','star2.gif');
+                        dojo.attr(imgEl4,'src','star2.gif');
+                        dojo.attr(imgEl5,'src','star1.gif');
+                        dojo.attr(imgEl6,'src','star1.gif');
+                }
+
+                if(score==4){
+                        dojo.attr(imgEl2,'src','star2.gif');
+                        dojo.attr(imgEl3,'src','star2.gif');
+                        dojo.attr(imgEl4,'src','star2.gif');
+                        dojo.attr(imgEl5,'src','star2.gif');
+                        dojo.attr(imgEl6,'src','star1.gif');
+                }
+
+                if(score==5){
+                        dojo.attr(imgEl2,'src','star2.gif');
+                        dojo.attr(imgEl3,'src','star2.gif');
+                        dojo.attr(imgEl4,'src','star2.gif');
+                        dojo.attr(imgEl5,'src','star2.gif');
+dojo.attr(imgEl6,'src','star2.gif');
+                }
+
+        });
+
+
+
+dojo.connect(imgEl4,'onmouseout','null',function(){
+
+if(score==0){
+
+                        dojo.attr(imgEl2,'src','star1.gif');
+                        dojo.attr(imgEl3,'src','star1.gif');
+                        dojo.attr(imgEl4,'src','star1.gif');
+                        dojo.attr(imgEl5,'src','star1.gif');
+                        dojo.attr(imgEl6,'src','star1.gif');
+
+                }
+
+                if(score==1){
+
+                        dojo.attr(imgEl2,'src','star2.gif');
+                        dojo.attr(imgEl3,'src','star1.gif');
+                        dojo.attr(imgEl4,'src','star1.gif');
+                        dojo.attr(imgEl5,'src','star1.gif');
+                        dojo.attr(imgEl6,'src','star1.gif');
+
+                }
+
+                if(score==2){
+
+                        dojo.attr(imgEl2,'src','star2.gif');
+                        dojo.attr(imgEl3,'src','star2.gif');
+                        dojo.attr(imgEl4,'src','star1.gif');
+                        dojo.attr(imgEl5,'src','star1.gif');
+                        dojo.attr(imgEl6,'src','star1.gif');
+
+                }
+
+                if(score==3){
+                        dojo.attr(imgEl2,'src','star2.gif');
+                        dojo.attr(imgEl3,'src','star2.gif');
+                        dojo.attr(imgEl4,'src','star2.gif');
+                        dojo.attr(imgEl5,'src','star1.gif');
+                        dojo.attr(imgEl6,'src','star1.gif');
+                }
+
+                if(score==4){
+                        dojo.attr(imgEl2,'src','star2.gif');
+                        dojo.attr(imgEl3,'src','star2.gif');
+                        dojo.attr(imgEl4,'src','star2.gif');
+                        dojo.attr(imgEl5,'src','star2.gif');
+                        dojo.attr(imgEl6,'src','star1.gif');
+                }
+
+                if(score==5){
+                        dojo.attr(imgEl2,'src','star2.gif');
+                        dojo.attr(imgEl3,'src','star2.gif');
+                        dojo.attr(imgEl4,'src','star2.gif');
+                        dojo.attr(imgEl5,'src','star2.gif');
+dojo.attr(imgEl6,'src','star2.gif');
+                }
+
+        });
+
+dojo.connect(imgEl5,'onmouseout','null',function(){
+
+if(score==0){
+
+                        dojo.attr(imgEl2,'src','star1.gif');
+                        dojo.attr(imgEl3,'src','star1.gif');
+                        dojo.attr(imgEl4,'src','star1.gif');
+                        dojo.attr(imgEl5,'src','star1.gif');
+                        dojo.attr(imgEl6,'src','star1.gif');
+
+                }
+
+                if(score==1){
+
+                        dojo.attr(imgEl2,'src','star2.gif');
+                        dojo.attr(imgEl3,'src','star1.gif');
+                        dojo.attr(imgEl4,'src','star1.gif');
+                        dojo.attr(imgEl5,'src','star1.gif');
+                        dojo.attr(imgEl6,'src','star1.gif');
+
+                }
+
+                if(score==2){
+
+                        dojo.attr(imgEl2,'src','star2.gif');
+                        dojo.attr(imgEl3,'src','star2.gif');
+                        dojo.attr(imgEl4,'src','star1.gif');
+                        dojo.attr(imgEl5,'src','star1.gif');
+                        dojo.attr(imgEl6,'src','star1.gif');
+
+                }
+
+                if(score==3){
+                        dojo.attr(imgEl2,'src','star2.gif');
+                        dojo.attr(imgEl3,'src','star2.gif');
+                        dojo.attr(imgEl4,'src','star2.gif');
+                        dojo.attr(imgEl5,'src','star1.gif');
+                        dojo.attr(imgEl6,'src','star1.gif');
+                }
+
+                if(score==4){
+                        dojo.attr(imgEl2,'src','star2.gif');
+                        dojo.attr(imgEl3,'src','star2.gif');
+                        dojo.attr(imgEl4,'src','star2.gif');
+                        dojo.attr(imgEl5,'src','star2.gif');
+                        dojo.attr(imgEl6,'src','star1.gif');
+                }
+
+                if(score==5){
+                        dojo.attr(imgEl2,'src','star2.gif');
+                        dojo.attr(imgEl3,'src','star2.gif');
+                        dojo.attr(imgEl4,'src','star2.gif');
+                        dojo.attr(imgEl5,'src','star2.gif');
+dojo.attr(imgEl6,'src','star2.gif');
+                }
+
+});
+
+dojo.connect(imgEl6,'onmouseout','null',function(){
+
+if(score==0){
+
+                        dojo.attr(imgEl2,'src','star1.gif');
+                        dojo.attr(imgEl3,'src','star1.gif');
+                        dojo.attr(imgEl4,'src','star1.gif');
+                        dojo.attr(imgEl5,'src','star1.gif');
+                        dojo.attr(imgEl6,'src','star1.gif');
+
+                }
+
+                if(score==1){
+
+                        dojo.attr(imgEl2,'src','star2.gif');
+                        dojo.attr(imgEl3,'src','star1.gif');
+                        dojo.attr(imgEl4,'src','star1.gif');
+                        dojo.attr(imgEl5,'src','star1.gif');
+                        dojo.attr(imgEl6,'src','star1.gif');
+
+                }
+
+                if(score==2){
+
+                        dojo.attr(imgEl2,'src','star2.gif');
+                        dojo.attr(imgEl3,'src','star2.gif');
+                        dojo.attr(imgEl4,'src','star1.gif');
+                        dojo.attr(imgEl5,'src','star1.gif');
+                        dojo.attr(imgEl6,'src','star1.gif');
+
+                }
+
+                if(score==3){
+                        dojo.attr(imgEl2,'src','star2.gif');
+                        dojo.attr(imgEl3,'src','star2.gif');
+                        dojo.attr(imgEl4,'src','star2.gif');
+                        dojo.attr(imgEl5,'src','star1.gif');
+                        dojo.attr(imgEl6,'src','star1.gif');
+                }
+
+                if(score==4){
+                        dojo.attr(imgEl2,'src','star2.gif');
+                        dojo.attr(imgEl3,'src','star2.gif');
+                        dojo.attr(imgEl4,'src','star2.gif');
+                        dojo.attr(imgEl5,'src','star2.gif');
+                        dojo.attr(imgEl6,'src','star1.gif');
+                }
+
+                if(score==5){
+                        dojo.attr(imgEl2,'src','star2.gif');
+                        dojo.attr(imgEl3,'src','star2.gif');
+                        dojo.attr(imgEl4,'src','star2.gif');
+                        dojo.attr(imgEl5,'src','star2.gif');
+dojo.attr(imgEl6,'src','star2.gif');
+                }
+
+        });
+
+
+
+dojo.connect(imgEl2,'onclick','null',function(){
+score = 1;
+});
+
+dojo.connect(imgEl3,'onclick','null',function(){
+score = 2;
+});
+
+dojo.connect(imgEl4,'onclick','null',function(){
+                score = 3;
+        });
+
+        dojo.connect(imgEl5,'onclick','null',function(){
+                score = 4;
+        });
+
+dojo.connect(imgEl6,'onclick','null',function(){
+                score = 5;
+        });
+
+
+
+dlg.set('content',divEl);
+
+
+
+dlg.show();
+
+
+
+}	
+
+dojo.addOnLoad(function(){
+	dojo.connect(dojo.byId("rating_button"), "onclick", function(){
+		//gen_dlg();
+	});
+});
+
+</script>
+
+<style type="text/css"> 
+.gl_xinx {text-align:center; margin:0 auto; width:160px; height:20px; background-color:#CCC; margin-bottom:10px;}
+</style>
+</head>
+<body class="claro">
+
+<form id="submitting_data" method="post" action="join.php?mod=trainer_score">
+
+<input id="submitting_trainer_uid" name="submitting_trainer_uid" type="hidden" value="<!--{$uid}-->"/>
+<input id="submitting_microblog_content" name="submitting_microblog_content" type="hidden"/>
+<input id="submitting_score" name="submitting_score" type="hidden"/>
+
+</form>
+
+<input type="hidden" id="hidden_uid" value="<!--{$uid}-->"/>
+<input type="hidden" id="hidden_realname" value="<!--{$realname}-->"/>
+
+<div id="append_parent"></div>
+<div class="wad">
+    <!--{subtemplate home/head_gobal}-->
+        <!--{if $bm_pay_status == 1}-->
+    <div class="headad_miao"><img src="../../../static/space/10/images/miao_banner_1.jpg" width="960" height="211" border="0" usemap="#Map2">
+      <map name="Map2">
+        <area shape="rect" coords="610,70,959,211" href="http://www.bwvip.com" target="_blank">
+      </map>
+</div>
+    <!--{else}-->
+    <div><img src="../../../static/space/person/images/duan_banner.jpg" width="960" height="160" border="0" usemap="#Map">
+      <map name="Map">
+        <area shape="rect" coords="670,25,955,160" href="http://www.bwvip.com" target="_blank">
+      </map>
+</div>
+    <!--{/if}-->
+    <div class="headbgxx_duan"></div>
+<div class="middlexx_duan">
+<div class="biag_duan">
+<div class="z touxiang_d">
+<div class="touxiang">
+<div id="circular-tou" class="clearfix">
+<a href="home.php?mod=space&uid=<!--{$uid}-->">
+<img src="http://www.bwvip.com/uc_server/avatar.php?uid=<!--{$uid}-->&size=middle" width="115" height="106" />
+<span class="cir-bg"></span>
+</a>
+<p class="center top5">
+<!--{if $userinfo['realname']}--><!--{$userinfo['realname']}--><!--{else}--><!--{$userinfo[username]}--><!--{/if}-->
+							<!--{if $userinfo['validate']}--><img src='weibo/images/vip.gif' width='12' height='12' /><!--{/if}-->
+</p>
+</div>
+</div>
+<div class="clear"></div>
+<div class="gl_xinx">
+<span>粉丝：<!--{$fsnum["num"]}--></span>
+<span> 关注：<!--{$gznum["num"]}--></span>
+</div>
+<ul class="xinx2_1">
+<li class="z">
+<a id="share_space" href="home.php?mod=spacecp&amp;ac=weibo&amp;op=follow">我的关注</a>
+</li>
+<li class="z"><a href="home.php?mod=spacecp&amp;ac=weibo&amp;op=refer">@ 我的</a></li>
+</ul>
+<!--<div class="cxzs_duan" >诚信指数</div>-->
+</div>
+
+<div class="miao_jl">
+                <div class="miao_jl_left">
+							
+						   <ul>
+								<li class="miao_jl_bg">所属俱乐部：</li>
+								<li class="miao_jl_t"><!--{$jlb["jlbname"]}--></li>
+								
+								<li class="miao_jl_bg">所属　球队：</li>
+								<li class="miao_jl_t"><!--{$jlb["qdname"]}--></li>
+								
+								<li class="miao_jl_bg">自我介绍：</li>
+								<li class="miao_jl_t"><!--{$bio}--></li>
+								
+							</ul>
+							<ul>	
+								<li class="miao_jl_bg">老鹰：</li>
+								<li class="miao_jl_t"><!--{if $scorerow[total_eagle]}--><!--{$scorerow[total_eagle]}--><!--{else}-->0<!--{/if}--></li>
+								
+								<li class="miao_jl_bg">小鸟：</li>
+								<li class="miao_jl_t"><!--{if $scorerow[total_birdie]}--><!--{$scorerow[total_birdie]}--><!--{else}-->0<!--{/if}--></li>
+								
+								<li class="miao_jl_bg">标准杆：</li>
+								<li class="miao_jl_t"><!--{if $scorerow[total_evenpar]}--><!--{$scorerow[total_evenpar]}--><!--{else}-->0<!--{/if}--></li>
+								<li class="miao_jl_t">
+								
+
+    <div><!--{if $space['self']}-->
+                    <a href="home.php?mod=spacecp&ac=mingpianall"><img src="{STATICURL}space/person/images/mp_gl.jpg" width="95" height="27" border="0"></a>
+                    <!--{elseif empty($_G['uid'])}-->
+                    <a href="member.php?mod=logging&action=login&referer={echo get_current_page_url()}" onclick="showWindow('login', this.href);return false;"><img src="{STATICURL}space/person/images/dingmp.jpg" width="145" height="37" border="0" /></a>
+                    <!--{else}-->
+                    <a href="home.php?mod=space&do=mingpian&cz=add&uid=<!--{$uid}-->&cid=$_G['uid']" ><img src="{STATICURL}space/person/images/dingmp.jpg" width="145" height="37" border="0" /></a>
+                    <!--{/if}--></div>
+					</li>
+						   </ul>
+				</div> 
+				<div class="miao_jl_right">
+				         
+						  <ul>
+							
+							
+							<!--{if $first_six_badge_amount > 0}-->
+							
+								
+							
+								<!--{loop $first_six_record $value}-->
+
+								<!--{if $value['badge_id']==1}-->
+									<li><img width="79" height="79" src="static/apply_badge/images/zs_1.jpg"></li>
+								<!--{/if}-->
+
+								<!--{if $value['badge_id']==2}-->
+									<li><img width="79" height="79" src="static/apply_badge/images/yhsf_1.jpg"></li>
+								<!--{/if}-->
+
+								<!--{if $value['badge_id']==3}-->
+									<li><img width="79" height="79" src="static/apply_badge/images/zs_3.jpg"></li>
+								<!--{/if}-->
+
+								<!--{if $value['badge_id']==4}-->
+									<li><img width="79" height="79" src="static/apply_badge/images/zs_4.jpg"></li>
+								<!--{/if}-->
+
+								<!--{if $value['badge_id']==5}-->
+									<li><img width="79" height="79" src="static/apply_badge/images/jk_1.jpg"></li>
+								<!--{/if}-->
+
+								<!--{if $value['badge_id']==6}-->
+									<li><img width="79" height="79" src="static/apply_badge/images/jk_2.jpg"></li>
+								<!--{/if}-->
+
+								<!--{if $value['badge_id']==7}-->
+									<li><img width="79" height="79" src="static/apply_badge/images/yhsf_6.jpg"></li>
+								<!--{/if}-->
+
+								<!--{if $value['badge_id']==8}-->
+									<li><img width="79" height="79" src="static/apply_badge/images/yhsf_7.jpg"></li>
+								<!--{/if}-->
+
+								<!--{if $value['badge_id']==9}-->
+									<li><img width="79" height="79" src="static/apply_badge/images/jk_5.jpg"></li>
+								<!--{/if}-->
+
+								<!--{if $value['badge_id']==10}-->
+									<li><img width="79" height="79" src="static/apply_badge/images/jk_7.jpg"></li>
+								<!--{/if}-->
+
+								<!--{if $value['badge_id']==11}-->
+									<li><img width="79" height="79" src="static/apply_badge/images/jk_8.jpg"></li>
+								<!--{/if}-->
+
+								<!--{if $value['badge_id']==12}-->
+									<li><img width="79" height="79" src="static/apply_badge/images/jk_9.jpg"></li>
+								<!--{/if}-->
+
+								<!--{if $value['badge_id']==13}-->
+									<li><img width="79" height="79" src="static/apply_badge/images/qyyh_1.jpg"></li>
+								<!--{/if}-->
+
+								<!--{if $value['badge_id']==14}-->
+									<li><img width="79" height="79" src="static/apply_badge/images/qyyh_2.jpg"></li>
+								<!--{/if}-->
+
+								<!--{if $value['badge_id']==15}-->
+									<li><img width="79" height="79" src="static/apply_badge/images/yk_3.jpg"></li>
+								<!--{/if}-->
+
+								<!--{if $value['badge_id']==16}-->
+									<li><img width="79" height="79" src="static/apply_badge/images/yk_4.jpg"></li>
+								<!--{/if}-->
+
+								<!--{if $value['badge_id']==17}-->
+									<li><img width="79" height="79" src="static/apply_badge/images/yk_5.jpg"></li>
+								<!--{/if}-->
+
+								<!--{if $value['badge_id']==18}-->
+									<li><img width="79" height="79" src="static/apply_badge/images/gj_1.jpg"></li>
+								<!--{/if}-->
+
+								<!--{if $value['badge_id']==19}-->
+									<li><img width="79" height="79" src="static/apply_badge/images/yhsf_8.jpg"></li>
+								<!--{/if}-->
+
+								<!--{if $value['badge_id']==20}-->
+									<li><img width="79" height="79" src="static/apply_badge/images/gj_3.jpg"></li>
+								<!--{/if}-->
+
+								<!--{if $value['badge_id']==21}-->
+									<li><img width="79" height="79" src="static/apply_badge/images/qyyh_4.jpg"></li>
+								<!--{/if}-->
+
+								<!--{if $value['badge_id']==22}-->
+									<li><img width="79" height="79" src="static/apply_badge/images/qyyh_6.jpg"></li>
+								<!--{/if}-->
+
+								<!--{if $value['badge_id']==23}-->
+									<li><img width="79" height="79" src="static/apply_badge/images/qyyh_7.jpg"></li>
+								<!--{/if}-->
+
+								<!--{if $value['badge_id']==24}-->
+									<li><img width="79" height="79" src="static/apply_badge/images/qyyh_8.jpg"></li>
+								<!--{/if}-->
+
+								<!--{if $value['badge_id']==25}-->
+									<li><img width="79" height="79" src="static/apply_badge/images/qyyh_9.jpg"></li>
+								<!--{/if}-->
+
+								<!--{if $value['badge_id']==26}-->
+									<li><img width="79" height="79" src="static/apply_badge/images/gj_9.jpg"></li>
+								<!--{/if}-->
+
+								<!--{if $value['badge_id']==27}-->
+									<li><img width="79" height="79" src="static/apply_badge/images/gj_10.jpg"></li>
+								<!--{/if}-->
+
+								<!--{if $value['badge_id']==28}-->
+									<li><img width="79" height="79" src="static/apply_badge/images/gj_11.jpg"></li>
+								<!--{/if}-->
+
+								<!--{if $value['badge_id']==29}-->
+									<li><img width="79" height="79" src="static/apply_badge/images/gj_12.jpg"></li>
+								<!--{/if}-->
+
+							<!--{/loop}-->
+						
+						<!--{else}-->
+							<li><a target="_blank" href="apply_badge.php"><img src="static/home/images/1.jpg"></a></li>
+						<!--{/if}-->
+							
+						  </ul>
+						 
+				</div>
+				<div style="float:right;"> <a target="_blank" href="apply_badge.php">更多</a></div>
+</div>
+</div>
+<div class="clear"></div>
+</div>
+<div class="footxx_duan"></div>
+</div>
+
+<!--{if $company_name_of_course_manager != $company_name}-->
+	<div data-dojo-type="dijit.Tooltip" data-dojo-props="connectId:'company_name',position:['below']">
+		<!--{$company_name_of_course_manager}-->
+	</div>
+<!--{/if}-->
+
+<!--{if $company_address_of_course_manager != $company_address}-->
+	<div data-dojo-type="dijit.Tooltip" data-dojo-props="connectId:'company_address',position:['below']">
+		<!--{$company_address_of_course_manager}-->
+	</div>
+<!--{/if}-->
+
+<!--{if $personal_desc_of_course_manager != $personal_desc}-->
+	<div data-dojo-type="dijit.Tooltip" data-dojo-props="connectId:'personal_desc',position:['below']">
+		<!--{$personal_desc_of_course_manager}-->
+	</div>
+<!--{/if}-->

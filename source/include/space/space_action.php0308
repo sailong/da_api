@@ -1,0 +1,35 @@
+<?php
+
+/**
+ *      [Discuz!] (C)2001-2099 Comsenz Inc.
+ *      This is NOT a freeware, use is subject to license terms
+ *
+ *      $Id: space_doing.php 19158 2010-12-20 08:21:50Z zhengqingpeng $
+ */
+
+ 
+if(!defined('IN_DISCUZ')) {
+	exit('Access Denied');
+}
+ 
+space_merge($space, 'count');
+$act=$_GET['act'];
+ 
+if($act=='iphone4s'){
+$srccode='source/group/iphone4s.php';
+ 
+include($srccode); 
+$templates='home/'.$getstat['groupid'].'_iphone4s';
+}
+if($act=='weibo'){
+$wburl=$_GET['wburl'];
+$wburl=base64_decode($wburl);
+$templates='home/'.$getstat['groupid'].'_weibo';
+}
+
+
+ $act=$_POST['act'];
+ if(!$act){
+include_once(template($templates));}
+
+?>
