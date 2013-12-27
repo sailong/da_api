@@ -26,6 +26,8 @@ else if(strpos($userAgent,"Android"))
 	$mlh_down_url = DB::result_first("select app_version_file from tbl_app_version where app_version_type='android' and field_uid=1186 order by app_version_addtime desc limit 1 ");
 	$ns_down_url = DB::result_first("select app_version_file from tbl_app_version where app_version_type='android' and field_uid=1160 order by app_version_addtime desc limit 1 ");
 	
+}else{
+	$dz_down_url = "http://www.bwvip.com/app";
 }
 
 
@@ -73,19 +75,34 @@ switch ($field_uid)
       break;
 }
 
+$where = " and arc_type is null";
+
 if($_G['gp_uid']){
-	$where = " and uid = '".getgpc('uid')."'";
+	$where .= " and uid = '".getgpc('uid')."'";
 }
 if($_G['gp_id']){
 	$where .= " and blogid>{$_G['gp_id']} ";
 }
+
+
 $num =3;
 $uid = getgpc('uid');
 
 /*最新博客*/
-
+if($_G['gp_bl'] == 'test'){
+echo " select `blogid`,`subject` from ".DB::table('home_blog')." where 1=1 ".$where." limit ".$num;die;
+}
 $new_blogs_query = DB::query(" select `blogid`,`subject` from ".DB::table('home_blog')." where 1=1 ".$where." limit ".$num);
-
+if(!$new_blogs_query){
+	$where = " and arc_type is null";
+	if($_G['gp_uid']){
+		$where .= " and uid = '".getgpc('uid')."'";
+	}
+	if($_G['gp_id']){
+		$where .= " and blogid<{$_G['gp_id']} ";
+	}
+	$new_blogs_query = DB::query(" select `blogid`,`subject` from ".DB::table('home_blog')." where 1=1 ".$where." limit ".$num);
+}
 
 while($new_blogs_result = DB::fetch($new_blogs_query)){
 	$new_blogs_list[$new_blogs_result['blogid']]= $new_blogs_result['subject'];
@@ -94,7 +111,7 @@ while($new_blogs_result = DB::fetch($new_blogs_query)){
 
 $id = getgpc('id');
 
-$news_blog = DB::fetch_first(" SELECT b.`subject`,b.`dateline`,bf.`tag`,bf.`message`,bf.`pic` FROM ".DB::table('home_blog')." as b LEFT join ".DB::table('home_blogfield')." as bf ON b.blogid=bf.blogid where b.blogid='".$id."'");
+$news_blog = DB::fetch_first(" SELECT b.`subject`,b.`dateline`,bf.`tag`,bf.`message`,bf.`pic`,bf.`ad_pic` FROM ".DB::table('home_blog')." as b LEFT join ".DB::table('home_blogfield')." as bf ON b.blogid=bf.blogid where b.blogid='".$id."'");
 
 
 $aa=str_replace("src=\"/Public/editor/attached","src=\"http://www.bwvip.com/Public/editor/attached",$news_blog['message']);

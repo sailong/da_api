@@ -32,6 +32,7 @@ if($is_exist_amp) {
 	header("Location:{$url_this}");exit;
 }
 if($_GET['test'] == 1) {
+	echo 55555555555555;die;
 	echo '<pre>'; 
 	$url_this =  "http://".$_SERVER ['HTTP_HOST'].$_SERVER['REQUEST_URI'];
 	$is_exist = is_int(strpos($url_this,'&&'));
