@@ -1,0 +1,8 @@
+姓名  所在地  手机号 是否进场  门票申请时间
+
+
+
+select DISTINCT(a.user_ticket_mobile),a.user_ticket_realname,a.user_ticket_address,b.user_ticket_log_status,a.user_ticket_addtime from tbl_user_ticket a left join tbl_user_ticket_log b on a.user_ticket_code=b.user_ticket_code
+
+select distinct(a.user_ticket_mobile),a.user_ticket_realname,a.user_ticket_address,b.user_ticket_log_status,a.user_ticket_addtime from tbl_user_ticket a left join tbl_user_ticket_log b on a.user_ticket_code=b.user_ticket_code and a.event_id in('56','25','41','51','56') and a.user_ticket_addtime>1377964800 and a.user_ticket_addtime<1381075200array(832) {
+1379433600

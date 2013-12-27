@@ -15,7 +15,8 @@ require_once '../source/function/function_home.php';
 $discuz = & discuz_core::instance ();
 $discuz->cachelist = $cachelist;
 $discuz->init ();
-
+/* echo '<pre>';
+var_dump($_SERVER); */
 $width = $_GET ['width'];
 if(!$width)
 {
@@ -52,30 +53,46 @@ if(!$page_size)
 }
 $page_start = ($page-1)*$page_size;
 
+$title_name = '信息列表';
+if(strpos($_SERVER['REQUEST_URI'],'album.php'))
+{
+	$title_name = '相片列表';
+}elseif(strpos($_SERVER['REQUEST_URI'],'album_list.php'))
+{
+	$title_name = '相册列表';
+}
+
     ?>
-<html xmlns="http://www.w3.org/1999/xhtml"> 
-<head> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0"/>
+<meta name="MobileOptimized" content="236"/>
+<meta http-equiv="Cache-Control" content="no-cache"/>
+<title><?php echo $title_name; ?></title>
+<style type="text/css">
+body{margin:0;padding:0;font-size:12pt;color:#000000; line-height:150%; font-family:"微软雅黑","宋体";}
+p,h2,h3,h4,ul,li{margin:0;padding:0;list-style:none;}
+img{margin:0;padding:0;border:none;width:100%;}
+.tuijian a:link,.tuijian a:visited{text-decoration:none; font-size:12pt;color:#000000;}
+.tuijian a:hover{text-decoration:none;color:000;}
+.wrap{width:100%;height:auto;}
+h3{width:95%;font-size:18px;line-height:25px; height:60px; background:url(images/line-bg.png) no-repeat left bottom;margin:20px 0 10px 0;}
+h2{width:95%;margin:20px auto 0;font-size:18px;height:40px;line-height:25px;background:url(images/line-bg.png) no-repeat left bottom;}
+.tuijian{width:100%;line-height:30px;margin: 20px auto 10px;}
+.tuijian .tu{width:13px;float:left;padding-top:10px;margin-right:10px;}
+.bottom{width:100%;margin:40px auto;}
 
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
-<title></title> 
-
-<style type="text/css">  
-body,div,ul,li{ 
-padding:0; 
-text-align:center; 
-} 
-img{width:90%}
-td{padding:1px;}
-td{text-align:center;font:<?php echo $dguoqi1;?>px "宋体";}
-</style>   
-</head> 
+</style>
+</head>
 <body>
- 
-  
-<table width="100%" border="0" align="center"  cellpadding="0" cellspacing="0" >
-  
-  <?php
+<div class="wrap">
+	<div class="top"><img src="images/album_img/dazheng-top.png" /></div>
+    <div style="padding:0 20px;">
+<div class="content">
+    	<h3><?php echo $title_name; ?></h3><br />
+<?php
     $total=DB::fetch_first("select count(album_id) as total from tbl_album");
 	
 	$total = $total['total'];
@@ -113,22 +130,69 @@ td{text-align:center;font:<?php echo $dguoqi1;?>px "宋体";}
 
 foreach($list_data as $key=>$val){
 	
-	?>
- 
-     <tr>
-       <td align="center"><a href="http://wap.bwvip.com/album.php?id=<?php echo $val['album_id'];?>"><img src="<?php echo $val['album_fenmian'];?>"></a></td> 
-     </tr>     
-     <tr>
-       <td align="center"><?php echo $val['album_name'];?></td> 
-     </tr> 
- 
-
+?>
+        <h4><a href="http://wap.bwvip.com/album.php?id=<?php echo $val['album_id'];?>"><img src="<?php echo $val['album_fenmian'];?>" /></a></h4>
+        <p style="margin-bottom:50px;font-weight:bold; font-size:18px;"><?php echo $val['album_name'];?></p>
  <?php } ?>
-	<tr>
-       <td align="center"><a href="http://wap.bwvip.com/album_list.php?page=<?php echo $page-1;?>">上一页</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://wap.bwvip.com/album_list.php?page=<?php echo $page+1;?>">下一页</a>&nbsp;&nbsp;&nbsp;&nbsp;<span>当前第<?php echo $page;?>页&nbsp;&nbsp;总共<?php echo $max_page;?>页</span></td> 
-	</tr> 
-</table>
+  <p style="margin-bottom:50px;font-weight:bold; font-size:18px;"><a href="http://wap.bwvip.com/album_list.php?page=<?php echo $page-1;?>">上一页</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://wap.bwvip.com/album_list.php?page=<?php echo $page+1;?>">下一页</a>&nbsp;&nbsp;&nbsp;&nbsp;<span>当前第<?php echo $page;?>页&nbsp;&nbsp;总共<?php echo $max_page;?>页</span></p>   
+</div>
+</div>
+<?php
+$userAgent = $_SERVER['HTTP_USER_AGENT'];
+if(strpos($userAgent,"iPhone") || strpos($userAgent,"iPad") || strpos($userAgent,"iPod") || strpos($userAgent,"iOS"))
+{
+	$dz_down_url = DB::result_first("select app_version_file from tbl_app_version where app_version_type='ios' and field_uid=0 order by app_version_addtime desc limit 1 ");//"https://itunes.apple.com/us/app/da-zheng-gao-er-fu-golf/id642016024?ls=1&mt=8";
+	
+	
+}
+else if(strpos($userAgent,"Android"))
+{
+	$dz_down_url = DB::result_first("select app_version_file from tbl_app_version where app_version_type='android' and field_uid=0 order by app_version_addtime desc limit 1 ");
+	
+}
+if($dz_down_url){
+?>
+
+		
+<div class="center"><a href="<? echo $dz_down_url; ?>"><img src="images/album_img/jinru-button.png" /></a></div>
+
+<?php } ?>
+<div class="wrap">
+<h2>相关推荐</h2>
+<div style="padding:0 20px 40px;">
+
+<?php
+if($_GET['gp_uid']){
+	$where = " and uid = '".getgpc('uid')."'";
+}
+if($_GET['gp_id']){
+	$where .= " and blogid>{$_GET['gp_id']} ";
+}
+$where = '';
+$num =3;
+$uid = getgpc('uid');
+/*最新博客*/
+
+$new_blogs_query = DB::query(" select `blogid`,`subject` from ".DB::table('home_blog')." where 1=1 order by blogid desc".$where." limit ".$num);
+//echo " select `blogid`,`subject` from ".DB::table('home_blog')." where 1=1 order by blogid desc".$where." limit ".$num;
+
+while($new_blogs_result = DB::fetch($new_blogs_query)){
+	$new_blogs_list[$new_blogs_result['blogid']]= $new_blogs_result['subject'];
+}
+
+foreach($new_blogs_list as $key=>$val){
+
+?>
+<div class="tuijian">
+<p class="tu"><img src="images/dian.png" /></p>
+<p><a href="http://wap.bwvip.com/index.php?mod=news&do=details&id=<?php echo $key; ?>&uid=<?php echo $uid; ?>" target="_blank"><?php echo $val; ?></a></p></div>
+<?php } ?>
+
+</div>
+    
+</div>
 </body>
+</html>
 <?php	
 exit;  
 ?>
