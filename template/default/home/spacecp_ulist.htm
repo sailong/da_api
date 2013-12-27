@@ -1,0 +1,760 @@
+<!--{if !$_G[inajax]}--> 
+<!--{template home/space_header_comm}-->
+<style>
+input, button, select, textarea {
+    color: #444444;
+    font: 12px/1.5 Tahoma,Helvetica,'SimSun',sans-serif;
+}
+a{color:#966307;}
+</style>
+<div id="wtcontent">
+	<!-- 左侧 -->
+	<!--{template home/spacecp_00_left}-->
+	<!-- 右侧 --> 
+	<div class="rightw">
+		 <a name="#maoshipin"><div class="rightlm">
+		  <span style="color:#fff; font-family:'方正准圆简体'; font-size:14px;">$navtitle</span></h1></div></a>
+		<br>
+		<div class="rcontent" style="border:1px solid #DBDBDB;">
+        <ul class="tb cl">
+    <li  class="<!--{if $op=='list'||$op=='edit'}-->a<!--{/if}-->"><a href="/home.php?mod=spacecp&ac=ulist&op=list">赛事选手列表</a></li>
+				<li  class="<!--{if $op=='fzhy'}-->a<!--{/if}-->"><a href="/home.php?mod=spacecp&ac=ulist&op=fzhy">分站选手列表</a></li>
+                <li  class="<!--{if $op=='fzdj'}-->a<!--{/if}-->"><a href="/home.php?mod=spacecp&ac=ulist&op=fzdj&do=fz">分站队籍管理</a></li>
+                <li  class="<!--{if $op=='qcgl'}-->a<!--{/if}-->"><a href="/home.php?mod=spacecp&ac=ulist&op=qcgl">球场管理</a></li>                
+                <li  class="<!--{if $op=='czqc'}-->a<!--{/if}-->"><a href="/home.php?mod=spacecp&ac=ulist&op=czqc">添加球场</a></li>
+          <li  class="<!--{if $op=='bfgl'}-->a<!--{/if}-->"><a href="/home.php?mod=spacecp&ac=ulist&op=bfgl">报分员管理</a></li> 
+    <li  ><a href="/home.php?mod=spacecp&ac=fenzu">赛事分组管理</a></li>
+         </ul>
+		 
+		<!--中间内容开始--> 
+				<div class="sapce_view_content">
+<div  >
+<!--{if $op=='list'}-->
+
+ <ul>
+      
+     <form action="home.php?mod=spacecp&ac=ulist&op=list" method="post" name="form3">
+ <div style="width:500px; float:left; text-align:left; background:#fff; padding:10px;border:#999 dashed 1px;margin-bottom:10px;"><!--{if $uid==1000333}--><select   name="fenz"><option value='0'>请-选择分站</option><option value='tj511'  {if $_GET['fenz']=='tj511'}  selected {/if}>5/11天津</option>
+ <option value='gz524'  {if $_GET['fenz']=='gz524'}  selected {/if}>5/24广州</option>
+ <option value='sz531'  {if $_GET['fenz']=='sz531'}  selected {/if}>5/31深圳</option>
+ <option value='hz615'  {if $_GET['fenz']=='hz615'}  selected {/if}>6/15杭州</option>
+ <option value='sh621'  {if $_GET['fenz']=='sh621'}  selected {/if}>6/21上海</option>
+ <option value='cs629'  {if $_GET['fenz']=='cs629'}  selected {/if}>6/29长沙</option>
+ <option value='bj719'  {if $_GET['fenz']=='bj719'}  selected {/if}>7/19北京</option>
+ <option value='dl726'  {if $_GET['fenz']=='dl726'}  selected {/if}>7/26大连</option>
+ <option value='zz89'  {if $_GET['fenz']=='zz89'}  selected {/if}>8/9郑州</option>
+ <option value='cd824'  {if $_GET['fenz']=='cd824'}  selected {/if}>8/24成都</option>
+ <option value='sz830'  {if $_GET['fenz']=='sz830'}  selected {/if}>8/30苏州</option>
+ <option value='fz97'  {if $_GET['fenz']=='fz97'}  selected {/if}>9/7福州</option></select> <!--{/if}-->
+    <!--队籍：<select name="team" id="team" >                             
+     <option value=""  >请选择队籍</option>
+    <!--{loop $tlist $k $v}-->
+    <option value="<!--{$v[team_id]}-->"  <!--{if $team==$v[team_id]}-->selected="selected"<!--{/if}-->  ><!--{$v[team_name]}--></option>
+     <!--{/loop}-->
+    </select>-->
+    姓名：<input  name="realname" id="realname" value="" type="text"/>
+ UID：<input  name="ggid" id="ggid" value="" type="text" onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')"/>
+<input type="submit" value="查找" /><br /> <!--{if $uid==1000333}--><!--{else}--><a href="/home.php?mod=spacecp&ac=ulist&op=add">添加选手</a><a href="/home.php?mod=spacecp&ac=ulist&op=jlist">查看积分</a><!--{/if}-->  
+</div>
+		  </form> 
+  
+</ul> 
+    <!--{if $uslist}-->
+    <script type="text/javascript">  
+	function moveArc(){
+	var qstr=getCheckboxItem();
+	if(qstr=='')
+	{ 
+		showWindow('sub', 'home.php?mod=spacecp&ac=ulist&msg=1');
+		return;
+	} 
+	showWindow('sub', 'home.php?mod=spacecp&ac=ulist&qstr='+qstr+'');
+}
+	//获得选中文件的文件名
+function getCheckboxItem()
+{
+	var allSel="";
+	if(document.form1.chkid.value) {return document.form1.chkid.value;}
+	for(i=0;i<document.form1.chkid.length;i++)
+	{
+		if(document.form1.chkid[i].checked)
+		{
+			if(allSel=="")
+				allSel=document.form1.chkid[i].value;
+			else
+				allSel=allSel+"`"+document.form1.chkid[i].value;
+		}
+	}
+	return allSel;
+}
+       //复选框全选   
+       function checkAll(formvalue) {   
+            var roomids = document.getElementsByName(formvalue);   
+            for (var j = 0; j < roomids.length; j++) {   
+               if (roomids.item(j).checked == false) {   
+                   roomids.item(j).checked = true;   
+                }   
+           }   
+        }   
+
+       //复选框全不选   
+      function uncheckAll(formvalue) {   
+          var roomids = document.getElementsByName(formvalue);   
+           for (var j = 0; j < roomids.length; j++) {   
+                if (roomids.item(j).checked == true) {   
+                   roomids.item(j).checked = false;   
+               }   
+           }   
+        }   
+ 
+      //复选框选择转换   
+ function switchAll(formvalue) {   
+    var roomids = document.getElementsByName(formvalue);   
+          for (var j = 0; j < roomids.length; j++) {   
+             roomids.item(j).checked = !roomids.item(j).checked;   
+           }   
+       }   
+  
+    </script>  
+    <ul> <form method="post" name="form1"  > 
+
+    <!--{loop $uslist $k $v}-->
+        <!--{if $k%2==1}-->
+          <!--{eval $bgcolor = "#D5E6F6";}-->	
+        <!--{else}-->
+          <!--{eval $bgcolor = "#efefef";}-->	
+        <!--{/if}-->
+                <li  id='title_<!--{$v[uid]}-->' style="float:left;width:505px; text-align:left; <!--{if $k%2==1}--> background:#D5E6F6;
+                <!--{else}-->background:#efefef;<!--{/if}-->"   onmouseover="this.style.backgroundColor='#D6D6D6';this.style.color='#ffffff';"    onmouseout="this.style.backgroundColor='<!--{$bgcolor}-->';this.style.color='#000000';">
+                <input type="checkbox" name="chkid" value="<!--{$v[uid]}-->" />
+                <a href="home.php?mod=space&uid=<!--{$v[uid]}-->" target="_blank"><!--{$v['realname']}--></a>
+                <span style="float:right"><!--{eval echo getteamname($v[team]);}-->  
+                <a onclick="showWindow('sub', this.href);return false;" href="home.php?mod=spacecp&ac=ulist&qstr=<!--{$v[uid]}-->">添加到分站</a>
+<!--{if $uid!=1000333}--><a href="/home.php?mod=spacecp&ac=ulist&op=edit&gid=<!--{$v[uid]}-->" id='edit_<!--{$v[uid]}-->'>编辑</a>&nbsp;&nbsp;&nbsp;&nbsp;
+      <a href='home.php?mod=spacecp&ac=ulist&do=del&gid=<!--{$v[uid]}-->' onclick="if(!confirm('确定要删除？')) return false">删除</a><!--{/if}--></span>
+                </li>
+    <!--{/loop}-->
+    
+      <li   style="float:left;width:505px; text-align:left;"><input type="radio" name="all" id="all" onclick="checkAll('chkid')" />  
+   全选   
+    <input type="radio" name="all" id="Checkbox1" onclick="uncheckAll('chkid')" />  
+   全不选   
+   <input type="radio" name="all" id="Checkbox2" onclick="switchAll('chkid')" />  
+   反选      <a  onclick="moveArc();" href="#">移到分站</a></li>
+ </li>
+   
+    </form>
+    </ul>
+      <div style='height:100px; text-align:right'><li   style="float:left;width:505px; float:left;"><!--{if $op=='list'}-->共计<!--{$count}-->人<!--{/if}--><!--{if $multi}--><!--{$multi}--><!--{/if}--></div>
+    
+       <!--{else}-->
+        <ul> <li  style="float:left;width:505px; text-align:left;">暂无选手数据</li></ul>
+        <!--{/if}-->
+      
+<!--{/if}-->
+
+<!--{if $op=='jlist'}-->
+
+ <ul>
+      
+     <form action="home.php?mod=spacecp&ac=ulist&op=list" method="post" name="form3">
+ <div style="width:500px; float:left; text-align:left; background:#fff; padding:10px;border:#999 dashed 1px;margin-bottom:10px;">
+    队籍：<select name="team" id="team" >                             
+     <option value=""  >请选择队籍</option>
+    <!--{loop $tlist $k $v}-->
+    <option value="<!--{$v[team_id]}-->"  <!--{if $team==$v[team_id]}-->selected="selected"<!--{/if}-->  ><!--{$v[team_name]}--></option>
+     <!--{/loop}-->
+    </select>
+    姓名：<input  name="realname" id="realname" value="" type="text"/>
+ UID：<input  name="ggid" id="ggid" value="" type="text" onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')"/>
+<input type="submit" value="查找" /><br /><a href="/home.php?mod=spacecp&ac=ulist&op=add">添加选手</a>  <a href="/home.php?mod=spacecp&ac=ulist&op=jlist">查看积分</a>
+</div>
+		  </form> 
+  
+</ul> 
+    <!--{if $uslist}--> 
+    <ul> <form method="post" name="form1"  > 
+
+    <!--{loop $uslist $k $v}-->
+        <!--{if $k%2==1}-->
+          <!--{eval $bgcolor = "#D5E6F6";}-->	
+        <!--{else}-->
+          <!--{eval $bgcolor = "#efefef";}-->	
+        <!--{/if}-->
+                <li  id='title_<!--{$v[uid]}-->' style="float:left;width:505px; text-align:left; <!--{if $k%2==1}--> background:#D5E6F6;
+                <!--{else}-->background:#efefef;<!--{/if}-->"   onmouseover="this.style.backgroundColor='#D6D6D6';this.style.color='#ffffff';"    onmouseout="this.style.backgroundColor='<!--{$bgcolor}-->';this.style.color='#000000';">
+                <a href="home.php?mod=space&uid=<!--{$v[uid]}-->" target="_blank"><!--{$v['realname']}--></a>
+                <span style="float:right"><!--{eval echo getteamname($v[team]);}--> 
+<a href="/home.php?mod=spacecp&ac=ulist&op=edit&gid=<!--{$v[uid]}-->" id='edit_<!--{$v[uid]}-->'><!--{$v[jifen]}--></a>&nbsp;&nbsp;&nbsp;&nbsp;
+                </span>
+                </li>
+    <!--{/loop}-->
+    
+     
+   
+    </form>
+    </ul>
+      <div style='height:100px; text-align:right'><li   style="float:left;width:505px; float:left;"><!--{if $op=='list'}-->共计<!--{$count}-->人<!--{/if}--><!--{if $multi}--><!--{$multi}--><!--{/if}--></div>
+    
+       <!--{else}-->
+        <ul> <li  style="float:left;width:505px; text-align:left;">暂无选手数据</li></ul>
+        <!--{/if}-->
+      
+<!--{/if}-->
+
+
+<!--{if $op=='fzhy'}-->
+ 
+ 
+ <ul>        
+     <form action="home.php?mod=spacecp&ac=ulist&op=fzhy" method="post" name="form3">
+<div style="width:500px; float:left; text-align:left; background:#fff; padding:10px;border:#999 dashed 1px;margin-bottom:10px;">
+    分站：<select name="fz_id" id="fz_id">                             
+     <option value=""  >请选择分站</option>
+    <!--{loop $tlist $k $v}-->
+    <option value="<!--{$v[fenzhan_id]}-->"  <!--{if $fz_id==$v[fenzhan_id]}-->selected="selected"<!--{/if}-->  ><!--{$v[fenzhan_name]}-->分站</option>
+     <!--{/loop}-->
+    </select>
+    
+    姓名：<input  name="realname" id="realname" value="" type="text"/>
+ UID：<input  name="ggid" id="ggid" value="" type="text" onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')"/>
+<input type="submit" value="查找" />
+</div>
+      
+		  </form> 
+</ul> 
+    <!--{if $uslist}-->
+     <table width="520" style="float:left">
+    <form method="post" name="form1"  > 
+
+    <!--{loop $uslist $k $v}-->
+        <!--{if $k%2==1}-->
+          <!--{eval $bgcolor = "#D5E6F6";}-->	
+        <!--{else}-->
+          <!--{eval $bgcolor = "#efefef";}-->	
+        <!--{/if}-->
+       <tr id='title_<!--{$v[uid]}-->' style=" <!--{if $k%2==1}--> background:#D5E6F6;
+                <!--{else}-->background:#efefef;<!--{/if}-->"   onmouseover="this.style.backgroundColor='#D6D6D6';this.style.color='#ffffff';"    onmouseout="this.style.backgroundColor='<!--{$bgcolor}-->';this.style.color='#000000';">  
+       <td  width="25%"> <input type="checkbox" name="chkid" value="<!--{$v[uid]}-->" />  <a href="home.php?mod=space&uid=<!--{$v[uid]}-->" target="_blank"><!--{$v['realname']}--></a>
+      </td>
+       <td width="25%"><!--{$v['team_name']}--> </td>
+       <td width="25%"><!--{eval echo getfzname($v[fz_id]);}-->分站</td>
+       <td  width="25%"> <a href='home.php?mod=spacecp&ac=ulist&op=fzhy&do=del&gid=<!--{$v[uid]}-->' onclick="if(!confirm('确定要删除？')) return false">删除</a></td>
+     </tr>
+    <!--{/loop}-->      
+   
+    </form>
+    </table>
+      <div style='height:100px; text-align:right'>
+        <li   style="float:left;width:505px; text-align:left;"><input type="radio" name="all" id="all" onclick="checkAll('chkid')" />  
+   全选   
+    <input type="radio" name="all" id="Checkbox1" onclick="uncheckAll('chkid')" />  
+   全不选   
+   <input type="radio" name="all" id="Checkbox2" onclick="switchAll('chkid')" />  
+   反选      <a  onclick="delArc();" href="#">删除</a></li>
+      <li   style="float:left;width:505px; float:left;"><!--{if $op=='fzhy'}-->共计<!--{$count}-->人<!--{/if}--><!--{if $multi}--><!--{$multi}--><!--{/if}--></div>
+    
+       <!--{else}-->
+        <ul> <li  style="float:left;width:505px; text-align:left;">暂无选手数据</li></ul>
+        <!--{/if}-->
+      
+<!--{/if}-->
+
+<script type="text/javascript">  
+	function delArc(){
+	  var qstr=getCheckboxItem();
+        if(qstr=='')
+        { 
+            showWindow('sub', 'home.php?mod=spacecp&ac=ulist&msg=1');
+            return;
+        } 
+        showWindow('sub', 'home.php?mod=spacecp&ac=ulist&do=del&qstr='+qstr+'');
+}
+	//获得选中文件的文件名
+function getCheckboxItem()
+{
+	var allSel="";
+	if(document.form1.chkid.value) {return document.form1.chkid.value;}
+	for(i=0;i<document.form1.chkid.length;i++)
+	{
+		if(document.form1.chkid[i].checked)
+		{
+			if(allSel=="")
+				allSel=document.form1.chkid[i].value;
+			else
+				allSel=allSel+"`"+document.form1.chkid[i].value;
+		}
+	}
+	return allSel;
+}
+       //复选框全选   
+       function checkAll(formvalue) {   
+            var roomids = document.getElementsByName(formvalue);   
+            for (var j = 0; j < roomids.length; j++) {   
+               if (roomids.item(j).checked == false) {   
+                   roomids.item(j).checked = true;   
+                }   
+           }   
+        }   
+
+       //复选框全不选   
+      function uncheckAll(formvalue) {   
+          var roomids = document.getElementsByName(formvalue);   
+           for (var j = 0; j < roomids.length; j++) {   
+                if (roomids.item(j).checked == true) {   
+                   roomids.item(j).checked = false;   
+               }   
+           }   
+        }   
+ 
+      //复选框选择转换   
+ function switchAll(formvalue) {   
+    var roomids = document.getElementsByName(formvalue);   
+          for (var j = 0; j < roomids.length; j++) {   
+             roomids.item(j).checked = !roomids.item(j).checked;   
+           }   
+       }   
+  
+    </script>  
+
+<!--{if $op=='fzdj'}--> 
+
+            <script type="text/javascript" src="{$_G[setting][jspath]}calendar.js?{VERHASH}"></script>
+ <ul>      
+<div style="width:500px; float:left; text-align:left; background:#fff; padding:10px;border:#999 dashed 1px;margin-bottom:10px;">
+    <a href="/home.php?mod=spacecp&ac=ulist&op=fzdj&do=fz">分站管理</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="/home.php?mod=spacecp&ac=ulist&op=fzdj&do=addfz">添加分站</a>&nbsp;&nbsp;&nbsp;&nbsp;   
+    <a href="/home.php?mod=spacecp&ac=ulist&op=fzdj&do=dj">队籍管理</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="/home.php?mod=spacecp&ac=ulist&op=fzdj&do=adddj">添加队籍</a> 
+</div> 
+</ul>   
+    <ul>
+      
+    <!--{if  $_GET['do']=='addfz'}-->
+       <form action="home.php?mod=spacecp&ac=ulist&op=fzdj&do=addfz" method="post" name="form1">
+     
+       <div style="width:450px; float:left;">分站名称：<input  name="fenz_name" id="fenz_name" value="" type="text"/>
+</div>
+ <div style="width:450px; float:left;">排序：<input  name="orderby" type="text" id="orderby" onkeyup="this.value=this.value.replace(/\D/g,'')" value="" size="2" maxlength="2"  onafterpaste="this.value=this.value.replace(/\D/g,'')"/>
+轮次：<input  name="lun" type="text" id="lun" onkeyup="this.value=this.value.replace(/\D/g,'')" value="" size="2" maxlength="2"  onafterpaste="this.value=this.value.replace(/\D/g,'')"/></div>
+ <div style="width:450px; float:left;">开始时间：<input  style="width:100px;" type="text" name="starttime" class="px"   onclick="showcalendar(event, this,1)" readonly="readonly" /></div>
+<div style="width:450px; float:left;">结束时间：<input  style="width:100px;" type="text" name="endtime" class="px"   onclick="showcalendar(event, this,1)" readonly="readonly" /></div>    
+      <div style="width:450px; float:left;"><input type="submit" value="提交" /></div>
+     </form> 
+    
+   <!--{/if}--> 
+   
+       <!--{if  $_GET['do']=='adddj'}-->
+       <form action="home.php?mod=spacecp&ac=ulist&op=fzdj&do=adddj" method="post" name="form1">
+     
+      <div style="width:100px; float:left;">队籍名称：</div>
+      <div style="width:350px; float:left;"><input  name="team_name" id="team_name" value="" type="text"/></div>
+        
+      <div style="width:450px; float:left;"><input type="submit" value="提交" /></div>
+     </form> 
+    
+   <!--{/if}--> 
+    
+ <!--{if  $_GET['do']=='fz'&&$_GET['ge']=='edit'}-->
+  
+    <form action="home.php?mod=spacecp&ac=ulist&op=fzdj&do=fz&ge=update" method="post" name="form1">
+
+    <!--{loop $fzlist $k $v}-->
+  <div style="width:450px; float:left;">分站名称：<input  name="fenz_name" id="fenz_name" value="$v['fenzhan_name']" type="text"/>
+<input  name="fz_id" id="fz_id" value="$_GET['fz_id']" type="hidden"/></div> 
+<div style="width:450px; float:left;">排序：<input  name="orderby" type="text" id="orderby" onkeyup="this.value=this.value.replace(/\D/g,'')" value="$v['orderby']" size="2" maxlength="2"  onafterpaste="this.value=this.value.replace(/\D/g,'')"/>
+轮次：<input  name="lun" type="text" id="lun" onkeyup="this.value=this.value.replace(/\D/g,'')" value="$v['fenzhan_lun']" size="2" maxlength="2"  onafterpaste="this.value=this.value.replace(/\D/g,'')"/></div>
+
+ <div style="width:450px; float:left;">开始时间：<input  style="width:100px;" type="text" name="starttime" class="px"   onclick="showcalendar(event, this,1)" readonly="readonly"  value="<!--{eval echo date('Y-m-d h:i:s',$v['starttime'])}-->"/></div>
+<div style="width:450px; float:left;">结束时间：<input  style="width:100px;" type="text" name="endtime" class="px"   onclick="showcalendar(event, this,1)" readonly="readonly" value="<!--{eval echo date('Y-m-d h:i:s',$v['endtime'])}-->"/></div>    
+  
+     <!--{/loop}-->
+            <div style="width:450px; float:left;"><input type="submit" value="提交" /></div>
+		  </form> 
+    <!--{else}-->     
+     <!--{if $_GET['do']=='fz'}-->
+     <!--{loop $tlist $k $v}-->
+            <!--{if $k%2==1}-->
+              <!--{eval $bgcolor = "#D5E6F6";}-->	
+            <!--{else}-->
+              <!--{eval $bgcolor = "#efefef";}-->	
+            <!--{/if}-->
+                    <li  id='title_<!--{$v[uid]}-->' style="float:left;width:505px; text-align:left; <!--{if $k%2==1}--> background:#D5E6F6;
+                    <!--{else}-->background:#efefef;<!--{/if}-->"   onmouseover="this.style.backgroundColor='#D6D6D6';this.style.color='#ffffff';"    onmouseout="this.style.backgroundColor='<!--{$bgcolor}-->';this.style.color='#000000';">
+                
+        <!--{$v[fenzhan_name]}-->
+                    <span style="float:right">ID:{$v[fenzhan_id]}
+    <a href="/home.php?mod=spacecp&ac=ulist&op=fzdj&do=fz&ge=edit&fz_id=<!--{$v[fenzhan_id]}-->" id='edit_<!--{$v[fenzhan_id]}-->'>编辑</a>&nbsp;&nbsp;&nbsp;&nbsp;
+                    <a href='/home.php?mod=spacecp&ac=ulist&op=fzdj&do=fz&ge=del&fz_id=<!--{$v[fenzhan_id]}-->' onclick="if(!confirm('确定要删除？')) return false">删除</a></span>
+     
+                    </li>
+        <!--{/loop}-->
+      <!--{/if}-->  
+ <!--{/if}-->     
+ 
+ 
+ <!--{if  $_GET['do']=='dj'&&$_GET['ge']=='edit'}-->
+  
+    <form action="home.php?mod=spacecp&ac=ulist&op=fzdj&do=dj&ge=update" method="post" name="form1">
+
+    <!--{loop $gflist $k $v}-->
+  <div style="width:100px; float:left;">队籍名称：</div>
+  <div style="width:350px; float:left;"><input  name="team_name" id="team_name" value="$v['team_name']" type="text"/><input  name="team_id" id="team_id" value="$_GET['team_id']" type="hidden"/></div>
+   
+     <!--{/loop}-->
+            <div style="width:450px; float:left;"><input type="submit" value="提交" /></div>
+		  </form> 
+    <!--{else}-->     
+     <!--{if $_GET['do']=='dj'}-->
+     <!--{loop $dlist $k $v}-->
+            <!--{if $k%2==1}-->
+              <!--{eval $bgcolor = "#D5E6F6";}-->	
+            <!--{else}-->
+              <!--{eval $bgcolor = "#efefef";}-->	
+            <!--{/if}-->
+                    <li  id='title_<!--{$v[uid]}-->' style="float:left;width:505px; text-align:left; <!--{if $k%2==1}--> background:#D5E6F6;
+                    <!--{else}-->background:#efefef;<!--{/if}-->"   onmouseover="this.style.backgroundColor='#D6D6D6';this.style.color='#ffffff';"    onmouseout="this.style.backgroundColor='<!--{$bgcolor}-->';this.style.color='#000000';">
+                
+        <!--{$v[team_name]}-->
+                    <span style="float:right"> 
+    <a href="/home.php?mod=spacecp&ac=ulist&op=fzdj&do=dj&ge=edit&team_id=<!--{$v[team_id]}-->" id='edit_<!--{$v[team_id]}-->'>编辑</a>&nbsp;&nbsp;&nbsp;&nbsp;
+                    <a href='/home.php?mod=spacecp&ac=ulist&op=fzdj&do=dj&ge=del&team_id=<!--{$v[team_id]}-->' onclick="if(!confirm('确定要删除？')) return false">删除</a></span>
+     
+                    </li>
+        <!--{/loop}-->
+      <!--{/if}-->  
+ <!--{/if}-->     
+ 
+
+     
+     
+ </li> 
+    </ul>
+        
+      
+<!--{/if}-->
+
+<!--{if $op=='czqc'}-->
+
+<form action="home.php?mod=spacecp&ac=ulist&op=czqc&do=add" method="post" name="form1">
+
+<div style="width:500px; float:left; text-align:left; background:#fff; padding:10px;border:#999 dashed 1px;margin-bottom:10px;">
+<select name='provinceid' id='province' style='width:100px; height:22px; border:1px solid #E8E8E8; font-size:13px' onchange='getarea(this.value)'>
+    <option value='0'>请选择地区</option>
+    <!--{loop $area $key $val}-->
+    
+    <option value='<!--{$val[id]}-->'><!--{$val[name]}--></option> 
+    <!--{/loop}-->
+</select>
+<select name='fuid' id='field' style='width:250px; height:22px; border:1px solid #E8E8E8; border-left:1px solid #E8E8E8; font-size:13px'>
+   
+    <!--{loop $field $key $val}-->
+    
+    <option value='<!--{$val[uid]}-->'><!--{$val[fieldname]}--></option>
+    
+    <!--{/loop}-->
+   
+</select>
+<input type="submit" value="确定" />
+</div>
+ </form>  
+<!--{if $glist}--> 
+<div style="width:300px; float:left;">球场名字</div>
+ <div style="width:150px; float:left;">UID</div>
+ 
+<form action="home.php?mod=spacecp&ac=ulist&op=move" method="post" name="form2">
+<!--{loop $glist $k $v}-->
+        <!--{if $k%2==1}-->
+          <!--{eval $bgcolor = "#D5E6F6";}-->	
+        <!--{else}-->
+          <!--{eval $bgcolor = "#efefef";}-->	
+        <!--{/if}-->
+          <li  id='title_<!--{$v[uid]}-->' style="float:left;width:505px; text-align:left; <!--{if $k%2==1}--> background:#D5E6F6;
+                <!--{else}-->background:#efefef;<!--{/if}-->"   onmouseover="this.style.backgroundColor='#D6D6D6';this.style.color='#ffffff';"    onmouseout="this.style.backgroundColor='<!--{$bgcolor}-->';this.style.color='#000000';">
+                <input type="checkbox" name="chkid" value="<!--{$v[uid]}-->" />
+                <a href="home.php?mod=space&uid=<!--{$v[uid]}-->" target="_blank"><!--{$v['realname']}--></a> 
+              <span style="float:right">&nbsp;&nbsp;&nbsp;&nbsp;
+              <a href="home.php?mod=space&uid=<!--{$v[uid]}-->" target="_blank">查看详情</a></span>
+              </li> 
+<!--{/loop}-->
+    <div style="width:450px; float:left;"><input type="button" value="添加到本赛事"  onclick="moveArc();"/></div>
+</form>
+<!--{/if}-->
+ 
+<script type="text/javascript">
+	function getarea(val) {
+		var url = 'home.php?mod=spacecp&ac=apply&op=caddie&do=area&val='+val;
+		jQuery.post(url, {}, function(msg) {
+			jQuery('#field').html(msg);
+		});
+	}
+	 
+</script>
+<!--{/if}-->
+
+<!--{if $op=='qcgl'}-->
+
+ <ul>
+      
+     <form action="home.php?mod=spacecp&ac=ulist&op=qcgl" method="post" name="form3">
+<div style="width:500px; float:left; text-align:left; background:#fff; padding:10px;border:#999 dashed 1px;margin-bottom:10px;">
+   球场名字:<input  name="field_name" id="field_name" value="" type="text"/>
+ UID：<input  name="field_id" id="field_id" value="" type="text" onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')"/>
+<input type="submit" value="查找" />
+</div>
+
+ 
+		  </form> 
+</ul> 
+    <!--{if $uslist}-->
+     
+    <ul> <form method="post" name="form1"  > 
+
+    <!--{loop $uslist $k $v}-->
+        <!--{if $k%2==1}-->
+          <!--{eval $bgcolor = "#D5E6F6";}-->	
+        <!--{else}-->
+          <!--{eval $bgcolor = "#efefef";}-->	
+        <!--{/if}-->
+                <li  id='title_<!--{$v[uid]}-->' style="float:left;width:505px; text-align:left; <!--{if $k%2==1}--> background:#D5E6F6;
+                <!--{else}-->background:#efefef;<!--{/if}-->"   onmouseover="this.style.backgroundColor='#D6D6D6';this.style.color='#ffffff';"    onmouseout="this.style.backgroundColor='<!--{$bgcolor}-->';this.style.color='#000000';">
+               <a href="home.php?mod=space&uid=<!--{$v[field_id]}-->" target="_blank"><!--{$v['field_name']}--></a> 
+                <span style="float:right"> 
+<!--<a href="/home.php?mod=spacecp&ac=ulist&op=qcgl&do=edit&gid=<!--{$v[field_id]}-->" id='edit_<!--{$v[field_id]}-->'>编辑</a>&nbsp;&nbsp;&nbsp;&nbsp;-->
+                <a href='home.php?mod=spacecp&ac=ulist&op=qcgl&do=del&gid=<!--{$v[field_id]}-->' onclick="if(!confirm('确定要删除？')) return false">删除</a></span>
+                </li>
+    <!--{/loop}--> 
+   
+    </form>
+    </ul>
+      <div style='height:100px; text-align:right'><li   style="float:left;width:505px; float:left;"><!--{if $op=='qcgl'}-->共有<!--{$count}-->个<!--{/if}--><!--{if $multi}--><!--{$multi}--><!--{/if}--></div>
+    
+       <!--{else}-->
+        <ul> <li  style="float:left;width:505px; text-align:left;">暂无选手数据</li></ul>
+        <!--{/if}-->
+      
+<!--{/if}-->
+
+
+<!--{if $op=='edit'}-->
+
+		  <form action="home.php?mod=spacecp&ac=ulist&op=edit" method="post" name="form1">
+
+  <div style="width:60px; float:left;">姓名：</div>
+  <div style="width:150px; float:left;"><input  name="realname" id="realname" value="$arr['realname']" type="text"/><input  name="gid" id="gid" value="$_GET['gid']" type="hidden"/></div>
+  <div style="width:60px; float:left;">队籍：</div>
+  <div style="width:100px; float:left;">
+  <select name="team" id="team"> 
+    <!--{loop $tlist $k $v}-->
+    <option value="<!--{$v[team_id]}-->"  <!--{if $arr['team']==$v[team_id]}-->selected="selected"<!--{/if}-->><!--{$v[team_name]}--></option><!--{/loop}-->
+  </select>
+  </div>
+  <div style="width:80px; float:left;">平均成绩：</div>
+    <div style="width:80px; float:left;"><input  name="chadian" id="chadian" value="$arr['chadian']" type="text" style="width:50px;"onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')"></div>
+  
+            <div style="width:450px; float:left;"><input type="submit" value="提交" /></div>
+		  </form> 
+            
+<!--{/if}-->
+
+<!--{if $op=='bfgl'}-->
+
+     <!--{if $_GET['do']=='dong'}-->
+     <form action="home.php?mod=spacecp&ac=ulist&op=bfgl&do=dong" method="post" name="form1">
+     <div style="width:510px; float:left;">
+     <select name="fz_id" id="fz_id">                             
+         <option value=""  >请选择分站</option>
+        <!--{loop $tlist $k $v}-->
+        <option value="<!--{$v[fz_id]}-->"  <!--{if $ishave['fz_id']==$v[fz_id]}-->selected="selected"<!--{/if}-->  ><!--{$v[fenz_name]}-->分站</option>
+         <!--{/loop}-->
+    </select> 
+    <select name="field_id" id="field_id">                             
+         <option value=""  >请选择球场</option>
+        <!--{loop $uslist $k $v}-->
+        <option value="<!--{$v[field_id]}-->"  <!--{if $ishave['fieldid']==$v[field_id]}-->selected="selected"<!--{/if}-->  ><!--{$v[field_name]}--></option>
+         <!--{/loop}-->
+    </select>
+     </div>
+    <div style="width:510px; float:left;"> $str <input name="up" value="1" type="hidden"/><input name="bid" value="$_GET['bid']" type="hidden"/></div>
+       <div style="width:450px; float:left;"><input type="submit" value="提交" /></div>
+     </form>
+     <!--{/if}-->
+     
+      <!--{if $_GET['do']=='add'}-->
+       <form action="home.php?mod=spacecp&ac=ulist&op=bfgl&do=add" method="post" name="form1">
+       <div style="width:450px; float:left;">$str1<input name="ge" value="add" type="hidden"/><input type="submit" value="提交" /></div>
+       </form>
+      <!--{/if}-->
+      
+      <!--{if $_GET['do']==''}-->
+        <div style="width:510px; float:left;"><a href="home.php?mod=spacecp&ac=ulist&op=bfgl&do=add">添加报分员</a></div>
+    <table style="float:left;width:550px; table-layout:fixed"> 
+    <tr  style="float: left; width: 550px; text-align: left; background: none repeat scroll 0% 0% rgb(239, 239, 239); color: rgb(0, 0, 0);">
+    <td width="60" style="word-break : break-all; ">用户名</td> 
+    <td width="80" style="word-break : break-all; ">密码</td> 
+    <td width="180" style="word-break : break-all; ">已分配球洞</td>   
+    <td  width="180" style="word-break : break-all; ">所属球场</td> 
+    <td  width="100" style="word-break : break-all; ">操作</td> 
+    </tr>
+      <!--{loop $bfarr $k $v}-->  
+           <!--{if $k%2==1}-->
+              <!--{eval $bgcolor = "#D5E6F6";}-->	
+            <!--{else}-->
+              <!--{eval $bgcolor = "#efefef";}-->	
+            <!--{/if}-->
+     <tr  style=" color:#966307;float:left;width:550px; text-align:left; <!--{if $k%2==1}--> background:#D5E6F6;
+                    <!--{else}-->background:#efefef;<!--{/if}-->"   onmouseover="this.style.backgroundColor='#D6D6D6';this.style.color='#ffffff';"    onmouseout="this.style.backgroundColor='<!--{$bgcolor}-->';this.style.color='#966307';">
+      
+    <td width="60" style="word-break : break-all; "><!--{$v[username]}--></td>  
+    <td width="80" style="word-break : break-all; "><!--{$v[password]}--></td> 
+    <td width="180" style="word-break : break-all; ">【<!--{$v[hole]}-->】</td>   
+    <td width="180" style="word-break : break-all; "><!--{$v[qc_name]}--></td> 
+    <td  width="100" style="word-break : break-all; "> <a href="home.php?mod=spacecp&ac=ulist&op=bfgl&do=dong&bid=<!--{$v[id]}-->">修改</a> <a href="home.php?mod=spacecp&ac=ulist&op=bfgl&do=del&bid=<!--{$v[id]}-->">删除</a></td> 
+                     </tr>
+        <!--{/loop}-->  
+        </table>
+    <!--{/if}-->
+<!--{/if}-->
+
+<!--{if $op=='add'}-->
+
+<form action="home.php?mod=spacecp&ac=ulist&op=add" method="post" name="form1">
+<div style="width:500px; float:left; text-align:left; background:#fff; padding:10px;border:#999 dashed 1px;margin-bottom:10px;"> 
+UID：<input  name="ggid" id="ggid" value="" type="text"  onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')"/>
+差点：<input  name="chadian" id="chadian" value="$arr['chadian']" type="text" style="width:50px;" onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')">
+<input type="submit" value="确定" />
+</div> 
+		  </form>  
+        
+    <!--{if $glist}--> 
+    <div style="width:300px; float:left;">姓名</div>
+     <div style="width:150px; float:left;">UID</div>
+    <script>
+    function moveArc(){
+        var qstr=getCheckboxItem();
+        if(qstr=='')
+        { 
+            showWindow('sub', 'home.php?mod=spacecp&ac=ulist&msg=1');
+            return;
+        } 
+        showWindow('sub', 'home.php?mod=spacecp&ac=ulist&do=add&qstr='+qstr+'');
+    }
+        //获得选中文件的文件名
+    function getCheckboxItem()
+    {
+        var allSel="";
+        if(document.form2.chkid.value) {return document.form2.chkid.value;}
+        for(i=0;i<document.form2.chkid.length;i++)
+        {
+            if(document.form2.chkid[i].checked)
+            {
+                if(allSel=="")
+                    allSel=document.form2.chkid[i].value;
+                else
+                    allSel=allSel+"`"+document.form2.chkid[i].value;
+            }
+        }
+        return allSel;
+    }
+    </script>
+    <form action="home.php?mod=spacecp&ac=ulist&do=move" method="post" name="form2">
+    <!--{loop $glist $k $v}-->
+            <!--{if $k%2==1}-->
+              <!--{eval $bgcolor = "#D5E6F6";}-->	
+            <!--{else}-->
+              <!--{eval $bgcolor = "#efefef";}-->	
+            <!--{/if}-->
+              <li  id='title_<!--{$v[uid]}-->' style="float:left;width:505px; text-align:left; <!--{if $k%2==1}--> background:#D5E6F6;
+                    <!--{else}-->background:#efefef;<!--{/if}-->"   onmouseover="this.style.backgroundColor='#D6D6D6';this.style.color='#ffffff';"    onmouseout="this.style.backgroundColor='<!--{$bgcolor}-->';this.style.color='#000000';">
+                    <input type="checkbox" name="chkid" value="<!--{$v[uid]}-->" />
+                    <a href="home.php?mod=space&uid=<!--{$v[uid]}-->" target="_blank"><!--{$v['realname']}--></a>  
+                  <span style="float:right">&nbsp;&nbsp;&nbsp;&nbsp;
+                  <a href="home.php?mod=space&uid=<!--{$v[uid]}-->" target="_blank">查看详情</a></span>
+                  </li> 
+    <!--{/loop}-->
+        <div style="width:450px; float:left;"><input type="button" value="添加到本赛事"  onclick="moveArc();"/></div>
+    </form>
+    <!--{else}-->
+    <div style="width:450px; float:left;">
+    如非本站会员请注册后再添加
+      点击<a href="member.php?mod=register&sid=<!--{$uid}-->">注册地址</a>
+      <br />
+      注册时请退出登录。
+    </div>
+    <!--{/if}-->
+<!--{/if}-->
+						<div class="clear"></div>
+				  </div>
+				</div>
+                   
+ 
+		<!--中间内容结束-->
+		</div>		
+	</div>
+	<div class="clear"></div>
+</div>
+<!--{template home/spacecp_foot_comm}-->
+
+   
+<!--{else}-->
+  
+          
+        <!--{template common/header}-->
+         
+        <div>
+        <h3 id="fctrl_login" class="flb" style="cursor: move;">
+        <em id="returnmessage_Lmg2h" fwin="login"> 选手管理</em>
+        <span>
+        <a class="flbc" title="关闭" onclick="hideWindow('sub', 0, 1);" href="javascript:;">关闭</a>
+        </span>
+        </h3>
+        <div class="rfm">
+        <!--{if $_GET['msg']==1}-->
+        <div style="font-size:12px; color:#ff0000; text-align:center;">必须选择一个或多个！</div>
+        <!--{else}-->
+           <!--{if $_GET['do']=='del'}-->
+        <form action="home.php?mod=spacecp&ac=ulist&do=dels" method="post" name="form1">
+          
+        <!--{else}-->
+        <form action="home.php?mod=spacecp&ac=ulist&do=move" method="post" name="form1">
+        
+        <!--{/if}-->
+        <table>               
+        <!--{if $_GET['do']=='del'}-->
+        <tr>
+        <th>
+        <label for="username_L1b9T">确认删除吗？</label>
+        </th>
+        <td>
+        
+        
+        </td></tr>
+        <!--{else}-->
+        <tr>
+        <th>
+        <label for="username_L1b9T">分站:</label>
+        </th>
+        <td>
+        <select name="fz_id" id="fz_id" >                  
+            <!--{loop $flist $k $v}-->
+            <option value="<!--{$v[fenzhan_id]}-->" ><!--{$v[fenzhan_name]}-->分站</option>
+             <!--{/loop}-->
+            </select>
+        
+        </td></tr>
+        <!--{/if}-->
+        
+        <tr>
+        <th></th>
+        <td><input id="uids"  type="hidden" value="$cklist"  name="uids">
+        <input class="pn pnc" tabindex="1"  name="loginsubmit" type="submit" value="提交"></button>
+        </td>
+        </table>
+        </form>
+        <!--{/if}-->
+        </div>
+        
+        
+        </div>    
+        <!--{template common/footer}-->  
+          
+           
+<!--{/if}-->

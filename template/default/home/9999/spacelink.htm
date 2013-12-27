@@ -1,0 +1,8 @@
+<!--{if $spacelink}-->
+<!--{loop $spacelink $key $val}-->
+<p class='center'><a href='<!--{$val[imgurl]}-->'><img src='<!--{$val[imglogo]}-->' alt='<!--{$val[description]}-->' width='145' height='65'></a></p>
+<p class='center'><a href='<!--{$val[imgurl]}-->'><!--{$val[imgname]}--></a></p>
+<!--{/loop}-->
+<!--{else}-->
+<p class='center'>未添加友情链接</p>
+<!--{/if}-->

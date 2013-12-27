@@ -1,0 +1,92 @@
+<!--{template home/space_header_comm}-->
+<div id="wtcontent">
+	<!-- 左侧 -->
+	<!--{template home/spacecp_00_left}-->
+    
+	<div class="rightw">
+     <!--右侧开始-->
+     <div class="rightlm"><span class="title_1">$alttitle</span></div>
+     <div class="rcontent" style="border:1px solid #DBDBDB; margin-top:10px;">	
+              <div class="sapce_view_content"> 
+                        <div class="sapce_view_content_div" style="padding:15px;">
+     <!--{if $op=='add'}-->
+                           <form action="home.php?mod=spacecp&ac=jguser&type=$type&op=addsub" method="post" name="form1">
+                          <table cellpadding="0" cellspacing="0" border="1" width="97%" bordercolor="#D5D5D5" style="font-size:12px;">
+                          <tr>
+                          <td  align="center" height="25">删除选定</td><td  align="center">用户id</td><td  align="center">用户名</td>
+                          </tr>
+                          <!--{loop $jiaolian $value}-->
+                          <tr>
+                          <td  align="center"><input type="checkbox" name="add[]" value="$value[uid]" /></td>
+                          <td  align="center"><img src="/uc_server/avatar.php?uid=$value[uid]&size=small" style="padding:5px 0px 5px 0px;" /></td>
+                          <td  align="center">$value[username]</td>
+                          </tr>
+                          <!--{/loop}-->
+                          <tr><td align="center" colspan="3" height="40"> <input type="submit" value="&nbsp;添&nbsp;加&nbsp;" /></td></tr>
+                          </table>
+                            </form>
+       <!--{/if}-->
+       
+       <!--{if $op=='list'}-->
+                     <form action="home.php?mod=spacecp&ac=jguser&type=$type&op=del" method="post" name="form1">
+                    <table cellpadding="0" cellspacing="0" border="1" width="97%" bordercolor="#D5D5D5" style="font-size:12px;">
+                    <tr>
+                    <td align="center" height="25">删除选定</td>
+                    <td align="center">用户id</td>
+                    <td  align="center">定用户名</td>
+                    <td  align="center">真实姓名</td>
+                    <td  align="center">排序</td>
+                    <td align="center">操作</td>
+                    </tr>
+                    <!--{loop $listrow $kyy}-->
+                    <tr>
+                    <td align="center"><input type="checkbox" name="del[]" value="$kyy[userid]" /></td>
+                    <td align="center"><img src="/uc_server/avatar.php?uid=$kyy[userid]&size=small" style="padding:5px 0px 5px 0px;" /></td>
+                    <td  align="center">$kyy["username"]</td>
+                    <td align="center">$kyy["realname"]</td>
+                    <td align="center"><input type="text" maxlength="3" size="5" value="$kyy[seq]" id="seq_$kyy[userid]" onkeyup="this.value=this.value.replace(/[^\d]/g,'')" style="text-align:center;" /></td>
+                    <td align="center"><a href="javascript:void(0)" onclick="editseq($kyy[userid])" style="color:#444;">修改排序</a></td>
+                    </tr>
+                    <!--{/loop}-->
+                    <tr><td colspan="6" align="center" height="40">                 
+                    <!--{if $listrow}-->
+                     <input type="submit" value="&nbsp;删&nbsp;除&nbsp;" />
+                     <!--{/if}--></td></tr>
+                    </table>
+
+                     </form>
+       
+       <!--{/if}-->
+       </div>
+      </div>
+   </div>
+	 <!--右侧结束-->
+    </div>
+		 
+</div>
+<input type="hidden" value="$type" id="typeid" />	
+<script src="static/js/jquery1.5.js"></script>
+<script>
+function editseq(uid){
+    var pid=$("#seq_"+uid).val();
+    var tpvalue=$("#typeid").val();
+    
+    if(pid){
+        $.post("jigou_user.php",{type:tpvalue,id:uid,op:'edit','seq':pid},function(msg){
+            //alert(msg);
+            if(msg=='no'){
+                alert('参数错误');
+            }else if(msg=='yes'){
+                alert('修改成功');
+            }else if(msg=='wrong'){
+                alert('修改错误');
+            }
+            
+        })
+    }
+    
+}
+
+</script>
+<div class="clear"></div>
+<!--{template home/spacecp_foot_comm}--> 

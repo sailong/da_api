@@ -1,0 +1,379 @@
+
+<!--{subtemplate home/spaces_header}-->
+
+	<div class="lefter z">
+		<div class="touxiang">
+			<div id="circular-tou" class="clearfix">
+				<a target="_blank" href="home.php?mod=space&uid=$uid">
+					<img src="uc_server/avatar.php?uid=$uid&size=middle" width="80" height="74" />
+					<span class="cir-bg"></span>
+				</a>
+				<p class="center top5">$realname</p>
+			</div>
+		</div>
+		<div class="clear"></div>
+		<div class="xinx">
+		粉丝：<a href="weibo/index.php?mod=$username&code=fans">$fans_count</a>
+		关注：<a href="weibo/index.php?mod=$username&code=follow">$follow_count</a>
+		微博：<a href="weibo/index.php?mod=$username">$topic_count</a>
+		</div>
+		<div class="xinx">空间人气榜：总排名23位</div>
+		<div class="top10">
+			<ul class="xinx2">
+				<li class="z">+<a href="javascript:void(0)" onclick="follow(<!--{$uid}-->, 'follow_<!--{$uid}-->', 'add'); return false;">关注</a></li>
+				<li class="z"><a href="javascript:void(0)" onclick="PmSend(<!--{$uid}-->, '<!--{$username}-->'); return false;">发私信</a></li>
+				<li class="z"><a href="#">@他</a></li>
+			</ul>
+		</div>
+		<div class="clear"></div>
+		<div class="ifs"><img src="{STATICURL}space/person/images/4s.jpg" width="253" height="102"></div>
+		<div class="ifs"><img src="{STATICURL}space/person/images/leftad.jpg" width="230" height="164"></div>
+		<div class="leftlm"><h1>Ta的主页</h1> <span><a href="#">更多</a></span></div>
+		<!--{subtemplate home/space_header_personalnv}-->
+		<div class="leftlm"><h1>博客精选</h1> <span><a href="#">更多</a></span></div>
+		<!--{loop $blogs $v}-->
+		<div class="bkxx">
+			<p><img src="{STATICURL}space/person/images/new.jpg" width="23" height="15"><!--{$v[subject]}--></p>
+			<p><!--{$v[message]}--></p>
+		</div>
+		<!--{/loop}-->
+	  <div class="leftlm"><h1>最新相册</h1> <span><a href="#">更多</a></span></div>
+		<div class="leftcon">
+			<div id="circular-box" class="clearfix">
+				<ul>
+				<!--{if $pic}-->
+				<!--{loop $pic $value}-->
+				<li><a href="home.php?mod=space&uid=<!--{$uid}-->&do=album&id=<!--{$value[albumid]}-->"><img src="data/attachment/album/<!--{$value[pic]}-->" width="62" height="57"><span class="cir-bg"></span></a><p class="center top5"><!--{$value[albumname]}--></p></li>
+				<!--{/loop}-->
+				<!--{else}-->
+				<li>没有相册</li>
+				<!--{/if}-->
+				</ul>
+			</div>
+			<div class="clear"></div>
+		</div>
+	  <div class="leftlm"><h1>精彩视频</h1> <span><a href="#">更多</a></span></div>
+		<div class="center"><img src="{STATICURL}space/person/images/jcsp.jpg" width="213" height="185"><P>&nbsp;</P></div>
+	</div>
+	<div class="righter y">
+		<div class="logoad"></div>
+		<div class="gglb"></div>
+		<div class="righter">
+			<div class="right_left z">
+				<div class="ggbg">&nbsp;</div>
+	
+
+
+<!--{subtemplate home/spaces_top}-->
+
+
+
+				<!-- 滑动按钮 -->
+				<div class="hd">
+				<div class="maininfoTab clearfix">
+					<ul>
+						<li id="xT1" onmouseover="TabMore('x',1);" class="cssxon">Ta的动态</li>
+						<li id="xT2" onmouseover="TabMore('x',2);" class="cssx">微博</li>
+						<li id="xT3" onmouseover="TabMore('x',3);" class="cssx">原创</li>
+						<li id="xT4" onmouseover="TabMore('x',4);" class="cssx">博客</li>
+						<li id="xT5" onmouseover="TabMore('x',5);" class="cssx">图片</li>
+						<li id="xT6" onmouseover="TabMore('x',6);" class="cssx">视频</li>
+					</ul>
+				</div>
+				<div class="hdgg clearfix">您有一条新的消息请注意查收</div>
+				<div id="xC1" class="maininfoTable">
+
+					<div class="bm_c">
+						<div id="feed_div" class="e">
+						<!--{if $hotlist}-->
+							<h4 class="et"><a href="home.php?mod=space&do=home&view=all&order=hot" class="y xw0">{lang view_more_hot} <em>&rsaquo;</em></a>{lang recent_recommended_hot}</h4>
+							<ul class="el">
+							<!--{loop $hotlist $value}-->
+							<!--{eval $value = mkfeed($value);}-->
+							<!--{template home/space_feed_li}-->
+							<!--{/loop}-->
+							</ul>
+						<!--{/if}-->
+
+						<!--{if $list}-->
+							<!--{if $_GET[view] == 'app' && $_G['setting']['my_app_status']}-->
+								<div class="xld xlda mtm">
+									<!--{loop $list $appicon $values}-->
+										<dl class="bbda cl">
+											<dd class="m avt">
+												<a href="userapp.php?mod=app&id=$appicon"><img src="http://appicon.manyou.com/logos/$appicon" alt="" /></a>
+											</dd>
+											<dd class="cl">
+												<ul class="el">
+													<!--{loop $values $value}-->
+													<li class="cl">
+														<a class="t" href="userapp.php?icon=$value[icon]" title="{lang just_look_dynamic}">
+															<img width="16" height="16" {if $_G[cache][myapp][$value[icon]][icon]}src="$_G[cache][myapp][$value[icon]][icon]" onerror="this.onerror=null;this.src='http://appicon.manyou.com/icons/$value[icon]'"{else} src="http://appicon.manyou.com/icons/$value[icon]"{/if} />
+														</a>
+														$value[title_template] 
+														<span class="xg1"><!--{date($value[dateline], 'n-j H:i')}--></span>
+
+														<div class="ec">
+															<!--{if $value['image_1']}-->
+															<a href="$value[image_1_link]"{$value[target]}><img src="$value[image_1]" class="tn" /></a>
+															<!--{/if}-->
+															<!--{if $value['image_2']}-->
+															<a href="$value[image_2_link]"{$value[target]}><img src="$value[image_2]" class="tn" /></a>
+															<!--{/if}-->
+															<!--{if $value['image_3']}-->
+															<a href="$value[image_3_link]"{$value[target]}><img src="$value[image_3]" class="tn" /></a>
+															<!--{/if}-->
+															<!--{if $value['image_4']}-->
+															<a href="$value[image_4_link]"{$value[target]}><img src="$value[image_4]" class="tn" /></a>
+															<!--{/if}-->
+
+															<!--{if $value['body_template']}-->
+															<div class="detail"{if $value['image_3']} style="clear: both; zoom: 1;"{/if}>
+																$value[body_template]
+															</div>
+															<!--{/if}-->
+
+															<!--{if $value['body_general']}-->
+															<div class="quote"><blockquote>$value[body_general]</blockquote></div>
+															<!--{/if}-->
+														</div>
+													</li>
+												<!--{/loop}-->
+												</ul>
+											</dd>
+										</dl>
+									<!--{/loop}-->
+								</div>
+							
+							<!--{else}-->
+								<!--{loop $list $day $values}-->
+									<!--{if $_GET['view']!='hot'}-->
+										<h4 class="et">
+											<!--{if $day=='yesterday'}-->{lang yesterday}<!--{elseif $day=='today'}-->{lang today}<!--{else}-->$day<!--{/if}-->
+										</h4>
+									<!--{/if}-->
+
+									<ul class="el">
+									<!--{loop $values $value}-->
+										<!--{template home/space_feed_li}-->
+									<!--{/loop}-->
+									</ul>
+								<!--{/loop}-->
+							<!--{/if}-->
+						<!--{elseif $feed_users}-->
+							<div class="xld xlda mtm">
+							<!--{loop $feed_users $day $users}-->
+							<h4 class="et">
+								<!--{if $day=='yesterday'}-->{lang yesterday}<!--{elseif $day=='today'}-->{lang today}<!--{else}-->$day<!--{/if}-->
+							</h4>
+							<!--{loop $users $user}-->
+							<!--{eval $daylist = $feed_list[$day][$user[uid]];}-->
+							<!--{eval $morelist = $more_list[$day][$user[uid]];}-->
+							<dl class="bbda cl">
+								<dd class="m avt">
+									<!--{if $user[uid]}-->
+									<a href="home.php?mod=space&uid=$user[uid]" target="_blank" c="1"><!--{avatar($user[uid],small)}--></a>
+									<!--{else}-->
+									<img src="{IMGDIR}/systempm.png" alt="" />
+									<!--{/if}-->
+								</dd>
+								<dd class="cl">
+									<ul class="el">
+									<!--{loop $daylist $value}-->
+										<!--{template home/space_feed_li}-->
+									<!--{/loop}-->
+									</ul>
+
+									<!--{if $morelist}-->
+									<p class="xg1 cl"><span onclick="showmore('$day', '$user[uid]', this);" class="unfold">{lang open}</span></p>
+									<div id="feed_more_div_{$day}_{$user[uid]}" style="display:none;">
+										<ul class="el">
+										<!--{loop $morelist $value}-->
+											<!--{template home/space_feed_li}-->
+										<!--{/loop}-->
+										</ul>
+									</div>
+									<!--{/if}-->
+								</dd>
+							</dl>
+							<!--{/loop}-->
+							<!--{/loop}-->
+							</div>
+						<!--{else}-->
+							<p class="emp">{lang no_feed}</p>
+						<!--{/if}-->
+
+						<!--{if $filtercount}-->
+							<div class="i" id="feed_filter_notice_{$start}">
+								{lang depending_your}<a href="home.php?mod=spacecp&ac=privacy&op=filter" target="_blank" class="xi2 xw1">{lang filter_settings}</a>,{lang shield_feed_message} (<a href="javascript:;" onclick="filter_more($start);" id="a_feed_privacy_more" class="xi2">{lang click_view}</a>)
+							</div>
+							<div id="feed_filter_div_{$start}" style="display:none;">
+								<h4 class="et">{lang following_feed_shielding}</h4>
+								<ul class="el">
+								<!--{loop $filter_list $value}-->
+								<!--{template home/space_feed_li}-->
+								<!--{/loop}-->
+								<li><a href="javascript:;" onclick="filter_more($start);">&laquo; {lang pack_up}</a></li>
+								</ul>
+							</div>
+						<!--{/if}-->
+
+						</div>
+						<!--/id=feed_div-->
+
+						<!--{if $multi}-->
+							<div class="pgs cl mtm">$multi</div>
+						<!--{/if}-->
+
+						<!--{hook/space_home_bottom}-->
+						<div id="ajax_wait"></div>
+					</div>
+
+				</div>
+				<div id="xC2" class="maininfoTable" style="display:none;">
+					fdfdf
+				</div>
+				<div id="xC3" class="maininfoTable" style="display:none;">
+					dfg
+				</div>
+				<div id="xC4" class="maininfoTable" style="display:none;">
+					dfgfd
+				</div>
+				<div id="xC5" class="maininfoTable" style="display:none;">
+					宣传宣传
+				</div>
+				<div id="xC5" class="maininfoTable" style="display:none;">
+					视频部分
+				</div>
+				
+				</div>
+				<!-- 滑动按钮 -->
+			</div>
+			<div class="right_right y">
+				<div class="rightlm"><span class="rlm1"><h1>他的徽章</h1></span>  <span class="rlm2">更多</span></div>
+				<div class="huizhang">
+				  <ul>
+					<!--{if $medal}-->
+					  <!--{loop $medal $value}-->
+					  <li><img src="static/image/common/<!--{$value[image]}-->" width="25" height="45"><p><!--{$value[name]}--></p></li>
+					  <!--{/loop}-->
+					  <!--{else}-->
+					  <li>没有勋章</li>
+					  <!--{/if}-->
+				  </ul>
+			  </div>
+			  <div class="clear"></div>
+				<div class="rightlm"><span class="rlm1"><h1>他参与的竞猜</h1></span>  <span class="rlm2">更多</span></div>
+				<div class="center top10">
+				  <p><img src="{STATICURL}space/person/images/jingcai.jpg" width="135" height="84"></p>
+				  <p>美巡赛竞猜</p>
+			  </div>
+				<div class="rightlm"><span class="rlm1"><h1>他的标签</h1></span>  <span class="rlm2">更多</span></div>
+				<div class="biaoqian">
+					<!--{if $tags}-->
+					<!--{loop $tags $value}-->
+					<span><!--{$value[tag_name]}--></span>
+					<!--{/loop}-->
+					<!--{else}-->
+					<span style='height:50px; line-height:50px; text-align:center'>暂无标签</span>
+					<!--{/if}-->
+				</div>
+				<div class="clear"></div>
+				<div class="rightlm"><span class="rlm1"><h1>他的群组</h1></span>  <span class="rlm2">更多</span></div>
+				<div class="rlmcon">
+
+				<!--{if $grouplist}-->
+				<!--{loop $grouplist $value}-->
+				  <div class="qunzu">
+				    <div class="qunztu z">
+					<p class="center"><img src="<!--{$value[icon]}-->" width="78" height="47"></p>
+					<p class="font10 center">高球媒体  198人</p>
+					</div>
+					<div class="qunzujs y">
+					  <p><!--{$value[name]}--></p>
+						<p>1500人</p>
+						<p>你有10位好友加入</p>
+					</div>
+				  </div>
+				  <div class="clear"></div>
+				<!--{/loop}-->
+				<!--{else}-->
+				<span style='height:50px; line-height:50px; margin-left:30px'>现在还没有群组</span>
+				<!--{/if}-->
+				</div>
+				<div class="rightlm"><span class="rlm1"><h1>他参加的活动</h1></span>  <span class="rlm2">更多</span></div>
+				<div class="rlmcon">
+					<!--{if $event}-->
+					<!--{loop $event $value}-->
+					<div class="huodong"><img src="weibo/<!--{$value[image]}-->" width="62" height="53"></div>
+					<!--{/loop}-->
+					<!--{else}-->
+					<span style='height:50px; line-height:50px; margin-left:30px'>未参加活动</span>
+					<!--{/if}-->
+				</div>
+				<div class="clear"></div>
+				<div class="rightlm"><span class="rlm1"><h1>他参加的话题</h1></span>  <span class="rlm2">更多</span></div>
+				<div class="rlmcon pabottom10 patop10">
+				  <div class="huati">
+					<!--{if $topic}-->
+					<!--{loop $topic $val}-->
+					<!--{$val[tag]}-->
+					<!--{/loop}-->
+					<!--{else}-->
+					未参加任何话题
+					<!--{/if}-->
+				  </div>
+				</div>
+				<div class="rightlm"><span class="rlm1"><h1>他的关注</h1></span>  <span class="rlm2">更多</span></div>
+				<div>
+				  <div id="circular-box" class="clearfix">
+						<!--{if $buddys}-->
+						<ul>
+							<!--{loop $buddys $k $v}-->
+							<li><a href="home.php?mod=space&uid=<!--{$v[uid]}-->">
+							<img src="uc_server/avatar.php?uid=<!--{$v[uid]}-->&size=middle" width="62" height="57">
+							<span class="cir-bg"></span></a>
+							<p class="center top5"><!--{$v[username]}--></p></li>
+							<!--{/loop}-->
+							
+						</ul>
+						<!--{else}-->
+						<span style='height:50px; line-height:50px; text-align:center'>现在还没有群组</span>
+						<!--{/if}-->
+					</div>
+					<div class="clear"></div>
+				</div>
+				<div class="rightlm"><span class="rlm1"><h1>他的粉丝</h1></span>  <span class="rlm2">更多</span></div>
+				<div>
+				  <div id="circular-box" class="clearfix">
+						<!--{if $fans}-->
+						<ul>
+							<!--{loop $fans $v}-->
+							<li><a href="#"><img src="uc_server/avatar.php?uid=<!--{$v[uid]}-->&size=middle" width="62" height="57"><span class="cir-bg"></span></a><p class="center top5"><!--{$v[username]}--></p></li>
+							<!--{/loop}-->
+						</ul>
+						<!--{else}-->
+						<span style='height:50px; line-height:50px; text-align:center'>现在还没有粉丝</span>
+						<!--{/if}-->
+					</div>
+					<div class="clear"></div>
+				</div>
+				<div class="rightlm"><span class="rlm1"><h1>他的成绩卡</h1></span>  <span class="rlm2">更多</span></div>
+				<div>
+				  <p class="center"><img src="{STATICURL}space/person/images/chengjika.jpg" width="138" height="68"></p>
+				  <P>&nbsp;</P>
+			  </div>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="clear">&nbsp;</div>
+<div class="wad footer">
+<div class="footer2">
+	<div class="z"><img src="{STATICURL}space/person/images/footlogo.jpg" width="175" height="59"></div>
+	<div class="y"> 关于大正 | 商务合作 | 招贤纳士 | 合作伙伴 | 联系我们 | 投诉建议 | 免责声明 <br>
+	大正网版权归北京大正承平文化传播有限公司 <br>
+	京ICP证110339号 京公网安备110108008116号 </div></div>
+</div>
+</body>
+</html>

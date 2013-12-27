@@ -1,0 +1,54 @@
+ <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>中韩对抗赛竖版</title>
+<style type="text/css"> 
+body {
+	margin-left: 0px;
+	margin-top: 0px;
+	margin-right: 0px;
+	margin-bottom: 0px;
+}
+</style>
+</head>
+
+<body>
+	<table width="{$width}" border="0" cellpadding="0" cellspacing="0">
+        <tr style="background:#fff; width:{$width}px;">
+        	<td>
+            	<table width="98%" style="background:#f4f4f4;text-align:center; margin-top:10px;" align="center" border="0" cellpadding="0" cellspacing="0">
+                	<tr height="80px" >
+                    	<td colspan="3" style="text-align:center;font-size:{$sb2}px;font-weight:bold;">中国VS韩国十佳俱乐部对抗赛</td>             
+                    </tr>
+                    <tr height="110px" style=" background:url(images/line-bg.gif) no-repeat left bottom;" align="center">
+                    	<td><img src="images/but-1.gif" width="{$dbut1}"/></td>
+                        <td><img src="images/guoqi.png"  width="{$szhongjian1}"/></td>
+                        <td><img src="images/but-2.gif"  width="{$dbut1}"/></td>
+                    </tr>
+                    
+<!--{loop $nblist $n  $v}-->   
+    <tr height="110px" align="center">
+                      <td colspan="3"><table width="95%" border="0" cellspacing="0" cellpadding="0" style=" background:url(images/line-bg.gif)  repeat-x left bottom;" >
+                                            <tr height="60px" align="left">
+                    	<td width="10%" height="60px" align="center" > <!--{if $v['pm']<=3}--><img src="images/xinxin.png" width="{$xing1}"/><!--{/if}--></td>
+                        <td width="5%" align="left" style="font-size:{$sb3}px;font-weight:bold;">{$v['pm']}</td>
+                        <td width="10%" align="left" ><img src="images/{$qzarray[$v['uid']]}" width="{$xguoqi1}"/></td>
+                        <td align="left" style="color:{$ysarray[$v['uid']]};font-size:{$sb3}px;font-weight:bold;">{$v['realname']}</td>
+                         <td align="right" style="padding-right:20px;color:{$ysarray[$v['uid']]};font-size:{$sb3}px;font-weight:bold;" >{echo Getstat($v['tlcave'])}</td>
+                    </tr>
+</table></td>
+                    </tr>
+<!--{/loop}--> 
+ 
+                   
+                    
+                 </table>
+            </td>
+        </tr>
+          <tr><td height="45">
+        </td>
+  </tr>
+    </table>
+</body>
+</html>

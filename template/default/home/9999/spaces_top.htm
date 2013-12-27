@@ -1,0 +1,53 @@
+<div class="xuanc">
+	<li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#"><img src="{STATICURL}space/person/images/gg1.jpg" width="244" height="23" border="0"></a></li>
+	<li>&nbsp;&nbsp;
+	<a id="domainurl" href="$space[domainurl]" onclick="setCopy('http://'+window.location.host+'/home.php?mod=space&uid=<!--{$uid}-->', '{lang copy_space_address}');return false;">
+		<img src="{STATICURL}space/person/images/fz.jpg" width="84" height="27" border="0">
+	</a>
+	<!--{if !$space['self']}-->
+	<a id="share_space" href="home.php?mod=spacecp&ac=share&type=space&id=$space[uid]" onclick="showWindow(this.id, this.href, 'get', 0);">
+		<img src="{STATICURL}space/person/images/fx.jpg" width="84" height="27" border="0">
+	</a>
+	<!--{/if}-->
+</div>
+<script type='text/javascript'>
+	//复制网址
+	function copyTxt(str) {
+		var clipBoardContent = '';
+		clipBoardContent += str;
+		window.clipboardData.setData('Text', clipBoardContent);
+		alert('地址已复制成功！');
+	}
+</script>
+<div class="clear"></div>
+<div class="jianjie">
+	<div>
+		<div class="y"><a href="home.php?mod=spacecp&ac=profile&op=verify"><img src="{STATICURL}space/person/images/sqrz.jpg" width="67" height="22" border="0"></a></div>
+		<p><span>地址：<!--{$info[residecity]}--></span><span style='margin-left:40px'>公司：<!--{$info[company]}--></span></p>
+		<p>简介：</p>
+	</div>
+	<div><!--{if $info[bio]}--><!--{$info[bio]}--><!--{else}-->暂无<!--{/if}--></div>
+</div>
+
+
+
+
+
+<form id="quickcommentform_{$space[uid]}" action="home.php?mod=spacecp&ac=comment" method="post" autocomplete="off" onsubmit="ajaxpost('quickcommentform_{$space[uid]}', 'return_qcwall_$space[uid]');doane(event);">
+	<div class="zxly">
+		<textarea id="comment_message" onkeydown="ctrlEnter(event, 'commentsubmit_btn');" class="lybbg" rows="5" name="message"></textarea>
+	</div>
+	<div class="liuyan">
+	<p>
+		<input type="hidden" name="referer" value="home.php?mod=space&uid=$wall[uid]&do=wall" />
+		<input type="hidden" name="id" value="$space[uid]" />
+		<input type="hidden" name="idtype" value="uid" />
+		<input type="hidden" name="handlekey" value="qcwall_{$space[uid]}" />
+		<input type="hidden" name="commentsubmit" value="true" />
+		<input type="hidden" name="quickcomment" value="true" />
+		<input type='image' name="commentsubmit_btn" style='height:38px' value="true" id="commentsubmit_btn" class="pn" src="{STATICURL}space/person/images/liuyan.jpg" width="114" height="38" />
+		<span id="return_qcwall_{$space[uid]}"></span>
+	</p>
+	<input type="hidden" name="formhash" value="{FORMHASH}" />
+	</div>
+</form>

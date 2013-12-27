@@ -1,0 +1,578 @@
+
+<!--{subtemplate home/24_header}-->
+<style type='text/css'>
+.score{
+	width:100%
+}
+.score td {
+	border-bottom:1px solid #abcdef; border-right:1px solid #abcdef; height:25px; width:33px; text-align:center; padding:0
+}
+.score tr .first {
+	border-top:1px solid #abcdef; border-left:1px solid #abcdef; width:80px; color:blue
+}
+.score tr .num {
+	font-weight:bold
+}
+.score tr td input {
+	width:27px; height:25px; line-height:25px; margin:0; border:none
+}
+.commoninfo {
+	text-align:left
+}
+</style>
+<div id="wtcontent">
+	<!--{subtemplate home/24_left}-->
+	<div class="z z2">
+		<!--{subtemplate home/common_center}-->
+        <a name="maoweibo">
+		<div class="cdt_lm">
+		    <span><h1><!--{if $option == 'him'}-->提到<!--{$visitname}-->的<!--{else}--><!--{$visitname}-->的<!--{if $option == 'score'}-->记分卡<!--{elseif $option == 'visiter'}-->访客<!--{elseif $option == 'qun'}-->群组<!--{elseif $option == 'medalmore'}-->勋章<!--{elseif $option == 'event'}-->活动<!--{elseif $option == 'follow'}-->关注<!--{elseif $option == 'fans'}-->粉丝<!--{elseif $option == 'tag'}-->标签<!--{elseif $option == 'topic'}-->话题<!--{elseif $option == 'weibo'}-->微博<!--{/if}--><!--{/if}--></h1></span>
+		</div>
+        </a>
+		<div class="cdt_2">
+			<!--<span>&nbsp;&nbsp;<img src="{STATICURL}space/24/images/new.gif"></span>
+			<span>您有一条新的微博消息，请注意查收</span> -->
+		</div>
+		<div class="cbg2">
+			<div style="background-color:#FFF">
+
+	<!-----------开始----------->
+			<!--{if $url}-->
+				<iframe src='<!--{$url}-->' width='460' height='800px' scrolling='no' frameborder='0' onload="Javascript:SetWinHeight(this)" ></iframe>
+			<!--{elseif  $option == 'score'}-->
+				<!--{if $list}-->
+				<!--{if empty($_GET['c']) && empty($_GET['cp'])}-->
+				<table cellspacing='1' cellpadding='2' bgcolor="#CCCCCC" width="95%" align="center" >
+					<tr bgcolor="#FFFFFF">
+						<td height="25" align="center" bgcolor="#67859F" class='first'>球场</td>
+						<td height="25" colspan='21' align="center" bgcolor="#B5C5D2">
+							<!--{$list[fieldname]}--> >> <!--{$list[tee]}-->
+							<!--{if $groupfield['id'] && $_G['uid'] != $_GET['uid']}-->
+							&nbsp;&nbsp;&nbsp;&nbsp;<a href='home.php?mod=space&uid=<!--{$_G[uid]}-->&zyzw=皇冠杯城市挑战赛&zyyh=<!--{$userinfo[realname]}-->'>质疑成绩卡</a>
+							<!--{/if}-->
+						</td>
+					</tr>
+					<tr bgcolor="#FFFFFF">
+						<td height="25" align="center" bgcolor="#67859F" class='first'>时间</td>
+						<td height="25" colspan='21' align="center" bgcolor="#0E6DBD" class='first'><!--{$list[dateline]}--></td>
+					</tr>
+					<tr bgcolor="#FFFFFF">
+						<td height="25" align="center" bgcolor="#9AD8E7" class='first'>球洞</td>
+						<!--{loop $data $k $v}-->
+					<td height="25" align="center" bgcolor="#9AD8E7" class='num'><!--{$v}--></td>
+						<!--{/loop}-->
+					</tr>
+					<tr bgcolor="#FFFFFF" id='par'>
+						<td height="25" align="center" bgcolor="#62CAE3" class='first'>标准杆</td>
+						<!--{if $list[par]}-->
+						<!--{loop $list[par] $key $val}-->
+					<td height="25" align="center" bgcolor="#62CAE3"><!--{$val}--></td>
+						<!--{/loop}-->
+						<!--{else}-->
+						<!--{loop $num $key $val}-->
+						<td align="center" bgcolor="#62CAE3">&nbsp;</td>
+						<!--{/loop}-->
+						<!--{/if}-->
+					</tr>
+					<tr bgcolor="#FFFFFF" id='score'>
+						<td height="25" align="center" bgcolor="#6BBDD2" class='first'>成绩</td>
+						<!--{if $list[score]}-->
+						<!--{loop $list[score] $key $val}-->
+						<td height="25" align="center" bgcolor="#6BBDD2">
+							<!--{$val}-->
+						</td>
+						<!--{/loop}-->
+						<!--{else}-->
+						<!--{loop $num $key $val}-->
+						<td align="center" bgcolor="#6BBDD2">&nbsp;</td>
+						<!--{/loop}-->
+						<!--{/if}-->
+					</tr>
+					<tr bgcolor="#FFFFFF" id='pars'>
+						<td height="25" align="center" bgcolor="#6EA9B7" class='first'>距离总标准杆</td>
+						<!--{if $list[pars]}-->
+						<!--{loop $list[pars] $key $val}-->
+					<td height="25" align="center" bgcolor="#6EA9B7"><!--{$val}--></td>
+						<!--{/loop}-->
+						<!--{else}-->
+						<!--{loop $num $key $val}-->
+						<td align="center" bgcolor="#6EA9B7">&nbsp;</td>
+						<!--{/loop}-->
+						<!--{/if}-->
+					</tr>
+				</table>
+				<table width="95%" align="center" cellpadding='2' cellspacing='1' id='more' bgcolor="#FFFFFF" style='display:none'>
+					<tr>
+						<td height="25" colspan='7' bgcolor="#B5C5D2" align='center'>详细资料</td>
+					</tr>
+					<tr>
+						<td height="25" align="center" bgcolor="#0E6DBD" style='width:100px' class='first'>名称</td>
+						<td height="25" align="center" bgcolor="#0E6DBD" style='width:100px' class='first'>成绩</td>
+						<td height="25" align="center" bgcolor="#0E6DBD" style='width:100px' class='first'>名称</td>
+						<td height="25" align="center" bgcolor="#0E6DBD" style='width:100px' class='first'>成绩</td>
+					</tr>
+					<tr>
+						<td height="25" align="center" bgcolor="#67859F" class='first'>平均开球距离</td>
+						<td height="25" align="center" bgcolor="#9AD8E7"><!--{$list[total_avglength]}--> 码</td>
+						<td height="25" align="center" bgcolor="#67859F" class='first'></td>
+						<td height="25" align="center" bgcolor="#9AD8E7"></td>
+					</tr>
+					<tr>
+						<td height="25" align="center" bgcolor="#67859F" class='first'>开球上球道</td>
+						<td height="25" align="center" bgcolor="#6BBDD2"><!--{$list[total_shangdao]}--> 杆</td>
+						<td height="25" align="center" bgcolor="#67859F" class='first'>开球上球道率</td>
+						<td height="25" align="center" bgcolor="#62CAE3"><!--{$list[total_aveshangdao]}--> %</td>
+					</tr>
+					<tr>
+						<td height="25" align="center" bgcolor="#67859F" class='first'>总推杆数</td>
+						<td height="25" align="center" bgcolor="#6BBDD2"><!--{$list[total_pushs]}--> 杆</td>
+						<td height="25" align="center" bgcolor="#67859F" class='first'>平均推杆数</td>
+						<td height="25" align="center" bgcolor="#62CAE3"><!--{$list[total_avepushs]}--> 杆</td>
+					</tr>
+					<tr>
+						<td height="25" align="center" bgcolor="#67859F" class='first'>老鹰球</td>
+						<td height="25" align="center" bgcolor="#6EA9B7"><!--{$list[total_eagle]}--> 杆</td>
+						<td height="25" align="center" bgcolor="#67859F" class='first'>小鸟球</td>
+						<td height="25" align="center" bgcolor="#9AD8E7"><!--{$list[total_birdie]}--> 杆</td>
+					</tr>
+					<tr>
+						<td height="25" align="center" bgcolor="#67859F" class='first'>柏忌数</td>
+						<td height="25" align="center" bgcolor="#62CAE3"><!--{$list[total_bogi]}--> 杆</td>
+						<td height="25" align="center" bgcolor="#67859F" class='first'>双柏忌数</td>
+						<td height="25" align="center" bgcolor="#6BBDD2"><!--{$list[total_doubles]}--> 杆</td>
+					</tr>
+					<tr>
+						<td height="25" align="center" bgcolor="#67859F" class='first'>打平标准杆</td>
+						<td height="25" align="center" bgcolor="#62CAE3"><!--{$list[total_evenpar]}--> 杆</td>
+						<td height="25" align="center" bgcolor="#67859F" class='first'>其他</td>
+						<td height="25" align="center" bgcolor="#6EA9B7"><!--{$list[total_other]}--> 杆</td>
+					</tr>
+					<tr>
+						<td height="25" align="center" bgcolor="#67859F" class='first'>被罚杆数</td>
+						<td height="25" align="center" bgcolor="#9AD8E7"><!--{$list[total_penalty]}--> 杆</td>
+						<td height="25" align="center" bgcolor="#67859F" class='first'>最远击球距离</td>
+						<td height="25" align="center" bgcolor="#9AD8E7"><!--{$list[total_furthest]}--> 码</td>
+					</tr>
+					<tr>
+						<td bgcolor="#6BBECC" align="center">缩略图</td>
+						<td colspan='3' bgcolor="#6BBECC">
+							<span class="table_miao">
+								<!--{if $list[uploadimg]}--><img src='<!--{$list[uploadimg]}-->' width='400' height='200' /><!--{else}--><img src='uploadfile/common/scoreimg.jpg' width='400' height='200' /><!--{/if}-->
+							</span>
+						</td>
+					</tr>
+				</table>
+				<!--{elseif ($_GET[c] == 'edit') && empty($flag) && $childuid && empty($_GET['cp']) && $list[par]}-->
+				<form action='home.php?mod=space&do=common&op=score&c=save' method='post' enctype='multipart/form-data'>
+							<input type='hidden' name='id' value='<!--{$list[baofen_id]}-->' />
+							<input type='hidden' name='uid' value='<!--{$list[uid]}-->' />
+                            <input type='hidden' name='sid' value='<!--{$list[sid]}-->' />
+                            <input type="hidden" name="field_id" value="<!--{$list['field_id']}-->">
+							<input type='hidden' name='scoreimg' value='<!--{$list[uploadimg]}-->' id='scoreimg' />
+							<table cellspacing='1' cellpadding='2' bgcolor="#CCCCCC" class='score' width="95%" align="center" >
+								<tr bgcolor="#FFFFFF">
+									<td height="25" align="center" bgcolor="#67859F" class='first'>球场</td>
+									<td height="25" colspan='21' align="center" bgcolor="#B5C5D2" style='width:555px'>
+										<!--{$list[fieldname]}--> >> <!--{$list[tee]}-->
+									</td>
+								</tr>
+								<tr bgcolor="#FFFFFF">
+									<td height="25" align="center" bgcolor="#67859F" class='first'>时间</td>
+									<td height="25" colspan='21' align="center" bgcolor="#0E6DBD" class='first' style='width:555px'><!--{$list[dateline]}--></td>
+								</tr>
+								<tr bgcolor="#FFFFFF">
+									<td height="25" align="center" bgcolor="#67859F" class='first'>成绩卡照片上传</td>
+									<td colspan='21' bgcolor="#B5C5D2" style='width:555px'><input type='file' name='uploadimg' id='uploadimg' style='width:200px' /><span id='rfile' style='color:red'></span></td>
+								</tr>
+								<tr bgcolor="#FFFFFF">
+									<td height="25" align="center" bgcolor="#9AD8E7" class='first'>球洞</td>
+									<!--{loop $data $k $v}-->
+								<td height="25" align="center" bgcolor="#9AD8E7" class='num'><!--{$v}--></td>
+									<!--{/loop}-->
+								</tr>
+								<tr bgcolor="#FFFFFF" id='par'>
+									<td height="25" align="center" bgcolor="#62CAE3" class='first'>标准杆</td>
+									<!--{loop $list[par] $key $val}-->
+									<td height="25" align="center" bgcolor="#62CAE3"><input type='text' style='background:#62CAE3' id='par_<!--{$key}-->' value='<!--{$val}-->' name='par[]' readonly /></td>
+									<!--{/loop}-->
+								</tr>
+								<tr bgcolor="#FFFFFF" id='score'>
+									<td height="25" align="center" bgcolor="#6BBDD2" class='first'>成绩</td>
+									<!--{if $list[score]}-->
+									<!--{loop $list[score] $key $val}-->
+									<td height="25" align="center" bgcolor="#6BBDD2">
+										<input type='text' id='score_<!--{$key}-->' value='<!--{$val}-->' style='border:1px solid #62CAE3' onblur="getscore('score_<!--{$key}-->')" name='score[]' maxlength='2' />
+									</td>
+									<!--{/loop}-->
+									<!--{else}-->
+									<!--{loop $num $key $val}-->
+									<td align="center" bgcolor="#6BBDD2">
+										<input type='text' id='score_<!--{$key}-->' value='' style='border:1px solid #62CAE3' onblur="getscore('score_<!--{$key}-->')" name='score[]' maxlength='2' />
+									</td>
+									<!--{/loop}-->
+									<!--{/if}-->
+								</tr>
+								<tr bgcolor="#FFFFFF" id='pars'>
+									<td height="25" align="center" bgcolor="#6EA9B7" class='first'>距离总标准杆</td>
+									<!--{if $list[pars]}-->
+									<!--{loop $list[pars] $key $val}-->
+									<td height="25" align="center" bgcolor="#6EA9B7">
+										<input type='text' id='pars_<!--{$key}-->' value='<!--{$val}-->' style='background:#6EA9B7' name='pars[]' readonly />
+									</td>
+									<!--{/loop}-->
+									<!--{else}-->
+									<!--{loop $num $key $val}-->
+									<td align="center" bgcolor="#6EA9B7"><input type='text' id='pars_<!--{$key}-->' style='background:#6EA9B7' value='' name='pars[]' readonly /></td>
+									<!--{/loop}-->
+									<!--{/if}-->
+								</tr>
+                                
+							</table>
+							<table align="center" cellpadding='2' cellspacing='1' id='more' bgcolor="#FFFFFF" style='display:none; width:640px'>
+								<tr>
+									<td height="25" colspan='7' bgcolor="#B5C5D2" align='center'>详细资料</td>
+								</tr>
+								<tr>
+									<td height="25" align="center" bgcolor="#0E6DBD" style='width:100px' class='first'>名称</td>
+									<td height="25" align="center" bgcolor="#0E6DBD" style='width:100px' class='first'>成绩</td>
+									<td height="25" align="center" bgcolor="#0E6DBD" style='width:100px' class='first'>名称</td>
+									<td height="25" align="center" bgcolor="#0E6DBD" style='width:100px' class='first'>成绩</td>
+								</tr>
+								<tr>
+									<td height="25" align="center" bgcolor="#67859F" class='first'>平均开球距离</td>
+									<td height="25" align="center" bgcolor="#9AD8E7">
+										<input type='text' value='<!--{$list[total_avglength]}-->' style='border:1px solid #62CAE3' name='total_avglength' maxlength='4' />
+									</td>
+									<td height="25" align="center" bgcolor="#67859F" class='first'></td>
+									<td height="25" align="center" bgcolor="#9AD8E7"></td>
+								</tr>
+								<tr>
+									<td height="25" align="center" bgcolor="#67859F" class='first'>开球上球道</td>
+									<td height="25" align="center" bgcolor="#6BBDD2">
+										<input type='text' value='<!--{$list[total_shangdao]}-->' style='border:1px solid #62CAE3' id='total_shangdao' name='total_shangdao' onblur="getaveval(this.value, 14, 'total_aveshangdao', 'shangdao')" maxlength='4' />
+									</td>
+									<td height="25" align="center" bgcolor="#67859F" class='first'>开球上球道率</td>
+									<td height="25" align="center" bgcolor="#62CAE3">
+										<input type='text' value='<!--{$list[total_aveshangdao]}-->' style='background:#62CAE3' id='total_aveshangdao' name='total_aveshangdao' readonly />
+									</td>
+								</tr>
+								<tr>
+									<td height="25" align="center" bgcolor="#67859F" class='first'>总推杆数</td>
+									<td height="25" align="center" bgcolor="#6BBDD2">
+										<input type='text' value='<!--{$list[total_pushs]}-->' style='border:1px solid #62CAE3' id='total_pushs' name='total_pushs' maxlength='4' onblur="getaveval(this.value, 18, 'total_avepushs', 'pushs')" />
+									</td>
+									<td height="25" align="center" bgcolor="#67859F" class='first'>平均推杆数</td>
+									<td height="25" align="center" bgcolor="#62CAE3">
+										<input type='text' value='<!--{$list[total_avepushs]}-->' style='background:#62CAE3' id='total_avepushs' name='total_avepushs' readonly />
+									</td>
+								</tr>
+								<tr>
+									<td height="25" align="center" bgcolor="#67859F" class='first'>老鹰球</td>
+									<td height="25" align="center" bgcolor="#6EA9B7">
+										<input type='text' value='<!--{$list[total_eagle]}-->' style='background:#6EA9B7' id='total_eagle' name='total_eagle' readonly />
+									</td>
+									<td height="25" align="center" bgcolor="#67859F" class='first'>小鸟球</td>
+									<td height="25" align="center" bgcolor="#9AD8E7">
+										<input type='text' value='<!--{$list[total_birdie]}-->' style='background:#9AD8E7' id='total_birdie' name='total_birdie' readonly />
+									</td>
+								</tr>
+								<tr>
+									<td height="25" align="center" bgcolor="#67859F" class='first'>柏忌数</td>
+									<td height="25" align="center" bgcolor="#62CAE3">
+										<input type='text' value='<!--{$list[total_bogi]}-->' style='background:#62CAE3' id='total_bogi' name='total_bogi' readonly />
+									</td>
+									<td height="25" align="center" bgcolor="#67859F" class='first'>双柏忌数</td>
+									<td height="25" align="center" bgcolor="#6BBDD2">
+										<input type='text' value='<!--{$list[total_doubles]}-->' style='background:#6BBDD2' id='total_doubles' name='total_doubles' readonly />
+									</td>
+								</tr>
+								<tr>
+									<td height="25" align="center" bgcolor="#67859F" class='first'>打平标准杆</td>
+									<td height="25" align="center" bgcolor="#62CAE3">
+										<input type='text' value='<!--{$list[total_evenpar]}-->' style='background:#62CAE3' id='total_evenpar' name='total_evenpar' readonly />
+									</td>
+									<td height="25" align="center" bgcolor="#67859F" class='first'>其他</td>
+									<td height="25" align="center" bgcolor="#6EA9B7">
+										<input type='text' value='<!--{$list[total_other]}-->' style='background:#6EA9B7' id='total_other' name='total_evenpar' readonly />
+									</td>
+								</tr>
+								<tr>
+									<td height="25" align="center" bgcolor="#67859F" class='first'>被罚杆数</td>
+									<td height="25" align="center" bgcolor="#9AD8E7">
+										<input type='text' value='<!--{$list[total_penalty]}-->' style='border:1px solid #62CAE3' name='total_penalty' maxlength='2' />
+									</td>
+									<td height="25" align="center" bgcolor="#67859F" class='first'>最远击球距离</td>
+									<td height="25" align="center" bgcolor="#9AD8E7">
+										<input type='text' value='<!--{$list[total_furthest]}-->' style='border:1px solid #62CAE3' name='total_furthest' maxlength='6' />
+									</td>
+								</tr>
+								<tr>
+									<td bgcolor="#6BBECC" align="center">缩略图</td>
+									<td colspan='3' bgcolor="#6BBECC">
+										<span class="table_miao">
+											<!--{if $list[uploadimg]}--><a href="<!--{$list[uploadimg]}-->" target=_balnk><img src='<!--{$list[uploadimg]}-->' width='400' height='200' /></a><!--{else}--><img src='uploadfile/common/scoreimg.jpg' width='400' height='200' /><!--{/if}-->
+										</span>
+									</td>
+								</tr>
+							</table>
+							<div style='width:100%; text-align:center; margin-top:10px'>
+							<button type='submit' name='profilesubmitbtn' value='true' id='profilesubmitbtn' onclick='return checksubmit()' class='pn pnc' /><strong>{lang save}</strong></button>
+							<span id='rscore' style='color:red'></span>
+							</div>
+						</form>
+				<!--{elseif ($_G['groupid'] == 1) && ($_GET['cp'] == 'aa') && $list['id']}-->
+				<table cellspacing='1' cellpadding='2' bgcolor="#CCCCCC" class='score' width="95%" align="center" >
+						<tr bgcolor="#FFFFFF">
+							<td height="25" align="center" bgcolor="#67859F" class='first'>球场</td>
+							<td height="25" colspan='21' align="center" bgcolor="#B5C5D2" style='width:555px'>
+								<!--{$list[fieldname]}--> >> <!--{$list[tee]}-->
+							</td>
+						</tr>
+						<tr bgcolor="#FFFFFF">
+							<td height="25" align="center" bgcolor="#67859F" class='first'>时间</td>
+							<td height="25" colspan='21' align="center" bgcolor="#0E6DBD" class='first'><!--{$list[dateline]}--></td>
+						</tr>
+						<tr bgcolor="#FFFFFF">
+							<td height="25" align="center" bgcolor="#9AD8E7" class='first'>球洞</td>
+							<!--{loop $data $k $v}-->
+						<td height="25" align="center" bgcolor="#9AD8E7" class='num'><!--{$v}--></td>
+							<!--{/loop}-->
+						</tr>
+						<tr bgcolor="#FFFFFF" id='par'>
+							<td height="25" align="center" bgcolor="#62CAE3" class='first'>标准杆</td>
+							<!--{loop $list[par] $key $val}-->
+							<td height="25" align="center" bgcolor="#62CAE3"><input type='text' style='background:#62CAE3' id='par_<!--{$key}-->' value='<!--{$val}-->' name='par[]' readonly /></td>
+							<!--{/loop}-->
+						</tr>
+						<tr bgcolor="#FFFFFF" id='score'>
+							<td height="25" align="center" bgcolor="#6BBDD2" class='first'>成绩</td>
+							<!--{if $list[score]}-->
+							<!--{loop $list[score] $key $val}-->
+							<td height="25" align="center" bgcolor="#6BBDD2"><!--{$val}--></td>
+							<!--{/loop}-->
+							<!--{else}-->
+							<!--{loop $num $key $val}-->
+							<td align="center" bgcolor="#6BBDD2">&nbsp;</td>
+							<!--{/loop}-->
+							<!--{/if}-->
+						</tr>
+						<tr bgcolor="#FFFFFF" id='pars'>
+							<td height="25" align="center" bgcolor="#6EA9B7" class='first'>距离总标准杆</td>
+							<!--{if $list[pars]}-->
+							<!--{loop $list[pars] $key $val}-->
+							<td height="25" align="center" bgcolor="#6EA9B7"><!--{$val}--></td>
+							<!--{/loop}-->
+							<!--{else}-->
+							<!--{loop $num $key $val}-->
+							<td align="center" bgcolor="#6EA9B7">&nbsp;</td>
+							<!--{/loop}-->
+							<!--{/if}-->
+						</tr>
+					</table>
+					<table align="center" cellpadding='2' cellspacing='1' id='more' bgcolor="#FFFFFF" style='display:none; width:100%'>
+						<tr>
+							<td height="25" colspan='7' bgcolor="#B5C5D2" align='center'>详细资料</td>
+						</tr>
+						<tr>
+							<td height="25" align="center" bgcolor="#0E6DBD" style='width:200px' class='first'>名称</td>
+							<td height="25" align="center" bgcolor="#0E6DBD" style='width:150px' class='first'>成绩</td>
+							<td height="25" align="center" bgcolor="#0E6DBD" style='width:250px' class='first'>名称</td>
+							<td height="25" align="center" bgcolor="#0E6DBD" style='width:150px' class='first'>成绩</td>
+						</tr>
+						<tr>
+							<td height="25" align="center" bgcolor="#67859F" class='first'>平均开球距离</td>
+							<td height="25" align="center" bgcolor="#9AD8E7"><!--{$list[total_avglength]}--></td>
+							<td height="25" align="center" bgcolor="#67859F" class='first'></td>
+							<td height="25" align="center" bgcolor="#9AD8E7"></td>
+						</tr>
+						<tr>
+							<td height="25" align="center" bgcolor="#67859F" class='first'>开球上球道</td>
+							<td height="25" align="center" bgcolor="#6BBDD2"><!--{$list[total_shangdao]}--></td>
+							<td height="25" align="center" bgcolor="#67859F" class='first'>开球上球道率</td>
+							<td height="25" align="center" bgcolor="#62CAE3"><!--{$list[total_aveshangdao]}--></td>
+						</tr>
+						<tr>
+							<td height="25" align="center" bgcolor="#67859F" class='first'>总推杆数</td>
+							<td height="25" align="center" bgcolor="#6BBDD2"><!--{$list[total_pushs]}--></td>
+							<td height="25" align="center" bgcolor="#67859F" class='first'>平均推杆数</td>
+							<td height="25" align="center" bgcolor="#62CAE3"><!--{$list[total_avepushs]}--></td>
+						</tr>
+						<tr>
+							<td height="25" align="center" bgcolor="#67859F" class='first'>老鹰球</td>
+							<td height="25" align="center" bgcolor="#6EA9B7"><!--{$list[total_eagle]}--></td>
+							<td height="25" align="center" bgcolor="#67859F" class='first'>小鸟球</td>
+							<td height="25" align="center" bgcolor="#9AD8E7"><!--{$list[total_birdie]}--></td>
+						</tr>
+						<tr>
+							<td height="25" align="center" bgcolor="#67859F" class='first'>柏忌数</td>
+							<td height="25" align="center" bgcolor="#62CAE3"><!--{$list[total_bogi]}--></td>
+							<td height="25" align="center" bgcolor="#67859F" class='first'>双柏忌数</td>
+							<td height="25" align="center" bgcolor="#6BBDD2"><!--{$list[total_doubles]}--></td>
+						</tr>
+						<tr>
+							<td height="25" align="center" bgcolor="#67859F" class='first'>打平标准杆</td>
+							<td height="25" align="center" bgcolor="#62CAE3"><!--{$list[total_evenpar]}--></td>
+							<td height="25" align="center" bgcolor="#67859F" class='first'>其他</td>
+							<td height="25" align="center" bgcolor="#6EA9B7"><!--{$list[total_other]}--></td>
+						</tr>
+						<tr>
+							<td height="25" align="center" bgcolor="#67859F" class='first'>被罚杆数</td>
+							<td height="25" align="center" bgcolor="#9AD8E7"><!--{$list[total_penalty]}--></td>
+							<td height="25" align="center" bgcolor="#67859F" class='first'>最远击球距离</td>
+							<td height="25" align="center" bgcolor="#9AD8E7"><!--{$list[total_furthest]}--></td>
+						</tr>
+						<tr>
+							<td bgcolor="#6BBECC" align="center">缩略图</td>
+							<td colspan='3' bgcolor="#6BBECC">
+								<span class="table_miao">
+									<!--{if $list[uploadimg]}--><img src='<!--{$list[uploadimg]}-->' width='400' height='200' /><!--{else}--><img src='uploadfile/common/scoreimg.jpg' width='400' height='200' /><!--{/if}-->
+								</span>
+							</td>
+						</tr>
+					</table>
+				<!--{else}-->
+				<p style='text-align:center; height:100px; line-height:100px'>没有您要找的信息，请确认后在查找...</p>
+				<!--{/if}-->
+				<!--{/if}-->
+
+				<!--{if $id && !empty($list) && empty($_GET['c'])}-->
+				<table cellspacing='1' cellpadding='2' align="center" width="95%">
+					<tr>
+						<td style='text-align:right' id='base' height="25"><span onclick='getmore()' id='getmore' style='cursor:hand'><strong>更多资料 >></strong></span></td>
+					</tr>
+				</table>
+				<!--{elseif empty($flag) && $list[id] && $childuid && ($_GET['c'] == 'edit')}-->
+				<table cellspacing='1' cellpadding='2' align="center" width="95%">
+					<tr>
+						<td style='text-align:right' id='base' height="25"><span onclick='getmore()' id='getmore' style='cursor:hand'><strong>更多资料 >></strong></span></td>
+					</tr>
+				</table>
+				<!--{elseif ($_G['groupid'] == 1) && ($_GET['cp'] == 'aa')}-->
+				<table cellspacing='1' cellpadding='2' align="center" width="95%">
+					<tr>
+						<td style='text-align:right' id='base' height="25"><span onclick='getmore()' id='getmore' style='cursor:hand'><strong>更多资料 >></strong></span></td>
+					</tr>
+				</table>
+				<!--{/if}-->
+
+
+				<!--{if empty($id)}-->
+				<!--{if $scorelist}-->
+				<!--{loop $scorelist $key $val}--><br /><br />
+				<table width="90%" align="center" cellpadding='2' cellspacing='1' bgcolor="#FFFFFF">
+					<tr>
+						<td height="25" align="center" bgcolor="#67859F" class="first"><!--{$val[dateline]}--></td>
+						<td height="25" colspan='21' align="center" bgcolor="#B5C5D2">
+							<a href='home.php?mod=space&do=common&op=score&uid=<!--{$uid}-->&id=<!--{$val[id]}-->'>查看详细</a>
+						</td>
+					</tr>
+					<tr>
+						<td height="25" align="center" bgcolor="#67859F" class="first">球场</td>
+						<td height="25" class="first" colspan='21' align="center" bgcolor="#0E6DBD" style='border-top:1px solid #abcdef'>
+							<!--{$val[fieldname]}--> >> <!--{$val[tee]}-->
+						</td>
+					</tr>
+					<tr>
+						<td height="25" align="center" bgcolor="#9AD8E7" class="first">球洞</td>
+						<!--{loop $data $k $v}-->
+						<td height="25" align="center" bgcolor="#9AD8E7" class='num'><!--{$v}--></td>
+						<!--{/loop}-->
+					</tr>
+					<tr>
+						<td height="25" align="center" bgcolor="#62CAE3" class="first">标准杆</td>
+						<!--{loop $val[par] $k $v}-->
+						<td height="25" align="center" bgcolor="#62CAE3"><!--{$v}-->&nbsp;</td>
+						<!--{/loop}-->
+					</tr>
+					<tr>
+						<td height="25" align="center" bgcolor="#6BBDD2" class="first">成绩</td>
+						<!--{loop $val[score] $k $v}-->
+						<td height="25" align="center" bgcolor="#6BBDD2"><!--{$v}-->&nbsp;</td>
+						<!--{/loop}-->
+					</tr>
+					<tr>
+						<td height="25" align="center" bgcolor="#6EA9B7" class="first">距离总标准杆</td>
+						<!--{loop $val[pars] $k $v}-->
+						<td height="25" align="center" bgcolor="#6EA9B7"><!--{$v}-->&nbsp;</td>
+						<!--{/loop}-->
+					</tr>
+				</table>
+				<!--{/loop}-->
+				<!--{else}-->
+				<p style='height:550px; line-height:100px; text-align:center'>未添加过成绩卡</p>
+				<!--{/if}-->
+				<!--{/if}-->
+			<!--{elseif  $option == 'visiter'}-->
+				<!--{if $visitermore}-->
+				<!--{loop $visitermore $k $v}-->
+				<div id="circular-tou" class="clearfix">
+					<a target="_blank" href="home.php?mod=space&uid=<!--{$v[vuid]}-->">
+						<img src="uc_server/avatar.php?uid=<!--{$v[vuid]}-->&size=middle" width="80" height="74" />
+						<span class="cir-bg"></span>
+					</a>
+					<p class="center top5"><!--{$v[vusername]}--></p>
+				</div>
+				<!--{/loop}-->
+				<!--{else}-->
+				<p style='height:550px; line-height:100px; text-align:center'>还没有访客</p>
+				<!--{/if}-->
+			<!--{elseif  $option == 'grouplist'}-->
+				<!--{if $groupmore}-->
+				<div class="qunzu">
+					<!--{loop $groupmore $k $v}-->
+						<dl style='float:left; width:100px; height:150px'>
+							<dt class="qunztu">
+								<p class="center"><a href='forum.php?mod=group&fid=<!--{$v[fid]}-->'><img src="<!--{$v[icon]}-->" width="70" height="50"></a></p>
+								<p class="font10 center"><!--{$v[foundername]}--></p>
+							</dt>
+							<dd><p><a href='forum.php?mod=group&fid=<!--{$v[fid]}-->'><!--{$v[name]}--></a><!--{$v[count]}-->人</p></dd>
+						</dl>
+					<!--{/loop}-->
+				</div>
+				<!--{else}-->
+				<p style='height:550px; line-height:100px; text-align:center'>黑没有群组</p>
+				<!--{/if}-->
+			<!--{elseif  $option == 'medalmore'}-->
+				<div class="huizhang">
+					<!--{if $medalmore}-->
+					<ul>
+						<!--{loop $medalmore $v}-->
+						<li><img src="static/image/common/<!--{$v[image]}-->" width="25" height="45"><p><!--{$v[name]}--></p></li>
+						<!--{/loop}-->
+						
+					</ul>
+					<!--{else}-->
+					<p style='height:550px; line-height:100px; text-align:center'>未获得勋章</p>
+					<!--{/if}-->
+				</div>
+			<!--{/if}-->
+
+			<!--{if $multi}-->
+				<p style='margin-top:-35px'><!--{$multi}--></p>
+			<!--{/if}-->
+		<!-----------结束------------->
+
+			</div>
+		</div>
+		<br>
+	</div>
+	<!--{subtemplate home/24_right}-->
+	<div class="clear"></div>
+</div>
+
+<br>
+<!--{subtemplate home/24_foot}-->
+
+<script type="text/javascript" src='static/js/jquery.js'></script>
+<script type="text/javascript">
+	function getmore() {
+		jQuery('#more').css('display', 'inline');
+		var html = "<span onclick='getbase()' id='getmore' style='cursor:hand'>基本资料 >></span>&nbsp;&nbsp;&nbsp;&nbsp;";
+		jQuery('#base').html(html);
+	}
+	function getbase() {
+		jQuery('#more').css('display', 'none');
+		var html = "<span onclick='getmore()' id='getmore' style='cursor:hand'>更多资料 >></span>&nbsp;&nbsp;&nbsp;&nbsp;";
+		jQuery('#base').html(html);
+	}
+</script>

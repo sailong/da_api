@@ -1,0 +1,21 @@
+<div class="xuanc">
+	<li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#"><img src="{STATICURL}space/person/images/gg1.jpg" width="244" height="23" border="0"></a></li>
+	<li>&nbsp;&nbsp;
+	<a id="domainurl" href="$space[domainurl]" onclick="setCopy('http://'+window.location.host+'/home.php?mod=space&uid=<!--{$uid}-->', '{lang copy_space_address}');return false;">
+		<img src="{STATICURL}space/person/images/fz.jpg" width="84" height="27" border="0">
+	</a>
+	<!--{if !$space['self']}-->
+	<a id="share_space" href="home.php?mod=spacecp&ac=share&type=space&id=$space[uid]" onclick="showWindow(this.id, this.href, 'get', 0);">
+		<img src="{STATICURL}space/person/images/fx.jpg" width="84" height="27" border="0">
+	</a>
+	<!--{/if}-->
+</div>
+<script type='text/javascript'>
+	//复制网址
+	function copyTxt(str) {
+		var clipBoardContent = '';
+		clipBoardContent += str;
+		window.clipboardData.setData('Text', clipBoardContent);
+		alert('地址已复制成功！');
+	}
+</script>

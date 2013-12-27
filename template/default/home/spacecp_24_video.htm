@@ -1,0 +1,260 @@
+<!--{template home/spacecp_24_head}-->
+<style type='text/css'>
+#bound {
+	margin-top:80px; margin-left:100px
+}
+#bound td {
+	height:30px
+}
+#bound tr td input {
+	width:150px; height:20px; margin:5px
+}
+#bound span {
+	color:red
+}
+#bound em {
+	color:gray
+}
+#bound a {
+	text-decoration:none
+}
+#video td {
+	height:30px; border:1px solid #abcdef
+}
+#video td ul {
+	float:left; width:160px; height:180px
+}
+</style>
+<div id="wtcontent">
+	<!-- 左侧 -->
+	<!--{template home/spacecp_24_left}-->
+	<!-- 右侧 -->
+	<div class="rightw">
+		<div class="rightlm"><h1>我的视频</h1></div>
+		<br>
+		<div class="rcontent">
+			<div><h1>视频</h1></div>
+			<div>
+
+		<!------开始--------->
+			<!--{subtemplate home/spacecp_score_nav}-->
+			<form action='home.php?mod=spacecp&ac=video&op=<!--{if $operation == pinless}-->bound<!--{elseif $operation == myvideo}-->myvideo<!--{/if}-->&do=<!--{if $operation == pinless}-->bound<!--{elseif $operation == videos}-->up<!--{/if}-->' method='post' enctype='multipart/form-data' onsubmit='clearErrorInfo();'>
+			<!--{if $operation == 'bound'}-->
+			<table cellspacing='0' cellpadding='0' id='bound'>
+				<!--{if empty($bound[bound])}-->
+				<tr>
+					<td>手机号</td>
+					<td><input type='text' name='phone' id='phone' value='' maxlength='12' onblur='getphone()' /><span id='rphone'></span></td>
+				</tr>
+				<tr>
+					<td>卡号</td>
+					<td><input type='text' name='code' id='code' value='' maxlength='18' onblur='getcode()' /><span id='rcode'></span></td>
+				</tr>
+				<tr>
+					<td colspan='2' style='padding-left:130px'>
+						<button type='submit' name='profilesubmitbtn' value='true' onclick='return checksubmit()' id='profilesubmitbtn' class='pn pnc' /><strong>{lang bound}</strong></button>
+					</td>
+				</tr>
+				<!--{else}-->
+				<tr>
+					<td>手机号：</td>
+					<td><em><!--{$bound[cardphone]}--></em></td>
+				</tr>
+				<tr>
+					<td>卡&nbsp;&nbsp;&nbsp;号：</td>
+					<td><em><!--{$bound[cardcode]}--></em></td>
+				</tr>
+				<tr>
+					<td colspan='2'><span>[帐号已绑定]</span>&nbsp;&nbsp;<a href='home.php?mod=spacecp&ac=video&op=bound&do=clear'><span>[解除绑定]</span></a></td>
+				</tr>
+				<!--{/if}-->
+			</table>
+			<!--{elseif $operation == 'video'}-->
+			<table cellspacing='0' cellpadding='0' id='video'>
+				<!--{if $bound[bound]}-->
+				<tr>
+					<!--{if $info}-->
+					<td width='800'>
+					<!--{loop $info $key $value}-->
+					<ul>
+						<li>
+							<a href='video.php?mod=list&ac=play&op=swing&id=<!--{$value[id]}-->'><img src='<!--{$value[videoimg]}-->' width='140' height='100' /></a><br />
+							标题：<span id='title_<!--{$value[id]}-->'><!--{$value[title]}--></span><br />
+							更新：<span><!--{$value[addtime]}--><span><br />
+							点击：<span><!--{$value[count]}--></span><br />
+							<span>
+								<a href='javascript:gethtml(<!--{$value[id]}-->)' id='edit_<!--{$value[id]}-->'>编辑</a> | 
+								<a href='home.php?mod=spacecp&ac=video&op=videos&do=del&id=<!--{$value[id]}-->' onclick="if(!confirm('确定要删除？')) return false">删除</a>
+							</span>
+						</li>
+					</ul>
+					<!--{/loop}-->
+					</td>
+					<!--{else}-->
+					<td style='width:800px' align='center' height='40'>
+						暂无数据
+					</td>
+					<!--{/if}-->
+				</tr>
+				<!--{if $multi}-->
+				<tr>
+					<td><!--{$multi}--></td>
+				</tr>
+				<!--{/if}-->
+				<!--{else}-->
+				<tr>
+					<td style='border:none; padding:30px 0 0 50px; color:red'>未绑定帐号无法查看</td>
+				</tr>
+				<!--{/if}-->
+			</table>
+			<!--{elseif $operation == 'myvideo'}-->
+			<table cellspacing='0' cellpadding='0' id='video'>
+				<tr>
+					<td width='80'>上传视频</td>
+					<td width='600'>
+						<input type='text' size='50' name='title' id='title' value='' maxlength='30' style='border:1px solid #abcdef; height:70%; margin-bottom:5px' /><br />
+						<input type='file' size='25' name='file' id='file' value='' style='border:1px solid #abcdef; height:80%' />&nbsp;&nbsp
+						<button type='submit' name='profilesubmitbtn' value='true' id='profilesubmitbtn' class='pn pnc' onclick='return checkval()' /><strong>{lang upload}</strong></button>&nbsp;&nbsp;<span id='rval' style='color:red'></span>
+					</td>
+				</tr>
+				<tr>
+					<!--{if $info}-->
+					<td colspan='2'>
+					<!--{loop $info $key $value}-->
+					<ul>
+						<li>
+							<a href='video.php?mod=list&ac=play&op=new&id=<!--{$value[id]}-->'><img src='<!--{$value[videoimg]}-->' width='140' height='100' /></a><br />
+							标题：<span id='title_<!--{$value[id]}-->'><!--{$value[title]}--></span><br />
+							更新：<span><!--{$value[addtime]}--><span><br />
+							点击：<span><!--{$value[count]}--></span><br />
+							<span>
+								<a href='javascript:gethtml(<!--{$value[id]}-->)' id='edit_<!--{$value[id]}-->'>编辑</a> | 
+								<a href='home.php?mod=spacecp&ac=video&op=videos&do=del&id=<!--{$value[id]}-->' onclick="if(!confirm('确定要删除？')) return false">删除</a>
+							</span>
+						</li>
+					</ul>
+					<!--{/loop}-->
+					</td>
+					<!--{else}-->
+					<td colspan='2' align='center' height='40'>
+					暂无数据
+					</td>
+					<!--{/if}-->
+				</tr>
+				<!--{if $multi}-->
+				<tr>
+					<td colspan='2'><!--{$multi}--></td>
+				</tr>
+				<!--{/if}-->
+			</table>
+			<!--{/if}-->
+			</form>
+
+			<script type="text/javascript" src='static/js/jquery.js'></script>
+			<script type="text/javascript">
+				function show_error(fieldid, extrainfo) {
+					var elem = $('th_'+fieldid);s
+					if(elem) {
+						elem.className = "rq";
+						fieldname = elem.innerHTML;
+						extrainfo = (typeof extrainfo == "string") ? extrainfo : "";
+						$('showerror_'+fieldid).innerHTML = "{lang check_date_item} " + extrainfo;
+						$(fieldid).focus();
+					}
+				}
+				function show_success(message) {
+					message = message == '' ? '{lang update_date_success}' : message;
+					showDialog(message, 'right', '{lang reminder}', function(){
+						top.window.location.href = top.window.location.href;
+					}, 0, null, '', '', '', '', 3);
+				}
+				function clearErrorInfo() {
+					var spanObj = $('profilelist').getElementsByTagName("div");
+					for(var i in spanObj) {
+						if(typeof spanObj[i].id != "undefined" && spanObj[i].id.indexOf("_")) {
+							var ids = explode('_', spanObj[i].id);
+							if(ids[0] == "showerror") {
+								spanObj[i].innerHTML = '';
+								$('th_'+ids[1]).className = '';
+							}
+						}
+					}
+				}
+				function getphone() {
+					var val = jQuery('#phone').val();
+					var len = strlen(val);
+					var reg = /^1[3|4|5|8][0-9]\d{4,8}$/;
+					if(reg.test(val)) {
+						if(len != '11') {
+							jQuery('#rphone').html('手机号位数不正确');
+							return false;
+						} else {
+							jQuery('#rphone').html('手机号填写正确');
+						}
+					} else {
+						jQuery('#rphone').html('请正确填写手机号');
+						return false;
+					}
+				}
+				function getcode() {
+					var val = jQuery('#code').val();
+					var len = strlen(val);
+					var reg = /^[1-9][0-9]\d{4,16}$/;
+					if(reg.test(val)) {
+						if(len != '18') {
+							jQuery('#rcode').html('卡号位数不正确');
+							return false;
+						} else {
+							jQuery('#rcode').html('卡号填写正确');
+						}
+					} else {
+						jQuery('#rcode').html('请正确填写卡号');
+						return false;
+					}
+				}
+				function checksubmit() {
+					var flag = true;
+					if(getphone() == false) {
+						flag = false;
+					}
+					if(getcode() == false) {
+						flag = false;
+					}
+					return flag;
+				}
+				function checkval() {
+					var title = jQuery('#title').val();
+					var file = jQuery('#file').val();
+					if(title == '' || file == '') {
+						jQuery('#rval').html('请正确填写内容');
+						return false;
+					}
+				}
+				function gethtml(id) {
+					jQuery('#edit_'+id).attr('href', 'javascript:gethtml(0)');
+					if(id != '' && id != '0') {
+						var url = 'home.php?mod=spacecp&ac=video&op=videos&do=title&id='+id;
+						jQuery.post(url, {}, function(msg) {
+							var html = "<input type='text' id='vititle' maxlength='10' value='"+msg+"' style='width:100px; height:13px; line-height:13px' onblur='gettitle("+id+")' />";
+							jQuery('#title_'+id).html(html);
+						});
+					}
+				}
+				function gettitle(id) {
+					var val = jQuery('#title_'+id+'>#vititle').val();
+					var url = 'home.php?mod=spacecp&ac=video&op=videos&do=edit&val='+val+'&id='+id;
+					jQuery.post(url, {}, function(msg) {
+						jQuery('#title_'+id+'>#vititle').css('display', 'none');
+						jQuery('#title_'+id).html(msg);
+					});
+				}
+			</script>
+<!-------结束------->
+
+
+			</div>
+		</div>
+	</div>
+	<div class="clear"></div>
+</div>
+<!--{template home/spacecp_foot_comm}-->

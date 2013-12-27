@@ -1,0 +1,73 @@
+<!--{subtemplate common/header}-->
+	<!--{subtemplate home/spacecp_header}-->
+        <ul class="tb cl">
+        <li {$actives['m_list']}><a href="home.php?mod=spacecp&ac=fenzu">【分站】会员列表</a></li>
+        <li {$actives['qyfenzu']}><a href="home.php?mod=spacecp&ac=fenzu&op=members_fenzu">【分站】会员分组</a></li>
+        <li {$actives['event_rule_list']}><a href="home.php?mod=spacecp&ac=fenzu&op=event_fenzu_rule_list">【赛事】分组规则列表</a></li>
+        </ul>
+
+		<!--{if $operation == 'event_fenzu_rule_list'}-->		    
+			<table cellspacing="0" cellpadding="0" class="dt valt">
+                <tr>
+					<th class="xw1">分站名称</th>
+					<th class="xw1">球场名称</th>
+                    <th class="xw1">分组规则</th>
+                    <th class="xw1">每对人数</th>
+                    <th class="xw1">添加时间</th>
+                    <th class="xw1">操作动作</th>
+				</tr>
+              <!--{if $event_fenzu_rule_list}-->
+                    <!--{eval $i = 0;}-->
+                    <!--{loop $event_fenzu_rule_list $key $value}-->
+                    <!--{eval $i++;}-->
+                    <tr{if $i % 2 == 0} class="alt"{/if} id="rule">
+                        <td>{$value['fenz_name']}</td>
+                        <td>{$value['field_name']}</td>
+                        <td>{$fenzu_rule[$value['fenzu_rule']]}</td>
+                        <td>【{$value['team_member_num']}】人组</td>
+                        <td><!--{eval echo date('Y-m-d h:i:s',$value['addtime'])}--></td>
+                        <td> 
+                        <!--<a href="javascript:;" onclick="showDialog('你确定删除此规则？','confirm','信息提示：','del_rule({$value['e_r_id']})')">
+                            【删除*规则】
+                        </a> |
+                        <!--<a href="home.php?mod=spacecp&ac=fenzu&op=start_nd&id={$value['e_r_id']}" >【启动*报分】</a>-->
+                        </td>					
+                    </tr>
+                    <!--{/loop}-->
+              <!--{else}-->
+              
+                        <tr>
+                           <td colspan="8" style="vertical-align:middle; text-align:center; color:red;"> <font>没有相关数据 请从新搜索</font></td>
+                        </tr>
+               
+              <!--{/if}-->
+			</table>
+		<!--{/if}-->
+		<!--{hook/spacecp_credit_bottom}-->
+		</div>
+	</div>
+	<div class="appl">
+		<!--{subtemplate home/spacecp_footer}-->
+	</div>
+</div>
+<div  style="display:none;" id="nd_"><input type="hidden" id="nd_status" value="0"></div>
+
+
+<script type="text/javascript">
+        function del_rule(id){
+            ajaxget('home.php?mod=spacecp&ac=fenzu&op=del_rule&id='+id,'rule')  //这里一点要注意 ·不要用双引号
+        }
+
+        function start_nd(id){
+            ajaxget('home.php?mod=spacecp&ac=fenzu&op=start_nd&id='+id,'nd_','','','none','nd_message()')  //这里一点要注意 ·不要用双引号
+        }
+        function nd_message() {
+            var nds = document.getElementById("nd_status");
+            if(nds.value==0){
+                alert('启动成功 欢迎使用ND报分系统');
+            }else{
+                alert('sorry 已经启动 你可以直接使用ND报分系统');
+            }            
+        }
+ </script>
+<!--{subtemplate common/footer}-->

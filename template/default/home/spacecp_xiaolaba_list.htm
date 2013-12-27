@@ -1,0 +1,53 @@
+<!--{template home/space_header_comm}-->
+<div id="wtcontent"><!-- 左侧 --> <!--{template home/spacecp_00_left}-->
+<!-- 右侧 -->
+<div class="rightw">
+<div class="rightlm"><span class="title_1"><a
+	href="/home.php?mod=spacecp&ac=xiaolaba">我的广播信息</a></span></div>
+<div class="rcontent"
+	style="border: 1px solid #DBDBDB; margin-top: 10px;">
+<div class="sapce_view_content">
+<div class="sapce_view_content_div" style="padding: 15px; line-height: 30px;"><!--中间内容--> <!--{if $op=='index'}-->
+<!--{if $endrow}-->
+	<form name="form1" method="post" action="/home.php?mod=spacecp&ac=xiaolaba&op=del">
+<table width="100%">
+	<tr>
+	<td>删除</td>
+		<td>标题</td>
+		<td>发送人</td>
+		<td>状态</td>
+	</tr>
+	<!--{loop $endrow $v}-->
+	<tr style="border-bottom: 1px dashed #ccc;">
+		<td><input type="checkbox" name="del[]" value="$v[msgid]" /></td>
+		<td width="=70%"><a
+			href="/home.php?mod=spacecp&ac=xiaolaba&op=list&bid=$v[msgid]">$v["title"]<!--{if $v["isread"]=='0'}--><img
+			src="static/space/img/new.gif" /><!--{/if}--></a></td>
+		<td width="12%">$v["realname"]</td>
+		<td width="12%"><!--{if $v["isread"]=='0'}--><a style="color:#f00" href="/home.php?mod=spacecp&ac=xiaolaba&op=list&bid=$v[msgid]">未查看</a><!--{else}--><a href="/home.php?mod=spacecp&ac=xiaolaba&op=list&bid=$v[msgid]">已查看</a><!--{/if}--></td>
+	</tr>
+	<!--{/loop}-->
+	<tr height="10">
+		<td colspan='3'>&nbsp;</td>
+	</tr>
+	<tr>
+		<td><input type="submit" value="删除" name="sub" /></td><td colspan='2'>$disppage</td>
+	</tr>
+</table>
+</form>
+<!--{/if}-->
+<!--{elseif $op=='list'}--> 
+	<!--{if $rearr["title"]}-->
+		<div style="font-size: 18px; font-weight: bold; text-align: center;">$rearr["title"]</div>
+		<div style="text-align: right;">日期：$rearr["date"]</div>
+		<div class="clear8"></div>
+		<div>$rearr["content"]</div>
+	<!--{/if}-->
+ <!--{/if}--> 
+ <!--中间内容--></div>
+</div>
+</div>
+</div>
+<div class="clear"></div>
+</div>
+<!--{template home/spacecp_foot_comm}-->

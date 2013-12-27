@@ -1,0 +1,59 @@
+		<div class="rightlmn"><span class="rlm1"><h1>员工</h1></span>  <span class="rlm2"><a href="home.php?mod=space&uid=$uid&do=member">更多</a></span></div>
+		<div class="ylmcon">
+			<div id="circular-box" class="clearfix">
+			<ul>
+            <!--{loop $yglist $value}-->
+			<li><a href="home.php?mod=space&uid=$value[userid]"><img src="uc_server/avatar.php?uid=$value[userid]&size=middle" width="62" height="57" /><span class="cir-bg"></span></a><p class="center top5"><a href="home.php?mod=space&uid=$value[userid]"><!--{if strlen($value[realname]) ==0 }-->$value[username]<!--{else}-->$value[realname]<!--{/if}--></a></p>
+            </li>
+			<!--{/loop}-->
+			</ul>
+		</div>
+		<div class="clear"></div>
+      </div>
+		<div class="rightlm"><span class="rlm1"><h1>企业群组</h1></span>  <span class="rlm2"><a href="#"></a></span></div>
+		<div class="ylmcon">
+			<!--{if $grouplist}-->
+            <!--{loop $grouplist $v}-->
+            <p class="center"><a href='$v[wburl]'><img src="/weibo/<!--{$v[icon]}-->" width="78" height="47"></a></p>
+            <p class="center"><!--{$v[name]}--></p>
+            <p class="center"><span><a href='home.php?mod=space&uid=<!--{$v[founderuid]}-->'><!--{$v[foundername]}--></a></span><span><!--{$v[member_num]}-->人</span></p>
+            <!--{/loop}-->
+			<!--{else}-->
+            <p class="center">未创建或参加任何群组</p>
+            <!--{/if}-->
+            
+		</div>
+		 
+		 
+		<div class="rightlm"><span class="rlm1"><h1>热门话题</h1></span>  <span class="rlm2"><a href="#"></a></span></div>
+		<div class="ylmcon">
+			<div class="rmht">
+				<!--{if $topic}-->
+                <!--{loop $topic $val}-->
+                <p><a href="home.php?mod=space&do=common&op=tagcode&code=<!--{$val}-->&uid=$uid"><!--{$val}--></a></p>
+				<!--{/loop}-->
+				<!--{else}-->
+				<p>未参加任何话题</p>
+				<!--{/if}-->
+		    </div>
+		</div>
+		<!--<div class="rightlm"><span class="rlm1"><h1>活动推荐</h1></span>  <span class="rlm2"><a href="#"></a></span></div>
+		<div class="ylmcon">
+			<p class="center"><img src="{STATICURL}space/20/images/hdtj.jpg" width="147" height="70"></p>
+			<p class="center top10">最新活动推荐</p>
+			<p class="center"><img src="{STATICURL}space/20/images/hdtj.jpg" width="147" height="70"></p>
+			<p class="center top10">最新活动推荐</p>
+        </div>
+        -->
+		<div class="rightlm"><span class="rlm1"><h1>热门标签</h1></span>  <span class="rlm2"><a href="home.php?mod=space&do=common&op=tag&uid=$uid">更多</a></span></div>
+		<div class="ylmcon">
+			<div class="rmbq">
+			<!--{loop $tagblglist $value}-->
+            <span><a href="home.php?mod=space&do=common&op=tag&tag=$value[tag_name]&uid=$uid">$value[tag_name]</a></span><span> | </span>
+			<!--{/loop}-->
+            </div>
+		</div>
+		<div class="rightlm"><span class="rlm1"><h1>友情链接</h1></span>  <span class="rlm2"><a href="#"></a></span></div>
+		<div class="ylmcon">
+			<!--{template home/spacelink}-->
+        </div>

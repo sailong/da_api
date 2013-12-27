@@ -1,0 +1,141 @@
+<!--{subtemplate join/10_header}-->
+<body class="claro">
+
+<script type="text/javascript">
+	dojo.addOnLoad(init_course);
+	dojo.addOnLoad(init_for_page2);
+	dojo.addOnLoad(
+		function(){
+			dojo.connect(dojo.byId('send_page2_submitting_data_link'),'onclick','send_page2_submitting_data');
+		}
+	);
+</script>
+
+
+
+<div id="jls_header">
+			   <div class="sc">
+					   <a href="#">加入收藏</a>&nbsp;|&nbsp;
+					   <a href="#">设为首页</a>&nbsp;|&nbsp;
+					   <a href="www.bwvip.com" target="_blank">大正网</a>
+			   </div>
+			   <div><img src="static/join/images/zyz_flash.jpg"></div>
+			   <div class="dh">
+						<ul>
+								<li><a href="#">首页</a></li>
+								<li><a href="#">赛事介绍</a></li>
+								<li><a href="http://www.bwvip.com/join.php?mod=player">参赛报名</a></li>
+								<li><a href="http://www.bwvip.com/join.php?mod=volunteer">志愿裁判报名</a></li>
+								<li><a href="http://www.bwvip.com/home.php?mod=space&uid=1899467">教练俱乐部</a></li>
+								<li><a href="http://www.bwvip.com/home.php?mod=space&uid=1899466">规则俱乐部</a></li>
+								<li><a href="http://www.bwvip.com/index.php">大正网</a></li>
+						</ul>
+						<div class="clear"></div>
+			   </div>
+</div>
+
+<div id="content">
+			             <div><img src="static/join/images/zyz_top.jpg"></div>
+						 <div class="zyz_bg">
+						           <div class="zyz_title ">
+								            <dt><a href="#"><img src="static/join/images/zyz_5.jpg"></a></dt>
+											<dt><a href="#"><img src="static/join/images/zyz_2.jpg"></a></dt>
+											<dt><a href="#"><img src="static/join/images/zyz_7.jpg"></a></dt>
+											<dt><a href="#"><img src="static/join/images/zyz_8.jpg"></a></dt>
+											<div class="clear"></div>
+								   </div>
+								   <div class="zyz_content">
+								             <div class="biao">
+											              <img src="static/join/images/cpy.jpg">
+														  <br>
+
+<div>
+*裁判级别:
+<select id="level">
+	<option value ="初级">初级</option>
+	<option value ="中级">中级</option>
+	<option value="国家C级">国家C级</option>
+	<option value="国家B级">国家B级</option>
+	<option value="国家A级">国家A级</option>
+	<option value="国际级">国际级</option>
+	<option value="其他">其他</option>
+</select>
+&nbsp;&nbsp;
+<label>*获得证书时间：</label><input id="getting_certificate_date" type="text" data-dojo-type="dijit.form.DateTextBox"/>
+</div>
+<br/>
+<div>
+	*执裁场次：<input id="judging_game_num" type="text"/>&nbsp;&nbsp;球龄：<input  id="playing_yearsexp" type="text"/>
+</div>
+<br/>
+<div>
+	差点：<input id="handicap" type="text"/>&nbsp;&nbsp;个人最好成绩：<input id="personal_best" type="text"/>
+</div>
+<br/>
+<div>
+	个人最好成绩所在球场：<span id="course_info1"></span>&nbsp;&nbsp;<span id="course_info2"></span>
+</div>
+
+<br/>
+<div>
+	<form id="upload_referee_certificate" enctype="multipart/form-data" action="join.php?mod=upload_referee_certificate&uid=<!--{$uid}-->" method="POST">
+	*上传裁判资格证书：<input name="avatar" type="file" onchange="dojo.addOnLoad(upload_referee_certificate);"/>
+	<!--{if $referee_certificate_filename != '' && $referee_certificate_original_size_filename != ''}-->
+	<span id="span"><a target="_blank" href="join.php?mod=read_referee_certificate_original_size&uid=<!--{$uid}-->"><img src="join.php?mod=read_referee_certificate&uid=<!--{$uid}-->"/></a></span><span id="span2"><input type="button" value="删除裁判资格证书" onclick="dojo.addOnLoad(remove_referee_certificate);" /></span>
+	<!--{else}-->
+	<span id="span"></span><span id="span2"></span>
+	<!--{/if}-->
+	</form>
+</div>
+
+<form id="remove_referee_certificate" action="join.php?mod=remove_referee_certificate&uid=<!--{$uid}-->" method="POST">
+</form>
+
+<!--<input type="button" value="下一步" onclick="dojo.addOnLoad(send_page2_submitting_data);"/>-->
+
+<form id="submitting_data" action="join.php?mod=store_volunteer_page2_info&uid=<!--{$uid}-->" method="post">
+	<input id="submitting_level" type="hidden" name="submitting_level"/>
+	<input id="submitting_getting_certificate_date" type="hidden" name="submitting_getting_certificate_date"/>
+	<input id="submitting_judging_game_num" type="hidden" name="submitting_judging_game_num"/>
+	<input id="submitting_playing_yearsexp" type="hidden" name="submitting_playing_yearsexp"/>
+	<input id="submitting_handicap" type="hidden" name="submitting_handicap"/>
+	<input id="submitting_personal_best" type="hidden" name="submitting_personal_best"/>
+	<input id="submitting_course_info1_of_getting_personal_best" type="hidden" name="submitting_course_info1_of_getting_personal_best"/>
+	<input id="submitting_course_info2_of_getting_personal_best" type="hidden" name="submitting_course_info2_of_getting_personal_best"/>
+</form>
+
+<input id="hidden_level" type="hidden" value="<!--{$row['referee_level']}-->"/>
+<input id="hidden_getting_certificate_date" type="hidden" value="<!--{$row['referee_getting_certificate_date']}-->"/>
+<input id="hidden_judging_game_num" type="hidden" value="<!--{$row['referee_judging_game_num']}-->"/>
+<input id="hidden_playing_yearsexp" type="hidden" value="<!--{$row['playing_yearsexp']}-->"/>
+<input id="hidden_handicap" type="hidden" value="<!--{$row['handicap']}-->"/>
+<input id="hidden_personal_best" type="hidden" value="<!--{$row['personal_best']}-->"/>
+<input id="hidden_course_info1_of_getting_personal_best" type="hidden" value="<!--{$row['course_info1_of_getting_personal_best']}-->"/>
+<input id="hidden_course_info2_of_getting_personal_best" type="hidden" value="<!--{$row['course_info2_of_getting_personal_best']}-->"/>
+
+<input id="hidden_uid" type="hidden" value="<!--{$uid}-->"/>
+
+<iframe id="course_info_page" src="home.php?mod=spacecp&ac=usefiled" width="1" height="1" frameborder="no" scrolling="no" onload="iframe_loading_finish();"></iframe>
+
+</div>
+											 <div class="bu">
+											        <a id="send_page2_submitting_data_link"><img src="static/join/images/next.jpg"></a>
+											        <a href="join.php?mod=volunteer&page=1&uid=<!--{$uid}-->"><img src="static/join/images/last.jpg"></a>
+											  </div>
+											 <div class="clear"></div>
+								   </div>
+								   <div class="clear"></div>
+						 </div>
+						 <div><img src="static/join/images/zyz_b.jpg"></div>
+			 </div>
+	  
+<div id="foot">
+		            <div class="foot">
+					            <dt class="foot_t">Copyright © 2010 Dazone Golf,All Rights Reserved 大正高尔夫 版权所有</dt>
+								<dt class="foot_line"><img src="static/join/images/foot_line.jpg"></dt>
+								<dt class="foot_logo"><img src="static/join/images/foot_logo.jpg"></dt>
+				    </div>
+</div>
+
+</body>
+<!--{subtemplate join/10_footer}-->

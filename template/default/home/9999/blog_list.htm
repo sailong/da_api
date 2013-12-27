@@ -1,0 +1,30 @@
+﻿<!--{template home/space_header_comm}--> 
+<div id="wtcontent">
+	<!-- 左侧 -->
+	<!--{template home/spacecp_00_left}-->
+	<!-- 右侧 -->
+        <div class="rightw">
+            <div class="rightlm"><h1>我的博客</h1></div>
+            <br>
+            <div class="rcontent">
+            <!--设置头部 -->
+    <ul class="tb cl">
+<li class="a"><a href="home.php?mod=space&amp;do=blog&amp;view=me">我的博客</a></li>
+<li class="o"><a href="home.php?mod=spacecp&amp;ac=blog">发表新博客</a></li>
+</ul>
+            <!--设置头部 -->
+            <!--公共列表 -->
+            <!--{subtemplate home/space_comm_bloglist}-->
+            <!--公共列表 -->
+            <script type="text/javascript">
+        function fuidgoto(fuid) {
+            var parameter = fuid != '' ? '&fuid='+fuid : '';
+            window.location.href = 'home.php?mod=space&do=blog&view=we'+parameter;
+        }
+  		  	</script>
+			<div class="clear"></div>
+    		</div>
+    	</div>
+    </div>
+    <div class="clear"></div>
+	<!--{subtemplate home/spacecp_foot_comm}-->

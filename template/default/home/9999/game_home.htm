@@ -1,0 +1,298 @@
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>赛事用户 动态home---大正高尔夫 home</title>
+<link href="{STATICURL}space/game/style.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+<div id="wt">
+	<div class="headsea"><img src="{STATICURL}space/game/images/membe.jpg" width="27" height="27"></div>
+	<div class="headad">&nbsp;</div>
+	<div class="menubg"><!--{subtemplate home/space_header_personalnv}--></div>
+</div>
+<div id="wtcontent">
+	
+    <!-- 左边  -->
+	<!--{subtemplate home/game_left}-->
+    
+	<div class="z z2">
+		<div class="cbg1"><a href="#"><img src="{STATICURL}space/game/images/cdl.jpg" width="144" height="34" border="0"></a>&nbsp;&nbsp;</div>
+		<div class="fenx">
+		  <span><a href="#"><img src="{STATICURL}space/game/images/ca1.jpg" width="246" height="27" border="0"></a></span>
+			<span><a href="#"><img src="{STATICURL}space/game/images/ca2.jpg" width="101" height="34" border="0"></a></span>
+			<span><a href="#"><img src="{STATICURL}space/game/images/ca3.jpg" width="101" height="33" border="0"></a></span>
+	    </div>
+	    <div><img src="{STATICURL}space/game/images/chx.jpg" width="482" height="8"></div>
+		<br />
+		<!--中间上部-->
+		<!--{subtemplate home/game_center}-->
+	   
+       <div class="cincontent">
+		  <div class="cinbiaoti"><h2>动态</h2></div>
+		  <div>
+	<ul class="tb cl">
+						<li$actives[we]><a href="home.php?mod=space&uid=$uid&do=home&view=we">{lang friend_feed}</a></li>
+						<li$actives[me]><a href="home.php?mod=space&uid=$uid&do=home&view=me">{lang my_feed}</a></li>
+						<li$actives[all]><a href="home.php?mod=space&uid=$uid&do=home&view=all">{lang view_all}</a></li>
+						<!--{if $_G['setting']['my_app_status']}-->
+						<li$actives[app]><a href="home.php?mod=space&uid=$uid&do=home&view=app">{lang view_app_feed}</a></li>
+						<!--{/if}-->
+						<!--{hook/space_home_navlink}-->
+						<!--{if $_G['setting']['magicstatus'] && $_G['setting']['magics']['thunder']}-->
+						<li class="y"><a id="a_magic_thunder" href="home.php?mod=magic&uid=$uid&mid=thunder" onclick="showWindow('magics', this.href, 'get', 0)" style="padding-left: 18px; background: url({STATICURL}image/magic/thunder.small.gif) no-repeat 0 50%;">{$_G[setting][magics][thunder]}</a></li>
+						<!--{/if}-->
+					</ul>
+    	<div id="feed_div" class="e">
+			<!--{if $hotlist}-->
+				<h4 class="et"><a href="home.php?mod=space&uid=$uid&do=home&view=all&order=hot" class="y xw0">{lang view_more_hot} <em>&rsaquo;</em></a>{lang recent_recommended_hot}</h4>
+				<ul class="el">
+				<!--{loop $hotlist $value}-->
+				<!--{eval $value = mkfeed($value);}-->
+				<!--{template home/space_feed_li}-->
+				<!--{/loop}-->
+				</ul>
+			<!--{/if}-->
+
+			<!--{if $list}-->
+				<!--{if $_GET[view] == 'app' && $_G['setting']['my_app_status']}-->
+				
+					<div class="xld xlda mtm">
+						<!--{loop $list $appicon $values}-->
+							<dl class="bbda cl">
+								<dd class="m avt">
+									<a href="userapp.php?mod=app&id=$appicon"><img src="http://appicon.manyou.com/logos/$appicon" alt="" /></a>
+								</dd>
+								<dd class="cl">
+									<ul class="el">
+										<!--{loop $values $value}-->
+										<li class="cl">
+											<a class="t" href="userapp.php?icon=$value[icon]" title="{lang just_look_dynamic}">
+												<img width="16" height="16" {if $_G[cache][myapp][$value[icon]][icon]}src="$_G[cache][myapp][$value[icon]][icon]" onerror="this.onerror=null;this.src='http://appicon.manyou.com/icons/$value[icon]'"{else} src="http://appicon.manyou.com/icons/$value[icon]"{/if} />
+											</a>
+											$value[title_template] 
+											<span class="xg1"><!--{date($value[dateline], 'n-j H:i')}--></span>
+	
+											<div class="ec">
+												<!--{if $value['image_1']}-->
+												<a href="$value[image_1_link]"{$value[target]}><img src="$value[image_1]" class="tn" /></a>
+												<!--{/if}-->
+												<!--{if $value['image_2']}-->
+												<a href="$value[image_2_link]"{$value[target]}><img src="$value[image_2]" class="tn" /></a>
+												<!--{/if}-->
+												<!--{if $value['image_3']}-->
+												<a href="$value[image_3_link]"{$value[target]}><img src="$value[image_3]" class="tn" /></a>
+												<!--{/if}-->
+												<!--{if $value['image_4']}-->
+												<a href="$value[image_4_link]"{$value[target]}><img src="$value[image_4]" class="tn" /></a>
+												<!--{/if}-->
+	
+												<!--{if $value['body_template']}-->
+												<div class="detail"{if $value['image_3']} style="clear: both; zoom: 1;"{/if}>
+													$value[body_template]
+												</div>
+												<!--{/if}-->
+	
+												<!--{if $value['body_general']}-->
+												<div class="quote"><blockquote>$value[body_general]</blockquote></div>
+												<!--{/if}-->
+											</div>
+										</li>
+									<!--{/loop}-->
+									</ul>
+								</dd>
+							</dl>
+						<!--{/loop}-->
+					</div>
+				
+				<!--{else}-->
+					<!--{loop $list $day $values}-->
+						<!--{if $_GET['view']!='hot'}-->
+							<h4 class="et">
+								<!--{if $day=='yesterday'}-->{lang yesterday}<!--{elseif $day=='today'}-->{lang today}<!--{else}-->$day<!--{/if}-->
+							</h4>
+						<!--{/if}-->
+	
+						<ul class="el">
+						<!--{loop $values $value}-->
+							<!--{template home/space_feed_li}-->
+						<!--{/loop}-->
+						</ul>
+					<!--{/loop}-->
+				<!--{/if}-->
+			<!--{elseif $feed_users}-->
+				<div class="xld xlda mtm">
+				<!--{loop $feed_users $day $users}-->
+				<h4 class="et">
+					<!--{if $day=='yesterday'}-->{lang yesterday}<!--{elseif $day=='today'}-->{lang today}<!--{else}-->$day<!--{/if}-->
+				</h4>
+				<!--{loop $users $user}-->
+				<!--{eval $daylist = $feed_list[$day][$user[uid]];}-->
+				<!--{eval $morelist = $more_list[$day][$user[uid]];}-->
+				<dl class="bbda cl">
+					<dd class="m avt">
+						<!--{if $user[uid]}-->
+						<a href="home.php?mod=space&uid=$user[uid]" target="_blank" c="1"><!--{avatar($user[uid],small)}--></a>
+						<!--{else}-->
+						<img src="{IMGDIR}/systempm.png" alt="" />
+						<!--{/if}-->
+					</dd>
+					<dd class="cl">
+						<ul class="el">
+						<!--{loop $daylist $value}-->
+							<!--{template home/space_feed_li}-->
+						<!--{/loop}-->
+						</ul>
+
+						<!--{if $morelist}-->
+						<p class="xg1 cl"><span onclick="showmore('$day', '$user[uid]', this);" class="unfold">{lang open}</span></p>
+						<div id="feed_more_div_{$day}_{$user[uid]}" style="display:none;">
+							<ul class="el">
+							<!--{loop $morelist $value}-->
+								<!--{template home/space_feed_li}-->
+							<!--{/loop}-->
+							</ul>
+						</div>
+						<!--{/if}-->
+					</dd>
+				</dl>
+				<!--{/loop}-->
+				<!--{/loop}-->
+				</div>
+			<!--{else}-->
+				<p class="emp">{lang no_feed}</p>
+			<!--{/if}-->
+
+			<!--{if $filtercount}-->
+				<div class="i" id="feed_filter_notice_{$start}">
+					{lang depending_your}<a href="home.php?mod=spacecp&ac=privacy&op=filter" target="_blank" class="xi2 xw1">{lang filter_settings}</a>,{lang shield_feed_message} (<a href="javascript:;" onclick="filter_more($start);" id="a_feed_privacy_more" class="xi2">{lang click_view}</a>)
+				</div>
+				<div id="feed_filter_div_{$start}" style="display:none;">
+					<h4 class="et">{lang following_feed_shielding}</h4>
+					<ul class="el">
+					<!--{loop $filter_list $value}-->
+					<!--{template home/space_feed_li}-->
+					<!--{/loop}-->
+					<li><a href="javascript:;" onclick="filter_more($start);">&laquo; {lang pack_up}</a></li>
+					</ul>
+				</div>
+			<!--{/if}-->
+
+			</div>
+    
+    
+		  </div>
+		  </div>
+       
+       
+	</div>
+	<div class="y y3">
+		<div class="rightlmn"><span class="rlm1"><h1>赛事赞助商</h1></span>  <span class="rlm2"><a href="#">更多</a></span></div>
+		<div class="ylmcon">
+			<div class="zbms">
+				<p><img src="{STATICURL}space/game/images/qczb.jpg" width="78" height="55"></p>
+				<p>网罗姓名</p>
+			</div>
+			<div class="zbms">
+				<p><img src="{STATICURL}space/game/images/qczb.jpg" width="78" height="55"></p>
+				<p>网罗姓名</p>
+			</div>
+		    <div class="zbms">
+				<p><img src="{STATICURL}space/game/images/qczb.jpg" width="78" height="55"></p>
+			    <p>网罗姓名</p>
+			</div>
+			<div class="zbms">
+				<p><img src="{STATICURL}space/game/images/qczb.jpg" width="78" height="55"></p>
+			    <p>网罗姓名</p>
+			</div>
+			<div class="clear"></div>
+		</div>
+		<div class="rightlm"><span class="rlm1"><h1>参赛明星</h1></span>  <span class="rlm2"><a href="#">更多</a></span></div>
+		<div class="ylmcon">
+		   <div class="zbms">
+				<p><img src="{STATICURL}space/game/images/zbms.jpg" width="50" height="50"></p>
+				<p>网罗姓名</p>
+		  </div>
+			<div class="zbms">
+				<p><img src="{STATICURL}space/game/images/zbms.jpg" width="50" height="50"></p>
+				<p>网罗姓名</p>
+			</div>
+		    <div class="zbms">
+				<p><img src="{STATICURL}space/game/images/zbms.jpg" width="50" height="50"></p>
+			    <p>网罗姓名</p>
+			</div>
+			<div class="zbms">
+				<p><img src="{STATICURL}space/game/images/zbms.jpg" width="50" height="50"></p>
+			    <p>网罗姓名</p>
+			</div>
+			<div class="clear"></div>
+	    </div>
+		<div class="rightlm"><span class="rlm1"><h1>举办球场</h1></span>  <span class="rlm2"><a href="#">更多</a></span></div>
+		<div class="ylmcon">
+			<p class="center"><img src="{STATICURL}space/game/images/ssqc.jpg"></p>
+			<p class="center top10">上海佘山高尔夫球场</p>
+        </div>
+		<div class="rightlm"><span class="rlm1">
+		<h1>周边旅游线路推荐</h1>
+		</span>  <span class="rlm2"><a href="#">更多</a></span></div>
+		<div class="ylmcon">
+			<p class="center"><img src="{STATICURL}space/game/images/lvxl.jpg"></p>
+			<p class="center top10">广东观澜湖游</p>
+        </div>
+		<div class="rightlm"><span class="rlm1"><h1>专家</h1></span>  <span class="rlm2"><a href="#">更多</a></span></div>
+		<div class="ylmcon">
+			<div class="qcjl">
+			<p class="center"><img src="{STATICURL}space/game/images/jiaolian.jpg" width="50" height="50"></p>
+			<p class="center">耐克体育</p>
+			</div>
+			<div class="qcjl">
+			<p class="center"><img src="{STATICURL}space/game/images/jiaolian.jpg" width="50" height="50"></p>
+			<p class="center">耐克体育</p>
+			</div>
+			<div class="qcjl">
+			<p class="center"><img src="{STATICURL}space/game/images/jiaolian.jpg" width="50" height="50"></p>
+			<p class="center">耐克体育</p>
+			</div>
+			<div class="clear"></div>
+      </div>
+		<div class="rightlm"><span class="rlm1"><h1>活动推荐</h1></span>  <span class="rlm2"><a href="#">更多</a></span></div>
+		<div class="ylmcon">
+			<p class="center"><img src="{STATICURL}space/game/images/hdtj.jpg" width="147" height="70"></p>
+			<p class="center top10">最新活动推荐</p>
+			<p class="center"><img src="{STATICURL}space/game/images/hdtj.jpg" width="147" height="70"></p>
+			<p class="center top10">最新活动推荐</p>
+        </div>
+		<div class="rightlm"><span class="rlm1"><h1>热门话题</h1></span>  <span class="rlm2"><a href="#">更多</a></span></div>
+		<div class="ylmcon">
+			<div class="rmht">
+				<p>#<a href="#">大正高尔夫</a>#</p>
+				<p>#<a href="#">皇冠赛事直播</a>#</p>
+				<p>#<a href="#">九州岛冠军赛</a>#</p>
+		    </div>
+		</div>
+		
+		<div class="rightlm"><span class="rlm1"><h1>热门标签</h1></span>  <span class="rlm2"><a href="#">更多</a></span></div>
+		<div class="ylmcon">
+			<div class="rmbq">
+			<span>养身</span><span> | </span><span>汽车</span><span> | </span><span>养身</span><span> | </span>
+			<span>养身</span><span> | </span><span>汽车</span><span> | </span><span>养身</span><span> | </span><span>养身</span><span> | </span><span>汽车</span><span> | </span><span>养身</span><span> | </span>
+			<span>养身</span><span> | </span><span>汽车</span><span> | </span><span>养身</span>
+			</div>
+		</div>
+		
+	</div>
+	<div class="clear"></div>
+</div>
+
+<br>
+<div id="wt" class="footer top20">
+  <div class="footer2">
+  <span class="z"><a href="/home.php"><img src="{STATICURL}space/game/images/bottomlogo.jpg" width="175" height="65" border="0"></a></span>
+  <span>关于大正 | 商务合作 | 招贤纳士 | 合作伙伴 | 联系我们 | 投诉建议 | 免责声明    <br>
+  大正网版权归北京大正承平文化传播有限公司 <br>
+  京ICP证110339号 京公网安备110108008116号 </span></div>
+</div>
+</body>
+</html>

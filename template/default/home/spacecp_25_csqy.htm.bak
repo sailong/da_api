@@ -1,0 +1,96 @@
+<!--{template home/spacecp_25_head}-->
+<div id="wtcontent">
+	<!-- 左侧 -->
+	<!--{template home/spacecp_25_left}-->
+	<!-- 右侧 -->
+	<div class="rightw">
+		<div class="rightlm"><h1>参赛明星</h1></div>
+		<br>
+		<div class="rcontent">
+			<!--中间内容-->
+<!--{if $op=='edit'}-->
+<form action="home.php?mod=spacecp&ac=csqy&op=edit&id=$editarr[userid]" method="post" name="form1" autocomplete="off">
+			<div>$editarr[userid]&nbsp;&nbsp;&nbsp;<img src="uc_server/avatar.php?uid=$editarr[userid]&size=middle" />&nbsp;&nbsp;&nbsp;$editarr[username]&nbsp;&nbsp;&nbsp;<input type="text" value="$editarr[seq]" name="myseq" size="5" maxlength="2" onkeyup="this.value=this.value.replace(/[^\d]/g,'')" />&nbsp;&nbsp;&nbsp;<input type="submit" value="修改" onclick="this.disabled=true" /></div>
+			<input type="hidden" value="$editarr[userid]" name="userid" />
+			<input type="hidden" value="$editarr[groupid]" name="groupid" />
+</form>
+<!--{/if}-->
+<!--{if $op=='list'}-->
+    <!--{if $earr}-->
+    <form action="home.php?mod=spacecp&ac=csqy&op=del" method="post" autocomplete="off" name="forma">
+    <ul>
+    <!--{loop $earr $key $value}-->
+    <li><input type="checkbox" value="$value[userid]" name="delid[]"/>&nbsp;&nbsp;&nbsp;&nbsp;$value[userid]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="/uc_server/avatar.php?uid=$value[userid]&size=small" />&nbsp;&nbsp;&nbsp;&nbsp; $value[username]&nbsp;&nbsp;&nbsp;$value[realname]&nbsp;&nbsp;$value[seq]&nbsp;&nbsp;&nbsp;<a href="home.php?mod=spacecp&ac=csqy&op=edit&id=$value[userid]">编辑排序</a></li>
+    <!--{/loop}-->
+    </ul>
+    <br />
+    <input type="submit" value="删除" onclick="if(!confirm('确认要删除吗？')) return false" /> &nbsp;&nbsp;
+    <a href="javascript:void(0)" onclick="chooseall()">全选</a>&nbsp;/&nbsp;<a href="javascript:void(0)" onclick="choosefan()">反选</a>
+    </form>
+    <!--{else}-->
+    还没有添加球星
+    <!--{/if}-->
+<!--{elseif $op=='search' || $op=='slist'}-->
+<form name="form2" action="home.php?mod=spacecp&ac=csqy&op=slist" method="post" onsubmit="return check();">
+<input type="text" name="searchname" id="searchname" /> <input type="submit" value="查询球星"/>(输入用户名或真实姓名)
+</form>
+
+
+
+
+<form method="post" name="form1" action="home.php?mod=spacecp&ac=csqy&op=searchsub" autocomplete="off">
+<!--{if $earr}-->
+<div>&nbsp;&nbsp;用户id &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  头像 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;用户名&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;真实姓名</div>
+<!--{/if}-->
+<!--{if $earr}-->
+<!--{loop $earr $value}-->
+<br />
+<div><input type="checkbox" name="userid[]" value="$value[uid]" /> &nbsp;$value[uid] &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="/uc_server/avatar.php?uid=$value[uid]&size=small" />  &nbsp;&nbsp;&nbsp;&nbsp; $value[username]  &nbsp;&nbsp;$value[realname]</div>
+<br />
+<!--{/loop}-->
+<!--{else}-->
+没有找到球星用户 &nbsp;&nbsp;&nbsp;&nbsp;<a href="home.php?mod=spacecp&ac=csqy&op=search" style="color:#f00">返回</a>
+<!--{/if}-->
+<div style="text-align:center;">
+$disppage
+</div>
+<br />
+<!--{if $earr}-->
+<input type="submit" value="添加" />
+<!--{/if}-->
+</form>
+<!--{/if}-->
+<script>
+function chooseall(){
+    for (var i=0;i<document.forma.elements.length;i++){
+        var e = document.forma.elements[i];
+        e.checked=true;
+    }
+}
+function choosefan(forma){
+    for (var i=0;i<document.forma.elements.length;i++){
+        var e = document.forma.elements[i];
+        if(e.checked){
+            e.checked=false;
+        }else{
+            e.checked=true;
+        }
+    }
+}
+function check(){
+    var ky=$("#searchname").val();
+    if(''==ky){
+        alert('请输入球星的名字');
+        return false;
+    }
+}
+
+
+</script>
+			<!--中间内容-->
+		
+		</div>
+	</div>
+	<div class="clear"></div>
+</div>
+<!--{template home/spacecp_foot_comm}-->

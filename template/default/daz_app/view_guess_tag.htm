@@ -1,0 +1,188 @@
+<!--{template common/header}-->
+<link href="static/space/daz_app/guess/guess_content.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="static/daz_js/jquery.js"></script>
+<body>
+<!--body 部分开始  -->
+<div class="body" style="margin-left:-10px;">
+          <!--left 部分开始  --> 
+          <div id="left_1">
+                   <div class="left_2"><span class="span_1">活动已经开始</span></div>
+                   <div class="left_img"><img src="data/attachment/daz_app/{$guess_info['guess_picture']}" width="288"></div>
+                   <div class="left_3">
+                            <div class="span_2">活动简介</div>
+                            <div class="left_more"><a href="#"><img src="static/space/daz_app/guess/images/more.gif" border="0"></a></div>
+                   </div>
+                   <div class="left_4">
+						 <span class="span_3">
+								{$guess_info['describe']}
+						</span>
+                   </div>
+                   <!--竞猜部分开始  --> 
+                   <div class="left_3">
+                            <div class="span_2">竞猜结果</div>
+                            <div class="left_more"><a ><img src="static/space/daz_app/guess/images/more.gif" border="0"></a></div>
+                   </div>
+                   <div class="left_4">
+				         
+                              <div>
+							        <!--{loop $jieguo_users $value}-->
+                                       <div class="left_jg">
+                                                 <div><a href="home.php?mod=space&uid={$value['uid']}&do=profile" target="_new"><img src="{$value['img']}" width="42" height="42"></a></div>
+                                                 <div><span>{$users[$value['uid']]}</span></div>
+                                       </div>
+									<!--{/loop}-->
+                              </div> 
+                             
+                              <div class="clear"></div> 
+  
+                   </div>
+                    <!--竞猜 部分结束  -->
+                    <!--已经参加人数部分开始  -->
+                    <div class="left_rs_1">
+					   <div class="left_rs"><img src="static/space/daz_app/guess/images/jc_1.gif" width="67" height="54"></div>
+					   <div class="left_rs"><img src="static/space/daz_app/guess/images/gn_{$join_user_num[0]}.gif" width="35" height="54"></div>
+					   <div class="left_rs"><img src="static/space/daz_app/guess/images/gn_{$join_user_num[1]}.gif" width="35" height="54"></div>
+					   <div class="left_rs"><img src="static/space/daz_app/guess/images/gn_{$join_user_num[2]}.gif" width="35" height="54"></div>
+					   <div class="left_rs"><img src="static/space/daz_app/guess/images/gn_{$join_user_num[3]}.gif" width="35" height="54"></div>
+					   <div class="left_rs"><img src="static/space/daz_app/guess/images/gn_{$join_user_num[4]}.gif" width="35" height="54"></div>
+					   <div class="left_rs"><img src="static/space/daz_app/guess/images/gn_{$join_user_num[5]}.gif" width="35" height="54"></div>
+                    </div> 
+                     <!--已经参加人数部分结束  -->
+                    <div><img src="static/space/daz_app/guess/images//left_b.gif"></div>
+          </div>
+        <!--left 部分结束  --> 
+
+
+         <!--right部分开始  --> 
+          <div>
+                      <!--猜球星部分开始  --> 
+                      <div class="left_rs">
+
+
+                                <div><img src="static/space/daz_app/guess/images//cqx_1.jpg" width="608" height="103"></div>
+                                <div>
+                                          <div class="left_rs"><img src="static/space/daz_app/guess/images//cqx_2.gif" width="4" height="236"></div>
+                                          <div class="cqx_1">
+
+											<div class="cqx_4">
+												 <div class="cqx_5">当前位置：竞猜标签 </div>
+												 <div class="cqx_6"><a href="{CURSCRIPT}.php?mod=guess">活动列表</a></div>
+												 <div class="clear"></div>
+											</div>
+                                             {if $guess_object==1}
+				                               <!--头像区域 start-->
+												<div class="examples_body">
+								
+
+													<!-- 0308新加内容开始--> 
+													<div class="xm_box">
+														   <div class="xm_menu"><span>竞猜标签</span></div> 
+														   <!--{loop $attrs $key $value}-->
+															 {if $tag_id == $key}
+																<a class="tag_big" style="background-color: #657ba9;" href="javascript:;">{$value}</a>  
+															 {else}
+																<a class="tag_big" href="{CURSCRIPT}.php?mod=guess&do=view_guess_tag&guess_id={$guess_id}&tag_id={$key}&guess_object={$guess_object}">{$value}</a> 
+															 {/if}
+														   <!--{/loop}-->
+													</div><br>
+													<!--0308新加内容结束-->
+
+
+													<ul class="bannerHolder" >
+														<li>
+													   <!--{loop $guess_ob_list $key $value}-->
+															<div class="banner" >
+																<a ><img height="120" width="125" alt="The Best Designs" src="{$value['pic']}"></a>
+																<p class="companyInfo" >猜 他 吗？</p>
+																<div class="cornerTR"></div>
+																{$value['a']}
+																<span><h2>{$value['username']}</h2></span>
+															</div>	
+														<!--{/loop}-->
+														</li>
+													</ul>
+												  </div>
+				                                <!--头像区域 start-->
+											{else}
+												<!--国家区域 start-->
+												<div class="examples_body">
+
+													<ul class="bannerHolder">
+														<li>
+													    <!--{loop $guess_ob_list $key $value}-->
+															<div class="banner" style="margin-top:2px;height:60px;background-color:#C1D4D8;" >
+																<a>{$value['relevance_value']}</a>
+																<p class="companyInfo" style="margin-top:-26px;">↑۩↑</p>
+																{$value[a]}
+															</div>	
+														<!--{/loop}-->
+														</li>
+													</ul>
+												  </div>
+												<!--国家区域 start-->
+											{/if}
+              
+                                                    
+                                          </div>
+                                          <div class="left_rs"><img src="static/space/daz_app/guess/images//cqx_2.gif" width="4" height="236"></div>
+                                </div>       
+                                
+                      </div> 
+
+				
+
+                       <!--猜球星 部分结束  --> 
+                      <div class="hd_1">
+                                     <div class="hd_2"><span>活动详情</span></div>
+                                     <div class="hd_3">
+									  	{$guess_info['content']}
+									 </div>
+                      </div>
+                      <div class="clear"></div>
+          </div>
+      <!--right 部分结束  --> 
+
+
+</div>
+<!--body 部分结束  -->
+</body>
+<script type="text/javascript">
+
+ var user_id = {$_G[uid]};
+
+jQuery(document).ready(function(){
+		jQuery.noConflict();
+		jQuery('.banner div').css('opacity',0.4);
+		jQuery('.banner').hover(function(){
+		var el = jQuery(this);
+		el.find('div').stop().animate({width:200,height:200},'',function(){
+		el.find('p').fadeIn('fast');
+	});
+	},function(){
+		var el = jQuery(this);
+		el.find('p').stop(true,true).hide();
+		el.find('div').stop().animate({width:60,height:60},'fast');
+	})
+	//.click(function(){
+	//	window.open(jQuery(this).find('a').attr('href'));
+	//	});
+	});
+
+
+
+ function vote_guessing(guess_id,tag_id,uid,guess_object,relevance_value){
+	 if(user_id<1){
+        showWindow('login', 'member.php?mod=logging&action=login&infloat=yes&handlekey=login&inajax=1&ajaxtarget=fwin_content_login');
+	 }else{
+	    //alert(guess_id+'---'+tag_id+'---'+uid+'---'+guess_type+'');return;
+	    ajaxget('daz_app.php?mod=guess&do=view_guess_tag&ac=vote_guessing&guess_id='+guess_id+'&tag_id='+tag_id+'&qx_uid='+uid+'&guess_object='+guess_object+'&relevance_value='+relevance_value,'','','',null,'angftt()');
+	 }
+ }
+
+ function angftt(){
+   showDialog('','info','感谢您的参与',setTimeout('parent.location.href = location', 2000),'','','','','','2');
+ }
+
+</script>
+
+<!--{template common/footer}-->

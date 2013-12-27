@@ -1,0 +1,58 @@
+﻿<!--{subtemplate home/21_header}-->
+<div id="wtcontent">
+	
+    <!-- 左边  -->
+	<!--{subtemplate home/21_left}-->
+    
+	<div class="z z2">
+	<!--{subtemplate home/common_center}-->
+	   
+       <div class="cintro">
+	   <a name="saishiinfo"><div class="cdt_lm">
+		    <span><h1>球场信息</h1></span>
+		</div>
+        </a>
+	   <div class="cbg2_2">
+		  <!--中间部分-->
+          <!--{if $ssre}-->
+		  <div class="cbg2_3">
+          <table width="90%">
+          <tr>
+          <td>公司名称</td><td>$infoarr[fieldname]</td>
+          </tr>
+          <tr>
+          <td>所属球场</td><td>$infoarr[name]</td>
+          </tr>
+          <tr>
+          <td>球场洞数</td><td>$infoarr[cup]</td>
+          </tr>
+          <tr>
+          <td>总标杆数</td><td>$infoarr[standardpar]</td>
+          </tr>
+          <tr>
+          <td>码距</td><td>$infoarr[LENGTH]</td>
+          </tr>
+          <tr>
+          <td>标准杆</td><td>$infoarr[par]</td>
+          </tr>
+          <tr>
+          <td>地址</td><td>$infoarr[address]</td>
+          </tr>
+          
+          
+          </table>
+		  </div>
+          <!--{/if}-->
+          <!--中间部分-->
+		  </div>
+		  </div>
+       
+       <br>
+	</div>
+	<!--右侧开始-->
+    <!--{subtemplate home/21_right}-->
+	<div class="clear"></div>
+</div>
+
+<br>
+<!--{subtemplate home/21_foot}-->

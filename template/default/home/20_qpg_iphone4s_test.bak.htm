@@ -1,0 +1,352 @@
+﻿<!--{subtemplate home/20_header}-->
+<div id="wtcontent">
+	<div class="z z1">
+		<!--{subtemplate home/20_left}-->
+	</div>
+    <style>
+    .bg{background-color:#00ff00; height:20px; margin-left:10px; margin-top:10px; width:137px; text-align:center;}
+    .nobg{background-color:#fff;height:20px; margin-left:10px; margin-top:10px; width:137px; text-align:center; background:url({STATICURL}space/uidcss_1889193/images/qpg_hbg.jpg);}
+	.innn {height:20px; margin-left:10px; margin-top:10px; width:137px; text-align:center; background:url({STATICURL}space/uidcss_1889193/images/qpg_hbg.jpg);}
+    </style>
+        <link href="static/space/20/jdt.css" rel="stylesheet" type="text/css" />
+	<div class="z qpg_z3">
+		<br>
+        <!--{subtemplate home/20_qpg_center}-->
+        
+	    <div class="qpg_xin clear">&nbsp;</div>
+        <br>
+        <div style="width:663px; margin:0 auto; background-color:#FFF; padding-left:14px;">
+        <!--焦点图-->
+       <!--{subtemplate home/20_jdt}-->
+        <!--焦点图-->
+        </div>
+        <br />
+        <div class="qpg_er">三星大礼包预定</div>
+        <div class="qpg_er_1">
+        <br />
+       
+            <div class="qpg_lhbg">
+            <div class="left20"><img src="{STATICURL}space/uidcss_1889193/images/qpg_lh.jpg" width="162" height="34"></div>
+                <div class="qpg_lh">
+                <input type="hidden" value="$countnum" id="contnum" />
+                    <ul>
+                    <!--{loop $arr $key $value}-->
+                    <input type="text" name="mobile" class="innn" id="xh_$key" value="$value[tel]" readonly="" onclick="cha($key)" />
+                    <!--{/if}-->
+                   <input type="hidden" value="" name="chosetel" id="chosetel" />
+                    </ul>
+                </div>
+                <script>
+function cha(idt){
+    //alert(idt);
+     //document.getElementById("xh_"+idt).className="nobg";
+    for(var i=0;i<12;i++){
+        if(i==idt){
+            document.getElementById("xh_"+i).className="bg";
+            //alert(idt);
+            document.getElementById("chosetel").value=document.getElementById("xh_"+idt).value;
+        }else{
+            document.getElementById("xh_"+i).className="nobg";
+           // alert(idt);
+        }
+        
+    }
+
+}
+
+</script>
+                <div class="clear"></div>
+                <div class="qpg_hyz"><img src="{STATICURL}space/uidcss_1889193/images/qpg_hyz.jpg" width="99" height="25" onclick="xuanhao()" /></div>
+            </div>
+            <br>
+            <div class="qpg_er_2">
+                <ul>
+                <li>预订数量：每个用户只可预定一部</li>
+                <li>手机颜色：
+                <input type="radio" name="telcolor" id="telcolor" value="黑色" />
+                <img src="static/space/20/images/hei.jpg" /><input type="radio" id="telcolor2" name="telcolor" value="白色"/><img src="static/space/20/images/bai.jpg" /></li>
+                <li>可用空间：
+                <input type="radio" name="kongjian" id="kongjian" value="16GB" onclick="lab(5780);" />16GB&nbsp;
+                <input type="radio" name="kongjian" value="32GB" id="kongjian2" onclick="lab(6899);" />32GB&nbsp;
+                <input type="radio" name="kongjian" value="64GB" id="kongjian3" onclick="lab(7899);" />64GB&nbsp;
+                </li>
+                <li>合约计划：<select name="plan" id="plan" onchange="selecthy()"><option value="">请选择</option><option value="289元" onclick="selecthy(289)">289元</option><option value="389元" onclick="selecthy(389)">389元</option></select></li>
+                <li>合约期限：<select name="qixian" id="qixian" ></select></li>
+                <li style="color: #f00;font-size:18px;"><b id="ppri">￥5780</b></li>
+                <li>入网用户姓名：<input type="text" name="username" id="username" maxlength="20" onblur="tishi('username','rwxm','入网用户姓名');" /><span id="rwxm" style="color:#f00; font-weight:bold;padding-left:10px;display:none;"></span></li>
+                <li>&nbsp;&nbsp;&nbsp;&nbsp;身份证号：<input type="text" name="sfz" id="sfz" maxlength="18" onblur="tishi('sfz','tssfz','身份证号');" /><span id="tssfz" style="color:#f00; font-weight:bold;padding-left:10px;display:none;"></span></li>
+                <li>&nbsp;&nbsp;身份证地址：<input type="text" name="address" id="address" maxlength="30" onblur="tishi('address','tsaddress','身份证地址');" /><span id="tsaddress" style="color:#f00; font-weight:bold;padding-left:10px;display:none;"></span></li>
+                <li>&nbsp;&nbsp;&nbsp;&nbsp;联系手机：<input type="text" name="mytel" id="mytel" onbeforepaste="clipboardData.setData('text',clipboardData.getData('text').replace(/[^\d]/g,''))" onkeyup="value=value.replace(/[^\d]/g,'') " maxlength="12" onblur="tishi('mytel','tsmytel','联系手机');" /><span id="tsmytel" style="color:#f00; font-weight:bold;padding-left:10px;display:none;"></span></li>
+                <li><hr /></li>
+                <li>&nbsp;&nbsp;收货人姓名：<input type="text" name="acname" id="acname" maxlength="20" onblur="tishi('acname','tsacname','收货人姓名');" /><span id="tsacname" style="color:#f00; font-weight:bold;padding-left:10px;display:none;"></span></li>
+                <li>收货人身份证：<input type="text" name="acsfz" id="acsfz" maxlength="18" onblur="tishi('acsfz','tsacsfz','收货人身份证');" /><span id="tsacsfz" style="color:#f00; font-weight:bold;padding-left:10px;display:none;"></span></li>
+                <li>&nbsp;&nbsp;收货人地址：<input type="text" name="acaddress" id="acaddress" maxlength="30" onblur="tishi('acaddress','tsacaddress','收货人地址');" /><span id="tsacaddress" style="color:#f00; font-weight:bold;padding-left:10px;display:none;"></span></li>
+                <li>&nbsp;&nbsp;收货人手机：<input type="text" name="actel" id="actel" maxlength="12" onbeforepaste="clipboardData.setData('text',clipboardData.getData('text').replace(/[^\d]/g,''))" onkeyup="value=value.replace(/[^\d]/g,'') " maxlength="12" onblur="tishi('actel','tsactel','收货人手机');" /><span id="tsactel" style="color:#f00; font-weight:bold;padding-left:10px;display:none;"></span></li>
+                <li style="text-align:right"><img src="{STATICURL}space/uidcss_1889193/images/qpg_tz.jpg" width="365" height="23"></li>
+                </ul>
+            </div>
+            <br />
+            <input type="hidden" value="$uid" name="compid" id="compid" />
+            <input type="hidden" value="$_G[uid]" name="dengid" id="dengid" />
+            <input type="hidden" name="price" id="price" />
+            <div class="center" style="color:#f00;display:none;font-weight:blod;" id="nologin"></div><br />
+            <div class="center"><input type="image" src="{STATICURL}space/uidcss_1889193/images/qpg_tj.jpg" width="134" height="33" name="sub" onclick="ajaxqpg()" /></div>
+            <br />
+            <div class="center"><img src="{STATICURL}space/uidcss_1889193/images/qpg_kf.jpg" width="649" height="64"></div>
+            <br />
+            
+        </div>
+<br />
+  </div>
+	<div class="clear"></div>
+</div>
+ <script src="js/ajax_func.js"></script>
+    <script src="js/json2.js"></script>
+    <script src="js/json.js"></script>
+<script>
+
+//随机选号
+function xuanhao(xmlHttp){
+    var url = "action/huanhao.php?timestamp="+new Date().getTime();
+	XMLHttp.send_request("GET",url,null,"text",headwordsxml);
+}
+function headwordsxml(xmlHttp){
+    var resultText = xmlHttp.responseText;
+	var resultJsonObject = resultText.parseJSON();
+    //alert(resultJsonObject.user[0].tel);
+    var num=document.getElementById("contnum").value;
+    for(var i=0;i<num;i++){
+       document.getElementById("xh_"+i).value=resultJsonObject.user[i].tel;
+    }
+}
+
+function lab(pp){
+    //alert(pp);
+    document.getElementById("ppri").innerHTML="￥"+pp;
+    if(pp=='5780'){
+        jQuery("#plan").html('<option value="">请选择</option><option value="289元">289元</option><option value="389元">389元</option>');
+    }else if(pp=='6899'){
+        jQuery("#plan").html('<option value="">请选择</option><option value="389元">389元</option><option value="489元">489元</option>');
+    }else if(pp=='7899'){
+        jQuery("#plan").html('<option value="">请选择</option><option value="489元">489元</option><option value="589元">589元</option><option value="889元" >889元</option>');
+    }
+    document.getElementById("qixian").innerHTML="";
+}
+//合约计划选择以后
+function selecthy(){
+    var v=jQuery("#plan").val();
+    
+    var kongjian=document.getElementById("kongjian").checked;
+    var kongjian2=document.getElementById("kongjian2").checked;
+    var kongjian3=document.getElementById("kongjian3").checked;
+    if(kongjian && v=='289元'){
+        jQuery("#qixian").html('<option value="三年">三年</option>');
+    }else if(kongjian2 && v=='389元'){
+        jQuery("#qixian").html('<option value="三年">三年</option>');
+    }else if(kongjian3 && v=='489元'){
+        jQuery("#qixian").html('<option value="三年">三年</option>');
+    }else{
+        jQuery("#qixian").html('<option value="两年">两年</option><option value="三年">三年</option>');
+    }
+}
+//提示信息
+/**
+*参数1是输入框的id，参数2是提示信息的id，参数3是提示信息
+*/
+function tishi(fid,tid,ht){
+    if(''==jQuery("#"+fid).val()){
+        jQuery("#"+tid).show();
+        jQuery("#"+tid).html("请输入"+ht);
+    }else{
+        jQuery("#"+tid).hide();
+        jQuery("#"+tid).html('');
+    }
+}
+
+
+function ajaxqpg(){
+    var chosetel=document.getElementById("chosetel").value;
+    var telcolor=document.getElementById("telcolor").checked;
+    var telcolor2=document.getElementById("telcolor2").checked;
+    var kongjian=document.getElementById("kongjian").checked;
+    var kongjian2=document.getElementById("kongjian2").checked;
+    var kongjian3=document.getElementById("kongjian3").checked;
+    var price;
+    var plan=document.getElementById("plan").value;
+    var qixian=document.getElementById("qixian").value;
+    var compid=document.getElementById("compid").value;
+    var username=document.getElementById("username").value;
+    var sfz=document.getElementById("sfz").value;
+    var address=document.getElementById("address").value;
+    var mytel=document.getElementById("mytel").value;
+    
+    var acname=document.getElementById("acname").value;
+    var acsfz=document.getElementById("acsfz").value;
+    var acaddress=document.getElementById("acaddress").value;
+    var actel=document.getElementById("actel").value;
+    var taochan=document.getElementById('plan');
+    var taochanv=taochan.options[taochan.selectedIndex].value;
+
+    if(''==chosetel){
+        //alert("请选择手机号");
+        jQuery("#nologin").html("请选择手机号");
+        jQuery("#nologin").show();
+        return false;
+    }else{
+        jQuery("#nologin").hide();
+    }
+    if(''==telcolor && ''==telcolor2){
+        //alert("请选择手机颜色");
+        jQuery("#nologin").html("请选择手机颜色");
+        jQuery("#nologin").show();
+        return false;
+    }else{
+        jQuery("#nologin").hide();
+    }
+    if(telcolor){
+        colo="黑色";
+    }else if(telcolor2){
+        colo="白色";
+    }
+    //alert(colo);
+    if(''==kongjian && ''==kongjian2 && ''==kongjian3){
+        //alert("请选择可用空间");
+        jQuery("#nologin").html("请选择可用空间");
+        jQuery("#nologin").show();
+        return false;
+    }else{
+        jQuery("#nologin").hide();
+    }
+    if(kongjian){
+        kj="16G";
+        price="5780";  
+    }else if(kongjian2){
+        kj="32G";
+        price="6899";
+    }else if(kongjian3){
+        kj="64G";
+        price="7899";
+    }
+    if(''==taochanv){
+        //alert("请先选择合约计划");
+        jQuery("#nologin").html("请先选择合约计划");
+        jQuery("#nologin").show();
+        return false;
+    }else{
+        jQuery("#nologin").hide();
+    }
+    //alert(qixian);
+    if(''==qixian){
+        //alert("请选择合约期限");
+        jQuery("#nologin").html("请选择合约期限");
+        jQuery("#nologin").show();
+        return false;
+    }else{
+        jQuery("#nologin").hide();
+    }
+    if(''==username){
+        //alert("请输入姓名");
+        jQuery("#rwxm").show();
+        jQuery("#rwxm").html("请输入入网用户姓名");
+        document.getElementById("username").focus();
+        return false;
+    }
+    if(''==sfz){
+        //alert("请输入身份证号码");
+        jQuery("#tssfz").show();
+        jQuery("#tssfz").html("请输入身份证号码");
+        document.getElementById("sfz").focus();
+        return false;
+    }
+    if(''==address){
+        //alert("请输入身份证地址");
+        jQuery("#tsaddress").show();
+        jQuery("#tsaddress").html("请输入身份证地址");
+        document.getElementById("address").focus();
+        return false;
+    }
+    if(''==mytel){
+        //alert("请输入联系电话");
+        jQuery("#tsmytel").show();
+        jQuery("#tsmytel").html("请输入联系手机");
+        document.getElementById("mytel").focus();
+        return false;
+    }
+    if(''==acname){
+        //alert("请输入收货人姓名");
+        jQuery("#tsacname").show();
+        jQuery("#tsacname").html("请输入收货人姓名");
+        document.getElementById("acname").focus();
+        return false;
+    }
+    if(''==acsfz){
+        //alert("请输入收货人身份证");
+        jQuery("#tsacsfz").show();
+        jQuery("#tsacsfz").html("请输入收货人身份证");
+        document.getElementById("acsfz").focus();
+        return false;
+    }
+    if(''==acaddress){
+        //alert("请输入收货人的身份证地址");
+        jQuery("#tsacaddress").show();
+        jQuery("#tsacaddress").html("请输入收货人地址");
+        document.getElementById("acaddress").focus();
+        return false;
+    }
+    if(''==actel){
+        //alert("请输入收货人的手机");
+        jQuery("#tsactel").show();
+        jQuery("#tsactel").html("请输入收货人手机");
+        document.getElementById("actel").focus();
+        return false;
+    }
+    
+    //alert(kj);
+    /*
+    alert(compid);
+    alert(chosetel);
+    alert(colo);
+    alert(kj);
+    alert(plan);
+    alert(qixian);
+    alert(price);*/
+    //return false;
+      jQuery.post("action/qpg_iphone4s_ajax.php",{tel:chosetel,color:colo,kongjian:kj,plan:plan,qixian:qixian,compid:compid,price:price,username:username,sfz:sfz,address:address,mytel:mytel,acname:acname,acsfz:acsfz,acaddress:acaddress,actel:actel},function(msg){
+         if(msg=='ok'){
+            //alert("预定成功");
+            jQuery("#nologin").html("预定成功");
+            jQuery("#nologin").show();
+             location.reload();
+         }else if(msg=='flag'){
+            //alert("您已经预定过了");
+            jQuery("#nologin").html("您已经预定过了");
+            jQuery("#nologin").show();
+            document.getElementById("chosetel").value='';
+            document.getElementById("telcolor").checked=false;
+            document.getElementById("telcolor2").checked=false;
+            document.getElementById("kongjian").checked=false;
+            document.getElementById("kongjian2").checked=false;
+            document.getElementById("kongjian3").checked=false;
+            location.reload();
+         }else if(msg=='limit'){
+            //alert("您没有预定的权限");
+            jQuery("#nologin").show();
+            jQuery("#nologin").html("您没有预定的权限");
+            document.getElementById("chosetel").value='';
+            document.getElementById("telcolor").checked=false;
+            document.getElementById("telcolor2").checked=false;
+            document.getElementById("kongjian").checked=false;
+            document.getElementById("kongjian2").checked=false;
+            document.getElementById("kongjian3").checked=false;
+            location.reload();
+         }else{
+            //alert(msg);
+            jQuery("#nologin").show();
+            jQuery("#nologin").html(msg);
+         }
+     })
+}
+
+</script>
+
+<!--{subtemplate home/20_foot}-->

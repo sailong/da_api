@@ -1,0 +1,66 @@
+<!--{subtemplate common/header}-->
+<div id='pt' class='bm cl'>
+	<div class='z'>
+		<a href='./' class='nvhm' title='{lang homepage}'>$_G[setting][bbname]</a><em>&raquo;</em><a href='video.php'>视频</a>$navigation
+	</div>
+</div>
+<style id='diy_style' type='text/css'></style>
+<div class='wp'>
+</div>
+<div id='ct' class='ct2 wp cl'>
+	<div class='mn' style='text-align:center; width:700px'>
+		<div class='bm bmw'>
+			<div class='bm_h cl'>
+				<span class='y xw1'><a href='video.php?mod=list&op=<!--{$op}-->'>{lang more} &rsaquo;</a></span>
+				<h2 align='left'>
+				<!--{if $op == 'new'}-->
+				{lang new_video}
+				<!--{elseif $op == 'hot'}-->
+				{lang hot_video}
+				<!--{/if}-->
+				</h2>
+			</div>
+			<div class='bm_c'>
+				<div>
+					<p style='font-size:20px'><!--{$playlist[title]}--></p>
+					<object classid='clsid:D27CDB6E-AE6D-11cf-96B8-444553540000' codebase='http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=7,0,19,0' width='400' height='300'>
+						<param name='movie' value='http://www.cnzz.cc/Flv/Flvplayer.swf' />
+						<param name='quality' value='high' />
+						<param name='allowFullScreen' value='true' />
+						<param name='FlashVars' value='vcastr_file=http://www.bwvip.com/<!--{$playlist[webpath]}-->&LogoText=www.bwvip.com&BufferTime=3' />
+						<embed src='http://www.cnzz.cc/Flv/Flvplayer.swf' allowfullscreen='true' flashvars='vcastr_file=http://211.94.187.157/<!--{$playlist[webpath]}-->&LogoText=大正网' quality='high' pluginspage='http://www.macromedia.com/go/getflashplayer' type='application/x-shockwave-flash' width='400' height='300'></embed>
+					</object>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class='sd' style='width:250px'>
+		<div class='bm'>
+			<div class='bm_h cl'>
+				<h2>相关视频</h2>
+			</div>
+			<div class='bm_c'>
+				<ul id='g_guide' class='mbm'>
+					<li><label></label></li>
+					<li><label></label></li>
+					<li><label></label></li>
+					<li><label></label></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+</div>
+<script type='text/javascript'>
+	function getval() {
+		var val = document.getElementById('content').innerHTML;
+		if(val == '') {
+			document.getElementById('rcontent').innerHTML = '请填写评论内容';
+			return false;
+		}
+	}
+	function getcontent(i) {
+		alert(i);
+	}
+</script>
+<!--{subtemplate common/footer}-->

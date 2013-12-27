@@ -1,0 +1,41 @@
+<!--{eval $keywordenc = $keyword ? rawurlencode($keyword) : '';}-->
+<!--{if $searchid || ($_G['gp_adv'] && CURMODULE == 'forum')}-->     
+            <div class="miao_search_1">
+                <input type="text"  style="border:1;border-color:#143F6D;" name="srchtxt" size="45" maxlength="40" value="$keyword" tabindex="1" />
+                <script type="text/javascript">initSearchmenu('scform_srchtxt');$('scform_srchtxt').focus();</script><!-- id="scform_srchtxt"-->
+            </div>
+
+            <div class="miao_search_2">
+               <input type="hidden" name="searchsubmit" value="yes" />
+             
+               <button type="buttom" style="background: url({STATICURL}search/images/search.gif) repeat-x top;width:99px;height:33px;"  class="schbtn"></button>
+               <!-- id="scform_submit"-->
+            </div>
+<!--{else}-->
+	<!--{if !empty($srchtype)}--><input type="hidden" name="srchtype" value="$srchtype" /><!--{/if}-->
+	<!--{if $srchtype != 'threadsort'}-->
+	        <div class="miao_search_1">
+                <input type="text"  style="border:1;border-color:#143F6D;" name="srchtxt" size="45" maxlength="40" value="$keyword" tabindex="1" />
+                <script type="text/javascript">initSearchmenu('scform_srchtxt');$('scform_srchtxt').focus();</script><!-- id="scform_srchtxt"-->
+            </div>
+
+            <div class="miao_search_2">
+               <input type="hidden" name="searchsubmit" value="yes" />
+             
+               <button type="buttom" style="background: url({STATICURL}search/images/search.gif) repeat-x top;width:99px;height:34px;margin-top:-2px;"  class="schbtn"></button>
+               <!-- id="scform_submit"-->
+            </div>		
+	<!--{/if}-->
+<!--{/if}-->
+<!--{if CURMODULE == 'forum'}-->
+	<ul id="quick_sch_menu" class="p_pop" style="display: none;">
+		<li><a href="search.php?mod=forum&srchfrom=3600&searchsubmit=yes">{lang search_quick_hour_1}</a></li>
+		<li><a href="search.php?mod=forum&srchfrom=14400&searchsubmit=yes">{lang search_quick_hour_4}</a></li>
+		<li><a href="search.php?mod=forum&srchfrom=28800&searchsubmit=yes">{lang search_quick_hour_8}</a></li>
+		<li><a href="search.php?mod=forum&srchfrom=86400&searchsubmit=yes">{lang search_quick_hour_24}</a></li>
+		<li><a href="search.php?mod=forum&srchfrom=604800&searchsubmit=yes">{lang search_quick_day_7}</a></li>
+		<li><a href="search.php?mod=forum&srchfrom=2592000&searchsubmit=yes">{lang search_quick_day_30}</a></li>
+		<li><a href="search.php?mod=forum&srchfrom=15552000&searchsubmit=yes">{lang search_quick_day_180}</a></li>
+		<li><a href="search.php?mod=forum&srchfrom=31536000&searchsubmit=yes">{lang search_quick_day_365}</a></li>
+	</ul>
+<!--{/if}-->

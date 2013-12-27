@@ -1,0 +1,270 @@
+﻿<!--{subtemplate home/20_header}-->
+<script type="text/javascript" src="static/js/jquery.js"></script>
+<script type="text/javascript" src="static/js/jquery.form.js"></script>
+<script type="text/javascript"> 
+        // wait for the DOM to be loaded 
+        //$(document).ready(function() { 
+            // bind 'myForm' and provide a simple callback function 
+            //$('#myForm').ajaxForm(function() { 
+               // alert("Thank you for your comment!"); 
+            //});
+        //}); 
+</script> 
+<div id="wtcontent">
+	<div class="z z1">
+		<!--{subtemplate home/20_left}-->
+	</div>
+	<div class="z z2">
+		<!--{subtemplate home/20_center}-->
+		<div class="cdt_lm">
+			<span><h1>Iphone4s订购</h1></span>
+		</div>
+		<div class="cdt_2">
+			<!--<span>&nbsp;&nbsp;<img src="{STATICURL}space/20/images/new.gif"></span>
+			<span>您有一条新的微博消息，请注意查收</span> -->
+		</div>
+		<div class="cbg2">
+		  <div class="cbg2_2">
+			  <div class="cbg2_2_lm">
+				  <!--start -->
+<form id="form1" name="form1" method="post" action="action/iphone4s.php" onsubmit="return validate_form(this)"> 
+<table width=440 border="0" cellpadding="1" cellspacing="1" style="background:#cdcdcd">
+
+
+<!--<tr>
+  <td bgcolor="#FFFFFF">提交人姓名</td>
+  <td bgcolor="#FFFFFF"><input type="text" name="username" id="username" /></td>
+</tr>-->
+<tr>
+  <td bgcolor="#FFFFFF">手机号</td>
+  <td bgcolor="#FFFFFF"><input type="text" name="mobile" id="mobile"   onkeyup="value=value.replace(/[^\d]/g,'') " 
+      onbeforepaste="clipboardData.setData('text',clipboardData.getData('text').replace(/[^\d]/g,''))" 
+/></td>
+</tr>
+<tr>
+  <td bgcolor="#FFFFFF">驾照编号</td>
+  <td bgcolor="#FFFFFF"><input type="text" name="license" id="license" /></td>
+</tr>
+<tr>
+  <td bgcolor="#FFFFFF">汽车类型</td>
+  <td bgcolor="#FFFFFF"><SELECT id=fctbox name="fctbox" class=sub_sinput onchange=_AutoBrandCHange()>
+    <OPTION selected value=0>
+        选择品牌
+    </OPTION>
+     <!--{loop $carlst $value}--> 	
+    <OPTION   value=$value[id]>$value[firstletter]  $value['name']
+   
+    </OPTION>
+  <!--{/loop}-->
+</SELECT> 
+<SELECT id=brbox class=sub_sinput disabled onchange=comp_splist() name=brbox>
+<OPTION selected value=0>选择车系</OPTION></SELECT> 
+<SELECT id=spbox class=sub_sinput disabled name=spbox> 
+<OPTION selected value=0>选择车型</OPTION></SELECT>
+<SCRIPT type=text/javascript>
+
+function AutohomeJsLoad(args) {
+    var s = document.createElement("script");
+    s.setAttribute("type", "text/javascript");
+    s.setAttribute("src", args.url);
+    s.onload = s.onreadystatechange = function() {
+        if (!this.readyState || this.readyState == "loaded" || this.readyState == "complete") {
+            if (typeof args.callBack == "function") args.callBack(args.args);
+            s.onload = s.onreadystatechange = null;
+            try {
+                s.parentNode && s.parentNode.removeChild(s)
+            } catch(e) {}
+        }
+    };
+    document.getElementsByTagName("head")[0].appendChild(s)
+};
+Function.prototype.bind = function(bindObj, args) {
+    var _self = this;
+    return function() {
+        return _self.apply(bindObj, [].concat(args))
+    }
+};
+ 
+ 
+    function _AutoBrandCHange() {
+        AutohomeJsLoad({ url: 'autojs.js?$rand(10,100)',
+            callBack: function () {
+                document.getElementById("fctbox").onchange = function () {
+                    comp_brlist();
+                };
+                comp_brlist();
+            }
+        });
+    }
+    
+   
+    
+</SCRIPT></td>
+</tr>
+<tr>
+  <td bgcolor="#FFFFFF">车驾号</td>
+  <td bgcolor="#FFFFFF"><input type="text" name="chejiahao" id="chejiahao" /></td>
+</tr>
+<tr>
+  <td bgcolor="#FFFFFF">车型名称</td>
+  <td bgcolor="#FFFFFF"><input type="text" name="chexing" id="chexing" /></td>
+</tr>
+<tr>
+  <td bgcolor="#FFFFFF">车牌号</td>
+  <td bgcolor="#FFFFFF"><input type="text" name="chepai" id="chepai" /></td>
+</tr>
+<tr>
+  <td bgcolor="#FFFFFF">发动机型号</td>
+  <td bgcolor="#FFFFFF"><input type="text" name="fadongji" id="fadongji" /></td>
+</tr>
+<tr>
+  <td bgcolor="#FFFFFF">手机颜色</td>
+  <td bgcolor="#FFFFFF"><select name="telcolor" id="telcolor">
+  <option value="黑色">黑色</option>
+  <option value="白色">白色</option>
+  </select></td>
+</tr>
+<tr>
+  <td bgcolor="#FFFFFF">可用空间</td>
+  <td bgcolor="#FFFFFF"><input type="radio" name="kongjian" value="16GB" checked="checked" />16GB&nbsp;
+                <input type="radio" name="kongjian" value="32GB" />32GB&nbsp;
+                <input type="radio" name="kongjian" value="64GB" />64GB&nbsp;</td>
+</tr>
+<tr>
+  <td bgcolor="#FFFFFF">合约计划</td>
+  <td bgcolor="#FFFFFF"><select name="plan"><option value="298元">298元</option><option value="398元">398元</option></select></td>
+</tr>
+<tr>
+  <td bgcolor="#FFFFFF">合约期限</td>
+  <td bgcolor="#FFFFFF"><select name="qixian"><option value="一年">一年</option><option value="两年">两年</option></select></td>
+</tr>
+<tr>
+  <td bgcolor="#FFFFFF">证件类型</td>
+  <td bgcolor="#FFFFFF"><select name="zjtype"><option value="身份证">身份证</option><option value="护照">护照</option><option value="驾驶证">驾驶证</option></select></td>
+</tr>
+<tr>
+  <td bgcolor="#FFFFFF">证件号码</td>
+  <td bgcolor="#FFFFFF"><input type="text" name="zhengjian" id="zhengjian" /></td>
+</tr>
+<tr>
+  <td bgcolor="#FFFFFF">联系地址</td>
+  <td bgcolor="#FFFFFF"><input type="text" name="address" id="address" /></td>
+</tr>
+<tr>
+  <td bgcolor="#FFFFFF">邮编</td>
+  <td bgcolor="#FFFFFF"><input type="text" name="youbian" id="youbian" /></td>
+</tr>
+
+
+<tr>
+  <td bgcolor="#FFFFFF"><input  type="hidden"name="compid" id="compid"   value="$_GET['uid']" />
+       <input type="hidden" name="act" id="act" value="add"> </td>
+  <td bgcolor="#FFFFFF"><input type="submit" name="sub" id="button" value="提交" /></td>
+</tr>
+ 
+</table>
+  </form>
+                  
+                  <!--end -->
+			  </div>
+		  </div>
+		</div>
+		<br>
+	</div>
+	<div class="y y3">
+		<!--{subtemplate home/20_right}-->
+	</div>
+	<div class="clear"></div>
+</div>
+<script>
+
+function validate_required(field,alerttxt)
+{
+with (field)
+  {
+  if (value==null||value=="")
+    {alert(alerttxt);return false}
+  else {return true}
+  }
+}
+
+function validate_form(thisform)
+{
+    with (thisform){
+        if (validate_required(mobile,"手机号不能为空")==false){
+            mobile.focus();
+            return false
+       }
+      if (validate_required(license,"驾照号码必须填写")==false){
+            license.focus();
+            return false
+      }
+      if (validate_required(chejiahao,"车驾号必须填写")==false){
+            chejiahao.focus();
+           return false
+      }
+      if (validate_required(chexing,"车型必须填写")==false){
+            chexing.focus();
+           return false
+      }
+      if (validate_required(chepai,"车牌号必须填写")==false) {
+            chepai.focus();
+           return false
+      }
+      
+      if (validate_required(fadongji,"发动机型号必须填写")==false) {
+            fadongji.focus();
+           return false
+      }
+      if (validate_required(kongjian,"可用空间必须填写")==false) {
+            kongjian.focus();
+           return false
+      }
+      if (validate_required(plan,"合约计划必须填写")==false) {
+            plan.focus();
+           return false
+      }
+      if (validate_required(qixian,"合约期限必须填写")==false) {
+            qixian.focus();
+           return false
+      }
+      if (validate_required(zhengjian,"证件号码必须填写")==false) {
+            zhengjian.focus();
+           return false
+      }
+      if (validate_required(address,"联系地址必须填写")==false) {
+            address.focus();
+           return false
+      }
+      if (validate_required(youbian,"邮编址必须填写")==false) {
+            youbian.focus();
+           return false
+      }
+    }
+}
+
+
+
+/*
+
+function checksub(){
+   var youbian=$("#youbian").val();
+   var address=$("#address").val();
+   var tel=document.getElementById("mobile").value;
+   var zhengjian=$("#zhengjian").val();
+   var zjtype=$("#zjtype").val();
+   var telcolor=$("#telcolor").val();
+   var fadongji=$("#fadongji").val();
+   var chepai=$("#chepai").val();
+   var chexing=$("#chexing").val();
+   var chejiahao=$("#chejiahao").val();
+   var license=$("#license").val();
+   if(''==tel){
+        alert("请输入电话号码");
+        return false;
+   }
+
+}*/
+
+</script>
+<!--{subtemplate home/20_foot}-->

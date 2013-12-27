@@ -1,0 +1,38 @@
+﻿<!--{subtemplate home/21_header}-->
+<div id="wtcontent">
+	
+    <!-- 左边  -->
+	<!--{subtemplate home/21_left}-->
+    
+	<div class="z z2">
+		
+	<!--{subtemplate home/21_sinfo}-->
+	    <div><img src="{STATICURL}space/game/images/chx.jpg" width="482" height="8"></div>
+		<br />
+	<!--{subtemplate home/21_center}-->
+	   
+       <div class="cintro">
+	   <div class="cdt_lm">
+		    <span><h1>球场信息</h1></span>
+		</div>
+	   <div class="cbg2_2">
+		  <!--中间部分-->
+          <!--{if $ssre}-->
+		  <div class="cbg2_3">
+          <div>球场名称：$ssre[field1]</div>
+          <div>球场介绍：$ssre[field2]</div>
+		  </div>
+          <!--{/if}-->
+          <!--中间部分-->
+		  </div>
+		  </div>
+       
+       <br>
+	</div>
+	<!--右侧开始-->
+    <!--{subtemplate home/21_right}-->
+	<div class="clear"></div>
+</div>
+
+<br>
+<!--{subtemplate home/21_foot}-->

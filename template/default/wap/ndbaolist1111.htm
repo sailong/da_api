@@ -1,0 +1,307 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>大正网-提供专业高尔夫资讯，教学，旅游，视频，赛事报道，球具订购，球场预定服务，最纯净高尔夫实名认证互动社区</title>
+<meta name="keywords" content="大正网,大正高尔夫,高尔夫预订,高尔夫球场预订,高尔夫旅游,高尔夫球具,高尔夫俱乐部,高尔夫社区,城市挑战赛"/>
+<meta name="Description" content="专业高尔夫爱好者无广告纯净的高尔夫主题互动社区，实名认证，远离广告骚扰，互动社区，提供最优惠的球场预定、球具订购和旅游定制服务,承办高尔夫比赛（皇冠杯城市挑战赛、英菲尼迪车主赛、电信天翼高尔夫活动等），球场资讯、旅游线路。大正高尔夫让您更好的享受高尔夫,享受生活。"/>
+<link rel="stylesheet" type="text/css" href="/static/space/index/css/main.css">
+<link rel="stylesheet" type="text/css" href="/static/space/index/css/lrtk.css" >
+<script type="text/javascript" src="/static/space/index/js/index_solid.js"></script>
+<script src="/static/js/logging.js?1bf" type="text/javascript"></script>
+<SCRIPT LANGUAGE="JavaScript">
+<!--
+
+var $ = function(o) {return document.getElementById(o);}
+function showDiv(parm)
+{
+    $('index_wb_mxs').style.display='none';
+    $('index_wb_axs').style.display='none';
+	$('index_wb_lpga').style.display='none';
+	$('index_wb_cstzs').style.display='none';
+    $('index_wb_httj').style.display='none';
+    $(parm).style.display = '';
+    for(var i in $('ulMenu').getElementsByTagName('LI')){
+        $('ulMenu').getElementsByTagName('LI')[i].className = 'codeDemomouseOutMenu';
+    }
+}
+//-->
+</SCRIPT>
+<style>
+.STYLE1 {color: #FF0000}
+.data_list td{height:25px;border-left: 1px solid #ffffff; border-bottom: 1px solid #ffffff; }
+.alt {  border-top: 0; background:#d5e6f6; color: #797268; width:35px;height:25px;  font-weight:800; font-size:14px;} 
+.spec {  border-top: 0; background: #bdd3e8; font-weight:800;  font-size:14px;} 
+</style>
+ <!--{if $days<1}--> 
+<meta http-equiv="refresh" content="180">
+ <!--{/if}-->
+</head>
+
+<body>
+<div id="box">
+<!--头部文件开始-->
+     
+      <div class="box_1">
+          <!--20120312修改部分开始-->
+                <div class="head_bg">
+                                      <div class="head_logo"><img src="/images/logo-1.jpg" width="308" height="112"></div>
+                                      <div style="float:left;">
+                                                   <div class="head_tel">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;400-810-9966  <a href="http://wap.bwvip.com" target="_blank" class="wap">WAP:wap.bwvip.com</a>
+                                                   </div>
+                                                   <div class="head_denglu">
+                                                                <div class="fleft"><img src="/images/dl_left.gif"></div>
+                                                                <div class="head_denglu_bg">
+                                                                                        <!--{if $_G['uid']}-->
+                                                                                        <div class="head_denglu_hou">
+                                          <form id="scbar_form" method="post" autocomplete="off" onsubmit="searchFocus($('scbar_txt'))" action="/search.php?searchsubmit=yes" target="_blank">
+                                          <div style="float:left;">
+                                          欢迎 &nbsp;&nbsp;
+                                          <a href="/home.php?mod=space&uid=<!--{eval echo $_G['uid'];}-->">
+                                                     <img src="/uc_server/avatar.php?uid=<!--{eval echo $_G['uid'];}-->&size=small" align="absmiddle" class="head_denglu_pic"/></a>
+                                          &nbsp;&nbsp;<a href="/home.php?mod=space&uid=<!--{eval echo $_G['uid'];}-->" ><!--{eval echo $getstat['usrnickname'];}-->	</a>
+                                          &nbsp;&nbsp;
+                                          <a href="/member.php?mod=logging&action=logout&formhash=<!--{eval echo $_G['formhash'];}-->">
+                                                        <img src="/images/dl_bt_3.gif" border="0" align="absmiddle">
+                                          </a>
+                                   </div>
+                                   <!--search start -->
+                                       <div style="float:right;">
+                                        <input type="hidden" name="mod" id="scbar_mod" value="weibo" />
+                                        <input type="hidden" name="formhash" value="6107e2c3" />
+                                        <input type="hidden" name="srchtype" value="title" />
+                                        <input type="hidden" name="srhfid" value="0" id="dzsearchforumid" />
+                                        <input type="hidden" name="srhlocality" value="home::space" />
+                                        <input type="text" name="srchtxt" id="scbar_txt" style="height:14px; width:100px; border:1px slid #CCC;" autocomplete="off"/><input type="image" src="/images/ss_bt_1.jpg"  style="width:61px; height:18px; border:none; margin-left:10px; margin-right:10px;">
+                                        </div> 
+                                      </form>                              
+                                          <!--search end -->
+                                   </div>
+                                     <!--{else}-->
+                                                                          <form onsubmit="return lsSubmit()" action="/member.php?mod=logging&amp;action=login&amp;loginsubmit=yes&amp;infloat=yes&amp;lssubmit=yes" id="lsform" autocomplete="off" method="post">
+                                                                                    <div class="fleft"><span>Email</span></div>
+                                                                                    <div class="fleft">
+                                                                                        <input type="text" name="username" />
+                                                                                    </div>
+                                                                                    <div class="fleft"><span>密码</span></div>
+                                                                                    <div class="fleft">
+                                                                                        <input  type="password" name="password" />
+                                                                                    </div>
+                                                                                    <div class="fleft">
+                                                                                         <input name="" type="image" src="/images/dl_bt_1.gif"  style="width:61px; height:18px; border:none; margin-left:10px; margin-right:10px;"/>
+                                                                                    </div>
+                                                                                    <div class="fleft" style="margin-top:20px;">
+                                                                                            <a href="/member.php?mod=register" target="_blank" ><img src="/images/dl_bt_2.gif" border="0"></a>
+                                                                                    </div>
+                                                                        <input type="hidden" value="54ec7ac9" name="formhash" />
+                                                                        <input type="hidden" value="http://211.94.187.157" name="referer">
+                                                                           </form>
+                                      <!--{/if}-->
+                                  
+                                                       </div>
+                                                                <div class="fleft"><img src="/images/dl_right.gif"></div>
+                                                   </div>
+                                      </div>
+                                      <div class="clear"></div>
+                </div>
+           <!--20120312修改部分结束-->
+      </div>
+        <div  class="box_1">
+             <div class="dh_1"><img src="/static/space/index/images/dh_bg_1.gif" width="17" height="24"></div>
+             <div class="dh_2">
+                    <a class="dh_3" href="/index.php">首页</a>
+<span class="diy_miao">|</span>
+<a class="dh_3" href="/star.php ">球星</a>
+<span class="diy_miao">|</span>
+<a class="dh_3" href="/event.php">赛事</a>
+<span class="diy_miao">|</span>
+<a class="dh_3" href="/field.php">球场</a>
+<span class="diy_miao">|</span>
+<a class="dh_3" href="/teach.php">教学</a>
+<span class="diy_miao">|</span>
+<a class="dh_3" href="/infomation.php">协会</a>
+<span class="diy_miao">|</span>
+<a class="dh_3" href="/mobilelist.php">手机报</a>
+<span class="diy_miao">|</span>
+<a class="dh_3" href="/club.php">品牌俱乐部</a>
+<span class="diy_miao">|</span>
+<a class="dh_gcct" target="_blank" href="http://www.gcctour.cn/">城市挑战赛</a>
+  </div>
+             <div class="dh_1"><img src="/static/space/index/images/dh_bg_3.gif" width="16" height="24"></div>
+             <div class="clear"></div>
+       </div>
+      
+       
+         
+<!--头部文件结束-->
+
+
+ <!--{if $_GET['qc_id']}-->
+<table cellpadding="0" cellspacing="0" style="background-attachment:#e7e7e7;" width="100%" class="data_list">
+  <tr>
+    <td colspan="25" bgcolor="#D5E6F8" > <table width="100%" border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <td><div align="center"><img src="/images/{$sais_id}-{$qc_id}.jpg" width="964" height="115"></div></td>
+  </tr>
+</table>
+</td>
+  </tr>  
+ <tr>
+    <td width="5%" rowspan="2"  style="background:#67859f;"><font color="#FFFFFF">排名</font></td>
+    <td width="5%" rowspan="2" style="background:#67859f;"><font color="#FFFFFF">姓名</font></td>
+    <td width="5%" rowspan="2" style="background:#67859f;"><font color="#FFFFFF">分组</font></td>
+    <td width="5%" rowspan="2" style="background:#67859f;"><font color="#FFFFFF">距标准杆</font></td>
+    <td  class="alt">1</td>
+    <td  class="alt">2</td>
+    <td  class="alt">3</td>
+    <td  class="alt">4</td>
+    <td  class="alt">5</td>
+    <td  class="alt">6</td>
+    <td  class="alt">7</td>
+    <td  class="alt">8</td>
+    <td  class="alt">9</td>
+    <td  class="alt">OUT</td>
+    <td  class="alt">10</td>
+    <td  class="alt">11</td>
+    <td  class="alt">12</td>
+    <td  class="alt">13</td>
+    <td  class="alt">14</td>
+    <td  class="alt">15</td>
+    <td  class="alt">16</td>
+    <td  class="alt">17</td>
+    <td  class="alt">18</td>
+    <td  class="alt">IN</td>
+    <td  class="alt">总计</td> 
+  </tr>
+   <tr>
+    <td class="spec">$par[0]</td>
+    <td class="spec">$par[1]</td>
+    <td class="spec">$par[2]</td>
+    <td class="spec">$par[3]</td>
+    <td class="spec">$par[4]</td>
+    <td class="spec">$par[5]</td>
+    <td class="spec">$par[6]</td>
+    <td class="spec">$par[7]</td>
+    <td class="spec">$par[8]</td>
+    <td class="spec">$POUT</td>
+   <td class="spec">$par[9]</td>
+    <td class="spec">$par[10]</td>
+    <td class="spec">$par[11]</td>
+    <td class="spec">$par[12]</td>
+    <td class="spec">$par[13]</td>
+    <td class="spec">$par[14]</td>
+    <td class="spec">$par[15]</td>
+    <td class="spec">$par[16]</td>
+    <td class="spec">$par[17]</td>
+    <td class="spec">$PIN</td>
+    <td class="spec">$PTL</td>   
+  </tr>
+<!--{loop $nblist $n  $v}-->                          
+
+{if $n%10==0 && $n!=0} 
+ <tr>
+    <td colspan="25"   height="10"></td>
+  </tr>  
+{/if} 				         
+<!--{if $n%2==1}-->
+  <!--{eval $bgcolor = "#D5E6F6";}-->	
+<!--{else}-->
+  <!--{eval $bgcolor = "#efefef";}-->	
+<!--{/if}-->
+   
+  <tr  bgcolor=<!--{$bgcolor}-->   onmouseover="this.style.backgroundColor='#D6D6D6';this.style.color='#ffffff';"    onmouseout="this.style.backgroundColor='<!--{$bgcolor}-->';this.style.color='#000000';"   >  
+    <td style="background:#42a7c3;"><font color="#FFFFFF">{$v['pm']}</font></td>
+    <td style="background:#2e96b1;"><a href="/home.php?mod=space&do=common&op=score&uid={$v['uid']}&gt=individual" target="_blank"><font {if $v['tlscore']!=1000}color="#FFFFFF"{else}color="#D6D6D6"{/if}>{$v['realname']}</font></a></td>
+    <td style="background:#12748f;"><font color="#FFFFFF">{$v[zid]}</font></td>
+    <td style="background:#12748f;"><font color="#FFFFFF">{if $v['avscore']<900}{echo Getchd($v['avscore'])}{else}0{/if} </font></td>
+    <td class="specalt" {if $v['score1']!=0}{echo Getcss($v['score1'],$par[0])}{/if}>{if $v['score1']<0}0{else}{$v['score1']}{/if}</td>
+    <td class="specalt" {if $v['score2']!=0}{echo Getcss($v['score2'],$par[1])}{/if}>{if $v['score2']<0}0{else}{$v['score2']}{/if}</td>
+    <td class="specalt" {if $v['score3']!=0}{echo Getcss($v['score3'],$par[2])}{/if}>{if $v['score3']<0}0{else}{$v['score3']}{/if}</td>
+    <td class="specalt" {if $v['score4']!=0}{echo Getcss($v['score4'],$par[3])}{/if}>{if $v['score4']<0}0{else}{$v['score4']}{/if}</td>
+    <td class="specalt" {if $v['score5']!=0}{echo Getcss($v['score5'],$par[4])}{/if}>{if $v['score5']<0}0{else}{$v['score5']}{/if}</td>
+    <td class="specalt" {if $v['score6']!=0}{echo Getcss($v['score6'],$par[5])}{/if}>{if $v['score6']<0}0{else}{$v['score6']}{/if}</td>
+    <td class="specalt" {if $v['score7']!=0}{echo Getcss($v['score7'],$par[6])}{/if}>{if $v['score7']<0}0{else}{$v['score7']}{/if}</td>
+    <td class="specalt" {if $v['score8']!=0}{echo Getcss($v['score8'],$par[7])}{/if}>{if $v['score8']<0}0{else}{$v['score8']}{/if}</td>
+    <td class="specalt" {if $v['score8']!=0}{echo Getcss($v['score9'],$par[8])}{/if}>{if $v['score9']<0}0{else}{$v['score9']}{/if}</td>
+    <td class="specalt" style="text-align:center;">{$v['lout']}</td>
+    <td class="specalt" {if $v['score10']!=0}{echo Getcss($v['score10'],$par[9])}{/if}>{if $v['score10']<0}0{else}{$v['score10']}{/if}</td>
+    <td class="specalt" {if $v['score11']!=0}{echo Getcss($v['score11'],$par[10])}{/if}>{if $v['score11']<0}0{else}{$v['score11']}{/if}</td>
+    <td class="specalt" {if $v['score12']!=0}{echo Getcss($v['score12'],$par[11])}{/if}>{if $v['score12']<0}0{else}{$v['score12']}{/if}</td>
+    <td class="specalt" {if $v['score13']!=0}{echo Getcss($v['score13'],$par[12])}{/if}>{if $v['score13']<0}0{else}{$v['score13']}{/if}</td>
+    <td class="specalt" {if $v['score14']!=0}{echo Getcss($v['score14'],$par[13])}{/if}>{if $v['score14']<0}0{else}{$v['score14']}{/if}</td>
+    <td class="specalt" {if $v['score15']!=0}{echo Getcss($v['score15'],$par[14])}{/if}>{if $v['score15']<0}0{else}{$v['score15']}{/if}</td>
+    <td class="specalt" {if $v['score16']!=0}{echo Getcss($v['score16'],$par[15])}{/if}>{if $v['score16']<0}0{else}{$v['score16']}{/if}</td>
+    <td class="specalt" {if $v['score17']!=0}{echo Getcss($v['score17'],$par[16])}{/if}>{if $v['score17']<0}0{else}{$v['score17']}{/if}</td>
+    <td class="specalt" {if $v['score18']!=0}{echo Getcss($v['score18'],$par[17])}{/if}>{if $v['score18']<0}0{else}{$v['score18']}{/if}</td>
+    <td class="specalt" style="text-align:center;">{$v['lin']}</td>
+    <td class="specalt" style="text-align:center;">{echo Getstat($v['tlscore'])}</td> 
+     
+  </tr> 
+<!--{/loop}-->
+
+   <tr>
+    <td colspan="25" align="right" style="background:#dae7f0; border-left: 1px solid #ffffff;" ><!--{if $multi}--><div class="pgs cl mtm">$multi</div><!--{/if}--></td>
+  </tr> 
+  <tr>
+    <td colspan="25" align="right" bgcolor="#000033" style="background:#dae7f0; border-left: 1px solid #ffffff;" ><img src="/images/bsslt0000.jpg" width="393" height="42" /></td>
+  </tr> 
+</table>
+     <!--{else}-->
+     	<!--{subtemplate wap/1083}-->
+     <!--{/if}-->
+<!-- 底部包含文件-->
+<div id="foot">
+        <div style="width:966px;">
+                 <div class="foot_1">
+                       <div>
+                              <A class=f9 
+                              href="/about.php">关于大正</A> 
+                              <SPAN class=f9>|</SPAN> <A class=f9 
+                              href="/about.php">商务合作</A> 
+                              <SPAN class=f9>|</SPAN> <A class=f9 
+                              href="/zhaopin.php">招贤纳士</A> 
+                              <SPAN class=f9>|</SPAN> <A class=f9 
+                              href="/huoban.php" >合作伙伴</A> 
+                              <SPAN class=f9>|</SPAN> <A class=f9 
+                              href="/lianxi.php" >联系我们</A> 
+                              
+                              <SPAN class=f9>|</SPAN> <A class=f9 
+                              href="/shengming.php" >免责声明</A>
+                   </div>
+                        <div>
+                             大正网版权归北京大正承平文化传播有限公司
+                        </div>
+                        <div style="line-height:30px;">
+                             京ICP证110339号 &nbsp;&nbsp; 京公网安备110108008116号
+                        </div>
+          </div>
+                   <div style="float:left;"><img src="/static/space/index/images/foot-2.gif" width="7" height="168"></div>
+                   <div style="float:left; padding-top:40px; padding-left:30px;"><img src="/static/space/index/images/foot-3.gif"  width="202" height="77"></div>
+   </div>  
+
+</div>
+<!-- 底部包含文件-->
+<script>
+function change(lb){
+    //alert(lb);
+    if(lb==1){
+        document.getElementById("rightimg1").style.display = "block";
+        document.getElementById("rightimg2").style.display = "none";
+        document.getElementById("rightimg3").style.display = "none";
+    }else if(lb==2){
+        document.getElementById("rightimg1").style.display = "none";
+        document.getElementById("rightimg2").style.display = "block";
+        document.getElementById("rightimg3").style.display = "none";
+    }else if(lb==3){
+        document.getElementById("rightimg1").style.display = "none";
+        document.getElementById("rightimg2").style.display = "none";
+        document.getElementById("rightimg3").style.display = "block";
+    }
+
+}
+
+</script>
+<div style="display:none"><script language="javascript" src="http://count47.51yes.com/click.aspx?id=476847339&logo=12" charset="gb2312"></script></div>
+</body>
+</html>

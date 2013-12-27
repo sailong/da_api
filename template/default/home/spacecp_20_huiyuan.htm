@@ -1,0 +1,145 @@
+<!--{template home/spacecp_20_head}-->
+<div id="wtcontent">
+	<!-- 左侧 -->
+	<!--{template home/spacecp_00_left}-->
+	<!-- 右侧 -->
+	<div class="rightw">
+		<div class="rightlm"><h1>栏目名称</h1></div>
+		<br>
+		<div class="rcontent">
+			<div>
+			  <h1>会员审核管理</h1></div>
+			<div>
+			<!--{if $_G['setting']['creditspolicy']['promotion_visit'] || $_G['setting']['creditspolicy']['promotion_register']}-->
+
+
+<!--{if $ac == 'huiyuan'}-->
+<ul class="tb cl" style='margin-bottom:2px'>
+	<li $opactives[chazhao]><a href="home.php?mod=spacecp&ac=huiyuan&op=chazhao">查找个人用户</a></li>
+	<li $opactives[shenhe]><a href="home.php?mod=spacecp&ac=huiyuan&op=shenhe">发出邀请状态</a></li>
+	<li $opactives[shenqing]><a href="home.php?mod=spacecp&ac=huiyuan&op=shenqing">审核会员申请</a></li>
+	<li $opactives[myhy]><a href="home.php?mod=spacecp&ac=huiyuan&op=myhy">我的会员</a></li>
+</ul>
+<!--{/if}-->
+
+<!--{if $operation == 'chazhao'}-->
+	<form name="form1" method="post" action="home.php?mod=spacecp&ac=huiyuan&user=key">
+	<table width="60%"  border="1" cellspacing="0" cellpadding="0">
+	  <tr>
+		<td width="25%" height="25" align="right">用户名：</td>
+		<td height="25">
+		  <input type="text" name="username"> 用户注册账号
+		</td>
+	  </tr>
+	  <tr>
+		<td width="25%" height="25" align="right">用户ID：</td>
+		<td height="25"><input type="text" name="userid" onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')"> 填写数字id
+</td>
+	  </tr>
+	  <tr>
+		<td width="25%" height="25" align="right">&nbsp;</td>
+		<td height="25">根据用户名或者用户ID其一即可查找个人用户</td>
+	  </tr>
+	  <tr>
+		<td width="25%" height="25" align="right">&nbsp;</td>
+		<td height="25"><input type="submit" name="Submit" value="提交"></td>
+	  </tr>
+	</table>
+	</form>
+	<!--{if $userr == 'key'}-->
+		<!--{if $user[username]==''}-->
+		没有此用户
+		<!--{else}-->
+		<br>
+		查找个人用户信息：　{$user[username]} 　　   
+			<!--{if $gxiscomp[isuser] == '0'}-->
+			<font color="#FF0000">已发出邀请</font>
+			<!--{elseif $gxiscomp[isuser] == '1'}-->
+			<font color="#FF0000">已经是会员</font>
+			<!--{elseif $gxiscomp[iscomp] == '0'}-->
+			<font color="#FF0000">用户已经申请</font>
+			<!--{elseif $gxiscomp[iscomp] == '1'}-->
+			<font color="#FF0000">已经是会员</font>
+			<!--{else}-->
+			<a href="home.php?mod=spacecp&ac=huiyuan&qiyeid=$user[uid]">邀请会员</a>
+			<!--{/if}-->
+		<!--{/if}-->
+	<!--{/if}-->
+<!--{/if}-->
+<!--{if $operation == 'shenhe'}-->
+企业邀请会员后 会员审核情况
+<table width="90%"  border="0" cellpadding="2" cellspacing="1" bgcolor="#0099CC">
+  <tr align="center" bgcolor="#FFFFFF">
+    <td height="25">会员ID</td>
+    <td height="25">会员用户名</td>
+    <td height="25">取消邀请</td>
+    <td height="25">邀请审核状态</td>
+  </tr>
+  <!--{loop $shenqsh $key $sqsh}-->
+  <tr align="center" bgcolor="#FFFFFF">
+    <td height="25">{$sqsh[userid]}</td>
+    <td height="25">{$sqsh[username]}</td>
+    <td height="25"><a href="home.php?mod=spacecp&ac=huiyuan&cz=del&userid={$sqsh[userid]}">取消邀请</a></td>
+    <td height="25"><!--{if $sqsh[isuser]==1}-->审核通过<!--{else}-->还未通过审核<!--{/if}--></td>
+  </tr>
+  <!--{/loop}-->
+</table>
+
+<!--{/if}-->
+
+<!--{if $operation == 'shenqing'}-->
+<strong>用户申请成为会员列表</strong>
+<table width="90%"  border="1" cellspacing="0" cellpadding="0">
+  <tr align="center">
+    <td height="25">会员ID</td>
+    <td height="25">会员用户名</td>
+    <td height="25">审核状态</td>
+    <td height="25">操作</td>
+  </tr>
+  <!--{loop $shenqing $key $sq}-->
+  <tr align="center">
+    <td height="25">{$sq[userid]}</td>
+    <td height="25">{$sq[username]}</td>
+    <td height="25"><!--{if $sq[iscomp]==0}-->未批准<!--{else}--><font color="#FF0000">申请</font><!--{/if}--></td>
+    <td height="25"><!--{if $sq[iscomp]==0}--><a href="home.php?mod=spacecp&ac=huiyuan&iscomp=1&userid={$sq[userid]}">同意</a> | <a href="home.php?mod=spacecp&ac=huiyuan&cz=del&userid={$sq[userid]}">拒绝</a><!--{/if}--></td>
+  </tr>
+  <!--{/loop}-->
+</table>
+
+
+<!--{/if}-->
+
+
+<!--{if $operation == 'myhy'}-->
+<strong>我的会员列表</strong>
+<table width="90%"  border="1" cellspacing="0" cellpadding="0">
+  <tr align="center">
+    <td height="25">会员ID</td>
+    <td height="25">会员用户名</td>
+    <td height="25">加入方式</td>
+    <td height="25">操作</td>
+  </tr>
+  <!--{loop $myhy $key $hy}-->
+  <tr align="center">
+    <td height="25">{$hy[userid]}</td>
+    <td height="25"><a href="home.php?mod=space&uid={$hy[userid]}" title="查看空间" target="_blank">{$hy[username]} 【查看其空间】</a></td>
+    <td height="25"><!--{if $hy[iscomp]==1}--><font color="#FF0000">申请</font><!--{/if}--> <!--{if $hy[isuser]==1}--><font color="#FF0000">邀请</font><!--{/if}--></td>
+    <td height="25"><!--{if $hy[iscomp]==1}--><a href="home.php?mod=spacecp&ac=huiyuan&cz=del&userid={$hy[userid]}">删除会员</a><!--{/if}--><!--{if $hy[isuser]==1}--><a href="home.php?mod=spacecp&ac=huiyuan&cz=del&userid={$hy[userid]}">删除会员</a><!--{/if}--></td>
+  </tr>
+  <!--{/loop}-->
+</table>
+
+
+<!--{/if}-->
+
+					
+			<!--{/if}-->
+			<!--{hook/spacecp_promotion_bottom}-->
+		</div>
+	</div>
+
+	 
+</div>
+		 
+</div>
+<!--{template home/spacecp_foot_comm}--> 

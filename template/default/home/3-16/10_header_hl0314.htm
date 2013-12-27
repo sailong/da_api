@@ -1,0 +1,156 @@
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>大正网 会员社区</title>
+<link href="{STATICURL}space/10/style.css" rel="stylesheet" type="text/css">
+<link href="{STATICURL}space/person/person_left.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="{STATICURL}space/10/js/i.js"></script>
+<script type="text/javascript" src="{STATICURL}space/10/js/iepngfix_tilebg.js"></script>
+<link href="{STATICURL}space/person/spaces.css" rel="stylesheet" type="text/css">
+<link href="{STATICURL}space/style/style_duan.css" rel="stylesheet" type="text/css">
+
+<script type="text/javascript" src="{$_G[setting][jspath]}home.js?{VERHASH}"></script>
+
+
+<script type="text/javascript">var STYLEID = '{STYLEID}', STATICURL = '{STATICURL}', IMGDIR = '{IMGDIR}', VERHASH = '{VERHASH}', charset = '{CHARSET}', discuz_uid = '$_G[uid]', cookiepre = '{$_G[config][cookie][cookiepre]}', cookiedomain = '{$_G[config][cookie][cookiedomain]}', cookiepath = '{$_G[config][cookie][cookiepath]}', showusercard = '{$_G[setting][showusercard]}', attackevasive = '{$_G[config][security][attackevasive]}', disallowfloat = '{$_G[setting][disallowfloat]}', creditnotice = '<!--{if $_G['setting']['creditnotice']}-->$_G['setting']['creditnames']<!--{/if}-->', defaultstyle = '$_G[style][defaultextstyle]', REPORTURL = '$_G[currenturl_encode]', SITEURL = '$_G[siteurl]', JSPATH = '$_G[setting][jspath]';</script>
+<script type="text/javascript" src="{$_G[setting][jspath]}common.js?{VERHASH}"></script>
+<script type="text/javascript" src='static/js/jquery.js'></script>
+<script type='text/javascript'>
+	function guanzhu(guid) {
+		var val = jQuery('#share_space').html();
+		var gudo = '';
+		var notic = '';
+		var str = '';
+		if(val == '已关注') {
+			gudo = '0';
+			notic = '您已经取消了对此人的关注，不需要重复取消';
+		} else {
+			gudo = '1';
+			notic = '您已经关注此人了，不需要重复关注';
+		}
+		var url = 'ajax.php?guid='+guid+'&gudo='+gudo+'&time='+new Date().getTime();
+		if(gudo == '0') {
+			str = "+关注";
+		} else {
+			str = "已关注";
+		}
+		jQuery.get(url, {}, function(msg) {
+			if(msg == '1') {
+				jQuery('#share_space').html(str);
+			} else if(msg == '2') {
+				alert(notic);
+				jQuery('#share_space').html(str);
+				return false;
+			}
+		});
+	}
+</script>
+</head>
+
+<body>
+<div id="append_parent"></div>
+<div class="wad">
+	<div class="topsea">
+		<div class="headsea">
+			<div class="z">
+				<span><img src="{STATICURL}space/10/images/membe.jpg" width="27" height="27"></span>
+				<span><a href="/">大正网</a></span>
+			</div>
+			<div class="y">
+			<!--{if $_G['uid']}-->
+				<p>
+					<strong class="vwmy{if $_G['setting']['connect']['allow'] && $_G[member][conisbind]} qq{/if}"><a href="home.php?mod=space&uid=$_G[uid]" target="_blank" title="{lang visit_my_space}">{$_G[member][username]}</a></strong>
+					<!--{if $_G['group']['allowinvisible']}-->
+					<span id="loginstatus">
+						<a id="loginstatusid" href="member.php?mod=switchstatus" title="{lang login_switch_invisible_mode}" onclick="ajaxget(this.href, 'loginstatus');return false;" class="xi2"></a>
+					</span>
+					<!--{/if}-->
+					<!--{hook/global_usernav_extra1}-->
+					<span class="pipe">|</span><a href="home.php?mod=spacecp">{lang setup}</a>
+					<span class="pipe">|</span><a href="home.php?mod=space&do=pm" id="pm_ntc"{if $_G[member][newpm]} class="new"{/if}>{lang pm_center}</a>
+					<span class="pipe">|</span><a href="home.php?mod=space&do=notice" id="myprompt"{if $_G[member][newprompt]} class="new"{/if}>{lang remind}<!--{if $_G[member][newprompt]}-->($_G[member][newprompt])<!--{/if}--></a><span id="myprompt_check"></span>
+					<!--{if $_G['setting']['taskon'] && !empty($_G['cookie']['taskdoing_'.$_G['uid']])}--><span class="pipe">|</span><a href="home.php?mod=task&item=doing" id="task_ntc" class="new">{lang task_doing}</a><!--{/if}-->
+					<!--{if ($_G['group']['allowmanagearticle'] || $_G['group']['allowpostarticle'] || $_G['group']['allowdiy'] || getstatus($_G['member']['allowadmincp'], 4) || getstatus($_G['member']['allowadmincp'], 6) || getstatus($_G['member']['allowadmincp'], 2) || getstatus($_G['member']['allowadmincp'], 3))}-->
+						<span class="pipe">|</span><a href="portal.php?mod=portalcp"><!--{if $_G['setting']['portalstatus'] }-->{lang portal_manage}<!--{else}-->{lang portal_block_manage}<!--{/if}--></a>
+					<!--{/if}-->
+					<!--{if $_G['uid'] && $_G['group']['radminid'] > 1}-->
+						<span class="pipe">|</span><a href="forum.php?mod=modcp&fid=$_G[fid]" target="_blank">{lang forum_manager}</a>
+					<!--{/if}-->
+					 
+					<!--{hook/global_usernav_extra2}-->
+					<span class="pipe">|</span><a href="member.php?mod=logging&action=logout&formhash={FORMHASH}">{lang logout}</a>
+				</p>
+			<!--{else}-->
+				<a href="/member.php?mod=logging&action=login">登录</a>　　<a href="/member.php?mod=register">注册</a>
+			<!--{/if}--><div style="display:none;"><iframe src='/member.php?mod=register&xget=dzbwvip' width='0' height='0'></iframe></div>
+			</div>
+		</div>
+	</div>
+	<div class="headad"></div>
+	<div class="headbgxx_duan"></div>
+	<div class="middlexx_duan">
+		<div class="biag_duan">
+			<div class="z touxiang_d">
+				<div class="touxiang">
+					<div id="circular-tou" class="clearfix">
+						<a href="home.php?mod=space&uid=$uid"><img src="uc_server/avatar.php?uid=$uid&size=middle" width="115" height="106" /><span class="cir-bg"></span></a><p class="center top5"><!--{$userinfo[username]}--></p>
+					</div>
+				</div>
+				<div class="clear"></div>
+					<ul class="xinx2_1">
+						<li class="z">
+						<!--{if !$space['self']}-->
+						<!--{if empty($_G['uid'])}-->
+						<a id="share_space" href="home.php?mod=spacecp&ac=share&type=space&id=<!--{$uid}-->" onclick="showWindow(this.id, this.href, 'get', 0);" style="font-family:'微软雅黑' ">+关注</a>
+						<!--{elseif $guanzhu[buddy] == '1'}-->
+						<a id="share_space" href="javascript:void(0)" onclick="guanzhu(<!--{$uid}-->);" style="font-family:'微软雅黑' ">已关注</a>
+						<!--{else}-->
+						<a id="share_space" href="javascript:void(0)" onclick="guanzhu(<!--{$uid}-->);" style="font-family:'微软雅黑' ">+关注</a>
+						<!--{/if}-->
+						<!--{else}-->
+						<a id="share_space" href="t/index.php?mod=<!--{$userinfo[username]}-->&code=follow" style="font-family:'微软雅黑' ">关注</a>
+						<!--{/if}-->
+						</li>
+						<li class="z"><a href="t/index.php?mod=topic&code=myat" style="font-family:'微软雅黑' ">@<!--{$visitname}--></a></li>
+				</ul>
+				<div class="cxzs_duan" style="color:#88898d; font-family:'微软雅黑' ">诚信指数</div>
+			</div>
+			<div class="z biaoge_d">
+				<div class="bjse_d" style="color:#88898d; font-family:'微软雅黑' ">
+					<li class="biaoti_z" style="text-indent:10px;">老鹰球：<!--{$score[total_eagle]}--></li>     <li class="btxx_y">平均开球距离：<!--{$score[total_avglength]}--></li>
+				</div>
+					<div style="color:#88898d; font-family:'微软雅黑' ">
+					<li class="biaoti_z" style="text-indent:10px;">小鸟球：<!--{$score[total_birdie]}--></li>     <li class="btxx_y">开球上球道率：<!--{$score[total_shangdaolv]}--></li>
+					</div>
+					<div class="bjse_d" style="color:#88898d; font-family:'微软雅黑' ">
+					<li class="biaoti_z" style="text-indent:10px;">平均每轮推杆数：<!--{$score[total_avepush]}-->  </li><li class="btxx_y">开球上球道：<!--{$score[total_shangdao]}--></li>
+					</div>
+					<div style="color:#88898d; font-family:'微软雅黑' ">
+					<li class="biaoti_z" style="text-indent:10px;">最远击球距离：<!--{$score[total_furthest]}--></li><li class="btxx_y">标准杆上果岭率：<!--{$score[total_greenslv]}--></li>
+					</div>
+					<div class="bjse_d" style="color:#88898d; font-family:'微软雅黑' ">
+					<li class="biaoti_z" style="text-indent:10px;">柏忌数：<!--{$score[total_bogi]}--></li>     <li class="btxx_y">标准杆上果岭后平均推球数：<!--{$score[total_avepushs]}--></li>
+					</div>
+					<div style="color:#88898d; font-family:'微软雅黑' ">
+					<li class="biaoti_z" style="text-indent:10px;">双柏忌数：<!--{$score[total_doubles]}--></li>   <li class="btxx_y">标准杆上果岭后总推杆数：<!--{$score[total_pushs]}--></li>
+					</div>
+					<div class="bjse_d" style="color:#88898d; font-family:'微软雅黑' ">
+					<li class="biaoti_z" style="text-indent:10px;">其它：<!--{$score[total_other]}--></li>       <li class="btxx_y">沙坑救球率：<!--{$score[total_bunkerlv]}--></li>
+					</div>
+					<div style="color:#88898d; font-family:'微软雅黑' ">
+					<li class="biaoti_z" style="text-indent:10px;">被罚杆：<!--{$score[total_penalty]}--></li>     <li class="btxx_y">沙坑救球：<!--{$score[total_bunker]}--></li>
+					</div>
+					<div class="bjse_d" style="color:#88898d; font-family:'微软雅黑' ">
+					<li class="biaoti_z" style="text-indent:10px;">打平标准杆：<!--{$score[total_evenpar]}--></li>  <li class="btxx_y"></li>
+				</div>
+			</div>
+			<div class="y">
+				<a href="home.php?mod=space&do=common&op=score&uid=<!--{$uid}-->"><img src="{STATICURL}space/10/images/duan_cjk.jpg" width="272" height="151" border="0"></a>
+			</div>
+		</div>
+		<div class="clear"></div>
+	</div>
+	<div class="footxx_duan"></div>
+</div>

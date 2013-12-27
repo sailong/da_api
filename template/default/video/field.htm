@@ -1,0 +1,36 @@
+<!--{subtemplate common/header}-->
+<div id='pt' class='bm cl'>
+	<div class='z'>
+		<a href='./' class='nvhm' title='{lang homepage}'>$_G[setting][bbname]</a><em>&raquo;</em><a href='star.php'>球星</a>$navigation
+	</div>
+</div>
+<style id='diy_style' type='text/css'></style>
+<div class='wp'>
+</div>
+<div id='ct' class='ct2 wp cl'>
+	<div class='mn' style='width:100%'>
+		<div class='bm bmw'>
+			<div class='bm_h cl'>
+				<h2>球场</h2>
+			</div>
+			<div class='bm_c'>
+			<!--{if $field}-->
+				<!--{loop $field $k $v}-->
+				<div class='video'>
+					<a href= 'home.php?mod=space&uid=<!--{$v[uid]}-->' style='text-decoration:none'><img src='uc_server/avatar.php?uid=<!--{$v[uid]}-->&size=middle' width='110' height='75' />&nbsp&nbsp;<br /></a>
+					<a href= 'home.php?mod=space&uid=<!--{$v[uid]}-->' style='text-decoration:none'><span><!--{$v[username]}--></span></a>
+				</div>
+				<!--{/loop}-->
+			<!--{else}-->
+				近期还没有添加球场，尽请期待
+			<!--{/if}-->
+			</div>
+		</div>
+		<div style='clear:both'></div>
+		<div style='margin-right:60px'><!--{$multi}--></div>
+<!--{subtemplate common/footer}-->
+<style type='text/css'>
+	.bm_c .video {
+		float:left
+	}
+</style>

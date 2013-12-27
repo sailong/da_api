@@ -1,0 +1,75 @@
+
+<style type="text/css">
+a{
+  color:#333;
+    text-decoration:none;
+}
+.search_user{
+  background:#f0f0f0;
+  width:217px;
+  font-size:12px;
+  }
+.search_user ul{
+  margin:8px 1px 1px 10px;
+  padding:0px;
+  position:relative;
+  list-style:none;
+}
+.search_user ul li{
+  float:left;
+  margin:6px;
+  text-align:center;
+  line-height:18px;
+}
+.search_user ul li img{
+  width:46px;
+  height:46px;
+  border:1px solid #AFAFAF;
+  padding:1px;
+  position:relative;
+}
+.clear{
+  clear:both;
+  zoom:1;
+  height:0;
+  font-size:0px;
+}
+</style>
+
+<div style="float:left;">
+   <div><img src="{STATICURL}search/images/left_top.gif"></div>
+   <div class="miao_r_bg">
+            <div class="miao_r_bg_1">
+                <a href="search.php?mod=weibo&srchtxt=城市挑战赛" class="miao_r">城市挑战赛</a>
+            </div>
+            <div class="miao_r_bg_1">
+                <a href="search.php?mod=weibo&srchtxt=视频" class="miao_r">大正网视频</a>
+            </div>
+            <div class="miao_r_bg_1">
+                <a href="search.php?mod=weibo&srchtxt=城市挑战赛" class="miao_r">城市挑战赛</a>
+            </div>
+            <div class="miao_r_bg_1">
+                <a href="search.php?mod=weibo&srchtxt=大正高尔夫" class="miao_r">大正高尔夫</a>
+            </div>
+            <div class="miao_r_bg_1">
+                 <a href="search.php?mod=weibo&srchtxt=高尔夫球星" class="miao_r">高尔夫球星</a>
+            </div>
+
+   </div>
+
+   <div class="search_user">
+        <img src="/static/search/images/search_gan.jpg"><br>
+        <ul>
+           <!--{loop $HotList $value}-->
+               <li>
+                  <a target="_blank" href="home.php?mod=space&uid={$value['buddyid']}">{$value['avatar']}</a>
+                  <br>
+                  <a target="_blank" href="home.php?mod=space&uid={$value['buddyid']}"><!--{eval echo cutstr($value['nickname'],'6','..'); }--></a>
+               </li>
+           <!--{/loop}-->
+           <div class="clear"> </div>
+        </ul>
+    </div>
+</div>
+
+

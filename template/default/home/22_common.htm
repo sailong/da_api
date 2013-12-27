@@ -1,0 +1,38 @@
+<!--{subtemplate home/22_header}-->
+<div id="wtcontent">
+	<div class="z z1">
+		<!--{subtemplate home/22_left}-->
+	</div>
+	<div class="z z2">
+		<!--{subtemplate home/common_center}-->
+
+		<div class="cdt_lm">
+			<span>
+			<!--{if $_GET[op]=='topic'}-->
+        热门话题
+        <!--{elseif $_GET[op]=='weibo'}-->
+        热门微博
+        <!--{else}-->
+        热门标签
+        <!--{/if}-->
+			</span>
+		</div>
+		<div class="cdt_2">
+			<!--<span>&nbsp;&nbsp;<img src="{STATICURL}space/20/images/new.gif"></span>
+			<span>您有一条新的微博消息，请注意查收</span> -->
+		</div>
+		<div class="cbg2">
+				  <!--start -->
+                  <iframe src='<!--{$url}-->' width='100%' height='100%' scrolling='no' frameborder='0' onload="Javascript:SetWinHeight(this)" ></iframe>
+                  
+                  <!--end -->
+		</div>
+		<br>
+	</div>
+	<div class="y y3">
+		<!--{subtemplate home/22_right}-->
+	</div>
+	<div class="clear"></div>
+</div>
+
+<!--{subtemplate home/22_foot}-->

@@ -1,0 +1,126 @@
+<!--{subtemplate common/wap_header}-->
+ <style type="text/css">
+ .ndbm {width:260px; list-style:none;}
+ .ndbm ul li { height:30px; list-style-type:none; float:left;}
+ </style>
+
+  <div id="centenr">  
+  	  
+	  <div id="qiuc">
+		<div id="con1_s"></div>
+			<div id="con1_t2" style="height:auto;">
+				  <div class="t_top">
+			     <div style="width:290px; float:left">  【<a href="/nd/baofen.php?ac=nlist&onlymark=<!--{echo $onlymark;}-->" target="_blank">成绩列表</a>】【<a href="/nd/baofen.php?ac=ndupdate&addd=ok&onlymark=<!--{echo $onlymark;}-->">生成成绩卡</a>】</div>
+				  </div>
+					<div class="nav_u" >  
+                
+                            <table width="100%" border="0">
+  <tr>
+    <td>请选择分组</td>
+    <td><select name="fzt" onchange="javascript:window.location.href='/nd/baofen.php?ac=ndupdate&fzt='+this.options[this.selectedIndex].value+'&field_id=<!--{echo $_GET['field_id'];}-->&qc_id=<!--{echo $_GET['field_id'];}-->'">  
+           					   <!--{loop $fz $v}-->                                
+						              <option value="{$v['team_num']}" <!--{if $fzt==$v['team_num']}-->selected="selected"<!--{/if}-->>{$v['team_num']}组/{$v['realname']}</option>  
+								<!--{/loop}-->  
+                            </select>  </td>
+    <td> </td>
+  </tr>
+</table>
+              
+				   <form action="/nd/baofen.php" method="POST"> 
+						       <DIV class="ndbm">
+                               <table border="0" cellpadding="0" cellspacing="0" style="width:260px;">
+                                 <tr>
+                                   <td height="25">球洞 </td>
+                                   <!--{loop $arr $v}-->
+                                   <td><!--{eval $i++;}-->
+                                     <!--{$v}--></td>
+                                   <!--{/loop}-->
+                                 </tr>
+                                             
+                                  <!--{loop $bmlist  $value}-->
+                               <tr> <td height="25">  </td>
+                               <td  colspan="$i">$value['realname'] </td>  
+                               </tr>          
+                                  <tr>
+                               <td height="30"></td> 
+                              <!--{loop $arr $v}-->
+                              
+                               <!--{eval $se=getscore($value['uid'],$sid,$field_id,$v);}-->
+							  <td>                            
+                                  <select name="userdk[{$value['uid']}][$v]">  
+                                             <option value=""  >0</option>                              
+										<!--{loop $fraction $z}--> 
+										  <!--{if $z==$se}--> 
+										     <!--{eval $selected="selected=\"selected\"";}-->
+										  <!--{else}-->
+										     <!--{eval $selected= "  ";}-->
+										  <!--{/if}-->
+											  <option value="{$z}" {$selected} >{$z}</option>
+										<!--{/loop}-->   
+                                         <!--{if $se==-1}--> 
+										     <!--{eval $selected1="selected=\"selected\"";}-->
+										  <!--{else}-->
+										     <!--{eval $selected1= "  ";}-->
+										  <!--{/if}-->    
+                                         <!--{if $se==-2}--> 
+										     <!--{eval $selected2="selected=\"selected\"";}-->
+										  <!--{else}-->
+										     <!--{eval $selected2= "  ";}-->
+										  <!--{/if}-->   
+                                         <!--{if $se==-3}--> 
+										     <!--{eval $selected3="selected=\"selected\"";}-->
+										  <!--{else}-->
+										     <!--{eval $selected3= "  ";}-->
+										  <!--{/if}-->                            
+                                         <option value="-1" {$selected1}>DQ</option>
+                                         <option value="-2" {$selected2}>RTD</option>
+                                        <option value="-3" {$selected3}>Quit</option>
+			                    </select>
+                               </td> 
+                               <!--{/loop}-->
+                               
+                            </tr>  
+                               
+                               <tr><td height="5">
+                               </td>
+                               </tr>
+                                    <!--{/loop}-->
+                            </table> 
+ </DIV> 
+					          
+                                <table width="250" cellpadding="0" cellspacing="0">
+						          <tr>
+						            <td height="45" align="center"><span style="text-align:center; padding-top:20px;">
+									<input type="hidden" name='ac' id="ac" value="tjbaofen">
+									<input type="hidden" name='fzt1' id="fzt1" value="{$fzt}">
+									<input type="hidden" name='qc_id' id="qc_id" value="$_GET['qc_id']">
+									<input type="image" src="/static/wap/t1/images/nddl3.jpg" width="109" height="27" />
+						            </span></td>
+					              </tr>
+                                  <tr>
+						            <td height="45" align="left"> <p>注: <br />
+						              DQ：                                         踢出比赛<br />
+						              RTD：取消比赛<br />
+Quit：退出比赛</p>
+					               </td>
+					              </tr>
+				             </table> 
+						</form> 
+                        
+					</div>
+		     </div>
+		 <div id="con1_p"></div>
+	  </div>
+
+ </div> 
+
+  <!--copyright-->
+ <div id="copyright" >
+     <p style="padding-top:10px;">大正高尔夫©2011&nbsp;&nbsp;&nbsp;&nbsp;京ICP证110339号</p>
+     <p> 京公网安备110105008914号</p>
+ </div>
+     
+  </div>
+ </div>
+</body>
+</html>

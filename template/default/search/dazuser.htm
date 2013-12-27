@@ -1,0 +1,76 @@
+<!--{subtemplate search/header}-->
+
+<link id="style_css" rel="stylesheet" type="text/css" href="{STATICURL}search/search.css">
+
+
+
+ <!-- body开始 -->
+<div class="miao_body_wai">
+            <div class="miao_body_nei">
+			               <div class="miao_search">
+						 	        <form class="searchform" method="post" autocomplete="off" action="search.php?mod=dazuser" onsubmit="if($('scform_srchtxt')) searchFocus($('scform_srchtxt'));"><input type="hidden" name="formhash" value="{FORMHASH}" />
+									        <!--{subtemplate search/daz_pubsearch}-->
+
+									</form>
+						   </div>
+			               <div>
+									<!-- left开始 -->
+									<div class="miao_left">
+
+											    <!-- 头像部分结束-->
+													<div style="padding-left:2px;">
+													      <!--滑动按钮开始-->
+														    <div>
+																	  <div style="float:left;"><img src="{STATICURL}search/images/hd_left.gif"></div>
+																	   <DIV class="miao_hd_bg">
+																		  <UL class=codeDemoUL id=ulMenu>
+
+                                                                                <LI  {if CURMODULE == 'weibo'} class="codeDemomouseOnMenu" {/if}>
+                                                                                     <a href="search.php?mod=weibo&amp;srchtxt=$keywordenc&searchsubmit=yes" <!--{if $_G['gp_mod']=='weibo'}--> class="a"<!--{/if}-->>微博</a>
+                                                                                </LI>
+
+
+                                                                                <LI  {if CURMODULE == 'blog'} class="codeDemomouseOnMenu" {/if}>
+                                                                                	<a href="search.php?mod=blog{if $keyword}&srchtxt=$keywordenc&searchsubmit=yes{/if}"{if CURMODULE == 'blog'} class="a"{/if}>博客</a>
+                                                                                </LI>
+
+
+                                                                                <LI  {if CURMODULE == 'album'} class="codeDemomouseOnMenu" {/if}>
+                                                                                	<a href="search.php?mod=album{if $keyword}&srchtxt=$keywordenc&searchsubmit=yes{/if}"{if CURMODULE == 'album'} class="a"{/if}>{lang album}</a>
+                                                                                </LI>
+
+
+                                                                                <LI  {if CURMODULE == 'video'} class="codeDemomouseOnMenu" {/if}>
+                                                                                     <a href="search.php?mod=video&amp;srchtxt=$keywordenc&searchsubmit=yes" <!--{if $_G['gp_mod']=='video'}-->class="a"<!--{/if}-->>视频</a>
+                                                                                </LI>
+
+
+
+                                                                                <LI  {if CURMODULE == 'dazuser'} class="codeDemomouseOnMenu" {/if}>
+                                                                                      <a href="search.php?mod=dazuser{if $keyword}&srchtxt=$keywordenc&searchsubmit=yes{/if}"{if CURMODULE == 'user'} class="a"{/if}>{lang user}</a>
+                                                                                </LI>
+																		  </UL>
+																	    </DIV>
+																	   <div style="float:left;"><img src="{STATICURL}search/images/hd_right.gif"></div>
+														     </div>
+															 <div class="clear"></div>
+															 <div class="miao_hd_line">
+															             <DIV class="codeDemoDiv" id="divDemo" style="HEIGHT:auto">
+                                                                         	<!--{subtemplate search/dazuser_list}-->
+                                                                         </DIV>
+															 </div>
+															<div class="clear"></div>
+														 <!--滑动按钮结束-->
+													</div>
+									</div>
+									<!-- left结束 -->
+									<!-- right开始 -->
+									    <!--{subtemplate search/right_side}-->
+									<!-- right结束 -->
+									<div class="clear"></div>
+						    </div>
+			</div>
+</div>
+<!-- body结束 -->
+
+<!--{subtemplate search/footer}-->

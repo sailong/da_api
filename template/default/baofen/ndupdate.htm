@@ -1,0 +1,119 @@
+<!--{subtemplate common/wap_header}-->
+ <style type="text/css">
+ .ndbm {width:260px; list-style:none;}
+ .ndbm ul li { height:30px; list-style-type:none; float:left;}
+ </style>
+
+  <div id="centenr">  
+  	  
+	  <div id="qiuc">
+		<div id="con1_s"></div>
+			<div id="con1_t2" style="height:auto;">
+				  <div class="t_top">
+			     <div style="width:290px; float:left">  【<a href="show.php?ac=list&fenzhan_id=$_GET['fenzhan_id']" target="_blank">成绩列表</a>】</div>
+				  </div>
+					<div class="nav_u" >  
+						       <DIV class="ndbm">
+                               <table border="0" cellpadding="0" cellspacing="0" style="width:260px;">
+                               <!--{loop $arr $v}-->
+                                <!--{eval $i++;}--> 
+                                   <!--{/loop}-->
+                                          
+                                  <!--{loop $bmlist  $value}-->
+                                  
+                 
+				   <form action="/baofen/index.php" method="POST" name="$value['uid']">    
+                                <tr>
+                                <td  colspan="$i">$value['realname']  {echo Getusername($value['uid'])}</td>  
+                                <td height="25">  </td>                               
+                                </tr>  
+                               
+                                <tr>
+                                   <!--{loop $arr $v}-->
+                                   <td align="center">
+                                     <!--{$v}--></td>
+                                   <!--{/loop}-->
+                                   
+                                   <td height="25">状态 </td>
+                                 </tr>        
+                                  <tr>
+                              
+                              <!--{loop $arr $v}-->
+                              
+                               <!--{eval $se=getscore($value['baofen_id'],$v);}-->
+							  <td>   
+			
+                              <input name="userdk[{$value['baofen_id']}][$v]"  value="{$se}"  style="width:20px; border:#fef000 solid 1px; text-align:center" />                         
+                               
+                               </td> 
+                               <!--{/loop}-->
+                                <td height="30"> 
+                                           <!--{if $value['status']==-1}--> 
+										     <!--{eval $selected1="selected=\"selected\"";}-->
+										  <!--{else}-->
+										     <!--{eval $selected1= "  ";}-->
+										  <!--{/if}-->    
+                                         <!--{if $value['status']==-2}--> 
+										     <!--{eval $selected2="selected=\"selected\"";}-->
+										  <!--{else}-->
+										     <!--{eval $selected2= "  ";}-->
+										  <!--{/if}-->   
+                                         <!--{if $value['status']==-3}--> 
+										     <!--{eval $selected3="selected=\"selected\"";}-->
+										  <!--{else}-->
+										     <!--{eval $selected3= "  ";}-->
+										  <!--{/if}--> 
+                               <select name="userdk[{$value['baofen_id']}][0]">  
+                                        
+                                         <option value="0"  >Normal</option>
+                                         <option value="-1" {$selected1}>DQ</option>
+                                         <option value="-2" {$selected2}>RTD</option>
+                                        <option value="-3" {$selected3}>Quit</option>
+			                    </select> 
+                              	thru:<input type="text" name='userdk[{$value['baofen_id']}][30]' id="userdk[{$value['baofen_id']}][30]" value="{$value['thru']}" style="width:20px; border:#fef000 solid 1px; text-align:center"> 
+                                <input name="提交" type="submit" value="提交"   />
+									<input type="hidden" name='ac' id="ac" value="tjbaofen"> 
+									<input type="hidden" name='qc_id' id="qc_id" value="$_GET['qc_id']"></td> 
+                            </tr>  
+                              
+						</form>  
+                               <tr><td height="5">
+                               </td>
+                               </tr>
+                                    <!--{/loop}-->
+                                    
+                        
+                            </table> 
+ </DIV> 
+					          
+                                <table width="250" cellpadding="0" cellspacing="0">
+						          <tr>
+						            <td height="45" align="center"><span style="text-align:center; padding-top:20px;">
+									
+						            </span></td>
+					              </tr>
+                                  <tr>
+						            <td height="45" align="left"> <p>注: <br />
+						              DQ：                                         踢出比赛<br />
+						              RTD：取消比赛<br />
+Quit：退出比赛</p>
+					               </td>
+					              </tr>
+				             </table> 
+					</div>
+		     </div>
+		 <div id="con1_p"></div>
+	  </div>
+
+ </div> 
+
+  <!--copyright-->
+ <div id="copyright" >
+     <p style="padding-top:10px;">大正高尔夫©2011&nbsp;&nbsp;&nbsp;&nbsp;京ICP证110339号</p>
+     <p> 京公网安备110105008914号</p>
+ </div>
+     
+  </div>
+ </div>
+</body>
+</html>

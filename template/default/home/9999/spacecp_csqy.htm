@@ -1,0 +1,69 @@
+<!--{template common/header}-->
+<div style="height: 8px;clear:both;"></div>
+sdfgsdfgsgsgsfdsg
+<div class="ct2_a wp cl" id="ct">
+<!--右侧开始-->
+<div class="mn">
+<br />
+<div><a href="home.php?mod=spacecp&ac=csqy&op=list">查看所有球星</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="home.php?mod=spacecp&ac=csqy&op=search">添加球星</a></div>
+<hr />
+<br />
+
+<!--{if $op=='list'}-->
+<form action="home.php?mod=spacecp&ac=csqy&op=del" method="post" autocomplete="off" name="forma">
+<ul>
+<!--{loop $earr $key $value}-->
+<li><input type="checkbox" value="$value[userid]" name="delid[]"/>&nbsp;&nbsp;&nbsp;&nbsp;$value[userid]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="/uc_server/avatar.php?uid=$value[userid]&size=small" />&nbsp;&nbsp;&nbsp;&nbsp; 用户名：$value[username] &nbsp;&nbsp;&nbsp; 100  &nbsp;&nbsp;&nbsp;<a href="">编辑排序</a></li>
+<!--{/loop}-->
+</ul>
+<br />
+<!--{if $earr}-->
+<input type="submit" value="删除" />
+<!--{/if}-->
+</form>
+<!--{elseif $op=='search'}-->
+<form name="form2" action="home.php?mod=spacecp&ac=csqy&op=search" method="post">
+<input type="text" name="searchname" /> <input type="submit" value="查询用户"/>
+</form>
+
+
+
+
+<form method="post" name="form1" action="home.php?mod=spacecp&ac=csqy&op=search" autocomplete="off">
+<!--{if $earr}-->
+<div>&nbsp;&nbsp;用户id &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  头像 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;用户名</div>
+<!--{/if}-->
+<!--{loop $earr $value}-->
+<br />
+<div><input type="checkbox" name="userid[]" value="$value[uid]" /> &nbsp;$value[uid] &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="/uc_server/avatar.php?uid=$value[uid]&size=small" />  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; $value[username]  </div>
+<br />
+<!--{/loop}-->
+<div style="text-align:center;">
+$disppage
+</div>
+<br />
+<!--{if $earr}-->
+<input type="submit" value="添加" />
+<!--{/if}-->
+</form>
+<!--{/if}-->
+
+</div>
+<!--右侧结束-->
+
+<!--左侧开始-->
+<div class="appl">
+<!--{template home/spacecp_footer}-->
+</div>
+<!--左侧开始结束-->
+</div>
+<script>
+function addqiuxing(){
+    alert('提交了');
+    
+    
+}
+
+</script>
+<!--{template common/footer}-->
+

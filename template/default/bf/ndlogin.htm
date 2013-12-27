@@ -1,0 +1,48 @@
+<!--{subtemplate common/wap_header}-->
+ 
+
+  <div id="centenr" style="height:auto;" >  
+  	  
+	  <div id="qiuc" style="height:auto;">
+		<div id="con1_s"></div>
+			<div id="con1_t2" style="height:auto;">
+				  <div class="t_top">
+					   <div style="width:120px; float:left"><span>【N洞报分系统】</span>  </div> 
+				  </div><br>
+                  <div style="text-align:center;"><img src="/static/wap/t1/images/nddl.jpg" /></div>
+					<div class="nav_u" style="height:150px;; line-height:30px;">
+						<ul>
+					  <form action="/bf/index.php" >
+						      <li style="padding-left:40px; height:35px; line-height:35px;"><input type="hidden" name='ac' id="ac" value="login"> 
+                             <input type="hidden" name='do' id="do" value="loggin"> 
+							  用户名：<input type="text" name='username' id="username" />
+                              </li>
+                              <li style="padding-left:40px; height:35px; line-height:35px;">
+                              密　码：<input type="text" name='password' id="password" />
+							  </li>
+						     <li style="text-align:center; padding-top:20px;">
+                             <!--{eval $sid = $_GET ['sid'] ? $_GET ['sid'] : 1000333;}-->
+                               <input type="hidden" name='sid' id="sid"  value="{$sid}"/>
+                            <input type="image" src="/static/wap/t1/images/nddl2.jpg" width="109" height="27" /> 
+						   </li>
+						</form>
+						  
+						</ul>
+					</div>
+		     </div>
+		 <div id="con1_p"></div>
+	  </div>
+ 
+ </div>
+  
+
+  <!--copyright-->
+ <div id="copyright" >
+     <p style="padding-top:10px;">大正高尔夫©2011&nbsp;&nbsp;&nbsp;&nbsp;京ICP证110339号</p>
+     <p> 京公网安备110105008914号</p>
+ </div>
+     
+  </div>
+ </div>
+</body>
+</html>

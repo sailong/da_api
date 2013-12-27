@@ -1,0 +1,217 @@
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>赛事用户 ---大正高尔夫</title>
+<link href="{STATICURL}space/game/style.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+<div id="wt">
+	<div class="headsea"><img src="{STATICURL}space/game/images/membe.jpg" width="27" height="27"></div>
+	<div class="headad">&nbsp;</div>
+	<div class="menubg"><!--{subtemplate home/space_header_personalnv}--></div>
+</div>
+<div id="wtcontent">
+	<div class="z z1">
+		<div class="zname"><h1>世锦赛-汇丰冠军赛俱乐部</h1></div>
+		<div class="zxinxi">
+			<div class="zxinxi2">
+				<div class="xlogo"><img src="data/attachment/profile/$field3"></div>
+				<div class="xinx">粉丝：$fans_count  <span>关注：$follow_count</span></div>
+				<div class="xinx_2">人气：204  <span>微博：$topic_count</span></div>
+				<div class="xinx_3">积分：$credits  <span><a href="#"><img src="{STATICURL}space/game/images/jifen.gif" width="72" height="19" border="0"></a></span></div>
+				<ul class="sq">
+					<li class="hysq z"><a href="#">会员申请</a></li>
+					<li class="fssq y"><a href="#">粉丝申请</a></li>
+				</ul>
+				<div class="clear"></div>
+				<div class="leftad">
+				<p class="center"><img src="{STATICURL}space/game/images/leftad1.jpg" border="0"></p>
+				<p class="center"><img src="{STATICURL}space/game/images/leftad2.jpg" border="0"></p>
+				</div>
+			</div>
+		</div>
+		<div class="leftlm"><h1>博客精选</h1> <span><a href="#">更多</a></span></div>
+		<div class="bjjx2">
+			<!--{loop $blog $key $value}-->
+			<div class="bkc"><img src="{STATICURL}space/game/images/new.jpg" width="24" height="16"> <a href="home.php?mod=space&uid=$value[uid]&do=blog&id=$value['blogid']">{$value["subject"]}</a></div>
+			<!--{/loop}-->
+		</div>
+		<div class="leftlm"><h1>最新相册</h1> <span><a href="#">更多</a></span></div>
+		<div class="bjjx3">
+		<!--{loop $albumre $key $value}-->
+			<div class="xcimg z left10">
+			<ul>
+				<li class="xcbg"><img src="data/attachment/album/$value[pic]" width="63" height="57"></li>
+				<li>$value["albumname"]</li>
+		    </ul>
+			</div>
+			<!--{/loop}-->
+			<div class="clear"></div>
+		</div>
+		<div class="leftlm"><h1>精彩视频</h1> <span><a href="#">更多</a></span></div>
+		<div class="bjjx3">
+			<div class="videoimg z">
+			<p><img src="{STATICURL}space/game/images/video.jpg" width="65" height="57"></p>
+			<p>推荐人</p>
+		    </div>
+			<div class="videoimg z">
+			<p><img src="{STATICURL}space/game/images/video.jpg" width="65" height="57"></p>
+			<p>推荐人</p>
+		    </div>
+			<div class="videoimg z">
+			<p><img src="{STATICURL}space/game/images/video.jpg" width="65" height="57"></p>
+			<p>推荐人</p>
+		    </div>
+		  <div class="clear"></div>
+		</div>
+	</div>
+	<div class="z z2">
+		<div class="cbg1"><a href="#"><img src="{STATICURL}space/game/images/cdl.jpg" width="144" height="34" border="0"></a>&nbsp;&nbsp;</div>
+		<div class="fenx">
+		  <span><a href="#"><img src="{STATICURL}space/game/images/ca1.jpg" width="246" height="27" border="0"></a></span>
+			<span><a href="#"><img src="{STATICURL}space/game/images/ca2.jpg" width="101" height="34" border="0"></a></span>
+			<span><a href="#"><img src="{STATICURL}space/game/images/ca3.jpg" width="101" height="33" border="0"></a></span>
+	    </div>
+	    <div><img src="{STATICURL}space/game/images/chx.jpg" width="482" height="8"></div>
+		<br>
+		<div class="cintro">
+		  <div class="cintro_1"><img src="uc_server/avatar.php?uid=$uid&size=middle"></div> 
+		  <div class="cintro_2">$bio</div>
+		  <div class="clear"></div>
+		</div>
+		<div class="cly"><p>留言板留言管理</p></div>
+		<div class="zxly">
+				<textarea name= "textfield" rows= "3" class="lybbg"></textarea>
+		</div>
+		<div class="zxly_2"><img src="{STATICURL}space/game/images/fabu.jpg" width="94" height="34"></div>
+		<div class="cdt">
+			<span><a href="#">原创</a> <a href="#">微博</a> <a href="#">博客</a> <a href="#">图片</a> <a href="#">视频</a></span>
+		</div>
+		<div class="cdt_2">
+			<span>&nbsp;&nbsp;<img src="{STATICURL}space/game/images/new.gif"></span>
+			<span>您有一条新的微博消息，请注意查收</span>
+		</div>
+		<div class="cbg2">
+		  <div class="cbg2_2">
+			   <!--{loop $leftlist $key $value}-->
+				<!--{if !empty($key)}-->
+					<div id="$key" class="dtzsk">
+					</div>
+						$value
+				<!--{/if}-->
+				<!--{/loop}-->
+		  </div>
+		</div>
+		<br>
+	</div>
+	<div class="y y3">
+		<div class="rightlmn"><span class="rlm1"><h1>赛事赞助商</h1></span>  <span class="rlm2"><a href="#">更多</a></span></div>
+		<div class="ylmcon">
+			<div class="zbms">
+				<p><img src="{STATICURL}space/game/images/qczb.jpg" width="78" height="55"></p>
+				<p>网罗姓名</p>
+			</div>
+			<div class="zbms">
+				<p><img src="{STATICURL}space/game/images/qczb.jpg" width="78" height="55"></p>
+				<p>网罗姓名</p>
+			</div>
+		    <div class="zbms">
+				<p><img src="{STATICURL}space/game/images/qczb.jpg" width="78" height="55"></p>
+			    <p>网罗姓名</p>
+			</div>
+			<div class="zbms">
+				<p><img src="{STATICURL}space/game/images/qczb.jpg" width="78" height="55"></p>
+			    <p>网罗姓名</p>
+			</div>
+			<div class="clear"></div>
+		</div>
+		<div class="rightlm"><span class="rlm1"><h1>参赛明星</h1></span>  <span class="rlm2"><a href="#">更多</a></span></div>
+		<div class="ylmcon">
+		   <div class="zbms">
+				<p><img src="{STATICURL}space/game/images/zbms.jpg" width="50" height="50"></p>
+				<p>网罗姓名</p>
+		  </div>
+			<div class="zbms">
+				<p><img src="{STATICURL}space/game/images/zbms.jpg" width="50" height="50"></p>
+				<p>网罗姓名</p>
+			</div>
+		    <div class="zbms">
+				<p><img src="{STATICURL}space/game/images/zbms.jpg" width="50" height="50"></p>
+			    <p>网罗姓名</p>
+			</div>
+			<div class="zbms">
+				<p><img src="{STATICURL}space/game/images/zbms.jpg" width="50" height="50"></p>
+			    <p>网罗姓名</p>
+			</div>
+			<div class="clear"></div>
+	    </div>
+		<div class="rightlm"><span class="rlm1"><h1>举办球场</h1></span>  <span class="rlm2"><a href="#">更多</a></span></div>
+		<div class="ylmcon">
+			<p class="center"><img src="{STATICURL}space/game/images/ssqc.jpg"></p>
+			<p class="center top10">上海佘山高尔夫球场</p>
+        </div>
+		<div class="rightlm"><span class="rlm1">
+		<h1>周边旅游线路推荐</h1>
+		</span>  <span class="rlm2"><a href="#">更多</a></span></div>
+		<div class="ylmcon">
+			<p class="center"><img src="{STATICURL}space/game/images/lvxl.jpg"></p>
+			<p class="center top10">广东观澜湖游</p>
+        </div>
+		<div class="rightlm"><span class="rlm1"><h1>专家</h1></span>  <span class="rlm2"><a href="#">更多</a></span></div>
+		<div class="ylmcon">
+			<div class="qcjl">
+			<p class="center"><img src="{STATICURL}space/game/images/jiaolian.jpg" width="50" height="50"></p>
+			<p class="center">耐克体育</p>
+			</div>
+			<div class="qcjl">
+			<p class="center"><img src="{STATICURL}space/game/images/jiaolian.jpg" width="50" height="50"></p>
+			<p class="center">耐克体育</p>
+			</div>
+			<div class="qcjl">
+			<p class="center"><img src="{STATICURL}space/game/images/jiaolian.jpg" width="50" height="50"></p>
+			<p class="center">耐克体育</p>
+			</div>
+			<div class="clear"></div>
+      </div>
+		<div class="rightlm"><span class="rlm1"><h1>活动推荐</h1></span>  <span class="rlm2"><a href="#">更多</a></span></div>
+		<div class="ylmcon">
+			<p class="center"><img src="{STATICURL}space/game/images/hdtj.jpg" width="147" height="70"></p>
+			<p class="center top10">最新活动推荐</p>
+			<p class="center"><img src="{STATICURL}space/game/images/hdtj.jpg" width="147" height="70"></p>
+			<p class="center top10">最新活动推荐</p>
+        </div>
+		<div class="rightlm"><span class="rlm1"><h1>热门话题</h1></span>  <span class="rlm2"><a href="#">更多</a></span></div>
+		<div class="ylmcon">
+			<div class="rmht">
+				<p>#<a href="#">大正高尔夫</a>#</p>
+				<p>#<a href="#">皇冠赛事直播</a>#</p>
+				<p>#<a href="#">九州岛冠军赛</a>#</p>
+		    </div>
+		</div>
+		
+		<div class="rightlm"><span class="rlm1"><h1>热门标签</h1></span>  <span class="rlm2"><a href="#">更多</a></span></div>
+		<div class="ylmcon">
+			<div class="rmbq">
+			<span>养身</span><span> | </span><span>汽车</span><span> | </span><span>养身</span><span> | </span>
+			<span>养身</span><span> | </span><span>汽车</span><span> | </span><span>养身</span><span> | </span><span>养身</span><span> | </span><span>汽车</span><span> | </span><span>养身</span><span> | </span>
+			<span>养身</span><span> | </span><span>汽车</span><span> | </span><span>养身</span>
+			</div>
+		</div>
+		
+	</div>
+	<div class="clear"></div>
+</div>
+
+<br>
+<div id="wt" class="footer top20">
+  <div class="footer2">
+  <span class="z"><a href="/home.php"><img src="{STATICURL}space/game/images/bottomlogo.jpg" width="175" height="65" border="0"></a></span>
+  <span>关于大正 | 商务合作 | 招贤纳士 | 合作伙伴 | 联系我们 | 投诉建议 | 免责声明    <br>
+  大正网版权归北京大正承平文化传播有限公司 <br>
+  京ICP证110339号 京公网安备110108008116号 </span></div>
+</div>
+</body>
+</html>

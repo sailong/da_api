@@ -1,0 +1,35 @@
+<!--{template home/spacecp_25_head}-->
+<div id="wtcontent">
+	<!-- 左侧 -->
+	<!--{template home/spacecp_00_left}-->
+	<!-- 右侧 -->
+	<div class="rightw">
+		<div class="rightlm"><span class="title_1">赛事信息</span></div>
+		<div class="rcontent" style="border:1px solid #DBDBDB; margin-top:10px;">
+		<!--内容开始-->
+        <div class="sapce_view_content">
+
+        <script src="static/js/calendar.js"></script>
+        <form name="form2" action="home.php?mod=spacecp&ac=ssinfo&op=change" method="post">
+              <div class="miao_ssinfo_div">
+                          <input type="hidden" value="$editre[id]" name="saishiid" />
+                          赛事名称:&nbsp;
+                          <input type="text" name="tname" value="$editre[name]"maxlength="100"  /><br /><br />
+                          赛事地址:&nbsp;
+                          <input type="text" name="address" value="$editre[address]" maxlength="100" /><br /><br />
+                          开始时间:&nbsp;
+                          <input type="text" name="start" value="$editre[start]" maxlength="10" id="caca" onclick="showcalendar(event, this)" />&nbsp;&nbsp;(例2012-03-05)<br /><br />
+                          结束时间:&nbsp;
+                          <input type="text" name="end" value="$editre[end]" maxlength="10" id="cbcb" onclick="showcalendar(event, this)" />&nbsp;&nbsp;(例2012-03-05)<br /><br />
+                          <div style="padding-left:240px;"><input type="submit" value="编辑" /></div><br />
+                </div>
+        </form>
+
+        </div>
+        <!--内容结束-->
+	   </div>
+	<div class="clear"></div>
+</div>
+</div>
+<div style="clear:both;height:8px;"></div>
+<!--{template home/spacecp_foot_comm}-->

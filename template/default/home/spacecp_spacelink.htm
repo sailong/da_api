@@ -1,0 +1,151 @@
+<!--{template home/space_header_comm}-->
+<div id="wtcontent">
+	<!-- 左侧 -->
+	<!--{template home/spacecp_00_left}-->
+	<!-- 右侧 -->
+	<div class="rightw">
+		<a name="qylistlink"><div class="rightlm">
+		  <h1>友情链接管理</h1></div></a>
+		<br>
+		<div class="rcontent">
+ <ul class="tb cl" style='margin-bottom:2px'>
+	<li $opactives[listlink]><a href="home.php?mod=spacecp&ac=spacelink&op=listlink">{lang memcp_listlink}</a></li>
+	<li $opactives[addlink]><a href="home.php?mod=spacecp&ac=spacelink&op=addlink">{lang memcp_addlink}</a></li>
+</ul>
+			<div>
+<style type='text/css'>
+.link {
+	width:100%
+}
+.link td {
+	height:30px
+}
+.link tr td input {
+	width:350px; height:20px; margin:5px
+}
+.link a {
+	text-decoration:none
+}
+.link td {
+	height:30px; border:1px solid #abcdef
+}
+.link span {
+	color:red
+}
+</style> 
+
+
+			<form action='home.php?mod=spacecp&ac=spacelink&op=<!--{if $operation == addlink}-->save<!--{elseif $operation == edit}-->up<!--{/if}-->' method='post' enctype='multipart/form-data' onsubmit='clearErrorInfo();'>
+			<!--{if $operation == 'listlink'}-->
+			<table cellspacing='0' cellpadding='0' class='link'>
+				<tr>
+					<td align='center' width='100'>网站名称</td>
+					<td align='center' width='200'>图片地址</td>
+					<td align='center' width='200'>链接地址</td>
+					<td align='center' width='200'>图片描述</td>
+					<td align='center' width='100'>操作</td>
+				</tr>
+				<!--{if $linklist}-->
+				<!--{loop $linklist $k $v}-->
+				<tr>
+					<td align='center'><!--{$v[imgname]}--></td>
+					<td align='center'><img src='<!--{$v[imglogo]}-->' width='100' height='50' /></td>
+					<td align='center'><!--{$v[imgurl]}--></td>
+					<td align='center'><!--{$v[description]}--></td>
+					<td align='center'>
+					<a href='home.php?mod=spacecp&ac=spacelink&op=del&id=<!--{$v[id]}-->' onclick="if(!confirm('确认要删除吗？')) return false">删除</a>|
+					<a href='home.php?mod=spacecp&ac=spacelink&op=edit&id=<!--{$v[id]}-->'>编辑</a></td>
+				</tr>
+				<!--{/loop}-->
+				<!--{else}-->
+				<tr>
+					<td align='center' colspan='5'>暂无数据</td>
+				</tr>
+				<!--{/if}-->
+			</table>
+			<!--{elseif $operation == 'addlink' || $operation == 'edit'}-->
+			<table width="90%" align='center' cellpadding='0' cellspacing='0' class='link'>
+				<h1 style='color:red'>以下带 * 为必填项，请注意正确填写相关内容！</h1><br />
+				<!--{if $operation == 'edit'}-->
+				<input type='hidden' name='id' value='<!--{$row[id]}-->' maxlength='40' />
+				<!--{/if}-->
+				<tr>
+					<td width="20%" align='center'>网站名称</td>
+					<td><input type='text' name='imgname' id='imgname' value='<!--{if $row[imgname]}--><!--{$row[imgname]}--><!--{/if}-->' maxlength='40' /> *</td>
+				</tr>
+				<tr>
+					<td align='center'>图片地址</td>
+					<td><!--{if $row[imglogo]}--><img src='<!--{$row[imglogo]}-->' width=200 height=100><!--{/if}--><br />
+					<!--{if $operation == addlink}-->
+					<input type='file' name='imglogo' id='imglogo' style='width:380px; height:25px; border:1px solid #abcdef' value='' />
+					<!--{else}-->
+					<input type='text' name='imglogo' id='imglogo' value='<!--{if $row[imglogo]}--><!--{$row[imglogo]}--><!--{/if}-->' />
+					<!--{/if}--> *
+					</td>
+				</tr>
+				<tr>
+					<td align='center'>链接地址</td>
+					<td><input type='text' name='imgurl' id='imgurl' value='<!--{if $row[imgurl]}--><!--{$row[imgurl]}--><!--{/if}-->' maxlength='200' /> *</td>
+				</tr>
+				<tr>
+					<td align='center'>图片描述</td>
+					<td>&nbsp;<textarea rows='6' cols='60' name='description'><!--{if $row[description]}--><!--{$row[description]}--><!--{/if}--></textarea></td>
+				</tr>
+				<tr>
+					<td colspan='2' style='padding-left:260px'>
+						<button type='submit' name='profilesubmitbtn' value='true' id='profilesubmitbtn' class='pn pnc' onclick='return checkval()' /><strong>{lang save}</strong></button><span id='rval'></span>
+					</td>
+				</tr>
+			</table>
+			<!--{/if}-->
+			</form>
+
+
+
+			<script type="text/javascript" src='static/js/jquery.js'></script>
+			<script type="text/javascript">
+				function show_error(fieldid, extrainfo) {
+					var elem = $('th_'+fieldid);s
+					if(elem) {
+						elem.className = "rq";
+						fieldname = elem.innerHTML;
+						extrainfo = (typeof extrainfo == "string") ? extrainfo : "";
+						$('showerror_'+fieldid).innerHTML = "{lang check_date_item} " + extrainfo;
+						$(fieldid).focus();
+					}
+				}
+				function show_success(message) {
+					message = message == '' ? '{lang update_date_success}' : message;
+					showDialog(message, 'right', '{lang reminder}', function(){
+						top.window.location.href = top.window.location.href;
+					}, 0, null, '', '', '', '', 3);
+				}
+				function clearErrorInfo() {
+					var spanObj = $('profilelist').getElementsByTagName("div");
+					for(var i in spanObj) {
+						if(typeof spanObj[i].id != "undefined" && spanObj[i].id.indexOf("_")) {
+							var ids = explode('_', spanObj[i].id);
+							if(ids[0] == "showerror") {
+								spanObj[i].innerHTML = '';
+								$('th_'+ids[1]).className = '';
+							}
+						}
+					}
+				}
+				
+				function checkval() {
+					var name = jQuery('#imgname').val();
+					var logo = jQuery('#imglogo').val();
+					var url = jQuery('#imgurl').val();
+					if(name == '' || logo == '' || url == '') {
+						jQuery('#rval').html('请正确填写内容');
+						return false;
+					}
+				}
+			</script>
+	</div>
+	</div>		
+	</div>
+	<div class="clear"></div>
+</div>
+<!--{template home/spacecp_foot_comm}-->

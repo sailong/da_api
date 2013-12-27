@@ -1,0 +1,110 @@
+<div class="right_right y">
+	<div class="rightlm">
+		<span class="rlm1"><h1><!--{$visitname}-->的标签</h1></span>
+		<span class="rlm2"><a href='t/index.php?mod=user_tag'>更多</a></span>
+	</div>
+	<div class="biaoqian">
+		<!--{if $tags}-->
+		<!--{loop $tags $value}-->
+		<span><a href='t/index.php?mod=search&code=usertag&usertag=<!--{$value[tag_name]}-->'><!--{$value[tag_name]}--></a></span>
+		<!--{/loop}-->
+		<!--{else}-->
+		<span style='height:50px; line-height:50px; text-align:center'>暂无标签</span>
+		<!--{/if}-->
+	</div>
+	<div class="clear"></div>
+	<div class="rightlm">
+		<span class="rlm1"><h1><!--{$visitname}-->的群组</h1></span>
+		<span class="rlm2"><a href='t/index.php?mod=qun&code=profile'>更多</a></span>
+	</div>
+	<div class="rlmcon">
+		<!--{if $grouplist}-->
+		<!--{loop $grouplist $v}-->
+		  <div class="qunzu">
+			<div class="qunztu z">
+			<p class="center"><a href='t/index.php?mod=qun&qid=<!--{$v[qid]}-->'><img src="weibo/<!--{$v[icon]}-->" width="70" height="50"></a></p>
+			<p class="font10 center"><!--{$v[foundername]}--></p>
+			</div>
+			<div class="qunzujs y">
+			  <p><a href='t/index.php?mod=qun&qid=<!--{$v[qid]}-->'><!--{$v[name]}--></a></p>
+				<p><!--{$v[member_num]}-->人</p>
+			</div>
+		  </div>
+		  <div class="clear"></div>
+		<!--{/loop}-->
+		<!--{else}-->
+		<span style='height:50px; line-height:50px; margin-left:30px'>未创建或参加任何群组</span>
+		<!--{/if}-->
+	</div>
+	<div class="clear"></div>
+	<div class="rightlm">
+		<span class="rlm1"><h1><!--{$visitname}-->参加的活动</h1></span>
+		<span class="rlm2"><a href='t/index.php?mod=event'>更多</a></span>
+	</div>
+	<div class="rlmcon">
+		<!--{if $event}-->
+		<!--{loop $event $value}-->
+		<div class="huodong_m" align="center">
+			<div style="width:70px; height:50px; padding:2px; border:1px solid #E8E8E8;"><a href='t/index.php?mod=event&code=detail&id=<!--{$value[id]}-->'><img  src="weibo/<!--{$value[image]}-->" width="70" height="50" border="0" ></a></div>
+			<div style="padding:5px 0px;"><!--{$value[title]}--></div>
+		</div>
+		<!--{/loop}-->
+		<!--{else}-->
+		<span style='height:50px; line-height:50px; margin-left:30px'>未参加任何活动</span>
+		<!--{/if}-->
+	</div>
+	<div class="clear"></div>
+	<div class="rightlm">
+		<span class="rlm1"><h1><!--{$visitname}-->参加的话题</h1></span>
+		<span class="rlm2"><a href='t/index.php?mod=<!--{$userinfo[username]}-->'>更多</a></span>
+	</div>
+	<div class="rlmcon pabottom10 patop10">
+		<div style="border:1px solid #E8E8E8; padding:5px; background-color:#EFEFEF; width:180px; margin:0 auto;">
+			<!--{if $topic}-->
+			<!--{loop $topic $k $val}-->
+			<div class="z" style="padding:5px; word-break:break-all;">
+			   <a href='t/index.php?mod=tag&code=<!--{$val[name]}-->' class="leftlm_a3">#<!--{$val[name]}-->#</a>
+			</div>
+			<!--{/loop}-->
+			<!--{else}-->
+			未参加任何话题
+			<!--{/if}-->
+			<div class="clear"></div>
+		</div>
+	</div>
+	<div class="rightlm">
+		<span class="rlm1"><h1><!--{$visitname}-->的关注</h1></span>
+		<span class="rlm2"><a href='t/index.php?mod=<!--{$userinfo[username]}-->&code=follow'>更多</a></span>
+	</div>
+	<div class="rlmcon">
+		<!--{if $buddys}-->
+		<!--{loop $buddys $k $v}-->
+		<div class="z center" style="padding:5px 10px 0px 20px;">
+		<div style="width:62px; height:57px; padding:2px; border:1px solid #E8E8E8;"><a href="home.php?mod=space&uid=<!--{$v[uid]}-->">
+		<img src="uc_server/avatar.php?uid=<!--{$v[uid]}-->&size=middle" width="62" height="57"></a></div>
+		<div style="padding:5px 0px;"><!--{$v[username]}--></div>
+		</div>
+		<!--{/loop}-->
+		<!--{else}-->
+		<span style='height:50px; line-height:50px; text-align:center'>未关注其他人</span>
+		<!--{/if}-->
+		<div class="clear"></div>
+	</div>
+	<div class="rightlm">
+		<span class="rlm1"><h1><!--{$visitname}-->的粉丝</h1></span>
+		<span class="rlm2"><a href='t/index.php?mod=<!--{$userinfo[username]}-->&code=fans'>更多</a></span>
+	</div>
+	<div class="rlmcon">
+		<!--{if $fans}-->
+		<!--{loop $fans $v}-->
+		<div class="z center" style="padding:5px 10px 0px 20px;">
+			<div style="width:62px; height:57px; padding:2px; border:1px solid #E8E8E8;"><a href="home.php?mod=space&uid=<!--{$v[uid]}-->"><img src="uc_server/avatar.php?uid=<!--{$v[uid]}-->&size=middle" width="62" height="57" boder="0"></a></div>
+			<div style="padding:5px 0px;"><!--{$v[username]}--></div>
+		</div>
+		<!--{/loop}-->
+		<!--{else}-->
+		<p style='text-align:center'>现在还没有粉丝</p>
+		<!--{/if}-->
+		<div class="clear"></div>
+	</div>
+</div>

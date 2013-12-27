@@ -1,0 +1,59 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>无标题文档</title>
+<!------原样式开始--------->
+<!--{csstemplate}-->
+<script type="text/javascript" src="{$_G[setting][jspath]}common.js?{VERHASH}"></script><!--头像-->
+<script type="text/javascript" src="{$_G[setting][jspath]}home.js?{VERHASH}"></script><!--博客-->
+<!------原样式结束--------->
+
+
+
+<link href="{STATICURL}space/member/style.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+<script type="text/javascript">
+var curPane="left_1";
+function show(switchSysBar)
+{
+if(switchSysBar==curPane){return;}
+document.getElementById(curPane).style.display="none";
+document.getElementById(switchSysBar).style.display="block";
+curPane=switchSysBar;
+}
+</script>
+<div id="wt">
+	<div class="headsea"><div class="z"><span><img src="{STATICURL}space/member/images/membe.jpg" width="27" height="27"></span>　　<span><a href="/home.php">大正网</a></span></div><div class="y">	<!--{if $_G['uid']}-->
+		<p>
+							<strong class="vwmy{if $_G['setting']['connect']['allow'] && $_G[member][conisbind]} qq{/if}"><a href="home.php?mod=space&uid=$_G[uid]" target="_blank" title="{lang visit_my_space}">{$_G[member][username]}</a></strong>
+							<!--{if $_G['group']['allowinvisible']}-->
+							<span id="loginstatus">
+								<a id="loginstatusid" href="member.php?mod=switchstatus" title="{lang login_switch_invisible_mode}" onclick="ajaxget(this.href, 'loginstatus');return false;" class="xi2"></a>
+							</span>
+							<!--{/if}-->
+							<!--{hook/global_usernav_extra1}-->
+							<span class="pipe">|</span><a href="home.php?mod=spacecp">{lang setup}</a>
+							<span class="pipe">|</span><a href="home.php?mod=space&do=pm" id="pm_ntc"{if $_G[member][newpm]} class="new"{/if}>{lang pm_center}</a>
+							<span class="pipe">|</span><a href="home.php?mod=space&do=notice" id="myprompt"{if $_G[member][newprompt]} class="new"{/if}>{lang remind}<!--{if $_G[member][newprompt]}-->($_G[member][newprompt])<!--{/if}--></a><span id="myprompt_check"></span>
+							<!--{if $_G['setting']['taskon'] && !empty($_G['cookie']['taskdoing_'.$_G['uid']])}--><span class="pipe">|</span><a href="home.php?mod=task&item=doing" id="task_ntc" class="new">{lang task_doing}</a><!--{/if}-->
+							<!--{if ($_G['group']['allowmanagearticle'] || $_G['group']['allowpostarticle'] || $_G['group']['allowdiy'] || getstatus($_G['member']['allowadmincp'], 4) || getstatus($_G['member']['allowadmincp'], 6) || getstatus($_G['member']['allowadmincp'], 2) || getstatus($_G['member']['allowadmincp'], 3))}-->
+								<span class="pipe">|</span><a href="portal.php?mod=portalcp"><!--{if $_G['setting']['portalstatus'] }-->{lang portal_manage}<!--{else}-->{lang portal_block_manage}<!--{/if}--></a>
+							<!--{/if}-->
+							<!--{if $_G['uid'] && $_G['group']['radminid'] > 1}-->
+								<span class="pipe">|</span><a href="forum.php?mod=modcp&fid=$_G[fid]" target="_blank">{lang forum_manager}</a>
+							<!--{/if}-->
+							 
+							<!--{hook/global_usernav_extra2}-->
+							<span class="pipe">|</span><a href="member.php?mod=logging&action=logout&formhash={FORMHASH}">{lang logout}</a>
+						</p>
+						<!--{else}-->
+		<a href="/home.php?mod=spacecp">登录</a>　　<a href="/member.php?mod=register">注册</a>
+		<!--{/if}--></div>
+	</div>
+	<div class="headad">&nbsp;</div>
+	<div class="clear"></div>
+</div>

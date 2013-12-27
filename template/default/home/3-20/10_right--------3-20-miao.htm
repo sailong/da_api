@@ -1,0 +1,155 @@
+<div class="right_right y">
+	<!--{if $do == 'index'}-->
+	<div class="rightlm">
+		<span class="font_4" style="margin-left:15px;"><!--{$visitname}-->的徽章</span>
+		<span class="rlm3"><!--{if $space['self']}--><a href='home.php?mod=medal'  class="leftlm_a"><!--{else}--><a href='home.php?mod=space&do=common&op=medalmore&uid=<!--{$uid}-->'  class="leftlm_a"><!--{/if}-->更多</a></span>
+	</div>
+	<div class="huizhang" style="padding-top:10px;">
+		<!--{if $medal}-->
+		<ul>
+			<!--{loop $medal $value}-->
+			<li style="width:50px; text-align:center">
+			<img src="static/image/common/<!--{$value[image]}-->" width="25" height="45">
+			<p class="font_2"><!--{$value[name]}--></p>
+			</li>
+			<!--{/loop}-->
+		</ul>
+		<!--{else}-->
+		<span style='height:50px; line-height:50px; margin-left:35px'>未获得勋章</span>
+		<!--{/if}-->
+	</div>
+	<div class="clear"></div>
+	<div class="rightlm">
+		<span class="font_4" style="margin-left:15px;"><!--{$visitname}-->参与的竞猜</span>
+	</div>
+	<div class="center top10">
+		<p><img src="{STATICURL}space/10/images/jingcai.jpg" width="135" height="84"></p>
+		<p class="font_2"><a href='home.php?mod=space&uid=1888972'>美巡赛竞猜</a></p>
+	</div>
+	<!--{/if}-->
+	<div class="rightlm">
+		<span class="font_4" style="margin-left:15px;"><!--{$visitname}-->的标签</span>
+		<span class="rlm2"  style="margin-left:78px;"><!--{if $space['self']}--><a href='home.php?mod=spacecp&ac=weibo&op=tag' class="leftlm_a"><!--{else}--><a href='home.php?mod=space&do=common&op=tag&uid=<!--{$uid}-->' class="leftlm_a"><!--{/if}-->更多</a></span>
+	</div>
+	<div class="biaoqian">
+		<!--{if $tags}-->
+		<!--{loop $tags $value}-->
+		<span><!--{if $space['self']}--><a href='home.php?mod=spacecp&ac=weibo&op=tag&tag=<!--{$value[tag_name]}-->'  class="leftlm_a3"><!--{else}--><a href='home.php?mod=space&do=common&op=tag&uid=<!--{$uid}-->&tag=<!--{$value[tag_name]}-->'  class="leftlm_a3"><!--{/if}--><!--{$value[tag_name]}--></a></span>
+		<!--{/loop}-->
+		<!--{else}-->
+		<span style='height:50px; line-height:50px; margin-left:35px'>暂无标签</span>
+		<!--{/if}-->
+	</div>
+	<div class="clear"></div>
+	<div class="rightlm">
+		<span class="font_4" style="margin-left:15px;"><!--{$visitname}-->的群组</span>
+		<span class="rlm2" style="margin-left:78px;"><!--{if $space['self']}--><a href='home.php?mod=spacecp&ac=weibo&op=qun' class="leftlm_a"><!--{else}--><a href='home.php?mod=space&do=common&op=qun&uid=<!--{$uid}-->' class="leftlm_a"><!--{/if}-->更多</a></span>
+	</div>
+	<div class="rlmcon">
+		<!--{if $grouplist}-->
+		<!--{loop $grouplist $v}-->
+		<div class="qunzu">
+			<div class="qunztu z">
+				<p class="center"><!--{if $space['self']}--><a href='home.php?mod=spacecp&ac=weibo&op=qun&qid=<!--{$v[qid]}-->'><!--{else}--><a href='home.php?mod=space&do=common&op=qun&qid=<!--{$v[qid]}-->&uid=<!--{$uid}-->'><!--{/if}--><img src="weibo/<!--{$v[icon]}-->" width="70" height="50"></a></p>
+				<p class="font10 center"><!--{$v[foundername]}--></p>
+			</div>
+			<div class="qunzujs y">
+				<p><!--{if $space['self']}--><a href='home.php?mod=spacecp&ac=weibo&op=qun&qid=<!--{$v[qid]}-->' class="leftlm_a3"><!--{else}--><a href='home.php?mod=space&do=common&op=qun&qid=<!--{$v[qid]}-->&uid=<!--{$uid}-->'  class="leftlm_a3"><!--{/if}--><!--{$v[name]}--></a></p>
+				<p class="font_2"><!--{$v[member_num]}-->人</p>
+			</div>
+		</div>
+		<div class="clear"></div>
+		<!--{/loop}-->
+		<!--{else}-->
+		<span style='height:50px; line-height:50px; margin-left:45px'>未创建或参加任何群组</span>
+		<!--{/if}-->
+	</div>
+	<div class="clear"></div>
+	<div class="rightlm">
+		<span class="font_4" style="margin-left:15px;"><!--{$visitname}-->参加的活动</span>
+		<span class="rlm2" style="margin-left:51px;"><!--{if $space['self']}--><a href='home.php?mod=spacecp&ac=weibo&op=event' class="leftlm_a"><!--{else}--><a href='home.php?mod=space&do=common&op=event&uid=<!--{$uid}-->' class="leftlm_a"><!--{/if}-->更多</a></span>
+	</div>
+	<div class="rlmcon">
+		<!--{if $event}-->
+		<!--{loop $event $value}-->
+		<div class="huodong_m" style="float:left; padding:10px 0px 5px 10px;">
+			<div id="circular-gz" class="clearfix">
+				<!--{if $space['self']}-->
+				<a href='home.php?mod=spacecp&ac=weibo&op=event&eid=<!--{$value[id]}-->'>
+				<!--{else}-->
+				<a href='home.php?mod=space&do=common&op=event&eid=<!--{$value[id]}-->&uid=<!--{$uid}-->'>
+				<!--{/if}-->
+				<img  src="weibo/<!--{$value[image]}-->" width="62" height="57" border="0" >
+                <span class="cir-bg"></span>
+                </a>
+			</div>
+			<div style="width:62px; text-align:center" class="font_2"><!--{$value[title]}--></div>
+		</div>
+		<!--{/loop}-->
+		<!--{else}-->
+		<span style='height:50px; line-height:50px; margin-left:45px'>未参加任何活动</span>
+		<!--{/if}-->
+	</div>
+	<div class="clear"></div>
+	<div class="rightlm">
+		<span class="font_4" style="margin-left:15px;"><!--{$visitname}-->参加的话题</span>
+		<span class="rlm2" style="margin-left:51px;"><!--{if $space['self']}--><a href='home.php?mod=spacecp&ac=weibo&op=topic' class="leftlm_a"><!--{else}--><a href='home.php?mod=space&do=common&op=topic&uid=<!--{$uid}-->' class="leftlm_a"><!--{/if}-->更多</a></span>
+	</div>
+	<div class="rlmcon pabottom10 patop10">
+		<div style="border:1px solid #E8E8E8; padding:5px; background-color:#EFEFEF; width:180px; margin:0 auto;">
+			<!--{if $topic}-->
+			<!--{loop $topic $k $val}-->
+			<div class="z" style="padding:5px; word-break:break-all; white-space:nowrap;">
+				<!--{if $space['self']}--><a href='home.php?mod=spacecp&ac=weibo&op=topic&tcode=<!--{$val[name]}-->' class="leftlm_a3"><!--{else}--><a href='home.php?mod=space&do=common&op=topic&tcode=<!--{$val[name]}-->&uid=<!--{$uid}-->' class="leftlm_a3"><!--{/if}-->#<!--{$val[name]}-->#</a>
+			</div>
+			<!--{/loop}-->
+			<!--{else}-->
+			<span style='height:50px; line-height:50px; margin-left:30px'>未参加任何话题</span>
+			<!--{/if}-->
+			<div class="clear"></div>
+		</div>
+	</div>
+	<div class="rightlm">
+		<span class="font_4" style="margin-left:15px;"><!--{$visitname}-->的关注</span>
+		<span class="rlm2" style="margin-left:78px;"><!--{if $space['self']}--><a href='home.php?mod=spacecp&ac=weibo&op=follow' class="leftlm_a3"><!--{else}--><a href='home.php?mod=space&do=common&op=follow&uid=<!--{$uid}-->' class="leftlm_a3"><!--{/if}-->更多</a></span>
+	</div>
+	<div class="rlmcon">
+		<!--{if $buddys}-->
+		<!--{loop $buddys $k $v}-->
+		<div class="z center" style="float:left;padding-left:15px; padding:10px 15px 5px 15px;">
+			<div  id="circular-gz" class="clearfix">
+				<a href="home.php?mod=space&uid=<!--{$v[uid]}-->">
+				<img src="uc_server/avatar.php?uid=<!--{$v[uid]}-->&size=middle" width="62" height="57">
+                <span class="cir-bg"></span>
+                </a>
+			</div>
+			<div style=" width:62px; text-align:center;" class="font_2"><!--{$v[nickname]}--></div>
+		</div>
+		<!--{/loop}-->
+		<!--{else}-->
+		<p style='height:50px; line-height:50px; margin-left:45px'>还未关注其他人</p>
+		<!--{/if}-->
+		<div class="clear"></div>
+	</div>
+	<div class="rightlm">
+		<span class="font_4" style="margin-left:15px;"><!--{$visitname}-->的粉丝</span>
+		<span class="rlm2" style="margin-left:78px;"><!--{if $space['self']}--><a href='home.php?mod=spacecp&ac=weibo&op=fans' class="leftlm_a3"><!--{else}--><a href='home.php?mod=space&do=common&op=fans&uid=<!--{$uid}-->' class="leftlm_a3"><!--{/if}-->更多</a></span>
+	</div>
+	<div class="rlmcon">
+		<!--{if $fans}-->
+		<!--{loop $fans $v}-->
+		<div class="z center" style="padding:5px 10px 0px 20px; height:90px">
+			<div  id="circular-fs" class="clearfix">
+				<a href="home.php?mod=space&uid=<!--{$v[uid]}-->"><img src="uc_server/avatar.php?uid=<!--{$v[uid]}-->&size=middle" width="62" height="57" boder="0">
+                 <span class="cir-bg"></span>
+                </a>
+			</div>
+			<div style="width:62px; text-align:center;" class="font_2"><!--{$v[nickname]}--></div>
+		</div>
+		<!--{/loop}-->
+		<!--{else}-->
+		<p style='height:50px; line-height:50px; margin-left:45px'>现在还没有粉丝</p>
+		<!--{/if}-->
+		<div class="clear"></div>
+	</div>
+</div>

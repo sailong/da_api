@@ -1,0 +1,44 @@
+﻿<!--{subtemplate home/25_header}-->
+
+<div id="wtcontent">
+	
+	<!-- 左边  -->
+	<!--{subtemplate home/25_left}-->
+	
+	<div class="z z2">
+		<!--{subtemplate home/25_sinfo}-->
+	    <div><img src="{STATICURL}space/game/images/chx.jpg" width="482" height="8"></div>
+		<br />
+        <!--中间上部-->
+		<!--{subtemplate home/25_center}-->
+		
+
+		<div class="cdt">
+			<span><a href="home.php?mod=space&uid=$_GET['uid']&do=action&act=weibo&wburl=d2VpYm8v">微博</a> <a href="home.php?mod=space&uid=$_GET["uid"]&do=blog&view=me&from=space">博客</a> <a href="home.php?mod=space&uid=$_GET["uid"]&do=album&view=me&from=space">图片</a> <a href="home.php?mod=space&uid=$_GET['uid']&do=video">视频</a></span>
+		</div>
+		<div class="cdt_2">
+		</div>
+		<div class="cbg2">
+		  <div class="cbg2_2">
+			  
+			  <!--{if $spacefeed}-->
+							<div class="bm_c">
+							<!--{$spacefeed}-->
+						<!--{else}-->
+							没有新动态
+						<!--{/if}-->
+						
+		  </div>
+		</div>
+		<br />
+	</div>
+	<!--右侧开始-->
+    <!--{subtemplate home/25_right}-->
+    <!--右侧结束-->
+    
+    
+	<div class="clear"></div>
+</div>
+
+<br>
+<!--{subtemplate home/25_foot}-->

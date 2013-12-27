@@ -1,0 +1,119 @@
+<!--{template home/spacecp_24_head}-->
+<style type='text/css'>
+#bound {
+	width:500px; margin-top:80px; margin-left:50px
+}
+#bound td {
+	height:30px
+}
+#bound a {
+	text-decoration:none
+}
+#bound span {
+	color:red
+}
+#bound tr td input {
+	width:250px; height:25px; margin:5px
+}
+</style>
+<div id="wtcontent">
+	<!-- 左侧 -->
+	<!--{template home/spacecp_24_left}-->
+	<!-- 右侧 -->
+	<div class="rightw">
+		<div class="rightlm"><h1><!--{if $op == 'bound'}-->我的手机绑定<!--{else}--><!--{if $option == 'mywb'}-->微博<!--{elseif $option == 'event'}-->活动<!--{elseif $option == 'qun'}-->群组<!--{elseif $option == 'vote'}-->投票<!--{elseif $option == 'follow'}-->关注<!--{elseif $option == 'fans'}-->粉丝<!--{elseif $option == 'favorite'}-->收藏<!--{elseif $option == 'discuss'}-->评论<!--{/if}--><!--{/if}--></h1></div>
+		<br>
+		<div class="rcontent">
+			<div style='height:800px'>
+
+				<!----------微博开始----------->
+				<!--{if $url}-->
+				<iframe src='<!--{$url}-->' width='600' height='100%' scrolling='no' frameborder='0'></iframe>
+				<!--{/if}-->
+				<!--{if $op == 'bound'}-->
+				<form action='home.php?mod=spacecp&ac=weibo&op=bound&do=bound' method='post' enctype='multipart/form-data' onsubmit='clearErrorInfo();'>
+				<table cellspacing='0' cellpadding='0' id='bound'>
+					<!--{if empty($arr[bound])}-->
+					<tr>
+						<td width='60'>手机号</td>
+						<td width='400'><input type='text' name='phone' id='phone' value='' maxlength='12' onblur='getphone()' /><span id='rphone'></span></td>
+					</tr>
+					<tr>
+						<td>卡号</td>
+						<td><input type='text' name='code' id='code' value='' maxlength='18' onblur='getcode()' /><span id='rcode'></span></td>
+					</tr>
+					<tr>
+						<td colspan='2' style='padding-left:130px'>
+							<button type='submit' name='profilesubmitbtn' value='true' onclick='return checksubmit()' id='profilesubmitbtn' class='pn pnc' /><strong>{lang bound}</strong></button>
+						</td>
+					</tr>
+					<!--{else}-->
+					<tr>
+						<td>手机号：</td>
+						<td><em><!--{$arr[cardphone]}--></em></td>
+					</tr>
+					<tr>
+						<td>卡&nbsp;&nbsp;&nbsp;号：</td>
+						<td><em><!--{$arr[cardcode]}--></em></td>
+					</tr>
+					<tr>
+						<td colspan='2'><span>[帐号已绑定]</span>&nbsp;&nbsp;<a href='home.php?mod=spacecp&ac=weibo&op=bound&do=clear'><span>[解除绑定]</span></a></td>
+					</tr>
+					<!--{/if}-->
+				</table>
+				</form>
+				<!--{/if}-->
+				<!----------微博结束----------->
+
+			</div>
+		</div>
+	</div>
+	<div class="clear"></div>
+</div>
+<!--{template home/spacecp_foot_comm}-->
+
+<script type="text/javascript" src='static/js/jquery.js'></script>
+<script type="text/javascript">
+	function getphone() {
+		var val = jQuery('#phone').val();
+		var len = strlen(val);
+		var reg = /^1[3|4|5|8][0-9]\d{4,8}$/;
+		if(reg.test(val)) {
+			if(len != '11') {
+				jQuery('#rphone').html('手机号位数不正确');
+				return false;
+			} else {
+				jQuery('#rphone').html('手机号填写正确');
+			}
+		} else {
+			jQuery('#rphone').html('请正确填写手机号');
+			return false;
+		}
+	}
+	function getcode() {
+		var val = jQuery('#code').val();
+		var len = strlen(val);
+		var reg = /^[1-9][0-9]\d{4,16}$/;
+		if(reg.test(val)) {
+			if(len != '18') {
+				jQuery('#rcode').html('卡号位数不正确');
+				return false;
+			} else {
+				jQuery('#rcode').html('卡号填写正确');
+			}
+		} else {
+			jQuery('#rcode').html('请正确填写卡号');
+			return false;
+		}
+	}
+	function checksubmit() {
+		var flag = true;
+		if(getphone() == false) {
+			flag = false;
+		}
+		if(getcode() == false) {
+			flag = false;
+		}
+		return flag;
+	}
+</script>

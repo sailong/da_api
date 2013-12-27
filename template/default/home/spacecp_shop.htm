@@ -1,0 +1,46 @@
+<!--{template home/space_header_comm}-->
+<div id="wtcontent">
+	<!-- 左侧 -->
+	<!--{template home/spacecp_00_left}-->
+	<!-- 右侧 -->
+	<div class="rightw">
+		 <a name="#maoshipin"><div class="rightlm">
+		  <span style="color:#fff; font-family:'方正准圆简体'; font-size:14px;">我的产品管理</span></h1></div></a>
+		<br>
+		<div class="rcontent" style="border:1px solid #DBDBDB;">
+			<ul class="tb cl" style='border-bottom:none;'>
+				<li  class="o_1 a">产品列表</li>
+				<li  class="a_1 o"><a href="/home.php?mod=spacecp&ac=shopping&add ">上传产品</a></li>
+			</ul>
+		<!--中间内容开始--> 
+			<form action="home.php?mod=spacecp&ac=shop&op=del" method="post" name="form1">
+				<div class="sapce_view_content">
+					<div class="sapce_view_content_div">
+						<!--{if $shoplist}-->
+						<!--{loop $shoplist $k $v}-->
+						<div class="sapce_view_libiao">
+							<div><a href="home.php?mod=space&uid=$v[uid]&do=shop&goods_id=$v[goods_id]" target="_blank"> <img src="/shop/$v[goods_thumb]" alt="$v[goods_name]"  width="114" height="99"></a></div>
+							<div class="div_center" id='title_<!--{$v[goods_id]}-->'><!--{$v['goods_name']}--></div>
+							<div class="div_center">
+								<a href="/home.php?mod=spacecp&ac=shopping&op=add&gid=<!--{$v[goods_id]}-->" id='edit_<!--{$v[goods_id]}-->'>编辑</a>&nbsp;&nbsp;&nbsp;&nbsp;
+								<!--{if getatt($v[goods_id])}--><a href="/home.php?mod=spacecp&ac=shopping&op=huopin&gid=<!--{$v[goods_id]}-->" id='hp_<!--{$v[goods_id]}-->'>货品</a>&nbsp;&nbsp;&nbsp;&nbsp;<!--{/if}-->
+                                <a href='home.php?mod=spacecp&ac=shop&op=del&gid=<!--{$v[goods_id]}-->' onclick="if(!confirm('确定要删除？')) return false">删除</a>
+							</div>
+						</div>
+						<!--{/loop}-->
+						<!--{if $multi}--><div style='height:100px; text-align:right'><!--{$multi}--></div><!--{/if}-->
+						<!--{else}-->
+						<p style='height:100px; line-height:50px; text-align:center'>暂无产品</p>
+						<!--{/if}-->
+						<div class="clear"></div>
+					</div>
+				</div>
+                   
+			</form> 
+ 
+		<!--中间内容结束-->
+		</div>		
+	</div>
+	<div class="clear"></div>
+</div>
+<!--{template home/spacecp_foot_comm}-->

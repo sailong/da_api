@@ -1,0 +1,66 @@
+	<div class="z z1">
+		<div class="zname"><img src="{STATICURL}space/qiche/images/biao.jpg" width="17" height="14">&nbsp;$realname</div>
+		<div class="zxinxi">
+			<div class="zxinxi2">
+				<br>
+				<p align="center"><img src="data/attachment/profile/$field3" width="240" height="76"></p>
+				<div class="x">
+				<div style="line-height:35px; margin-left:50px;"><div class="z">粉丝：<a href="$fansurl">$fans_count</a></div> <div style="float:right; text-align:left; margin-right:20px; ">关注：<a href="$followurl">$follow_count</a></div></div>
+				<div style="line-height:35px; margin-left:50px; clear:both;"><div class="z">人气：$space[views]</div> <div style="float:right; text-align:left; margin-right:20px; ">微博：<a href="$wbsurl">$topic_count</a></div></div>
+				 
+				</div>
+				<ul style="margin:0 auto; width:230px;  ">
+					<li class="hysq z"><a href="home.php?mod=spacecp&ac=qiye&qiyeid=$_GET[uid]" id="qiye" onclick="showWindow(this.id, this.href, 'get', 0);doane(event);" >会员申请</a></li>
+					<li class="fssq y"><a href="home.php?mod=spacecp&ac=qiye&qiyeid=$_GET[uid]" id="sdfa" onclick="showWindow(this.id, this.href, 'get', 0);doane(event);" >粉丝申请</a></li>
+				</ul>
+				<div class="clear center"><br>
+			    <a href="home.php?mod=space&uid=$_GET[uid]&do=action&act=iphone4s"><img src="{STATICURL}space/qiche/images/zad1.jpg" width="255" height="95"></a></div>
+				<div class="center"><img src="{STATICURL}space/qiche/images/zad2.jpg" width="255" height="66"></div>
+				<br>
+				<div class="center"><img src="{STATICURL}space/qiche/images/ad3.jpg" width="245" height="154"></div>
+				<br>
+			</div>
+		</div>
+		<div class="bkjx"><div class="z left20 top20"><img src="{STATICURL}space/qiche/images/biao.gif" width="17" height="14"></div><div class="z left20 top20"><h1>博客精选</h1></div></div>
+		<div class="bjjx2">
+    <!--{loop $ubloglst $value}--> 		
+        <div class="bkc"><img src="{STATICURL}space/qiche/images/new.jpg" width="24" height="16"> <A href="home.php?mod=space&uid=$value[uid]&do=blog&id=$value[blogid]">$value[subject]</A></div>
+    <!--{/loop}-->
+			<br>
+			 
+		</div>
+		<div class="zxxc"><div class="z left20 top20"><img src="{STATICURL}space/qiche/images/biao.gif" width="17" height="14"></div><div class="z left20 top20"><h1>最新相册</h1></div></div>
+		<div class="bjjx3">
+			<div class="bjjx3">
+		<!--{loop $albumre $key $value}-->
+			<div class="xcimg z left10">
+			<ul>
+				<li class="xcbg"><a href="home.php?mod=space&uid=$uid&do=album&id=$value["albumid"]"><img src="data/attachment/album/$value[pic]" width="63" height="57" alt="文件数$value["picnum"]"></a></li>
+				<li>$value["albumname"]</li>
+		    </ul>
+			</div>
+			<!--{/loop}--> 
+		</div>
+		<div class="clear"></div>
+		</div>
+		<div class="jcsp clear"><div class="z left20 top20"><img src="{STATICURL}space/qiche/images/biao.gif" width="17" height="14"></div><div class="z left20 top20"><h1>精彩视频</h1></div></div>
+		<div class="bjjx3">
+			<div class="videoimg z">
+			<p><img src="{STATICURL}space/qiche/images/videoimg.jpg" width="65" height="57"></p>
+			<p>推荐人</p>
+			<p>我的高尔夫人生</p>
+		    </div>
+			<div class="videoimg z">
+			<p><img src="{STATICURL}space/qiche/images/videoimg.jpg" width="65" height="57"></p>
+			<p>推荐人</p>
+			<p>我的高尔夫人生</p>
+		    </div>
+			<div class="videoimg z">
+			<p><img src="{STATICURL}space/qiche/images/videoimg.jpg" width="65" height="57"></p>
+			<p>推荐人</p>
+			<p>我的高尔夫人生</p>
+		    </div>
+		  <div class="clear"></div>
+		</div>
+      
+	</div>

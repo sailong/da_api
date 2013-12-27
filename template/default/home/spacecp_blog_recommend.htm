@@ -1,0 +1,25 @@
+<!--{template home/spacecp_25_head}-->
+<div id="wtcontent">
+	<!-- 左侧 -->
+	<!--{template home/spacecp_25_left}-->
+	<!-- 右侧 -->
+	<div class="rightw">
+		<div class="rightlm"><span class="title_1">博客推荐</span></div>
+		<div class="rcontent" style="border:1px solid #DBDBDB; margin-top:10px;">
+                 <div class="sapce_view_content"> 
+                        <div class="sapce_view_content_div" style="padding:15px;"> 
+			<!--中间内容-->
+                <table width="98%" border="1">
+                <tr><td>博客id</td><td>名称</td><td>操作</td></tr>
+                <!--{loop $listarr $vk}-->
+                <tr><td width="60">$vk["blogid"]</td><td>$vk["subject"]</td><td width="100"><!--{if $vk[flag]}--><a href="/home.php?mod=spacecp&ac=blog_recommend&operation=cancel&id=$vk[blogid]">取消推荐</a><!--{else}--><a href="/home.php?mod=spacecp&ac=blog_recommend&operation=add&id=$vk[blogid]" >推荐到空间首页</a><!--{/if}--></td></tr>
+                <!--{/loop}-->
+                </table>
+			<!--中间内容-->
+		           </div>
+              </div>
+		</div>
+	</div>
+	<div class="clear"></div>
+</div>
+<!--{template home/spacecp_foot_comm}-->

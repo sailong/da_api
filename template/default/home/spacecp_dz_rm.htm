@@ -1,0 +1,61 @@
+<!--{template home/space_header_comm}-->
+<div id="wtcontent">
+	<!-- 左侧 -->
+	<!--{template home/spacecp_00_left}-->
+	<!-- 右侧 -->
+	<div class="rightw">
+	<div class="rightlm"><h1>空间推荐</h1></div> 
+		<div class="rcontent"> 
+      
+<!--{if !$_G[inajax]}--> 
+<div id="ct"  >
+	<div class="mn">
+		<div class="bm bw0">
+        <ul class="tb cl">
+          <li class="<!--{if empty($_GET['type'])}-->a<!--{else}-->o<!--{/if}-->"><a href="home.php?mod=spacecp&ac=dz_space_recommend">赞助球星推荐</a></li>
+          <li class="<!--{if $_GET['type'] == 1}-->a<!--{else}-->o<!--{/if}-->"><a href="home.php?mod=spacecp&ac=dz_space_recommend&type=1">创建中</a></li>
+        </ul>        
+<!--{/if}-->
+
+
+    <form action="home.php?mod=spacecp&ac=dz_space_recommend&op=star_rm" method="post" enctype="multipart/form-data" autocomplete="off" target="frame_profile" >
+    <input type="hidden" value="{FORMHASH}" name="formhash">
+    <input type="hidden" value="6" name="submit_star_rm"><br>
+        <table cellspacing="0" cellpadding="0" class="tfm" id="profilelist">
+            <tbody>
+
+                <tr id="tr_realname">
+                    <td align="right" id="th_realname" style="padding-right:10px"><span class="rq" title="必填">*</span>填写球星的UID 例如(1,2,3,4,5)
+                        </td>
+                    <td id="td_realname">
+                        <input type="text" name="rm_member" value="<!--{eval echo substr($rm_member_str['rm_member'],0,-2);}-->" class="px"  tabindex="1">
+                    </td>
+                </tr>
+               
+
+                <tr>
+                    <td align="right" style="padding-right:10px">&nbsp;
+                    </td><td colspan="2">
+                        <input type="hidden" name="profilesubmit" value="true">
+                        <button type="submit" name="profilesubmitbtn" id="profilesubmitbtn" value="true" class="pn pnc"><strong>保存</strong></button>
+                        <input name="ac" value="dz_space_recommend" type="hidden"><input name="op" value="star_rm" type="hidden">  
+                    </td>
+                </tr>
+
+
+            </tbody>
+        </table>
+    </form>
+
+
+<!--{if !$_G[inajax]}-->
+		</div>
+	</div> 
+</div>
+<!--{/if}-->
+
+	</div>
+	</div>
+	<div class="clear"></div>
+</div>
+<!--{template home/spacecp_foot_comm}-->

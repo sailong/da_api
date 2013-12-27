@@ -1,0 +1,380 @@
+{eval
+	$_G[home_tpl_spacemenus][] = "<a href=\"home.php?mod=space&uid=$space[uid]&do=blog&view=me\">{lang they_blog}</a>";
+	$friendsname = array(1 => '{lang friendname_1}',2 => '{lang friendname_2}',3 => '{lang friendname_3}',4 => '{lang friendname_4}');
+}
+
+<!--{template home/spacecp_10_head}-->
+<div id="wtcontent">
+	<!-- 左侧 -->
+	<!--{template home/spacecp_10_left}-->
+	<!-- 右侧 -->
+	<div class="rightw">
+		<div class="rightlm"><h1>成绩卡所在球场：{$qc_name}</h1></div>
+		<div class="rcontent">
+			<div>
+				<div id="pt" class="bm cl">
+					<!--{subtemplate common/simplesearchform}-->
+				</div>
+				<style id="diy_style" type="text/css"></style>
+				<div class="wp">
+					<!--[diy=diy1]--><div id="diy1" class="area"></div><!--[/diy]-->
+				</div>
+				<div id="ct">
+					<div class="mn">
+					
+							<ul class="tb cl">
+                              <!--{eval $do=$_GET['do'];}-->
+
+								<li  <!--{if $do!='add'}-->class=a<!--{/if}-->>
+									<a href="home.php?mod=spacecp&uid=1889777&ac=resultcard&id=#resultcard">
+										球场-球员-成绩卡列表
+									</a> 
+								</li>   
+								<li <!--{if $do=='add'}-->class=a<!--{/if}-->>
+									<a href="home.php?mod=spacecp&uid=1889777&ac=resultcard&do=add">
+										添加球场-球员-成绩卡
+									</a>
+								</li>
+								<!--<li class="o"><a href="home.php?mod=spacecp&ac=blog">发布博客</a></li>-->
+							</ul>
+					
+			
+ <!--{if $do!='add'}-->
+						<!--{if $card_info}-->
+							<div class="xld {if empty($diymode)}xlda{/if}">
+							<!--{loop $card_info $k $value}-->
+								<dl class="bbda">
+									
+									<dd class="m" >
+										<div  style="width:150px;height:80px;">
+											<a href="home.php?mod=space&uid=$value[uid]" c="1">
+											 <img src="{$value['image']}" width="120" height="100">
+											</a>
+									    </div>
+									</dd>
+								
+									<dt class="xs2">
+										<span class="xi1">
+											球手名称：<a href="home.php?mod=space&uid=$value[uid]" ><!--{$value['realname']}--></a>
+										</span><br>
+
+										<span class="xi1">
+											球手成绩卡状态：<a  ><!--{$value['status']}--></a>
+										</span><br>
+
+
+										<span class="xi1">
+											比赛时间：<a><!--{$value['dateline']}--></a>
+										</span><br>
+
+										<span class="xi1">
+											T台：<a href="/home.php?mod=space&uid=$value[field_id]" target="_blank" > <!--{$value['qc_name']}-->  <!--{$value['tee']}--></a>
+										</span><br>
+
+										<span class="xi1">
+										<a href="home.php?mod=space&do=common&op=score&uid=$value['uid']&id=$value[baofen_id]" target="_blank" >
+										<font color='blue'>查看成绩卡 |</font>
+										</a>
+										<a href="home.php?mod=space&do=common&op=score&uid=$value['uid']&id=$value[baofen_id]&c=edit" target="_blank" ><font color='blue'>编辑成绩卡</font> </a>
+
+										<a href="home.php?mod=space&do=common&op=score&uid=$value['uid']&id=$value[baofen_id]&c=del"><font color='blue'>删除</font> </a>
+										</span><br>
+									</dt>									
+								</dl>
+							<!--{/loop}-->
+							</div>
+							<div class="pgs cl mtm">$multipage</div>
+						<!--{else}-->
+							<div class="emp">你所在的球场 还未添加成绩卡</div>
+						<!--{/if}-->
+<!--{else}-->
+							<div class="emp">
+                            <style type='text/css'>
+.score {
+	width:99%; border:1px solid #E2E2E2; margin-top:10px;
+}
+.score td {
+	border:1px solid #F8FcFD; height:38px; width:20px; text-align:center; padding:0
+}
+.score .bggao {height:18px;}
+.score tr .first {
+	width:80px; color:#FFF; height:30px; background-color:#3A6293;
+}
+.score tr .first2 {
+	width:80px; color:#FFF; height:30px; background-color:#94B2CC;
+}
+.score tr .num {
+	font-weight:bold; width:20px; background-color:#Eff3f4;
+}
+.score tr td input {
+	width:20px; height:25px; line-height:25px; margin:0; border:none
+}
+.score tr td .bottom {
+	width:96%
+}
+.score tr td #time {
+	width:150px; border:1px solid #E2e2e2; height:25px;
+}
+.table_miao {
+	line-height:25px; border:1px solid #fff; padding:0px; margin-top:8px; margin-bottom:8px; background:##b5c5d2
+}
+</style>
+                            	<!--{subtemplate home/spacecp_score_nav}-->
+				<script type="text/javascript" src="{$_G[setting][jspath]}calendar.js?{VERHASH}"></script>
+                            <form action='home.php?mod=spacecp&ac=resultcard&do=scoreadd&op=save' method='post' enctype='multipart/form-data' onsubmit='clearErrorInfo();'> 
+				 
+					<table cellspacing='0' cellpadding='0' class='score'>
+						<tr>
+							<td width="80">Tee</td>
+							<td colspan='21' style='text-align:left'> 
+							   <input name='fuid' id='field' value="<!--{$fuid}-->"  type="hidden"/>
+							   <input name=' sais_id' id=' sais_id' value="1000333"  type="hidden"/>
+								<select name='tee' id='tee' style='width:80px; height:25px; border:1px solid #E2e2e2; font-size:13px'>
+									<option value='0'>请选择</option>
+									<option value='蓝Tee'>蓝Tee</option>
+									<option value='金Tee'>金Tee</option>
+									<option value='黑Tee'>黑Tee</option>
+									<option value='白Tee'>白Tee</option>
+									<option value='红Tee'>红Tee</option>
+								</select> 	<span id='rtee' style='color:red'></span>
+								UID:<input name='uid' id='uid' value=""   style='width:50px;; border:1px solid #E2e2e2; height:25px;'/>
+								<span id='ruid' style='color:red'></span>
+							</td>
+						</tr>
+						<tr>
+							<td>时间</td>
+							<td colspan='21' style='text-align:left'>
+								<input type="text" name='dateline' id='time' value="<!--{if $scorelist[dateline]}-->$scorelist[dateline]<!--{else}-->$_G[gp_starttime]<!--{/if}-->" onclick="showcalendar(event, this)" />
+								<span id='rtime' style='color:red'></span>
+							</td>
+						</tr>
+						<tr>
+							<td>参加人数</td>
+							<td colspan='4'>
+								<input type='text' style='width:100%; border:1px solid #E2e2e2; height:25px;' name='member' value='<!--{if $scorelist[member]}-->$scorelist[member]<!--{/if}-->' maxlength='3' />
+							</td>
+							<td colspan='3'>备注</td>
+							<td colspan='14'>
+								<input type='text' style='width:80%; border:1px solid #E2e2e2; height:25px;' name='content' value='<!--{if $scorelist[content]}-->$scorelist[content]<!--{/if}-->' />
+							</td>
+						</tr>
+						<tr>
+							<td>上传积分卡</td>
+							<td colspan='21' style='text-align:left'><input type='file' name='uploadimg' style='width:300px; border:1px solid gray' /></td>
+						</tr>
+                        <tr><td height="12" colspan="22" bgcolor="#008bc6" class="bggao"></td></tr>
+						<tr>
+							<td class='first'>球洞</td>
+							<!--{loop $data $k $v}-->
+							<td class='num'><!--{$v}--></td>
+							<!--{/loop}-->
+						</tr>
+						<tr id='par'>
+							<td class='first'>标准杆</td>
+							 
+							<!--{loop $num $key $val}-->
+							<td>
+								<input name='par[]' type='text' id='par_$key' value='' size="2" readonly />
+					    </td>
+							<!--{/loop}--> 
+						</tr>
+						<tr id='score'>
+							<td class='first2'>成绩</td>
+							 
+							<!--{loop $num $key $val}-->
+							<td>
+								<!--{if ($key == '9') || ($key == '19') || ($key == '20')}-->
+								<input name='score[]' type='text' id='score_<!--{$key}-->' onblur="getscore('score_<!--{$key}-->')" value='' size="2" maxlength='2' readonly />
+								<!--{else}-->
+								<input name='score[]' type='text' id='score_<!--{$key}-->' onblur="getscore('score_<!--{$key}-->')" value='' size="2" maxlength='2' />
+								<!--{/if}-->
+						  </td>
+							<!--{/loop}--> 
+						</tr>
+						<tr id='pars'>
+							<td class='first2'>距离总标准杆</td>
+							 
+							<!--{loop $num $key $val}-->
+							<td id='<!--{$key}-->'><input name='pars[]' type='text' id='pars_<!--{$key}-->' value='' size="2" readonly /></td>
+							<!--{/loop}--> 
+						</tr>
+                        
+					</table>
+					 	<button type='submit' name='profilesubmitbtn' value='true' id='profilesubmitbtn' onclick='return checksubmit()' class='pn pnc' /><strong>{lang save}</strong></button> 
+					  
+				</form>
+                            
+                          <script type="text/javascript" src='static/js/jquery.js'></script>
+				<script type="text/javascript">
+				getpar(<!--{$fuid}-->);
+					function getmore() {
+						var html = "<span onclick='getbase()' id='getmore' style='cursor:hand'>基本资料 >></span>&nbsp;&nbsp;&nbsp;&nbsp;";
+						jQuery('#base').html(html);
+						jQuery('#more').css('display', '');
+					}
+					function getbase() {
+						jQuery('#more').css('display', 'none');
+						var html = "<span onclick='getmore()' id='getmore' style='cursor:hand'>更多资料 >></span>&nbsp;&nbsp;&nbsp;&nbsp;";
+						jQuery('#base').html(html);
+					}
+					function getarea(val) {
+						var url = 'ajax.php?do=area&val='+val;
+						jQuery.post(url, {}, function(msg) {
+							jQuery('#field').html(msg);
+						});
+					}
+					function getparsum() {
+						var par_9 = jQuery('#par_9').val();
+						var score_9 = jQuery('#score_9').val();
+						var pars_9 = score_9 - par_9;
+						jQuery('#pars_9').val(pars_9);
+						var par_19 = jQuery('#par_19').val();
+						var score_19 = jQuery('#score_19').val();
+						var pars_19 = score_19 - par_19;
+						jQuery('#pars_19').val(pars_19);
+						var par_20 = jQuery('#par_20').val();
+						var score_20 = jQuery('#score_20').val();
+						var pars_20 = score_20 - par_20;
+						jQuery('#pars_20').val(pars_20);
+					}
+					function getscore(str) {
+						getparsum();
+						var total_eagle = total_birdie = total_bogi = total_doubles = total_evenpar = 0;
+						var prefix = str.substr(0, 5);
+						var num = str.substr(6, 2);
+
+						var sco = parseInt(jQuery('#'+str).val()) ? parseInt(jQuery('#'+str).val()) : parseInt(0);
+
+						var par = jQuery('#par_'+num).val() ? parseInt(jQuery('#par_'+num).val()) : parseInt(0);
+						var pars = sco - par;
+						pars = (pars == '0') ? 'E' : pars;
+						jQuery('#'+'pars_'+num).val(pars);
+
+						var sum = 0;
+						var val = 0;
+						var cou = 0;
+						var plus = 0;
+						for(var i = 0; i < 9; i++) {
+							var val = parseInt(jQuery('#'+(prefix+'_'+i)).val()) ? parseInt(jQuery('#'+(prefix+'_'+i)).val()) : parseInt(0);
+							sum = sum + val;
+						}
+						jQuery('#'+prefix+'_9').val(sum);
+						for(var i = 10; i < 19; i++) {
+							var cou = parseInt(jQuery('#'+(prefix+'_'+i)).val()) ? parseInt(jQuery('#'+(prefix+'_'+i)).val()) : parseInt(0);
+							plus = plus + cou;
+						}
+						jQuery('#'+prefix+'_19').val(plus);
+						var sums = sum + plus;
+						jQuery('#'+prefix+'_20').val(sums);
+						for(var i = 0; i < 19; i++) {
+							if(i != '9') {
+								var val = jQuery('#pars_'+i).val();
+								if(val == 'E') {
+									total_evenpar++;		//打平标准杆
+								}
+								if(val == '-2') {
+									total_eagle++;		//老鹰球
+								}
+								if(val == '-1') {
+									total_birdie++;		//小鸟球
+								}
+								if(val == '1') {
+									total_bogi++;		//柏忌数
+								}
+								if(val == '2') {
+									total_doubles++;		//双柏忌数
+								}
+							}
+						}
+						var total = total_evenpar + total_eagle + total_birdie + total_bogi + total_doubles;
+						var total_otert = 18 - total;
+						jQuery('#total_evenpar').val(total_evenpar);
+						jQuery('#total_eagle').val(total_eagle);
+						jQuery('#total_birdie').val(total_birdie);
+						jQuery('#total_bogi').val(total_bogi);
+						jQuery('#total_doubles').val(total_doubles);
+						jQuery('#total_other').val(total_otert);
+					}
+					function getaveval(val, num, sid, flag) {
+						if(flag == 'pushs') {
+							/*if(parseInt(val) > 18) {
+								val = 18;
+								jQuery('#total_pushs').val(val);
+							}*/
+							var ave = (parseInt(val) / num).toFixed(2);
+						} else {
+							if(parseInt(val) > 14) {
+								val = 14;
+								jQuery('#total_shangdao').val(val);
+							}
+							var ave = ((parseInt(val) / num)*100).toFixed(2);
+						}
+						jQuery('#'+sid).val(ave);
+					}
+					function checksubmit() {
+						var flag = 1; 
+						var val = jQuery('#field').val();
+						var uid = jQuery('#uid').val(); 
+						var tee = jQuery('#tee').val();
+						var time = jQuery('#time').val(); 
+						
+						if(uid == '' || uid == '0') {
+							jQuery('#ruid').html('请填写uid');
+							return false;
+						} 
+						if(tee == '' || tee == '0') {
+							jQuery('#rtee').html('请填写Tee的类型');
+							return false;
+						}
+						if(time == '' || time == '0') {
+							jQuery('#rtime').html('请填写时间');
+							return false;
+						}
+						for(var i = 0; i < 19; i++) {
+							var val = jQuery('#score_'+i).val();
+							if(val == '' || val == '0') {
+								flag = 0;
+								break;
+							}
+						}
+						if(flag == '0') {
+							jQuery('#rscore').html('请填写成绩');
+							return false;
+						}
+					}
+					function getpar(id) {
+						var url = 'ajax.php?do=par&id='+id;
+						jQuery.get(url, {}, function(msg) {
+							var arr = new Array();
+							arr = msg.split('|');
+							jQuery.each(arr, function(k, v) {
+								jQuery('#par_'+k).val(v);
+							})
+						});
+					}
+				</script>  
+                             </div>
+ <!--{/if}-->	</div>
+						
+					</div>
+				</div>
+				<div class="wp mtn">
+					<!--[diy=diy3]--><div id="diy3" class="area"></div><!--[/diy]-->
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="clear"></div>
+
+
+
+
+
+
+
+
+
+
+
+</div>
+<!--{template home/spacecp_foot_comm}-->

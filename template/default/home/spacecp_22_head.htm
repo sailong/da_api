@@ -1,0 +1,26 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>无标题文档</title>
+<link href="{STATICURL}space/style/style_gobal.css?{VERHASH}" rel="stylesheet">
+<link href="{STATICURL}space/member/style.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+<script type="text/javascript">
+var curPane="left_1";
+function show(switchSysBar)
+{
+if(switchSysBar==curPane){return;}
+document.getElementById(curPane).style.display="none";
+document.getElementById(switchSysBar).style.display="block";
+curPane=switchSysBar;
+}
+</script>
+<div id="wt">
+	<!--{subtemplate home/head_gobal}-->
+	<div class="headad">&nbsp;</div>
+	<div class="menubg"><!--{subtemplate home/space_header_menu}--></div>
+</div>

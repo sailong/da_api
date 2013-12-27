@@ -1,0 +1,280 @@
+<!--{template home/space_header_comm}-->
+<div id="wtcontent">
+	<!-- 左侧 -->
+	<!--{template home/spacecp_00_left}-->
+	<!-- 右侧开始 -->
+	<script src="static/js/jquery-1.4.2.min.js"></script>
+	<style>
+	.list-div {
+  width: 100%;
+  background: #EEF8F9;
+  border: 1px solid #BBDDE5;
+}
+
+.list-div-ad {
+  border: 0px solid #BBDDE5;
+}
+
+.list-div table {
+  width: 100%;
+}
+
+.list-div th {
+  line-height: 24px;
+  background: #BBDDE5 url("/shop/admin/images/th_bg.gif") repeat-x;
+  white-space: nowrap;
+  text-align:center;
+}
+
+.list-div td {
+  background: #FFF;
+  line-height: 22px;
+}
+
+.list-div td.first-cell{
+  font-weight: bold;
+  padding-left: 10px;
+}
+
+.list-div input {
+  vertical-align: middle;
+}
+
+.list-div a:visited, .list-div a:link {
+  text-decoration: underline;
+  color: #192E32;
+}
+
+.list-div a:hover {
+  color: #9D7250;
+}
+
+.list-div input, list-div img {
+  vertical-align: middle;
+}
+
+.list-div .footer {
+  background: #F4FAFB;
+  text-align: right;
+}
+
+input.button {
+  padding: 2px 8px 0px;
+  margin: 2px 2px;
+  border: 1px solid #2D5082;
+  background: url(/shop/admin/images/button_bg.gif) repeat-x;
+}
+form{
+	padding:0;
+	margin:0;
+}
+td.label {
+  text-align: right;
+  vertical-align: top;
+  font-weight: bold;
+  padding: 5px 1em;
+  width: 30%;
+}
+
+td.label_2 {
+  text-align: right;
+  vertical-align: top;
+  font-weight: bold;
+  padding: 5px 1em;
+}
+
+table {
+  background: #FFF;
+  border-top: 10px solid #FFF;
+  border-bottom: 10px solid #FFF;
+  width: 99%;
+}
+.tabk td{
+	border:1px solid #BBDDE5;
+}
+#table_list tr:hover{background:#567896;color:#f00;}
+
+	</style>
+	
+		<div class="rightw">
+		<div class="rightlm"><h1>货品列表</h1></div>
+		<br>
+		<div class="rcontent">
+			<div>
+	<!----------货品开始----------->
+				<div class="list-div" style="margin-bottom: 5px; margin-top: 10px;" id="listDiv">
+<form method="post" action="home.php?mod=spacecp&ac=shopping&op=huopinadd" name="addForm" id="addForm" >
+<input type="hidden" name="goods_id" value="$goods[goods_id]" />
+<input type="hidden" name="act" value="product_add_execute" />
+  <table width="100%" cellpadding="3" cellspacing="1" id="table_list" class="tabk">
+    <tr>
+      <th colspan="20" scope="col">商品名称：{$goods["goods_name"]}&nbsp;&nbsp;&nbsp;&nbsp;货号：{$goods["goods_sn"]}</th>
+    </tr>
+    <tr>
+      <!-- start for specifications -->
+      <!--{loop $_attribute $attribute_value}-->
+        <td scope="col"><div align="center"><strong>$attribute_value["attr_name"]</strong></div></td>
+      <!--{/if}-->
+      <!-- end for specifications -->
+      <td class="label_2" style="text-align:center">货号</td>
+      <td class="label_2" style="text-align:center">库存</td>
+      <td class="label_2">&nbsp;</td>
+    </tr>
+
+	
+	<!--{loop $product_list $product}-->
+    <tr style="text-align:center">
+		<!--{loop $product[goods_attr] $goods}-->
+			<td scope="col"><div align="center">$goods</div></td>
+        <!--{/loop}-->
+      <td class="td_1"><span><input type="text" onblur="edit(this.value, $product[product_id],'huohao')" size=15 value="$product[product_sn]"></span></td>
+      <td class="td_1"><span><input type="text" onblur="edit(this.value, $product[product_id],'number')" value="$product[product_number]" size="8" /></span></td>
+      <td><input type="button" class="button" value=" - " onclick="myremove($product[product_id])"  /></td>
+    </tr>
+    <!--{/loop}-->
+	
+	<tr id="attr_row">
+    <!-- start for specifications_value -->
+		 <!--{loop $_attribute $attribute_value}-->
+      <td align="center">
+        <select name="attr[<!--{$attribute_value['attr_id']}-->][]">
+        <option value="" selected>请选择</option>
+		<!--{loop $attribute_value[attr_values] $value}-->
+        <option value="$value">$value</option>
+        <!--{/loop}-->
+        </select>
+      </td>
+    <!--{/loop}-->
+        <!-- end for specifications_value -->
+
+      <td class="label_2" style="background-color: rgb(255, 255, 255);"><input type="text" size="20" value="" name="product_sn[]"></td>
+      <td class="label_2" style="background-color: rgb(255, 255, 255);"><input type="text" size="10" value="1" name="product_number[]"></td>
+      <td style="background-color: rgb(255, 255, 255);"><input type="button" onclick="javascript:add_attr_product();" value=" + " class="button"></td>
+    </tr>
+    
+
+    <tr>
+      <td align="center" colspan="{$attribute_count_3}">
+        <input type="submit" class="button" value="保存" name="addhuopin" />
+      </td>
+    </tr>
+  </table>
+</form>
+</div>
+	<!----------货品结束----------->
+
+			</div>
+		</div>
+	</div>
+	<div class="clear"></div>
+	<script>
+	function myremove(id){
+		//alert(id);
+		if(confirm("确定要删除吗？"))
+		 {
+			jQuery.get('/home.php?mod=spacecp&ac=shopping&op=remove',{gid:id},function(msg){
+					alert(msg);
+					location.reload();
+				})
+
+		 }
+	}
+	
+	
+	/**
+ * 追加货品添加表格
+ */
+function add_attr_product()
+{
+  var table_list = document.getElementById('table_list');
+  var new_tr_id = rand_str('t');
+  var attr_row, attr_col, new_row, new_col;
+  var index = table_list.rows.length - 2; //此行号为输入框所在行
+
+  //创建新行
+  attr_row = document.getElementById('attr_row');
+  attr_col = attr_row.getElementsByTagName('td');
+
+  new_row = table_list.insertRow(index);//新增行
+  new_row.setAttribute("id", new_tr_id);
+
+  //创建新行的列
+  for (var i = 0; i < attr_col.length; i++)
+  {
+    new_col = new_row.insertCell(-1);
+    new_col.setAttribute("align", attr_col[i].getAttribute("align"));
+    new_col.setAttribute("class", attr_col[i].getAttribute("class"));
+    new_col.setAttribute("className", attr_col[i].getAttribute("className"));
+
+    if (i + 1 == attr_col.length)
+    {
+      new_col.innerHTML = '<input type="button" class="button" value=" - " onclick="javascript:minus_attr_product(\'' + new_tr_id + '\');"/>';
+    }
+    else
+    {
+      new_col.innerHTML = attr_col[i].innerHTML;
+    }
+  }
+
+  return true;
+}
+/**
+ * 返回随机数字符串
+ *
+ * @param : prefix  前缀字符
+ *
+ * @return : string
+ */
+function rand_str(prefix)
+{
+  var dd = new Date();
+  var tt = dd.getTime();
+  tt = prefix + tt;
+
+  var rand = Math.random();
+  rand = Math.floor(rand * 100);
+
+  return (tt + rand);
+}
+	
+/**
+ * 删除追加的货品表格
+ */
+function minus_attr_product(tr_number)
+{
+  if (tr_number.length > 0)
+  {
+    if (confirm("确定删除吗？") == false)
+    {
+      return false;
+    }
+
+    var table_list = document.getElementById('table_list');
+
+    for (var i = 0; i < table_list.rows.length; i++)
+    {
+      if (table_list.rows[i].id == tr_number)
+      {
+        table_list.deleteRow(i);
+      }
+    }
+  }
+
+  return true;
+}
+function edit(value,pid,type){
+	jQuery.post('home.php?mod=spacecp&ac=shopping&op=edit',{value:value,pid:pid,type:type},function(msg){
+		var jmg=jQuery.parseJSON(msg);
+		var jtype=jmg.m.type;
+		var jm=jmg.m.msg;
+		if(jtype=='goods' || jtype=='pro'){
+			alert(jm);
+		}
+		//location.reload();
+	})
+	
+}
+
+	</script>
+	<!--右侧结束-->
+<!--{template home/spacecp_foot_comm}-->

@@ -1,0 +1,52 @@
+<!--{subtemplate join/10_header}-->
+<body>
+	<img id="img" src="join.php?mod=read_avatar" style="float:left;position:absolute;z-index:0;left:0px;top:0px;"/>
+	<input type="hidden" value="<!--{$md5}-->"/>
+	<div id="cropper" border="1" style="float:left;position:absolute;z-index:-1;left:0px;top:0px;width:140px;height:140px;opacity:0.9;border-style: solid;"></div>
+	<script type="text/javascript">
+
+		dojo.addOnLoad(
+			function(){
+				dojo.connect(dojo.body(),'onmousedown',null,function(evt){
+
+					var imgWidth = dojo.byId('img').width;
+					var imgHeight = dojo.byId('img').height;
+					var tmp;
+					var rate;
+
+					if(imgWidth>imgHeight){
+						tmp = imgWidth;
+						imgWidth = 140;
+						rate = tmp/imgWidth;
+						imgHeight = Math.round(imgHeight/rate);
+					}
+
+					if(imgHeight>imgWidth){
+						tmp = imgHeight;
+						imgHeight = 140;
+						rate = tmp/imgHeight;
+						imgWidth = Math.round(imgWidth/rate);
+					}
+
+					if(imgWidth==imgHeight){
+						imgWidth = 140;
+						imgHeight = 140;
+					}
+
+					x = evt.layerX - Math.round(imgWidth/2);
+					y = evt.layerY - Math.round(imgHeight/2);
+
+					dojo.byId('cropper').style.left=x+"px";
+					dojo.byId('cropper').style.top=y+"px";
+
+					dojo.byId('cropper').style.width = imgWidth+"px";
+					dojo.byId('cropper').style.height = imgHeight+"px";
+
+					dojo.byId('cropper').style.zIndex="1";
+				});
+			}
+		);
+
+	</script>
+</body>
+<!--{subtemplate join/10_footer}-->

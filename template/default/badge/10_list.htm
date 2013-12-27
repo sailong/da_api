@@ -1,0 +1,2544 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="js/dojo-release-1.7.2/dijit/themes/claro/claro.css">
+<script src="js/dojo-release-1.7.2/dojo/dojo.js" type="text/javascript" djConfig="isDebug: true, parseOnLoad: true"></script>
+<script type="text/javascript" src='static/js/jquery.js'></script>
+<script type="text/javascript">
+			
+			dojo.require("dijit.Dialog");
+			dojo.require("dojo.io.iframe");
+			dojo.require("dojo.date.stamp");
+			dojo.require("dijit.form.DateTextBox");
+			
+			dojo.addOnLoad(function(){
+				
+				dojo.connect(dojo.byId("applying_cga_trainer_badge_button"), "onclick", function(){
+					dijit.byId("dialog_of_applying_cga_trainer_badge").show();
+				});
+				
+				dojo.connect(dojo.byId("applying_certificated_club_badge_button"), "onclick", function(){
+					dijit.byId("dialog_of_applying_certificated_club_badge").show();
+				});
+				
+				dojo.connect(dojo.byId("applying_hmt_trainer_badge_button"), "onclick", function(){
+					dijit.byId("dialog_of_applying_hmt_trainer_badge").show();
+				});
+				
+				dojo.connect(dojo.byId("applying_foreign_trainer_badge_button"), "onclick", function(){
+					dijit.byId("dialog_of_applying_foreign_trainer_badge").show();
+				});
+				
+				dojo.connect(dojo.byId("applying_dazheng_shop_badge_button"), "onclick", "applying_dazheng_shop_badge");
+				
+				dojo.connect(dojo.byId("applying_course_manager_badge_button"), "onclick", function(){
+					dijit.byId("dialog_of_applying_course_manager_badge").show();
+				});
+				
+				dojo.connect(dojo.byId("applying_lawn_expert_badge_button"), "onclick", function(){
+					dijit.byId("dialog_of_applying_lawn_expert_badge").show();
+				});
+				
+				dojo.connect(dojo.byId("applying_expert_badge_button"), "onclick", function(){
+					dijit.byId("dialog_of_applying_expert_badge").show();
+				});
+				
+				dojo.connect(dojo.byId("applying_microblog_gold_medal_button"), "onclick", "applying_microblog_gold_medal");
+				
+				dojo.connect(dojo.byId("applying_blog_gold_medal_button"), "onclick", "applying_blog_gold_medal");
+				
+				dojo.connect(dojo.byId("applying_grade_card_gold_medal_button"), "onclick", "applying_grade_card_gold_medal");
+				
+				
+				dojo.connect(dojo.byId("applying_toyota_crown_owner_badge_button"), "onclick", function(){
+					dijit.byId("dialog_of_applying_toyota_crown_owner_badge").show();
+				});
+				
+				dojo.connect(dojo.byId("applying_ct_diamond_card_badge_button"), "onclick", function(){
+					dijit.byId("dialog_of_applying_ct_diamond_card_badge").show();
+				});
+				
+				dojo.connect(dojo.byId("applying_microblog_silver_medal_button"), "onclick", "applying_microblog_silver_medal");
+				
+				dojo.connect(dojo.byId("applying_blog_silver_medal_button"), "onclick", "applying_blog_silver_medal");
+				
+				dojo.connect(dojo.byId("applying_grade_card_silver_medal_button"), "onclick", "applying_grade_card_silver_medal");
+				
+				dojo.connect(dojo.byId("applying_cga_referee_badge_button"), "onclick", function(){
+					dijit.byId("dialog_of_applying_cga_referee_badge").show();
+				});
+				
+				dojo.connect(dojo.byId("applying_common_employee_badge_button"), "onclick" ,function(){
+					dijit.byId("dialog_of_applying_common_employee_badge").show();
+				});
+				
+				//applying_caddie_badge_button
+				dojo.connect(dojo.byId("applying_caddie_badge_button"), "onclick" ,function(){
+                                        dijit.byId("dialog_of_applying_caddie_badge").show();
+                                });
+
+				dojo.connect(dojo.byId("applying_taylormade_badge_button"), "onclick", "applying_taylormade_badge");
+				
+				dojo.connect(dojo.byId("applying_china_golf_media_league_badge_button"), "onclick", "applying_china_golf_media_league_badge");
+				
+				dojo.connect(dojo.byId("applying_rolex_member_badge_button"), "onclick", "applying_rolex_member_badge");
+				
+				dojo.connect(dojo.byId("applying_ziji_investment_club_member_badge_button"), "onclick", "applying_ziji_investment_club_member_badge");
+				
+				dojo.connect(dojo.byId("applying_pamirs_spring_water_club_member_badge_button"), "onclick", "applying_pamirs_spring_water_club_member_badge");
+				
+				dojo.connect(dojo.byId("applying_nike_golf_badge_button"), "onclick", "applying_nike_golf_badge");
+
+				dojo.connect(dojo.byId("applying_toyota_crown_city_challenge_badge_button"), "onclick", "applying_toyota_crown_city_challenge_badge");
+				
+				dojo.connect(dojo.byId("applying_microblog_bronze_medal_button"), "onclick", "applying_microblog_bronze_medal");
+				
+				dojo.connect(dojo.byId("applying_blog_bronze_medal_button"), "onclick", "applying_blog_bronze_medal");
+				
+				dojo.connect(dojo.byId("applying_grade_card_bronze_medal_button"), "onclick", "applying_grade_card_bronze_medal");
+				
+				dojo.attr('cga_referee_level','value',dojo.attr('hidden_cga_referee_level','value'));
+
+				dojo.attr('cga_referee_native_place','value',dojo.attr('hidden_cga_referee_native_place','value'));
+
+				dojo.attr('cga_referee_working_place','value',dojo.attr('hidden_cga_referee_working_place','value'));
+
+			});
+			
+			function uploading_cga_trainer_certificate(){
+				
+				dojo.io.iframe.send({
+					form: "uploading_cga_trainer_certificate",
+					handleAs: "html",
+					load: function(response, ioArgs){
+						console.log(response.body.outerHTML);
+						if(response.body.outerHTML.toLowerCase().match('ok')==null){
+							if(dojo.byId('span')!=null){
+								dojo.byId('span').innerHTML = '';	
+							}
+						}else{
+							if(dojo.byId('span')!=null){
+								var d = new Date();
+								var num = dojo.date.stamp.toISOString(d)+Math.random();
+								dojo.byId('span').innerHTML = '<a target="_blank" href="badge.php?mod=reading_cga_trainer_certificate_original_size"><img src="badge.php?mod=reading_cga_trainer_certificate&amp;&amp;num='+num+'"/></a>';
+							}
+							if(dojo.byId('span2')!=null){
+								dojo.byId('span2').innerHTML = '<input type="button" value="删除已上传的中高协教练证书" onclick="removing_cga_trainer_certificate();" />';
+							}
+						}
+						return response;
+					},
+					error: function(response, ioArgs){
+						console.log(response);
+						return response;
+					}
+				});
+				
+			}
+			
+			function removing_cga_trainer_certificate(){
+
+				dojo.io.iframe.send({
+					form: "removing_cga_trainer_certificate",
+					handleAs: "html",
+					load: function(response, ioArgs){
+
+						if(response.body.outerHTML.toLowerCase().match('ok')==null){
+
+						}else{
+							if(dojo.byId('span')!=null){
+								dojo.byId('span').innerHTML = '';
+							}
+							if(dojo.byId('span2')!=null){
+								dojo.byId('span2').innerHTML = '';
+							}
+						}
+
+						return response;
+					},
+					error: function(response, ioArgs){
+						return response;
+					}
+				});
+
+			}
+			
+			function applying_cga_trainer_badge(){
+				
+				dojo.io.iframe.send({
+					form: "applying_cga_trainer_badge",
+					handleAs: "html",
+					load: function(response, ioArgs){
+						console.log(response.body.outerHTML);
+						
+						if(response.body.outerHTML.match('ok')==null){
+							
+							var tmp = response.body.outerHTML.toLowerCase();
+							tmp = tmp.replace("<body>","");
+                                                	tmp = tmp.replace("</body>","");
+							dojo.byId('applying_cga_trainer_badge_tip').innerHTML = tmp;
+						
+							setTimeout("dojo.byId('applying_cga_trainer_badge_tip').innerHTML = ''",3000);
+
+						}else{
+							
+							dijit.byId("dialog_of_applying_cga_trainer_badge").hide();
+							dojo.byId('tip_desc').innerHTML = '中高协教练徽章的申请成功提交';														 dijit.byId("dialog_of_tip").show();
+					
+						}
+						return response;
+					},
+					error: function(response, ioArgs){
+						return response;
+					}
+				});
+				
+			}
+
+			function uploading_club_trainer_certificate(){
+				
+				dojo.io.iframe.send({
+					form: "uploading_club_trainer_certificate",
+					handleAs: "html",
+					load: function(response, ioArgs){
+						console.log(response.body.outerHTML);
+						if(response.body.outerHTML.toLowerCase().match('ok')==null){
+							if(dojo.byId('span3')!=null){
+								dojo.byId('span3').innerHTML = '';	
+							}
+						}else{
+							if(dojo.byId('span3')!=null){
+								var d = new Date();
+								var num = dojo.date.stamp.toISOString(d)+Math.random();
+								dojo.byId('span3').innerHTML = '<a target="_blank" href="badge.php?mod=reading_club_trainer_certificate_original_size"><img src="badge.php?mod=reading_club_trainer_certificate&amp;&amp;num='+num+'"/></a>';
+							}
+							if(dojo.byId('span4')!=null){
+								dojo.byId('span4').innerHTML = '<input type="button" value="删除已上传的俱乐部教练证书" onclick="removing_club_trainer_certificate();" />';
+							}
+						}
+						return response;
+					},
+					error: function(response, ioArgs){
+						console.log(response);
+						return response;
+					}
+				});
+
+			}
+
+			function removing_club_trainer_certificate(){
+				
+				dojo.io.iframe.send({
+					form: "removing_club_trainer_certificate",
+					handleAs: "html",
+					load: function(response, ioArgs){
+
+						if(response.body.outerHTML.toLowerCase().match('ok')==null){
+
+						}else{
+							if(dojo.byId('span3')!=null){
+								dojo.byId('span3').innerHTML = '';
+							}
+							if(dojo.byId('span4')!=null){
+								dojo.byId('span4').innerHTML = '';
+							}
+						}
+
+						return response;
+					},
+					error: function(response, ioArgs){
+						return response;
+					}
+				});	
+
+			}
+
+			function applying_club_trainer_badge(){
+				dojo.io.iframe.send({
+					form: "applying_club_trainer_badge",
+					handleAs: "html",
+					load: function(response, ioArgs){
+						console.log(response.body.outerHTML);
+
+						if(response.body.outerHTML.match('ok')==null){
+
+                                                        var tmp = response.body.outerHTML.toLowerCase();
+                                                        tmp = tmp.replace("<body>","");
+                                                        tmp = tmp.replace("</body>","");
+                                                        dojo.byId('applying_certificated_club_badge_tip').innerHTML = tmp;
+
+                                                        setTimeout("dojo.byId('applying_certificated_club_badge_tip').innerHTML = ''",3000);
+
+                                                }else{
+
+                                                        dijit.byId("dialog_of_applying_certificated_club_badge").hide();
+							dojo.byId('tip_desc').innerHTML = '俱乐部教练徽章的申请成功提交';
+							dijit.byId("dialog_of_tip").show();
+
+                                                }
+
+						return response;
+					},
+					error: function(response, ioArgs){
+						return response;
+					}
+				});	
+			}
+
+			function uploading_hmt_trainer_certificate(){
+				dojo.io.iframe.send({
+					form: "uploading_hmt_trainer_certificate",
+					handleAs: "html",
+					load: function(response, ioArgs){
+						console.log(response.body.outerHTML);
+						if(response.body.outerHTML.toLowerCase().match('ok')==null){
+							if(dojo.byId('span5')!=null){
+								dojo.byId('span5').innerHTML = '';	
+							}
+						}else{
+							if(dojo.byId('span5')!=null){
+								var d = new Date();
+								var num = dojo.date.stamp.toISOString(d)+Math.random();
+								dojo.byId('span5').innerHTML = '<a target="_blank" href="badge.php?mod=reading_hmt_trainer_certificate_original_size"><img src="badge.php?mod=reading_hmt_trainer_certificate&amp;&amp;num='+num+'"/></a>';
+							}
+							if(dojo.byId('span6')!=null){
+								dojo.byId('span6').innerHTML = '<input type="button" value="删除已上传的港澳台教练证书" onclick="removing_hmt_trainer_certificate();" />';
+							}
+						}
+						return response;
+					},
+					error: function(response, ioArgs){
+						console.log(response);
+						return response;
+					}
+				});
+			}
+
+			function removing_hmt_trainer_certificate(){
+				
+				dojo.io.iframe.send({
+					form: "removing_hmt_trainer_certificate",
+					handleAs: "html",
+					load: function(response, ioArgs){
+
+						if(response.body.outerHTML.toLowerCase().match('ok')==null){
+
+						}else{
+							if(dojo.byId('span5')!=null){
+								dojo.byId('span5').innerHTML = '';
+							}
+							if(dojo.byId('span6')!=null){
+								dojo.byId('span6').innerHTML = '';
+							}
+						}
+
+						return response;
+					},
+					error: function(response, ioArgs){
+						return response;
+					}
+				});
+
+			}
+
+			function applying_hmt_trainer_badge(){
+				
+				dojo.io.iframe.send({
+					form: "applying_hmt_trainer_badge",
+					handleAs: "html",
+					load: function(response, ioArgs){
+						console.log(response.body.outerHTML);
+
+						if(response.body.outerHTML.match('ok')==null){
+
+                                                        var tmp = response.body.outerHTML.toLowerCase();
+                                                        tmp = tmp.replace("<body>","");
+                                                        tmp = tmp.replace("</body>","");
+                                                        dojo.byId('applying_hmt_trainer_badge_tip').innerHTML = tmp;
+
+                                                        setTimeout("dojo.byId('applying_hmt_trainer_badge_tip').innerHTML = ''",3000);
+
+                                                }else{
+
+                                                        dijit.byId("dialog_of_applying_hmt_trainer_badge").hide();
+							dojo.byId('tip_desc').innerHTML = '港澳台教练徽章的申请成功提交';
+							dijit.byId("dialog_of_tip").show();
+
+                                                }
+
+						return response;
+					},
+					error: function(response, ioArgs){
+						return response;
+					}
+				});
+
+			}
+
+			function uploading_foreign_trainer_certificate(){
+				
+				dojo.io.iframe.send({
+					form: "uploading_foreign_trainer_certificate",
+					handleAs: "html",
+					load: function(response, ioArgs){
+						console.log(response.body.outerHTML);
+						if(response.body.outerHTML.toLowerCase().match('ok')==null){
+							if(dojo.byId('span7')!=null){
+								dojo.byId('span7').innerHTML = '';	
+							}
+						}else{
+							if(dojo.byId('span7')!=null){
+								var d = new Date();
+								var num = dojo.date.stamp.toISOString(d)+Math.random();
+								dojo.byId('span7').innerHTML = '<a target="_blank" href="badge.php?mod=reading_foreign_trainer_certificate_original_size"><img src="badge.php?mod=reading_foreign_trainer_certificate&amp;&amp;num='+num+'"/></a>';
+							}
+							if(dojo.byId('span8')!=null){
+								dojo.byId('span8').innerHTML = '<input type="button" value="删除已上传的港澳台教练证书" onclick="removing_foreign_trainer_certificate();" />';
+							}
+						}
+						return response;
+					},
+					error: function(response, ioArgs){
+						console.log(response);
+						return response;
+					}
+				});
+
+			}
+
+			function removing_foreign_trainer_certificate(){
+				
+				dojo.io.iframe.send({
+					form: "removing_foreign_trainer_certificate",
+					handleAs: "html",
+					load: function(response, ioArgs){
+
+						if(response.body.outerHTML.toLowerCase().match('ok')==null){
+
+						}else{
+							if(dojo.byId('span7')!=null){
+								dojo.byId('span7').innerHTML = '';
+							}
+							if(dojo.byId('span8')!=null){
+								dojo.byId('span8').innerHTML = '';
+							}
+						}
+
+						return response;
+					},
+					error: function(response, ioArgs){
+						return response;
+					}
+				});
+
+			}
+
+			function applying_foreign_trainer_badge(){
+				
+				dojo.io.iframe.send({
+					form: "applying_foreign_trainer_badge",
+					handleAs: "html",
+					load: function(response, ioArgs){
+						console.log(response.body.outerHTML);
+
+						if(response.body.outerHTML.match('ok')==null){
+
+                                                        var tmp = response.body.outerHTML.toLowerCase();
+                                                        tmp = tmp.replace("<body>","");
+                                                        tmp = tmp.replace("</body>","");
+                                                        dojo.byId('applying_foreign_trainer_badge_tip').innerHTML = tmp;
+
+                                                        setTimeout("dojo.byId('applying_foreign_trainer_badge_tip').innerHTML = ''",3000);
+
+                                                }else{
+
+                                                        dijit.byId("dialog_of_applying_foreign_trainer_badge").hide();
+							dojo.byId('tip_desc').innerHTML = '外籍教练徽章的申请成功提交';
+							dijit.byId("dialog_of_tip").show();
+
+                                                }
+
+
+						return response;
+					},
+					error: function(response, ioArgs){
+						return response;
+					}
+				});
+
+			}
+
+			function uploading_toyota_crown_owner_certificate(){
+				
+				dojo.io.iframe.send({
+					form: "uploading_toyota_crown_owner_certificate",
+					handleAs: "html",
+					load: function(response, ioArgs){
+						console.log(response.body.outerHTML);
+						if(response.body.outerHTML.toLowerCase().match('ok')==null){
+							if(dojo.byId('span9')!=null){
+								dojo.byId('span9').innerHTML = '';	
+							}
+						}else{
+							if(dojo.byId('span9')!=null){
+								var d = new Date();
+								var str = dojo.date.stamp.toISOString(d)+Math.random();
+								dojo.byId('span9').innerHTML = '<a target="_blank" href="badge.php?mod=reading_toyota_crown_owner_certificate_original_size"><img src="badge.php?mod=reading_toyota_crown_owner_certificate&str='+str+'"/></a>';
+							}
+							if(dojo.byId('span10')!=null){
+								dojo.byId('span10').innerHTML = '<input type="button" value="删除已上传的皇冠车主行驶本" onclick="removing_toyota_crown_owner_certificate();" />';
+							}
+						}
+						return response;
+					},
+					error: function(response, ioArgs){
+						console.log(response);
+						return response;
+					}
+				});
+
+			}
+
+			function removing_toyota_crown_owner_certificate(){
+				
+				dojo.io.iframe.send({
+					form: "removing_toyota_crown_owner_certificate",
+					handleAs: "html",
+					load: function(response, ioArgs){
+
+						if(response.body.outerHTML.toLowerCase().match('ok')==null){
+
+						}else{
+							if(dojo.byId('span9')!=null){
+								dojo.byId('span9').innerHTML = '';
+							}
+							if(dojo.byId('span10')!=null){
+								dojo.byId('span10').innerHTML = '';
+							}
+						}
+
+						return response;
+					},
+					error: function(response, ioArgs){
+						return response;
+					}
+				});
+
+			}
+
+			function applying_toyota_crown_owner_badge(){
+				console.log(dojo.byId('applying_toyota_crown_owner_badge'));
+				dojo.io.iframe.send({
+					form: "applying_toyota_crown_owner_badge",
+					handleAs: "html",
+					load: function(response, ioArgs){
+						console.log(response.body.outerHTML);
+
+						if(response.body.outerHTML.match('ok')==null){
+
+                                                        var tmp = response.body.outerHTML.toLowerCase();
+                                                        tmp = tmp.replace("<body>","");
+                                                        tmp = tmp.replace("</body>","");
+                                                        dojo.byId('applying_toyota_crown_owner_badge_tip').innerHTML = tmp;
+
+                                                        setTimeout("dojo.byId('applying_toyota_crown_owner_badge_tip').innerHTML = ''",3000);
+
+                                                }else{
+
+                                                        dijit.byId("dialog_of_applying_toyota_crown_owner_badge").hide();
+							dojo.byId('tip_desc').innerHTML = '皇冠车主徽章的申请成功提交';
+							dijit.byId("dialog_of_tip").show();
+
+                                                }
+
+						return response;
+					},
+					error: function(response, ioArgs){
+						return response;
+					}
+				});			
+			}
+
+			function uploading_ct_diamond_card_pic(){
+				dojo.io.iframe.send({
+					form: "uploading_ct_diamond_card_pic",
+					handleAs: "html",
+					load: function(response, ioArgs){
+						console.log(response.body.outerHTML);
+						if(response.body.outerHTML.toLowerCase().match('ok')==null){
+							if(dojo.byId('span11')!=null){
+								dojo.byId('span11').innerHTML = '';	
+							}
+						}else{
+							if(dojo.byId('span11')!=null){
+								var d = new Date();
+								var str = dojo.date.stamp.toISOString(d)+Math.random();
+								dojo.byId('span11').innerHTML = '<a target="_blank" href="badge.php?mod=reading_ct_diamond_card_pic_original_size"><img src="badge.php?mod=reading_ct_diamond_card_pic&str='+str+'"/></a>';
+							}
+							if(dojo.byId('span12')!=null){
+								dojo.byId('span12').innerHTML = '<input type="button" value="删除已上传的电信钻石卡图片" onclick="removing_ct_diamond_card_pic();" />';
+							}
+						}
+						return response;
+					},
+					error: function(response, ioArgs){
+						console.log(response);
+						return response;
+					}
+				});
+			}
+
+			function removing_ct_diamond_card_pic(){
+				
+				dojo.io.iframe.send({
+					form: "removing_ct_diamond_card_pic",
+					handleAs: "html",
+					load: function(response, ioArgs){
+
+						if(response.body.outerHTML.toLowerCase().match('ok')==null){
+
+						}else{
+							if(dojo.byId('span11')!=null){
+								dojo.byId('span11').innerHTML = '';
+							}
+							if(dojo.byId('span12')!=null){
+								dojo.byId('span12').innerHTML = '';
+							}
+						}
+
+						return response;
+					},
+					error: function(response, ioArgs){
+						return response;
+					}
+				});
+
+			}
+
+			function applying_ct_diamond_card_badge(){
+				
+				dojo.io.iframe.send({
+					form: "applying_ct_diamond_card_badge",
+					handleAs: "html",
+					load: function(response, ioArgs){
+						console.log(response.body.outerHTML);
+
+						if(response.body.outerHTML.match('ok')==null){
+
+                                                        var tmp = response.body.outerHTML.toLowerCase();
+                                                        tmp = tmp.replace("<body>","");
+                                                        tmp = tmp.replace("</body>","");
+                                                        dojo.byId('applying_ct_diamond_card_badge_tip').innerHTML = tmp;
+
+                                                        setTimeout("dojo.byId('applying_ct_diamond_card_badge_tip').innerHTML = ''",3000);
+
+                                                }else{
+
+                                                        dijit.byId("dialog_of_applying_ct_diamond_card_badge").hide();
+							dojo.byId('tip_desc').innerHTML = '电信钻石卡徽章的申请成功提交';
+							dijit.byId("dialog_of_tip").show();
+
+                                                }
+
+						return response;
+					},
+					error: function(response, ioArgs){
+						return response;
+					}
+				});
+
+			}
+
+			function uploading_cga_referee_certificate(){
+				
+				dojo.io.iframe.send({
+					form: "uploading_cga_referee_certificate",
+					handleAs: "html",
+					load: function(response, ioArgs){
+						console.log(response.body.outerHTML);
+						if(response.body.outerHTML.toLowerCase().match('ok')==null){
+							if(dojo.byId('span13')!=null){
+								dojo.byId('span13').innerHTML = '';	
+							}
+						}else{
+							if(dojo.byId('span13')!=null){
+								var d = new Date();
+								var str = dojo.date.stamp.toISOString(d)+Math.random();
+								dojo.byId('span13').innerHTML = '<a target="_blank" href="badge.php?mod=reading_cga_referee_certificate_original_size"><img src="badge.php?mod=reading_cga_referee_certificate&str='+str+'"/></a>';
+							}
+							if(dojo.byId('span14')!=null){
+								dojo.byId('span14').innerHTML = '<input type="button" value="删除已上传的中高协裁判证书" onclick="removing_cga_referee_certificate();" />';
+							}
+						}
+						return response;
+					},
+					error: function(response, ioArgs){
+						console.log(response);
+						return response;
+					}
+				});
+
+			}
+
+			function removing_cga_referee_certificate(){
+				
+				dojo.io.iframe.send({
+					form: "removing_cga_referee_certificate",
+					handleAs: "html",
+					load: function(response, ioArgs){
+
+						if(response.body.outerHTML.toLowerCase().match('ok')==null){
+
+						}else{
+							if(dojo.byId('span13')!=null){
+								dojo.byId('span13').innerHTML = '';
+							}
+							if(dojo.byId('span14')!=null){
+								dojo.byId('span14').innerHTML = '';
+							}
+						}
+
+						return response;
+					},
+					error: function(response, ioArgs){
+						return response;
+					}
+				});
+
+			}
+
+			function applying_cga_referee_badge(){
+				
+				dojo.io.iframe.send({
+					form: "applying_cga_referee_badge",
+					handleAs: "html",
+					load: function(response, ioArgs){
+						console.log(response.body.outerHTML);
+
+						if(response.body.outerHTML.match('ok')==null){
+
+                                                        var tmp = response.body.outerHTML.toLowerCase();
+                                                        tmp = tmp.replace("<body>","");
+                                                        tmp = tmp.replace("</body>","");
+                                                        dojo.byId('applying_cga_referee_badge_tip').innerHTML = tmp;
+
+                                                        setTimeout("dojo.byId('applying_cga_referee_badge_tip').innerHTML = ''",3000);
+
+                                                }else{
+
+                                                        dijit.byId("dialog_of_applying_cga_referee_badge").hide();
+							dojo.byId('tip_desc').innerHTML = '中高协裁判徽章的申请成功提交';
+							dijit.byId("dialog_of_tip").show();
+
+                                                }
+
+						return response;
+					},
+					error: function(response, ioArgs){
+						return response;
+					}
+				});
+
+			}
+
+			function applying_china_golf_media_league_badge(){
+				
+				dojo.io.iframe.send({
+					form: "applying_china_golf_media_league_badge",
+					handleAs: "html",
+					load: function(response, ioArgs){
+						console.log(response.body.outerHTML);
+
+						if(response.body.outerHTML.match('ok')==null){
+
+                                                        var tmp = response.body.outerHTML.toLowerCase();
+                                                        tmp = tmp.replace("<body>","");
+                                                        tmp = tmp.replace("</body>","");
+                                                        dojo.byId('tip_desc').innerHTML = tmp;
+                                                        dijit.byId("dialog_of_tip").show();
+
+                                                }else{
+
+
+
+
+                                                }
+
+						return response;
+					},
+					error: function(response, ioArgs){
+						return response;
+					}
+				});
+
+			}
+
+			function applying_rolex_member_badge(){
+	
+				dojo.io.iframe.send({
+					form: "applying_rolex_member_badge",
+					handleAs: "html",
+					load: function(response, ioArgs){
+						console.log(response.body.outerHTML);
+
+						if(response.body.outerHTML.match('ok')==null){
+
+                                                        var tmp = response.body.outerHTML.toLowerCase();
+                                                        tmp = tmp.replace("<body>","");
+                                                        tmp = tmp.replace("</body>","");
+                                                        dojo.byId('tip_desc').innerHTML = tmp;
+                                                        dijit.byId("dialog_of_tip").show();
+
+                                                }else{
+
+
+
+
+                                                }
+
+						return response;
+					},
+					error: function(response, ioArgs){
+						return response;
+					}
+				});
+
+			}
+
+			function applying_ziji_investment_club_member_badge(){
+				
+				dojo.io.iframe.send({
+					form: "applying_ziji_investment_club_member_badge",
+					handleAs: "html",
+					load: function(response, ioArgs){
+						console.log(response.body.outerHTML);
+
+						if(response.body.outerHTML.match('ok')==null){
+
+                                                        var tmp = response.body.outerHTML.toLowerCase();
+                                                        tmp = tmp.replace("<body>","");
+                                                        tmp = tmp.replace("</body>","");
+                                                        dojo.byId('tip_desc').innerHTML = tmp;
+                                                        dijit.byId("dialog_of_tip").show();
+
+                                                }else{
+
+
+
+
+                                                }
+
+						return response;
+					},
+					error: function(response, ioArgs){
+						return response;
+					}
+				});
+
+			}
+
+			function applying_pamirs_spring_water_club_member_badge(){
+				
+				dojo.io.iframe.send({
+					form: "applying_pamirs_spring_water_club_member_badge",
+					handleAs: "html",
+					load: function(response, ioArgs){
+						console.log(response.body.outerHTML);
+
+						if(response.body.outerHTML.match('ok')==null){
+
+                                                        var tmp = response.body.outerHTML.toLowerCase();
+                                                        tmp = tmp.replace("<body>","");
+                                                        tmp = tmp.replace("</body>","");
+                                                        dojo.byId('tip_desc').innerHTML = tmp;
+                                                        dijit.byId("dialog_of_tip").show();
+
+                                                }else{
+
+
+
+
+                                                }
+
+						return response;
+					},
+					error: function(response, ioArgs){
+						return response;
+					}
+				});
+
+			}
+
+			function applying_nike_golf_badge(){
+				
+				dojo.io.iframe.send({
+					form: "applying_nike_golf_badge",
+					handleAs: "html",
+					load: function(response, ioArgs){
+						console.log(response.body.outerHTML);
+
+						if(response.body.outerHTML.match('ok')==null){
+
+                                                        var tmp = response.body.outerHTML.toLowerCase();
+                                                        tmp = tmp.replace("<body>","");
+                                                        tmp = tmp.replace("</body>","");
+                                                        dojo.byId('tip_desc').innerHTML = tmp;
+                                                        dijit.byId("dialog_of_tip").show();
+
+                                                }else{
+
+
+
+
+                                                }
+
+						return response;
+					},
+					error: function(response, ioArgs){
+						return response;
+					}
+				});
+
+			}
+
+			function applying_toyota_crown_city_challenge_badge(){
+				
+				dojo.io.iframe.send({
+                                        form: "applying_toyota_crown_city_challenge_badge",
+                                        handleAs: "html",
+                                        load: function(response, ioArgs){
+                                                console.log(response.body.outerHTML);
+
+						if(response.body.outerHTML.match('ok')==null){
+
+                                                        var tmp = response.body.outerHTML.toLowerCase();
+                                                        tmp = tmp.replace("<body>","");
+                                                        tmp = tmp.replace("</body>","");
+                                                        dojo.byId('tip_desc').innerHTML = tmp;
+                                                        dijit.byId("dialog_of_tip").show();
+
+                                                }else{
+
+                                                        
+
+
+                                                }
+
+                                                return response;
+                                        },
+                                        error: function(response, ioArgs){
+                                                return response;
+                                        }
+                                });
+
+			}
+
+			function applying_course_manager_badge(){
+				
+				dojo.io.iframe.send({
+					form: "applying_course_manager_badge",
+					handleAs: "html",
+					load: function(response, ioArgs){
+						console.log(response.body.outerHTML);
+
+						if(response.body.outerHTML.match('ok')==null){
+
+                                                        var tmp = response.body.outerHTML.toLowerCase();
+                                                        tmp = tmp.replace("<body>","");
+                                                        tmp = tmp.replace("</body>","");
+                                                        dojo.byId('applying_course_manager_badge_tip').innerHTML = tmp;
+
+                                                        setTimeout("dojo.byId('applying_course_manager_badge_tip').innerHTML = ''",3000);
+
+                                                }else{
+
+                                                        dijit.byId("dialog_of_applying_course_manager_badge").hide();
+							dojo.byId('tip_desc').innerHTML = '球场总经理徽章的申请成功提交';
+							dijit.byId("dialog_of_tip").show();
+
+                                                }
+
+						return response;
+					},
+					error: function(response, ioArgs){
+						return response;
+					}
+				});
+
+			}
+
+			function applying_lawn_expert_badge(){
+				
+				dojo.io.iframe.send({
+					form: "applying_lawn_expert_badge",
+					handleAs: "html",
+					load: function(response, ioArgs){
+						console.log(response.body.outerHTML);
+
+						if(response.body.outerHTML.match('ok')==null){
+
+                                                        var tmp = response.body.outerHTML.toLowerCase();
+                                                        tmp = tmp.replace("<body>","");
+                                                        tmp = tmp.replace("</body>","");
+                                                        dojo.byId('applying_lawn_expert_badge_tip').innerHTML = tmp;
+
+                                                        setTimeout("dojo.byId('applying_lawn_expert_badge_tip').innerHTML = ''",3000);
+
+                                                }else{
+
+                                                        dijit.byId("dialog_of_applying_lawn_expert_badge").hide();
+							dojo.byId('tip_desc').innerHTML = '草坪专家徽章的申请成功提交';
+							dijit.byId("dialog_of_tip").show();
+
+                                                }
+
+						return response;
+					},
+					error: function(response, ioArgs){
+						return response;
+					}
+				});
+
+			}
+			
+			function applying_expert_badge(){
+				
+				dojo.io.iframe.send({
+					form: "applying_expert_badge",
+					handleAs: "html",
+					load: function(response, ioArgs){
+						console.log(response.body.outerHTML);
+
+						if(response.body.outerHTML.match('ok')==null){
+
+                                                        var tmp = response.body.outerHTML.toLowerCase();
+                                                        tmp = tmp.replace("<body>","");
+                                                        tmp = tmp.replace("</body>","");
+                                                        dojo.byId('applying_expert_badge_tip').innerHTML = tmp;
+
+                                                        setTimeout("dojo.byId('applying_expert_badge_tip').innerHTML = ''",3000);
+
+                                                }else{
+
+                                                        dijit.byId("dialog_of_applying_expert_badge").hide();
+							dojo.byId('tip_desc').innerHTML = '专家徽章的申请成功提交';
+							dijit.byId("dialog_of_tip").show();
+
+                                                }
+
+						return response;
+					},
+					error: function(response, ioArgs){
+						return response;
+					}
+				});
+
+			}
+			
+			function applying_common_employee_badge(){
+				
+				dojo.io.iframe.send({
+					form: "applying_common_employee_badge",
+					handleAs: "html",
+					load: function(response, ioArgs){
+						console.log(response.body.outerHTML);
+
+						if(response.body.outerHTML.match('ok')==null){
+
+                                                        var tmp = response.body.outerHTML.toLowerCase();
+                                                        tmp = tmp.replace("<body>","");
+                                                        tmp = tmp.replace("</body>","");
+                                                        dojo.byId('applying_common_employee_badge_tip').innerHTML = tmp;
+
+                                                        setTimeout("dojo.byId('applying_common_employee_badge_tip').innerHTML = ''",3000);
+
+                                                }else{
+
+                                                        dijit.byId("dialog_of_applying_common_employee_badge").hide();
+							dojo.byId('tip_desc').innerHTML = '普通从业者徽章的申请成功提交';
+							dijit.byId("dialog_of_tip").show();
+
+                                                }
+
+						return response;
+					},
+					error: function(response, ioArgs){
+						return response;
+					}
+				});
+			}
+
+			function applying_taylormade_badge(){
+				
+				dojo.io.iframe.send({
+					form: "applying_taylormade_badge",
+					handleAs: "html",
+					load: function(response, ioArgs){
+						console.log(response.body.outerHTML);
+						
+						if(response.body.outerHTML.match('ok')==null){
+
+                                                        var tmp = response.body.outerHTML.toLowerCase();
+                                                        tmp = tmp.replace("<body>","");
+                                                        tmp = tmp.replace("</body>","");
+                                                        dojo.byId('tip_desc').innerHTML = tmp;
+                                                        dijit.byId("dialog_of_tip").show();
+
+                                                }else{
+
+
+
+
+                                                }
+
+						return response;
+					},
+					error: function(response, ioArgs){
+						return response;
+					}
+				});		
+			}
+
+			function applying_dazheng_shop_badge(){
+				
+				dojo.io.iframe.send({
+					form: "applying_dazheng_shop_badge",
+					handleAs: "html",
+					load: function(response, ioArgs){
+						console.log(response.body.outerHTML);
+
+						if(response.body.outerHTML.match('ok')==null){
+
+                                                        var tmp = response.body.outerHTML.toLowerCase();
+                                                        tmp = tmp.replace("<body>","");
+                                                        tmp = tmp.replace("</body>","");
+                                                        dojo.byId('tip_desc').innerHTML = tmp;
+                                                        dijit.byId("dialog_of_tip").show();
+
+                                                }else{
+
+
+
+
+                                                }
+
+						return response;
+					},
+					error: function(response, ioArgs){
+						return response;
+					}
+				});
+
+			}
+
+			function applying_blog_gold_medal(){
+				dojo.io.iframe.send({
+					form: "applying_blog_gold_medal",
+					handleAs: "html",
+					load: function(response, ioArgs){
+						console.log(response.body.outerHTML);
+
+						if(response.body.outerHTML.match('ok')==null){
+
+                                                        var tmp = response.body.outerHTML.toLowerCase();
+                                                        tmp = tmp.replace("<body>","");
+                                                        tmp = tmp.replace("</body>","");
+                                                        dojo.byId('tip_desc').innerHTML = tmp;
+                                                        dijit.byId("dialog_of_tip").show();
+
+                                                }else{
+
+
+
+
+                                                }
+
+
+						return response;
+					},
+					error: function(response, ioArgs){
+						return response;
+					}
+				});
+			}
+
+			function applying_microblog_gold_medal(){
+				dojo.io.iframe.send({
+                                        form: "applying_microblog_gold_medal",
+                                        handleAs: "html",
+                                        load: function(response, ioArgs){
+                                                console.log(response.body.outerHTML);
+
+						if(response.body.outerHTML.match('ok')==null){
+
+                                                        var tmp = response.body.outerHTML.toLowerCase();
+                                                        tmp = tmp.replace("<body>","");
+                                                        tmp = tmp.replace("</body>","");
+                                                        dojo.byId('tip_desc').innerHTML = tmp;
+                                                        dijit.byId("dialog_of_tip").show();
+
+                                                }else{
+
+
+
+
+                                                }
+
+
+                                                return response;
+                                        },
+                                        error: function(response, ioArgs){
+                                                return response;
+                                        }
+                                });
+			}
+
+			function applying_grade_card_gold_medal(){
+				dojo.io.iframe.send({
+                                        form: "applying_grade_card_gold_medal",
+                                        handleAs: "html",
+                                        load: function(response, ioArgs){
+                                                console.log(response.body.outerHTML);
+
+						if(response.body.outerHTML.match('ok')==null){
+
+                                                        var tmp = response.body.outerHTML.toLowerCase();
+                                                        tmp = tmp.replace("<body>","");
+                                                        tmp = tmp.replace("</body>","");
+                                                        dojo.byId('tip_desc').innerHTML = tmp;
+                                                        dijit.byId("dialog_of_tip").show();
+
+                                                }else{
+
+
+
+
+                                                }
+
+
+                                                return response;
+                                        },
+                                        error: function(response, ioArgs){
+                                                return response;
+                                        }
+                                });
+			}
+
+			function applying_blog_silver_medal(){
+				
+				dojo.io.iframe.send({
+					form: "applying_blog_silver_medal",
+					handleAs: "html",
+					load: function(response, ioArgs){
+						console.log(response.body.outerHTML);
+
+						if(response.body.outerHTML.match('ok')==null){
+
+                                                        var tmp = response.body.outerHTML.toLowerCase();
+                                                        tmp = tmp.replace("<body>","");
+                                                        tmp = tmp.replace("</body>","");
+                                                        dojo.byId('tip_desc').innerHTML = tmp;
+                                                        dijit.byId("dialog_of_tip").show();
+
+                                                }else{
+
+
+
+
+                                                }
+
+						return response;
+					},
+					error: function(response, ioArgs){
+						return response;
+					}
+				});
+				
+			}
+			
+			function applying_microblog_silver_medal(){
+				
+				dojo.io.iframe.send({
+                                        form: "applying_microblog_silver_medal",
+                                        handleAs: "html",
+                                        load: function(response, ioArgs){
+                                                console.log(response.body.outerHTML);
+
+						if(response.body.outerHTML.match('ok')==null){
+
+                                                        var tmp = response.body.outerHTML.toLowerCase();
+                                                        tmp = tmp.replace("<body>","");
+                                                        tmp = tmp.replace("</body>","");
+                                                        dojo.byId('tip_desc').innerHTML = tmp;
+                                                        dijit.byId("dialog_of_tip").show();
+
+                                                }else{
+
+
+
+
+                                                }
+
+                                                return response;
+                                        },
+                                        error: function(response, ioArgs){
+                                                return response;
+                                        }
+                                });
+				
+			}
+			
+			function applying_grade_card_silver_medal(){
+				
+				dojo.io.iframe.send({
+                                        form: "applying_grade_card_silver_medal",
+                                        handleAs: "html",
+                                        load: function(response, ioArgs){
+                                                console.log(response.body.outerHTML);
+
+						if(response.body.outerHTML.match('ok')==null){
+
+                                                        var tmp = response.body.outerHTML.toLowerCase();
+                                                        tmp = tmp.replace("<body>","");
+                                                        tmp = tmp.replace("</body>","");
+                                                        dojo.byId('tip_desc').innerHTML = tmp;
+                                                        dijit.byId("dialog_of_tip").show();
+
+                                                }else{
+
+
+
+
+                                                }
+
+                                                return response;
+                                        },
+                                        error: function(response, ioArgs){
+                                                return response;
+                                        }
+                                });
+				
+			}
+			
+			function applying_blog_bronze_medal(){
+				dojo.io.iframe.send({
+					form: "applying_blog_bronze_medal",
+					handleAs: "html",
+					load: function(response, ioArgs){
+						console.log(response.body.outerHTML);
+
+						if(response.body.outerHTML.match('ok')==null){
+
+                                                        var tmp = response.body.outerHTML.toLowerCase();
+                                                        tmp = tmp.replace("<body>","");
+                                                        tmp = tmp.replace("</body>","");
+                                                        dojo.byId('tip_desc').innerHTML = tmp;
+                                                        dijit.byId("dialog_of_tip").show();
+
+                                                }else{
+
+
+
+
+                                                }
+
+						return response;
+					},
+					error: function(response, ioArgs){
+						return response;
+					}
+				});
+			}
+			
+			function applying_microblog_bronze_medal(){
+				dojo.io.iframe.send({
+                                        form: "applying_microblog_bronze_medal",
+                                        handleAs: "html",
+                                        load: function(response, ioArgs){
+                                                console.log(response.body.outerHTML);
+
+						if(response.body.outerHTML.match('ok')==null){
+
+                                                        var tmp = response.body.outerHTML.toLowerCase();
+                                                        tmp = tmp.replace("<body>","");
+                                                        tmp = tmp.replace("</body>","");
+                                                        dojo.byId('tip_desc').innerHTML = tmp;
+                                                        dijit.byId("dialog_of_tip").show();
+
+                                                }else{
+
+
+
+
+                                                }
+
+                                                return response;
+                                        },
+                                        error: function(response, ioArgs){
+                                                return response;
+                                        }
+                                });
+			}
+			
+			function applying_grade_card_bronze_medal(){
+				dojo.io.iframe.send({
+                                        form: "applying_grade_card_bronze_medal",
+                                        handleAs: "html",
+                                        load: function(response, ioArgs){
+                                                console.log(response.body.outerHTML);
+
+						if(response.body.outerHTML.match('ok')==null){
+
+                                                        var tmp = response.body.outerHTML.toLowerCase();
+                                                        tmp = tmp.replace("<body>","");
+                                                        tmp = tmp.replace("</body>","");
+                                                        dojo.byId('tip_desc').innerHTML = tmp;
+                                                        dijit.byId("dialog_of_tip").show();
+
+                                                }else{
+
+
+
+
+                                                }
+
+                                                return response;
+                                        },
+                                        error: function(response, ioArgs){
+                                                return response;
+                                        }
+                                });
+			}
+			
+	
+
+			
+
+			function applying_caddie_badge(){
+				
+				dojo.attr('submitting_caddie_beginning_working_date','value',dijit.byId('caddie_beginning_working_date').get('displayedValue'));
+				dojo.attr('submitting_caddie_birth_date','value',dijit.byId('caddie_birth_date').get('displayedValue'));
+				
+				dojo.io.iframe.send({
+                                        form: "applying_caddie_badge",
+                                        handleAs: "html",
+                                        load: function(response, ioArgs){
+                                                console.log(response.body.outerHTML);
+
+                                                if(response.body.outerHTML.match('ok')==null){
+
+                                                        var tmp = response.body.outerHTML.toLowerCase();
+                                                        tmp = tmp.replace("<body>","");
+                                                        tmp = tmp.replace("</body>","");
+                                                        dojo.byId('applying_caddie_badge_tip').innerHTML = tmp;
+
+                                                        setTimeout("dojo.byId('applying_caddie_badge_tip').innerHTML = ''",3000);
+
+                                                }else{
+							
+							dijit.byId("dialog_of_applying_caddie_badge").hide();
+							dojo.byId('tip_desc').innerHTML = '球童徽章的申请成功提交';
+							dijit.byId("dialog_of_tip").show();
+
+                                                }
+
+                                                return response;
+                                        },
+                                        error: function(response, ioArgs){
+                                                return response;
+                                        }
+                                });
+
+			}
+
+			function getarea(val) {
+				var url = 'home.php?mod=spacecp&ac=apply&op=caddie&do=area&val='+val;
+				jQuery.post(url, {}, function(msg) {
+					jQuery('#field').html(msg);
+					dojo.attr('field','value',dojo.attr('hidden_club_place_info2_of_caddie','value'));
+				});
+			}
+
+			function ffield(fvalue){
+				var ty=jQuery("#"+fvalue).val();
+				jQuery.post('home.php?mod=spacecp&ac=usefiled&op=aj',{pid:ty},function(msg){
+					jQuery("#"+fvalue+"a").html(msg);
+					if(fvalue=='one'){
+						dojo.attr('onea','value',dojo.attr('hidden_caddie_working_place_info1_2','value'));
+					}
+					if(fvalue=='two'){
+						dojo.attr('twoa','value',dojo.attr('hidden_caddie_working_place_info2_2','value'));
+					}
+					if(fvalue=="three"){
+						dojo.attr('threea','value',dojo.attr('hidden_caddie_working_place_info3_2','value'));
+					}	
+				});
+				
+			}
+
+			function init_club_place_info(){
+				
+				var hidden_club_place_info1_of_caddie = dojo.attr('hidden_club_place_info1_of_caddie','value');
+				dojo.attr('province','value',hidden_club_place_info1_of_caddie);
+				getarea(hidden_club_place_info1_of_caddie);
+
+				dijit.byId('caddie_beginning_working_date').set('displayedValue',dojo.attr('hidden_caddie_beginning_working_date','value'));
+				
+				dijit.byId('caddie_birth_date').set('displayedValue',dojo.attr('hidden_caddie_birth_date','value'));
+
+				var hidden_caddie_working_place_info1_1 = dojo.attr('hidden_caddie_working_place_info1_1','value');
+				dojo.attr('one','value',hidden_caddie_working_place_info1_1);
+				ffield('one');
+
+				var hidden_caddie_working_place_info2_1 = dojo.attr('hidden_caddie_working_place_info2_1','value');
+				dojo.attr('two','value',hidden_caddie_working_place_info2_1);
+				ffield('two');
+
+				var hidden_caddie_working_place_info3_1 = dojo.attr('hidden_caddie_working_place_info3_1','value');
+				dojo.attr('three','value',hidden_caddie_working_place_info3_1);
+				ffield('three');
+
+				//hidden_caddie_personal_desc
+				dojo.attr('caddie_personal_desc','value',dojo.attr('hidden_caddie_personal_desc','value'));
+
+			}
+
+			dojo.addOnLoad(init_club_place_info);
+
+		</script>
+<link rel="stylesheet" href="static/badge/css/huizhang.css">
+<link href="style.css" rel="static/badge/css/style.css" type="text/css">
+<link href="spaces.css" rel="static/badge/css/spaces.css" type="text/css">
+<title>申请徽章</title>
+</head>
+
+<body class="claro">
+
+
+
+<div id="shop_wrapper">
+
+	<div id="shop_head"></div>
+
+          <!-- head部分开始 -->
+<!--
+          <div id="shop_head">
+                  <div class="member"><img src="static/badge/images/head_member.jpg"></div>
+                  <form action="#" method="post" name="search">
+                  <div class="search">
+                              <ul>
+                                    <li><input name="" type="image" src="static/badge/images/search_r.jpg"/></li>
+                                    <li><input type="text" value="look for something"  class="input"></li>
+                                    <li><img src="static/badge/images/search_l.jpg" ></li>
+                               </ul>
+                  </div>
+                  </form>
+                  <div class="datu"><img src="static/badge/images/flash.jpg"></div>
+          </div>
+
+          <div class="clear"></div>
+-->
+	
+	<div id="shop_head">
+		<div style="height:42px;">
+			<div class="member"><img src="static/badge/images/top_tx.jpg"></div>
+				<form id="scbar_form" target="_blank" action="search.php?searchsubmit=yes" method="post">
+					<div class="search">
+						<dt class="search_bt"><a><font color="white">大正网</font></a></dt>
+						<dt>&nbsp;</dt>
+						<dt class="search_input"><input type="text" name="srchtxt" value="" ></dt>
+						<dt class="search_bt"><input type="image" src="static/badge/images/search_bt.jpg"></dt>
+					</div>
+				</form>
+				<div class="denglu">
+					<a href="home.php?mod=space&uid=<!--{$uid}-->"><!--{$realname}--></a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="home.php?mod=space&do=pm">消息</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="home.php?mod=space&do=notice">提醒</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="member.php?mod=logging&action=logout">退出</a>
+				</div>
+		         </div>
+		<div><img src="static/badge/images/flash-1.jpg"></div>
+	</div>
+
+          <!-- head部分结束 -->
+          <!-- 内容部分开始-->
+           <div id="shop_content_wrapper">
+		            <div><img src="static/badge/images/zs.jpg"></div>
+					<div class="hz">
+								  <ul>
+										 <li>
+											 <img src="static/badge/images/zs_1.jpg">
+											 <p><a id="applying_certificated_club_badge_button" style="cursor:pointer"><img src="static/badge/images/lq.jpg"></a>
+										 </li>
+										 <li>
+											 <img src="static/badge/images/zs_2.jpg">
+											 <p><a id="applying_cga_trainer_badge_button" style="cursor:pointer"><img src="static/badge/images/lq.jpg"></a>
+										 </li>
+										 <li>
+											 <img src="static/badge/images/zs_3.jpg">
+											 <p><a id="applying_hmt_trainer_badge_button" style="cursor:pointer"><img src="static/badge/images/lq.jpg"></a>
+										 </li>
+										 <li>
+											 <img src="static/badge/images/zs_4.jpg">
+											 <p><a id="applying_foreign_trainer_badge_button" style="cursor:pointer"><img src="static/badge/images/lq.jpg"></a>
+										 </li>
+										 <!--
+										 <li>
+											 <img src="static/badge/images/zs_5.jpg">
+											 <p><a href="#"><img src="static/badge/images/lq.jpg"></a>
+										 </li>
+										 -->
+									</ul>
+					</div>
+					<div><img src="static/badge/images/jk.jpg"></div>
+					<div class="hz">
+								  <ul>
+										 <li>
+											 <img src="static/badge/images/jk_1.jpg">
+											 <p><a id="applying_toyota_crown_city_challenge_badge_button" style="cursor:pointer"><img src="static/badge/images/lq.jpg"></a>
+										 </li>
+										 <li>
+											 <img src="static/badge/images/jk_2.jpg">
+											 <p><a id="applying_dazheng_shop_badge_button" style="cursor:pointer"><img src="static/badge/images/lq.jpg"></a>
+										 </li>
+										 <li>
+											 <img src="static/badge/images/jk_3.jpg">
+											 <p><a id="applying_course_manager_badge_button" style="cursor:pointer"><img src="static/badge/images/lq.jpg"></a>
+										 </li>
+										 <li>
+											 <img src="static/badge/images/jk_4.jpg">
+											 <p><a id="applying_lawn_expert_badge_button" style="cursor:pointer"><img src="static/badge/images/lq.jpg"></a>
+										 </li>
+										 <li>
+											 <img src="static/badge/images/jk_5.jpg">
+											 <p><a id="applying_expert_badge_button" style="cursor:pointer"><img src="static/badge/images/lq.jpg"></a>
+										 </li>
+										 <!--
+										 <li>
+											 <img src="static/badge/images/jk_6.jpg">
+											 <p><a href="#"><img src="static/badge/images/lq.jpg"></a>
+										 </li>
+										 -->
+										 <li>
+											 <img src="static/badge/images/jk_7.jpg">
+											 <p><a id="applying_microblog_gold_medal_button" style="cursor:pointer"><img src="static/badge/images/lq.jpg"></a>
+										 </li>
+										 <li>
+											 <img src="static/badge/images/jk_8.jpg">
+											 <p><a id="applying_blog_gold_medal_button" style="cursor:pointer"><img src="static/badge/images/lq.jpg"></a>
+										 </li>
+										 <li>
+											 <img src="static/badge/images/jk_9.jpg">
+											 <p><a id="applying_grade_card_gold_medal_button" style="cursor:pointer"><img src="static/badge/images/lq.jpg"></a>
+										 </li>
+
+							  </ul>
+					</div>
+					<div><img src="static/badge/images/yk.jpg"></div>
+					<div class="hz">
+								 <ul>
+										 <li>
+											 <img src="static/badge/images/yk_1.jpg">
+											 <p><a id="applying_toyota_crown_owner_badge_button" style="cursor:pointer"><img src="static/badge/images/lq.jpg"></a>
+										 </li>
+										 <li>
+											 <img src="static/badge/images/yk_2.jpg">
+											 <p><a id="applying_ct_diamond_card_badge_button" style="cursor:pointer"><img src="static/badge/images/lq.jpg"></a>
+										 </li>
+										 <li>
+											 <img src="static/badge/images/yk_3.jpg">
+											 <p><a id="applying_microblog_silver_medal_button" style="cursor:pointer"><img src="static/badge/images/lq.jpg"></a>
+										 </li>
+										 <li>
+											 <img src="static/badge/images/yk_4.jpg">
+											 <p><a id="applying_blog_silver_medal_button" style="cursor:pointer"><img src="static/badge/images/lq.jpg"></a>
+										 </li>
+										 <li>
+											 <img src="static/badge/images/yk_5.jpg">
+											 <p><a id="applying_grade_card_silver_medal_button" style="cursor:pointer"><img src="static/badge/images/lq.jpg"></a>
+										 </li>
+								</ul>
+					</div>
+					<div><img src="static/badge/images/gj.jpg"></div>
+					<div class="hz">
+								  <ul>
+										 <li>
+											 <img src="static/badge/images/gj_1.jpg">
+											 <p><a id="applying_cga_referee_badge_button" style="cursor:pointer"><img src="static/badge/images/lq.jpg"></a>
+										 </li>
+										 <li>
+											 <img src="static/badge/images/gj_2.jpg">
+											 <p><a id="applying_caddie_badge_button" style="cursor:pointer"><img src="static/badge/images/lq.jpg"></a>
+										 </li>
+										 <li>
+											 <img src="static/badge/images/gj_3.jpg">
+											 <p><a id="applying_common_employee_badge_button" style="cursor:pointer"><img src="static/badge/images/lq.jpg"></a>
+										 </li>
+										 <li>
+											 <img src="static/badge/images/gj_4.jpg">
+											 <p><a id="applying_taylormade_badge_button" style="cursor:pointer"><img src="static/badge/images/lq.jpg"></a>
+										 </li>
+										 <li>
+											 <img src="static/badge/images/gj_5.jpg">
+											 <p><a id="applying_china_golf_media_league_badge_button" style="cursor:pointer"><img src="static/badge/images/lq.jpg"></a>
+										 </li>
+										 <li>
+											 <img src="static/badge/images/gj_6.jpg">
+											 <p><a id="applying_rolex_member_badge_button" style="cursor:pointer"><img src="static/badge/images/lq.jpg"></a>
+										 </li>
+										 <li>
+											 <img src="static/badge/images/gj_7.jpg">
+											 <p><a id="applying_ziji_investment_club_member_badge_button" style="cursor:pointer"><img src="static/badge/images/lq.jpg"></a>
+										 </li>
+										 <li>
+											 <img src="static/badge/images/gj_8.jpg">
+											 <p><a id="applying_pamirs_spring_water_club_member_badge_button" style="cursor:pointer"><img src="static/badge/images/lq.jpg"></a>
+										 </li>
+										 <li>
+											 <img src="static/badge/images/gj_9.jpg">
+											 <p><a id="applying_nike_golf_badge_button" style="cursor:pointer"><img src="static/badge/images/lq.jpg"></a>
+										 </li>
+										 <li>
+											 <img src="static/badge/images/gj_10.jpg">
+											 <p><a id="applying_microblog_bronze_medal_button" style="cursor:pointer"><img src="static/badge/images/lq.jpg"></a>
+										 </li>
+										 <li>
+											 <img src="static/badge/images/gj_11.jpg">
+											 <p><a id="applying_blog_bronze_medal_button" style="cursor:pointer"><img src="static/badge/images/lq.jpg"></a>
+										 </li>
+										 <li>
+											 <img src="static/badge/images/gj_12.jpg">
+											 <p><a id="applying_grade_card_bronze_medal_button" style="cursor:pointer"><img src="static/badge/images/lq.jpg"></a>
+										 </li>
+								</ul>
+					</div>
+					<!--<div><img src="static/badge/images/rz.jpg"></div>-->
+					<!--
+					<div class="hz">
+								 <ul>
+										 <li>
+											 <img src="static/badge/images/rz_1.jpg">
+											 <p><a href="#"><img src="static/badge/images/lq.jpg"></a>
+										 </li>
+								 </ul>
+					</div>
+					-->
+		            <div><img src="static/badge/images/content_b.jpg"></div>
+		   </div>
+          <!-- 内容部分结束-->
+          <!-- 底部文件开始-->
+          <div  id="foot_1"></div>
+          <div id="foot">
+                     <div id="foot_logo"><img src="static/badge/images/foot_logo.jpg"></div>
+                     <div id="foot_right">
+                                <A  href="/about.php">关于大正</A>&nbsp;|&nbsp;
+                                <A class=f9 href="/about.php">商务合作</A>&nbsp;|&nbsp;
+                                <A class=f9 href="/zhaopin.php">招贤纳士</A>&nbsp;|&nbsp;
+                                <A class=f9  href="/huoban.php" >合作伙伴</A>&nbsp;|&nbsp;
+                                <A class=f9  href="/lianxi.php" >联系我们</A>&nbsp;|&nbsp;
+                                <A class=f9  href="/shengming.php" >免责声明</A>&nbsp;|&nbsp;
+                                <A class=f9  href="/sitemap.php" >网站地图</A><br>
+                                大正网版权归北京大正承平文化传播有限公司<br> 
+                                京ICP证110339号    京公网安备110108008116号 
+                    </div>
+          </div>
+          <!--底部文件结束-->
+</div>
+
+<div id="dialog_of_applying_cga_trainer_badge" data-dojo-type="dijit.Dialog" title="申请中高协教练徽章">
+
+	<table>
+
+	<form id="applying_cga_trainer_badge" method="POST" action="badge.php?mod=applying_cga_trainer_badge">
+
+		<tr>
+			<td align="right">*所属机构：</td><td align="left"><input name="org_cga_trainer_belonging" type="text" value="<!--{$org_cga_trainer_belonging}-->"/></td>
+		</tr>
+
+		<tr>
+			<td align="right">职务：</td><td align="left"><input name="cga_trainer_duty" type="text" value="<!--{$cga_trainer_duty}-->"/></td>
+		</tr>
+
+		<tr>
+			<td align="right">教学擅长：</td><td align="left"><textarea name="cga_trainer_teaching_strong_point"><!--{$cga_trainer_teaching_strong_point}--></textarea></td>
+		</tr>
+
+		<input type="hidden" name="badge_type" value="中高协教练徽章"/>
+	</form>
+
+	<form id="uploading_cga_trainer_certificate" method="POST" action="badge.php?mod=uploading_cga_trainer_certificate" enctype="multipart/form-data">
+		<tr>
+		<td align="right">*上传中高协教练证书：</td>
+		<td align="left"><input type="file" onchange="dojo.addOnLoad(uploading_cga_trainer_certificate);" name="avatar">
+		<!--{if $cga_trainer_certificate_filename != '' && $cga_trainer_certificate_original_size_filename != ''}-->
+			<span id="span"><a target="_blank" href="badge.php?mod=reading_cga_trainer_certificate_original_size"><img src="badge.php?mod=reading_cga_trainer_certificate"/></a></span><span id="span2"><input type="button" value="删除已上传的中高协教练证书" onclick="dojo.addOnLoad(removing_cga_trainer_certificate);" /></span>
+		<!--{else}-->
+			<span id="span"></span><span id="span2"></span>
+		<!--{/if}-->
+		</td>
+		</tr>
+	</form>
+	
+	</table>
+
+	<form id="removing_cga_trainer_certificate" method="POST" action="badge.php?mod=removing_cga_trainer_certificate">
+	</form>
+	
+	
+	
+	<div align="left" id="applying_cga_trainer_badge_tip"></div>
+
+	<input type="button" value="提交" onclick="dojo.addOnLoad(applying_cga_trainer_badge);"/>
+</div>
+
+<div id="dialog_of_applying_certificated_club_badge" data-dojo-type="dijit.Dialog" title="申请俱乐部教练徽章">
+		<table>
+	<form id="applying_club_trainer_badge" method="POST" action="badge.php?mod=applying_club_trainer_badge">
+
+		
+
+		<tr>
+		<td align="right">*所属机构：</td><td align="left"><input name="org_club_trainer_belonging" type="text" value="<!--{$org_club_trainer_belonging}-->"/></td>
+		</tr>
+
+                <tr>
+		<td align="right">职务：</td><td align="left"><input name="club_trainer_duty" type="text" value="<!--{$club_trainer_duty}-->"/></td>
+		</tr>
+
+                <tr>
+		<td align="right">教学擅长：</td><td align="left"><textarea name="club_trainer_teaching_strong_point"><!--{$club_trainer_teaching_strong_point}--></textarea></td>
+		</tr>
+
+		<input type="hidden" name="badge_type" value="俱乐部教练徽章"/>
+
+		
+
+	</form>
+
+	<form id="uploading_club_trainer_certificate" method="POST" action="badge.php?mod=uploading_club_trainer_certificate" enctype="multipart/form-data">
+
+		
+		<tr>
+		<td>*上传俱乐部教练证书：</td>
+		<td>
+		<input type="file" onchange="dojo.addOnLoad(uploading_club_trainer_certificate);" name="avatar">
+		<!--{if $club_trainer_certificate_filename != '' && $club_trainer_certificate_original_size_filename != ''}-->
+			<span id="span3"><a target="_blank" href="badge.php?mod=reading_club_trainer_certificate_original_size"><img src="badge.php?mod=reading_club_trainer_certificate"/></a></span><span id="span4"><input type="button" value="删除已上传的俱乐部教练证书" onclick="dojo.addOnLoad(removing_club_trainer_certificate);" /></span>
+		<!--{else}-->
+			<span id="span3"></span><span id="span4"></span>
+		<!--{/if}-->
+		</td>
+		</tr>
+		
+
+	</form>
+		</table>
+	<form id="removing_club_trainer_certificate" method="POST" action="badge.php?mod=removing_club_trainer_certificate">
+	</form>
+
+	<div align="left" id="applying_certificated_club_badge_tip"></div>
+
+	<input type="button" value="提交" onclick="dojo.addOnLoad(applying_club_trainer_badge);"/>
+
+</div>
+
+<div id="dialog_of_applying_hmt_trainer_badge" data-dojo-type="dijit.Dialog" title="申请港澳台教练徽章">
+
+	<table>
+
+	<form id="applying_hmt_trainer_badge" method="POST" action="badge.php?mod=applying_hmt_trainer_badge">
+		
+		<tr><td align="right">*所属机构：</td><td align="left"><input name="org_hmt_trainer_belonging" type="text" value="<!--{$org_hmt_trainer_belonging}-->"/></td></tr>
+
+                <tr><td align="right">职务：</td><td align="left"><input name="hmt_trainer_duty" type="text" value="<!--{$hmt_trainer_duty}-->"/></td></tr>
+
+                <tr><td align="right">教学擅长：</td><td align="left"><textarea name="hmt_trainer_teaching_strong_point"><!--{$hmt_trainer_teaching_strong_point}--></textarea></td></tr>
+
+		<input type="hidden" name="badge_type" value="港澳台教练徽章"/>
+	</form>
+
+	<form id="uploading_hmt_trainer_certificate" method="POST" action="badge.php?mod=uploading_hmt_trainer_certificate" enctype="multipart/form-data">
+		
+		<tr>
+		<td align="right">*上传港澳台教练证书：</td>
+		<td align="left"><input type="file" onchange="dojo.addOnLoad(uploading_hmt_trainer_certificate);" name="avatar">
+		<!--{if $hmt_trainer_certificate_filename != '' && $hmt_trainer_certificate_original_size_filename != ''}-->
+			<span id="span5"><a target="_blank" href="badge.php?mod=reading_hmt_trainer_certificate_original_size"><img src="badge.php?mod=reading_hmt_trainer_certificate"/></a></span><span id="span6"><input type="button" value="删除已上传的港澳台教练证书" onclick="dojo.addOnLoad(removing_hmt_trainer_certificate);" /></span>
+		<!--{else}-->
+			<span id="span5"></span><span id="span6"></span>
+		<!--{/if}-->
+		</td>
+		</tr>
+	</form>
+
+	</table>
+
+	<form id="removing_hmt_trainer_certificate" method="POST" action="badge.php?mod=removing_hmt_trainer_certificate">
+	</form>
+
+	
+
+	<div align="left" id="applying_hmt_trainer_badge_tip"></div>
+
+	<input type="button" value="提交" onclick="dojo.addOnLoad(applying_hmt_trainer_badge);"/>
+
+	
+
+</div>
+
+<div id="dialog_of_applying_foreign_trainer_badge" data-dojo-type="dijit.Dialog" title="申请外籍教练徽章">
+
+	<table>
+
+	<form id="applying_foreign_trainer_badge" method="POST" action="badge.php?mod=applying_foreign_trainer_badge">
+
+		<tr><td align="right">*所属机构：</td><td align="left"><input name="org_foreign_trainer_belonging" type="text" value="<!--{$org_foreign_trainer_belonging}-->"/></td></tr>
+
+                <tr><td align="right">职务：</td><td align="left"><input name="foreign_trainer_duty" type="text" value="<!--{$foreign_trainer_duty}-->"/></td></tr>
+
+                <tr><td align="right">教学擅长：</td><td align="left"><textarea name="foreign_trainer_teaching_strong_point"><!--{$foreign_trainer_teaching_strong_point}--></textarea></td></tr>
+
+		<input type="hidden" name="badge_type" value="外籍教练徽章"/>
+	</form>
+
+	<form id="uploading_foreign_trainer_certificate" method="POST" action="badge.php?mod=uploading_foreign_trainer_certificate" enctype="multipart/form-data">
+		<tr>
+		<td align="right">*上传外籍教练证书：</td>
+		<td align="left">
+		<input type="file" onchange="dojo.addOnLoad(uploading_foreign_trainer_certificate);" name="avatar">
+		<!--{if $foreign_trainer_certificate_filename != '' && $foreign_trainer_certificate_original_size_filename != ''}-->
+			<span id="span7"><a target="_blank" href="badge.php?mod=reading_foreign_trainer_certificate_original_size"><img src="badge.php?mod=reading_foreign_trainer_certificate"/></a></span><span id="span8"><input type="button" value="删除已上传的外籍教练证书" onclick="dojo.addOnLoad(removing_foreign_trainer_certificate);" /></span>
+		<!--{else}-->
+			<span id="span7"></span><span id="span8"></span>
+		<!--{/if}-->
+		</td>
+		</tr>
+	</form>
+
+	</table>
+
+	<form id="removing_foreign_trainer_certificate" method="POST" action="badge.php?mod=removing_foreign_trainer_certificate">
+	</form>
+
+	
+
+	<div align="left" id="applying_foreign_trainer_badge_tip"></div>
+
+	<input type="button" value="提交" onclick="dojo.addOnLoad(applying_foreign_trainer_badge);"/>
+
+</div>
+
+<div id="dialog_of_applying_toyota_crown_owner_badge" data-dojo-type="dijit.Dialog" title="申请皇冠车主徽章">
+
+	<form id="uploading_toyota_crown_owner_certificate" method="POST" action="badge.php?mod=uploading_toyota_crown_owner_certificate" enctype="multipart/form-data">
+
+		*上传皇冠车主行驶本：<input type="file" onchange="dojo.addOnLoad(uploading_toyota_crown_owner_certificate);" name="avatar">
+		<!--{if $toyota_crown_owner_certificate_filename != '' && $toyota_crown_owner_certificate_original_size_filename != ''}-->
+			<span id="span9"><a target="_blank" href="badge.php?mod=reading_toyota_crown_owner_certificate_original_size"><img src="badge.php?mod=reading_toyota_crown_owner_certificate"/></a></span><span id="span10"><input type="button" value="删除已上传的冠车主行驶本" onclick="dojo.addOnLoad(removing_toyota_crown_owner_certificate);" /></span>
+		<!--{else}-->
+			<span id="span9"></span><span id="span10"></span>
+		<!--{/if}-->
+
+	</form>
+
+	<form id="removing_toyota_crown_owner_certificate" method="POST" action="badge.php?mod=removing_toyota_crown_owner_certificate">
+	</form>
+
+	<form id="applying_toyota_crown_owner_badge" method="POST" action="badge.php?mod=applying_toyota_crown_owner_badge">
+		<input type="hidden" name="badge_type" value="皇冠车主徽章"/>
+	</form>
+
+	<div align="left" id="applying_toyota_crown_owner_badge_tip"></div>
+
+	<input type="button" value="提交" onclick="dojo.addOnLoad(applying_toyota_crown_owner_badge);"/>
+
+</div>
+
+<div id="dialog_of_applying_ct_diamond_card_badge" data-dojo-type="dijit.Dialog" title="申请电信钻石卡徽章">
+	
+	<form id="uploading_ct_diamond_card_pic" method="POST" action="badge.php?mod=uploading_ct_diamond_card_pic" enctype="multipart/form-data">
+		*上传电信钻石卡正面图片：<input type="file" onchange="dojo.addOnLoad(uploading_ct_diamond_card_pic);" name="avatar">
+		<!--{if $ct_diamond_card_pic_filename != '' && $ct_diamond_card_pic_original_size_filename != ''}-->
+			<span id="span11"><a target="_blank" href="badge.php?mod=reading_ct_diamond_card_pic_original_size"><img src="badge.php?mod=reading_ct_diamond_card_pic"/></a></span><span id="span12"><input type="button" value="删除已上传的电信钻石卡正面图片" onclick="dojo.addOnLoad(removing_ct_diamond_card_pic);" /></span>
+		<!--{else}-->
+			<span id="span11"></span><span id="span12"></span>
+		<!--{/if}-->
+	</form>
+
+	<form id="removing_ct_diamond_card_pic" method="POST" action="badge.php?mod=removing_ct_diamond_card_pic">
+	</form>
+
+	<form id="applying_ct_diamond_card_badge" method="POST" action="badge.php?mod=applying_ct_diamond_card_badge">
+		<input type="hidden" name="badge_type" value="电信钻石卡徽章"/>
+	</form>
+
+	<div align="left" id="applying_ct_diamond_card_badge_tip"></div>
+
+	<input type="button" value="提交" onclick="dojo.addOnLoad(applying_ct_diamond_card_badge);"/>
+
+</div>
+
+<div id="dialog_of_applying_cga_referee_badge" data-dojo-type="dijit.Dialog" title="申请中高协裁判徽章">
+
+	<table>
+
+	<form id="applying_cga_referee_badge" method="POST" action="badge.php?mod=applying_cga_referee_badge">
+
+		<tr>
+		<td align="right">*裁判级别：</td>
+		<td align="left">
+		<select id="cga_referee_level" name="cga_referee_level">
+			<option value ="初级">初级</option>
+			<option value ="中级">中级</option>
+			<option value="国家C级">国家C级</option>
+			<option value="国家B级">国家B级</option>
+			<option value="国家A级">国家A级</option>
+			<option value="国际级">国际级</option>
+			<option value="其他">其他</option>
+		</select>
+		</td>
+		</tr>
+
+		<tr>
+		<td align="right">*执裁场次：</td>
+		<td align="left"><input type="text" id="cga_referee_judging_game_num" name="cga_referee_judging_game_num" value="<!--{$cga_referee_judging_game_num}-->"/></td>
+		</tr>
+
+		<tr>
+		<td align="right">籍贯：</td>
+		<td align="left">
+		<select name="cga_referee_native_place" id="cga_referee_native_place">
+			<option value="0">请选择</option>
+			<option value="1">北京市</option>
+			<option value="2">天津市</option>
+			<option value="3">河北省</option>
+			<option value="4">山西省</option>
+			<option value="5">内蒙古自治区</option>
+			<option value="6">辽宁省</option>
+			<option value="7">吉林省</option>
+			<option value="8">黑龙江省</option>
+			<option value="9">上海市</option>
+			<option value="10">江苏省</option>
+			<option value="11">浙江省</option>
+			<option value="12">安徽省</option>
+			<option value="13">福建省</option>
+			<option value="14">江西省</option>
+			<option value="15">山东省</option>
+			<option value="16">河南省</option>
+			<option value="17">湖北省</option>
+			<option value="18">湖南省</option>
+			<option value="19">广东省</option>
+			<option value="20">广西壮族自治区</option>
+			<option value="21">海南省</option>
+			<option value="22">重庆市</option>
+			<option value="23">四川省</option>
+			<option value="24">贵州省</option>
+			<option value="25">云南省</option>
+			<option value="26">西藏自治区</option>
+			<option value="27">陕西省</option>
+			<option value="28">甘肃省</option>
+			<option value="29">青海省</option>
+			<option value="30">宁夏回族自治区</option>
+			<option value="31">新疆维吾尔自治区</option>
+			<option value="32">台湾省</option>
+			<option value="33">香港特别行政区</option>
+			<option value="34">澳门特别行政区</option>
+			<option value="35">海外</option>
+			<option value="36">其他</option>
+		</select>
+		</td>
+		</tr>
+
+		<tr>
+		<td align="right">工作地点：</td>
+		<td align="left">
+		<select name="cga_referee_working_place" id="cga_referee_working_place">
+			<option value="0">请选择</option>
+			<option value="1">北京市</option>
+			<option value="2">天津市</option>
+			<option value="3">河北省</option>
+			<option value="4">山西省</option>
+			<option value="5">内蒙古自治区</option>
+			<option value="6">辽宁省</option>
+			<option value="7">吉林省</option>
+			<option value="8">黑龙江省</option>
+			<option value="9">上海市</option>
+			<option value="10">江苏省</option>
+			<option value="11">浙江省</option>
+			<option value="12">安徽省</option>
+			<option value="13">福建省</option>
+			<option value="14">江西省</option>
+			<option value="15">山东省</option>
+			<option value="16">河南省</option>
+			<option value="17">湖北省</option>
+			<option value="18">湖南省</option>
+			<option value="19">广东省</option>
+			<option value="20">广西壮族自治区</option>
+			<option value="21">海南省</option>
+			<option value="22">重庆市</option>
+			<option value="23">四川省</option>
+			<option value="24">贵州省</option>
+			<option value="25">云南省</option>
+			<option value="26">西藏自治区</option>
+			<option value="27">陕西省</option>
+			<option value="28">甘肃省</option>
+			<option value="29">青海省</option>
+			<option value="30">宁夏回族自治区</option>
+			<option value="31">新疆维吾尔自治区</option>
+			<option value="32">台湾省</option>
+			<option value="33">香港特别行政区</option>
+			<option value="34">澳门特别行政区</option>
+			<option value="35">海外</option>
+			<option value="36">其他</option>
+		</select>
+		</td>
+		</tr>
+
+		<tr>
+			<td align="right">个人简介：</td><td align="left"><textarea name="cga_referee_personal_desc" id="cga_referee_personal_desc"><!--{$cga_referee_personal_desc}--></textarea></td>
+		</tr>
+
+		<input type="hidden" name="badge_type" value="中高协裁判徽章"/>
+	</form>
+
+	<form id="uploading_cga_referee_certificate" method="POST" action="badge.php?mod=uploading_cga_referee_certificate" enctype="multipart/form-data">
+		<tr>
+		<td align="right">*上传中高协裁判证书：</td>
+		<td align="left">
+		<input type="file" onchange="dojo.addOnLoad(uploading_cga_referee_certificate);" name="avatar">
+		<!--{if $cga_referee_certificate_filename != '' && $cga_referee_certificate_original_size_filename != ''}-->
+			<span id="span13"><a target="_blank" href="badge.php?mod=reading_cga_referee_certificate_original_size"><img src="badge.php?mod=reading_cga_referee_certificate"/></a></span><span id="span14"><input type="button" value="删除已上传的中高协裁判证书" onclick="dojo.addOnLoad(removing_cga_referee_certificate);" /></span>
+		<!--{else}-->
+			<span id="span13"></span><span id="span14"></span>
+		<!--{/if}-->
+		</td>
+		</tr>
+	</form>
+
+	</table>
+
+	<form id="removing_cga_referee_certificate" method="POST" action="badge.php?mod=removing_cga_referee_certificate">
+	</form>
+
+	
+
+	<div align="left" id="applying_cga_referee_badge_tip"></div>
+
+	<input type="button" value="提交" onclick="dojo.addOnLoad(applying_cga_referee_badge);"/>
+
+</div>
+
+<form id="applying_china_golf_media_league_badge" method="POST" action="badge.php?mod=applying_china_golf_media_league_badge">
+	<input type="hidden" name="badge_type" value="中国高尔夫媒体联盟徽章"/>
+</form>
+
+<form id="applying_rolex_member_badge" method="POST" action="badge.php?mod=applying_rolex_member_badge">
+	<input type="hidden" name="badge_type" value="劳力士会员徽章"/>
+</form>
+
+<form id="applying_ziji_investment_club_member_badge" method="POST" action="badge.php?mod=applying_ziji_investment_club_member_badge">
+	<input type="hidden" name="badge_type" value="紫金理财俱乐部会员徽章"/>
+</form>
+
+<form id="applying_pamirs_spring_water_club_member_badge" method="POST" action="badge.php?mod=applying_pamirs_spring_water_club_member_badge">
+	<input type="hidden" name="badge_type" value="帕米尔矿泉水俱乐部会员徽章"/>
+</form>
+
+<form id="applying_nike_golf_badge" method="POST" action="badge.php?mod=applying_nike_golf_badge">
+	<input type="hidden" name="badge_type" value="耐克高尔夫徽章"/>
+</form>
+
+<form id="applying_toyota_crown_city_challenge_badge" method="POST" action="badge.php?mod=applying_toyota_crown_city_challenge_badge">
+	<input type="hidden" name="badge_type" value="皇冠杯城市挑战赛徽章"/>
+</form>
+
+<div id="dialog_of_applying_course_manager_badge" data-dojo-type="dijit.Dialog" title="申请球场总经理徽章">
+
+	<table>
+
+	<form id="applying_course_manager_badge" method="POST" action="badge.php?mod=applying_course_manager_badge">
+		<tr><td align="right">*公司名称：</td><td align="left"><input type="text" name="company_name_of_course_manager" value="<!--{$company_name_of_course_manager}-->"/></td></tr>
+		<tr><td align="right">公司地址：</td><td align="left"><input type="text" name="company_address_of_course_manager" value="<!--{$company_address_of_course_manager}-->"/></td></tr>
+		<tr>
+		<td align="right">个人简介：</td>
+		<td align="left"><textarea name="personal_desc_of_course_manager"><!--{$personal_desc_of_course_manager}--></textarea></td>
+		</tr>
+		<input type="hidden" name="badge_type" value="球场总经理徽章"/>
+	</form>
+
+	</table>
+
+	<div align="left" id="applying_course_manager_badge_tip"></div>
+
+	<input type="button" value="提交" onclick="dojo.addOnLoad(applying_course_manager_badge);"/>
+</div>
+
+<div id="dialog_of_applying_lawn_expert_badge" data-dojo-type="dijit.Dialog" title="申请草坪专家徽章">
+	<table>
+	<form id="applying_lawn_expert_badge" method="POST" action="badge.php?mod=applying_lawn_expert_badge">
+		<tr><td align="right">*姓名及职务：</td><td align="left"><input name="lawn_expert_name_and_duty" type="text" value="<!--{$lawn_expert_name_and_duty}-->"/></td></tr>
+		<tr>
+		<td align="right">*个人简介：</td>
+		<td align="left"><textarea name="lawn_expert_personal_desc"><!--{$lawn_expert_personal_desc}--></textarea></td>
+		</tr>
+		<input type="hidden" name="badge_type" value="草坪专家徽章"/>
+	</form>
+	</table>
+
+	<div align="left" id="applying_lawn_expert_badge_tip"></div>
+
+	<input type="button" value="提交" onclick="dojo.addOnLoad(applying_lawn_expert_badge);"/>
+</div>
+
+<div id="dialog_of_applying_expert_badge" data-dojo-type="dijit.Dialog" title="申请专家徽章">
+
+	<table>
+
+	 <form id="applying_expert_badge" method="POST" action="badge.php?mod=applying_expert_badge">
+		<tr><td align="right">*姓名及职务：</td><td align="left"><input name="expert_name_and_duty" type="text" value="<!--{$expert_name_and_duty}-->"/></td></tr>
+		<tr>
+		<td align="right">*个人简介：</td>
+		<td align="left"><textarea name="expert_personal_desc"><!--{$expert_personal_desc}--></textarea></td>
+		</tr>
+		<input type="hidden" name="badge_type" value="专家徽章"/>
+	</form>
+
+	</table>
+
+	<div align="left" id="applying_expert_badge_tip"></div>
+
+	<input type="button" value="提交" onclick="dojo.addOnLoad(applying_expert_badge);"/>
+</div>
+
+<div id="dialog_of_applying_common_employee_badge" data-dojo-type="dijit.Dialog" title="申请普通从业者徽章">
+
+	<table>
+
+	<form id="applying_common_employee_badge" method="POST" action="badge.php?mod=applying_common_employee_badge">
+		<tr><td align="right">*公司名称：</td><td align="left"><input type="text" name="company_name_of_practitioner" value="<!--{$company_name_of_practitioner}-->"/></td></tr>
+		<tr><td align="right">职务：</td><td align="left"><input type="text" name="duty_of_practitioner" value="<!--{$duty_of_practitioner}-->"/></td></tr>
+		<tr><td align="right">公司地址：</td><td align="left"><input type="text" name="company_address_of_practitioner" value="<!--{$company_address_of_practitioner}-->"/></td></tr>
+		<tr>
+		<td align="right">个人简介：</td>
+		<td align="left"><textarea name="personal_desc_of_practitioner"><!--{$personal_desc_of_practitioner}--></textarea></td>
+		</tr>
+		<input type="hidden" name="badge_type" value="普通从业者徽章"/>
+	</form>
+
+	</table>
+
+	<div align="left" id="applying_common_employee_badge_tip"></div>
+
+	<input type="button" value="提交" onclick="dojo.addOnLoad(applying_common_employee_badge);"/>
+
+</div>
+
+<div id="dialog_of_applying_caddie_badge" data-dojo-type="dijit.Dialog" title="申请球童徽章">
+
+	<table>
+
+	<form id="applying_caddie_badge" method="post" action="badge.php?mod=applying_caddie_badge">
+	<input type="hidden" name="caddie_beginning_working_date" id="submitting_caddie_beginning_working_date"/>
+	<input type="hidden" name="caddie_birth_date" id="submitting_caddie_birth_date"/>
+	
+	<tr>
+		<td align="right">*所属俱乐部：</td>
+		<td align="left">
+		<select id="province" onchange="getarea(this.value)" style="width:100px; height:22px; border:1px solid #E8E8E8; font-size:13px" name="club_place_info1_of_caddie">
+			<option value="0">请选择</option>
+			<option value="1">北京市</option>
+			<option value="2">天津市</option>
+			<option value="3">河北省</option>
+			<option value="4">山西省</option>
+			<option value="5">内蒙古自治区</option>
+			<option value="6">辽宁省</option>
+			<option value="7">吉林省</option>
+			<option value="8">黑龙江省</option>
+			<option value="9">上海市</option>
+			<option value="10">江苏省</option>
+			<option value="11">浙江省</option>
+			<option value="12">安徽省</option>
+			<option value="13">福建省</option>
+			<option value="14">江西省</option>
+			<option value="15">山东省</option>
+			<option value="16">河南省</option>
+			<option value="17">湖北省</option>
+			<option value="18">湖南省</option>
+			<option value="19">广东省</option>
+			<option value="20">广西壮族自治区</option>
+			<option value="21">海南省</option>
+			<option value="22">重庆市</option>
+			<option value="23">四川省</option>
+			<option value="24">贵州省</option>
+			<option value="25">云南省</option>
+			<option value="26">西藏自治区</option>
+			<option value="27">陕西省</option>
+			<option value="28">甘肃省</option>
+			<option value="29">青海省</option>
+			<option value="30">宁夏回族自治区</option>
+			<option value="31">新疆维吾尔自治区</option>
+			<option value="32">台湾省</option>
+			<option value="33">香港特别行政区</option>
+			<option value="34">澳门特别行政区</option>
+			<option value="35">海外</option>
+			<option value="36">其他</option>
+		</select>
+
+		</td>
+
+		<td align="left">
+
+		<select id="field" style="width:150px; height:22px; border:1px solid #E8E8E8; border-left:1px solid #E8E8E8; font-size:13px" name="club_place_info2_of_caddie">
+			<option value="0">请选择</option>
+		</select>		
+
+		</td>
+
+	</tr>
+
+	<tr>
+		<td align="right"><label for="date1">*入行时间：</label></td><td align="left" colspan="2"><input id='caddie_beginning_working_date' type="text" data-dojo-type="dijit.form.DateTextBox"/></td>
+	</tr>
+
+	<tr>
+		<td align="right"><label for="date1">*出生日期：</label></td><td align="left" colspan="2"><input id='caddie_birth_date' type="text" data-dojo-type="dijit.form.DateTextBox"/></td>
+	</tr>
+
+	<tr>
+		<td align="right">工作地点1：</td>
+		<td align="left">
+		<select id="one" onchange="ffield('one')" name="caddie_working_place_info1_1">
+			<option value="">请选择</option>
+			<option value="1">北京市</option>
+			<option value="2">天津市</option>
+			<option value="3">河北省</option>
+			<option value="4">山西省</option>
+			<option value="5">内蒙古自治区</option>
+			<option value="6">辽宁省</option>
+			<option value="7">吉林省</option>
+			<option value="8">黑龙江省</option>
+			<option value="9">上海市</option>
+			<option value="10">江苏省</option>
+			<option value="11">浙江省</option>
+			<option value="12">安徽省</option>
+			<option value="13">福建省</option>
+			<option value="14">江西省</option>
+			<option value="15">山东省</option>
+			<option value="16">河南省</option>
+			<option value="17">湖北省</option>
+			<option value="18">湖南省</option>
+			<option value="19">广东省</option>
+			<option value="20">广西壮族自治区</option>
+			<option value="21">海南省</option>
+			<option value="22">重庆市</option>
+			<option value="23">四川省</option>
+			<option value="24">贵州省</option>
+			<option value="25">云南省</option>
+			<option value="26">西藏自治区</option>
+			<option value="27">陕西省</option>
+			<option value="28">甘肃省</option>
+			<option value="29">青海省</option>
+			<option value="30">宁夏回族自治区</option>
+			<option value="31">新疆维吾尔自治区</option>
+			<option value="32">台湾省</option>
+			<option value="33">香港特别行政区</option>
+			<option value="34">澳门特别行政区</option>
+			<option value="35">海外</option>
+			<option value="36">其他</option>
+		</select>
+		</td>
+		<td align="left">
+		<select id="onea" name="caddie_working_place_info1_2">
+			<option value="">请选择</option>
+		</select>
+		</td>
+	</tr>
+
+	<tr>
+		<td align="right">工作地点2：</td>
+		<td align="left">
+		<select id="two" onchange="ffield('two')" name="caddie_working_place_info2_1">
+			<option value="">请选择</option>
+			<option value="1">北京市</option>
+			<option value="2">天津市</option>
+			<option value="3">河北省</option>
+			<option value="4">山西省</option>
+			<option value="5">内蒙古自治区</option>
+			<option value="6">辽宁省</option>
+			<option value="7">吉林省</option>
+			<option value="8">黑龙江省</option>
+			<option value="9">上海市</option>
+			<option value="10">江苏省</option>
+			<option value="11">浙江省</option>
+			<option value="12">安徽省</option>
+			<option value="13">福建省</option>
+			<option value="14">江西省</option>
+			<option value="15">山东省</option>
+			<option value="16">河南省</option>
+			<option value="17">湖北省</option>
+			<option value="18">湖南省</option>
+			<option value="19">广东省</option>
+			<option value="20">广西壮族自治区</option>
+			<option value="21">海南省</option>
+			<option value="22">重庆市</option>
+			<option value="23">四川省</option>
+			<option value="24">贵州省</option>
+			<option value="25">云南省</option>
+			<option value="26">西藏自治区</option>
+			<option value="27">陕西省</option>
+			<option value="28">甘肃省</option>
+			<option value="29">青海省</option>
+			<option value="30">宁夏回族自治区</option>
+			<option value="31">新疆维吾尔自治区</option>
+			<option value="32">台湾省</option>
+			<option value="33">香港特别行政区</option>
+			<option value="34">澳门特别行政区</option>
+			<option value="35">海外</option>
+			<option value="36">其他</option>
+		</select>
+		</td>
+		<td align="left">
+		<select id="twoa" name="caddie_working_place_info2_2">
+			<option value="">请选择</option>
+		</select>
+		</td>
+	</tr>
+
+	<tr>
+		<td align="right">工作地点3：</td>
+		<td align="left">
+		<select id="three" onchange="ffield('three')" name="caddie_working_place_info3_1">
+			<option value="">请选择</option>
+			<option value="1">北京市</option>
+			<option value="2">天津市</option>
+			<option value="3">河北省</option>
+			<option value="4">山西省</option>
+			<option value="5">内蒙古自治区</option>
+			<option value="6">辽宁省</option>
+			<option value="7">吉林省</option>
+			<option value="8">黑龙江省</option>
+			<option value="9">上海市</option>
+			<option value="10">江苏省</option>
+			<option value="11">浙江省</option>
+			<option value="12">安徽省</option>
+			<option value="13">福建省</option>
+			<option value="14">江西省</option>
+			<option value="15">山东省</option>
+			<option value="16">河南省</option>
+			<option value="17">湖北省</option>
+			<option value="18">湖南省</option>
+			<option value="19">广东省</option>
+			<option value="20">广西壮族自治区</option>
+			<option value="21">海南省</option>
+			<option value="22">重庆市</option>
+			<option value="23">四川省</option>
+			<option value="24">贵州省</option>
+			<option value="25">云南省</option>
+			<option value="26">西藏自治区</option>
+			<option value="27">陕西省</option>
+			<option value="28">甘肃省</option>
+			<option value="29">青海省</option>
+			<option value="30">宁夏回族自治区</option>
+			<option value="31">新疆维吾尔自治区</option>
+			<option value="32">台湾省</option>
+			<option value="33">香港特别行政区</option>
+			<option value="34">澳门特别行政区</option>
+			<option value="35">海外</option>
+			<option value="36">其他</option>
+		</select>
+		</td>
+		<td align="left">
+		<select id="threea" name="caddie_working_place_info3_2">
+			<option value="">请选择</option>
+		</select>
+		</td>
+	</tr>
+
+	<tr>
+		<td align="right">个人简介：</td>
+		<td align="left" colspan="2"><textarea id="caddie_personal_desc" name="caddie_personal_desc"></textarea></td>
+	</tr>
+
+	<input type="hidden" name="badge_type" value="球童徽章"/>
+
+	</form>
+
+	</table>
+
+	<div align="left" id="applying_caddie_badge_tip"></div>
+
+	<div align="center">
+		<input type="button" value="提交" onclick="dojo.addOnLoad(applying_caddie_badge);"/>
+	</div>
+
+</div>
+
+<div id="dialog_of_tip" data-dojo-type="dijit.Dialog" title="提示">
+	<span id="tip_desc"></span>
+<div>
+
+<form id="applying_taylormade_badge" method="POST" action="badge.php?mod=applying_taylormade_badge">
+	<input type="hidden" name="badge_type" value="泰勒梅徽章"/>
+</form>	
+
+<form id="applying_dazheng_shop_badge" method="POST" action="badge.php?mod=applying_dazheng_shop_badge">
+	<input type="hidden" name="badge_type" value="大正商城徽章"/>
+</form>
+
+<form id="applying_blog_gold_medal" method="POST" action="badge.php?mod=applying_blog_gold_medal">
+	<input type="hidden" name="badge_type" value="博客达人金牌"/>
+</form>
+
+<form id="applying_microblog_gold_medal" method="POST" action="badge.php?mod=applying_microblog_gold_medal">
+	<input type="hidden" name="badge_type" value="微博达人金牌"/>
+</form>
+
+<form id="applying_grade_card_gold_medal" method="POST" action="badge.php?mod=applying_grade_card_gold_medal">
+	<input type="hidden" name="badge_type" value="成绩卡达人金牌"/>
+</form>
+
+<form id="applying_blog_silver_medal" method="POST" action="badge.php?mod=applying_blog_silver_medal">
+	<input type="hidden" name="badge_type" value="博客达人银牌"/>
+</form>
+
+<form id="applying_microblog_silver_medal" method="POST" action="badge.php?mod=applying_microblog_silver_medal">
+	<input type="hidden" name="badge_type" value="微博达人银牌"/>
+</form>
+
+<form id="applying_grade_card_silver_medal" method="POST" action="badge.php?mod=applying_grade_card_silver_medal">
+	<input type="hidden" name="badge_type" value="成绩卡达人银牌"/>
+</form>
+
+<form id="applying_blog_bronze_medal" method="POST" action="badge.php?mod=applying_blog_bronze_medal">
+	<input type="hidden" name="badge_type" value="博客达人铜牌"/>
+</form>
+
+<form id="applying_microblog_bronze_medal" method="POST" action="badge.php?mod=applying_microblog_bronze_medal">
+	<input type="hidden" name="badge_type" value="微博达人铜牌"/>
+</form>
+
+<!--applying_grade_card_bronze_medal-->
+<form id="applying_grade_card_bronze_medal" method="POST" action="badge.php?mod=applying_grade_card_bronze_medal">
+	<input type="hidden" name="badge_type" value="成绩卡达人铜牌"/>
+</form>
+
+
+
+<input type="hidden" id="hidden_club_place_info1_of_caddie" value="<!--{$club_place_info1_of_caddie}-->"/>
+<input type="hidden" id="hidden_club_place_info2_of_caddie" value="<!--{$club_place_info2_of_caddie}-->"/>
+<input type="hidden" id="hidden_caddie_beginning_working_date" value="<!--{$caddie_beginning_working_date}-->"/>
+<input type="hidden" id="hidden_caddie_birth_date" value="<!--{$caddie_birth_date}-->"/>
+<input type="hidden" id="hidden_caddie_working_place_info1_1" value="<!--{$caddie_working_place_info1_1}-->"/>
+<input type="hidden" id="hidden_caddie_working_place_info1_2" value="<!--{$caddie_working_place_info1_2}-->"/>
+<input type="hidden" id="hidden_caddie_working_place_info2_1" value="<!--{$caddie_working_place_info2_1}-->"/>
+<input type="hidden" id="hidden_caddie_working_place_info2_2" value="<!--{$caddie_working_place_info2_2}-->"/>
+<input type="hidden" id="hidden_caddie_working_place_info3_1" value="<!--{$caddie_working_place_info3_1}-->"/>
+<input type="hidden" id="hidden_caddie_working_place_info3_2" value="<!--{$caddie_working_place_info3_2}-->"/>
+<input type="hidden" id="hidden_caddie_personal_desc" value="<!--{$caddie_personal_desc}-->"/>
+
+<input type="hidden" id="hidden_cga_referee_level" value="<!--{$cga_referee_level}-->"/>
+<input type="hidden" id="hidden_cga_referee_native_place" value="<!--{$cga_referee_native_place}-->"/>
+<input type="hidden" id="hidden_cga_referee_working_place" value="<!--{$cga_referee_working_place}-->"/>
+
+</body>
+</html>
+
+

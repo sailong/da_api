@@ -1,0 +1,269 @@
+<!--{subtemplate home/25_header}-->
+<style type="text/css">
+.rightbg_d {background-color:#7c7c7c; width:700px; overflow-x:hidden;}
+.rightbg_d_2 {background-color:#CCCCCC; margin:0 auto; padding:10px 0px; width:680px;}
+.cintro_d {background-color:#CCCCCC; width:680px; margin:0px auto; padding-bottom:10px;}
+.cdt_lm {width:650px; height:40px; background-image:url({STATICURL}space/style/images/cdt_2_d.jpg); margin:0 auto; line-height:40px; padding-left:30px;}
+.rightbg_d_3 {background-color:#FFF; padding:0px 10px; width:640px; margin:0 auto;}
+</style>
+<div id="wtcontent">
+	
+    <!-- 左边  -->
+	<!--{subtemplate home/25_left}-->
+    
+	<div class="y rightbg_d">
+		<!--日志开始-->
+        <br />
+		<div class="cintro_d">
+          <a name="jysblog"><div class="cdt_lm">
+		    <span><h1><!--{$visitname}-->的博客</h1></span>
+		</div>
+        </a>
+        </div>
+		<div class="rightbg_d_2">
+		<div class="rightbg_d_3">
+          <!--{if $_G[uid] != 3801239}-->
+          <body  onselectstart="return false;" oncopy="return false;" oncut="return false;">
+          	<!--{/if}-->
+					<div class="bm_c">
+							<div class="vw mbm">
+								<div class="h pbm">
+									<h1 class="ph" {if $blog[magiccolor]} style="color: {$_G[colorarray][$blog[magiccolor]]}"{/if}>
+										$blog[subject]
+										<!--{if $blog[status] == 1}-->
+											<span class="xi1">({lang pending})</span>
+										<!--{/if}-->
+									</h1>
+									<p class="xg2">
+										<!--{if $blog['friend']}-->
+										<span class="y">{$friendsname[$blog[friend]]}</span>
+										<!--{/if}-->
+										<!--{if $blog[hot]}--><strong class="hot">{lang hot} <em>$blog[hot]</em></strong><!--{/if}-->
+										<!--{if $blog['friend']}-->
+										<span class="y"><a href="home.php?mod=space&uid=$space[uid]&do=$do&view=me&friend=$blog[friend]" class="xg1">{$friendsname[$value[friend]]}</a></span>
+										<!--{/if}-->
+										<!--{if $blog[viewnum]}--><span class="xg1">{lang have_read_blog}</span><!--{/if}-->
+										<span class="xg1"><!--{date($blog[dateline])}--></span>
+
+									<!--{if $classarr[classname]}--><span class="pipe">|</span><span class="xg1">{lang personal_category}:<a href="home.php?mod=space&uid=$blog[uid]&do=blog&classid=$blog[classid]&view=me">{$classarr[classname]}</a></span><!--{/if}-->
+									<!--{if $blog[catname]}--><span class="pipe">|</span><span class="xg1">{lang system_cat}:<a href="home.php?mod=space&do=blog&view=all&catid=$blog[catid]">$blog[catname]</a></span><!--{/if}-->
+									<!--{if $blog[tag]}-->
+										<span class="pipe">|</span>
+										<span class="ptg xg1">
+											<!--{eval $tagi = 0;}-->
+											<!--{loop $blog[tag] $var}-->
+												<!--{if $tagi}-->, <!--{/if}--><a href="misc.php?mod=tag&id=$var[0]" target="_blank">$var[1]</a>
+												<!--{eval $tagi++;}-->
+											<!--{/loop}-->
+										</span>
+									<!--{/if}-->
+
+									</p>
+									<!--{hook/space_blog_title}-->
+								</div>
+
+								<div id="blog_article" class="d cl" style="font-size:15px; padding:10px 30px;">
+									<!--{ad/blog/a_b}-->
+									$blog[message]
+								</div>
+								
+                                <div class="o cl">
+									
+									<!--{if ($_G[uid] == $blog[uid]) && $_G[setting][magicstatus] && ($_G[setting][magics][call] || $_G[setting][magics][updateline] || $_G[setting][magics][downdateline] || $_G[setting][magics][hot] || $_G[setting][magics][highlight])}-->
+										<a href="javascript:;" id="usemagic" onMouseOver="showMenu(this.id);">{lang use_magic_tools}</a>
+										<span class="pipe">|</span>
+										<ul id="usemagic_menu" class="p_pop mgcmn" style="display:none;">
+											<!--{if $_G[setting][magics][call]}-->
+											<li><a href="home.php?mod=magic&mid=call&idtype=blogid&id=$blog[blogid]" id="a_magic_call" onClick="showWindow('magics', this.href, 'get', 0);"><img src="{STATICURL}image/magic/call.small.gif" alt="call" class="vm" /> {$_G[setting][magics][call]}</a></li>
+											<!--{/if}-->
+											<!--{if $_G[setting][magics][updateline]}-->
+											<li><a href="home.php?mod=magic&mid=updateline&idtype=blogid&id=$blog[blogid]" id="a_magic_updateline" onClick="showWindow('magics', this.href, 'get', 0);"><img src="{STATICURL}image/magic/updateline.small.gif" alt="updateline" class="vm" /> {$_G[setting][magics][updateline]}</a></li>
+											<!--{/if}-->
+											<!--{if $_G[setting][magics][downdateline]}-->
+											<li><a href="home.php?mod=magic&mid=downdateline&idtype=blogid&id=$blog[blogid]" id="a_magic_downdateline" onClick="showWindow('magics', this.href, 'get', 0);"><img src="{STATICURL}image/magic/downdateline.small.gif" alt="downdateline" class="vm" /> {$_G[setting][magics][downdateline]}</a></li>
+											<!--{/if}-->
+											<!--{if $_G[setting][magics][hot]}-->
+											<li><a href="home.php?mod=magic&mid=hot&idtype=blogid&id=$blog[blogid]" id="a_magic_hot" onClick="showWindow('magics', this.href, 'get', 0);"><img src="{STATICURL}image/magic/hot.small.gif" alt="hot" class="vm" /> {$_G[setting][magics][hot]}</a></li>
+											<!--{/if}-->
+											<!--{if $_G[setting][magics][highlight]}-->
+											<li><a href="home.php?mod=magic&mid=highlight&idtype=blogid&id=$blog[blogid]" id="a_magic_highlight" onClick="showWindow('magics', this.href, 'get', 0);"><img src="{STATICURL}image/magic/highlight.small.gif" alt="hot" class="vm" /> {$_G[setting][magics][highlight]}</a></li>
+											<!--{/if}-->
+										</ul>
+									<!--{/if}-->
+
+									<!--{hook/space_blog_op_extra}-->
+									<!--{if $_G[uid] == $blog[uid] || checkperm('manageblog')}-->
+									<a href="home.php?mod=spacecp&ac=blog&blogid=$blog[blogid]&op=edit">{lang edit}</a><span class="pipe">|</span>
+									<a href="home.php?mod=spacecp&ac=blog&blogid=$blog[blogid]&op=delete&handlekey=delbloghk_{$blog[blogid]}" id="blog_delete_$blog[blogid]" onClick="showWindow(this.id, this.href, 'get', 0);">{lang delete}</a><span class="pipe">|</span>
+									<!--{/if}-->
+
+									<!--{if checkperm('manageblog')}-->
+									IP: $blog[postip]<span class="pipe">|</span>
+									<a href="home.php?mod=spacecp&ac=blog&blogid=$blog[blogid]&op=edithot&handlekey=bloghothk_{$blog[blogid]}" id="blog_hot_$blog[blogid]" onClick="showWindow(this.id, this.href, 'get', 0);">{lang hot}</a><span class="pipe">|</span>
+									<!--{/if}-->
+
+									<!--{if !$blog['friend'] && !$blog['pushedaid'] && (getstatus($_G['member']['allowadmincp'], 2) || $_G['group']['allowmanagearticle'])}-->
+									<a href="portal.php?mod=portalcp&ac=index&op=push&idtype=blogid&id=$blog[blogid]" onClick="showWindow('push', this.href, 'get', 0)">{lang article_push}</a><span class="pipe">|</span>
+									<!--{/if}-->
+
+									<!--{if $_G['group']['allowdiy'] || getstatus($_G['member']['allowadmincp'], 4) || getstatus($_G['member']['allowadmincp'], 5) || getstatus($_G['member']['allowadmincp'], 6)}-->
+										<a href="portal.php?mod=portalcp&ac=portalblock&op=recommend&idtype=blogid&id=$blog[blogid]" onClick="showWindow('recommend', this.href, 'get', 0)">{lang blockdata_recommend}</a><span class="pipe">|</span>
+									<!--{/if}-->
+									<!--{if $_G['uid'] != $blog['uid']}-->
+									<a href="javascript:;" onClick="showWindow('miscreport$blog[blogid]', 'misc.php?mod=report&rtype=blog&uid=$blog[uid]&rid=$blog[blogid]', 'get', -1);return false;">{lang report}</a>
+									<!--{/if}-->
+								</div>
+                          <div style="height:40px; clear:both;">
+                                           <!-- Baidu Button BEGIN -->
+                                                        <div id="bdshare" class="bdshare_t bds_tools_32 get-codes-bdshare">
+                                                            <a class="bds_qzone"></a>
+                                                            <a class="bds_tsina"></a>
+                                                            <a class="bds_tqq"></a>
+                                                            <a class="bds_renren"></a>
+                                                            <span class="bds_more">更多</span>
+                                                            <a class="shareCount"></a>
+                                                        </div>
+                                                    <script type="text/javascript" id="bdshare_js" data="type=tools&amp;uid=726712" ></script>
+                                                    <script type="text/javascript" id="bdshell_js"></script>
+                                                    <script type="text/javascript">
+                                                        document.getElementById("bdshell_js").src = "http://bdimg.share.baidu.com/static/js/shell_v2.js?cdnversion=" + new Date().getHours();
+                                                    </script>
+                                          <!-- Baidu Button END -->
+
+                        </div>
+							</div>
+
+						<div class="ct_vw cl">
+							<div class="ct_vw_sd">
+								<!--{if $otherlist}-->
+								<div class="mbm cl">
+									<h2 class="mbm ptn pbn bbs"><span class="xs1 xw0 y"><a href="home.php?mod=space&uid=$blog[uid]&do=blog&view=me">{lang all}</a></span>{lang author_newest_blog}</h2>
+									<ul class="xl xl1 cl">
+										<!--{loop $otherlist $value}-->
+										<li>&bull; <a href="home.php?mod=space&uid=$value[uid]&do=blog&id=$value[blogid]" target="_blank">$value[subject]</a></li>
+										<!--{/loop}-->
+									</ul>
+								</div>
+								<!--{/if}-->
+								<!--{if $newlist}-->
+								<div class="mbm cl">
+									<h2 class="mbm ptn pbn bbs">{lang popular_blog_review}</h2>
+									<ul class="xl xl1 cl">
+										<!--{loop $newlist $value}-->
+										<li><span class="xl1_elp">&bull; <a href="home.php?mod=space&uid=$value[uid]&do=blog&id=$value[blogid]" target="_blank">$value[subject]</a></span></li>
+										<!--{/loop}-->
+									</ul>
+								</div>
+								<!--{/if}-->
+							</div>
+
+							<div class="ct_vw_mn">
+								<div id="div_main_content" class="mbm">
+									<h3 class="ptn pbn bbs">
+										<!--{if !empty($list)}-->
+										<a href="home.php?mod=space&uid=$blog[uid]&do=$do&id=$id#quickcommentform_{$id}" onClick="if($('comment_message')){$('comment_message').focus();return false;}" class="y xi2 xw0">{lang publish_comment}</a>
+										<!--{/if}-->
+										{lang comment} (<span id="comment_replynum">$blog[replynum]</span> {lang blog_replay})
+									</h3>
+									<!--{if $cid}-->
+									<div class="i">
+										{lang current_blog_replay}<a href="home.php?mod=space&uid=$blog[uid]&do=blog&id=$blog[blogid]">{lang click_view_all}</a>
+									</div>
+									<!--{/if}-->
+									<div id="comment_ul" class="xld xlda">
+									<!--{loop $list $k $value}-->
+										<!--{template home/space_comment_li}-->
+									<!--{/loop}-->
+									</div>
+								</div>
+								<!--{if $multi}--><div class="pgs cl mbm">$multi</div><!--{/if}-->
+
+							<!--{if !$blog[noreply]}-->
+							<form id="quickcommentform_{$id}" action="home.php?mod=spacecp&ac=comment" method="post" autocomplete="off" onSubmit="ajaxpost('quickcommentform_{$id}', 'return_qcblog_$id');doane(event);">
+								<p>
+									<span id="comment_face" title="{lang insert_emoticons}" onClick="showFace(this.id, 'comment_message');return false;" class="cur1"><img src="{IMGDIR}/facelist.gif" alt="facelist" class="vm" /></span>
+									<!--{hook/space_blog_face_extra}-->
+									<!--{if $_G['setting']['magicstatus'] && !empty($_G['setting']['magics']['doodle'])}-->
+										<a id="a_magic_doodle" href="home.php?mod=magic&mid=doodle&showid=comment_doodle&target=comment_message" onClick="showWindow(this.id, this.href, 'get', 0)"><img src="{STATICURL}image/magic/doodle.small.gif" alt="doodle" class="vm" /> {$_G[setting][magics][doodle]}</a>
+									<!--{/if}-->
+								</p>
+								<div class="tedt mtn mbn">
+									<div class="area">
+										<!--{if $_G['uid']}-->
+											<textarea id="comment_message" onKeyDown="ctrlEnter(event, 'commentsubmit_btn');" name="message" rows="3" class="pt"></textarea>
+										<!--{else}-->
+											<div class="pt hm">{lang login_to_comment} <a href="member.php?mod=logging&action=login" onClick="showWindow('login', this.href)" class="xi2">{lang login}</a> | <a href="member.php?mod={$_G[setting][regname]}" class="xi2">$_G['setting']['reglinkname']</a></div>
+										<!--{/if}-->
+									</div>
+								</div>
+								<!--{if checkperm('seccode') && ($secqaacheck || $seccodecheck)}-->
+									<!--{block sectpl}--><sec> <span id="sec<hash>" onClick="showMenu(this.id);"><sec></span><div id="sec<hash>_menu" class="p_pop p_opt" style="display:none"><sec></div><!--{/block}-->
+									<div class="mtm mbm sec"><!--{subtemplate common/seccheck}--></div>
+								<!--{/if}-->
+								<p class="pns">
+									<input type="hidden" name="referer" value="home.php?mod=space&uid=$blog[uid]&do=$do&id=$id" />
+									<input type="hidden" name="id" value="$id" />
+									<input type="hidden" name="idtype" value="blogid" />
+									<input type="hidden" name="handlekey" value="qcblog_{$id}" />
+									<input type="hidden" name="commentsubmit" value="true" />
+									<input type="hidden" name="quickcomment" value="true" />
+									<button type="submit" name="commentsubmit_btn"value="true" id="commentsubmit_btn" class="pn"{if !$_G[uid]} onClick="showWindow(this.id, this.form.action);return false;"{/if}><strong>{lang comment}</strong></button>
+									<span id="return_qcblog_{$id}"></span>
+								</p>
+								<input type="hidden" name="formhash" value="{FORMHASH}" />
+							</form>
+							<script type="text/javascript">
+								function succeedhandle_qcblog_$id(url, msg, values) {
+									if(values['cid']) {
+										comment_add(values['cid']);
+									} else {
+										$('return_qcblog_{$id}').innerHTML = msg;
+									}
+									<!--{if checkperm('seccode') && $sechash}-->
+										<!--{if $secqaacheck}-->
+										updatesecqaa('$sechash');
+										<!--{/if}-->
+										<!--{if $seccodecheck}-->
+										updateseccode('$sechash');
+										<!--{/if}-->
+									<!--{/if}-->
+								}
+							</script>
+							<!--{/if}-->
+
+							<script type="text/javascript">
+							function addFriendCall(){
+								var el = $('friendinput');
+								if(!el || el.value == "")	return;
+								var s = '<input type="checkbox" name="fusername[]" class="pc" value="'+el.value+'" id="'+el.value+'" checked="checked">';
+								s += '<label for="'+el.value+'">'+el.value+'</label>';
+								s += '<br />';
+								$('friendscall').innerHTML += s;
+								el.value = '';
+							}
+							resizeImg('div_main_content','450');
+
+							var elems = selector('dd[class~=magicflicker]');
+							for(var i=0; i<elems.length; i++){
+								magicColor(elems[i]);
+							}
+							</script>
+
+							</div>
+						</div>
+					</div>
+           </body>
+		</div>
+		</div>
+        <br />
+	</div>
+		
+		<!--日志结束-->
+		
+	
+	<div class="clear"></div>
+</div>
+
+<div class="clear"></div>
+<br>
+<!--{subtemplate home/25_foot}-->

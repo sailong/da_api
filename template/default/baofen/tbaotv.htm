@@ -1,0 +1,117 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title> 大正高尔夫赛事成绩表</title>
+</head>
+<style type="text/css">
+body { font: normal 20px auto "Trebuchet MS", Verdana, Arial, Helvetica, sans-serif; color: #4f6b72; background: #dae7f0;margin:0 auto ; }
+a { color: #c75f3e; }
+td {line-height:15px; border-right: 1px solid #ffffff; border-bottom: 1px solid #ffffff;  font-size:18px; padding: 2px 0; color: #4f6b72;  text-align:center; font-weight:600; }
+td.alt { border-left: 1px solid #ffffff; border-top: 0; background:#d5e6f6; color: #797268; width:3%;height:20px;font:  16px;   font-weight:600; }
+td.spec { border-left: 1px solid #ffffff; border-top: 0; background: #bdd3e8; font:  18px;  font-weight:600; }
+td.specalt {border-left: 1px solid #ffffff; border-top: 0;  font:18px; color: #272727; text-align:center; font-weight:600; }
+ /*---------for IE 5.x bug*/ html>body td{ font-size:14px;}
+
+</style>
+<META   HTTP-EQUIV=REFRESH   CONTENT="60;URL=show.php?fenzhan_id={$_GET['fenzhan_id']}&ac=tv&page=<!--{echo $page;}-->&pg=<!--{echo $perpage;}-->&pm=<!--{$pm}-->" >
+<body>
+ <table width="99%" align="left" cellpadding="0" cellspacing="0" style="background-attachment:#e7e7e7;">
+  <!--<tr>
+    <td colspan="28" align="center" style="background:#f1f8fe; border-top: 1px solid #ffffff; height:40px;" >  <img src="/images/nd/nd{$_GET['fenzhan_id']}.jpg" onerror="this.src='/images/nd/bwvip.jpg'" ></td>
+  </tr>-->
+ <tr>
+    <td width="3%" rowspan="2" style="background:url(../images/nd/shangm.jpg) top center  repeat-x #02425d;"><font color="#ffffff">排名</font></td>
+    <td width="13%"  rowspan="2" style="background:url(../images/nd/shangm.jpg) top center repeat-x  #02425d;"><font color="#ffffff">姓名</font></td>
+    <td width="6%" rowspan="2" style="background:url(../images/nd/shangm.jpg) top center repeat-x  #02425d;"><font color="#ffffff">分组</font></td>
+    <td width="5%" rowspan="2" style="background:url(../images/nd/shangm.jpg) top center repeat-x  #02425d;"><font color="#ffffff">成绩</font></td>
+    <td width="3%"  class="alt">1</td>
+    <td width="3%"  class="alt">2</td>
+    <td width="3%"  class="alt">3</td>
+    <td width="3%"  class="alt">4</td>
+    <td width="3%"  class="alt">5</td>
+    <td width="3%"  class="alt">6</td>
+    <td width="3%"  class="alt">7</td>
+    <td width="3%"  class="alt">8</td>
+    <td width="3%"  class="alt">9</td>
+    <td width="4%"  class="alt">OUT</td>
+    <td width="3%"  class="alt">10</td>
+    <td width="3%"  class="alt">11</td>
+    <td width="3%"  class="alt">12</td>
+    <td width="3%"  class="alt">13</td>
+    <td width="3%"  class="alt">14</td>
+    <td width="3%"  class="alt">15</td>
+    <td width="3%"  class="alt">16</td>
+    <td width="3%"  class="alt">17</td>
+    <td width="3%"  class="alt">18</td>
+    <td width="3%"  class="alt">IN</td>
+    <td width="12%"  class="alt">ALL</td>  
+  </tr>
+   <tr>
+    <td class="spec">$par[0]</td>
+    <td class="spec">$par[1]</td>
+    <td class="spec">$par[2]</td>
+    <td class="spec">$par[3]</td>
+    <td class="spec">$par[4]</td>
+    <td class="spec">$par[5]</td>
+    <td class="spec">$par[6]</td>
+    <td class="spec">$par[7]</td>
+    <td class="spec">$par[8]</td>
+    <td class="spec">$POUT</td>
+   <td class="spec">$par[9]</td>
+    <td class="spec">$par[10]</td>
+    <td class="spec">$par[11]</td>
+    <td class="spec">$par[12]</td>
+    <td class="spec">$par[13]</td>
+    <td class="spec">$par[14]</td>
+    <td class="spec">$par[15]</td>
+    <td class="spec">$par[16]</td>
+    <td class="spec">$par[17]</td>
+    <td class="spec">$PIN</td>
+    <td class="spec">$PTL</td>  
+  </tr>
+<!--{loop $nbtvlist $n  $v}-->
+ <!--{if $n%2==1}-->
+  <!--{eval $bgcolor = "#D5E6F6";}-->
+<!--{else}-->
+  <!--{eval $bgcolor = "#C3CED4";}-->
+<!--{/if}-->
+  <tr  bgcolor="<!--{$bgcolor}-->">
+    <td  style="background:url(../images/nd/paiming.jpg) repeat-x ;"><font color="#ffffff">{$v['pm']}</font></td>
+    <td  style="background:url(../images/nd/paiming.jpg) repeat-x ;"><font color="#ffffff" style="letter-spacing:10px; font-size:20px; line-height: 28px"><strong>{$v['realname']}</strong></font></td>
+    <td style="background:url(../images/nd/fenzuchengji.jpg)  repeat-x ;"><font color="#ffffff">{$v['fenzu_id']}</td>
+    <td style="background:url(../images/nd/fenzuchengji.jpg)  repeat-x ;"><font color="#FFFFFF">{if $v['total_ju_par']<900}{echo Getchd($v['total_ju_par'])}{else}&nbsp;{/if} </font></td>
+   <td class="specalt" {if $v['cave_1']!=0}{echo Getcss($v['cave_1'],$par[0])}{/if}>{if $v['cave_1']<=0}&nbsp;{else}{$v['cave_1']}{/if}</td>
+    <td class="specalt" {if $v['cave_2']!=0}{echo Getcss($v['cave_2'],$par[1])}{/if}>{if $v['cave_2']<=0}&nbsp;{else}{$v['cave_2']}{/if}</td>
+    <td class="specalt" {if $v['cave_3']!=0}{echo Getcss($v['cave_3'],$par[2])}{/if}>{if $v['cave_3']<=0}&nbsp;{else}{$v['cave_3']}{/if}</td>
+    <td class="specalt" {if $v['cave_4']!=0}{echo Getcss($v['cave_4'],$par[3])}{/if}>{if $v['cave_4']<=0}&nbsp;{else}{$v['cave_4']}{/if}</td>
+    <td class="specalt" {if $v['cave_5']!=0}{echo Getcss($v['cave_5'],$par[4])}{/if}>{if $v['cave_5']<=0}&nbsp;{else}{$v['cave_5']}{/if}</td>
+    <td class="specalt" {if $v['cave_6']!=0}{echo Getcss($v['cave_6'],$par[5])}{/if}>{if $v['cave_6']<=0}&nbsp;{else}{$v['cave_6']}{/if}</td>
+    <td class="specalt" {if $v['cave_7']!=0}{echo Getcss($v['cave_7'],$par[6])}{/if}>{if $v['cave_7']<=0}&nbsp;{else}{$v['cave_7']}{/if}</td>
+    <td class="specalt" {if $v['cave_8']!=0}{echo Getcss($v['cave_8'],$par[7])}{/if}>{if $v['cave_8']<=0}&nbsp;{else}{$v['cave_8']}{/if}</td>
+    <td class="specalt" {if $v['cave_9']!=0}{echo Getcss($v['cave_9'],$par[8])}{/if}>{if $v['cave_9']<=0}&nbsp;{else}{$v['cave_9']}{/if}</td>
+    <td class="specalt" style="text-align:center;">{if $v['lout']<=0}&nbsp;{else}{$v['lout']}{/if}</td>
+    <td class="specalt" {if $v['cave_10']!=0}{echo Getcss($v['cave_10'],$par[9])}{/if}>{if $v['cave_10']<=0}&nbsp;{else}{$v['cave_10']}{/if}</td>
+    <td class="specalt" {if $v['cave_11']!=0}{echo Getcss($v['cave_11'],$par[10])}{/if}>{if $v['cave_11']<=0}&nbsp;{else}{$v['cave_11']}{/if}</td>
+    <td class="specalt" {if $v['cave_12']!=0}{echo Getcss($v['cave_12'],$par[11])}{/if}>{if $v['cave_12']<=0}&nbsp;{else}{$v['cave_12']}{/if}</td>
+    <td class="specalt" {if $v['cave_13']!=0}{echo Getcss($v['cave_13'],$par[12])}{/if}>{if $v['cave_13']<=0}&nbsp;{else}{$v['cave_13']}{/if}</td>
+    <td class="specalt" {if $v['cave_14']!=0}{echo Getcss($v['cave_14'],$par[13])}{/if}>{if $v['cave_14']<=0}&nbsp;{else}{$v['cave_14']}{/if}</td>
+    <td class="specalt" {if $v['cave_15']!=0}{echo Getcss($v['cave_15'],$par[14])}{/if}>{if $v['cave_15']<=0}&nbsp;{else}{$v['cave_15']}{/if}</td>
+    <td class="specalt" {if $v['cave_16']!=0}{echo Getcss($v['cave_16'],$par[15])}{/if}>{if $v['cave_16']<=0}&nbsp;{else}{$v['cave_16']}{/if}</td>
+    <td class="specalt" {if $v['cave_17']!=0}{echo Getcss($v['cave_17'],$par[16])}{/if}>{if $v['cave_17']<=0}&nbsp;{else}{$v['cave_17']}{/if}</td>
+    <td class="specalt" {if $v['cave_18']!=0}{echo Getcss($v['cave_18'],$par[17])}{/if}>{if $v['cave_18']<=0}&nbsp;{else}{$v['cave_18']}{/if}</td>
+     <td class="specalt" style="text-align:center;">{if $v['lin']<=0}&nbsp;{else}{$v['lin']}{/if}</td>
+    <td class="specalt" style="text-align:center;{if $v['tlscore']==1000}color:#FFffff;background:#089218;{/if}" >{echo Getstat($v[total_score])}</td>
+     
+    <!--{eval  if($v['total_score1']>=10000) $v['total_score1']=0;  }-->
+    <!--{eval  if($v['total_score2']>=10000) $v['total_score2']=0;  }-->
+ 
+  </tr>
+<!--{/loop}-->
+   <tr>
+    <td colspan="28" align="center" style="background:#dae7f0; border-left: 1px solid #ffffff;" ><img src="/images/nd/ndbt.jpg" width="100%" ></td>
+  </tr>
+</table>
+</body>
+</html>
+
