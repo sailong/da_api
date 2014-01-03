@@ -72,6 +72,18 @@
 					<th>赛事LOGO：</th>
 					<td><php>if($data['event_logo']){</php><img src="/{$data.event_logo}" style="max-height:100px; max-width:200px;"><br/><php>}</php><input type="file" name="event_logo" id="event_logo"  class="mod_input"> (如需修改，请重新上传)</td>
 				</tr>
+				<tr>
+					<th><font color="red">*</font>赛事年度：</th>
+					<td>
+						<select name="event_year" id="event_year">
+							<option value="0">请选择</option>
+							<volist id="vo2" name="event_years">
+							<option value="{$vo2.dict_name}">{$vo2.dict_name}</option>
+							</volist>
+						</select>
+						<script>set_select_value(document.act_form.event_year,"{$data.event_year}");</script>
+					</td>	
+				</tr>
 				<tr class="tuanti">
 					<th>左边团队标识：</th>
 					<td><input type="text" name="event_left_flag" id="event_left_flag" class="mod_input2" style="width:300px;"  value="{$data.event_left_flag}">(只限英文字符和数字，不可写中文)</td>
