@@ -270,6 +270,13 @@
 					<td><php>if($data['event_audio_bg']){</php><img src="/{$data.event_audio_bg}" style="max-height:100px; max-width:200px;"><br/><php>}</php><input type="file" name="event_audio_bg" id="event_audio_bg"  class="mod_input">  (如需修改，请重新上传)</td>
 				</tr>
 				<tr>
+					<th>广告地址：</th>
+					<td>
+						<input type="text" name="event_ad_url" id="event_ad_url" class="mod_input2" style="width:500px;"  value="{$data.event_ad_url}">
+						<!-- <span class="help_info">(门票申请为WAP时，这里填写WAP的地址，仅在WAP页时生效)</span> -->
+					</td>
+				</tr>
+				<tr>
 					<th>排序：</th>
 					<td><input type="text" name="event_sort" id="event_sort" class="mod_input2" style="width:66px;"  value="{$data.event_sort}">
 					<span class="help_info">(“赛事直播”中显示的顺序，数值越大，越靠前显示)</span>

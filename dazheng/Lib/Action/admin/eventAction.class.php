@@ -79,6 +79,9 @@ class eventAction extends AdminAuthAction
 			//add2013.12.24start
 			$data["event_year"]=post("event_year");
 			//add2013.12.24END
+			//add2014.01.03start
+			$data["event_ad_url"]=post("event_ad_url");
+			//add2014.01.03END
 			$uploadinfo=upload_file("upload/event/");
 				
 			foreach($uploadinfo as $key=>$val){
@@ -222,6 +225,9 @@ class eventAction extends AdminAuthAction
 			//add2013.12.24start
 			$data["event_year"]=post("event_year");
 			//add2013.12.24END
+			//add2014.01.03start
+			$data["event_ad_url"]=post("event_ad_url");
+			//add2014.01.03END
 			
 			$uploadinfo=upload_file("upload/event/");
 			
