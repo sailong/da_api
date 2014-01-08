@@ -25,6 +25,64 @@ class userAction extends AdminAuthAction
 		$this->assign("page_title","用户");
     	$this->display();
 	}
+	
+	
+	
+	public function user_zimeiti()
+	{
+		$level = get('level');
+		if($level!==''){
+			$level_sql=" and pre_common_member_profile.level='{$level}'";
+		}
+		$list=D("user")->user_list_pro(" and pre_common_member_profile.is_zimeiti='Y'{$level_sql}");
+		$level_tmp = select_dict(19);
+		foreach($level_tmp as $key=>$val){
+			$levels[$val['dict_value']] = $val;
+		}
+		
+		unset($level_tmp);
+		$this->assign("levels",$levels);
+		$this->assign("list",$list["item"]);
+		$this->assign("pages",$list["pages"]);
+		$this->assign("total",$list["total"]);
+
+		$this->assign("page_title","用户");
+    	$this->display();
+	}
+	
+	
+	public function to_zimeiti_action()
+	{
+		if(post("ids"))
+		{
+			$ids_arr=explode(",",post("ids"));
+			for($i=0; $i<count($ids_arr); $i++)
+			{
+				$res=M()->execute("update pre_common_member_profile set is_zimeiti='Y' where uid=".$ids_arr[$i]." ");
+			}
+			
+			echo "succeed^恭喜，升级成功";
+			
+		}
+	}
+	
+	
+	public function cancel_zimeiti_action()
+	{
+		if(post("ids"))
+		{
+			$ids_arr=explode(",",post("ids"));
+			for($i=0; $i<count($ids_arr); $i++)
+			{
+				$res=M()->execute("update pre_common_member_profile set is_zimeiti='N' where uid=".$ids_arr[$i]." ");
+			}
+			
+			echo "succeed^操作成功";
+			
+		}
+	}
+	
+	
 
 	public function user()
 	{
@@ -40,7 +98,8 @@ class userAction extends AdminAuthAction
 
 	public function user_add()
 	{
-
+		$levels = select_dict(19);
+		$this->assign("levels",$levels);
 		$this->assign("page_title","添加用户");
     	$this->display();
 	}
@@ -65,7 +124,7 @@ class userAction extends AdminAuthAction
 			unset($data["salt"]);
 			//unset($data["username"]);
 			//$data["realname"]=post("realname"); 
-			//$data["mobile"]=post("mobile");  
+			$data["mobile"]=post("mobile");  
 			$data["groupid"]=10;  
 			//生成社区会员 
 			$list=M("common_member","pre_")->add($data); 
@@ -74,6 +133,7 @@ class userAction extends AdminAuthAction
 			$data["gender"]=post("gender"); 
 			$data["realname"]=post("realname");
 			$data["enrealname"]=post("enrealname"); 
+			$data["level"]=post("level"); 
 			
 			//生成真实姓名
 			$list=M("common_member_profile","pre_")->add($data); 
@@ -114,7 +174,8 @@ class userAction extends AdminAuthAction
 			join( "$table2 on $table.uid=$table2.uid" ) ->
 			where("$table.uid=".intval(get("uid")))->find();
 			$this->assign("data",$data); 
-			 
+			$levels = select_dict(19);
+			$this->assign("levels",$levels);
 			
 			$this->assign("page_title","修改用户");
 			$this->display();
@@ -138,6 +199,7 @@ class userAction extends AdminAuthAction
 			$gender=post("gender"); 
 			$mobile=post("mobile"); 
 			$email=post("email"); 
+			$level=post("level"); 
 			
 			$upda="username='$username',";
 			$updp="uid='$uid',";
@@ -147,7 +209,7 @@ class userAction extends AdminAuthAction
 			 $password = md5(md5($password).$salt); 
 			$upda.="password='$password',salt='$salt',";
 			
-			$updp.="password='$password',";
+			//$updp.="password='$password',";
 			}
 			if($email){	
 			$upda.="email='$email',";
@@ -167,18 +229,23 @@ class userAction extends AdminAuthAction
 			$updp.="gender='$gender',";
 			$updj.="gender='$gender',";
 			}
+			if($level){	
+			$updp.="level='$level',";
+			}
 			  
 			  
 			$upda.="username='$username'";
 			$updp.="uid='$uid'";
 			$updj.="username='$username'";
+			
 			//ucenter会员  
 			$res=M()->execute("update pre_ucenter_members set $upda where uid=".$uid." ");  
 			//生成社区会员 			
 			$res1=M()->execute("update pre_common_member set $upda where uid=".$uid." "); 		
 			//生成社区会员 			
-			$res2=M()->execute("update pre_common_member_profile set $updp where uid=".$uid." "); 			
-			  
+			$res2=M()->execute("update pre_common_member_profile set $updp where uid=".$uid." ");
+			/* 	echo "update pre_common_member_profile set $updp where uid=".$uid;
+			  var_dump($res2);die; */
 			//生成微博记录   
 			$res3=M()->execute("update jishigou_members set $updj where uid=".$uid." ");   
 			if($res!=false||$res1!=false||$res2!=false||$res3!=false)

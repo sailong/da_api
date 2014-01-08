@@ -1,11 +1,11 @@
 <include file="../public/_header" />
 <div class="so_main">
 
-  <div class="page_tit">用户管理</div>
+  <div class="page_tit">用户管理  <span style="font-size:12px; color:#f60;">(注意：自媒体用户不能直接添加，需要先添加或注册普通用户，然后”升级为自媒体“)</span></div>
 	<div class="tit_tab">
 		<ul>
-			<li><a <php> if(get("is_zimeiti")!='Y'){ echo " class=on ";}</php> href="{:U('admin/user/user',array('is_zimeiti'=>N))}">普通用户</a></li>
-			<li><a <php> if(get("is_zimeiti")=='Y'){ echo " class=on ";}</php> href="{:U('admin/user/user_zimeiti',array('is_zimeiti'=>Y))}">自媒体用户</a></li>
+			<li><a href="{:U('admin/user/user',array('is_zimeiti'=>N))}">普通用户</a></li>
+			<li><a class=on  href="{:U('admin/user/user_zimeiti',array('is_zimeiti'=>Y))}">自媒体用户</a></li>
 		</ul>
 	</div>
 
@@ -13,7 +13,7 @@
 		<form name="search_form"   method="get">
 		<input type="hidden" name="g" value="admin">
 		<input type="hidden" name="m" value="user">
-		<input type="hidden" name="a" value="user">
+		<input type="hidden" name="a" value="user_zimeiti">
 
 		<table border="0" cellspacing="0" cellpadding="0">
 			<th>姓名：</th>
@@ -31,7 +31,7 @@
 			</td>
 			<td class="btn">
 				<input type="submit" value="搜索" class="btn_b_small" style="margin-right:8px;" >
-				<input type="button" value="查看全部" class="btn_b_small" onclick="javascript:location='{:U('admin/user/user',array('state'=>get('state')))}';">
+				<input type="button" value="查看全部" class="btn_b_small" onclick="javascript:location='{:U('admin/user/user_zimeiti',array('state'=>get('state')))}';">
 			</td>
 		</table>
 	</form>
@@ -40,11 +40,12 @@
   <!--------list -------->
   <div class="Toolbar_inbox">
   	<div class="page right">{$pages}</div>
-	
-	<a href="{:U('admin/user/user_add')}" class="btn_a"><span>添加用户</span></a>
-	
-	<a href="javascript:void(0);" class="btn_a"  onclick="mod_post_batch('{:U('admin/user/to_zimeiti_action')}','mod_table');"><span>升级自媒体</span></a>
-	
+
+	<a href="javascript:void(0);" class="btn_a"  onclick="mod_post_batch('{:U('admin/user/cancel_zimeiti_action')}','mod_table');"><span>取消自媒体</span></a>
+	<a href="{:U('admin/user/user_zimeiti',array('is_zimeiti'=>get('Y'),'level'=>'0'))}" class="btn_a" ><span>普通级别</span></a>
+	<volist id="vo" name="levels">
+	<a href="{:U('admin/user/user_zimeiti',array('is_zimeiti'=>get('Y'),'level'=>$vo['dict_value']))}" class="btn_a" ><span>{$vo['dict_name']}</span></a>
+	</volist>
 	<div class="clear"></div>
   </div>
   <div class="list">
@@ -57,7 +58,7 @@
 		</th>
 		<th class="line_l">UID</th>
 		<th class="line_l">用户名</th>
-		
+		<th class="line_l">用户级别</th>
 		<th class="line_l">姓名</th>
 		<th class="line_l">性别</th>
 		<th class="line_l">邮箱</th>
@@ -69,15 +70,14 @@
 	<tr overstyle="on"  id=ids_{$vo["uid"]}>
 		<td><input type="checkbox" name="checkbox" onclick="select_one(this)" value="{$vo.uid}" ></td>
         <td>{$vo.uid}</td>
+		
 		<td><a href="javascript:void(0);" onclick="mod_dialog('查看详细','{:U('admin/user/user_detail', array('uid'=>$vo['uid']))}');">{$vo.username}</a></th>
-
-		
-		
-			<td>{$vo.realname}</td>
-			<td> <php>if($vo['gender']=="1"){ echo " 男 ";} if($vo['gender']=="0"){ echo " 女 ";}</php></td>
-			<td>{$vo.email}</td>
-			<td>{$vo.mobile}</td>
-			<td>{$vo.regdate|format_to_time}</td>
+		<td><php>if($vo['level']){</php>{$levels[$vo['level']]['dict_name']}<php>}else{echo '普通级别';}</php></td>
+		<td>{$vo.realname}</td>
+		<td> <php>if($vo['gender']=="1"){ echo " 男 ";} if($vo['gender']=="0"){ echo " 女 ";}</php></td>
+		<td>{$vo.email}</td>
+		<td>{$vo.mobile}</td>
+		<td>{$vo.regdate|format_to_time}</td>
 			
 		<td>
 		  <a href="{:U('admin/user/user_edit', array('uid'=>$vo['uid']))}">修改</a></td>
@@ -94,7 +94,7 @@
   <div class="Toolbar_inbox">
 	<div class="page right">{$pages}</div>
 
-	<a href="{:U('admin/user/user_add')}" class="btn_a"><span>添加用户</span></a>
+	
 	<div class="clear"></div>
   </div>
 </div>

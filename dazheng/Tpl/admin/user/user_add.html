@@ -15,7 +15,18 @@
 					<th><font color=red>*</font>用户名：</th>
 					<td><input type="text" name="username" id="username" class="mod_input2" style="width:300px;"  value="{$data.username}"></td>
 				</tr>
-                	
+                <tr>
+					<th><font color="red">*</font>用户级别：</th>
+					<td>
+						<select name="level" id="level">
+							<option value="0">请选择</option>
+							<volist id="vo2" name="levels">
+							<option value="{$vo2.dict_value}">{$vo2.dict_name}</option>
+							</volist>
+						</select>
+						<script>set_select_value(document.act_form.level,"{$data.level}");</script>
+					</td>	
+				</tr>	
 				   <tr>
 					<th><font color=red>*</font>姓名：</th>
 					<td><input type="text" name="realname" id="realname" class="mod_input2" style="width:300px;"  value="{$data.realname}"></td>
@@ -66,7 +77,7 @@
 				<th></th>
 				<td> 
 					<input type="submit" class="btn_b"  value="添加" style="margin-right:10px;"/>
-					<input type="button" class="btn_w" onclick="close_dialog(this)" value="取消" />
+					<input type="button" class="btn_w" onclick="javascript:history.back(-1);" value="取消" />
 				</td>
 		</tfoot>
 	</table><!--/add_table-->
