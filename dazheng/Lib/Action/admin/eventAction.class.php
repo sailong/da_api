@@ -126,6 +126,21 @@ class eventAction extends AdminAuthAction
 			if(!empty($uploadinfo["event_audio_bg"])) {
 				$data["event_audio_bg"]=$uploadinfo["event_audio_bg"]["savepath"] . $uploadinfo["event_audio_bg"]["savename"];
 			}
+			
+			//iphone pic
+			if(!empty($uploadinfo["by_top_pic_iphone4"])) {
+				$data["by_top_pic_iphone4"]=$uploadinfo["by_top_pic_iphone4"]["savepath"] . $uploadinfo["by_top_pic_iphone4"]["savename"];
+			}
+			if(!empty($uploadinfo["by_top_pic_iphone5"])) {
+				$data["by_top_pic_iphone5"]=$uploadinfo["by_top_pic_iphone5"]["savepath"] . $uploadinfo["by_top_pic_iphone5"]["savename"];
+			}
+			
+			if(!empty($uploadinfo["event_audio_bg_iphone4"])) {
+				$data["event_audio_bg_iphone4"]=$uploadinfo["event_audio_bg_iphone4"]["savepath"] . $uploadinfo["event_audio_bg_iphone4"]["savename"];
+			}
+			if(!empty($uploadinfo["event_audio_bg_iphone5"])) {
+				$data["event_audio_bg_iphone5"]=$uploadinfo["event_audio_bg_iphone5"]["savepath"] . $uploadinfo["event_audio_bg_iphone5"]["savename"];
+			}
 
 			$data["event_starttime"]=strtotime(post("event_starttime"));
 			$data["event_endtime"]=strtotime(post("event_endtime"));
@@ -273,6 +288,20 @@ class eventAction extends AdminAuthAction
 			
 			if(!empty($uploadinfo["event_audio_bg"])) {
 				$data["event_audio_bg"]=$uploadinfo["event_audio_bg"]["savepath"] . $uploadinfo["event_audio_bg"]["savename"];
+			}
+			//iphone pic
+			if(!empty($uploadinfo["by_top_pic_iphone4"])) {
+				$data["by_top_pic_iphone4"]=$uploadinfo["by_top_pic_iphone4"]["savepath"] . $uploadinfo["by_top_pic_iphone4"]["savename"];
+			}
+			if(!empty($uploadinfo["by_top_pic_iphone5"])) {
+				$data["by_top_pic_iphone5"]=$uploadinfo["by_top_pic_iphone5"]["savepath"] . $uploadinfo["by_top_pic_iphone5"]["savename"];
+			}
+			
+			if(!empty($uploadinfo["event_audio_bg_iphone4"])) {
+				$data["event_audio_bg_iphone4"]=$uploadinfo["event_audio_bg_iphone4"]["savepath"] . $uploadinfo["event_audio_bg_iphone4"]["savename"];
+			}
+			if(!empty($uploadinfo["event_audio_bg_iphone5"])) {
+				$data["event_audio_bg_iphone5"]=$uploadinfo["event_audio_bg_iphone5"]["savepath"] . $uploadinfo["event_audio_bg_iphone5"]["savename"];
 			}
 			
 			$data["event_starttime"]=strtotime(post("event_starttime"));
