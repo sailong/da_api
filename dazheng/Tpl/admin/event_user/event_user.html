@@ -93,10 +93,11 @@
 		<tr overstyle="on"  id=ids_{$sub["event_user_id"]}>
 			<td><input type="checkbox" name="checkbox" onclick="select_one(this)" value="{$sub.event_user_id}" ></td>
 			<td>{$sub.event_user_id}</th>
-				<td><a href="{:U('admin/event_user/event_user_detail', array('event_user_id'=>$sub['event_user_id']))}">{$sub.uid}</a></td>
+				<!-- <td><a href="{:U('admin/event_user/event_user_detail', array('event_user_id'=>$sub['event_user_id']))}">{$sub.uid}</a></td> -->
 				<td>{$vo.event_user_team}</td>
 				<td>&nbsp;&nbsp;&nbsp;&nbsp;|-- {$sub.event_user_realname}</td>
-				<td>{$sub.event_user_sex}</td>
+				<td>{$sub.uid}</td>
+				<!-- <td>{$sub.event_user_sex}</td> -->
 				<td>{$sub.event_user_card_type}</td>
 				<td>{$sub.event_user_card}</td>
 				<td>{$sub.event_user_chadian}</td>

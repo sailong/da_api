@@ -29,7 +29,7 @@ class event_userAction extends AdminAuthAction
 		$this->assign('event_name',$event_info['event_name']);
 		$this->assign('event_id',$event_info['event_id']);
 		$this->assign('event_type',$event_info['event_type']);
-
+		
 		$this->assign("list",$list["item"]);
 		$this->assign("pages",$list["pages"]);
 		$this->assign("total",$list["total"]);
@@ -53,6 +53,10 @@ class event_userAction extends AdminAuthAction
 		$event_info=M('event')->where("event_id=".get("event_id")." ")->field("event_left_flag,event_right_flag,event_type")->find();
 		$team_list[]=$event_info['event_left_flag'];
 		$team_list[]=$event_info['event_right_flag'];
+		
+		$country_list=select_dict(17,"select");
+		$this->assign("country_list",$country_list);
+
 		
 		$this->assign("event_info",$event_info);
 		$this->assign("team_list",$team_list);
@@ -145,14 +149,14 @@ class event_userAction extends AdminAuthAction
 			$data["event_user_chadian"]=post("event_user_chadian");
 			$data["event_user_state"]=post("event_user_state");
 			
-			if(post("event_user_team")!="")
+			/* if(post("event_user_team")!="")
 			{
 				$data["event_user_team"]=post("event_user_team");
 			}
 			if(post("event_user_parent_id")!="")
 			{
 				$data["event_user_parent_id"]=post("event_user_parent_id");
-			}
+			} */
 
 			$list=M("event_user")->save($data);
 			$event_id=$data["event_id"];

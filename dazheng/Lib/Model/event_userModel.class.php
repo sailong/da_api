@@ -31,8 +31,17 @@ class event_userModel extends Model
 			$where .=" and event_user_addtime<".strtotime(get("endtime"))." ";
 		}
 
-		$data["item"]=M("event_user")->where($where.$bigwhere)->field("event_user_id,event_id,uid,event_user_realname,event_user_sex,event_user_card_type,event_user_card,event_user_chadian,event_user_state,event_user_addtime")->order($sort)->page($page.",".$page_size)->select();
+		$data["item"]=M("event_user")->where($where.$bigwhere)->field("event_user_id,event_user_team,event_id,uid,event_user_realname,event_user_sex,event_user_card_type,event_user_card,event_user_chadian,event_user_state,event_user_addtime")->order($sort)->page($page.",".$page_size)->select();
 		//echo M()->getLastSql();
+		for($i=0; $i<count($data["item"]); $i++)
+		{
+			if($data["item"][$i]["event_user_id"]!="")
+			{
+				$sub_list=M("event_user")->where("event_user_parent_id='".$data["item"][$i]["event_user_id"]."'")->field("event_user_id,event_user_team,event_id,uid,event_user_realname,event_user_sex,event_user_card_type,event_user_card,event_user_chadian,event_user_state,event_user_addtime")->select();
+				$data["item"][$i]['sub'] = $sub_list;
+			}
+			
+		}
 		for($i=0; $i<count($data["item"]); $i++)
 		{
 			if($data["item"][$i]["user_id"]!="")
@@ -40,6 +49,7 @@ class event_userModel extends Model
 				$user=M()->query("select uname from ".C("db_prefix")."user where  uid='".$data["item"][$i]["user_id"]."' ");
 				$data["item"][$i]["uname"]=$user[0]["uname"];
 			}
+			
 		}
 		$data["total"] = M("event_user")->where($where.$bigwhere)->count();
 		

@@ -226,11 +226,11 @@ class eventAction extends AdminAuthAction
 			$data["event_team_level"]=post("event_team_level");
 			
 			$data["event_left"]=post("event_left");
-			$data["event_left_flag"]=post("event_left_flag");
+			//$data["event_left_flag"]=post("event_left_flag");
 			$data["event_left_intro"]=post("event_left_intro");
 			//$data["event_left_pic"]=post("event_left_pic");
 			$data["event_right"]=post("event_right");
-			$data["event_right_flag"]=post("event_right_flag");
+			//$data["event_right_flag"]=post("event_right_flag");
 			$data["event_right_intro"]=post("event_right_intro");
 			//add2013.12.10start
 			$data["event_audio_url"]=post("event_audio_url");
