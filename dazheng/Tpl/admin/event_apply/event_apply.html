@@ -71,7 +71,7 @@
 		<!-- <th class="line_l">赛事</th> -->
 		<th class="line_l">分站</th>
 		<!-- <th class="line_l">报名人</th> -->
-		<php>if($event_type=='T'){</php>
+		<php>if($event_type=='T' || $event_type=='LAIDEBEI'){</php>
 		<th class="line_l">队别</th>
 		<php>}</php>
 		<th class="line_l">姓名</th>
@@ -89,7 +89,7 @@
 			<!-- <td>{$vo.event_name}({$vo.event_id})</th> -->
 			<td>{$vo.fenzhan_name}</th>
 			<!-- <td>{$vo.uid}</td> -->
-			<php>if($event_type=='T'){</php>
+			<php>if($event_type=='T' || $event_type=='LAIDEBEI'){</php>
 			<td>{$vo.event_user_team}</td>
 			<php>}</php>
 			<td>{$vo.event_apply_realname}</td>
@@ -103,7 +103,7 @@
 			<a href="javascript:void(0);" onclick="mod_delete_one('{:U('admin/event_apply/event_apply_delete_action')}','{$vo['event_apply_id']}');">删除</a>
 		</td>
 	</tr>
-	<php>if($event_type=='T'){</php>
+	<php>if($event_type=='T' || $event_type=='LAIDEBEI'){</php>
 	<volist id="vo1" name="vo['child_list']">
 	<tr overstyle="on"  id=ids_{$vo1["event_apply_id"]}>
 			<td><input type="checkbox" name="checkbox" onclick="select_one(this)" value="{$vo1.event_apply_id}" ></td>
@@ -111,7 +111,7 @@
 			<!-- <td>{$vo1.event_name}({$vo.event_id})</th> -->
 			<td>{$vo1.fenzhan_name}</th>
 			<!-- <td>{$vo1.uid}</td> -->
-			<php>if($event_type=='T'){</php>
+			<php>if($event_type=='T' || $event_type=='LAIDEBEI'){</php>
 			<td>{$vo1.event_user_team}</td>
 			<php>}</php>
 			<td>&nbsp;&nbsp;&nbsp;&nbsp;|--{$vo1.event_apply_realname}</td>

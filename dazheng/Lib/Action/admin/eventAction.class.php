@@ -113,6 +113,15 @@ class eventAction extends AdminAuthAction
 			if(!empty($uploadinfo["event_right_pic"])) {
 				$data["event_right_pic"]=$uploadinfo["event_right_pic"]["savepath"] . $uploadinfo["event_right_pic"]["savename"];
 			}
+			if(!empty($uploadinfo["event_left_ico"]))
+			{
+				$data["event_left_ico"]=$uploadinfo["event_left_ico"]["savepath"] . $uploadinfo["event_left_ico"]["savename"];
+			
+			}
+			if(!empty($uploadinfo["event_right_ico"]))
+			{
+				$data["event_right_ico"]=$uploadinfo["event_right_ico"]["savepath"] . $uploadinfo["event_right_ico"]["savename"];
+			}
 			
 			//event_ticket_ad_pic
 			if(!empty($uploadinfo["event_ticket_ad_pic"])) {
@@ -275,6 +284,16 @@ class eventAction extends AdminAuthAction
 			//event_right_pic
 			if(!empty($uploadinfo["event_right_pic"])) {
 				$data["event_right_pic"]=$uploadinfo["event_right_pic"]["savepath"] . $uploadinfo["event_right_pic"]["savename"];
+			}
+			
+			if(!empty($uploadinfo["event_left_ico"]))
+			{
+				$data["event_left_ico"]=$uploadinfo["event_left_ico"]["savepath"] . $uploadinfo["event_left_ico"]["savename"];
+			
+			}
+			if(!empty($uploadinfo["event_right_ico"]))
+			{
+				$data["event_right_ico"]=$uploadinfo["event_right_ico"]["savepath"] . $uploadinfo["event_right_ico"]["savename"];
 			}
 			//event_ticket_ad_pic
 			if(!empty($uploadinfo["event_ticket_ad_pic"])) {

@@ -54,7 +54,8 @@
 							<option value="0">请选择</option>
 							<option value="G" selected>比杆</option>
 							<option value="D">比洞</option>
-							<option value="T">团体</option>
+							<option value="T">团体(中韩)</option>
+							<option value="LAIDEBEI">团体(莱德杯)</option>
 						</select>
 						<script>set_select_value(document.act_form.event_type,'{$data.event_type}');</script>
 						
@@ -106,6 +107,10 @@
 					<td><php>if($data['event_left_pic']){</php><img src="/{$data.event_left_pic}" style="max-height:100px; max-width:200px;"><br/><php>}</php><input type="file" name="event_left_pic" id="event_left_pic"  style="width:300px;" class="mod_input">  (如需修改，请重新上传)</td>
 				</tr>
 				<tr class="tuanti">
+					<th>左边图标：</th>
+					<td><php>if($data['event_left_ico']){</php><img src="/{$data.event_left_ico}" style="max-height:100px; max-width:200px;"><br/><php>}</php><input type="file" name="event_left_ico" id="event_left_ico"  style="width:300px;" class="mod_input">  (如需修改，请重新上传)</td>
+				</tr>
+				<tr class="tuanti">
 					<th>右边团队标识：</th>
 					<td><input type="text" name="event_right_flag" id="event_right_flag" class="mod_input2" style="width:300px;"  value="{$data.event_right_flag}">(只限英文字符和数字，不可写中文)</td>
 				</tr>
@@ -120,6 +125,10 @@
 				<tr class="tuanti">
 					<th>右边团队图片：</th>
 					<td><php>if($data['event_right_pic']){</php><img src="/{$data.event_right_pic}" style="max-height:100px; max-width:200px;"><br/><php>}</php><input type="file" name="event_right_pic" id="event_right_pic"  style="width:300px;" class="mod_input">  (如需修改，请重新上传)</td>
+				</tr>
+				<tr class="tuanti">
+					<th>右边图标：</th>
+					<td><php>if($data['event_right_ico']){</php><img src="/{$data.event_right_ico}" style="max-height:100px; max-width:200px;"><br/><php>}</php><input type="file" name="event_right_ico" id="event_right_ico"  style="width:300px;" class="mod_input">  (如需修改，请重新上传)</td>
 				</tr>
 				<tr>
 					<th>时间表图片：</th>
@@ -379,7 +388,7 @@ function reloadAutoTip()
 	$.formValidator.reloadAutoTip();
 }
 function change_event_type(event_type){
-	if(event_type == 'T') {
+	if(event_type == 'T'|| event_type == 'LAIDEBEI') {
 		$(".tuanti").show();
 	}else{
 		$(".tuanti").hide();

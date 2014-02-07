@@ -134,12 +134,13 @@ class userAction extends AdminAuthAction
 			$data["realname"]=post("realname");
 			$data["enrealname"]=post("enrealname"); 
 			$data["level"]=post("level"); 
+			$data["intro"]=post("intro");  		
 			
 			//生成真实姓名
 			$list=M("common_member_profile","pre_")->add($data); 
 			$data["nickname"]=post("realname"); 
 			$data["ucuid"]=$ucuid; 
-			$data["role_id"]=3; 			
+			$data["role_id"]=3;		
 			
 			//生成微博记录
 			$list=M("members","jishigou_")->add($data); 
@@ -200,6 +201,7 @@ class userAction extends AdminAuthAction
 			$mobile=post("mobile"); 
 			$email=post("email"); 
 			$level=post("level"); 
+			$intro=post("intro");
 			
 			$upda="username='$username',";
 			$updp="uid='$uid',";
@@ -231,6 +233,9 @@ class userAction extends AdminAuthAction
 			}
 			if($level){	
 			$updp.="level='$level',";
+			}
+			if($intro){
+			$updp.="intro='$intro',";
 			}
 			  
 			  

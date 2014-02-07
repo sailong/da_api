@@ -44,7 +44,7 @@
 						<script>set_select_value(document.act_form.fenzhan_id,'{$data.fenzhan_id}');</script>
 					</td>
 				</tr>
-				<php>if($event_info['event_type'] == 'T'){</php>
+				<php>if($event_info['event_type'] == 'T' || $event_info['event_type']=='LAIDEBEI'){</php>
 				<tr>
 					<th>队别：</th>
 					<td>{$data.event_user_team}</td>

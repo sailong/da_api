@@ -30,12 +30,12 @@
 					<script>set_select_value(document.act_form.event_id,'<php> echo get("event_id");</php>');</script>
 				</td>
 			</tr> -->
-			<php>if($event_info['event_type'] == 'T'){</php>
+			<php>if($event_info['event_type'] == 'T' || $event_info['event_type']=='LAIDEBEI'){</php>
 			<tr>
 					<th>所属团队：</th>
 					<td>
 						<select name="event_user_team">
-							<option value="">请选择</option>
+							<!-- <option value="">请选择</option> -->
 							<volist id="vo" name="team_list">
 							<option value="{$vo}">{$vo}</option>
 							</volist>
@@ -47,7 +47,7 @@
 					<th>上一级：</th>
 					<td>
 						<select name="event_user_parent_id">
-							<option value="">请选择</option>
+							<!-- <option value="">请选择</option> -->
 							<option value="0" selected>一级</option>
 							<volist id="vo" name="event_user_list">
 							<option value="{$vo.event_user_id}">{$vo.event_user_realname}</option>

@@ -51,7 +51,7 @@
 		</th>
 		<th class="line_l">编号</th>
 		<!-- <th class="line_l">所属用户</th> -->
-		<php>if($event_type=='T'){</php>
+		<php>if($event_type=='T' || $event_type=='LAIDEBEI'){</php>
 		<th class="line_l">队别</th>
 		<php>}</php>
 		<th class="line_l">姓名</th>
@@ -70,7 +70,7 @@
 		<td><input type="checkbox" name="checkbox" onclick="select_one(this)" value="{$vo.event_user_id}" ></td>
 		<td>{$vo.event_user_id}</th>
 			<!-- <td><a href="{:U('admin/event_user/event_user_detail', array('event_user_id'=>$vo['event_user_id']))}">{$vo.uid}</a></td> -->
-			<php>if($event_type=='T'){</php>
+			<php>if($event_type=='T' || $event_type=='LAIDEBEI'){</php>
 			<td>{$vo.event_user_team}</td>
 			<php>}</php>
 			<td>{$vo.event_user_realname}</td>
@@ -83,12 +83,12 @@
 			-->
 			<td>{$vo.event_user_addtime|format_to_time}</td>
 		<td>
-			<php>if($event_type=='T'){</php><a href="{:U('admin/event_user/event_user_add', array('event_user_parent_id'=>$vo['event_user_id'],'event_user_team'=>$vo['event_user_team'],'event_id'=>$vo['event_id']))}">添加下级</a> | <php>}</php>
+			<php>if($event_type=='T' || $event_type=='LAIDEBEI'){</php><a href="{:U('admin/event_user/event_user_add', array('event_user_parent_id'=>$vo['event_user_id'],'event_user_team'=>$vo['event_user_team'],'event_id'=>$vo['event_id']))}">添加下级</a> | <php>}</php>
 			<a href="{:U('admin/event_user/event_user_edit', array('event_user_id'=>$vo['event_user_id'],'event_id'=>$vo['event_id']))}">修改</a> | 
 			<a href="javascript:void(0);" onclick="mod_delete_one('{:U('admin/event_user/event_user_delete_action')}','{$vo['event_user_id']}');">删除</a>
 		</td>
 	</tr>
-	<php>if($event_type=='T'){</php>
+	<php>if($event_type=='T' || $event_type=='LAIDEBEI'){</php>
 		<volist name="vo['sub']" id="sub">
 		<tr overstyle="on"  id=ids_{$sub["event_user_id"]}>
 			<td><input type="checkbox" name="checkbox" onclick="select_one(this)" value="{$sub.event_user_id}" ></td>

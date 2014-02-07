@@ -98,6 +98,7 @@ class event_applyAction extends AdminAuthAction
 		$this->assign('fenzhan',$fenzhan['item']);
 		
 		
+		
 		$this->assign("page_title","添加赛事报名");
     	$this->display();
 	}
@@ -138,8 +139,10 @@ class event_applyAction extends AdminAuthAction
 			$this->assign("data",$data);
 			
 			
-			$event=D('event')->event_select_pro(" and field_uid='".$_SESSION['field_uid']."' ");
-			$this->assign('event',$event['item']);
+			$event_info=M('event')->where("event_id='".get('event_id')."'")->find();
+			$this->assign('event_info',$event_info);
+			/* echo '<pre>';
+			var_dump($event); */
 			
 			$fenzhan=D('fenzhan_tbl')->fenzhan_list_pro(" and event_id='".$data['event_id']."'  ");
 			$this->assign('fenzhan',$fenzhan['item']);
@@ -365,7 +368,7 @@ class event_applyAction extends AdminAuthAction
 					
 						if($event_info['event_type']=='T')
 						{
-							if($fenzhan_info['fenzhan_rule']==11 && $apply_info['parent_id']==0)
+							if($fenzhan_info['fenzhan_rule']==11 && $apply_info['parent_id']>0)//$apply_info['parent_id']==0只显示队名---$apply_info['parent_id']==0只显示队员名称
 							{
 								$res=M("baofen")->add($insert_data);
 						
