@@ -494,7 +494,7 @@ if($ac=="news_detail")
 		
 		if($detail_data['arc_type']=='U')
 		{
-			$detail_data['subject']="".$detail_data['realname']."：".$detail_data['subject'];
+			$detail_data['subject']="来自".$detail_data['realname']."：".$detail_data['subject'];
 		}
 		
 		

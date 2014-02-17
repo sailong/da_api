@@ -51,10 +51,9 @@ if(!empty($if_mobile[0]))
 		$email_info = DB::fetch_first( "select email  from " . DB::table ( 'common_member' ) . "  where uid='$uid' ");
 		$data['data']['email']=$email_info['email'];
 		
-		$realname = DB::fetch_first( "select realname,chadian,level  from " . DB::table ( 'common_member_profile' ) . "  where uid='$uid' ");
+		$realname = DB::fetch_first( "select realname,chadian  from " . DB::table ( 'common_member_profile' ) . "  where uid='$uid' ");
 		$data['data']['username']=$realname['realname'];
 		$data['data']['chadian']=$realname['chadian'];
-		$data['data']['level']=$realname['level'];
 
 		
 

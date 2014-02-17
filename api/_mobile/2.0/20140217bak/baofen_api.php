@@ -68,7 +68,7 @@ if($ac=='rank')
 	}
 	
 	//event_info
-	$event_info=DB::fetch_first("select event_id,event_name,event_uid,event_fenzhan_id,event_logo,event_logo_small,event_timepic,event_starttime,event_endtime,event_content,event_state,event_is_tj,event_is_baoming,event_addtime,event_is_viewscore,event_lun_num,event_sort_fenzhan_id,event_video_url,event_audio_url,event_ad_url from tbl_event where 1=1 ".$event_sql." order by event_addtime desc limit 1 ");
+	$event_info=DB::fetch_first("select event_id,event_name,event_uid,event_fenzhan_id,event_logo,event_logo_small,event_timepic,event_starttime,event_endtime,event_content,event_state,event_is_tj,event_is_baoming,event_addtime,event_is_viewscore,event_lun_num,event_sort_fenzhan_id from tbl_event where 1=1 ".$event_sql." order by event_addtime desc limit 1 ");
 	if(!empty($event_info))
 	{
 		
@@ -221,33 +221,23 @@ if($ac=='rank')
 			//if($event_info['event_sort_fenzhan_id'])
 			if($now_fenzhan_info['fenzhan_ing_status']==0 && $now_fenzhan_info['fenzhan_lun']==1)
 			{
-				$query = DB::query(" SELECT id,uid,lun,event_id,total_score,zong_score,score,par,tianshu,total_sum_ju,event_apply_id,username,enrealname,event_user_id ,status,dateline,jiadong_status,thru,first_thru,thru_sort,start_time,rtype,country FROM (select event_id,baofen_id as id,uid,lun,total_score,zong_score,score,par,to_days(FROM_UNIXTIME(dateline))-to_days(now()) as tianshu,total_sum_ju ,total_ju_par,total_ju_par1,total_ju_par2,total_ju_par3,event_apply_id,realname,enrealname,realname as username,event_user_id,status,dateline,jiadong_status,thru,thru as first_thru,TIME_TO_SEC(STR_TO_DATE
-(thru,'%H:%i:%s')) as thru_sort,start_time,rtype,country from tbl_baofen where fenzhan_id='".$now_fenzhan_id."' and source='ndong' order by start_time asc,status asc,thru_sort asc) as t2 group by event_user_id order by start_time asc,status desc,thru_sort asc,rtype asc limit 0,$limit");
+				$query = DB::query(" SELECT id,uid,lun,event_id,total_score,zong_score,score,par,tianshu,total_sum_ju,event_apply_id,username,enrealname,event_user_id ,status,dateline,jiadong_status,thru,first_thru,thru_sort,start_time,rtype FROM (select event_id,baofen_id as id,uid,lun,total_score,zong_score,score,par,to_days(FROM_UNIXTIME(dateline))-to_days(now()) as tianshu,total_sum_ju ,total_ju_par,total_ju_par1,total_ju_par2,total_ju_par3,event_apply_id,realname,enrealname,realname as username,event_user_id,status,dateline,jiadong_status,thru,thru as first_thru,TIME_TO_SEC(STR_TO_DATE
+(thru,'%H:%i:%s')) as thru_sort,start_time,rtype from tbl_baofen where fenzhan_id='".$now_fenzhan_id."' and source='ndong' order by start_time asc,status asc,thru_sort asc) as t2 group by event_user_id order by start_time asc,status desc,thru_sort asc,rtype asc limit 0,$limit");
 			}
 			else if($now_fenzhan_info['fenzhan_ing_status']==1 && $now_fenzhan_info['fenzhan_lun']==1)
 			{
-				$query = DB::query(" SELECT id,uid,lun,event_id,total_score,zong_score,score,par,tianshu,total_sum_ju,event_apply_id,username,enrealname,event_user_id ,status,dateline,jiadong_status,thru,first_thru,thru_sort,start_time,rtype,country FROM (select event_id,baofen_id as id,uid,lun,total_score,zong_score,score,par,to_days(FROM_UNIXTIME(dateline))-to_days(now()) as tianshu,total_sum_ju ,total_ju_par,total_ju_par1,total_ju_par2,total_ju_par3,event_apply_id,realname,enrealname,realname as username,event_user_id,status,dateline,jiadong_status,thru,thru as first_thru,TIME_TO_SEC(STR_TO_DATE
-(thru,'%H:%i:%s')) as thru_sort,start_time,rtype,country from tbl_baofen where fenzhan_id='".$now_fenzhan_id."' and source='ndong' order by status asc,total_sum_ju asc,jiadong_status desc) as t2 group by event_user_id order by status desc,total_sum_ju asc,start_time asc,jiadong_status desc,rtype asc limit 0,$limit");
+				$query = DB::query(" SELECT id,uid,lun,event_id,total_score,zong_score,score,par,tianshu,total_sum_ju,event_apply_id,username,enrealname,event_user_id ,status,dateline,jiadong_status,thru,first_thru,thru_sort,start_time,rtype FROM (select event_id,baofen_id as id,uid,lun,total_score,zong_score,score,par,to_days(FROM_UNIXTIME(dateline))-to_days(now()) as tianshu,total_sum_ju ,total_ju_par,total_ju_par1,total_ju_par2,total_ju_par3,event_apply_id,realname,enrealname,realname as username,event_user_id,status,dateline,jiadong_status,thru,thru as first_thru,TIME_TO_SEC(STR_TO_DATE
+(thru,'%H:%i:%s')) as thru_sort,start_time,rtype from tbl_baofen where fenzhan_id='".$now_fenzhan_id."' and source='ndong' order by status asc,total_sum_ju asc,jiadong_status desc) as t2 group by event_user_id order by status desc,total_sum_ju asc,start_time asc,jiadong_status desc,rtype asc limit 0,$limit");
 			}
 			else
 			{
-				$query = DB::query(" SELECT id,uid,lun,event_id,total_score,zong_score,score,par,tianshu,total_sum_ju,event_apply_id,username,enrealname,event_user_id ,status,dateline,jiadong_status,rtype,country FROM (select event_id,baofen_id as id,uid,lun,total_score,zong_score,score,par,to_days(FROM_UNIXTIME(dateline))-to_days(now()) as tianshu,total_sum_ju ,total_ju_par,total_ju_par1,total_ju_par2,total_ju_par3,event_apply_id,realname,enrealname,realname as username,event_user_id,status,dateline,jiadong_status,rtype,country from tbl_baofen where 1=1 ".$baofen_sql." and source='ndong' order by status asc,total_sum_ju asc,jiadong_status desc) as t2 group by event_user_id order by status desc,total_sum_ju asc,jiadong_status desc,rtype asc limit 0,$limit");
+				$query = DB::query(" SELECT id,uid,lun,event_id,total_score,zong_score,score,par,tianshu,total_sum_ju,event_apply_id,username,enrealname,event_user_id ,status,dateline,jiadong_status,rtype FROM (select event_id,baofen_id as id,uid,lun,total_score,zong_score,score,par,to_days(FROM_UNIXTIME(dateline))-to_days(now()) as tianshu,total_sum_ju ,total_ju_par,total_ju_par1,total_ju_par2,total_ju_par3,event_apply_id,realname,enrealname,realname as username,event_user_id,status,dateline,jiadong_status,rtype from tbl_baofen where 1=1 ".$baofen_sql." and source='ndong' order by status asc,total_sum_ju asc,jiadong_status desc) as t2 group by event_user_id order by status desc,total_sum_ju asc,jiadong_status desc,rtype asc limit 0,$limit");
 			}
 			
 			$i=0;
 			while($row = DB::fetch($query))
 			{
-				//国籍
-				if($row['country'])
-				{
-					$row['country_ico']=$site_url."/upload/country_ico/".$row['country'].".gif";
-				}
-				else
-				{
-					$row['country_ico']="";
-				}
-				
-				
+
 				//jiadong_status
 				if($row['uid'])
 				{
@@ -633,9 +623,6 @@ if($ac=='rank')
 			'event_is_baoming'=>$event_info['event_is_baoming'],
 			'event_baoming_state'=>$event_info['event_baoming_state'],
 			'event_baoming_pic'=>$event_info['event_baoming_pic'],
-			'event_video_url'=>$event_info['event_video_url'],
-			'event_audio_url'=>$event_info['event_audio_url'],
-			'event_ad_url'=>$event_info['event_ad_url'],
 			'score_list'=>$gscore,
 			'topic_list'=>$topic_list,
 		);

@@ -146,7 +146,7 @@ if($ac == 'event_zhibo_detail')
 	
 	/* if($zhibo_detail)
 	{ */
-	$event_detail=DB::fetch_first("select event_id,event_name,event_id as event_uid,event_content,event_url,event_type,event_logo,event_starttime,event_endtime,event_video_url,event_audio_url,event_ad_url,event_city,field_uid,by_top_pic,event_audio_bg from tbl_event where 1 and event_id=".$event_id);
+	$event_detail=DB::fetch_first("select event_id,event_name,event_id as event_uid,event_content,event_url,event_type,event_logo,event_starttime,event_endtime,event_video_url,event_audio_url,event_city,field_uid,by_top_pic,event_audio_bg from tbl_event where 1 and event_id=".$event_id);
 	if($event_detail)
 	{
 		if($event_detail['field_uid'] != '')
@@ -180,7 +180,6 @@ if($ac == 'event_zhibo_detail')
 		
 		$zhibo_detail['event_audio_url'] = $event_detail['event_audio_url']?$event_detail['event_audio_url'] : '';
 		$zhibo_detail['event_video_url'] = $event_detail['event_video_url']?$event_detail['event_video_url'] : '';
-		$zhibo_detail['event_ad_url'] = $event_detail['event_ad_url']?$event_detail['event_ad_url'] : '';
 		$zhibo_detail['event_logo'] = '';
 		$zhibo_detail['event_logo_info'] = '';
 		if($event_detail['event_logo'])
@@ -262,7 +261,7 @@ if($ac == 'event_zhibo_play')
 	}
 	
 
-	$event_detail=DB::fetch_first("select event_id,event_name,event_id as event_uid,event_content,event_url,event_type,event_logo,event_starttime,event_endtime,event_video_url,event_audio_url,event_ad_url,event_city,field_uid,by_top_pic,event_audio_bg from tbl_event where 1 and event_id=".$event_id);
+	$event_detail=DB::fetch_first("select event_id,event_name,event_id as event_uid,event_content,event_url,event_type,event_logo,event_starttime,event_endtime,event_video_url,event_audio_url,event_city,field_uid,by_top_pic,event_audio_bg from tbl_event where 1 and event_id=".$event_id);
 	
 	if($event_detail)
 	{
@@ -299,7 +298,6 @@ if($ac == 'event_zhibo_play')
 		
 		$zhibo_detail['event_audio_url'] = $event_detail['event_audio_url']?$event_detail['event_audio_url'] : '';
 		$zhibo_detail['event_video_url'] = $event_detail['event_video_url']?$event_detail['event_video_url'] : '';
-		$zhibo_detail['event_ad_url'] = $event_detail['event_ad_url']?$event_detail['event_ad_url'] : '';
 		$zhibo_detail['event_logo'] = '';
 		$zhibo_detail['event_logo_info'] = '';
 		if($event_detail['event_logo'])

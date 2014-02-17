@@ -72,8 +72,7 @@ if($ac=="album_list")
 			if($photo)
 			{
 				$row['album_fenmian']=$site_url.'/'.$photo;//get_small_pic($site_url."/".$photo);
-				$row['album_fenmian_info']=null;
-				//$row['album_fenmian_info']=getimagesize($row['album_fenmian']);
+				$row['album_fenmian_info']=getimagesize($row['album_fenmian']);
 				
 			}
 			else
@@ -122,14 +121,12 @@ if($ac=="photo_list")
 			if($row['photo_url'])
 			{
 				$row['photo_url']=$site_url."/".$row['photo_url'];
-				//$row['photo_url_info']=getimagesize($row['photo_url']);
-				$row['photo_url_info']=null;
+				$row['photo_url_info']=getimagesize($row['photo_url']);
 				//$row['photo_url_small']=$site_url.'/'.$row['photo_url'].'_small.jpg';//get_small_pic($row['photo_url']);
-				if($row['photo_url_small'])
+				if(getimagesize($root_path.'/'.$row['photo_url_small']))
 				{	
 					$row['photo_url_small']=$site_url.'/'.$row['photo_url_small'];//get_small_pic($row['photo_url']);
-					//$row['photo_url_small_info']=getimagesize($row['photo_url_small']);
-					$row['photo_url_small_info']=null;
+					$row['photo_url_small_info']=getimagesize($row['photo_url_small']);
 				}
 				else
 				{

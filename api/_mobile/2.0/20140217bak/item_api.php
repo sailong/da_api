@@ -622,11 +622,7 @@ if($ac=='new_order')
 			unset($new_field_array[$key]);
 			$field_array[] = $val;
 		}
-		if($_G['gp_test']==1){
-			echo $current_path.'/data/'.$val.'_array_data.php';
-			$new_arr=include($current_path.'/data/'.$val.'_array_data.php');
-			var_dump($new_arr);die;
-		}
+		
 		//$field_array=array_flip(array_flip($field_array));
 		//$field_array=array_del_chongfu($field_array);
 		//$field_array=unique_arr($field_array,true);
