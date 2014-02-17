@@ -68,10 +68,23 @@ $hot_2013district=array(
 
 
 //echo time()+86400*15;
+
 //选择 赛事
 if($ac=="select_event")
 {
-	$list3=DB::query("select event_id,event_name,event_uid,event_is_zhutui,event_zhutui_pic,event_content,event_url,event_type,event_logo,event_video_url,event_audio_url,event_city from tbl_event where event_is_zhutui='Y' and field_uid=0 order by event_sort desc limit 1 ");
+	
+	$year=$_G['gp_year'];
+	if($year)
+	{
+		$where =" and event_year='".$_G['gp_year']."' ";
+	}
+	else
+	{
+		//$where =" and event_year='".date("Y",time())."' ";
+		$where =" and event_year='2013' ";
+	}
+
+	$list3=DB::query("select event_id,event_name,event_uid,event_is_zhutui,event_zhutui_pic,event_content,event_url,event_type,event_logo,event_video_url,event_audio_url,event_city,event_year from tbl_event where event_is_zhutui='Y' and field_uid=0  ".$where."  order by event_sort desc limit 1 ");
 	while($row3 = DB::fetch($list3))
 	{
 		if($row3['event_zhutui_pic'])
@@ -103,10 +116,10 @@ if($ac=="select_event")
 		
 		
 		
-		$list_data3[]=$row3;
+		//$list_data3[]=$row3;
 	}
 
-	$list=DB::query("select event_id,event_name,event_id as event_uid,event_is_zhutui,event_content,event_url,event_type,event_logo,event_starttime,event_endtime,event_video_url,event_audio_url,event_city from tbl_event where event_is_tj='Y' and (event_viewtype='B' or event_viewtype='A' or event_viewtype='S') order by event_sort desc  ");
+	$list=DB::query("select event_id,event_name,event_id as event_uid,event_is_zhutui,event_content,event_url,event_type,event_logo,event_starttime,event_endtime,event_video_url,event_audio_url,event_city,event_year from tbl_event where event_is_tj='Y' and (event_viewtype='B' or event_viewtype='A' or event_viewtype='S')  ".$where."  order by event_sort desc  ");
 	while($row = DB::fetch($list))
 	{
 		
@@ -154,6 +167,8 @@ if($ac=="select_event")
 	}
 	
 	
+	
+	$menu_list=array('2014','2013','2012');
 
 	if($list_data)
 	{
@@ -162,13 +177,26 @@ if($ac=="select_event")
 							  'zhutui_list'=>$list_data3,
 							  'ing_list'=>$list_data,
 							  'apply_ing_list'=>$list_data2,
+							  'menu_list'=>$menu_list,
 							 );
 		//print_r($data);
 		api_json_result(1,0,$app_error['event']['10502'],$data);
 	}
 	else
 	{
-		api_json_result(1,0,"no data",$data);
+	
+		$list_data3=array();
+		$list_data=array();
+		$list_data2=array();
+		$data['title']		= "list_data";
+		$data['data']=array(
+							  'zhutui_list'=>$list_data3,
+							  'ing_list'=>$list_data,
+							  'apply_ing_list'=>$list_data2,
+							  'menu_list'=>$menu_list,
+							 );
+		api_json_result(1,0,$app_error['event']['10502'],$data);
+		//api_json_result(1,0,"no data",$data);
 	}
 	
 	
@@ -182,7 +210,7 @@ if($ac=="apply_ing")
 {
 	$login_uid=$_G['gp_login_uid'];
 
-	$list=DB::query("select event_id,field_uid,event_name,event_uid,event_is_zhutui,event_content,event_url,event_type,event_logo,event_video_url,event_audio_url,event_city from tbl_event where event_baoming_starttime<=".time()." and event_baoming_endtime>=".time()." and (event_viewtype='B' or (field_uid=0) or event_viewtype='S') and event_is_baoming='Y' order by event_baoming_starttime desc  limit 100 ");
+	$list=DB::query("select event_id,field_uid,event_name,event_id as event_uid,event_is_zhutui,event_content,event_url,event_type,event_logo,event_video_url,event_audio_url,event_city from tbl_event where event_baoming_starttime<=".time()." and event_baoming_endtime>=".time()." and (event_viewtype='B' or (field_uid=0) or event_viewtype='S') and event_is_baoming='Y' order by event_baoming_starttime desc  limit 100 ");
 	while($row = DB::fetch($list))
 	{
 		if($login_uid)
@@ -1105,57 +1133,22 @@ if($ac=="blog_comment_me")
 //赛事报名接口
 if($ac=="event_baoming")
 {
+	//当前文件所在路径
+	$current_path = dirname(__FILE__); 
+	$event_id=$_G['gp_event_id'];
+	if($event_id)
+	{
+		$list_data=include($current_path.'/data/tbl_event_apply_'.$event_id.'_array_data.php');
 
-
-
-	$list_data[0]['name']="event_apply_realname";
-	$list_data[0]['name_cn']="姓　　名";
-	$list_data[0]['type']="input";
-	$list_data[0]['max_size']="50";
-
-	$list_data[1]['name']="event_apply_sex";
-	$list_data[1]['name_cn']="姓　　别";
-	$list_data[1]['type']="radio";
-	$list_data[1]['type_more']=array('男','女');
-	$list_data[1]['max_size']="50";
-
+		$data['title']="data";
+		$data['data']=$list_data;
+		api_json_result(1,0,$app_error['event']['10502'],$data);
+	}
+	else
+	{
+		api_json_result(1,1,$app_error['event']['10502'],null);
+	}
 	
-
-	$list_data[2]['name']="event_apply_card";
-	$list_data[2]['name_cn']="身份证号";
-	$list_data[2]['type']="input";
-	$list_data[2]['max_size']="50";
-
-	$list_data[3]['name']="event_apply_chadian";
-	$list_data[3]['name_cn']="差　　点";
-	$list_data[3]['type']="input";
-	$list_data[3]['max_size']="50";
-
-	$list_data[4]['name']="event_apply_fenzhan";
-	$list_data[4]['name_cn']="分　　站";
-	$list_data[4]['type']="radio";
-	$list_data[4]['type_more']=array('5/11天津','5/24广州','5/31深圳','6/15杭州','6/21上海','6/29长沙','7/19北京','7/26大连','8/9郑州','8/24成都','8/30苏州','9/7福州');
-	$list_data[4]['max_size']="50";
-
-	$list_data[1]['name']="event_apply_is_huang";
-	$list_data[1]['name_cn']="是否车主";
-	$list_data[1]['type']="radio";
-	$list_data[1]['type_more']=array('是','否');
-	$list_data[1]['max_size']="50";
-
-/*
-	$list_data[4]['name']="event_id";
-	$list_data[4]['type']="hidden";
-	$list_data[4]['max_size']="11";
-
-	$list_data[5]['name']="uid";
-	$list_data[5]['type']="hidden";
-	$list_data[5]['max_size']="11";
-*/
-	$data['title']="data";
-	$data['data']=$list_data;
-	//print_r($data);
-	api_json_result(1,0,$app_error['event']['10502'],$data);
 }
 
 
@@ -1163,60 +1156,85 @@ if($ac=="event_baoming")
 //赛事报名接口  ACTION
 if($ac=="event_baoming_action")
 {
-	$fenzhan=array_search(urldecode($_G['gp_event_apply_fenzhan']),$hot_2013district);
-	
-	api_json_result(1,1,"该比赛已结束，不能报名",$data);
-	
-	/*
+	$event_id=$_G['gp_event_id'];
+	$uid=$_G['gp_uid'];
 
-	$bm=DB::fetch_first("select bm_id from pre_home_dazbm where uid='".$_G['gp_uid']."' and hot_district='".$fenzhan."' ");
-	if(!$bm['bm_id'])
+	if($event_id==25 || $event_id==65)
 	{
-		if(urlencode($_G['gp_event_apply_sex'])=="男")
+	
+		$fenzhan=array_search(urldecode($_G['gp_event_apply_fenzhan']),$hot_2013district);
+		
+		//api_json_result(1,1,"该比赛已结束，不能报名",$data);
+		
+		$bm=DB::fetch_first("select bm_id from pre_home_dazbm where uid='".$_G['gp_uid']."' and hot_district='".$fenzhan."' and year='2014' ");
+		if(!$bm['bm_id'])
 		{
-			$sex=1;
+			if(urlencode($_G['gp_event_apply_sex'])=="男")
+			{
+				$sex=1;
+			}
+			else
+			{
+				$sex=2;
+			}
+			if(urlencode($_G['gp_event_apply_is_huang'])=="是")
+			{
+				$is_huang=1;
+			}
+			else
+			{
+				$is_huang=0;
+			}
+			
+			
+			$mobile=DB::result_first("select mobile from ".DB::table("common_member_profile")." where uid='".$_G['gp_uid']."' ");
+			
+			$data_bm['uid']=$_G['gp_uid'];
+			$data_bm['realname']   = urldecode($_G['gp_event_apply_realname']);         //真实姓名
+			$data_bm['gender']     = $sex;            //1 男 2 女
+			$data_bm['credentials_num']    = $_G['gp_event_apply_card'];     //证件号码
+			$data_bm['hot_district']    = $fenzhan;
+
+			$data_bm['cahdian']    = !empty ( $_G['gp_event_apply_chadian'] ) ? $_G['gp_event_apply_chadian'] : '';              //差点
+			$data_bm['moblie']             = $mobile;
+			$data_bm['is_huang']             = $is_huang; //是否车主
+			$data_bm['nationality']='中国';     //国籍
+			//xyx 20130615增加字段，方便客服查询
+			$data_bm['addtime']= time(); 
+			$data_bm['game_s_type']= 1000333; 
+			$data_bm['year']= '2014'; 
+			
+			DB::insert('home_dazbm',$data_bm,true);
+			api_json_result(1,0,"报名成功",$data);
+			
 		}
 		else
 		{
-			$sex=2;
+			api_json_result(1,1,"不能重复报名",$data);
 		}
-		if(urlencode($_G['gp_event_apply_is_huang'])=="是")
+	}
+	
+	
+	
+	//亚运会
+	if($event_id==66)
+	{
+		$baoming_info=DB::fetch_first("select baoming_id from tbl_baoming where uid='".$_G['gp_uid']."' and event_id='".$event_id."' ");
+		if(!$baoming_info['baoming_id'])
 		{
-			$is_huang=1;
+			DB::query("insert into tbl_baoming (event_id,uid,baoming_realname,baoming_age,baoming_card,baoming_mobile,baoming_email,baoming_chadian,baoming_addtime) values('".$event_id."','".$uid."','".$_G['gp_baoming_realname']."','".$_G['gp_baoming_age']."','".$_G['gp_baoming_card']."','".$_G['gp_baoming_mobile']."','".$_G['gp_baoming_email']."','".$_G['gp_baoming_chadian']."','".time()."') ");
+			
+			api_json_result(1,0,"报名成功",$data);
+		
 		}
 		else
 		{
-			$is_huang=0;
+			api_json_result(1,1,"不能重复报名",$data);
 		}
 		
-		
-		$mobile=DB::result_first("select mobile from ".DB::table("common_member_profile")." where uid='".$_G['gp_uid']."' ");
-		
-		$data_bm['uid']=$_G['gp_uid'];
-		$data_bm['realname']   = urldecode($_G['gp_event_apply_realname']);         //真实姓名
-		$data_bm['gender']     = $sex;            //1 男 2 女
-		$data_bm['credentials_num']    = $_G['gp_event_apply_card'];     //证件号码
-		$data_bm['hot_district']    = $fenzhan;
-
-		$data_bm['cahdian']    = !empty ( $_G['gp_event_apply_chadian'] ) ? $_G['gp_event_apply_chadian'] : '';              //差点
-		$data_bm['moblie']             = $mobile;
-		$data_bm['is_huang']             = $is_huang; //是否车主
-		$data_bm['nationality']='中国';     //国籍
-		//xyx 20130615增加字段，方便客服查询
-		$data_bm['addtime']= time(); 
-		$data_bm['game_s_type']= 1000333; 
-
-		
-		DB::insert('home_dazbm',$data_bm,true);
-		api_json_result(1,0,"报名成功",$data);
-		
+	
 	}
-	else
-	{
-		api_json_result(1,1,"不能重复报名",$data);
-	}
-	*/
-
+	
 	
 }
 
