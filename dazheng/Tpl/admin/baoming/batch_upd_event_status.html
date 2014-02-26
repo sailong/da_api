@@ -1,0 +1,97 @@
+<script language="javascript" type="text/javascript" src="/skin/js/jquery-1.6.2.min.js"></script>
+<div class="so_main">
+
+<table border="0" cellspacing="0" cellpadding="0" style="width:600px;">
+<tr>
+<td>
+<!--/dialog_start-->
+
+<form method="post" id="act_form" name="act_form"  action="{:U('admin/baoming/batch_upd_event_status_action')}" >
+	<table class="add_table" border="0" cellspacing="0" cellpadding="0" >
+		<tbody>
+			<tr>
+				<th>选择赛事：</th>
+				<td>
+					<select name="event_id" id="event_id" style="width:120px;"  class="search_select">
+						<option value="">请选择</option>
+						<volist id="vo" name="event_select">
+						<option value="{$vo.event_id}">{$vo.event_name}</option>
+						</volist>
+					</select>
+				</td>
+				<th>选择分站：</th>
+				<td>
+					<select name="fenzhan_id" id="fenzhan_id" style="width:120px;"  class="search_select">
+						<option value=''>请选择</option>
+					</select>
+				</td>
+				
+			</tr>
+			<tr>
+				<th>比赛状态：</th>
+				<td style="padding:5px 0px;">
+					<select name="baoming_event_status" style="width:120px;"  class="search_select">
+						<option value="">请选择</option>
+						<option value="1">已经比赛</option>
+						<option value="0">还未比赛</option>
+
+					</select>
+				</td>
+			</tr>
+		</tbody>
+		<tfoot>
+			<tr>
+				<th></th>
+				<td>
+					<input type="hidden" name="ids" value="<php> echo get('ids');</php>">
+					<input type="submit" class="btn_b" value="保存" style="margin-right:10px;"/>
+					<input type="button" class="btn_w" onclick="close_dialog(this)" value="取消" />
+				</td>
+		</tfoot>
+	</table><!--/add_table-->
+</form>
+
+<script>
+$(document).ready(function(){
+	$("#event_id").change(function(){
+		var event_id = $(this).val();
+		fenzhan_list(event_id);
+	});
+});
+
+function fenzhan_list(event_id)
+{
+	var event_id = event_id|{};
+		
+		if(event_id == ''){
+			return false;
+		}
+		$.ajax({
+		 type: 'GET',
+		 url: '/default.php?g=admin&m=baoming&a=get_fenzhan_list&event_id='+event_id,
+		 //data: ,
+		 dataType:'json',
+		 async: false,
+		 success:function(json){
+			var option_str = "<option value=''>请选择</option>";
+			if(json.status == 1){
+				var fenzhan_list = json.data;
+				for(var i in fenzhan_list){
+					var fenzhan_info = fenzhan_list[i];
+					option_str += "<option value='"+fenzhan_info['fenzhan_id']+"'>"+fenzhan_info['fenzhan_name']+"</option>";
+					
+				}
+			}
+			$("#fenzhan_id").html('');
+			$("#fenzhan_id").append(option_str);
+		 }
+		});
+}
+</script>
+
+<!--/dialog_end-->
+</td>
+</tr>
+</table>
+
+</div>

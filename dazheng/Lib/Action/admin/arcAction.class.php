@@ -13,6 +13,23 @@ class arcAction extends AdminAuthAction
 	{
 		parent::_basic();
 	}
+	
+	
+	public function arc_zimeiti()
+	{
+		$arc_type=D("arctype")->arctype_admin_tree_pro(" and arctype_parent_id=0 "," and arctype_type='A' ");
+		$this->assign("arc_type",$arc_type['item']);
+
+		$list=D("arc")->arc_admin_list_pro(" and arc_type='U' ");
+
+		$this->assign("list",$list["item"]);
+		$this->assign("pages",$list["pages"]);
+		$this->assign("total",$list["total"]);
+
+		$this->assign("page_title","新闻");
+    	$this->display();
+	}
+
 
 	public function arc()
 	{
@@ -51,6 +68,7 @@ class arcAction extends AdminAuthAction
 		if(M()->autoCheckToken($_POST))
 		{
 			$data["arc_name"]=post("arc_name");
+			$data["uid"]=post("uid");
 			$data["staff_id"]=post("staff_id");
 			$data["field_uid"]=post("field_uid");
 			$data["language"]=post("language");
@@ -152,6 +170,7 @@ class arcAction extends AdminAuthAction
 		{
 			$data["arc_id"]=post("arc_id");
 			$data["arc_name"]=post("arc_name");
+			$data["uid"]=post("uid");
 			$data["field_uid"]=post("field_uid");
 			$data["language"]=post("language");
 			$data["staff_id"]=post("staff_id");

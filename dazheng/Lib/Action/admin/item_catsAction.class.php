@@ -17,8 +17,8 @@ class item_catsAction extends AdminAuthAction
 
 	public function item_cats()
 	{
-		$list=D("item_cats")->item_cats_select_all_pro('and is_parent=1');
-		$parent_list=D("item_cats")->item_cats_select_pro(" and is_parent=1");
+		$list=D("item_cats")->item_cats_select_all_pro('and parent_id=0');
+		$parent_list=D("item_cats")->item_cats_select_pro(" and parent_id=0");
 		$parents = array();
 		foreach($parent_list["item"] as $key=>$val)
 		{

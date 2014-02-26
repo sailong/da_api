@@ -1,0 +1,283 @@
+<include file="../public/_header" />
+<div class="so_main">
+
+  <div class="page_tit">报名管理</div>
+  <include file="_tab" />
+
+  <div class="search_box">
+		<form name="search_form" action="/default.php" method="get">
+		<input type="hidden" name="g" value="admin">
+		<input type="hidden" name="m" value="baoming">
+		<input type="hidden" name="a" value="baoming">
+
+		<table border="0" cellspacing="0" cellpadding="0">
+			<tr>
+			<th>姓名：</th>
+			<td><input type="text" name="k" class="search_input" style="width:120px;" value="<php> echo  get('k');</php>"></td>
+			<th>赛事：</th>
+			<td>
+				<select name="event_id" id="event_id" style="width:120px;"  class="search_select">
+					<option value="">请选择</option>
+					<volist id="vo" name="event_select">
+					<option value="{$vo.event_id}">{$vo.event_name}</option>
+					</volist>
+				</select>
+				<script>set_select_value(document.search_form.event_id,"<php> echo  get("event_id");</php>");</script>
+			</td>
+			<th>所属分站：</th>
+			<td colspan="2">
+				<select name="fenzhan_id" id="fenzhan_id" style="width:120px;"  class="search_select">
+					<option value=''>请选择</option>
+				</select>
+				<input type="hidden" name="get_fenzhan_id" id="get_fenzhan_id" class="search_input" style="width:120px;" value="<php> echo  get('fenzhan_id');</php>">
+				<!-- <script>set_select_value(document.search_form.fenzhan_id,"<php> echo  get("fenzhan_id");</php>");</script> -->
+			</td>
+			</tr>
+			<tr>
+			<th>车主类型：</th>
+			<td>
+				<select name="baoming_is_huang" style="width:120px;"  class="search_select">
+					<option value="">选择车型</option>
+					<option value="1">皇冠车主</option>
+					<option value="0">非皇冠车主</option>
+
+				</select>
+				<script>set_select_value(document.search_form.baoming_is_huang,"<php> echo  get("baoming_is_huang");</php>");</script>
+			</td>
+			
+			<th>支付状态：</th>
+			<td>
+				<select name="baoming_pay_status" style="width:120px;"  class="search_select">
+					<option value="">请选择</option>
+					<option value="0">未支付</option>
+					<option value="1">已支付</option>
+
+				</select>
+				<script>set_select_value(document.search_form.baoming_pay_status,"<php> echo  get("baoming_pay_status");</php>");</script>
+			</td>
+			
+			<th>审核状态：</th>
+			<td colspan="2">
+				<select name="baoming_status" style="width:120px;"  class="search_select">
+					<option value="">请选择</option>
+					<option value="0">未审核</option>
+					<option value="1">已审核</option>
+
+				</select>
+				<script>set_select_value(document.search_form.baoming_status,"<php> echo  get("baoming_status");</php>");</script>
+			</td>
+			</tr>
+			<tr>
+			
+			<th>比赛状态：</th>
+			<td>
+				<select name="baoming_event_status" style="width:120px;"  class="search_select">
+					<option value="">请选择</option>
+					<option value="1">已经比赛</option>
+					<option value="0">还未比赛</option>
+
+				</select>
+				<script>set_select_value(document.search_form.baoming_event_status,"<php> echo  get("baoming_event_status");</php>");</script>
+			</td>
+			
+			<th>备注类型：</th>
+			<td>
+				<select name="baoming_note" style="width:120px;"  class="search_select">
+					<option value=''> -请选择备注类型- </option>
+					<option value=''>未填写备注</option>
+					<option value="客户报名咨询">客户报名咨询</option>
+					<option value="客户信息审核-已核实">客户信息审核-已核实</option>
+					<option value="客户信息审核-待核实">客户信息审核-待核实</option>
+					<option value="客户信息审核-未联系上">客户信息审核-未联系上</option>
+					<option value="客户信息审核-条件不符已告知">客户信息审核-条件不符已告知</option>
+					<option value="客户信息审核-身份证明未提供">客户信息审核-身份证明未提供</option>
+					<option value="客户信息审核-身份证明已提供">客户信息审核-身份证明已提供</option>
+					<option value="通知缴款-已通知，待缴">通知缴款-已通知，待缴</option>
+					<option value="通知缴款-未通知">通知缴款-未通知</option>
+					<option value="通知缴款-已通知，不参加">通知缴款-已通知，不参加</option>
+					<option value="通知缴款-已支付，待核实">通知缴款-已支付，待核实</option>
+					<option value="通知缴款-已支付，到账">通知缴款-已支付，到账</option>
+					<option value="通知缴款-更改至其他分站">通知缴款-更改至其他分站</option>
+					<option value="分组通知-已发短信">分组通知-已发短信</option>
+					<option value="分组通知-已电话通知">分组通知-已电话通知</option>
+					<option value="分组通知-电话未联系上">分组通知-电话未联系上</option>
+					<option value="分组通知-要求更改分组">分组通知-要求更改分组</option>
+					<option value="赛前--其他">赛前--其他</option>
+					<option value="赛中-其他">赛中-其他</option>
+					<option value="赛后-其他">赛后-其他</option>
+					<option value="不参加-需退款">不参加-需退款</option>
+					<option value="通知缴款-已通知，现场缴费">通知缴款-已通知，现场缴费</option>
+					<option value="通知缴款-已支付，球场代收">通知缴款-已支付，球场代收</option>
+					<option value="总决赛-已发入围通知">总决赛-已发入围通知</option>
+					<option value="总决赛-已回执入围通知，确认参赛">总决赛-已回执入围通知，确认参赛</option>
+					<option value="总决赛-已发航班信息">总决赛-已发航班信息</option>
+					<option value="总决赛-已回复航班信息">总决赛-已回复航班信息</option>
+					<option value="总决赛-已发邀请函">总决赛-已发邀请函</option>
+					<option value="总决赛-已回执入围通知，确认不参加">总决赛-已回执入围通知，确认不参加</option>
+					<option value="通知缴款-已短信通知，待缴">通知缴款-已短信通知，待缴</option>
+					<option value="总决赛-联系选手，未发通知">总决赛-联系选手，未发通知</option>
+					<option value="总决赛-已发送航班信息">总决赛-已发送航班信息</option>
+					<option value="总决赛-选手收到航班信息">总决赛-选手收到航班信息</option>
+				</select>
+				<script>set_select_value(document.search_form.baoming_note,"<php> echo  get("baoming_note");</php>");</script>
+			</td>
+			<th>开始时间：</th>
+			<td>
+				<input type="text" name="starttime" class="search_input_date" style="width:120px;" value="<php> echo  get('starttime');</php>" onFocus="WdatePicker({isShowClear:false,readOnly:true})"> 至 
+				<input type="text" name="endtime" class="search_input_date" style="width:120px;" value="<php> echo  get('endtime');</php>" onFocus="WdatePicker({isShowClear:false,readOnly:true})">
+			</td>
+			<!--
+			<th>类型：</th>
+			<td>
+				<select name="type" style="width:120px;"  class="search_select">
+					<option value="">请选择</option>
+					<option value="1">1</option>
+				</select>
+				<script>set_select_value(document.search_form.course_type,"<php> echo  get("type");</php>");</script>
+			</td>
+			-->
+			<td class="btn">
+				<input type="submit" value="搜索" class="btn_b" style="margin-right:8px;" >
+				<input type="button" value="查看全部" class="btn_b" onclick="javascript:location='{:U('admin/baoming/baoming',array('state'=>get('state')))}';">
+			</td>
+			</tr>
+		</table>
+	</form>
+  </div><!--/search_box-->
+
+  <!--------list -------->
+  <div class="Toolbar_inbox">
+  	<div class="page right">{$pages}</div>
+
+	<a href="{:U('admin/baoming/baoming_add')}" class="btn_a"><span>添加报名</span></a>
+	<a href="javascript:void(0);" class="btn_a"  onclick="mod_delete_batch('{:U('admin/baoming/baoming_delete_action')}','mod_table');"><span>批量删除</span></a>
+
+	<div class="clear"></div>
+  </div>
+  <div class="list">
+	<php>if($total>0){</php>
+	  <table width="100%" id="mod_table" border="0" cellspacing="0" cellpadding="0">
+	  <tr>
+		<th style="width:30px;">
+			<input type="checkbox" id="checkbox_handle" onclick="select_all(this,'mod_table','checkbox')" value="0">
+			<label for="checkbox"></label>
+		</th>
+		<th class="line_l">所属用户</th>
+		<th class="line_l">所属赛事</th>
+		<th class="line_l">所属分站</th>
+		<th class="line_l">姓名</th>
+		<th class="line_l">手机</th>
+		<th class="line_l">邮箱</th>
+		<th class="line_l">国家</th>
+		<th class="line_l">差点</th>
+		<th class="line_l">性别</th>
+		<th class="line_l">是否外卡</th>
+		<th class="line_l">外卡分站ID</th>
+		<th class="line_l">备注</th>
+		<th class="line_l">来源</th>
+		<th class="line_l">审核状态</th>
+		<th class="line_l">添加时间</th>
+		<th class="line_l">操作</th>
+	</tr>
+	<volist id="vo" name="list">
+	<tr overstyle="on"  id=ids_{$vo["baoming_id"]}>
+		<td><input type="checkbox" name="checkbox" onclick="select_one(this)" value="{$vo.baoming_id}" ></td>
+		<td>{$vo.uid}</th>
+			<td>{$vo.event_name}</td><!-- <a href="{:U('admin/baoming/baoming_detail', array('baoming_id'=>$vo['baoming_id']))}'"></a> -->
+			<td>{$vo.fenzhan_name}</td>
+			<td>{$vo.baoming_realname}</td>
+			<td>{$vo.baoming_mobile}</td>
+			<td>{$vo.baoming_email}</td>
+			<td>{$vo.baoming_country}</td>
+			<td>{$vo.baoming_chadian}</td>
+			<td>{$vo.baoming_sex}</td>
+			<td><php>if($vo['baoming_is_waika']=='Y'){echo '是';}else{echo '否';}</php></td>
+			<td>{$vo.baoming_waika_fenzhan_id}</td>
+			<td>{$vo.baoming_note}</td>
+			<td>{$vo.baoming_source}</td>
+			<td><php>if($vo['baoming_status']=='1'){echo '已审核';}else{echo '未审核';}</php></td>
+			<td>{$vo.baoming_addtime|format_to_time}</td>
+			
+		<td>
+			<a href="{:U('admin/baoming/baoming_edit', array('baoming_id'=>$vo['baoming_id']))}">修改</a> | 
+			<a href="javascript:void(0);" onclick="mod_delete_one('{:U('admin/baoming/baoming_delete_action')}','{$vo['baoming_id']}');">删除</a>
+		</td>
+	</tr>
+	</volist>
+    </table>
+	  <php>}else{</php>
+			<div class="no_data">
+				<img src="/skin/images/no_data.gif" align="absmiddle"> <span>没有报名... </span>
+			</div>
+	 <php>}</php>
+  </div>
+
+  <div class="Toolbar_inbox">
+	<div class="page right">{$pages}</div>
+
+	<a href="{:U('admin/baoming/baoming_add')}" class="btn_a"><span>添加报名</span></a>
+	<a href="javascript:void(0);" class="btn_a"  onclick="mod_delete_batch('{:U('admin/baoming/baoming_delete_action')}','mod_table');"><span>批量删除</span></a>
+
+
+	<div class="clear"></div>
+  </div>
+</div>
+
+<script>
+	$(document).ready(function(){
+		var event_id = $("#event_id").val();
+		if(event_id!=''){
+			fenzhan_list(event_id);
+		}
+		$("tr[overstyle='on']").hover(
+		  function ()
+		  {
+		    $(this).addClass("bg_hover");
+		  },
+		  function (){
+		    $(this).removeClass("bg_hover");
+		  }
+		);
+		$("#event_id").change(function(){
+			var event_id = $(this).val();
+			
+			fenzhan_list(event_id);
+		});
+	});
+function fenzhan_list(event_id)
+{
+	var event_id = event_id|{};
+		
+		if(event_id == ''){
+			return false;
+		}
+		
+	var fenzhan_id = $("#get_fenzhan_id").val();
+		$.ajax({
+		 type: 'GET',
+		 url: '/default.php?g=admin&m=baoming&a=get_fenzhan_list&event_id='+event_id,
+		 //data: ,
+		 dataType:'json',
+		 success:function(json){
+			var option_str = "<option value=''>请选择</option>";
+			if(json.status == 1){
+				var fenzhan_list = json.data;
+				for(var i in fenzhan_list){
+					var fenzhan_info = fenzhan_list[i];
+					if(fenzhan_info['fenzhan_id'] == fenzhan_id){
+						option_str += "<option value='"+fenzhan_info['fenzhan_id']+"' selected>"+fenzhan_info['fenzhan_name']+"</option>";
+					}else{
+						option_str += "<option value='"+fenzhan_info['tfenzhan_id']+"'>"+fenzhan_info['fenzhan_name']+"</option>";
+					}
+					
+				}
+			}
+			$("#fenzhan_id").html('');
+			$("#fenzhan_id").append(option_str);
+		 }
+		});
+}
+</script>
+
+
+<include file="../public/_footer" />

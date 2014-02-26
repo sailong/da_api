@@ -1,0 +1,263 @@
+<include file="../public/header_dialog" />
+{$usejs}
+
+<div class="so_main">
+
+  <div class="page_tit">报名管理</div>
+  <div class="tit_tab">
+	<ul>
+		<li><a class=on href="#">修改报名</a></li>
+	</ul>
+  </div>
+
+<table border="0" cellspacing="0" cellpadding="0" style="width:900px;">
+<tr>
+<td>
+<!--/dialog_start-->
+
+<form method="post" id="act_form" name="act_form" action="{:U('admin/baoming/baoming_edit_action')}" enctype="multipart/form-data">
+	<table class="add_table" border="0" cellspacing="0" cellpadding="0" >
+		<tbody>
+			<tr>
+				<th>所属用户：</th>
+				<td><input type="text" name="uid" id="uid" class="mod_input2" style="width:66px;"  value="{$data.uid}"></td>
+			</tr>
+			<tr>
+				<th>所属赛事：</th>
+				<td>
+					<select name="event_id" id="event_id">
+						<option value="">请选择</option>
+						<volist id="vo" name="event_select">
+						<option value="{$vo.event_id}">{$vo.event_name}</option>
+						</volist>
+					</select>
+					<script>set_select_value(document.act_form.event_id,"{$data.event_id}");</script>
+				</td>
+			</tr>
+			<tr>
+				<th>所属分站：</th>
+				<td>
+					<select name="fenzhan_id" id="fenzhan_id" style="width:120px;"  class="search_select">
+						<option value=''>请选择</option>
+					</select>
+					<input type="hidden" name="get_fenzhan_id" id="get_fenzhan_id" class="search_input" style="width:120px;" value="{$data.fenzhan_id}">
+					<!-- <select name="fenzhan_id">
+						<option value="">请选择</option>
+						<option value="{$data.fenzhan_id}">{$data.fenzhan_id}</option>
+					</select>
+					<script>set_select_value(document.act_form.fenzhan_id,"{$data.fenzhan_id}");</script> -->
+				</td>
+			</tr>
+			<!-- <tr>
+				<th>所属分站（多个）：</th>
+				<td><input type="text" name="fenzhan_ids" id="fenzhan_ids" class="mod_input2" style="width:300px;"  value="{$data.fenzhan_ids}"></td>
+			</tr> -->
+			<tr>
+				<th>姓名：</th>
+				<td><input type="text" name="baoming_realname" id="baoming_realname" class="mod_input2" style="width:300px;"  value="{$data.baoming_realname}"></td>
+			</tr>
+			
+			<tr>
+				<th>差点：</th>
+				<td><input type="text" name="baoming_chadian" id="baoming_chadian" class="mod_input2" style="width:60px;"  value="{$data.baoming_chadian}"></td>
+			</tr>
+			<tr>
+				<th>性别：</th>
+				<td>
+					<select name="baoming_sex">
+						<option value="">请选择</option>
+						<option value="男">男</option>
+						<option value="女">女</option>
+					</select>
+					<script>set_select_value(document.act_form.baoming_sex,"{$data.baoming_sex}");</script>
+				</td>
+			</tr>
+			<tr>
+				<th>皇冠车主：</th>
+				<td>
+					<!-- <input type="radio" name="baoming_is_huang" id="baoming_is_huang" value="{$data.baoming_is_huang}"> -->
+					<!-- <input name="baoming_is_huang" type="radio" value="1" class="mod_input2"/>是
+					<input name="baoming_is_huang" type="radio" value="0" class="mod_input2" checked/>否 -->
+					<select id="baoming_is_huang" name="baoming_is_huang">
+						<option value="1">是</option>
+						<option value="0" selected >否</option>
+					</select>
+					<script>set_select_value(document.act_form.baoming_is_huang,"{$data.baoming_is_huang}");</script>
+				</td>
+			</tr>
+			
+			<tr>
+				<th>数据来源：</th>
+				<td>
+					<select name="baoming_source">
+						<option value="">请选择</option>
+						<option value="web">网站报名</option>
+						<option value="app">客户端报名</option>
+						<option value="field">球场报名</option>
+						<option value="jingxiaodian">经销店报名</option>
+					</select>
+					<script>set_select_value(document.act_form.baoming_source,"{$data.baoming_source}");</script>
+				</td>
+			</tr>
+			<tr>
+				<th>比赛状态：</th>
+				<td>
+					<select name="baoming_event_status">
+						<option value="">请选择</option>
+						<option value="0">还未比赛</option>
+						<option value="1">已经比赛</option>
+					</select>
+					<script>set_select_value(document.act_form.baoming_event_status,"{$data.baoming_event_status}");</script>
+				</td>
+			</tr>
+			<tr>
+				<th>支付状态：</th>
+				<td>
+					<select name="baoming_pay_status">
+						<option value="">请选择</option>
+						<option value="0">未支付</option>
+						<option value="1">已支付</option>
+					</select>
+					<script>set_select_value(document.act_form.baoming_pay_status,"{$data.baoming_pay_status}");</script>
+				</td>
+			</tr>
+			<tr>
+				<th>审核状态：</th>
+				<td>
+					<select name="baoming_status">
+						<option value="">请选择</option>
+						<option value="0">未审核</option>
+						<option value="1">已审核</option>
+					</select>
+					<script>set_select_value(document.act_form.baoming_status,"{$data.baoming_status}");</script>
+				</td>
+			</tr>
+		</tbody>
+		<tfoot>
+			<tr>
+				<th></th>
+				<td>
+					<input type="hidden" name="baoming_id" value="{$data.baoming_id}">
+					<input type="submit" class="btn_b" value="保存" style="margin-right:10px;"/>
+					<input type="button" class="btn_w" onclick="javascript:history.back(-1);" value="返回" />
+				</td>
+		</tfoot>
+	</table><!--/add_table-->
+</form>
+
+<script>
+$(document).ready(function(){
+
+
+var event_id = $("#event_id").val();
+	if(event_id!=''){
+		fenzhan_list(event_id);
+	}
+$("#event_id").change(function(){
+	var event_id = $(this).val();
+	
+	fenzhan_list(event_id);
+});
+var baoming_car_impress_json = $("#baoming_car_impress_json").val();
+checked_input(baoming_car_impress_json," , ",'baoming_car_impress[]');
+var baoming_tool_brand_json = $("#baoming_tool_brand_json").val();
+checked_input(baoming_tool_brand_json," , ",'baoming_tool_brand[]');
+var baoming_attract_json = $("#baoming_attract_json").val();
+checked_input(baoming_attract_json," , ",'baoming_attract[]');
+var baoming_hot_district_json = $("#baoming_hot_district_json").val();
+checked_input(baoming_hot_district_json," , ",'baoming_hot_district[]');
+
+$("#baoming_yiqi_shop").val($("#baoming_yiqi_shop_v").val());
+
+$.formValidator.initConfig({formID:"act_form",theme:'ArrowSolidBox',mode:'AutoTip',onError:function(msg){msg_error(msg)},inIframe:true});
+
+	$("#uid").formValidator({empty:true,onShow:"请输入所属用户",onFocus:"请输入所属用户",onCorrect:"输入正确"}).inputValidator({min:1,max:11,onError:"请输入所属用户"});
+		$("#event_id").formValidator({empty:true,onShow:"请输入所属赛事",onFocus:"请输入所属赛事",onCorrect:"输入正确"}).inputValidator({min:1,max:11,onError:"请输入所属赛事"});
+		$("#fenzhan_id").formValidator({empty:true,onShow:"请输入所属分站",onFocus:"请输入所属分站",onCorrect:"输入正确"}).inputValidator({min:1,max:11,onError:"请输入所属分站"});
+		$("#baoming_realname").formValidator({empty:true,onShow:"请输入姓名",onFocus:"请输入姓名",onCorrect:"输入正确"}).inputValidator({min:1,max:50,onError:"请输入姓名"});
+		$("#baoming_mobile").formValidator({empty:true,onShow:"请输入手机",onFocus:"请输入手机",onCorrect:"输入正确"}).inputValidator({min:1,max:50,onError:"请输入手机"});
+		$("#baoming_email").formValidator({empty:true,onShow:"请输入邮箱",onFocus:"请输入邮箱",onCorrect:"输入正确"}).inputValidator({min:1,max:50,onError:"请输入邮箱"});
+		$("#baoming_country").formValidator({empty:true,onShow:"请输入国家",onFocus:"请输入国家",onCorrect:"输入正确"}).inputValidator({min:1,max:50,onError:"请输入国家"});
+		$("#baoming_chadian").formValidator({empty:true,onShow:"请输入差点",onFocus:"请输入差点",onCorrect:"输入正确"}).inputValidator({min:1,max:10,onError:"请输入差点"});
+		$("#baoming_sex").formValidator({empty:true,onShow:"请输入性别",onFocus:"请输入性别",onCorrect:"输入正确"}).inputValidator({min:1,max:11,onError:"请输入性别"});
+		$("#baoming_is_waika").formValidator({empty:true,onShow:"请输入是否外卡",onFocus:"请输入是否外卡",onCorrect:"输入正确"}).inputValidator({min:1,max:10,onError:"请输入是否外卡"});
+		$("#baoming_waika_fenzhan_id").formValidator({empty:true,onShow:"请输入外卡分站ID",onFocus:"请输入外卡分站ID",onCorrect:"输入正确"}).inputValidator({min:1,max:10,onError:"请输入外卡分站ID"});
+		$("#baoming_note").formValidator({empty:true,onShow:"请输入备注",onFocus:"请输入备注",onCorrect:"输入正确"}).inputValidator({min:1,max:100,onError:"请输入备注"});
+		$("#baoming_source").formValidator({empty:true,onShow:"请输入来源",onFocus:"请输入来源",onCorrect:"输入正确"}).inputValidator({min:1,max:50,onError:"请输入来源"});
+		$("#baoming_status").formValidator({empty:true,onShow:"请输入状态",onFocus:"请输入状态",onCorrect:"输入正确"}).inputValidator({min:1,max:10,onError:"请输入状态"});
+		
+
+	$.formValidator.reloadAutoTip();
+});
+
+function reloadAutoTip()
+{
+	$.formValidator.reloadAutoTip();
+}
+function fenzhan_list(event_id)
+{
+	var event_id = event_id|{};
+		
+		if(event_id == ''){
+			return false;
+		}
+		
+	var fenzhan_id = $("#get_fenzhan_id").val();
+		$.ajax({
+		 type: 'GET',
+		 url: '/default.php?g=admin&m=baoming&a=get_fenzhan_list&event_id='+event_id,
+		 //data: ,
+		 dataType:'json',
+		 success:function(json){
+			var option_str = "<option value=''>请选择</option>";
+			if(json.status == 1){
+				var fenzhan_list = json.data;
+				for(var i in fenzhan_list){
+					var fenzhan_info = fenzhan_list[i];
+					if(fenzhan_info['fenzhan_id'] == fenzhan_id){
+						option_str += "<option value='"+fenzhan_info['fenzhan_id']+"' selected>"+fenzhan_info['fenzhan_name']+"</option>";
+					}else{
+						option_str += "<option value='"+fenzhan_info['fenzhan_id']+"'>"+fenzhan_info['fenzhan_name']+"</option>";
+					}
+					
+				}
+			}
+			$("#fenzhan_id").html('');
+			$("#fenzhan_id").append(option_str);
+		 }
+		});
+}
+function checked_input(input_str,separator,checked_name){
+	if(input_str=='' || separator=='' || checked_name=='')
+	{
+		return false;
+	}
+	var tmp_arr = input_str.split(separator);
+	
+	//alert($.isArray(tmp_arr));
+	//console.log(tmp_arr);return false;
+	$("[name='"+checked_name+"']").each(function(){
+		//alert($(this).val()+'---'+$(this).attr("checked"));
+		//for(var i in tmp_arr)
+		//{
+		//	if(tmp_arr[i] == $(this).val()){
+		//		$(this).attr("checked","checked");
+		//	}
+			//alert("'"+tmp_arr[i]+"'");
+		//}
+		if($.inArray($(this).val(),tmp_arr)>-1){
+			$(this).attr("checked","checked");
+		}
+	})  
+}
+</script>
+
+
+<!--/dialog_end-->
+</td>
+</tr>
+</table>
+
+</div>
+
+<include file="../Public/_footer" />

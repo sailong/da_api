@@ -237,6 +237,24 @@ class HandlePHPExcel implements PHPExcelInterface {
             //设置对应的数据显示的格式
             for($k = 0; $k < $cols; $k++) {
                 $colname = chr($k + 65);
+				if($k==26){
+					$colname = 'AA';
+				}
+				if($k==27){
+					$colname = 'AB';
+				}
+				if($k==28){
+					$colname = 'AC';
+				}
+				if($k==29){
+					$colname = 'AD';
+				}
+				if($k==30){
+					$colname = 'AE';
+				}
+				if($k==31){
+					$colname = 'AF';
+				}
                 $objActiveSheet->getStyle($colname)->getNumberFormat()->setFormatCode(PHPExcel_Style_NumberFormat::FORMAT_NUMBER);
                 $objActiveSheet->getColumnDimension($colname)->setWidth(20);
             }

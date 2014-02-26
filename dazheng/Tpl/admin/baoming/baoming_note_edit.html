@@ -1,0 +1,116 @@
+<include file="../public/_header_dialog" />
+<table border="0" cellspacing="0" cellpadding="0" style="width:600px;">
+<tr>
+<td>
+<!--/dialog_start-->
+
+<form method="post" id="basic_setting" name="act_form" action="{:U('admin/baoming/baoming_note_edit_action')}"  >
+	<div class="add_dialog" >
+
+				<dl class="lineD">
+						<dt>备注类型：</dt>
+						<dd>
+							<select name="baoming_note" id="baoming_note" style="width:120px;"  class="search_select">
+								<option value=''> -请选择备注类型- </option>
+								<option value=''>未填写备注</option>
+								<option value="客户信息审核-未审核">客户信息审核-未审核</option>
+								<option value="客户信息审核-已审核">客户信息审核-已审核</option>
+								<option value="客户信息审核-未通过">客户信息审核-未通过</option>
+								<option value="客户信息审核-未通知">客户信息审核-未通知</option>
+								
+								<option value="通知缴款-未通知">通知缴款-未通知</option>
+								<option value="通知缴款-已通知待缴">通知缴款-已通知待缴</option>
+								<option value="通知缴款-已通知不参加">通知缴款-已通知不参加</option>
+								<option value="通知缴款-已支付待核实">通知缴款-已支付待核实</option>
+								<option value="通知缴款-已支付到账">通知缴款-已支付到账</option>
+								<option value="通知缴款-更改至其他分站">通知缴款-更改至其他分站</option>
+								
+								<option value="分组通知-已发短信">分组通知-已发短信</option>
+								<option value="分组通知-已短信/电话通知">分组通知-已短信/电话通知</option>
+								<option value="分组通知-未短信/电话确认">分组通知-未短信/电话确认</option>
+								<option value="分组通知-电话未联系上">分组通知-电话未联系上</option>
+								<option value="分组通知-要求更改分组">分组通知-要求更改分组</option>
+								
+								<option value="客户不参加需退费">客户不参加需退费</option>
+								<option value="已通知-现场缴费">已通知-现场缴费</option>
+								<option value="已支付-球场代收">已支付-球场代收</option>
+								
+								<option value="总决赛-已入围">总决赛-已入围</option>
+								<option value="总决赛-已发入围通知">总决赛-已发入围通知</option>
+								<option value="总决赛-已回复入围通知<确认参赛>">总决赛-已回复入围通知<确认参赛></option>
+								<option value="总决赛-已回复入围通知<不参加>">总决赛-已回复入围通知<不参加></option>
+								
+								<option value="总决赛-航班信息已发">总决赛-航班信息已发</option>
+								<option value="总决赛-航班信息已回复">总决赛-航班信息已回复</option>
+								
+								<option value="外卡赛-已审核">外卡赛-已审核</option>
+								<option value="外卡赛-已通知缴费<待缴>">外卡赛-已通知缴费<待缴></option>
+								<option value="外卡赛-已支付一次<已确认>">外卡赛-已支付一次<已确认></option>
+								<option value="外卡赛-已支付二次<已确认>">外卡赛-已支付二次<已确认></option>
+								<option value="外卡赛-已支付三次<已确认>">外卡赛-已支付三次<已确认></option>
+								<option value="外卡赛-已支付N次<已确认>">外卡赛-已支付N次<已确认></option>
+								<option value="外卡赛-比赛完成">外卡赛-比赛完成</option>
+								<option value="外卡赛-已晋级">外卡赛-已晋级</option>
+								<option value="球场报名">球场报名</option>
+								<option value="经销商报名">经销商报名</option>
+								<option value="其他">其他</option>
+							</select>
+							<script>set_select_value(document.act_form.baoming_note,"{$data.baoming_note}");</script>
+						</dd>
+						<div class="clear"></div>
+					</dl>
+					<dl class="lineD">
+						<dt>备注标题：</dt>
+						<dd>
+							<input type="text" name="baoming_note_title" id="baoming_note_title" class="mod_input2" style="width:300px;" value="{$data.baoming_note_title}" >
+						</dd>
+						<div class="clear"></div>
+					</dl>
+					<dl class="lineD">
+						<dt>备注内容：</dt>
+						<dd>
+							<textarea type="textarea" name="baoming_note_content" id="baoming_note_content" style="width:300px;" rows="3" cols="20" >{$data.baoming_note_content}
+							</textarea>
+						</dd>
+						<div class="clear"></div>
+					</dl>
+					
+	</div><!--/add_dialog-->
+
+	<div class="page_btm">
+		<input type="hidden" name="baoming_id" id="baoming_id" value="{$data.baoming_id}">
+		<input type="button" class="btn_b" onclick="Check_Pro()" value="保存" style="margin-right:10px;"/>
+		<input type="button" class="btn_w" onclick="close_dialog(this)" value="取消" />
+	</div><!--/page_btm-->
+</form>
+
+<script>
+function Check_Pro()
+{
+	var lobj=document.act_form;
+	if(lobj.baoming_note.value=="")
+	{
+		msg_error("请选择类型");
+	}
+	if(lobj.baoming_note_title.value=="")
+	{
+		msg_error("请填写标题");
+	}
+	else if(lobj.baoming_note_content.value=="")
+	{
+		msg_error("请填写内容");
+	}
+	else
+	{
+		lobj.submit()
+	}
+}
+</script>
+
+
+<!--/dialog_end-->
+</td>
+</tr>
+</table>
+
+<include file="../public/_footer" />

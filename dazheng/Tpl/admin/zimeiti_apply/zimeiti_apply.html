@@ -1,0 +1,243 @@
+<include file="../public/_header" />
+
+<style type='css/text'>
+.list table td {
+   border-bottom: 1px solid #D5D6D7;
+   color: #222222;
+   font-size: 12px;
+   padding: 3px 0 3px 5px;
+}
+</style>
+<div class="so_main">
+
+  <div class="page_tit">第一线申请管理
+  <!-- <span style="font-size:12px; color:#999; font-weight:normal; margin-left:30px;">共检索到<b style="font-size:14px; color:red;">{$total}</b>名符合条件的报名用户</span> --></div>
+  <include file="_tab" />
+
+  <div class="search_box">
+		<form name="search_form" action="/default.php" method="get">
+		<input type="hidden" name="g" value="admin">
+		<input type="hidden" name="m" value="zimeiti_apply">
+		<input type="hidden" name="a" value="zimeiti_apply">
+
+		<table border="0" cellspacing="2" cellpadding="5">
+			
+			<!-- <tr>
+			<th>关键字：</th>
+			<td><input type="text" name="k" class="search_input" style="width:120px;" value="<php> echo  get('k');</php>"></td>
+			
+			<th>赛事：</th>
+			<td>
+				<select name="event_id" id="event_id" style="width:120px;"  class="search_select">
+					<option value="">请选择</option>
+					<volist id="vo" name="event_select">
+					<option value="{$vo.event_id}">{$vo.event_name}</option>
+					</volist>
+				</select>
+				<script>set_select_value(document.search_form.event_id,"<php> echo  get("event_id");</php>");</script>
+			</td>
+			<th>所属分站：</th>
+			<td>
+				<select name="fenzhan_id" id="fenzhan_id" style="width:120px;"  class="search_select">
+					<option value=''>请选择</option>
+				</select>
+				<input type="hidden" name="get_fenzhan_id" id="get_fenzhan_id" class="search_input" style="width:120px;" value="<php> echo  get('fenzhan_id');</php>"> -->
+				<!-- <script>set_select_value(document.search_form.fenzhan_id,"<php> echo  get("fenzhan_id");</php>");</script> -->
+			<!-- </td>
+			
+			<th>审核状态：</th>
+			<td style="padding:5px 0px;">
+				<select name="baoming_status" style="width:120px;"  class="search_select">
+					<option value="">请选择</option>
+					<option value="0">未审核</option>
+					<option value="1">已审核</option>
+
+				</select>
+				<script>set_select_value(document.search_form.baoming_status,"<php> echo  get("baoming_status");</php>");</script>
+			</td>
+			
+			
+			</tr>
+			
+			-->
+			
+			<tr>
+			<th>开始时间：</th>
+			<td colspan='3'>
+				<input type="text" name="starttime" class="search_input_date" style="width:120px;" value="<php> echo  get('starttime');</php>" onFocus="WdatePicker({isShowClear:false,readOnly:true})"> 至 
+				<input type="text" name="endtime" class="search_input_date" style="width:120px;" value="<php> echo  get('endtime');</php>" onFocus="WdatePicker({isShowClear:false,readOnly:true})">
+			</td>
+			
+			<td class="btn" colspan='2'>
+				<input type="submit" value="搜索" class="btn_b_small" style="margin-right:8px;" >
+				<input type="button" value="查看全部" class="btn_b_small" onclick="javascript:location='{:U('admin/zimeiti_apply/zimeiti_apply',array('state'=>get('state')))}';">
+			</td>
+			
+			<!-- <td class="btn">
+				<input type="submit" value="导出excel" class="btn_b_small" name="export"> -->
+				 <!-- onclick="javascript:location='{:U('admin/baoming/excel_import',array('state'=>get('state')))}';" -->
+			<!-- </td> -->
+			</tr>
+		</table>
+	</form>
+  </div><!--/search_box-->
+
+  <!--------list -------->
+  <div class="Toolbar_inbox">
+  	<div class="page right">{$pages}</div>
+
+	<a href="{:U('admin/zimeiti_apply/zimeiti_apply_add')}" class="btn_a"><span>添加</span></a>
+	<a href="javascript:void(0);" class="btn_a"  onclick="mod_delete_batch('{:U('admin/zimeiti_apply/zimeiti_apply_delete_action')}','mod_table');"><span>批量删除</span></a>
+	<!-- <a href="javascript:void(0);" style="color:red;" class="btn_a"  onclick="mod_batch_dialog('{:U('admin/zimeiti_apply/zimeiti_apply_status',array('zimeiti_apply_id'=>get('zimeiti_apply_id')))}','mod_table','批量修改比赛状态');"><span>批量修改比赛状态</span></a> -->
+	<div class="clear"></div>
+  </div>
+  <div class="list">
+	<php>if($total>0){</php>
+	  <table width="100%" id="mod_table" border="0" cellspacing="0" cellpadding="0">
+	  <tr>
+		<th style="width:30px;">
+			<input type="checkbox" id="checkbox_handle" onclick="select_all(this,'mod_table','checkbox')" value="0">
+			<label for="checkbox"></label>
+		</th>
+		<!-- <th class="line_l">所属用户</th>
+		<th class="line_l">所属赛事</th>
+		<th class="line_l">所属分站</th> -->
+		<th class="line_l">用户UID</th>
+		<th class="line_l">姓名</th>
+		<th class="line_l">球场名称</th>
+		<th class="line_l">手机号</th>
+		<th class="line_l">用户身份</th>
+		<th class="line_l">身份证号</th>
+		<!-- <th class="line_l">所属分站</th> -->
+		<!-- <th class="line_l">邮箱</th> -->
+		<!-- <th class="line_l">国家</th> -->
+		<!-- <th class="line_l">状态</th> -->
+		<!-- <th class="line_l">性别</th> -->
+		<!-- <th class="line_l">是否外卡</th> -->
+		<!-- <th class="line_l">外卡分站ID</th> -->
+		<!-- <th class="line_l">备注</th> -->
+		<!-- <th class="line_l">来源</th> -->
+		<th class="line_l">审核状态</th>
+		<!-- <th class="line_l">报名方式</th> -->
+		<!-- <th class="line_l">添加时间</th> -->
+		<!-- <th class="line_l">是否外卡</th> -->
+		<th class="line_l">操作</th>
+	</tr>
+	<volist id="vo" name="list">
+	<tr overstyle="on"  id=ids_{$vo["zimeiti_apply_id"]}>
+		<td><input type="checkbox" name="checkbox" onclick="select_one(this)" value="{$vo.zimeiti_apply_id}" ></td>
+		<!-- <td>{$vo.uid}</th> -->
+			<!--  --><!-- <a href="{:U('admin/baoming/baoming_detail', array('baoming_id'=>$vo['baoming_id']))}'"></a> -->
+			<td>{$vo.uid}</td>
+			<td>{$vo.zimeiti_apply_realname}</td>
+			<td>{$field_select[$vo['field_uid']]}</td>
+			<td>{$vo.zimeiti_apply_mobile}</td>
+			<td><php>if($vo['zimeiti_apply_role']=='1'){echo '白';}elseif($vo['zimeiti_apply_role']=='2'){echo '兰';}elseif($vo['zimeiti_apply_role']=='3'){echo '金';}</php></td>
+			<td>{$vo.zimeiti_apply_card}</td>
+			<!-- <td>{$vo.zimeiti_apply_fenzhan}</td> -->
+			<td>{$vo.zimeiti_apply_addtime|format_to_time}</td>
+			
+		<td>
+			<a href="{:U('admin/zimeiti_apply/zimeiti_apply_edit', array('zimeiti_apply_id'=>$vo['zimeiti_apply_id']))})">修改</a> | 
+			<a href="javascript:void(0);" onclick="mod_delete_one('{:U('admin/zimeiti_apply/zimeiti_apply_delete_action')}','{$vo['zimeiti_apply_id']}');">删除</a>
+		</td>
+	</tr>
+	</volist>
+    </table>
+	  <php>}else{</php>
+			<div class="no_data">
+				<img src="/skin/images/no_data.gif" align="absmiddle"> <span>没有信息... </span>
+			</div>
+	 <php>}</php>
+  </div>
+
+  <div class="Toolbar_inbox">
+	<div class="page right">{$pages}</div>
+
+	<a href="{:U('admin/zimeiti_apply/zimeiti_apply_add')}" class="btn_a"><span>添加</span></a>
+	<a href="javascript:void(0);" class="btn_a"  onclick="mod_delete_batch('{:U('admin/zimeiti_apply/zimeiti_apply_delete_action')}','mod_table');"><span>批量删除</span></a>
+	<!-- <a href="javascript:void(0);" style="color:red;" class="btn_a"  onclick="mod_batch_dialog('{:U('admin/baoming/batch_upd_event_status',array('event_id'=>get('event_id')))}','mod_table','批量修改比赛状态');"><span>批量修改比赛状态</span></a> -->
+
+	<div class="clear"></div>
+  </div>
+</div>
+
+<script>
+	$(document).ready(function(){
+		$("tr[overstyle='on']").hover(
+		  function ()
+		  {
+		    $(this).addClass("bg_hover");
+		  },
+		  function (){
+		    $(this).removeClass("bg_hover");
+		  }
+		);
+		//var event_id = $("#event_id").val();
+		//if(event_id!=''){
+		//	fenzhan_list(event_id);
+		//}
+		//$("#event_id").change(function(){
+		//	var event_id = $(this).val();
+		//	
+		//	fenzhan_list(event_id);
+		//});
+	});
+//function fenzhan_list(event_id)
+//{
+//	var event_id = event_id|{};
+//		
+//		if(event_id == ''){
+//			return false;
+//		}
+		
+//	var fenzhan_id = $("#get_fenzhan_id").val();
+//		$.ajax({
+//		 type: 'GET',
+//		 url: '/default.php?g=admin&m=baoming&a=get_fenzhan_list&event_id='+event_id,
+		 //data: ,
+//		 dataType:'json',
+//		 async: false,
+//		 success:function(json){
+//			var option_str = "<option value=''>请选择</option>";
+//			if(json.status == 1){
+//				var fenzhan_list = json.data;
+//				for(var i in fenzhan_list){
+//					var fenzhan_info = fenzhan_list[i];
+//					if(fenzhan_info['fenzhan_id'] == fenzhan_id){
+//						option_str += "<option value='"+fenzhan_info['fenzhan_id']+"' selected>"+fenzhan_info['fenzhan_name']+"</option>";
+//					}else{
+//						option_str += "<option value='"+fenzhan_info['fenzhan_id']+"'>"+fenzhan_info['fenzhan_name']+"</option>";
+//					}
+//					
+//				}
+//			}
+//			$("#fenzhan_id").html('');
+//			$("#fenzhan_id").append(option_str);
+//		 }
+//		});
+//}
+//function ajax_upd_data(obj,field,value){
+//	var baoming_id = $("#baoming_id",obj).val();
+//	var rs_val = false;
+//	$.ajax({
+//		 type: 'GET',
+//		 url: '/default.php?g=admin&m=baoming&a=upd_data_by_ajax&baoming_id='+baoming_id+'&field='+field+'&value='+value,
+//		 //data: ,
+//		 dataType:'json',
+//		  async: false,
+//		 success:function(json){
+//			if(json.status == 1){
+//				rs_val = true;
+//			}else{
+//				rs_val = false;
+//			}
+//		 }
+//		});
+//	return rs_val;
+//}
+
+</script>
+
+
+<include file="../public/_footer" />

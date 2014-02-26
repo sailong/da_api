@@ -80,7 +80,7 @@
 			<td>{$vo.regdate|format_to_time}</td>
 			
 		<td>
-		  <a href="{:U('admin/user/user_edit', array('uid'=>$vo['uid']))}">修改</a></td>
+		  <a href="{:U('admin/user/user_edit', array('uid'=>$vo['uid'],'is_zimeiti'=>get('is_zimeiti')))}">修改</a></td>
 	</tr>
 	</volist>
     </table>

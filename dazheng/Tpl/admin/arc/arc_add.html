@@ -22,7 +22,10 @@
 					<th>新闻标题：</th>
 					<td><input type="text" name="arc_name" id="arc_name" class="mod_input2" style="width:500px;" ></td>
 				</tr>
-	
+				<tr>
+					<th>用户UID：</th>
+					<td><input type="text" name="uid" id="uid" class="mod_input2" style="width:100px;" ></td>
+				</tr>
 				<tr>
 					<th>所属栏目：</th>
 					<td>
@@ -47,6 +50,7 @@
 							<option value="B">公众平台（大正客户端、球场客户端均显示）</option>
 							<option value="S">私有平台（仅在大正客户端显示）</option>
 							<option value="Q">球场信息</option>
+							<option value="U">第一线</option>
 						</select>
 						<script>set_select_value(document.act_form.arc_type,"{$data.arc_type}");</script>
 					</td>

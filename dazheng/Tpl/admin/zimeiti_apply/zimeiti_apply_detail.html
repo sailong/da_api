@@ -1,0 +1,99 @@
+<include file="../public/header_dialog" />
+{$usejs}
+
+<div class="so_main">
+
+  <div class="page_tit">报名管理</div>
+  <div class="tit_tab">
+	<ul>
+		<li><a class=on href="#">查看详细报名</a></li>
+	</ul>
+  </div>
+
+<table border="0" cellspacing="0" cellpadding="0" style="width:900px;">
+<tr>
+<td>
+<!--/dialog_start-->
+
+	<table class="add_table" border="0" cellspacing="0" cellpadding="0" >
+		<tbody>
+		<tr>
+					<th>所属用户：</th>
+						<td>{$data.uid}</td>
+				</tr>
+				<tr>
+					<th>所属赛事：</th>
+						<td>{$data.event_id}</td>
+				</tr>
+				<tr>
+					<th>所属分站：</th>
+						<td>{$data.fenzhan_id}</td>
+				</tr>
+				<tr>
+					<th>姓名：</th>
+						<td>{$data.baoming_realname}</td>
+				</tr>
+				<tr>
+					<th>手机：</th>
+						<td>{$data.baoming_mobile}</td>
+				</tr>
+				<tr>
+					<th>邮箱：</th>
+						<td>{$data.baoming_email}</td>
+				</tr>
+				<tr>
+					<th>国家：</th>
+						<td>{$data.baoming_country}</td>
+				</tr>
+				<tr>
+					<th>差点：</th>
+						<td>{$data.baoming_chadian}</td>
+				</tr>
+				<tr>
+					<th>性别：</th>
+						<td>{$data.baoming_sex}</td>
+				</tr>
+				<tr>
+					<th>是否外卡：</th>
+						<td>{$data.baoming_is_waika}</td>
+				</tr>
+				<tr>
+					<th>外卡分站ID：</th>
+						<td>{$data.baoming_waika_fenzhan_id}</td>
+				</tr>
+				<tr>
+					<th>备注：</th>
+						<td>{$data.baoming_note}</td>
+				</tr>
+				<tr>
+					<th>来源：</th>
+						<td>{$data.baoming_source}</td>
+				</tr>
+				<tr>
+					<th>状态：</th>
+						<td>{$data.baoming_status}</td>
+				</tr>
+				<tr>
+					<th>添加时间：</th>
+					<td>{$data.baoming_addtime|format_to_time}</td>
+					
+				</tr>
+				
+		</tbody>
+		<tfoot>
+			<tr>
+				<th></th>
+				<td>
+					<input type="button" class="btn_w" onclick="javascript:history.back(-1);" value="返回" />
+				</td>
+		</tfoot>
+	</table><!--/add_table-->
+
+
+<!--/dialog_end-->
+</td>
+</tr>
+</table>
+
+</div>
+<include file="../public/_footer" />

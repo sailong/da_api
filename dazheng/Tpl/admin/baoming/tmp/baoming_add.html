@@ -1,0 +1,1063 @@
+<include file="../public/header_dialog" />
+{$usejs}
+
+<div class="so_main">
+
+  <div class="page_tit">报名管理</div>
+  <div class="tit_tab">
+	<ul>
+		<li><a class=on href="{:U('admin/baoming/baoming_add')}">添加报名</a></li>
+	</ul>
+  </div>
+
+<table border="0" cellspacing="0" cellpadding="0" style="width:900px;">
+<tr>
+<td>
+<!--/dialog_start-->
+
+<form method="post" id="act_form" name="act_form" action="{:U('admin/baoming/baoming_add_action')}" enctype="multipart/form-data">
+	<table class="add_table" border="0" cellspacing="0" cellpadding="0" >
+		<tbody>
+			<tr>
+				<th>所属用户：</th>
+				<td><input type="text" name="uid" id="uid" class="mod_input2" style="width:66px;"  value="{$data.uid}"></td>
+			</tr>
+			<tr>
+				<th>所属赛事：</th>
+				<td>
+					<select name="event_id" id="event_id">
+						<option value="">请选择</option>
+						<volist id="vo" name="event_select">
+						<option value="{$vo.event_id}">{$vo.event_name}</option>
+						</volist>
+					</select>
+					<script>set_select_value(document.act_form.event_id,"{$data.event_id}");</script>
+				</td>
+			</tr>
+			<tr>
+				<th>所属分站：</th>
+				<td>
+					<select name="fenzhan_id" id="fenzhan_id" style="width:120px;"  class="search_select">
+						<option value=''>请选择</option>
+					</select>
+					<input type="hidden" name="get_fenzhan_id" id="get_fenzhan_id" class="search_input" style="width:120px;" value="{$data.fenzhan_id}">
+					<!-- <select name="fenzhan_id">
+						<option value="">请选择</option>
+						<option value="{$data.fenzhan_id}">{$data.fenzhan_id}</option>
+					</select>
+					<script>set_select_value(document.act_form.fenzhan_id,"{$data.fenzhan_id}");</script> -->
+				</td>
+			</tr>
+			<tr>
+				<th>所属分站（多个）：</th>
+				<td><input type="text" name="fenzhan_ids" id="fenzhan_ids" class="mod_input2" style="width:300px;"  value="{$data.fenzhan_ids}"></td>
+			</tr>
+			<tr>
+				<th>姓名：</th>
+				<td><input type="text" name="baoming_realname" id="baoming_realname" class="mod_input2" style="width:300px;"  value="{$data.baoming_realname}"></td>
+			</tr>
+			<tr>
+				<th>手机：</th>
+				<td><input type="text" name="baoming_mobile" id="baoming_mobile" class="mod_input2" style="width:300px;"  value="{$data.baoming_mobile}"></td>
+			</tr>
+			<tr>
+				<th>邮箱：</th>
+				<td><input type="text" name="baoming_email" id="baoming_email" class="mod_input2" style="width:300px;"  value="{$data.baoming_email}"></td>
+			</tr>
+			<tr>
+				<th>国家：</th>
+				<td>
+					<!-- <input type="text" name="baoming_country" id="baoming_country" class="mod_input2" style="width:300px;"  value="{$data.baoming_country}"> -->
+					<select name="baoming_country">
+						<option value="中国"  selected >中国</option>
+						<option value="美国" >美国</option>
+						<option value="日本" >日本</option>
+					</select>
+					<script>set_select_value(document.act_form.baoming_country,"{$data.baoming_country}");</script>
+				</td>
+			</tr>
+			<tr>
+				<th>差点：</th>
+				<td><input type="text" name="baoming_chadian" id="baoming_chadian" class="mod_input2" style="width:60px;"  value="{$data.baoming_chadian}"></td>
+			</tr>
+			<tr>
+				<th>性别：</th>
+				<td>
+					<select name="baoming_sex">
+						<option value="">请选择</option>
+						<option value="男">男</option>
+						<option value="女">女</option>
+					</select>
+					<script>set_select_value(document.act_form.baoming_sex,"{$data.baoming_sex}");</script>
+				</td>
+			</tr>
+			<tr>
+				<th>年份：</th>
+				<td>
+					<input type="text" name="baoming_year" class="mod_input2" style="width:66px;" value="{$data.baoming_year}" onFocus="WdatePicker({isShowClear:false,readOnly:true,dateFmt:'yyyy'})">
+					<!-- <select name="baoming_year">
+						<option value="">请选择</option>
+						<option value="{$data.baoming_year}">{$data.baoming_year}</option>
+					</select>
+					<script>set_select_value(document.act_form.baoming_year,"{$data.baoming_year}");</script> -->
+				</td>
+			</tr>
+			<tr>
+				<th>年龄：</th>
+				<td><input type="text" name="baoming_age" id="baoming_age" class="mod_input2" style="width:66px;"  value="{$data.baoming_age}"></td>
+			</tr>
+			<tr>
+				<th>身份证号：</th>
+				<td><input type="text" name="baoming_card" id="baoming_card" class="mod_input2" style="width:300px;"  value="{$data.baoming_card}"></td>
+			</tr>
+			<tr>
+				<th>是否外卡：</th>
+				<td>
+					<select name="baoming_is_waika">
+						<option value="">请选择</option>
+						<option value="1">是</option>
+						<option value="0">否</option>
+					</select>
+					<script>set_select_value(document.act_form.baoming_is_waika,"{$data.baoming_is_waika}");</script>
+				</td>
+			</tr>
+			<tr>
+				<th>外卡分站ID：</th>
+				<td>
+					<input type="text" name="baoming_waika_fenzhan_id" id="baoming_waika_fenzhan_id" class="mod_input2" style="width:66px;"  value="{$data.baoming_waika_fenzhan_id}">
+					<!-- <select name="baoming_waika_fenzhan_id">
+						<option value="">请选择</option>
+						<option value="{$data.baoming_waika_fenzhan_id}">{$data.baoming_waika_fenzhan_id}</option>
+					</select>
+					<script>set_select_value(document.act_form.baoming_waika_fenzhan_id,"{$data.baoming_waika_fenzhan_id}");</script> -->
+				</td>
+			</tr>
+			<tr>
+				<th>头像：</th>
+				<td><php>if($data['baoming_realname_photo']){</php><img src="{$data.baoming_realname_photo}" style="max-height:180px; max-width:300px;"><php>}</php></br><input type="file" name="baoming_realname_photo" id="baoming_realname_photo"  class="mod_input"></td>
+			</tr>
+			<tr>
+				<th>身高：</th>
+				<td><input type="text" name="baoming_height" id="baoming_height" class="mod_input2" style="width:60px;"  value="{$data.baoming_height}"></td>
+			</tr>
+			
+			<tr>
+				<th>传真：</th>
+				<td><input type="text" name="baoming_fax" id="baoming_fax" class="mod_input2" style="width:300px;"  value="{$data.baoming_fax}"></td>
+			</tr>
+			<tr>
+				<th>证件类型：</th>
+				<td>
+					<select name="baoming_credentials">
+						<option value="">请选择</option>
+						<option value="1">身份证</option>
+						<option value="2">驾驶本</option>
+						<option value="3">台胞证</option>
+						<option value="4">回乡证</option>
+					</select>
+					<script>set_select_value(document.act_form.baoming_credentials,"{$data.baoming_credentials}");</script>
+				</td>
+			</tr>
+			<tr>
+				<th>证件号：</th>
+				<td><input type="text" name="baoming_credentials_num" id="baoming_credentials_num" class="mod_input2" style="width:300px;"  value="{$data.baoming_credentials_num}"></br><span style="color:red;">今后比赛的机票预订、球手积分、差点证明将使用此证件号码，且不可更改。请认真填写</span></td>
+			</tr>
+			<tr>
+				<th>证件图片地址：</th>
+				<td><php>if($data['baoming_realname_photo']){</php><img src="{$data.baoming_realname_photo}" style="max-height:180px; max-width:300px;"><php>}</php></br><input type="file" name="baoming_credentials_photo" id="baoming_credentials_photo"  class="mod_input"></td>
+			</tr>
+			<tr>
+				<th>所在地区：</th>
+				<td>
+					<!-- <input type="text" name="baoming_resideprovince" id="baoming_resideprovince" class="mod_input2" style="width:180px;"  value="{$data.baoming_resideprovince}"> -->
+					<select name="baoming_resideprovince" id="baoming_resideprovince">
+					<option value="">-省份-</option>
+					<option did="1" value="北京市">北京市</option>
+					<option did="2" value="天津市">天津市</option>
+					<option did="3" value="河北省">河北省</option>
+					<option did="4" value="山西省">山西省</option>
+					<option did="5" value="内蒙古自治区">内蒙古自治区</option>
+					<option did="6" value="辽宁省">辽宁省</option>
+					<option did="7" value="吉林省">吉林省</option>
+					<option did="8" value="黑龙江省">黑龙江省</option>
+					<option did="9" value="上海市">上海市</option>
+					<option did="10" value="江苏省">江苏省</option>
+					<option did="11" value="浙江省">浙江省</option>
+					<option did="12" value="安徽省">安徽省</option>
+					<option did="13" value="福建省">福建省</option>
+					<option did="14" value="江西省">江西省</option>
+					<option did="15" value="山东省">山东省</option>
+					<option did="16" value="河南省">河南省</option>
+					<option did="17" value="湖北省">湖北省</option>
+					<option did="18" value="湖南省">湖南省</option>
+					<option did="19" value="广东省">广东省</option>
+					<option did="20" value="广西壮族自治区">广西壮族自治区</option>
+					<option did="21" value="海南省">海南省</option>
+					<option did="22" value="重庆市">重庆市</option>
+					<option did="23" value="四川省">四川省</option>
+					<option did="24" value="贵州省">贵州省</option>
+					<option did="25" value="云南省">云南省</option>
+					<option did="26" value="西藏自治区">西藏自治区</option>
+					<option did="27" value="陕西省">陕西省</option>
+					<option did="28" value="甘肃省">甘肃省</option>
+					<option did="29" value="青海省">青海省</option>
+					<option did="30" value="宁夏回族自治区">宁夏回族自治区</option>
+					<option did="31" value="新疆维吾尔自治区">新疆维吾尔自治区</option>
+					<option did="32" value="台湾省">台湾省</option>
+					<option did="33" value="香港特别行政区">香港特别行政区</option>
+					<option did="34" value="澳门特别行政区">澳门特别行政区</option>
+					<option did="35" value="海外">海外</option>
+					<option did="36" value="其他">其他</option>
+					</select>
+					<script>set_select_value(document.act_form.baoming_resideprovince,"{$data.baoming_resideprovince}");</script>
+				</td>
+			</tr>
+			<tr>
+				<th>个人年收入：</th>
+				<td>
+					<!-- <input type="text" name="baoming_income" id="baoming_income" class="mod_input2" style="width:300px;"  value="{$data.baoming_income}"> -->
+					<select name="baoming_income" id="baoming_income">
+						<option value="1"  selected /> 15万元以下 </option>
+						<option value="2" /> 15-20万元  </option>
+						<option value="3" /> 20-30万元  </option>
+						<option value="4" /> 30-50万元  </option>
+						<option value="5" /> 50万-100万 </option>
+						<option value="6" /> 100万以上  </option>
+					</select>
+					<script>set_select_value(document.act_form.baoming_income,"{$data.baoming_income}");</script>
+				</td>
+			</tr>
+			<tr>
+				<th>公司名称：</th>
+				<td><input type="text" name="baoming_company" id="baoming_company" class="mod_input2" style="width:300px;"  value="{$data.baoming_company}"></td>
+			</tr>
+			<tr>
+				<th>职 务：</th>
+				<td>
+					<!-- <input type="text" name="baoming_position" id="baoming_position" class="mod_input2" style="width:300px;"  value="{$data.baoming_position}"> -->
+					<select id="baoming_position" name="baoming_position">
+						<option value="">请选择</option>
+						<option value="总裁/总经理" >总裁/总经理/CEO</option>
+						<option value="副总裁/副总经理/COO" >副总裁/副总经理/COO</option>
+						<option value="总监/分公司负责人" >总监/分公司负责人</option>
+						<option value="合伙人" >合伙人</option>
+						<option value="经理/主管" >经理/主管</option>
+						<option value="公务人员" >公务人员</option>
+						<option value="企业员工"  selected >企业员工</option>
+						<option value="其他" >其他</option>
+					</select>
+					<script>set_select_value(document.act_form.baoming_position,"{$data.baoming_position}");</script>
+				</td>
+			</tr>
+			<tr>
+				<th>所属行业：</th>
+				<td>
+					<select name="baoming_company_class">
+						<option value="">请选择</option>
+						<option value="IT/互联网/电子商务" >IT/互联网/电子商务</option>
+						<option value="通讯/电子/仪器仪表" >通讯/电子/仪器仪表</option>
+						<option value="金融/银行/投资" >金融/银行/投资</option>
+						<option value="保险" >保险</option>
+						<option value="房地产/建筑/建材/物业" >房地产/建筑/建材/物业</option>
+						<option value="广告/设计/公关" >广告/设计/公关</option>
+						<option value="媒体/出版/影视/文化/印刷" selected>媒体/出版/影视/文化/印刷</option>
+						<option value="机械/重工/制造" >机械/重工/制造</option>
+						<option value="法律/财会/咨询" >法律/财会/咨询</option>
+						<option value="教育/培训" >教育/培训</option>
+						<option value="石油/化工/能源/矿产/冶金" >石油/化工/能源/矿产/冶金</option>
+						<option value="贸易/进出口" >贸易/进出口</option>
+						<option value="零售/批发" >零售/批发</option>
+						<option value="交通/运输" >交通/运输</option>
+						<option value="娱乐/体育/休闲" >娱乐/体育/休闲</option>
+						<option value="旅游服务" >旅游服务</option>
+						<option value="医疗/医药" >医疗/医药</option>
+						<option value="政府机关/事业单位/非赢利机构" >政府机关/事业单位/非赢利机构</option>
+						<option value="其它" >其它</option>
+
+					</select>
+					<script>set_select_value(document.act_form.baoming_company_class,"{$data.baoming_company_class}");</script>
+				</td>
+			</tr>
+			<tr>
+				<th>通讯地址：</th>
+				<td><input type="text" name="baoming_address" id="baoming_address" class="mod_input2" style="width:300px;"  value="{$data.baoming_address}"></td>
+			</tr>
+			<tr>
+				<th>邮编：</th>
+				<td><input type="text" name="baoming_zipcode" id="baoming_zipcode" class="mod_input2" style="width:66px;"  value="{$data.baoming_zipcode}"></td>
+			</tr>
+			<tr>
+				<th>皇冠车主：</th>
+				<td>
+					<!-- <input type="radio" name="baoming_is_huang" id="baoming_is_huang" value="{$data.baoming_is_huang}"> -->
+					<!-- <input name="baoming_is_huang" type="radio" value="1" class="mod_input2"/>是
+					<input name="baoming_is_huang" type="radio" value="0" class="mod_input2" checked/>否 -->
+					<select id="baoming_is_huang" name="baoming_is_huang">
+						<option value="1">是</option>
+						<option value="0" selected >否</option>
+					</select>
+					<script>set_select_value(document.act_form.baoming_is_huang,"{$data.baoming_is_huang}");</script>
+				</td>
+			</tr>
+			<tr>
+				<th>您座驾品牌：</th>
+				<td>
+					<!-- <input type="text" name="baoming_car_brand" id="baoming_car_brand" class="mod_input2" style="width:300px;"  value="{$data.baoming_car_brand}"> -->
+					<select name="baoming_car_brand">
+					<option  selected  value="A 阿尔法.罗米欧"   >A 阿尔法.罗米欧</option>
+					<option  value="A 阿斯顿.马丁"   >A 阿斯顿.马丁</option>
+					<option  value="A 奥迪"   >A 奥迪</option>
+					<option  value="B 宝马"   >B 宝马</option>
+					<option  value="B 保时捷"   >B 保时捷</option>
+					<option  value="B 北汽"   >B 北汽</option>
+					<option  value="B 奔驰"   >B 奔驰</option>
+					<option  value="B 奔腾"   >B 奔腾</option>
+					<option  value="B 本田(进口)"   >B 本田(进口)</option>
+					<option  value="B 比亚迪"   >B 比亚迪</option>
+					<option  value="B 标致"   >B 标致</option>
+					<option  value="B 别克"   >B 别克</option>
+					<option  value="B 宾利"   >B 宾利</option>
+					<option  value="B 布嘉迪"   >B 布嘉迪</option>
+					<option  value="C 长安"   >C 长安</option>
+					<option  value="C 长城"   >C 长城</option>
+					<option  value="C 长丰"   >C 长丰</option>
+					<option  value="C昌河"   >C昌河</option>
+					<option  value="D 大众(进口)"   >D 大众(进口)</option>
+					<option  value="D 道奇"   >D 道奇</option>
+					<option  value="D 帝豪"   >D 帝豪</option>
+					<option  value="D 东风"   >D 东风</option>
+					<option  value="D 东风本田"   >D 东风本田</option>
+					<option  value="D 东风风神"   >D 东风风神</option>
+					<option  value="D 东南"   >D 东南</option>
+					<option  value="F 菲亚特"   >F 菲亚特</option>
+					<option  value="F 丰田(进口)"   >F 丰田(进口)</option>
+					<option  value="F 福特"   >F 福特</option>
+					<option  value="F 福田"   >F 福田</option>
+					<option  value="F 法拉利"   >F 法拉利</option>
+					<option  value="G GMC"   >G GMC</option>
+					<option  value="G 广汽本田"   >G 广汽本田</option>
+					<option  value="G 广汽丰田"   >G 广汽丰田</option>
+					<option  value="H 哈飞"   >H 哈飞</option>
+					<option  value="H 海马"   >H 海马</option>
+					<option  value="H 悍马"   >H 悍马</option>
+					<option  value="H 红旗"   >H 红旗</option>
+					<option  value="H 华普"   >H 华普</option>
+					<option  value="H 华泰"   >H 华泰</option>
+					<option  value="H 江淮"   >H 江淮</option>
+					<option  value="J 吉奥"   >J 吉奥</option>
+					<option  value="J 吉利"   >J 吉利</option>
+					<option  value="J 吉普Jeep"   >J 吉普Jeep</option>
+					<option  value="J 捷豹"   >J 捷豹</option>
+					<option  value="J 精灵smart"   >J 精灵smart</option>
+					<option  value="K 开瑞"   >K 开瑞</option>
+					<option  value="K 凯迪拉克"   >K 凯迪拉克</option>
+					<option  value="K 柯尼赛格"   >K 柯尼赛格</option>
+					<option  value="K 克莱斯勒"   >K 克莱斯勒</option>
+					<option  value="L 兰博基尼"   >L 兰博基尼</option>
+					<option  value="L 劳伦士"   >L 劳伦士</option>
+					<option  value="L 劳斯莱斯"   >L 劳斯莱斯</option>
+					<option  value="L 雷克萨斯"   >L 雷克萨斯</option>
+					<option  value="L 雷诺"   >L 雷诺</option>
+					<option  value="L 力帆"   >L 力帆</option>
+					<option  value="L 莲花"   >L 莲花</option>
+					<option  value="L 林肯"   >L 林肯</option>
+					<option  value="L 铃木"   >L 铃木</option>
+					<option  value="L 陆风"   >L 陆风</option>
+					<option  value="L 路虎"   >L 路虎</option>
+					<option  value="M MG"   >M MG</option>
+					<option  value="M 马自达"   >M 马自达</option>
+					<option  value="M 玛莎拉蒂"   >M 玛莎拉蒂</option>
+					<option  value="M 迈巴赫"   >M 迈巴赫</option>
+					<option  value="M 迷你MINI"   >M 迷你MINI</option>
+					<option  value="O 讴歌"   >O 讴歌</option>
+					<option  value="O 欧宝"   >O 欧宝</option>
+					<option  value="P 帕加尼"   >P 帕加尼</option>
+					<option  value="Q 奇瑞"   >Q 奇瑞</option>
+					<option  value="Q 起亚"   >Q 起亚</option>
+					<option  value="Q 全球鹰"   >Q 全球鹰</option>
+					<option  value="R 日产"   >R 日产</option>
+					<option  value="R 荣威"   >R 荣威</option>
+					<option  value="R 瑞麒"   >R 瑞麒</option>
+					<option  value="S 萨博"   >S 萨博</option>
+					<option  value="S 三菱"   >S 三菱</option>
+					<option  value="S 上海大众"   >S 上海大众</option>
+					<option  value="S 世爵"   >S 世爵</option>
+					<option  value="S 双环"   >S 双环</option>
+					<option  value="S 双龙"   >S 双龙</option>
+					<option  value="S 斯巴鲁"   >S 斯巴鲁</option>
+					<option  value="S 斯柯达"   >S 斯柯达</option>
+					<option  value="W 威麟"   >W 威麟</option>
+					<option  value="W 威兹曼"   >W 威兹曼</option>
+					<option  value="W 沃尔沃"   >W 沃尔沃</option>
+					<option  value="W 五菱"   >W 五菱</option>
+					<option  value="X 西亚特"   >X 西亚特</option>
+					<option  value="X 现代"   >X 现代</option>
+					<option  value="X 雪佛兰"   >X 雪佛兰</option>
+					<option  value="X 雪铁龙"   >X 雪铁龙</option>
+					<option  value="Y 一汽"   >Y 一汽</option>
+					<option  value="Y 一汽大众"   >Y 一汽大众</option>
+					<option  value="Y 一汽丰田"   >Y 一汽丰田</option>
+					<option  value="Y 英菲尼迪"   >Y 英菲尼迪</option>
+					<option  value="Y 英伦"   >Y 英伦</option>
+					<option  value="Z 中华"   >Z 中华</option>
+					<option  value="Z 中兴"   >Z 中兴</option>
+					<option  value="Z 众泰"   >Z 众泰</option>
+					<option  value="其他"   >其他</option>
+				</select>	
+				<script>set_select_value(document.act_form.baoming_car_brand,"{$data.baoming_car_brand}");</script>
+				</td>
+			</tr>
+			<tr>
+				<th>皇冠车型：</th>
+				<td><input type="text" name="baoming_h_car_type" id="baoming_h_car_type" class="mod_input2" style="width:300px;"  value="{$data.baoming_h_car_type}"></td>
+			</tr>
+			<tr>
+				<th>皇冠车驾号：</th>
+				<td><input type="text" name="baoming_car_j_type" id="baoming_car_j_type" class="mod_input2" style="width:300px;"  value="{$data.baoming_car_j_type}"></td>
+			</tr>
+			<tr>
+				<th>所属经销店：</th>
+				<td><input type="text" name="baoming_car_marking_shop" id="baoming_car_marking_shop" class="mod_input2" style="width:300px;"  value="{$data.baoming_car_marking_shop}"></td>
+			</tr>
+			<tr>
+				<th>上传行驶本：</th>
+				<td><php>if($data['baoming_car_drive_pic']){</php><img src="{$data.baoming_car_drive_pic}" style="max-height:180px; max-width:300px;"><php>}</php></br><input type="file" name="baoming_car_drive_pic" id="baoming_car_drive_pic"  class="mod_input"></td>
+			</tr>
+			<tr>
+				<th>了解皇冠：</th>
+				<td>
+					<!-- <input type="radio" name="baoming_sure_realize" id="baoming_sure_realize" value="{$data.baoming_sure_realize}"> -->
+					<select id="baoming_sure_realize" name="baoming_sure_realize">
+						<option value="1">了解</option>
+						<option value="0" selected >不了解</option>
+					</select>
+					<script>set_select_value(document.act_form.baoming_sure_realize,"{$data.baoming_sure_realize}");</script>
+				</td>
+			</tr>
+			<tr>
+				<th>试驾皇冠：</th>
+				<td>
+					<!-- <input type="radio" name="baoming_sure_drive" id="baoming_sure_drive" value="{$data.baoming_sure_drive}"> -->
+					<select id="baoming_sure_drive" name="baoming_sure_drive">
+						<option value="1">试驾过</option>
+						<option value="0" selected >没有</option>
+					</select>
+					<script>set_select_value(document.act_form.baoming_sure_drive,"{$data.baoming_sure_drive}");</script>
+				</td>
+			</tr>
+			<tr>
+				<th>对评价皇冠：</th>
+				<td>
+					<!-- <select name="baoming_assess_price">
+						<option value="">请选择</option>
+						<option value="{$data.baoming_assess_price}">{$data.baoming_assess_price}</option>
+					</select>
+					<script>set_select_value(document.act_form.baoming_assess_price,"{$data.baoming_assess_price}");</script> -->
+					<select id="baoming_assess_price" name="baoming_assess_price">
+						<option value="1" selected >中级车</option>
+						<option value="2">中高级车</option>
+						<option value="3">高级车</option>
+					</select>
+					<script>set_select_value(document.act_form.baoming_assess_price,"{$data.baoming_assess_price}");</script>
+				</td>
+			</tr>
+			<tr>
+				<th>您都知道哪些（汽车类）厂商举办的高尔夫赛事：</th>
+				<td><input type="text" name="baoming_konw_saishi" id="baoming_konw_saishi" class="mod_input2" style="width:600px;"  value="{$data.baoming_konw_saishi}"></td>
+			</tr>
+			<tr>
+				<th>您认为本次赛事让您对皇冠车的品牌印象产生了哪些变化：</th>
+				<td><input type="text" name="baoming_bianhua" id="baoming_bianhua" class="mod_input2" style="width:600px;"  value="{$data.baoming_bianhua}"></td>
+			</tr>
+			<tr>
+				<th>半年内是否有购买CROWN皇冠轿车意向：</th>
+				<td>
+					<!-- <input type="radio" name="baoming_buy_car" id="baoming_buy_car" value="{$data.baoming_buy_car}"> -->
+					<select id="baoming_buy_car" name="baoming_buy_car">
+						<option value="1">是</option>
+						<option value="0" selected >否</option>
+					</select>
+					<script>set_select_value(document.act_form.baoming_buy_car,"{$data.baoming_buy_car}");</script>
+				</td>
+			</tr>
+			<tr>
+				<th>请问您对CROWN皇冠轿车形象的评价：</th>
+				<td>
+					<!-- <input type="text" name="baoming_car_impress" id="baoming_car_impress" class="mod_input2" style="width:300px;" value="{$data.baoming_car_impress}"> -->
+					<input type="checkbox" name="baoming_car_impress[]" value="先进的"   checked  />
+					&nbsp;先进的&nbsp;&nbsp;
+					<input type="checkbox" name="baoming_car_impress[]" value="高科技感的"  checked />
+					&nbsp;高科技感的&nbsp;&nbsp;
+					<input type="checkbox" name="baoming_car_impress[]" value="不断创新的" /> 
+					&nbsp;不断创新的&nbsp;&nbsp;
+					<input type="checkbox" name="baoming_car_impress[]" value="引领时代"   />
+					&nbsp;引领时代&nbsp;&nbsp;
+					<input type="checkbox" name="baoming_car_impress[]" value="时尚的" />
+					&nbsp;时尚的&nbsp;&nbsp;
+					<input type="checkbox" name="baoming_car_impress[]" value="有活力的" /> 
+					&nbsp;有活力的&nbsp;&nbsp;
+					<input type="checkbox" name="baoming_car_impress[]" value="年轻的"   />
+					&nbsp;年轻的&nbsp;&nbsp;<br>
+					<input type="checkbox" name="baoming_car_impress[]" value="个性的"  checked />
+					&nbsp;个性的&nbsp;&nbsp;
+					<input type="checkbox" name="baoming_car_impress[]" value="勇于挑战的"  checked /> 
+					&nbsp;勇于挑战的&nbsp;&nbsp;
+					<input type="checkbox" name="baoming_car_impress[]" value="传统的"   />
+					&nbsp;传统的&nbsp;&nbsp;
+					<input type="checkbox" name="baoming_car_impress[]" value="富有激情的" />
+					&nbsp;富有激情的&nbsp;&nbsp;
+					<input type="checkbox" name="baoming_car_impress[]" value="富有驾驶乐趣的" /> 
+					&nbsp;富有驾驶乐趣的&nbsp;&nbsp;
+						<input type="checkbox" name="baoming_car_impress[]" value="动感十足的"   />
+					&nbsp;动感十足的&nbsp;&nbsp;
+					<input type="checkbox" name="baoming_car_impress[]" value="知性的" />
+					&nbsp;知性的&nbsp;&nbsp;<br>
+					<input type="checkbox" name="baoming_car_impress[]" value="稳重的"  checked /> 
+					&nbsp;稳重的&nbsp;&nbsp;
+					<input type="checkbox" name="baoming_car_impress[]" value="务实的"   checked  />
+					&nbsp;务实的&nbsp;&nbsp;
+					<input type="checkbox" name="baoming_car_impress[]" value="值得信赖的" />
+					&nbsp;值得信赖的&nbsp;&nbsp;
+					<input type="checkbox" name="baoming_car_impress[]" value="经典的" /> 
+					&nbsp;经典的&nbsp;&nbsp;
+					<input type="checkbox" name="baoming_car_impress[]" value="大气的"   />
+					&nbsp;大气的&nbsp;&nbsp;
+					<input type="checkbox" name="baoming_car_impress[]" value="精致的" />
+					&nbsp;精致的&nbsp;&nbsp;
+					<input type="checkbox" name="baoming_car_impress[]" value="有品味的" /> 
+					&nbsp;有品味的&nbsp;&nbsp;<br>
+					<input type="checkbox" name="car_impress[]" value="有高级感的"   checked  />
+					&nbsp;有高级感的&nbsp;&nbsp;
+					<input type="checkbox" name="baoming_car_impress[]" value="豪华的"  checked />
+					&nbsp;豪华的&nbsp;&nbsp;
+					<input type="checkbox" name="baoming_car_impress[]" value="尊贵的" /> 
+					&nbsp;尊贵的&nbsp;&nbsp;
+					<input type="checkbox" name="baoming_car_impress[]" value="有亲近感的"   />
+					&nbsp;有亲近感的&nbsp;&nbsp;
+					<input type="checkbox" name="baoming_car_impress[]" value="让人感到安心的" />
+					&nbsp; 让人感到安心的&nbsp;&nbsp;
+					<input type="checkbox" name="baoming_car_impress[]" value="口碑好的" /> 
+					&nbsp;口碑好的&nbsp;&nbsp;
+					<input type="checkbox" name="baoming_car_impress[]" value="能够体现身份地位的"   />
+					&nbsp;能够体现身份地位的 &nbsp;&nbsp;
+
+				</td>
+			</tr>
+			<tr>
+				<th>球龄：</th>
+				<td><input type="text" name="baoming_ball_age" id="baoming_ball_age" class="mod_input2" style="width:300px;"  value="{$data.baoming_ball_age}"></td>
+			</tr>
+			<tr>
+				<th>您的最好成绩：</th>
+				<td><input type="text" name="baoming_best_score" id="baoming_best_score" class="mod_input2" style="width:300px;"  value="{$data.baoming_best_score}"></td>
+			</tr>
+			<tr>
+				<th>您拥有的球具品牌：</th>
+				<td>
+					<!-- <input type="text" name="baoming_tool_brand" id="baoming_tool_brand" class="mod_input2" style="width:300px;"  value="{$data.baoming_tool_brand}"> -->
+					<input type="checkbox" name="baoming_tool_brand[]" value="Callaway"    checked /> Callaway
+				<input type="checkbox" name="baoming_tool_brand[]" value="Cleverland" />
+				Cleverland&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" name="baoming_tool_brand[]" value="PING"       />
+				PING&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" name="baoming_tool_brand[]" value="MAC_GREGON" />
+				MAC GREGON&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" name="baoming_tool_brand[]" value="Admas"      />
+				Admas&nbsp;&nbsp;&nbsp;&nbsp;<br><br>
+
+
+
+				
+				<input type="checkbox" name="baoming_tool_brand[]" value="Odyssey"     checked /> 
+				Odyssey&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" name="baoming_tool_brand[]" value="Nike_Golf"  />
+				Nike Golf&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" name="baoming_tool_brand[]" value="Titleist"   /> Titleist&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" name="baoming_tool_brand[]" value="Taylormade" />
+				Taylormade&nbsp;&nbsp;&nbsp;&nbsp;<br/><br>
+
+
+				
+				<input type="checkbox" name="baoming_tool_brand[]" value="Dunlop"      checked /> 
+				Dunlop&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" name="baoming_tool_brand[]" value="Wilson"     />
+				Wilson&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" name="baoming_tool_brand[]" value="Co_bra"     /> 
+				Co bra&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" name="baoming_tool_brand[]" value="Kasco"      /> 
+				Kasco &nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" name="baoming_tool_brand[]" value="MURUMAN"    />
+				MURUMAN &nbsp;&nbsp;&nbsp;&nbsp;<br><br>
+
+				
+				<input type="checkbox" name="baoming_tool_brand[]" value="Mizuno"      checked />
+				Mizuno&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" name="baoming_tool_brand[]" value="HONMAN"     />
+				HONMAN&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" name="baoming_tool_brand[]" value="SRIXON"     />
+				SRIXON&nbsp;&nbsp;&nbsp;&nbsp;  
+				<input type="checkbox" name="baoming_tool_brand[]" value="S-YARD"     />
+				S-YARD  &nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" name="baoming_tool_brand[]" value="PRGR"       /> 
+				PRGR &nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" name="baoming_tool_brand[]" value="other"      >
+				其他&nbsp;&nbsp;&nbsp;&nbsp;<br><br> 
+
+				</td>
+			</tr>
+			<tr>
+				<th>拥有会籍数量：</th>
+				<td><input type="text" name="baoming_num_qiu_hui" id="baoming_num_qiu_hui" class="mod_input2" style="width:60px;"  value="{$data.baoming_num_qiu_hui}"></td>
+			</tr>
+			<tr>
+				<th>您拥有球会的会籍：</th>
+				<td><input type="text" name="baoming_faction" id="baoming_faction" class="mod_input2" style="width:600px;"  value="{$data.baoming_faction}"></td>
+			</tr>
+			<tr>
+				<th>请问您参加本次比赛的原因：</th>
+				<td>
+					<!-- <textarea name="baoming_attract" id="baoming_attract" class="mod_input2" style="width:400px; height:100px;">{$data.baoming_attract}</textarea> -->
+					<input type="checkbox" name="baoming_attract[]" value="喜爱高尔夫运动"   checked  />喜爱高尔夫运动&nbsp;&nbsp;
+					<input type="checkbox" name="baoming_attract[]" value="本赛事是中国业余顶级赛事，是中高协主办的正规比赛"  >&nbsp;&nbsp;本赛事是中国业余顶级赛事，是中高协主办的正规比赛&nbsp;&nbsp;
+					<input type="checkbox" name="baoming_attract[]" value="朋友介绍"  >朋友介绍&nbsp;&nbsp;
+					<br><br/>
+					<input type="checkbox" name="baoming_attract[]" value="3"  >赛事知名度高（宣传力度较大/有知名品牌赞助）
+					<input type="checkbox" name="baoming_attract[]" value="经销店邀请"  >经销店邀请 &nbsp;&nbsp;
+					<input type="checkbox" name="baoming_attract[]" value="奖品丰厚有吸引力"  >奖品丰厚有吸引力&nbsp;&nbsp;
+					<input type="checkbox" name="baoming_attract[]" value="可以获得CGA认定业余选手积分"  >可以获得CGA认定业余选手积分&nbsp;&nbsp;
+
+				</td>
+			</tr>
+			<tr>
+				<th>你希望参加哪个地区的分站赛：</th>
+				<td>
+					<!-- <select name="baoming_hot_district">
+						<option value="">请选择</option>
+						<option value="{$data.baoming_hot_district}">{$data.baoming_hot_district}</option>
+					</select>
+					<script>set_select_value(document.act_form.baoming_hot_district,"{$data.baoming_hot_district}");</script> -->
+					
+                        <input type="checkbox" name="baoming_hot_district[]" value="5/11天津"    checked  />
+					&nbsp;5/11天津&nbsp;&nbsp;
+										
+				   <input type="checkbox" name="baoming_hot_district[]" value="5/24广州"       />
+					&nbsp;5/24广州&nbsp;&nbsp;
+										
+				   <input type="checkbox" name="baoming_hot_district[]" value="5/31深圳"       />
+					&nbsp;5/31深圳&nbsp;&nbsp;
+										
+				   <input type="checkbox" name="baoming_hot_district[]" value="6/15杭州"       />
+					&nbsp;6/15杭州&nbsp;&nbsp;
+										
+				   <input type="checkbox" name="baoming_hot_district[]" value="6/21上海"       />
+					&nbsp;6/21上海&nbsp;&nbsp;
+										
+				   <input type="checkbox" name="baoming_hot_district[]" value="6/29长沙"       />
+					&nbsp;6/29长沙&nbsp;&nbsp;
+										
+				   <input type="checkbox" name="baoming_hot_district[]" value="7/19北京"       />
+					&nbsp;7/19北京&nbsp;&nbsp;
+										
+				   <input type="checkbox" name="baoming_hot_district[]" value="7/26大连"       />
+					&nbsp;7/26大连&nbsp;&nbsp;
+										
+				   <input type="checkbox" name="baoming_hot_district[]" value="8/9郑州"       />
+					&nbsp;8/9郑州&nbsp;&nbsp;
+										
+				   <input type="checkbox" name="baoming_hot_district[]" value="8/24成都"       />
+					&nbsp;8/24成都&nbsp;&nbsp;
+										
+				   <input type="checkbox" name="baoming_hot_district[]" value="8/30苏州"       />
+					&nbsp;8/30苏州&nbsp;&nbsp;
+										
+				   <input type="checkbox" name="baoming_hot_district[]" value="9/7福州"       />
+					&nbsp;9/7福州&nbsp;&nbsp;
+				</td>
+			</tr>
+			<tr>
+				<th>赛事信息获取途径：</th>
+				<td>
+					<!-- <select name="baoming_accept_way">
+						<option value="">请选择</option>
+						<option value="{$data.baoming_accept_way}">{$data.baoming_accept_way}</option>
+					</select>
+					<script>set_select_value(document.act_form.baoming_accept_way,"{$data.baoming_accept_way}");</script> -->
+					<input type="text" name="baoming_accept_way" id="baoming_accept_way" class="mod_input2" style="width:300px;"  value="{$data.baoming_accept_way}">
+				</td>
+			</tr>
+			<tr>
+				<th>一汽丰田营销店：</th>
+				<td>
+						<!-- <input type="text" name="baoming_yiqi_shop" id="baoming_yiqi_shop" class="mod_input2" style="width:300px;"  value="{$data.baoming_yiqi_shop}"> -->
+					<script type="text/javascript">
+					var currentShowCity=0;
+					jQuery(document).ready(function(){
+					//$(document).ready(function(){
+					jQuery("#province").change(function(){
+					jQuery("#province option").each(function(i,o){
+					if(jQuery(this).attr("selected"))
+					{
+					jQuery(".city").hide();
+					jQuery(".city").eq(i).show(); 
+					currentShowCity=i;
+					jQuery("#baoming_yiqi_shop").val(jQuery(".city").eq(i).val()); 
+					}
+					});
+					});
+					jQuery("#province").change();
+					jQuery(".city").change(function(){
+					jQuery(".city").each(function(i,o){
+					if(i == currentShowCity){
+					jQuery("#baoming_yiqi_shop").val(jQuery(".city").eq(i).val()); 
+					}
+					});
+					});
+					});
+
+					</script>
+					<select id="province">
+					<option>--请选择赛区--</option>
+					<option>天津</option>
+					<option>广州</option>
+					<option>深圳</option>
+					<option>杭州</option>
+					<option>上海</option>
+					<option>长沙</option>
+					<option>北京</option>
+					<option>成都</option>
+					<option>郑州</option>
+					<option>大连</option>
+					<option>苏州</option>
+					<option>福州</option>
+					</select>
+					<select class="city">
+					<option>--请选择营销店--</option>
+					</select>
+					<select class="city">
+					<option>天津柳林</option>
+					<option>天津东联</option>
+					<option>天津中乒</option>
+					<option>天津华苑</option>
+					<option>天津凯达</option>
+					<option>天津浩物</option>
+					<option>天津和裕</option>
+					<option>天津柳林金海</option>
+					<option>天津奥嘉</option>
+					<option>天津奥德行津盛</option>
+					<option>天津庞大丰雅</option>
+					</select>
+					<select class="city">
+					<option>广州广保</option>
+					<option>广州沙河</option>
+					<option>广州龙的</option>
+					<option>广州迎宾</option>
+					<option>广州华通</option>
+					<option>广州庆丰</option>
+					<option>广州宗远</option>
+					<option>广州顺协</option>
+					<option>广州新钜</option>
+					<option>广州芳村</option>
+					<option>广州南菱</option>
+					<option>广州广博</option>
+					<option>广州骏辉</option>
+					<option>广州永佳</option>
+					<option>广州中升</option>
+					<option>广州兆方</option>
+					<option>广州庆丰人和分店</option>
+					<option>广州南菱雅瑶分店</option>
+					</select>
+					<select class="city">
+					<option>深圳南方</option>
+					<option>深圳大兴</option>
+					<option>深圳华日</option>
+					<option>深圳深业</option>
+					<option>深圳都通</option>
+					<option>深圳兆方</option>
+					<option>深圳红彤</option>
+					<option>深圳骏爵</option>
+					<option>深圳易达</option>
+					<option>深圳中升</option>
+					<option>宝安大兴</option>
+					<option>深圳中升迎宾</option>
+					<option>深圳民生东都</option>
+					<option>深圳大兴观澜</option>
+					<option>深圳兴业</option>
+					<option>深圳都通坪山分店</option>
+					</select>
+					<select class="city">
+					<option>杭州江干</option>
+					<option>杭州龙通</option>
+					<option>杭州康桥</option>
+					<option>杭州金丰</option>
+					<option>杭州和诚八下里</option>
+					<option>杭州康隆</option>
+					<option>杭州东昌</option>
+					</select>
+					<select class="city">
+					<option>上海宝和</option>
+					<option>上海协通</option>
+					<option>上海开隆</option>
+					<option>上海和裕</option>
+					<option>上海东昌</option>
+					<option>上海永达</option>
+					<option>上海由由</option>
+					<option>上海中汽</option>
+					<option>上海中升</option>
+					<option>上海申晖</option>
+					<option>上海锦江</option>
+					<option>上海冠松</option>
+					<option>上海万兴</option>
+					<option>上海联合</option>
+
+					</select>
+					<select class="city">
+					<option>长沙华运通</option>
+					<option>长沙力天</option>
+					<option>长沙申湘</option>
+					<option>长沙和信</option>
+					<option>长沙华运通望城分</option>
+
+					</select>
+					<select class="city">
+					<option>北京中新兴达</option>
+					<option>北京远通桥</option>
+					<option>北京首汽</option>
+					<option>北京三元桥</option>
+					<option>北京惠通四惠</option>
+					<option>北京东仁天宇</option>
+					<option>北京北苑</option>
+					<option>北京华通</option>
+					<option>北京博丰长久顺义</option>
+					<option>北京五方桥</option>
+					<option>北京和裕</option>
+					<option>北京广通</option>
+					<option>北京中业</option>
+					<option>北京京石</option>
+					<option>北京花乡桥</option>
+					<option>北京方庄</option>
+					<option>北京奥德行</option>
+					<option>北京森华</option>
+					<option>北京凯百隆</option>
+					<option>北京金冠兴业</option>
+					<option>北京花园桥</option>
+					<option>北京苹果园</option>
+					<option>北京运通博裕</option>
+					<option>北京北苑怀柔分店</option>
+					</select>
+					<select class="city">
+					<option>成都中升</option>
+					<option>成都安利捷</option>
+					<option>成都中达</option>
+					<option>成都中道成</option>
+					<option>成都三和</option>
+					<option>成都锦泰</option>
+					<option>成都启阳华通</option>
+					</select>
+					<select class="city">
+					<option>郑州富达</option>
+					<option>郑州豫中</option>
+					<option>郑州世纪鸿图</option>
+					<option>郑州裕华</option>
+					</select>
+					<select class="city">
+					<option>大连中升</option>
+					<option>大连迎宾中升</option>
+					<option>大连裕德</option>
+					<option>大连新盛荣</option>
+					<option>大连保税区华通</option>
+					</select>
+					<select class="city">
+					<option>苏州康福</option>
+					<option>苏州汇凯</option>
+					<option>苏州由由</option>
+					<option>苏州华成</option>
+					<option>苏州裕达</option>
+					</select>
+					<select class="city">
+					<option>福建世纪丰田</option>
+					<option>福州中升</option>
+					<option>福州玖玖</option>
+					<option>福州运通</option>
+					</select><input  type="input"  value="{$data.baoming_yiqi_shop}" name="baoming_yiqi_shop" id="baoming_yiqi_shop"> </span>
+
+				</td>
+			</tr>
+			<tr>
+				<th>是否参加去年城市挑战赛：</th>
+				<td>
+					<!-- <input type="radio" name="baoming_is_join_c" id="baoming_is_join_c" value="{$data.baoming_is_join_c}"> -->
+					<select name="baoming_is_join_c">
+						<option value="1">是</option>
+						<option value="0">否</option>
+					</select>
+					<script>set_select_value(document.act_form.baoming_is_join_c,"{$data.baoming_is_join_c}");</script>
+				</td>
+			</tr>
+			<tr>
+				<th>报名资格：</th>
+				<td>
+					<select name="baoming_zige">
+						<option value="">请选择</option>
+						<option value="国家队现役运动员">国家队现役运动员</option>
+						<option value="业余比赛前三名运动员">业余比赛前三名运动员</option>
+						<option value="海外运动员">海外运动员</option>
+						<option value="中高协推荐运动员">中高协推荐运动员</option>
+					</select>
+					<script>set_select_value(document.act_form.baoming_zige,"{$data.baoming_zige}");</script>
+				</td>
+			</tr>
+			<tr>
+				<th>是否自带球童：</th>
+				<td>
+					<select name="baoming_is_zidai_qiutong">
+						<option value="">请选择</option>
+						<option value="0">否</option>
+						<option value="1">是</option>
+					</select>
+					<script>set_select_value(document.act_form.baoming_is_zidai_qiutong,"{$data.baoming_is_zidai_qiutong}");</script>
+				</td>
+			</tr>
+			<tr>
+				<th>备注：</th>
+				<td>
+					<!-- <textarea name="baoming_note" id="baoming_note" class="mod_input2" style="width:400px; height:100px;">{$data.baoming_note}</textarea> -->
+					<select name="baoming_note" id="baoming_note" style="width:120px;">
+					<option value=''> -请选择备注类型- </option>
+					<option value='未填写备注'>未填写备注</option>
+					<option value="客户报名咨询">客户报名咨询</option>
+					<option value="客户信息审核-已核实">客户信息审核-已核实</option>
+					<option value="客户信息审核-待核实">客户信息审核-待核实</option>
+					<option value="客户信息审核-未联系上">客户信息审核-未联系上</option>
+					<option value="客户信息审核-条件不符已告知">客户信息审核-条件不符已告知</option>
+					<option value="客户信息审核-身份证明未提供">客户信息审核-身份证明未提供</option>
+					<option value="客户信息审核-身份证明已提供">客户信息审核-身份证明已提供</option>
+					<option value="通知缴款-已通知，待缴">通知缴款-已通知，待缴</option>
+					<option value="通知缴款-未通知">通知缴款-未通知</option>
+					<option value="通知缴款-已通知，不参加">通知缴款-已通知，不参加</option>
+					<option value="通知缴款-已支付，待核实">通知缴款-已支付，待核实</option>
+					<option value="通知缴款-已支付，到账">通知缴款-已支付，到账</option>
+					<option value="通知缴款-更改至其他分站">通知缴款-更改至其他分站</option>
+					<option value="分组通知-已发短信">分组通知-已发短信</option>
+					<option value="分组通知-已电话通知">分组通知-已电话通知</option>
+					<option value="分组通知-电话未联系上">分组通知-电话未联系上</option>
+					<option value="分组通知-要求更改分组">分组通知-要求更改分组</option>
+					<option value="赛前--其他">赛前--其他</option>
+					<option value="赛中-其他">赛中-其他</option>
+					<option value="赛后-其他">赛后-其他</option>
+					<option value="不参加-需退款">不参加-需退款</option>
+					<option value="通知缴款-已通知，现场缴费">通知缴款-已通知，现场缴费</option>
+					<option value="通知缴款-已支付，球场代收">通知缴款-已支付，球场代收</option>
+					<option value="总决赛-已发入围通知">总决赛-已发入围通知</option>
+					<option value="总决赛-已回执入围通知，确认参赛">总决赛-已回执入围通知，确认参赛</option>
+					<option value="总决赛-已发航班信息">总决赛-已发航班信息</option>
+					<option value="总决赛-已回复航班信息">总决赛-已回复航班信息</option>
+					<option value="总决赛-已发邀请函">总决赛-已发邀请函</option>
+					<option value="总决赛-已回执入围通知，确认不参加">总决赛-已回执入围通知，确认不参加</option>
+					<option value="通知缴款-已短信通知，待缴">通知缴款-已短信通知，待缴</option>
+					<option value="总决赛-联系选手，未发通知">总决赛-联系选手，未发通知</option>
+					<option value="总决赛-已发送航班信息">总决赛-已发送航班信息</option>
+					<option value="总决赛-选手收到航班信息">总决赛-选手收到航班信息</option>
+				</select>
+				<script>set_select_value(document.act_form.baoming_note,"{$data.baoming_note}");</script>
+				</td>
+			</tr>
+			<tr>
+				<th>数据来源：</th>
+				<td>
+					<select name="baoming_source">
+						<option value="">请选择</option>
+						<option value="web">web</option>
+						<option value="app">app</option>
+					</select>
+					<script>set_select_value(document.act_form.baoming_source,"{$data.baoming_source}");</script>
+				</td>
+			</tr>
+			<tr>
+				<th>审核状态状态：</th>
+				<td>
+					<select name="baoming_status">
+						<option value="">请选择</option>
+						<option value="0">未审核</option>
+						<option value="1">已审核</option>
+					</select>
+					<script>set_select_value(document.act_form.baoming_status,"{$data.baoming_status}");</script>
+				</td>
+			</tr>
+		</tbody>
+		<tfoot>
+			<tr>
+				<th></th>
+				<td>
+					<input type="submit" class="btn_b"  value="添加" style="margin-right:10px;"/>
+					<input type="button" class="btn_w" onclick="javascript:history.back(-1);" value="返回" />
+				</td>
+		</tfoot>
+	</table><!--/add_table-->
+</form>
+
+<script>
+$(document).ready(function(){
+
+var event_id = $("#event_id").val();
+	if(event_id!=''){
+		fenzhan_list(event_id);
+	}
+$("#event_id").change(function(){
+	var event_id = $(this).val();
+	
+	fenzhan_list(event_id);
+});
+
+$.formValidator.initConfig({formID:"act_form",theme:'ArrowSolidBox',mode:'AutoTip',onError:function(msg){msg_error(msg)},inIframe:true});
+
+	$("#uid").formValidator({empty:true,onShow:"请输入所属用户",onFocus:"请输入所属用户",onCorrect:"输入正确"}).inputValidator({min:1,max:11,onError:"请输入所属用户"});
+		$("#event_id").formValidator({empty:true,onShow:"请输入所属赛事",onFocus:"请输入所属赛事",onCorrect:"输入正确"}).inputValidator({min:1,max:11,onError:"请输入所属赛事"});
+		$("#fenzhan_id").formValidator({empty:true,onShow:"请输入所属分站",onFocus:"请输入所属分站",onCorrect:"输入正确"}).inputValidator({min:1,max:11,onError:"请输入所属分站"});
+		$("#baoming_realname").formValidator({empty:true,onShow:"请输入姓名",onFocus:"请输入姓名",onCorrect:"输入正确"}).inputValidator({min:1,max:50,onError:"请输入姓名"});
+		$("#baoming_mobile").formValidator({empty:true,onShow:"请输入手机",onFocus:"请输入手机",onCorrect:"输入正确"}).inputValidator({min:1,max:50,onError:"请输入手机"});
+		$("#baoming_email").formValidator({empty:true,onShow:"请输入邮箱",onFocus:"请输入邮箱",onCorrect:"输入正确"}).inputValidator({min:1,max:50,onError:"请输入邮箱"});
+		$("#baoming_country").formValidator({empty:true,onShow:"请输入国家",onFocus:"请输入国家",onCorrect:"输入正确"}).inputValidator({min:1,max:50,onError:"请输入国家"});
+		$("#baoming_chadian").formValidator({empty:true,onShow:"请输入差点",onFocus:"请输入差点",onCorrect:"输入正确"}).inputValidator({min:1,max:10,onError:"请输入差点"});
+		$("#baoming_sex").formValidator({empty:true,onShow:"请输入性别",onFocus:"请输入性别",onCorrect:"输入正确"}).inputValidator({min:1,max:11,onError:"请输入性别"});
+		$("#baoming_is_waika").formValidator({empty:true,onShow:"请输入是否外卡",onFocus:"请输入是否外卡",onCorrect:"输入正确"}).inputValidator({min:1,max:10,onError:"请输入是否外卡"});
+		$("#baoming_waika_fenzhan_id").formValidator({empty:true,onShow:"请输入外卡分站ID",onFocus:"请输入外卡分站ID",onCorrect:"输入正确"}).inputValidator({min:1,max:10,onError:"请输入外卡分站ID"});
+		$("#baoming_note").formValidator({empty:true,onShow:"请输入备注",onFocus:"请输入备注",onCorrect:"输入正确"}).inputValidator({min:1,max:100,onError:"请输入备注"});
+		$("#baoming_source").formValidator({empty:true,onShow:"请输入来源",onFocus:"请输入来源",onCorrect:"输入正确"}).inputValidator({min:1,max:50,onError:"请输入来源"});
+		$("#baoming_status").formValidator({empty:true,onShow:"请输入状态",onFocus:"请输入状态",onCorrect:"输入正确"}).inputValidator({min:1,max:10,onError:"请输入状态"});
+		
+
+	$.formValidator.reloadAutoTip();
+});
+
+function reloadAutoTip()
+{
+	$.formValidator.reloadAutoTip();
+}
+function fenzhan_list(event_id)
+{
+	var event_id = event_id|{};
+		
+		if(event_id == ''){
+			return false;
+		}
+		
+	var fenzhan_id = $("#get_fenzhan_id").val();
+		$.ajax({
+		 type: 'GET',
+		 url: '/default.php?g=admin&m=baoming&a=get_fenzhan_list&event_id='+event_id,
+		 //data: ,
+		 dataType:'json',
+		 success:function(json){
+			var option_str = "<option value=''>请选择</option>";
+			if(json.status == 1){
+				var fenzhan_list = json.data;
+				for(var i in fenzhan_list){
+					var fenzhan_info = fenzhan_list[i];
+					if(fenzhan_info['fenzhan_id'] == fenzhan_id){
+						option_str += "<option value='"+fenzhan_info['fenzhan_id']+"' selected>"+fenzhan_info['fenzhan_name']+"</option>";
+					}else{
+						option_str += "<option value='"+fenzhan_info['fenzhan_id']+"'>"+fenzhan_info['fenzhan_name']+"</option>";
+					}
+					
+				}
+			}
+			$("#fenzhan_id").html('');
+			$("#fenzhan_id").append(option_str);
+		 }
+		});
+}
+</script>
+
+<!--/dialog_end-->
+</td>
+</tr>
+</table>
+
+</div>
+<include file="../public/_footer" />

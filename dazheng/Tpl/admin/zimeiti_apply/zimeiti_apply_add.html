@@ -1,0 +1,128 @@
+<include file="../public/header_dialog" />
+{$usejs}
+
+<div class="so_main">
+
+  <div class="page_tit">第一线申请管理</div>
+  <div class="tit_tab">
+	<ul>
+		<li><a class=on href="{:U('admin/zimeiti_apply/zimeiti_apply_add')}">添加申请</a></li>
+	</ul>
+  </div>
+
+<table border="0" cellspacing="0" cellpadding="0" style="width:900px;">
+<tr>
+<td>
+<!--/dialog_start-->
+
+<form method="post" id="act_form" name="act_form" action="{:U('admin/zimeiti_apply/zimeiti_apply_add_action')}" enctype="multipart/form-data">
+	<table class="add_table" border="0" cellspacing="0" cellpadding="0" >
+		<tbody>
+			<tr>
+				<th>用户UID：</th>
+				<td><input type="text" name="uid" id="uid" class="mod_input2" style="width:66px;"  value="{$data.uid}"></td>
+			</tr>
+			<tr>
+				<th>所属球场：</th>
+				<td>
+					<select name="field_uid" id="field_uid">
+						<option value="">请选择</option>
+						<volist id="vo" name="field_select">
+						<option value="{$vo.field_uid}">{$vo.field_name}</option>
+						</volist>
+					</select>
+					<script>set_select_value(document.act_form.field_uid,"{$data.field_uid}");</script>
+				</td>
+			</tr>
+			<tr>
+				<th>姓名：</th>
+				<td><input type="text" name="zimeiti_apply_realname" id="zimeiti_apply_realname" class="mod_input2" style="width:300px;"  value="{$data.zimeiti_apply_realname}"></td>
+			</tr>
+			<tr>
+				<th>手机：</th>
+				<td><input type="text" name="zimeiti_apply_mobile" id="zimeiti_apply_mobile" class="mod_input2" style="width:300px;"  value="{$data.zimeiti_apply_mobile}"></td>
+			</tr>
+			<tr>
+				<th>用户身份：</th>
+				<td>
+					<select name="zimeiti_apply_role" id="zimeiti_apply_role">
+						<option value="">请选择</option>
+						<option value="1" selected>白</option>
+						<option value="2">兰</option>
+						<option value="3">金</option>
+					</select>
+					<script>set_select_value(document.act_form.zimeiti_apply_role,"{$data.zimeiti_apply_role}");</script>
+					<!-- <input type="text" name="zimeiti_apply_role" id="zimeiti_apply_role" class="mod_input2" style="width:300px;"  value="{$data.zimeiti_apply_role}"> -->
+				</td>
+			</tr>
+			<tr>
+				<th>身份证号：</th>
+				<td><input type="text" name="zimeiti_apply_card" id="zimeiti_apply_card" class="mod_input2" style="width:300px;"  value="{$data.zimeiti_apply_card}"></td>
+			</tr>
+			
+			<tr>
+				<th>简介：</th>
+				<td>
+					<textarea type="textarea" name="zimeiti_apply_intro" id="zimeiti_apply_intro" rows="5" cols="30" ></textarea>
+				</td>
+			</tr>
+			<tr>
+				<th>审核状态：</th>
+				<td>
+					<select name="zimeiti_apply_status">
+						<option value="">请选择</option>
+						<option value="0" select>未审核</option>
+						<option value="1">通过</option>
+						<option value="2">拒绝</option>
+					</select>
+					<script>set_select_value(document.act_form.zimeiti_apply_status,"{$data.zimeiti_apply_status}");</script>
+				</td>
+			</tr>
+		</tbody>
+		<tfoot>
+			<tr>
+				<th></th>
+				<td>
+					<input type="submit" class="btn_b"  value="添加" style="margin-right:10px;"/>
+					<input type="button" class="btn_w" onclick="javascript:history.back(-1);" value="返回" />
+				</td>
+		</tfoot>
+	</table><!--/add_table-->
+</form>
+
+<script>
+$(document).ready(function(){
+$.formValidator.initConfig({formID:"act_form",theme:'ArrowSolidBox',mode:'AutoTip',onError:function(msg){msg_error(msg)},inIframe:true});
+
+	$("#uid").formValidator({empty:true,onShow:"请输入所属用户",onFocus:"请输入所属用户",onCorrect:"输入正确"}).inputValidator({min:1,max:11,onError:"请输入所属用户"});
+		$("#event_id").formValidator({empty:true,onShow:"请输入所属赛事",onFocus:"请输入所属赛事",onCorrect:"输入正确"}).inputValidator({min:1,max:11,onError:"请输入所属赛事"});
+		$("#fenzhan_id").formValidator({empty:true,onShow:"请输入所属分站",onFocus:"请输入所属分站",onCorrect:"输入正确"}).inputValidator({min:1,max:11,onError:"请输入所属分站"});
+		$("#baoming_realname").formValidator({empty:true,onShow:"请输入姓名",onFocus:"请输入姓名",onCorrect:"输入正确"}).inputValidator({min:1,max:50,onError:"请输入姓名"});
+		$("#baoming_mobile").formValidator({empty:true,onShow:"请输入手机",onFocus:"请输入手机",onCorrect:"输入正确"}).inputValidator({min:1,max:50,onError:"请输入手机"});
+		$("#baoming_email").formValidator({empty:true,onShow:"请输入邮箱",onFocus:"请输入邮箱",onCorrect:"输入正确"}).inputValidator({min:1,max:50,onError:"请输入邮箱"});
+		$("#baoming_country").formValidator({empty:true,onShow:"请输入国家",onFocus:"请输入国家",onCorrect:"输入正确"}).inputValidator({min:1,max:50,onError:"请输入国家"});
+		$("#baoming_chadian").formValidator({empty:true,onShow:"请输入差点",onFocus:"请输入差点",onCorrect:"输入正确"}).inputValidator({min:1,max:10,onError:"请输入差点"});
+		$("#baoming_sex").formValidator({empty:true,onShow:"请输入性别",onFocus:"请输入性别",onCorrect:"输入正确"}).inputValidator({min:1,max:11,onError:"请输入性别"});
+		$("#baoming_is_waika").formValidator({empty:true,onShow:"请输入是否外卡",onFocus:"请输入是否外卡",onCorrect:"输入正确"}).inputValidator({min:1,max:10,onError:"请输入是否外卡"});
+		$("#baoming_waika_fenzhan_id").formValidator({empty:true,onShow:"请输入外卡分站ID",onFocus:"请输入外卡分站ID",onCorrect:"输入正确"}).inputValidator({min:1,max:10,onError:"请输入外卡分站ID"});
+		$("#baoming_note").formValidator({empty:true,onShow:"请输入备注",onFocus:"请输入备注",onCorrect:"输入正确"}).inputValidator({min:1,max:100,onError:"请输入备注"});
+		$("#baoming_source").formValidator({empty:true,onShow:"请输入来源",onFocus:"请输入来源",onCorrect:"输入正确"}).inputValidator({min:1,max:50,onError:"请输入来源"});
+		$("#baoming_status").formValidator({empty:true,onShow:"请输入状态",onFocus:"请输入状态",onCorrect:"输入正确"}).inputValidator({min:1,max:10,onError:"请输入状态"});
+		
+
+	$.formValidator.reloadAutoTip();
+});
+
+function reloadAutoTip()
+{
+	$.formValidator.reloadAutoTip();
+}
+</script>
+
+<!--/dialog_end-->
+</td>
+</tr>
+</table>
+
+</div>
+<include file="../public/_footer" />

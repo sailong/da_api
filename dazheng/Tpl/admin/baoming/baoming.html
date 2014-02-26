@@ -1,0 +1,464 @@
+<include file="../public/_header" />
+
+<style type='css/text'>
+.list table td {
+   border-bottom: 1px solid #D5D6D7;
+   color: #222222;
+   font-size: 12px;
+   padding: 3px 0 3px 5px;
+}
+</style>
+<div class="so_main">
+
+  <div class="page_tit">报名管理   <span style="font-size:12px; color:#999; font-weight:normal; margin-left:30px;">共检索到<b style="font-size:14px; color:red;">{$total}</b>名符合条件的报名用户</span></div>
+  <include file="_tab" />
+
+  <div class="search_box">
+		<form name="search_form" action="/default.php" method="get">
+		<input type="hidden" name="g" value="admin">
+		<input type="hidden" name="m" value="baoming">
+		<input type="hidden" name="a" value="baoming">
+
+		<table border="0" cellspacing="2" cellpadding="5">
+			
+			<tr>
+			<th>关键字：</th>
+			<td><input type="text" name="k" class="search_input" style="width:120px;" value="<php> echo  get('k');</php>"></td>
+			
+			<th>赛事：</th>
+			<td>
+				<select name="event_id" id="event_id" style="width:120px;"  class="search_select">
+					<option value="">请选择</option>
+					<volist id="vo" name="event_select">
+					<option value="{$vo.event_id}">{$vo.event_name}</option>
+					</volist>
+				</select>
+				<script>set_select_value(document.search_form.event_id,"<php> echo  get("event_id");</php>");</script>
+			</td>
+			<th>所属分站：</th>
+			<td>
+				<select name="fenzhan_id" id="fenzhan_id" style="width:120px;"  class="search_select">
+					<option value=''>请选择</option>
+				</select>
+				<input type="hidden" name="get_fenzhan_id" id="get_fenzhan_id" class="search_input" style="width:120px;" value="<php> echo  get('fenzhan_id');</php>">
+				<!-- <script>set_select_value(document.search_form.fenzhan_id,"<php> echo  get("fenzhan_id");</php>");</script> -->
+			</td>
+			<th>年份：</th>
+			<td style="padding:5px 0px;">
+				<select name="baoming_year" style="width:120px;"  class="search_select">
+					<option value="">请选择</option>
+					<option value="2014">2014</option>
+					<option value="2013">2013</option>
+					<option value="2012">2012</option>
+					<option value="2011">2011</option>
+					<option value="2010">2010</option>
+				</select>
+				<script>set_select_value(document.search_form.baoming_year,"<php> echo  get("baoming_year");</php>");</script>
+			</td>
+			
+			</tr>
+			<tr>
+			
+			<th>支付方式：</th>
+			<td style="padding:5px 0px;">
+				<select name="baoming_pay_type" style="width:120px;"  class="search_select">
+					<option value="">请选择</option>
+					<option value="outline">线下支付</option>
+					<option value="web">网银支付</option>
+				</select>
+				<script>set_select_value(document.search_form.baoming_pay_type,"<php> echo  get("baoming_pay_type");</php>");</script>
+			</td>
+			
+			<th>支付状态：</th>
+			<td style="padding:5px 0px;">
+				<select name="baoming_pay_status" style="width:120px;"  class="search_select">
+					<option value="">请选择</option>
+					<option value="0">未支付</option>
+					<option value="1">已支付</option>
+
+				</select>
+				<script>set_select_value(document.search_form.baoming_pay_status,"<php> echo  get("baoming_pay_status");</php>");</script>
+			</td>
+			
+			<th>审核状态：</th>
+			<td style="padding:5px 0px;">
+				<select name="baoming_status" style="width:120px;"  class="search_select">
+					<option value="">请选择</option>
+					<option value="0">未审核</option>
+					<option value="1">已审核</option>
+
+				</select>
+				<script>set_select_value(document.search_form.baoming_status,"<php> echo  get("baoming_status");</php>");</script>
+			</td>
+			
+			<th>比赛状态：</th>
+			<td style="padding:5px 0px;">
+				<select name="baoming_event_status" style="width:120px;"  class="search_select">
+					<option value="">请选择</option>
+					<option value="1">已经比赛</option>
+					<option value="0">还未比赛</option>
+
+				</select>
+				<script>set_select_value(document.search_form.baoming_event_status,"<php> echo  get("baoming_event_status");</php>");</script>
+			</td>
+			
+			
+			</tr>
+			<tr>
+			
+			<th>车主类型：</th>
+			<td>
+				<select name="baoming_is_huang" style="width:120px;"  class="search_select">
+					<option value="">选择车型</option>
+					<option value="1">皇冠车主</option>
+					<option value="0">非皇冠车主</option>
+
+				</select>
+				<script>set_select_value(document.search_form.baoming_is_huang,"<php> echo  get("baoming_is_huang");</php>");</script>
+			</td>
+			
+			<!--
+			<th>类型：</th>
+			<td>
+				<select name="type" style="width:120px;"  class="search_select">
+					<option value="">请选择</option>
+					<option value="1">1</option>
+				</select>
+				<script>set_select_value(document.search_form.course_type,"<php> echo  get("type");</php>");</script>
+			</td>
+			-->
+			
+			
+			<th>报名方式：</th>
+			<td style="padding:5px 0px;">
+				<select name="baoming_source" style="width:120px;"  class="search_select">
+					<option value="">请选择</option>
+					<option value="web">网站报名</option>
+					<option value="app">客户端报名</option>
+					<option value="field">球场报名</option>
+					<option value="jingxiaodian">经销店报名</option>
+
+				</select>
+				<script>set_select_value(document.search_form.baoming_source,"<php> echo  get("baoming_source");</php>");</script>
+			</td>
+			
+			
+			<th>是否外卡：</th>
+			<td style="padding:5px 0px;">
+				<select name="baoming_is_waika" style="width:120px;"  class="search_select">
+					<option value="">请选择</option>
+					<option value="Y">是</option>
+					<option value="N">否</option>
+				</select>
+				<script>set_select_value(document.search_form.baoming_is_waika,"<php> echo  get("baoming_is_waika");</php>");</script>
+			</td>
+			
+			
+			</tr>
+			<tr>
+			
+			<th>备注类型：</th>
+			<td style="padding:5px 0px;" colspan="3">
+				<select name="baoming_note" style="width:300px;"  class="search_select">
+					<option value=''> -请选择备注类型- </option>
+					<option value=''>未填写备注</option>
+					<option value="客户信息审核-未审核">客户信息审核-未审核</option>
+					<option value="客户信息审核-已审核">客户信息审核-已审核</option>
+					<option value="客户信息审核-未通过">客户信息审核-未通过</option>
+					<option value="客户信息审核-未通知">客户信息审核-未通知</option>
+					
+					<option value="通知缴款-未通知">通知缴款-未通知</option>
+					<option value="通知缴款-已通知待缴">通知缴款-已通知待缴</option>
+					<option value="通知缴款-已通知不参加">通知缴款-已通知不参加</option>
+					<option value="通知缴款-已支付待核实">通知缴款-已支付待核实</option>
+					<option value="通知缴款-已支付到账">通知缴款-已支付到账</option>
+					<option value="通知缴款-更改至其他分站">通知缴款-更改至其他分站</option>
+					
+					<option value="分组通知-已发短信">分组通知-已发短信</option>
+					<option value="分组通知-已短信/电话通知">分组通知-已短信/电话通知</option>
+					<option value="分组通知-未短信/电话确认">分组通知-未短信/电话确认</option>
+					<option value="分组通知-电话未联系上">分组通知-电话未联系上</option>
+					<option value="分组通知-要求更改分组">分组通知-要求更改分组</option>
+					
+					<option value="客户不参加需退费">客户不参加需退费</option>
+					<option value="已通知-现场缴费">已通知-现场缴费</option>
+					<option value="已支付-球场代收">已支付-球场代收</option>
+					
+					<option value="总决赛-已入围">总决赛-已入围</option>
+					<option value="总决赛-已发入围通知">总决赛-已发入围通知</option>
+					<option value="总决赛-已回复入围通知<确认参赛>">总决赛-已回复入围通知<确认参赛></option>
+					<option value="总决赛-已回复入围通知<不参加>">总决赛-已回复入围通知<不参加></option>
+					
+					<option value="总决赛-航班信息已发">总决赛-航班信息已发</option>
+					<option value="总决赛-航班信息已回复">总决赛-航班信息已回复</option>
+					
+					<option value="外卡赛-已审核">外卡赛-已审核</option>
+					<option value="外卡赛-已通知缴费<待缴>">外卡赛-已通知缴费<待缴></option>
+					<option value="外卡赛-已支付一次<已确认>">外卡赛-已支付一次<已确认></option>
+					<option value="外卡赛-已支付二次<已确认>">外卡赛-已支付二次<已确认></option>
+					<option value="外卡赛-已支付三次<已确认>">外卡赛-已支付三次<已确认></option>
+					<option value="外卡赛-已支付N次<已确认>">外卡赛-已支付N次<已确认></option>
+					<option value="外卡赛-比赛完成">外卡赛-比赛完成</option>
+					<option value="外卡赛-已晋级">外卡赛-已晋级</option>
+					<option value="球场报名">球场报名</option>
+					<option value="经销商报名">经销商报名</option>
+					<option value="其他">其他</option>
+				</select>
+				<script>set_select_value(document.search_form.baoming_note,"<php> echo  get("baoming_note");</php>");</script>
+			</td>
+			
+			
+			<th>开始时间：</th>
+			<td colspan='3'>
+				<input type="text" name="starttime" class="search_input_date" style="width:120px;" value="<php> echo  get('starttime');</php>" onFocus="WdatePicker({isShowClear:false,readOnly:true})"> 至 
+				<input type="text" name="endtime" class="search_input_date" style="width:120px;" value="<php> echo  get('endtime');</php>" onFocus="WdatePicker({isShowClear:false,readOnly:true})">
+			</td>
+			
+			</tr>
+			<tr>
+			
+			<th>每页显示：</th>
+			<td style="padding:5px 0px;">
+				<select name="page_size" style="width:120px;"  class="search_select">
+					<option value="">请选择</option>
+					<option value="20" selected>20</option>
+					<option value="40">40</option>
+					<option value="80">80</option>
+					<option value="150">150</option>
+					<option value="200">200</option>
+					<option value="500">500</option>
+				</select>
+				条
+				<script>set_select_value(document.search_form.page_size,"<php> if(get('page_size')){ echo  get("page_size"); }else{ echo "20";}</php>");</script>
+			</td>
+			
+			
+			<td class="btn" colspan='2'>
+				<input type="submit" value="搜索" class="btn_b_small" style="margin-right:8px;" >
+				<input type="button" value="查看全部" class="btn_b_small" onclick="javascript:location='{:U('admin/baoming/baoming',array('state'=>get('state')))}';">
+			</td>
+			
+			<td class="btn">
+				<input type="submit" value="导出excel" class="btn_b_small" name="export">
+				 <!-- onclick="javascript:location='{:U('admin/baoming/excel_import',array('state'=>get('state')))}';" -->
+			</td>
+			</tr>
+		</table>
+	</form>
+  </div><!--/search_box-->
+
+  <!--------list -------->
+  <div class="Toolbar_inbox">
+  	<div class="page right">{$pages}</div>
+
+	<a href="{:U('admin/baoming/baoming_add')}" class="btn_a"><span>添加报名</span></a>
+	<a href="javascript:void(0);" class="btn_a"  onclick="mod_delete_batch('{:U('admin/baoming/baoming_delete_action')}','mod_table');"><span>批量删除</span></a>
+	<a href="javascript:void(0);" style="color:red;" class="btn_a"  onclick="mod_batch_dialog('{:U('admin/baoming/batch_upd_event_status',array('event_id'=>get('event_id')))}','mod_table','批量修改比赛状态');"><span>批量修改比赛状态</span></a>
+	<div class="clear"></div>
+  </div>
+  <div class="list">
+	<php>if($total>0){</php>
+	  <table width="100%" id="mod_table" border="0" cellspacing="0" cellpadding="0">
+	  <tr>
+		<th style="width:30px;">
+			<input type="checkbox" id="checkbox_handle" onclick="select_all(this,'mod_table','checkbox')" value="0">
+			<label for="checkbox"></label>
+		</th>
+		<!-- <th class="line_l">所属用户</th>
+		<th class="line_l">所属赛事</th>
+		<th class="line_l">所属分站</th> -->
+		<th class="line_l">姓名</th>
+		<th class="line_l">手机号</th>
+		<th class="line_l">差点</th>
+		<th class="line_l">身份证号</th>
+		<th class="line_l">所属赛事</th>
+		<!-- <th class="line_l">邮箱</th> -->
+		<!-- <th class="line_l">国家</th> -->
+		<th class="line_l">支付状态</th>
+		<!-- <th class="line_l">性别</th> -->
+		<!-- <th class="line_l">是否外卡</th> -->
+		<!-- <th class="line_l">外卡分站ID</th> -->
+		<!-- <th class="line_l">备注</th> -->
+		<!-- <th class="line_l">来源</th> -->
+		<th class="line_l">审核状态</th>
+		<th class="line_l">报名方式</th>
+		<!-- <th class="line_l">添加时间</th> -->
+		<th class="line_l">是否外卡</th>
+		<th class="line_l">操作</th>
+	</tr>
+	<volist id="vo" name="list">
+	<tr overstyle="on"  id=ids_{$vo["baoming_id"]}>
+		<td><input type="checkbox" name="checkbox" onclick="select_one(this)" value="{$vo.baoming_id}" ></td>
+		<!-- <td>{$vo.uid}</th> -->
+			<!--  --><!-- <a href="{:U('admin/baoming/baoming_detail', array('baoming_id'=>$vo['baoming_id']))}'"></a> -->
+			<!-- <td>{$vo.fenzhan_name}</td> -->
+			<td>{$vo.baoming_realname}</td>
+			<td>{$vo.baoming_mobile}</td>
+			<td>{$vo.baoming_chadian}</td>
+			<td>{$vo.baoming_card}</td>
+			<td>{$vo.event_name}</td>
+			<!-- <td>{$vo.baoming_email}</td>
+			<td>{$vo.baoming_country}</td> -->
+			<td id="baoming_pay_status"><php>if($vo['baoming_pay_status']=='1'){echo '<font style="color:green;">已支付</font>';}else{echo '<font style="color:red;">未支付</font>';}</php></td>
+			<!-- <td>{$vo.baoming_sex}</td>
+			<td>{$vo.baoming_waika_fenzhan_id}</td>
+			<td>{$vo.baoming_note}</td>
+			<td>{$vo.baoming_source}</td> -->
+			<td id="baoming_status">
+			<php>if($vo['baoming_status']=='1'){echo '<font style="color:green;">已审核</font>';}else{echo '<font style="color:red;">否</font>';}</php></td>
+			<!-- <td>{$vo.baoming_addtime|format_to_time}</td> -->
+			<td><php>if($vo['baoming_source']=='web'){echo '网站报名';}elseif($vo['baoming_source']=='field'){echo '球场报名';}elseif($vo['baoming_source']=='app'){echo '客户端报名';}elseif($vo['baoming_source']=='jingxiaodian'){echo '经销店报名';}</php>
+			</td>
+			<td><php>if($vo['baoming_is_waika']=='Y'){echo '<font style="color:green;">是</font>';}else{echo '<font style="color:red;">否</font>';}</php></td>
+		<td>
+			<a href="?g=admin&m=baoming&a=baoming_edit_{$vo['event_id']}&baoming_id={$vo['baoming_id']}">编辑</a> | 
+			<a href="javascript:;" class="rz" field="baoming_status" value="<php>if($vo['baoming_status']=='1'){echo 0;}else{echo 1;}</php>">
+				<php>if($vo['baoming_status']=='1'){echo '取消认证';}else{echo '认证';}</php>
+			</a> | 
+			<a href="javascript:;" class="zf" field="baoming_pay_status" value="<php>if($vo['baoming_pay_status']=='1'){echo 0;}else{echo 1;}</php>">
+				<php>if($vo['baoming_pay_status']=='1'){echo '取消支付';}else{echo '支付';}</php>
+			</a> | 
+			<a href="javascript:;" onclick="mod_dialog('添加备注','{:U('admin/baoming/baoming_note_edit', array('baoming_id'=>$vo['baoming_id']))}')">添加备注</a> | 
+			<a href="javascript:;" onclick="mod_dialog('查看备注','{:U('admin/baoming/baoming_note_detail', array('baoming_id'=>$vo['baoming_id']))}')">查看备注</a> 
+			<input type="hidden" name="baoming_id" id="baoming_id" value="{$vo.baoming_id}" >
+			
+			<!-- <a href="javascript:void(0);" onclick="mod_delete_one('{:U('admin/baoming/baoming_delete_action')}','{$vo['baoming_id']}');">删除</a> -->
+		</td>
+	</tr>
+	</volist>
+    </table>
+	  <php>}else{</php>
+			<div class="no_data">
+				<img src="/skin/images/no_data.gif" align="absmiddle"> <span>没有报名... </span>
+			</div>
+	 <php>}</php>
+  </div>
+
+  <div class="Toolbar_inbox">
+	<div class="page right">{$pages}</div>
+
+	<a href="{:U('admin/baoming/baoming_add')}" class="btn_a"><span>添加报名</span></a>
+	<a href="javascript:void(0);" class="btn_a"  onclick="mod_delete_batch('{:U('admin/baoming/baoming_delete_action')}','mod_table');"><span>批量删除</span></a>
+	<a href="javascript:void(0);" style="color:red;" class="btn_a"  onclick="mod_batch_dialog('{:U('admin/baoming/batch_upd_event_status',array('event_id'=>get('event_id')))}','mod_table','批量修改比赛状态');"><span>批量修改比赛状态</span></a>
+
+	<div class="clear"></div>
+  </div>
+</div>
+
+<script>
+	$(document).ready(function(){
+		var event_id = $("#event_id").val();
+		if(event_id!=''){
+			fenzhan_list(event_id);
+		}
+		$("tr[overstyle='on']").hover(
+		  function ()
+		  {
+		    $(this).addClass("bg_hover");
+		  },
+		  function (){
+		    $(this).removeClass("bg_hover");
+		  }
+		);
+		$("#event_id").change(function(){
+			var event_id = $(this).val();
+			
+			fenzhan_list(event_id);
+		});
+		$(".rz").click(function(){
+			var value=$(this).attr('value');
+			var parent_obj = $(this).parents('tr');
+			var rs = ajax_upd_data(parent_obj,'baoming_status',value);
+			if(rs){
+				if(value==1){
+					$(this).attr('value','0')
+					
+					$("#baoming_status",parent_obj).html("<font style='color:green;'>是</font>");
+					$(this).html('取消认证');
+				}
+				else{
+					$(this).attr('value','1')
+					$("#baoming_status",parent_obj).html("<font style='color:red;'>否</font>");
+					$(this).html('认证');
+				}
+			}
+			
+		});
+		$(".zf").click(function(){
+			var value=$(this).attr('value');
+			var parent_obj = $(this).parents('tr');
+			var rs = ajax_upd_data(parent_obj,'baoming_pay_status',value);
+			if(rs){
+				if(value==1){
+					$(this).attr('value','0')
+					
+					$("#baoming_pay_status",parent_obj).html("<font style='color:green;'>已支付</font>");
+					$(this).html('取消支付');
+				}
+				else{
+					$(this).attr('value','1')
+					$("#baoming_pay_status",parent_obj).html("<font style='color:red;'>未支付</font>");
+					$(this).html('支付');
+				}
+			}
+			//ajax_upd_data($(this).parents('tr'),)
+		});
+	});
+function fenzhan_list(event_id)
+{
+	var event_id = event_id|{};
+		
+		if(event_id == ''){
+			return false;
+		}
+		
+	var fenzhan_id = $("#get_fenzhan_id").val();
+		$.ajax({
+		 type: 'GET',
+		 url: '/default.php?g=admin&m=baoming&a=get_fenzhan_list&event_id='+event_id,
+		 //data: ,
+		 dataType:'json',
+		 async: false,
+		 success:function(json){
+			var option_str = "<option value=''>请选择</option>";
+			if(json.status == 1){
+				var fenzhan_list = json.data;
+				for(var i in fenzhan_list){
+					var fenzhan_info = fenzhan_list[i];
+					if(fenzhan_info['fenzhan_id'] == fenzhan_id){
+						option_str += "<option value='"+fenzhan_info['fenzhan_id']+"' selected>"+fenzhan_info['fenzhan_name']+"</option>";
+					}else{
+						option_str += "<option value='"+fenzhan_info['fenzhan_id']+"'>"+fenzhan_info['fenzhan_name']+"</option>";
+					}
+					
+				}
+			}
+			$("#fenzhan_id").html('');
+			$("#fenzhan_id").append(option_str);
+		 }
+		});
+}
+function ajax_upd_data(obj,field,value){
+	var baoming_id = $("#baoming_id",obj).val();
+	var rs_val = false;
+	$.ajax({
+		 type: 'GET',
+		 url: '/default.php?g=admin&m=baoming&a=upd_data_by_ajax&baoming_id='+baoming_id+'&field='+field+'&value='+value,
+		 //data: ,
+		 dataType:'json',
+		  async: false,
+		 success:function(json){
+			if(json.status == 1){
+				rs_val = true;
+			}else{
+				rs_val = false;
+			}
+		 }
+		});
+	return rs_val;
+}
+
+</script>
+
+
+<include file="../public/_footer" />

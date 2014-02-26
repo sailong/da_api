@@ -1,0 +1,204 @@
+<include file="../public/header_dialog" />
+<div class="page_tit">广告</div>
+  <div class="tit_tab">
+	<ul>
+		<li><a class=on href="#">添加广告</a></li>
+	</ul>
+  </div>
+
+{$usejs}
+
+<table border="0" cellspacing="0" cellpadding="0" style="width:900px;">
+<tr>
+<td>
+<!--/dialog_start-->
+
+<form method="post" id="act_form" name="act_form" action="{:U('admin/ad/ad_add_action')}" enctype="multipart/form-data">
+	<table class="add_table" border="0" cellspacing="0" cellpadding="0" >
+		<tbody>
+				<tr>
+					<th><font color="red">*</font>广告名称：</th>
+					<td>
+						<input type="text" name="ad_name" id="ad_name" class="mod_input2" style="width:300px;" value="{$data.ad_name}">
+						<span class="help_info">(仅用于区分、标识广告，没有实际作用)</span>
+					</td>
+				</tr>
+				<tr>
+					<th><font color="red">*</font>投放平台：</th>
+					<td>
+						<select name="ad_apptype" id="ad_apptype" class="mod_select">
+							<option value="">请选择</option>
+							<option value="all">全部</option>
+							<option value="android">Android</option>
+							<option value="ios">IOS</option>
+						</select>
+						<script>set_select_value(document.act_form.ad_apptype,"all");</script>
+						<span class="help_info">(部分广告仅在android/ios显示，就在这里设置)</span>
+					</td>
+				</tr>
+				
+				<!-- <tr>
+					<th><font color="red">*</font>广告类型：</th>
+					<td>
+						<select name="ad_type" id="ad_type" class="mod_select">
+							<option value="">请选择</option>
+							<option value="pic">图片</option>
+							<option value="flash">FLASH</option>
+							<option value="video">视频</option>
+						</select>
+						<script>set_select_value(document.act_form.ad_type,"{$data.ad_type}");</script>
+					</td>
+				</tr> -->
+				
+				<tr>
+					<th><font color="red">*</font>客户端类型：</th>
+					<td>
+						<select name="ad_app" id="ad_app" class="mod_select">
+							<option value="">请选择</option>
+							<option value="bwvip_app">大正手机客户端</option>
+							<option value="field_app">球场客户端</option>
+							<option value="bwvip">大正官网</option>
+						</select>
+						<script>set_select_value(document.act_form.ad_app,"bwvip_app");</script>
+					</td>
+				</tr>
+				<tr>
+					<th><font color="red">*</font>所属客户端：</th>
+					<td>
+						<select name="field_uid" id="field_uid" class="mod_select">
+							<option value="">请选择</option>
+							{$app_list}
+						</select>
+						<script>set_select_value(document.act_form.field_uid,"{$data.field_uid}");</script>
+					</td>
+				</tr>
+				<tr>
+					<th><font color="red">*</font>广告位置：</th>
+					<td>
+						<select name="ad_page" id="ad_page" class="mod_select">
+							<option value="">请选择</option>
+							{$page_list}
+						</select>
+						<script>set_select_value(document.act_form.ad_page,"{$data.ad_page}");</script>
+					</td>
+				</tr>
+				<tr>
+					<th><font color="red">*</font>所属赛事：</th>
+					<td>
+						<select name="event_id">
+							<option value="">请选择</option>
+							<volist id="vo" name="event">
+							<option value="{$vo.event_id}">{$vo.event_name}</option>
+							</volist>
+						</select>
+						<script>set_select_value(document.act_form.event_id,'{$data.event_id}');</script>
+						(门票申请的赞助商广告，需要设置所属赛事)
+					</td>
+				</tr>
+				
+				<tr>
+					<th><font color="red">*</font>广告图片：</th>
+					<td>
+						
+						<input type="file" name="ad_file" id="ad_file"  class="mod_input" style="width:300px;">
+						<br />
+						<span class="help_info">(广告图片默认传1张，也可以传3张)</span>
+					</td>
+				</tr>
+
+				<tr>
+					<th><font color="red">*</font>广告图片(IPHONE4)：</th>
+					<td>
+						
+						<input type="file" name="ad_file_iphone4" id="ad_file_iphone4"  class="mod_input" style="width:300px;">
+						<br />
+						<span class="help_info">(仅iphone4显示的图片,两张iphone图要同时上传)</span>
+					</td>
+				</tr>
+				<tr>
+					<th><font color="red">*</font>广告图片(IPHONE5)：</th>
+					<td>
+						
+						<input type="file" name="ad_file_iphone5" id="ad_file_iphone5"  class="mod_input" style="width:300px;">
+						<br />
+						<span class="help_info">(仅iphone5显示的图片,两张iphone图要同时上传)</span>
+					</td>
+				</tr>
+				
+				
+				<tr>
+					<th><font color="red">*</font>跳转页面：</th>
+					<td>
+						<select name="ad_action" id="ad_action" class="mod_select">
+							<option value="">请选择</option>
+							{$action_list}
+						</select>
+						<script>set_select_value(document.act_form.ad_action,"{$data.ad_action}");</script>
+					</td>
+				</tr>
+				<tr>
+					<th><font color="red">*</font>跳转值：</th>
+					<td><input type="text" name="ad_action_id" id="ad_action_id" class="mod_input2" style="width:300px;" value="{$data.ad_action_id}"><span>(WAP页时此处为跳转地址)</span></td>
+				</tr>
+				<tr>
+					<th><font color="red"></font>跳转信息：</th>
+					<td><input type="text" name="ad_action_text" id="ad_action_text" class="mod_input2" style="width:300px;" value="{$data.ad_action_text}"></td>
+				</tr>
+				
+				
+				<tr>
+					<th><font color="red"></font>广告宽度：</th>
+					<td><input type="text" name="ad_width" id="ad_width" class="mod_input2" style="width:80px;" value="{$data.ad_width}" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  &nbsp;&nbsp;&nbsp;  
+						<font color="red"></font>高度：<input type="text" name="ad_height" id="ad_height" class="mod_input2" style="width:80px;" value="{$data.ad_height}">
+					</td>
+				</tr>
+				
+				<tr>
+					<th><font color="red"></font>广告链接：</th>
+					<td><input type="text" name="ad_url" id="ad_url" class="mod_input2" style="width:300px;" value="{$data.ad_url}"></td>
+				</tr>
+				
+				<tr>
+					<th><font color="red">*</font>排序：</th>
+					<td><input type="text" name="ad_sort" id="ad_sort" class="mod_input2" style="width:100px;" value="{$data.ad_sort}">
+					<span class="help_info">(数值越大，排序越靠前)</span>
+					</td>
+				</tr>
+
+			
+		</tbody>
+		<tfoot>
+			<tr>
+				<th></th>
+				<td>
+					<input type="submit" class="btn_b"  value="添加" style="margin-right:10px;"/>
+					<input type="button" class="btn_w" onclick="javascript:history.back(-1);" value="取消" />
+				</td>
+		</tfoot>
+	</table><!--/add_table-->
+</form>
+
+<script>
+$(document).ready(function(){
+$.formValidator.initConfig({formID:"act_form",theme:'ArrowSolidBox',mode:'AutoTip',onError:function(msg){msg_error(msg)},inIframe:true});
+
+	$("#ad_name").formValidator({onShow:"请输入广告名称",onFocus:"请输入广告名称",onCorrect:"输入正确"}).inputValidator({min:1,max:50,onError:"请输入广告名称"});
+	$("#ad_app").formValidator({onShow:"请输入广告分类",onFocus:"请输入广告分类",onCorrect:"输入正确"}).inputValidator({min:1,max:50,onError:"请输入广告分类"});
+	
+	$("#ad_file").formValidator({onShow:"请输入文件地址",onFocus:"请输入文件地址",onCorrect:"输入正确"}).inputValidator({min:1,max:300,onError:"请输入文件地址"});
+	$.formValidator.reloadAutoTip();
+});
+
+function reloadAutoTip()
+{
+	$.formValidator.reloadAutoTip();
+}
+
+</script>
+
+<!--/dialog_end-->
+</td>
+</tr>
+</table>
+
+<include file="../public/_footer" />

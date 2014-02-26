@@ -255,12 +255,21 @@ class userAction extends AdminAuthAction
 			$res3=M()->execute("update jishigou_members set $updj where uid=".$uid." ");   
 			if($res!=false||$res1!=false||$res2!=false||$res3!=false)
 			{ 
-				
-					$this->success("修改成功",U('admin/user/user',array('event_id'=>post('event_id'))));
+					if(post('is_zimeiti')=='Y'){
+						$this->success("修改成功",U('admin/user/user_zimeiti',array('event_id'=>post('event_id'),'is_zimeiti'=>post('is_zimeiti'))));
+					}else{
+						$this->success("修改成功",U('admin/user/user',array('event_id'=>post('event_id'),'is_zimeiti'=>post('is_zimeiti'))));
+					}
+					
 			}
 			else
 			{ 
-					$this->success("修改失败",U('admin/user/user',array('event_id'=>post('event_id'))));
+					if(post('is_zimeiti')=='Y'){
+						$this->success("修改失败",U('admin/user/user_zimeiti',array('event_id'=>post('event_id'),'is_zimeiti'=>post('is_zimeiti'))));
+					}else{
+						$this->success("修改失败",U('admin/user/user',array('event_id'=>post('event_id'),'is_zimeiti'=>post('is_zimeiti'))));
+					}
+					
 			}
 		}
 		else
