@@ -4,9 +4,9 @@
 function is_mobile($mobile)
 {
 	preg_match_all("/1[3|5|8][0-9]{9}|15[0|1|2|3|5|6|7|8|9]\d{8}|18[0|5|6|7|8|9]\d{8}/",$mobile, $if_mobile);
-	if(!empty($if_mobile[0]))
+	if(!empty($if_mobile[0][0]))
 	{
-		return $if_mobile[0];
+		return $if_mobile[0][0];
 	}
 	else
 	{
