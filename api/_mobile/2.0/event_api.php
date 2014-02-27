@@ -81,7 +81,7 @@ if($ac=="select_event")
 	else
 	{
 		//$where =" and event_year='".date("Y",time())."' ";
-		$where =" and event_year='2013' ";
+		$where =" and event_year='2014' ";
 	}
 
 	$list3=DB::query("select event_id,event_name,event_uid,event_is_zhutui,event_zhutui_pic,event_content,event_url,event_type,event_logo,event_video_url,event_audio_url,event_city,event_year from tbl_event where event_is_zhutui='Y' and field_uid=0  ".$where."  order by event_sort desc limit 1 ");
@@ -210,7 +210,7 @@ if($ac=="apply_ing")
 {
 	$login_uid=$_G['gp_login_uid'];
 
-	$list=DB::query("select event_id,field_uid,event_name,event_id as event_uid,event_is_zhutui,event_content,event_url,event_type,event_logo,event_video_url,event_audio_url,event_city from tbl_event where event_baoming_starttime<=".time()." and event_baoming_endtime>=".time()." and (event_viewtype='B' or (field_uid=0) or event_viewtype='S') and event_is_baoming='Y' order by event_baoming_starttime desc  limit 100 ");
+	$list=DB::query("select event_id,field_uid,event_name,event_id as event_uid,event_is_zhutui,event_content,event_url,event_type,event_logo,event_video_url,event_audio_url,event_city,event_baoming_starttime,event_baoming_endtime from tbl_event where event_baoming_starttime<=".time()." and event_baoming_endtime>=".time()." and (event_viewtype='B' or (field_uid=0) or event_viewtype='S') and event_is_baoming='Y' order by event_baoming_starttime desc  limit 100 ");
 	while($row = DB::fetch($list))
 	{
 		if($login_uid)
@@ -291,7 +291,18 @@ if($ac=="apply_ing")
 		//$row['event_pic']=$site_url."/uc_server/avatar.php?uid=".$row['event_uid']."&size=middle";
 		$row['event_pic']=$site_url."/".$row['event_logo'];
 		$row['uid']=$row['event_uid'];
-		$row['event_content']=msubstr(cutstr_html($row['event_content']),0,30);
+		
+		if(date('m',$row['event_baoming_starttime']) == date('m',$row['event_baoming_endtime']) )
+		{
+			$row['event_content']=date('Y年m月d',$row['event_baoming_starttime'])." ~ ".date('d日',$row['event_baoming_endtime']);
+		}
+		else
+		{
+			$row['event_content']=date('Y年m月d日',$row['event_baoming_starttime'])." ~ ".date('m月d日',$row['event_baoming_endtime']);
+		}
+		
+		
+		//$row['event_content']=msubstr(cutstr_html($row['event_content']),0,30);
 		$list_data[]=$row;
 	}
 
@@ -1159,13 +1170,13 @@ if($ac=="event_baoming_action")
 	$event_id=$_G['gp_event_id'];
 	$uid=$_G['gp_uid'];
 
-	if($event_id==25 || $event_id==65)
+	//2013城市挑战赛
+	if($event_id==25)
 	{
 	
 		$fenzhan=array_search(urldecode($_G['gp_event_apply_fenzhan']),$hot_2013district);
 		
 		//api_json_result(1,1,"该比赛已结束，不能报名",$data);
-		
 		$bm=DB::fetch_first("select bm_id from pre_home_dazbm where uid='".$_G['gp_uid']."' and hot_district='".$fenzhan."' and year='2014' ");
 		if(!$bm['bm_id'])
 		{
@@ -1215,6 +1226,44 @@ if($ac=="event_baoming_action")
 	}
 	
 	
+	//2014城市挑战赛
+	if($event_id==65)
+	{
+		$baoming_info=DB::fetch_first("select baoming_id from tbl_baoming where uid='".$_G['gp_uid']."' and event_id='".$event_id."' ");
+		if(!$baoming_info['baoming_id'])
+		{
+			if(urldecode($_G['gp_baoming_is_zidai_qiutong'])=="是")
+			{
+				$baoming_is_zidai_qiutong='Y';
+			}
+			else
+			{
+				$baoming_is_zidai_qiutong='N';
+			}
+			
+			/* $fenzhan_names=implode(",",$_POST['fenzhan_names']);
+			$list=DB::query("select fenzhan_id from tbl_fenzhan where fenzhan_name in('".explode("','",$fenzhan_names)."')");
+			$fenzhan_ids = '';
+			while($row=DB::fetch($list))
+			{
+				$fenzhan_ids .= ','.$row['fenzhan_id'];
+			}
+			unset($list); */
+			//$fenzhan_ids = explode(',',$fenzhan_ids);
+			
+			//$fenzhan_ids=implode(",",$_POST['fenzhan_ids']);
+			$fenzhan_ids = $_G['gp_fenzhan_names'];
+			$sql="insert into tbl_baoming (event_id,uid,baoming_realname,baoming_sex,baoming_is_huang,baoming_chadian,fenzhan_ids,baoming_source,baoming_addtime) values('".$event_id."','".$uid."','".urldecode($_G['gp_baoming_realname'])."','".urldecode($_G['gp_baoming_sex'])."','".$_G['baoming_is_huang']."','".$_G['gp_baoming_chadian']."','".$fenzhan_ids."','app','".time()."') ";
+			DB::query($sql);
+			
+			api_json_result(1,0,"您的报名信息已受理，详询4008109966。",$data);
+
+		}
+		else
+		{
+			api_json_result(1,1,"不能重复报名",$data);
+		}
+	}
 	
 	//亚运会
 	if($event_id==66)
@@ -1222,9 +1271,31 @@ if($ac=="event_baoming_action")
 		$baoming_info=DB::fetch_first("select baoming_id from tbl_baoming where uid='".$_G['gp_uid']."' and event_id='".$event_id."' ");
 		if(!$baoming_info['baoming_id'])
 		{
-			DB::query("insert into tbl_baoming (event_id,uid,baoming_realname,baoming_age,baoming_card,baoming_mobile,baoming_email,baoming_chadian,baoming_addtime) values('".$event_id."','".$uid."','".$_G['gp_baoming_realname']."','".$_G['gp_baoming_age']."','".$_G['gp_baoming_card']."','".$_G['gp_baoming_mobile']."','".$_G['gp_baoming_email']."','".$_G['gp_baoming_chadian']."','".time()."') ");
+			if(urldecode($_G['gp_baoming_is_zidai_qiutong'])=="是")
+			{
+				$baoming_is_zidai_qiutong='Y';
+			}
+			else
+			{
+				$baoming_is_zidai_qiutong='N';
+			}
 			
-			api_json_result(1,0,"报名成功",$data);
+			
+			
+			$fenzhan_names = urldecode($_G['gp_fenzhan_names']);//$fenzhan_names=implode(",",$_POST['fenzhan_names']);//
+			$list=DB::query("select fenzhan_id from tbl_fenzhan where fenzhan_name in('".explode("','",(array)$fenzhan_names)."')");
+			$fenzhan_ids = '';
+			while($row=DB::fetch($list))
+			{
+				$fenzhan_ids[] = $row['fenzhan_id'];
+			}
+			unset($list);
+			$fenzhan_ids = explode(',',(array)$fenzhan_ids);
+			
+			$sql="insert into tbl_baoming (event_id,uid,baoming_realname,baoming_sex,baoming_card,baoming_mobile,baoming_email,baoming_chadian,baoming_zige,baoming_is_zidai_qiutong,fenzhan_ids,baoming_source,baoming_addtime) values('".$event_id."','".$uid."','".urldecode($_G['gp_baoming_realname'])."','".urldecode($_G['gp_baoming_sex'])."','".$_G['gp_baoming_card']."','".$_G['gp_baoming_mobile']."','".urldecode($_G['gp_baoming_email'])."','".$_G['gp_baoming_chadian']."','".urldecode($_G['gp_baoming_zige'])."','".$baoming_is_zidai_qiutong."','".$fenzhan_ids."','app','".time()."') ";
+			DB::query($sql);
+			
+			api_json_result(1,0,"您的报名信息已受理，详询4008109966。",$data);
 		
 		}
 		else

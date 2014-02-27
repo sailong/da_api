@@ -1,5 +1,20 @@
 <?php
 
+//判断手机号合法性，如果是则返回手机号
+function is_mobile($mobile)
+{
+	preg_match_all("/1[3|5|8][0-9]{9}|15[0|1|2|3|5|6|7|8|9]\d{8}|18[0|5|6|7|8|9]\d{8}/",$mobile, $if_mobile);
+	if(!empty($if_mobile[0]))
+	{
+		return $if_mobile[0];
+	}
+	else
+	{
+		return false;
+	}
+}
+
+
 //4人2球计算方法
 function get_score_44($arr1,$arr2)
 {
@@ -448,65 +463,129 @@ else if(data=='10103')
 //如果您的系统是utf-8,请转成GB2312 后，再提交、
 //请参考 'content'=>iconv( "UTF-8", "gb2312//IGNORE" ,'您好测试短信[XXX公司]'),//短信内容
 
-function send_mobile_msg($mobile,$content)
+
+
+//新版发送手机短信
+function send_mobile_msg($mobile,$content,$code,$source,$sql_content,$msg_task_id)
 {
-	
-$start=file_get_contents("msg.txt");
-file_put_contents("msg.txt",$start+1);	
-$flag = 0; 
-        //要post的数据 
-$argv = array( 
-         'sn'=>'SDK-BBX-010-16801', ////替换成您自己的序列号
-		 'pwd'=>strtoupper(md5('SDK-BBX-010-16801'.'f-_4ef-4')), //此处密码需要加密 加密方式为 md5(sn+password) 32位大写
-		 'mobile'=>$mobile,//手机号 多个用英文的逗号隔开 post理论没有长度限制.推荐群发一次小于等于10000个手机号
-		 'content'=>iconv( "UTF-8", "gb2312//IGNORE" ,$content),//短信内容
-		 'ext'=>'',		
-		 'stime'=>date("Y-m-d H:i:s"),//定时时间 格式为2011-6-29 11:09:21
-		 'rrid'=>''
-		 ); 
-//构造要post的字符串 
-foreach ($argv as $key=>$value) { 
-          if ($flag!=0) { 
-                         $params .= "&"; 
-                         $flag = 1; 
-          } 
-         $params.= $key."="; $params.= urlencode($value); 
-         $flag = 1; 
-          } 
-         $length = strlen($params); 
-                 //创建socket连接 
-        $fp = fsockopen("sdk2.zucp.net",8060,$errno,$errstr,10) or exit($errstr."--->".$errno); 
-         //构造post请求的头 
-         $header = "POST /webservice.asmx/mt HTTP/1.1\r\n"; 
-         $header .= "Host:sdk2.zucp.net\r\n"; 
-         $header .= "Content-Type: application/x-www-form-urlencoded\r\n"; 
-         $header .= "Content-Length: ".$length."\r\n"; 
-         $header .= "Connection: Close\r\n\r\n"; 
-         //添加post的字符串 
-         $header .= $params."\r\n"; 
-         //发送post的数据 
-         fputs($fp,$header); 
-         $inheader = 1; 
-          while (!feof($fp)) { 
-                         $line = fgets($fp,1024); //去除请求包的头只显示页面的返回数据 
-                         if ($inheader && ($line == "\n" || $line == "\r\n")) { 
-                                 $inheader = 0; 
-                          } 
-                          if ($inheader == 0) { 
-                                // echo $line; 
-                          } 
-          } 
-		  //<string xmlns="http://tempuri.org/">-5</string>
-	       $line=str_replace("<string xmlns=\"http://tempuri.org/\">","",$line);
-	       $line=str_replace("</string>","",$line);
-		   $result=explode("-",$line);
-		  // echo $line."-------------";
-		   
-		    if(count($result)>1)
-			return $line;
+	//判断手机号合法性
+	preg_match_all("/1[3|5|8][0-9]{9}|15[0|1|2|3|5|6|7|8|9]\d{8}|18[0|5|6|7|8|9]\d{8}/",$mobile, $if_mobile);
+	if(!empty($if_mobile[0]))
+	{
+		$ip=get_ip_v2();
+		$sql_send_num=$send_num+1;
+		//LOG记录
+		$log_sql="insert into tbl_msg_log (mobile,code,content,msg_log_source,msg_log_addtime,msg_log_date,ip,msg_task_id) values ('".$mobile."','".$code."','".$sql_content."','".$source."','".time()."','".date("Y-m-d H:i:s",time())."','".$ip."','".$msg_task_id."') ";
+		DB::query($log_sql);
+		$new_log_id = DB::result_first( "select msg_log_id from tbl_msg_log where mobile='".$mobile."' order by msg_log_id desc limit 1 ");
+
+
+		$start=file_get_contents("msg.txt");
+		file_put_contents("msg.txt",$start+1);	
+		$flag = 0; 
+		//要post的数据 
+		$argv = array( 
+			 'sn'=>'SDK-BBX-010-16801', ////替换成您自己的序列号
+			 'pwd'=>strtoupper(md5('SDK-BBX-010-16801'.'f-_4ef-4')), //此处密码需要加密 加密方式为 md5(sn+password) 32位大写
+			 'mobile'=>$mobile,//手机号 多个用英文的逗号隔开 post理论没有长度限制.推荐群发一次小于等于10000个手机号
+			 'content'=>$content,//短信内容
+			 'ext'=>'',		
+			 'stime'=>date("Y-m-d H:i:s"),//定时时间 格式为2011-6-29 11:09:21
+			 'rrid'=>''
+			 ); 
+			 
+		//构造要post的字符串 
+		foreach ($argv as $key=>$value)
+		{ 
+			if($flag!=0)
+			{ 
+				$params .= "&"; 
+				$flag = 1; 
+			} 
+			$params.= $key."="; $params.= urlencode($value); 
+			$flag = 1; 
+		}
+		
+		$length = strlen($params); 
+		//创建socket连接 
+		$fp = fsockopen("sdk2.zucp.net",8060,$errno,$errstr,10) or exit($errstr."--->".$errno); 
+		//构造post请求的头 
+		$header = "POST /webservice.asmx/mt HTTP/1.1\r\n"; 
+		$header .= "Host:sdk2.zucp.net\r\n"; 
+		$header .= "Content-Type: application/x-www-form-urlencoded\r\n"; 
+		$header .= "Content-Length: ".$length."\r\n"; 
+		$header .= "Connection: Close\r\n\r\n"; 
+		//添加post的字符串 
+		$header .= $params."\r\n"; 
+		//发送post的数据 
+		fputs($fp,$header); 
+		$inheader = 1; 
+		
+		
+		while (!feof($fp))
+		{ 
+			$line = fgets($fp,1024); //去除请求包的头只显示页面的返回数据 
+			if($inheader && ($line == "\n" || $line == "\r\n"))
+			{ 
+				$inheader = 0; 
+			} 
+			if ($inheader == 0)
+			{
+				// echo $line; 
+			} 
+		}
+		
+		//<string xmlns="http://tempuri.org/">-5</string>
+		$line=str_replace("<string xmlns=\"http://tempuri.org/\">","",$line);
+		$line=str_replace("</string>","",$line);
+		$result=explode("-",$line);
+			  // echo $line."-------------";
+			   
+		if(count($result)>1)
+		{
+			//如果发送不成功，更新状态
+			
+			if($line==-4)
+			{
+				$msg_log_status=-4;
+			}
 			else
+			{
+				$msg_log_status=-1;
+			}
+			
+			$log_up_sql="update tbl_msg_log set msg_log_sendtime='".$_SERVER['REQUEST_TIME']."',msg_log_status='".$msg_log_status."' where msg_log_id='".$new_log_id."' ";
+			DB::query($log_up_sql);
+			
+			$task_up_sql="update tbl_msg_task set msg_task_lasttime='".$_SERVER['REQUEST_TIME']."',msg_task_err_num=msg_task_err_num+1 where msg_task_id='".$msg_task_id."' ";
+			DB::query($task_up_sql);
+			
+			
+			return $line;
+			
+			//line  -4代表没费了
+		}
+		else
+		{
+			//如果发送成功，更新状态
+			$log_up_sql="update tbl_msg_log set msg_log_sendtime='".$_SERVER['REQUEST_TIME']."',msg_log_status=1 where msg_log_id='".$new_log_id."' ";
+			DB::query($log_up_sql);
+			
+			$task_up_sql="update tbl_msg_task set msg_task_lasttime='".$_SERVER['REQUEST_TIME']."',msg_task_success_num=msg_task_success_num+1 where msg_task_id='".$msg_task_id."' ";
+			DB::query($task_up_sql);
+			
 			return '0#1';
+		}
+	}
+	else
+	{
+		return '-5';
+	}
+
+	
 }
+
+
 
 
 
@@ -911,6 +990,29 @@ foreach ($argv as $key=>$value) {
 			return $line;
 			else
 			return '0#1';
+}
+
+
+
+function get_ip_v2()
+{
+	$ip = $_SERVER['REMOTE_ADDR'];
+	if(isset($_SERVER['HTTP_CLIENT_IP']) && preg_match('/^([0-9]{1,3}\.){3}[0-9]{1,3}$/', $_SERVER['HTTP_CLIENT_IP']))
+	{
+		$ip = $_SERVER['HTTP_CLIENT_IP'];
+	}
+	else if(isset($_SERVER['HTTP_X_FORWARDED_FOR']) AND preg_match_all('#\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}#s', $_SERVER['HTTP_X_FORWARDED_FOR'], $matches))
+	{
+		foreach ($matches[0] AS $xip)
+		{
+			if(!preg_match('#^(10|172\.16|192\.168)\.#', $xip))
+			{
+				$ip = $xip;
+				break;
+			}
+		}
+	}
+	return $ip;
 }
 
 
