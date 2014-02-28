@@ -70,7 +70,7 @@ class itemAction extends AdminAuthAction
 		$parent_item_list=D("item")->item_select_pro(" and parent_id=0");
 		
 		//一级分类列表
-		$parent_cats_list = D("item_cats")->item_cats_select_all_pro(" and is_parent=1");
+		$parent_cats_list = D("item_cats")->item_cats_select_all_pro(" and is_parent=0");
 		
 		$event_select=D('event')->event_select_pro(" ");
 		
@@ -215,7 +215,7 @@ class itemAction extends AdminAuthAction
 			$parent_item_list=D("item")->item_select_pro(" and parent_id=0");
 			
 			//一级分类列表
-			$parent_cats_list = D("item_cats")->item_cats_select_all_pro(" and is_parent=1");
+			$parent_cats_list = D("item_cats")->item_cats_select_all_pro(" and is_parent=0");
 			
 			$event_select=D('event')->event_select_pro(" ");
 			$this->assign('event_select',$event_select['item']);

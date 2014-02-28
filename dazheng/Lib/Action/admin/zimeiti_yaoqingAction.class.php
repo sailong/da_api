@@ -7,47 +7,17 @@
  *    @E-mail		123695069@qq.com
  *    @Date			2014-02-13
  */
-class zimeiti_applyAction extends AdminAuthAction
+class zimeiti_yaoqingAction extends AdminAuthAction
 {
 
 	public function _basic()	
 	{
 		parent::_basic();
 	}
-	public function role_list(){
-		return array(
-				'zishenmeitiren'=>'资深媒体人',
-				'zhiyejingliren'=>'职业经理人',
-				'zishenjiaolian'=>'资深教练',
-				'PGAjiaolian'=>'PGA教练',
-				'shichangzongjian'=>'市场总监',
-				'qiuhuijingli'=>'球会经理',
-				'qiuhuizongjingli'=>'球会总经理',
-				'qiujuzhuanjia'=>'球具专家',
-				'qiuchangshejishi'=>'球场设计师',
-				'saishijingli'=>'赛事经理',
-				'saishizongjian'=>'赛事总监',
-				'CGAcaipan'=>'CGA裁判',
-				'guojicaipan'=>'国际裁判',
-				'pinglunyuan'=>'评论员',
-				'zhiyeqiuyuan'=>'职业球员',
-				'yeyuqiuyuan'=>'业余球员',
-				'qingshaonianqiuyuan'=>'青少年球员',
-				'qita'=>'其他'
-			);
-	}
-	public function role_key_val(){
-		$role_arr = $this->role_list();
-		foreach($role_arr as $key=>$val){
-			$tmp_arr[] = array('role_key'=>$key,'role_val'=>$val);
-		}
-		
-		return $tmp_arr;
-	} 
-	public function zimeiti_apply()
+
+	public function zimeiti_yaoqing()
 	{
 		//球场列表
-		//var_dump($this->role_list());die;
 		$field_select_tmp=D('field')->field_select_pro(" ");
 		//var_dump($field_select_tmp);
 		$field_select = array();
@@ -56,126 +26,71 @@ class zimeiti_applyAction extends AdminAuthAction
 		}
 		//var_dump($field_select);
 		$this->assign('field_select',$field_select);
-		$this->assign('role_list',$this->role_list());
+	
 		$page_size=get('page_size');
 		if(!$page_size)
 		{
 			$page_size=20;
 		}
 	
-		$list=D("zimeiti_apply")->zimeiti_apply_list_pro('',$page_size,' zimeiti_apply_addtime desc ');
+		$list=D("zimeiti_yaoqing")->zimeiti_yaoqing_list_pro('',$page_size,' zimeiti_yaoqing_addtime desc ');
 		
-		if(isset($_GET['export'])){
-			$this->excel_import($list["item"]);
-			return false;
-		}
-	
 		$this->assign("list",$list["item"]);
 		$this->assign("pages",$list["pages"]);
 		$this->assign("total",$list["total"]);
 
-		$this->assign("page_title","第一线申请管理");
+		$this->assign("page_title","第一线邀请管理");
     	$this->display();
 	}
 
-	public function zimeiti_apply_add()
+	public function zimeiti_yaoqing_add()
 	{
 		//球场列表
 		$field_select=D('field')->field_select_pro(" ");
 		$this->assign('field_select',$field_select['item']);
-		$this->assign('role_list',$this->role_key_val());
+		
 		$this->assign("page_title","添加报名");
     	$this->display();
 	}
 	
-	public function zimeiti_apply_add_action()
+	public function zimeiti_yaoqing_add_action()
 	{
 		if(M()->autoCheckToken($_POST))
 		{
 			
 			$data["uid"]=post("uid");
-			if(!empty($data["uid"])){
+			$data["field_uid"]=post("field_uid");
+			$data["to_uid"]=post("to_uid");
+			$data["mobile"]=post("mobile");
+			$data["guanxi"]=post("guanxi");
+			$data["zimeiti_yaoqing_status"]=post("zimeiti_yaoqing_status");
+			$data["zimeiti_yaoqing_addtime"]=time();
 			
+			$list=M("zimeiti_yaoqing")->add($data);
 			
-				$list=M("zimeiti_apply")->where("uid='".$data["uid"]."'")->find();
-				if($list){
-					$this->success("账号已存在",U('admin/zimeiti_apply/zimeiti_apply_add'));die;
-				}
-				$data["event_id"]=post("event_id");
-				$data["field_uid"]=post("field_uid");
-				$data["zimeiti_apply_realname"]=post("zimeiti_apply_realname");
-				$data["zimeiti_apply_mobile"]=post("zimeiti_apply_mobile");
-				$data["zimeiti_apply_card"]=post("zimeiti_apply_card");
-				$data["zimeiti_apply_role"]=post("zimeiti_apply_role");
-				$data["zimeiti_apply_intro"]=post("zimeiti_apply_intro");
-				$data["zimeiti_apply_status"]=post("zimeiti_apply_status");
-				$data["zimeiti_apply_addtime"]=time();
-				
-				$list=M("zimeiti_apply")->add($data);
-				if($list!==false && $data["zimeiti_apply_status"]=='1'){
-					$smcode=rand(1000,9999);
-					$find_task = M('msg_task')->where("mobile='".$data["zimeiti_apply_mobile"]."'")->find();//->query("select * from tbl_msg_task where mobile='".$mobile."' and msg_task_status=0 and msg_task_source='reg' order by msg_task_id desc ");
-					//如果没有任务，则添加
-					if(!$find_task){
-						$time = time();
-						$task_data['field_uid'] = 0;
-						$task_data['mobile'] = $data["zimeiti_apply_mobile"];
-						$task_data['msg_task_source'] = 'reg';
-						$task_data['msg_task_status'] = '0';
-						$task_data['msg_task_addtime'] = $time;
-						$task_data['msg_task_date'] = date('Y-m-d H:i:s',$time);
-						$msg_task_id = M('msg_task')->add($task_data);
-					}else{
-						$msg_task_id = $find_task['msg_task_id'];
-					}
-					
-					//修改密码
-					$password_tmp = $password=mt_rand(100000,999999);
-					$salt = substr(uniqid(rand()), -6);
-					$password = md5(md5($password).$salt);
-					$user_data['password'] = $password;
-					$user_data['salt']     = $salt;
-					M("ucenter_members","pre_")->where("uid='".$data["uid"]."'")->save($user_data);
-					unset($user_data['salt']);
-					M("common_member","pre_")->where("uid='".$data["uid"]."'")->save($user_data); 
-					M("members","jishigou_")->where("uid='".$data["uid"]."'")->save($user_data); 
-					
-					
-					$data['message_title'] = '系统消息第一线审核通过';
-					$data['message_content'] = '恭喜您已成为第一线用户，账号是您的手机号：'.$data["zimeiti_apply_mobile"].',密码是'.$password_tmp.',请登录客户端修改密码！';
-					
-					$this->sys_message_add_return($data);
-					$msg_content=$data['message_content'];
-					$sql_content=$msg_content;
-					$msg_content=iconv('UTF-8', 'GB2312', $msg_content);;
-					$this->send_msg($data["zimeiti_apply_mobile"],$msg_content,$smcode,'reg',$sql_content,$msg_task_id);
-					sleep(4);
-				}
-				$this->success("添加成功",U('admin/zimeiti_apply/zimeiti_apply'));
-			}else{
-				$this->error("传入参数有误！",U('admin/zimeiti_apply/zimeiti_apply_add'));
-			}
+			$this->success("添加成功",U('admin/zimeiti_yaoqing/zimeiti_yaoqing'));
+			
 		}
 		else
 		{
-			$this->error("不能重复提交",U('admin/zimeiti_apply/zimeiti_apply_add'));
+			$this->error("不能重复提交",U('admin/zimeiti_yaoqing/zimeiti_yaoqing_add'));
 		}
 
 	}
 
 
-	public function zimeiti_apply_edit()
+	public function zimeiti_yaoqing_edit()
 	{
-		if(intval(get("zimeiti_apply_id"))>0)
+		if(intval(get("zimeiti_yaoqing_id"))>0)
 		{
 			//球场列表
 			$field_select=D('field')->field_select_pro(" ");
 			$this->assign('field_select',$field_select['item']);
 			
-			$data=M("zimeiti_apply")->where("zimeiti_apply_id=".intval(get("zimeiti_apply_id")))->find();
+			$data=M("zimeiti_yaoqing")->where("zimeiti_yaoqing_id=".intval(get("zimeiti_yaoqing_id")))->find();
 			
 			$this->assign("data",$data);
-			$this->assign('role_list',$this->role_key_val());
+			
 			$this->assign("page_title","修改");
 			$this->display();
 		}
@@ -185,95 +100,53 @@ class zimeiti_applyAction extends AdminAuthAction
 		}
 	}
 	
-	public function zimeiti_apply_edit_action()
+	public function zimeiti_yaoqing_edit_action()
 	{
 		if(M()->autoCheckToken($_POST))
 		{	
-			$data["zimeiti_apply_id"]=post("zimeiti_apply_id");
-			$data["uid"]=post("uid");
-			$data["event_id"]=post("event_id");
-			$data["field_uid"]=post("field_uid");
-			$data["zimeiti_apply_realname"]=post("zimeiti_apply_realname");
-			$data["zimeiti_apply_mobile"]=post("zimeiti_apply_mobile");
-			$data["zimeiti_apply_card"]=post("zimeiti_apply_card");
-			$data["zimeiti_apply_role"]=post("zimeiti_apply_role");
-			$data["zimeiti_apply_intro"]=post("zimeiti_apply_intro");
-			$data["zimeiti_apply_status"]=post("zimeiti_apply_status");
-			//$data["zimeiti_apply_addtime"]=time();
+			$data["zimeiti_yaoqing_id"]=post("zimeiti_yaoqing_id");
 			
-			$list=M("zimeiti_apply")->save($data);
-			if($list!==false && $data["zimeiti_apply_status"]=='1'){
-				$smcode=rand(1000,9999);
-				$find_task = M('msg_task')->where("mobile='".$data["zimeiti_apply_mobile"]."'")->find();//->query("select * from tbl_msg_task where mobile='".$mobile."' and msg_task_status=0 and msg_task_source='reg' order by msg_task_id desc ");
-				//如果没有任务，则添加
-				if(!$find_task){
-					$time = time();
-					$task_data['field_uid'] = 0;
-					$task_data['mobile'] = $data["zimeiti_apply_mobile"];
-					$task_data['msg_task_source'] = 'reg';
-					$task_data['msg_task_status'] = '0';
-					$task_data['msg_task_addtime'] = $time;
-					$task_data['msg_task_date'] = date('Y-m-d H:i:s',$time);
-					$msg_task_id = M('msg_task')->add($task_data);
-				}else{
-					$msg_task_id = $find_task['msg_task_id'];
-				}
-				unset($data['field_uid']);
-				
-				
-				//修改密码
-				$password_tmp = $password=mt_rand(100000,999999);
-				$salt = substr(uniqid(rand()), -6);
-				$password = md5(md5($password).$salt);
-				$user_data['password'] = $password;
-				$user_data['salt']     = $salt;
-				M("ucenter_members","pre_")->where("uid='".$data["uid"]."'")->save($user_data);
-				unset($user_data['salt']);
-				M("common_member","pre_")->where("uid='".$data["uid"]."'")->save($user_data); 
-				M("members","jishigou_")->where("uid='".$data["uid"]."'")->save($user_data); 
-				
-				
-				$data['message_title'] = '系统消息第一线审核通过';
-				$data['message_content'] = '恭喜您已成为第一线用户，账号是您的手机号：'.$data["zimeiti_apply_mobile"].',密码是'.$password_tmp.',请登录客户端修改密码！';
-				//$msg_content=$data['message_content']."，大正客户端下载地址：http://www.bwvip.com/app ";
-				$this->sys_message_add_return($data);
-				$msg_content=$data['message_content'];
-				$sql_content=$msg_content;
-				$msg_content=iconv('UTF-8', 'GB2312', $msg_content);;
-				$this->send_msg($data["zimeiti_apply_mobile"],$msg_content,$smcode,'reg',$sql_content,$msg_task_id);
-			}
-			$this->success("修改成功",U('admin/zimeiti_apply/zimeiti_apply'));			
+			$data["uid"]=post("uid");
+			$data["field_uid"]=post("field_uid");
+			$data["to_uid"]=post("to_uid");
+			$data["mobile"]=post("mobile");
+			$data["guanxi"]=post("guanxi");
+			$data["zimeiti_yaoqing_status"]=post("zimeiti_yaoqing_status");
+			//$data["zimeiti_yaoqing_addtime"]=time();
+			
+			$list=M("zimeiti_yaoqing")->save($data);
+			$this->success("修改成功",U('admin/zimeiti_yaoqing/zimeiti_yaoqing'));			
 		}
 		else
 		{
-			$this->error("不能重复提交",U('admin/zimeiti_apply/zimeiti_apply'));
+			$this->error("不能重复提交",U('admin/zimeiti_yaoqing/zimeiti_yaoqing'));
 		}
 
 	}
 	
 	
-	public function zimeiti_apply_delete_action()
+	public function zimeiti_yaoqing_delete_action()
 	{
 		if(post("ids"))
 		{
 			$ids_arr=explode(",",post("ids"));
 			for($i=0; $i<count($ids_arr); $i++)
 			{
-				$res=M("zimeiti_apply")->where("zimeiti_apply_id=".$ids_arr[$i])->delete();
+				$res=M("zimeiti_yaoqing")->where("zimeiti_yaoqing_id=".$ids_arr[$i])->delete();
 			}
 			echo "succeed^删除成功";
 		}
 	}
 
 
-	public function zimeiti_apply_check_action()
+	public function zimeiti_yaoqing_check_action()
 	{
 		if(post("ids"))
 		{
 			$ids_arr=explode(",",post("ids"));
 			for($i=0; $i<count($ids_arr); $i++)
 			{
-				$res=M()->execute("update tbl_zimeiti_apply set zimeiti_apply_state=1 where zimeiti_apply_id=".$ids_arr[$i]." ");
+				$res=M()->execute("update tbl_zimeiti_yaoqing set zimeiti_yaoqing_state=1 where zimeiti_yaoqing_id=".$ids_arr[$i]." ");
 			}
 			if($res)
 			{
@@ -287,11 +160,11 @@ class zimeiti_applyAction extends AdminAuthAction
 		}
 	}
 
-	public function zimeiti_apply_detail()
+	public function zimeiti_yaoqing_detail()
 	{
-		if(intval(get("zimeiti_apply_id"))>0)
+		if(intval(get("zimeiti_yaoqing_id"))>0)
 		{
-			$data=M("zimeiti_apply")->where("zimeiti_apply_id=".intval(get("zimeiti_apply_id")))->find();
+			$data=M("zimeiti_yaoqing")->where("zimeiti_yaoqing_id=".intval(get("zimeiti_yaoqing_id")))->find();
 			if(!empty($data))
 			{
 				$this->assign("data",$data);

@@ -459,7 +459,7 @@ class fenzhanAction extends AdminAuthAction
 		//$list=D("fenzu_mingxi")->fenzu_mingxi_list_pro(" ");
 		if($fenzhan_id)
 		{
-			$list=M()->query("select * from tbl_baofen where fenzhan_id='".$fenzhan_id."' order by fenzu_id asc ");
+			$list=M()->query("select * from tbl_baofen where fenzhan_id='".$fenzhan_id."' order by fenzu_id asc,fenzu_sort asc ");
 		}else
 		{		
 			//$list=M()->query("select * from tbl_baofen where event_id='".get("event_id")."' order by baofen_id desc ");

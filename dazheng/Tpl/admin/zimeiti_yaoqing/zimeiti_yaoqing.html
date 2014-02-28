@@ -10,15 +10,15 @@
 </style>
 <div class="so_main">
 
-  <div class="page_tit">第一线申请管理
+  <div class="page_tit">第一线邀请管理
   <!-- <span style="font-size:12px; color:#999; font-weight:normal; margin-left:30px;">共检索到<b style="font-size:14px; color:red;">{$total}</b>名符合条件的报名用户</span> --></div>
   <include file="_tab" />
 
   <div class="search_box">
 		<form name="search_form" action="/default.php" method="get">
 		<input type="hidden" name="g" value="admin">
-		<input type="hidden" name="m" value="zimeiti_apply">
-		<input type="hidden" name="a" value="zimeiti_apply">
+		<input type="hidden" name="m" value="zimeiti_yaoqing">
+		<input type="hidden" name="a" value="zimeiti_yaoqing">
 
 		<table border="0" cellspacing="2" cellpadding="5">
 			
@@ -70,7 +70,7 @@
 			
 			<td class="btn" colspan='2'>
 				<input type="submit" value="搜索" class="btn_b_small" style="margin-right:8px;" >
-				<input type="button" value="查看全部" class="btn_b_small" onclick="javascript:location='{:U('admin/zimeiti_apply/zimeiti_apply',array('state'=>get('state')))}';">
+				<input type="button" value="查看全部" class="btn_b_small" onclick="javascript:location='{:U('admin/zimeiti_yaoqing/zimeiti_yaoqing',array('state'=>get('state')))}';">
 			</td>
 			
 			<!-- <td class="btn">
@@ -86,8 +86,8 @@
   <div class="Toolbar_inbox">
   	<div class="page right">{$pages}</div>
 
-	<a href="{:U('admin/zimeiti_apply/zimeiti_apply_add')}" class="btn_a"><span>添加</span></a>
-	<a href="javascript:void(0);" class="btn_a"  onclick="mod_delete_batch('{:U('admin/zimeiti_apply/zimeiti_apply_delete_action')}','mod_table');"><span>批量删除</span></a>
+	<a href="{:U('admin/zimeiti_yaoqing/zimeiti_yaoqing_add')}" class="btn_a"><span>添加</span></a>
+	<a href="javascript:void(0);" class="btn_a"  onclick="mod_delete_batch('{:U('admin/zimeiti_yaoqing/zimeiti_yaoqing_delete_action')}','mod_table');"><span>批量删除</span></a>
 	<!-- <a href="javascript:void(0);" style="color:red;" class="btn_a"  onclick="mod_batch_dialog('{:U('admin/zimeiti_apply/zimeiti_apply_status',array('zimeiti_apply_id'=>get('zimeiti_apply_id')))}','mod_table','批量修改比赛状态');"><span>批量修改比赛状态</span></a> -->
 	<div class="clear"></div>
   </div>
@@ -103,12 +103,12 @@
 		<!-- <th class="line_l">所属用户</th>
 		<th class="line_l">所属赛事</th>
 		<th class="line_l">所属分站</th> -->
-		<th class="line_l">用户UID</th>
-		<th class="line_l">姓名</th>
+		<th class="line_l">邀请用户UID</th>
+		<th class="line_l">被邀请用户UID</th>
 		<th class="line_l">球场名称</th>
 		<th class="line_l">手机号</th>
-		<th class="line_l">用户身份</th>
-		<th class="line_l">身份证号</th>
+		<th class="line_l">审核状态</th>
+		<th class="line_l">关系</th>
 		<!-- <th class="line_l">所属分站</th> -->
 		<!-- <th class="line_l">邮箱</th> -->
 		<!-- <th class="line_l">国家</th> -->
@@ -118,37 +118,29 @@
 		<!-- <th class="line_l">外卡分站ID</th> -->
 		<!-- <th class="line_l">备注</th> -->
 		<!-- <th class="line_l">来源</th> -->
-		<th class="line_l">审核状态</th>
-		<th class="line_l">推荐人手机号</th>
-		<th class="line_l">推荐人状态</th>
-		<th class="line_l">邀请人</th>
+		<th class="line_l">时间</th>
 		<!-- <th class="line_l">报名方式</th> -->
-		<th class="line_l">添加时间</th>
+		<!-- <th class="line_l">添加时间</th> -->
 		<!-- <th class="line_l">是否外卡</th> -->
 		<th class="line_l">操作</th>
 	</tr>
 	<volist id="vo" name="list">
-	<tr overstyle="on"  id=ids_{$vo["zimeiti_apply_id"]}>
-		<td><input type="checkbox" name="checkbox" onclick="select_one(this)" value="{$vo.zimeiti_apply_id}" ></td>
-		<!-- <td>{$vo.uid}</th> -->
+	<tr overstyle="on"  id=ids_{$vo["zimeiti_yaoqing_id"]}>
+		<td><input type="checkbox" name="checkbox" onclick="select_one(this)" value="{$vo.zimeiti_yaoqing_id}" ></td>
+			<td>{$vo.zimeiti_yaoqing_id}</th>
 			<!--  --><!-- <a href="{:U('admin/baoming/baoming_detail', array('baoming_id'=>$vo['baoming_id']))}'"></a> -->
-			<td>{$vo.zimeiti_apply_id}</td>
 			<td>{$vo.uid}</td>
-			<td>{$vo.zimeiti_apply_realname}</td>
+			<td>{$vo.to_uid}</td>
 			<td>{$field_select[$vo['field_uid']]}</td>
-			<td>{$vo.zimeiti_apply_mobile}</td>
-			<td>{$role_list[$vo['zimeiti_apply_role']]}</td>
-			<td>{$vo.zimeiti_apply_card}</td>
+			<td>{$vo.mobile}</td>
+			<td><php>if($vo['zimeiti_yaoqing_status']=='-1'){echo '未通过';}elseif($vo['zimeiti_yaoqing_status']=='0'){echo '默认';}elseif($vo['zimeiti_yaoqing_status']=='1'){echo '通过';}</php></td>
+			<td>{$vo.guanxi}</td>
 			<!-- <td>{$vo.zimeiti_apply_fenzhan}</td> -->
-			<td><php>if($vo['zimeiti_apply_status']=='0'){echo '未审核';}elseif($vo['zimeiti_apply_status']=='1'){echo '通过';}elseif($vo['zimeiti_apply_status']=='2'){echo '拒绝';}</php></td>
-			<td><php>if($vo['zimeiti_recommend_mobile']){ echo $vo['zimeiti_recommend_mobile'];}else{echo '--';}</php></td>
-			<td><php>if($vo['zimeiti_recommend_status']=='0'){echo '未审核';}elseif($vo['zimeiti_recommend_status']=='1'){echo '通过';}elseif($vo['zimeiti_recommend_status']=='2'){echo '拒绝';}</php></td>
-			<td><php>if($vo['yaoqing_name']){ echo $vo['yaoqing_name'];}else{echo '--';}</php></td>
-			<td>{$vo.zimeiti_apply_addtime|format_to_time}</td>
+			<td>{$vo.zimeiti_yaoqing_addtime|format_to_time}</td>
 			
 		<td>
-			<a href="{:U('admin/zimeiti_apply/zimeiti_apply_edit', array('zimeiti_apply_id'=>$vo['zimeiti_apply_id']))})">修改</a> | 
-			<a href="javascript:void(0);" onclick="mod_delete_one('{:U('admin/zimeiti_apply/zimeiti_apply_delete_action')}','{$vo['zimeiti_apply_id']}');">删除</a>
+			<a href="{:U('admin/zimeiti_yaoqing/zimeiti_yaoqing_edit', array('zimeiti_yaoqing_id'=>$vo['zimeiti_yaoqing_id']))})">修改</a> | 
+			<a href="javascript:void(0);" onclick="mod_delete_one('{:U('admin/zimeiti_yaoqing/zimeiti_yaoqing_delete_action')}','{$vo['zimeiti_yaoqing_id']}');">删除</a>
 		</td>
 	</tr>
 	</volist>
@@ -163,8 +155,8 @@
   <div class="Toolbar_inbox">
 	<div class="page right">{$pages}</div>
 
-	<a href="{:U('admin/zimeiti_apply/zimeiti_apply_add')}" class="btn_a"><span>添加</span></a>
-	<a href="javascript:void(0);" class="btn_a"  onclick="mod_delete_batch('{:U('admin/zimeiti_apply/zimeiti_apply_delete_action')}','mod_table');"><span>批量删除</span></a>
+	<a href="{:U('admin/zimeiti_yaoqing/zimeiti_yaoqing_add')}" class="btn_a"><span>添加</span></a>
+	<a href="javascript:void(0);" class="btn_a"  onclick="mod_delete_batch('{:U('admin/zimeiti_yaoqing/zimeiti_yaoqing_delete_action')}','mod_table');"><span>批量删除</span></a>
 	<!-- <a href="javascript:void(0);" style="color:red;" class="btn_a"  onclick="mod_batch_dialog('{:U('admin/baoming/batch_upd_event_status',array('event_id'=>get('event_id')))}','mod_table','批量修改比赛状态');"><span>批量修改比赛状态</span></a> -->
 
 	<div class="clear"></div>

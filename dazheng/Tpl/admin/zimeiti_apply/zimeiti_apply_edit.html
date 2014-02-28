@@ -48,9 +48,9 @@
 					<!-- <input type="text" name="zimeiti_apply_role" id="zimeiti_apply_role" class="mod_input2" style="width:300px;"  value="{$data.zimeiti_apply_role}"> -->
 					<select name="zimeiti_apply_role" id="zimeiti_apply_role">
 						<option value="">请选择</option>
-						<option value="1">白</option>
-						<option value="2">兰</option>
-						<option value="3">金</option>
+						<volist id="vo" name="role_list">
+						<option value="{$vo.role_key}">{$vo.role_val}</option>
+						</volist>
 					</select>
 					<script>set_select_value(document.act_form.zimeiti_apply_role,"{$data.zimeiti_apply_role}");</script>
 				</td>
