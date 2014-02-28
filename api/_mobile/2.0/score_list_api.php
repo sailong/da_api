@@ -57,13 +57,14 @@ if($ac = 'score_list'){
 	$fenzhan_id=$score_info['fenzhan_id'];  
 	$zong_fen=$score_info['total_score'];
 	$realname=$score_info['realname'];
-	$event_name=DB::result_first("select event_name from tbl_event where event_id='".$event_id."' "); 
+	$event_info=DB::fetch_first("select event_name,event_starttime,event_endtime from tbl_event where event_id='".$event_id."' ");
+	$start_date = date('Y.m.d',$event_info['event_starttime']).' — '.date('Y.m.d',$event_info['event_endtime']);
 
 	$score_list_arr = array();
 	if($nd_id > 0)
 	{ 
-		/* $row1 = array(
-					'RND',
+		$row1 = array(
+					'球洞(RND)',
 					'1',
 					'2',
 					'3',
@@ -86,7 +87,7 @@ if($ac = 'score_list'){
 					'IN',
 					'TOT');
 	
-		$score_list_arr[] = $row1; */
+		$score_list_arr[] = $row1;
 		$ct= DB::result_first("SELECT lun  FROM tbl_baofen WHERE event_id=".$event_id." and uid=".$uid."  order by lun desc limit 1");
 		
 		if($ct>1)
@@ -107,97 +108,72 @@ if($ac = 'score_list'){
 			}
 			
 			$row2[]='标准杆(PAR)';
-			$tmp_score = 0;
 			$i=0;
 			foreach($par as $key=>$val){
-				if($i%9==0){
-					$row2[] = $tmp_score;
-					$tmp_score=0;
-				}else{
-					$tmp_score+=$val;
-					$row2[] = $val;
+				if(($i+1)%10==0){
+					$row2[] = "'".$POUT."'";
 				}
+				$row2[] = $val;
+				$i++;
 			}
-			$row2[] = $tmp_score;
-			$row2[] = $PTL;
+			
+			$row2[] = "'".$PIN."'";
+			$row2[] = "'".$PTL."'";
 			$score_list_arr[] = $row2;
 			
 			if($event_id==27){
-				$jdt=DB::query("SELECT uid,realname,lun,cave_1,cave_2,cave_3,cave_4,cave_5,cave_6,cave_7,cave_8,cave_9,cave_10,cave_11,cave_12,cave_13,cave_14,cave_15,cave_16,cave_17,cave_18,  (cave_1+cave_2+cave_3+cave_4+cave_5+cave_6+cave_7+cave_8+cave_9) as lout,(cave_11+cave_12+cave_13+cave_14+cave_15+cave_16+cave_17+cave_18) as lin,(cave_1+cave_2+cave_3+cave_4+cave_5+cave_6+cave_7+cave_8+cave_9+cave_10+cave_11+cave_12+cave_13+cave_14+cave_15+cave_16+cave_17+cave_18) as lto,total_ju_par   FROM tbl_baofen WHERE event_id=".$event_id." and uid=".$uid." and fenzhan_id in(115,116,117) order by is_end desc,lun");  
+				$jdt=DB::query("SELECT uid,realname,lun,cave_1,cave_2,cave_3,cave_4,cave_5,cave_6,cave_7,cave_8,cave_9,cave_10,cave_11,cave_12,cave_13,cave_14,cave_15,cave_16,cave_17,cave_18,  (cave_1+cave_2+cave_3+cave_4+cave_5+cave_6+cave_7+cave_8+cave_9) as lout,(cave_10+cave_11+cave_12+cave_13+cave_14+cave_15+cave_16+cave_17+cave_18) as lin,(cave_1+cave_2+cave_3+cave_4+cave_5+cave_6+cave_7+cave_8+cave_9+cave_10+cave_11+cave_12+cave_13+cave_14+cave_15+cave_16+cave_17+cave_18) as lto,total_ju_par,pars   FROM tbl_baofen WHERE event_id=".$event_id." and uid=".$uid." and fenzhan_id in(115,116,117) order by is_end desc,lun");  
 			}else{
-				$jdt=DB::query("SELECT uid,realname,lun,cave_1,cave_2,cave_3,cave_4,cave_5,cave_6,cave_7,cave_8,cave_9,cave_10,cave_11,cave_12,cave_13,cave_14,cave_15,cave_16,cave_17,cave_18,  (cave_1+cave_2+cave_3+cave_4+cave_5+cave_6+cave_7+cave_8+cave_9) as lout,(cave_11+cave_12+cave_13+cave_14+cave_15+cave_16+cave_17+cave_18) as lin,(cave_1+cave_2+cave_3+cave_4+cave_5+cave_6+cave_7+cave_8+cave_9+cave_10+cave_11+cave_12+cave_13+cave_14+cave_15+cave_16+cave_17+cave_18) as lto,total_ju_par   FROM tbl_baofen WHERE event_id=".$event_id." and uid=".$uid."  order by is_end desc,lun");  
+				$jdt=DB::query("SELECT uid,realname,lun,cave_1,cave_2,cave_3,cave_4,cave_5,cave_6,cave_7,cave_8,cave_9,cave_10,cave_11,cave_12,cave_13,cave_14,cave_15,cave_16,cave_17,cave_18,  (cave_1+cave_2+cave_3+cave_4+cave_5+cave_6+cave_7+cave_8+cave_9) as lout,(cave_10+cave_11+cave_12+cave_13+cave_14+cave_15+cave_16+cave_17+cave_18) as lin,(cave_1+cave_2+cave_3+cave_4+cave_5+cave_6+cave_7+cave_8+cave_9+cave_10+cave_11+cave_12+cave_13+cave_14+cave_15+cave_16+cave_17+cave_18) as lto,total_ju_par,pars   FROM tbl_baofen WHERE event_id=".$event_id." and uid=".$uid."  order by is_end desc,lun");  
 			}
 			//echo '<pre>';
-			$tmp_score=0;
+			$row3 = array();
+			$totle_score = 0;
 			while($lib=DB::fetch($jdt)){
 				//var_dump($lib);
-				$tmp_row[] = $lib['lun'];
+				unset($tmp_row,$tmp_color);
+				
+				$tmp_row[] = 'R'.$lib['lun'];
+				$tmp_color[] = Getcolor();
 				for($i=0;$i<=17;$i++){
-					if($i%9==0){
-						$row2[] = $tmp_score;
-						$tmp_score=0;
-					}else{
-						$tmp_score+=$val;
-						$tmp_row[] = Getchj($lib["cave_".($i+1)]);
+					$score=Getchj($lib["cave_".($i+1)]);
+					if(($i+1)%10==0){
+						$tmp_row[] = $lib['lout'];
+						$tmp_color[] = Getcolor();
 					}
-					
+					$tmp_row[] = $score;
+					$tmp_color[] = Getcolor($score,$par[$i]);
 				}
-				
-				$tmp_row[] = Getchd($lib['total_ju_par']);
-				
+				$tmp_row[] = $lib['lin'];
+				$tmp_color[] = Getcolor();
 				if($lib['lto']){
 					$tmp_row[] = $lib['lto'];
 				}else{
 					$tmp_row[] = '-';
 				}
-				//var_dump($tmp_row);die;
-				$score_list_arr[] = $tmp_row;
+				$totle_score+=$lib['lto'];
+				$tmp_color[] = Getcolor();
+				$tmp_score_list['score'] = $tmp_row;
+				$tmp_score_list['color'] = $tmp_color;
+				$row3[]=$tmp_score_list;
 			}
 			
-			//var_dump($score_list_arr);die;
 			
-			/* if($nd_id > 0)
-			{
-				$bf = DB::query ( "select  *,(cave_1+cave_2+cave_3+cave_4+cave_5+cave_6+cave_7+cave_8+cave_9) as lout,(cave_10+cave_11+cave_12+cave_13+cave_14+cave_15+cave_16+cave_17 +cave_18) as lin   from tbl_baofen  where  baofen_id=".$nd_id );
-			}else{
-				if ($uid > 0) {
-					$bf = DB::query ( "select  *,(cave_1+cave_2+cave_3+cave_4+cave_5+cave_6+cave_7+cave_8+cave_9) as lout,(cave_10+cave_11+cave_12+cave_13+cave_14+cave_15+cave_16+cave_17 +cave_18) as lin   from tbl_baofen where sid='$sid'  and field_id='$field_id' and uid=".$uid );
-				}else{
-					$bf = DB::query ( "select *,(cave_1+cave_2+cave_3+cave_4+cave_5+cave_6+cave_7+cave_8+cave_9) as lout,(cave_10+cave_11+cave_12+cave_13+cave_14+cave_15+cave_16+cave_17 +cave_18) as lin  from tbl_baofen  ORDER BY total_ju_par,lin"); 
-				}
-			}
-				
-			while ( $row = DB::fetch ( $bf ) ) {
-				$fz [] = $row;
-			} 
-
-
-
-			asort($new_cg);
-
-			$qc_par_result = DB::fetch_first ( " select `fenzhan_a`,fenzhan_b,sid from tbl_fenzhan where fenzhan_id='".$fenzhan_id."' " );
-
-
-			$par = explode(',',$qc_par_result['fenzhan_a'].','.$qc_par_result['fenzhan_b'] ); 
-
-			$POUT = $par [0] + $par [1] + $par [2] + $par [3] + $par [4] + $par [5] + $par [6] + $par [7] + $par [8];
-			$PIN = $par [9] + $par [10] + $par [11] + $par [12] + $par [13] + $par [14] + $par [15] + $par [16] + $par [17];
-			$PTL = $POUT + $PIN;
-			$sid=$qc_par_result['sid'];  */
 		}
 	}
 	
 	$data['title']='detail_data';
 	$data['data']=array(
 		//'list_info'=>$list_info,
-		'detail_data'=>array(
 			'uid'=>$uid,
 			'realname'=>$realname,
+			'event_name'=>$event_info['event_name'],
 			'fuid'=>$field_id,
-			'uid'=>$uid,
-			'uid'=>$uid,
-			'score'=>$score_list_arr
-		)
+			'totle_score'=>"{$totle_score}",
+			'start_date'=>$start_date,
+			'par_title'=>$row1,
+			'par'=>$row2,
+			'score_list'=>$row3//$score_list_arr
 	);
 	
 	api_json_result(1,0,$app_error['event']['10502'],$data);
@@ -304,62 +280,46 @@ function Getchj($score)
 	
 	return $dataInfo;
 }
-
-function Getcss($score, $par)
-{
-	if($score){
-	$option = $score - $par;
-	if ($score == - 1) {
-		$dataInfo = " style=\"text-align:center;color:#FFffff;background:#089218\"";
-	} else {
-		switch ($option) {
-			//成绩数据显示
-			
-
-			//低于标准杆3杆以上或者一杆进洞的：字变白色 底色变为深黄色，
-			case - 3 :
-				$dataInfo = " style=\"text-align:center;color:#FFffff;background:#fd6804\"";
-				break;
-			//低于标准杆两杆：字变白色 底变为ffcc01
-			case - 2 :
-				$dataInfo = " style=\"text-align:center;color:#FFffff;background:#ffcc01\"";
-				break;
-			
-			//低于标准杆1杆：字变白色
-			case - 1 :
-				$dataInfo = " style=\"text-align:center;color:#FFffff;background:#cd3301\"";
-				break;
-			
-			//平标准杆：字变白色 没背景
-			case 0 :
-				$dataInfo = " style=\"text-align:center;color:#000000;\"";
-				break;
-			
-			//高于标准杆1杆：字变白色 
-			case 1 :
-				$dataInfo = " style=\"text-align:center;color:#FFffff;background:#5dcff1\"";
-				break;
-			
-			//高于标准杆2杆：字变成白色 底为正常蓝色
-			case 2 :
-				$dataInfo = " style=\"text-align:center;color:#FFffff;background:#0166ff\"";
-				break;
-			
-		//高于标准杆3杆以上的：字是白色 底为深蓝色
-		//case 3 :
-		//$dataInfo = " style=\"text-align:center;color:#FFffff;background:#000033\"";
-		//	break;
-		
-
+function Getcolor($score,$par){
+	$color='0';
+	if($score!="" )
+	{
+		if($score-$par==3)
+		{
+			$color='1';
 		}
-		if ($option >= 3)
-			$dataInfo = " style=\"text-align:center;color:#FFffff;background:#000033\"";
-		if ($option < - 3)
-			$dataInfo = " style=\"text-align:center;color:#FFffff;background:#FF00ff\"";
+		else if($score-$par==2)
+		{
+			$color='2';
+		}
+		else if($score-$par==1)
+		{
+			$color='3';
+		}
+		else if($score-$par==0)
+		{
+			$color='4';
+		}
+		else if($score-$par==-1)
+		{
+			$color='5';
+		}
+		else if($score-$par==-2)
+		{
+			$color='6';
+		}
+		else if($score-$par==-3)
+		{
+			$color='7';
+		}
+		else
+		{
+			$color='0';
+		}
 	}
-	} 
 	
-	return $dataInfo;
+	return $color;
 }
+
 
 ?>

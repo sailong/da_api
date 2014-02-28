@@ -1,5 +1,6 @@
 <?php
 
+
 //判断手机号合法性，如果是则返回手机号
 function is_mobile($mobile)
 {
@@ -14,8 +15,146 @@ function is_mobile($mobile)
 	}
 }
 
+function score_count($score,$type='end')
+{
+	$end_num=0;
+	$be_num=0;
+	for($i=0; $i<18; $i++)
+	{
+		$d=$i+1;
+		$score1=$score['cave_'.$d];
+		
+		if($score1>0  && $score1<500)
+		{
+			$end_num+=1;
+		}
+		else
+		{
+			$be_num+=1;
+		}
+	}
+	
+	if($type=='end')
+	{
+		return (string)$end_num;
+	}
+	else
+	{
+		return (string)$be_num;
+	}
+	
+}
 
-//4人2球计算方法
+
+
+function get_up_44($arr1,$arr2,$dong_number=0,$team_number=0,$type='up_text')
+{
+	
+	$up1=0;
+	$up2=0;
+	
+	$up1_text=array();
+	$up2_text=array();
+	$up_value=array();
+	
+	$fen1=array();
+	$fen2=array();
+	for($i=0; $i<18; $i++)
+	{
+		$d=$i+1;
+		$score1=$arr1['cave_'.$d];
+		$score2=$arr2['cave_'.$d];
+		
+		if($score1<$score2)
+		{
+			$up1 +=1;
+			$up2 +=0;
+		}
+		else if($score1>$score2)
+		{
+			$up1 +=0;
+			$up2 +=1;
+		}
+		else
+		{
+			$up1 +=0;
+			$up2 +=0;
+		}
+		
+		
+		if($up1==$up2)
+		{
+			$up1_text[$i]='AS';
+			$up2_text[$i]='AS';
+			
+			$up1=$up1-$up2;
+			$up2=0;
+		}
+		else if($up1>$up2)
+		{
+			$up_value[$i]=$up1-$up2;
+			$up1_text[$i]=$up_value[$i].'UP';
+			$up2_text[$i]='';
+		}
+		else if($up1<$up2)
+		{
+			$up_value[$i]=$up2-$up1;
+			$up1_text[$i]='';
+			$up2_text[$i]=$up_value[$i].'UP';
+		}
+		else
+		{
+			
+		}
+
+		
+	}
+	
+
+	$team_number=$team_number+1;
+	
+	for($i=0; $i<18; $i++)
+	{
+		$d=$i+1;
+		
+		if($dong_number>0 && $dong_number==$d)
+		{
+			if($team_number==1)
+			{
+				$up_text=$up1_text[$dong_number-1];
+			}
+			else
+			{
+				$up_text=$up2_text[$dong_number-1];
+			}
+			
+		}
+	
+	}
+	
+	
+	
+	$up_total=intval(str_replace('UP',"",$up_text));
+	
+	//返回判断
+	if($type=='up_text')
+	{
+		return $up_text;
+	}
+	else if($type=='up_total')
+	{
+		return (string)$up_total;
+	}
+	
+	
+	
+
+}
+
+
+
+
+//4人4球计算方法
 function get_score_44($arr1,$arr2)
 {
 	$arr=array($arr1['cave_1'],$arr2['cave_1']);
@@ -588,8 +727,6 @@ function send_mobile_msg($mobile,$content,$code,$source,$sql_content,$msg_task_i
 
 
 
-
-
 function get_token()
 {
 	$token=time().md5("bwvip.com");
@@ -992,8 +1129,6 @@ foreach ($argv as $key=>$value) {
 			return '0#1';
 }
 
-
-
 function get_ip_v2()
 {
 	$ip = $_SERVER['REMOTE_ADDR'];
@@ -1014,6 +1149,4 @@ function get_ip_v2()
 	}
 	return $ip;
 }
-
-
 ?>

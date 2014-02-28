@@ -43,12 +43,12 @@ $field_set_list[1]['type_more'][]=array('key_value'=>'pinglunyuan','key_name'=>'
 $field_set_list[1]['type_more'][]=array('key_value'=>'zhiyeqiuyuan','key_name'=>'职业球员');
 $field_set_list[1]['type_more'][]=array('key_value'=>'yeyuqiuyuan','key_name'=>'业余球员');
 $field_set_list[1]['type_more'][]=array('key_value'=>'qingshaonianqiuyuan','key_name'=>'青少年球员');
-$field_set_list[1]['type_more'][]=array('key_value'=>'qita','key_name'=>'其他');
+$field_set_list[1]['type_more'][]=array('key_value'=>'qita','key_name'=>'其他（空白）');
 $field_set_list[1]['max_size']="50";
 $field_set_list[1]['value']="B";
 
 
-$field_set_list[2]['name']="mobile";
+$field_set_list[2]['name']="zimeiti_apply_mobile";
 $field_set_list[2]['name_cn']="手机号";
 $field_set_list[2]['type']="input";
 $field_set_list[2]['type_more']=null;
@@ -64,7 +64,7 @@ $field_set_list[3]['max_size']="50";
 $field_set_list[3]['value']="12345689";
 
 
-$field_set_list[4]['name']="zimeiti_apply_mobile";
+$field_set_list[4]['name']="zimeiti_recommend_mobile";
 $field_set_list[4]['name_cn']="推荐人手机号";
 $field_set_list[4]['type']="input";
 $field_set_list[4]['type_more']=null;

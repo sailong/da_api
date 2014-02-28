@@ -212,6 +212,7 @@ if($ac == 'item_detail')
 		{
 			$item_info['item_pic']=$site_url."/".$item_info['item_pic'];
 			$item_info['item_pic_info']=getimagesize($item_info['item_pic']);
+			//$item_info['item_pic_info']=null;
 		}
 		else
 		{
@@ -222,6 +223,7 @@ if($ac == 'item_detail')
 		{
 			$item_info['item_pic_bottom']=$site_url."/".$item_info['item_pic_bottom'];
 			$item_info['item_pic_bottom_info']=getimagesize($item_info['item_pic_bottom']);
+			//$item_info['item_pic_bottom_info']=null;
 		}
 		else
 		{

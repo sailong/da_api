@@ -89,7 +89,7 @@ if($ac=="zimeiti_apply_action")
 	if(!$uid)
 	{
 		//自动注册
-		$mobile=$_G['gp_mobile'];
+		$mobile=$_G['gp_zimeiti_apply_mobile'];
 		$username=$_G['gp_zimeiti_apply_realname'];
 		$password=get_number(6,"0123456789");
 		//$password="123456";
@@ -127,10 +127,10 @@ if($ac=="zimeiti_apply_action")
 		
 		
 		//发送短信给推荐人
-		$tjr_mobile=is_mobile($_G['zimeiti_apply_mobile']);
+		$tjr_mobile=is_mobile($_G['gp_zimeiti_recommend_mobile']);
 		if($tjr_mobile)
 		{
-			$new_apply=DB::fetch_first("select zimeiti_apply_id from tbl_zimeiti_apply where uid='".$uid."' and zimeiti_apply_mobile='".$tjr_mobile."' ");
+			$new_apply=DB::fetch_first("select zimeiti_apply_id from tbl_zimeiti_apply where uid='".$uid."' and zimeiti_recommend_mobile='".$tjr_mobile."' ");
 		
 			$msg_content="您的好友 ".$_G['zimeiti_apply_realname']." ,手机号：".$mobile."  ，现申请“大正高尔夫”第一线权限，你是他的推荐人，是否同意他的申请？http://wap.bwvip.com/zimeiti_apply_confirm.php?zimeiti_apply_id='".$new_apply['zimeiti_apply_id']."'&uid=".$uid."&mobile=".$tjr_mobile;
 		

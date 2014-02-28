@@ -312,7 +312,8 @@ if($ac=="user_ticket_detail")
 	$user_ticket_id=$_G['gp_user_ticket_id'];
 	if($user_ticket_id)
 	{
-		$detail_info=DB::fetch_first("select *,(select ticket_name from tbl_ticket where ticket_id=tbl_user_ticket.ticket_id) as ticket_name,(select ticket_is_zengsong from tbl_ticket where ticket_id=tbl_user_ticket.ticket_id) as ticket_is_zengsong from tbl_user_ticket where user_ticket_id='".$user_ticket_id."'  ");
+		/* $detail_info=DB::fetch_first("select *,(select ticket_name from tbl_ticket where ticket_id=tbl_user_ticket.ticket_id) as ticket_name,(select ticket_is_zengsong from tbl_ticket where ticket_id=tbl_user_ticket.ticket_id) as ticket_is_zengsong from tbl_user_ticket where user_ticket_id='".$user_ticket_id."'  "); */
+		$detail_info=DB::fetch_first("select *,(select item_name from tbl_item where item_id=tbl_user_ticket.ticket_id) as ticket_name,(select ticket_is_zengsong from tbl_item where item_id=tbl_user_ticket.ticket_id) as ticket_is_zengsong from tbl_user_ticket where user_ticket_id='".$user_ticket_id."'  ");
 		if($detail_info['user_ticket_id'])
 		{
 			if($detail_info['user_ticket_codepic'])
