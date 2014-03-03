@@ -64,7 +64,7 @@ if($ac = 'score_list'){
 	if($nd_id > 0)
 	{ 
 		$row1 = array(
-					'球洞(RND)',
+					'球洞',
 					'1',
 					'2',
 					'3',
@@ -107,18 +107,18 @@ if($ac = 'score_list'){
 				$PTL = $POUT + $PIN;
 			}
 			
-			$row2[]='标准杆(PAR)';
+			$row2[]='标准杆';
 			$i=0;
 			foreach($par as $key=>$val){
 				if(($i+1)%10==0){
-					$row2[] = "'".$POUT."'";
+					$row2[] = "{$POUT}";
 				}
 				$row2[] = $val;
 				$i++;
 			}
 			
-			$row2[] = "'".$PIN."'";
-			$row2[] = "'".$PTL."'";
+			$row2[] = "{$PIN}";
+			$row2[] = "{$PTL}";
 			$score_list_arr[] = $row2;
 			
 			if($event_id==27){

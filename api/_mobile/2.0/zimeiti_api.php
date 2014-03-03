@@ -132,7 +132,7 @@ if($ac=="zimeiti_apply_action")
 		{
 			$new_apply=DB::fetch_first("select zimeiti_apply_id from tbl_zimeiti_apply where uid='".$uid."' and zimeiti_recommend_mobile='".$tjr_mobile."' ");
 		
-			$msg_content="您的好友 ".$_G['zimeiti_apply_realname']." ,手机号：".$mobile."  ，现申请“大正高尔夫”第一线权限，你是他的推荐人，是否同意他的申请？http://wap.bwvip.com/zimeiti_apply_confirm.php?zimeiti_apply_id='".$new_apply['zimeiti_apply_id']."'&uid=".$uid."&mobile=".$tjr_mobile;
+			$msg_content="您的好友 ".$_G['gp_zimeiti_apply_realname']." ,手机号：".$mobile."  ，现申请“大正高尔夫”第一线权限，你是他的推荐人，是否同意他的申请？http://wap.bwvip.com/zimeiti_apply_confirm.php?zimeiti_apply_id=".$new_apply['zimeiti_apply_id']."&uid=".$uid."&mobile=".$tjr_mobile;
 		
 			$sql_content=$msg_content;
 			$msg_content=iconv('UTF-8', 'GB2312', $msg_content);
@@ -142,6 +142,7 @@ if($ac=="zimeiti_apply_action")
 			if(!$task_info['msg_task_id'])
 			{
 				//如果没有任务，则添加
+				$time = time();
 				$task_in="insert into tbl_msg_task (field_uid,mobile,msg_task_source,msg_task_status,msg_task_addtime,msg_task_date) values ('".$field_uid."','".$tjr_mobile."','zimeiti_apply','0','".$time."','".date("Y-m-d H:i:s",$time)."') ";
 				DB::query($task_in);
 				$msg_task_id = DB::result_first( "select msg_task_id from tbl_msg_task where mobile='".$tjr_mobile."' and msg_task_status=0 and msg_task_source='zimeiti_apply' order by msg_task_id desc limit 1 ");

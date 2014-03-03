@@ -66,7 +66,7 @@ if($ac=="heng")
 	{
 		$big_where .=" and fenzhan_id='".$fenzhan_id."' ";
 	}
-	else
+	elseif($event_info['event_fenzhan_id'])
 	{
 		if($event_info['event_fenzhan_id'])
 		{

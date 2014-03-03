@@ -66,10 +66,10 @@ if($ac=="baoming_add")
 	$event_id=$_G['gp_event_id'];
 	if($event_id)
 	{
-		$list_data=include($current_path.'/data/tbl_event_apply_'.$event_id.'_array_data.php');
+		$list_data=include($current_path.'/data/tbl_event_baoming_'.$event_id.'_array_data.php');
 
 		$data['title']="data";
-		$data['data']=$list_data;
+		$data['data']=array('list'=>$list_data);
 		api_json_result(1,0,$app_error['event']['10502'],$data);
 	}
 	else
@@ -146,7 +146,8 @@ if($ac=="baoming_add_action")
 		$baoming_info=DB::fetch_first("select baoming_id from tbl_baoming where uid='".$_G['gp_uid']."' and event_id='".$event_id."' ");
 		if(!$baoming_info['baoming_id'])
 		{
-			$fenzhan_ids=implode(",",$_POST['fenzhan_names']);
+			//$fenzhan_ids=implode(",",$_POST['fenzhan_names']);
+			$fenzhan_ids = $_G['gp_fenzhan_names'];
 			$sql="insert into tbl_baoming (event_id,uid,baoming_realname,baoming_sex,baoming_is_huang,baoming_chadian,fenzhan_ids,baoming_source,baoming_addtime) values('".$event_id."','".$uid."','".urldecode($_G['gp_baoming_realname'])."','".urldecode($_G['gp_baoming_sex'])."','".$_G['baoming_is_huang']."','".$_G['gp_baoming_chadian']."','".$fenzhan_ids."','app','".time()."') ";
 			DB::query($sql);
 			
@@ -167,8 +168,11 @@ if($ac=="baoming_add_action")
 		{
 		
 			
-			$fenzhan_ids=implode(",",$_POST['fenzhan_names']);//
 			
+			/* var_dump($_G['gp_fenzhan_names']);
+			$fenzhan_ids=implode(",",$_POST['fenzhan_names']);//
+			var_dump($fenzhan_ids);die; */
+			$fenzhan_ids = $_G['gp_fenzhan_names'];
 			$sql="insert into tbl_baoming (event_id,uid,baoming_realname,baoming_sex,baoming_card,baoming_mobile,baoming_email,baoming_chadian,baoming_zige,baoming_is_zidai_qiutong,fenzhan_ids,baoming_source,baoming_addtime) values('".$event_id."','".$uid."','".urldecode($_G['gp_baoming_realname'])."','".urldecode($_G['gp_baoming_sex'])."','".$_G['gp_baoming_card']."','".$_G['gp_baoming_mobile']."','".urldecode($_G['gp_baoming_email'])."','".$_G['gp_baoming_chadian']."','".urldecode($_G['gp_baoming_zige'])."','".$_G['gp_baoming_is_zidai_qiutong']."','".$fenzhan_ids."','app','".time()."') ";
 			DB::query($sql);
 			

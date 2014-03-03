@@ -608,8 +608,8 @@ else if(data=='10103')
 function send_mobile_msg($mobile,$content,$code,$source,$sql_content,$msg_task_id)
 {
 	//判断手机号合法性
-	preg_match_all("/1[3|5|8][0-9]{9}|15[0|1|2|3|5|6|7|8|9]\d{8}|18[0|5|6|7|8|9]\d{8}/",$mobile, $if_mobile);
-	if(!empty($if_mobile[0]))
+	$rs = preg_match_all("/1[3|5|8][0-9]{9}|15[0|1|2|3|5|6|7|8|9]\d{8}|18[0|5|6|7|8|9]\d{8}/",$mobile, $if_mobile);
+	if($rs)
 	{
 		$ip=get_ip_v2();
 		$sql_send_num=$send_num+1;

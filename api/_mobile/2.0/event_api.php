@@ -213,6 +213,9 @@ if($ac=="apply_ing")
 	$list=DB::query("select event_id,field_uid,event_name,event_id as event_uid,event_is_zhutui,event_content,event_url,event_type,event_logo,event_video_url,event_audio_url,event_city,event_baoming_starttime,event_baoming_endtime from tbl_event where event_baoming_starttime<=".time()." and event_baoming_endtime>=".time()." and (event_viewtype='B' or (field_uid=0) or event_viewtype='S') and event_is_baoming='Y' order by event_baoming_starttime desc  limit 100 ");
 	while($row = DB::fetch($list))
 	{
+		if(in_array($row['event_id'],array(66))){
+			$row['event_name'] = '亚运会世锦赛选拔赛';
+		}
 		if($login_uid)
 		{
 			$bm=DB::fetch_first("select bm_id,code_pic from ".DB::table("home_dazbm")." where  uid='".$login_uid."' and pay_status=1 ");
@@ -1265,6 +1268,8 @@ if($ac=="event_baoming_action")
 		}
 	}
 	
+	
+	
 	//亚运会
 	if($event_id==66)
 	{
@@ -1281,16 +1286,15 @@ if($ac=="event_baoming_action")
 			}
 			
 			
-			
-			$fenzhan_names = urldecode($_G['gp_fenzhan_names']);//$fenzhan_names=implode(",",$_POST['fenzhan_names']);//
-			$list=DB::query("select fenzhan_id from tbl_fenzhan where fenzhan_name in('".explode("','",(array)$fenzhan_names)."')");
-			$fenzhan_ids = '';
-			while($row=DB::fetch($list))
+			$fenzhan_names = urldecode($_G['gp_fenzhan_names']);
+			$fenzhan_arr=explode(",",$fenzhan_names);
+			for($i=0; $i<count($fenzhan_arr); $i++ )
 			{
-				$fenzhan_ids[] = $row['fenzhan_id'];
+				$fenzhan_id=DB::result_first("select fenzhan_id from tbl_fenzhan where fenzhan_name like '".$fenzhan_arr[$i]."' ");
+				$fenzhan_id_arr[]=$fenzhan_id;
 			}
-			unset($list);
-			$fenzhan_ids = explode(',',(array)$fenzhan_ids);
+			$fenzhan_ids=implode(",",$fenzhan_id_arr);
+			
 			
 			$sql="insert into tbl_baoming (event_id,uid,baoming_realname,baoming_sex,baoming_card,baoming_mobile,baoming_email,baoming_chadian,baoming_zige,baoming_is_zidai_qiutong,fenzhan_ids,baoming_source,baoming_addtime) values('".$event_id."','".$uid."','".urldecode($_G['gp_baoming_realname'])."','".urldecode($_G['gp_baoming_sex'])."','".$_G['gp_baoming_card']."','".$_G['gp_baoming_mobile']."','".urldecode($_G['gp_baoming_email'])."','".$_G['gp_baoming_chadian']."','".urldecode($_G['gp_baoming_zige'])."','".$baoming_is_zidai_qiutong."','".$fenzhan_ids."','app','".time()."') ";
 			DB::query($sql);

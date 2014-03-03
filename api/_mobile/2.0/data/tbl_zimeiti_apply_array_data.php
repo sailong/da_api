@@ -45,7 +45,7 @@ $field_set_list[1]['type_more'][]=array('key_value'=>'yeyuqiuyuan','key_name'=>'
 $field_set_list[1]['type_more'][]=array('key_value'=>'qingshaonianqiuyuan','key_name'=>'青少年球员');
 $field_set_list[1]['type_more'][]=array('key_value'=>'qita','key_name'=>'其他（空白）');
 $field_set_list[1]['max_size']="50";
-$field_set_list[1]['value']="B";
+$field_set_list[1]['value']="zishenmeitiren";
 
 
 $field_set_list[2]['name']="zimeiti_apply_mobile";
