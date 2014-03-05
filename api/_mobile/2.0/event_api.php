@@ -1295,6 +1295,28 @@ if($ac=="event_baoming_action")
 			}
 			$fenzhan_ids=implode(",",$fenzhan_id_arr);
 			
+			/* $event_names = urldecode($_G['gp_fenzhan_names']);
+			$event_arr=explode(",",$event_names);
+			
+			for($i=0; $i<count($event_arr); $i++ )
+			{
+				$event_id=DB::result_first("select event_id from tbl_event where event_name like '".$event_arr[$i]."' ");
+				$event_id_arr[]=$event_id;
+			}
+			//$event_ids="'".implode("','",$event_id_arr)."'";
+			
+			
+			for($i=0; $i<count($event_id_arr); $i++ )
+			{
+				$list=DB::query("select fenzhan_id from tbl_fenzhan where event_id='".$event_id_arr[$i]."' ");
+				while($row=DB::fetch($list))
+				{
+					$fenzhan_id_arr[]=$row['fenzhan_id'];
+				}
+				
+			}
+			$fenzhan_ids=implode(",",$fenzhan_id_arr); */
+			
 			
 			$sql="insert into tbl_baoming (event_id,uid,baoming_realname,baoming_sex,baoming_card,baoming_mobile,baoming_email,baoming_chadian,baoming_zige,baoming_is_zidai_qiutong,fenzhan_ids,baoming_source,baoming_addtime) values('".$event_id."','".$uid."','".urldecode($_G['gp_baoming_realname'])."','".urldecode($_G['gp_baoming_sex'])."','".$_G['gp_baoming_card']."','".$_G['gp_baoming_mobile']."','".urldecode($_G['gp_baoming_email'])."','".$_G['gp_baoming_chadian']."','".urldecode($_G['gp_baoming_zige'])."','".$baoming_is_zidai_qiutong."','".$fenzhan_ids."','app','".time()."') ";
 			DB::query($sql);
