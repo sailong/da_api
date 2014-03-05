@@ -150,6 +150,9 @@ class eventAction extends AdminAuthAction
 			if(!empty($uploadinfo["event_audio_bg_iphone5"])) {
 				$data["event_audio_bg_iphone5"]=$uploadinfo["event_audio_bg_iphone5"]["savepath"] . $uploadinfo["event_audio_bg_iphone5"]["savename"];
 			}
+			if(!empty($uploadinfo["event_baoming_top_pic"])) {
+				$data["event_baoming_top_pic"]=$uploadinfo["event_baoming_top_pic"]["savepath"] . $uploadinfo["event_baoming_top_pic"]["savename"];
+			}
 
 			$data["event_starttime"]=strtotime(post("event_starttime"));
 			$data["event_endtime"]=strtotime(post("event_endtime"));
@@ -321,6 +324,9 @@ class eventAction extends AdminAuthAction
 			}
 			if(!empty($uploadinfo["event_audio_bg_iphone5"])) {
 				$data["event_audio_bg_iphone5"]=$uploadinfo["event_audio_bg_iphone5"]["savepath"] . $uploadinfo["event_audio_bg_iphone5"]["savename"];
+			}
+			if(!empty($uploadinfo["event_baoming_top_pic"])) {
+				$data["event_baoming_top_pic"]=$uploadinfo["event_baoming_top_pic"]["savepath"] . $uploadinfo["event_baoming_top_pic"]["savename"];
 			}
 			
 			$data["event_starttime"]=strtotime(post("event_starttime"));

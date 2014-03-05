@@ -1,0 +1,106 @@
+<include file="../public/header_dialog" />
+{$usejs}
+
+<div class="so_main">
+
+  <div class="page_tit">排名管理</div>
+  <div class="tit_tab">
+	<ul>
+		<li><a class=on href="#">修改排名</a></li>
+	</ul>
+  </div>
+
+<table border="0" cellspacing="0" cellpadding="0" style="width:900px;">
+<tr>
+<td>
+<!--/dialog_start-->
+
+<form method="post" id="act_form" name="act_form" action="{:U('admin/rank/rank_edit_action')}" enctype="multipart/form-data">
+	<table class="add_table" border="0" cellspacing="0" cellpadding="0" >
+		<tbody>
+		<tr>
+					<th>所属用户：</th>
+					<td><input type="text" name="uid" id="uid" class="mod_input2" style="width:60px;"  value="{$data.uid}"></td>
+				</tr>
+				<tr>
+					<th>用户组：</th>
+					<td>
+						<select name="user_group">
+							<option value="">请选择</option>
+							<option value="{$data.user_group}">{$data.user_group}</option>
+						</select>
+						<script>set_select_value(document.act_form.user_group,"{$data.user_group}");</script>
+					</td>
+				</tr>
+				<tr>
+					<th>类型：</th>
+					<td>
+						<select name="rank_type">
+							<option value="">请选择</option>
+							<option value="{$data.rank_type}">{$data.rank_type}</option>
+						</select>
+						<script>set_select_value(document.act_form.rank_type,"{$data.rank_type}");</script>
+					</td>
+				</tr>
+				<tr>
+					<th>总分：</th>
+					<td><input type="text" name="rank_total_score" id="rank_total_score" class="mod_input2" style="width:60px;"  value="{$data.rank_total_score}"></td>
+				</tr>
+				<tr>
+					<th>平均分：</th>
+					<td><input type="text" name="rank_score" id="rank_score" class="mod_input2" style="width:60px;"  value="{$data.rank_score}"></td>
+				</tr>
+				<tr>
+					<th>变化趋势：</th>
+					<td><input type="text" name="rank_change" id="rank_change" class="mod_input2" style="width:60px;"  value="{$data.rank_change}"></td>
+				</tr>
+				<tr>
+					<th>上周排名：</th>
+					<td><input type="text" name="rank_last" id="rank_last" class="mod_input2" style="width:60px;"  value="{$data.rank_last}"></td>
+				</tr>
+				
+		</tbody>
+		<tfoot>
+			<tr>
+				<th></th>
+				<td>
+					<input type="hidden" name="rank_id" value="{$data.rank_id}">
+					<input type="submit" class="btn_b" value="保存" style="margin-right:10px;"/>
+					<input type="button" class="btn_w" onclick="javascript:history.back(-1);" value="返回" />
+				</td>
+		</tfoot>
+	</table><!--/add_table-->
+</form>
+
+<script>
+$(document).ready(function(){
+$.formValidator.initConfig({formID:"act_form",theme:'ArrowSolidBox',mode:'AutoTip',onError:function(msg){msg_error(msg)},inIframe:true});
+
+	$("#uid").formValidator({empty:true,onShow:"请输入所属用户",onFocus:"请输入所属用户",onCorrect:"输入正确"}).inputValidator({min:1,max:10,onError:"请输入所属用户"});
+		$("#user_group").formValidator({empty:true,onShow:"请输入用户组",onFocus:"请输入用户组",onCorrect:"输入正确"}).inputValidator({min:1,max:10,onError:"请输入用户组"});
+		$("#rank_type").formValidator({empty:true,onShow:"请输入类型",onFocus:"请输入类型",onCorrect:"输入正确"}).inputValidator({min:1,max:1,onError:"请输入类型"});
+		$("#rank_total_score").formValidator({empty:true,onShow:"请输入总分",onFocus:"请输入总分",onCorrect:"输入正确"}).inputValidator({min:1,max:10,onError:"请输入总分"});
+		$("#rank_score").formValidator({empty:true,onShow:"请输入平均分",onFocus:"请输入平均分",onCorrect:"输入正确"}).inputValidator({min:1,max:10,onError:"请输入平均分"});
+		$("#rank_change").formValidator({empty:true,onShow:"请输入变化趋势",onFocus:"请输入变化趋势",onCorrect:"输入正确"}).inputValidator({min:1,max:10,onError:"请输入变化趋势"});
+		$("#rank_last").formValidator({empty:true,onShow:"请输入上周排名",onFocus:"请输入上周排名",onCorrect:"输入正确"}).inputValidator({min:1,max:10,onError:"请输入上周排名"});
+		
+
+	$.formValidator.reloadAutoTip();
+});
+
+function reloadAutoTip()
+{
+	$.formValidator.reloadAutoTip();
+}
+
+</script>
+
+
+<!--/dialog_end-->
+</td>
+</tr>
+</table>
+
+</div>
+
+<include file="../Public/_footer" />

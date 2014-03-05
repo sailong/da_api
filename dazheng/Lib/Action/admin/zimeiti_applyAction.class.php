@@ -137,6 +137,7 @@ class zimeiti_applyAction extends AdminAuthAction
 					$user_data['salt']     = $salt;
 					M("ucenter_members","pre_")->where("uid='".$data["uid"]."'")->save($user_data);
 					unset($user_data['salt']);
+					M("common_member_profile","pre_")->where("uid='".$data["uid"]."'")->save(array('is_zimeiti'=>'Y','level'=>1));
 					M("common_member","pre_")->where("uid='".$data["uid"]."'")->save($user_data); 
 					M("members","jishigou_")->where("uid='".$data["uid"]."'")->save($user_data); 
 					
@@ -229,6 +230,7 @@ class zimeiti_applyAction extends AdminAuthAction
 				$user_data['salt']     = $salt;
 				M("ucenter_members","pre_")->where("uid='".$data["uid"]."'")->save($user_data);
 				unset($user_data['salt']);
+				M("common_member_profile","pre_")->where("uid='".$data["uid"]."'")->save(array('is_zimeiti'=>'Y','level'=>1)); 
 				M("common_member","pre_")->where("uid='".$data["uid"]."'")->save($user_data); 
 				M("members","jishigou_")->where("uid='".$data["uid"]."'")->save($user_data); 
 				

@@ -1,0 +1,248 @@
+<include file="../public/_header" />
+<div class="so_main">
+
+  <div class="page_tit">积分方案</div>
+  <include file="_tab" />
+
+  <div class="search_box">
+		<form name="search_form" action="/default.php" method="get">
+		<input type="hidden" name="g" value="admin">
+		<input type="hidden" name="m" value="rank_plan">
+		<input type="hidden" name="a" value="rank_plan">
+
+		<table border="0" cellspacing="0" cellpadding="0">
+			<th>名称：</th>
+			<td><input type="text" name="k" class="search_input" style="width:120px;" value="<php> echo  get('k');</php>"></td>
+			<th>开始时间：</th>
+			<td>
+				<input type="text" name="starttime" class="search_input_date" style="width:120px;" value="<php> echo  get('starttime');</php>" onFocus="WdatePicker({isShowClear:false,readOnly:true})"> 至 
+				<input type="text" name="endtime" class="search_input_date" style="width:120px;" value="<php> echo  get('endtime');</php>" onFocus="WdatePicker({isShowClear:false,readOnly:true})">
+			</td>
+			<!--
+			<th>类型：</th>
+			<td>
+				<select name="type" style="width:120px;"  class="search_select">
+					<option value="">请选择</option>
+					<option value="1">1</option>
+				</select>
+				<script>set_select_value(document.search_form.course_type,"<php> echo  get("type");</php>");</script>
+			</td>
+			-->
+			<td class="btn">
+				<input type="submit" value="搜索" class="btn_b" style="margin-right:8px;" >
+				<input type="button" value="查看全部" class="btn_b" onclick="javascript:location='{:U('admin/rank_plan/rank_plan',array('state'=>get('state')))}';">
+			</td>
+		</table>
+	</form>
+  </div><!--/search_box-->
+
+  <!--------list -------->
+  <div class="Toolbar_inbox">
+  	<div class="page right">{$pages}</div>
+
+	<a href="{:U('admin/rank_plan/rank_plan_add')}" class="btn_a"><span>添加积分方案</span></a>
+	<a href="javascript:void(0);" class="btn_a"  onclick="mod_delete_batch('{:U('admin/rank_plan/rank_plan_delete_action')}','mod_table');"><span>批量删除</span></a>
+
+	<div class="clear"></div>
+  </div>
+  <div class="list">
+	<php>if($total>0){</php>
+	  <table width="100%" id="mod_table" border="0" cellspacing="0" cellpadding="0">
+	  <tr>
+		<th style="width:30px;">
+			<input type="checkbox" id="checkbox_handle" onclick="select_all(this,'mod_table','checkbox')" value="0">
+			<label for="checkbox"></label>
+		</th>
+		<th class="line_l">类型</th>
+		<th class="line_l">比赛级别</th>
+		<th class="line_l">rank_1</th>
+		<th class="line_l">rank_2</th>
+		<th class="line_l">rank_3</th>
+		<th class="line_l">rank_4</th>
+		<th class="line_l">rank_5</th>
+		<th class="line_l">rank_6</th>
+		<th class="line_l">rank_7</th>
+		<th class="line_l">rank_8</th>
+		<th class="line_l">rank_9</th>
+		<th class="line_l">rank_10</th>
+		<th class="line_l">rank_11</th>
+		<th class="line_l">rank_12</th>
+		<th class="line_l">rank_13</th>
+		<th class="line_l">rank_14</th>
+		<th class="line_l">rank_15</th>
+		<th class="line_l">rank_16</th>
+		<th class="line_l">rank_17</th>
+		<th class="line_l">rank_18</th>
+		<th class="line_l">rank_19</th>
+		<th class="line_l">rank_20</th>
+		<th class="line_l">rank_21</th>
+		<th class="line_l">rank_22</th>
+		<th class="line_l">rank_23</th>
+		<th class="line_l">rank_24</th>
+		<th class="line_l">rank_25</th>
+		<th class="line_l">rank_26</th>
+		<th class="line_l">rank_27</th>
+		<th class="line_l">rank_28</th>
+		<th class="line_l">rank_29</th>
+		<th class="line_l">rank_30</th>
+		<th class="line_l">rank_31</th>
+		<th class="line_l">rank_32</th>
+		<th class="line_l">rank_33</th>
+		<th class="line_l">rank_34</th>
+		<th class="line_l">rank_35</th>
+		<th class="line_l">rank_36</th>
+		<th class="line_l">rank_37</th>
+		<th class="line_l">rank_38</th>
+		<th class="line_l">rank_39</th>
+		<th class="line_l">rank_40</th>
+		<th class="line_l">rank_41</th>
+		<th class="line_l">rank_42</th>
+		<th class="line_l">rank_43</th>
+		<th class="line_l">rank_44</th>
+		<th class="line_l">rank_45</th>
+		<th class="line_l">rank_46</th>
+		<th class="line_l">rank_47</th>
+		<th class="line_l">rank_48</th>
+		<th class="line_l">rank_49</th>
+		<th class="line_l">rank_50</th>
+		<th class="line_l">rank_51</th>
+		<th class="line_l">rank_52</th>
+		<th class="line_l">rank_53</th>
+		<th class="line_l">rank_54</th>
+		<th class="line_l">rank_55</th>
+		<th class="line_l">rank_56</th>
+		<th class="line_l">rank_57</th>
+		<th class="line_l">rank_58</th>
+		<th class="line_l">rank_59</th>
+		<th class="line_l">rank_60</th>
+		<th class="line_l">rank_61</th>
+		<th class="line_l">rank_62</th>
+		<th class="line_l">rank_63</th>
+		<th class="line_l">rank_64</th>
+		<th class="line_l">rank_65</th>
+		<th class="line_l">rank_66</th>
+		<th class="line_l">rank_67</th>
+		<th class="line_l">rank_68</th>
+		<th class="line_l">rank_69</th>
+		<th class="line_l">rank_70</th>
+		<th class="line_l">添加时间</th>
+		<th class="line_l">操作</th>
+	</tr>
+	<volist id="vo" name="list">
+	<tr overstyle="on"  id=ids_{$vo["rank_plan_id"]}>
+		<td><input type="checkbox" name="checkbox" onclick="select_one(this)" value="{$vo.rank_plan_id}" ></td>
+		<td>{$vo.rank_plan_type}</th>
+			<td><a href="{:U('admin/rank_plan/rank_plan_detail', array('rank_plan_id'=>$vo['rank_plan_id']))}'">{$vo.event_level}</a></td>
+			<td>{$vo.rank_1}</td>
+			<td>{$vo.rank_2}</td>
+			<td>{$vo.rank_3}</td>
+			<td>{$vo.rank_4}</td>
+			<td>{$vo.rank_5}</td>
+			<td>{$vo.rank_6}</td>
+			<td>{$vo.rank_7}</td>
+			<td>{$vo.rank_8}</td>
+			<td>{$vo.rank_9}</td>
+			<td>{$vo.rank_10}</td>
+			<td>{$vo.rank_11}</td>
+			<td>{$vo.rank_12}</td>
+			<td>{$vo.rank_13}</td>
+			<td>{$vo.rank_14}</td>
+			<td>{$vo.rank_15}</td>
+			<td>{$vo.rank_16}</td>
+			<td>{$vo.rank_17}</td>
+			<td>{$vo.rank_18}</td>
+			<td>{$vo.rank_19}</td>
+			<td>{$vo.rank_20}</td>
+			<td>{$vo.rank_21}</td>
+			<td>{$vo.rank_22}</td>
+			<td>{$vo.rank_23}</td>
+			<td>{$vo.rank_24}</td>
+			<td>{$vo.rank_25}</td>
+			<td>{$vo.rank_26}</td>
+			<td>{$vo.rank_27}</td>
+			<td>{$vo.rank_28}</td>
+			<td>{$vo.rank_29}</td>
+			<td>{$vo.rank_30}</td>
+			<td>{$vo.rank_31}</td>
+			<td>{$vo.rank_32}</td>
+			<td>{$vo.rank_33}</td>
+			<td>{$vo.rank_34}</td>
+			<td>{$vo.rank_35}</td>
+			<td>{$vo.rank_36}</td>
+			<td>{$vo.rank_37}</td>
+			<td>{$vo.rank_38}</td>
+			<td>{$vo.rank_39}</td>
+			<td>{$vo.rank_40}</td>
+			<td>{$vo.rank_41}</td>
+			<td>{$vo.rank_42}</td>
+			<td>{$vo.rank_43}</td>
+			<td>{$vo.rank_44}</td>
+			<td>{$vo.rank_45}</td>
+			<td>{$vo.rank_46}</td>
+			<td>{$vo.rank_47}</td>
+			<td>{$vo.rank_48}</td>
+			<td>{$vo.rank_49}</td>
+			<td>{$vo.rank_50}</td>
+			<td>{$vo.rank_51}</td>
+			<td>{$vo.rank_52}</td>
+			<td>{$vo.rank_53}</td>
+			<td>{$vo.rank_54}</td>
+			<td>{$vo.rank_55}</td>
+			<td>{$vo.rank_56}</td>
+			<td>{$vo.rank_57}</td>
+			<td>{$vo.rank_58}</td>
+			<td>{$vo.rank_59}</td>
+			<td>{$vo.rank_60}</td>
+			<td>{$vo.rank_61}</td>
+			<td>{$vo.rank_62}</td>
+			<td>{$vo.rank_63}</td>
+			<td>{$vo.rank_64}</td>
+			<td>{$vo.rank_65}</td>
+			<td>{$vo.rank_66}</td>
+			<td>{$vo.rank_67}</td>
+			<td>{$vo.rank_68}</td>
+			<td>{$vo.rank_69}</td>
+			<td>{$vo.rank_70}</td>
+			<td>{$vo.rank_plan_addtime|format_to_time}</td>
+			
+		<td>
+			<a href="{:U('admin/rank_plan/rank_plan_edit', array('rank_plan_id'=>$vo['rank_plan_id']))}">修改</a> | 
+			<a href="javascript:void(0);" onclick="mod_delete_one('{:U('admin/rank_plan/rank_plan_delete_action')}','{$vo['rank_plan_id']}');">删除</a>
+		</td>
+	</tr>
+	</volist>
+    </table>
+	  <php>}else{</php>
+			<div class="no_data">
+				<img src="/skin/images/no_data.gif" align="absmiddle"> <span>没有积分方案... </span>
+			</div>
+	 <php>}</php>
+  </div>
+
+  <div class="Toolbar_inbox">
+	<div class="page right">{$pages}</div>
+
+	<a href="{:U('admin/rank_plan/rank_plan_add')}" class="btn_a"><span>添加积分方案</span></a>
+	<a href="javascript:void(0);" class="btn_a"  onclick="mod_delete_batch('{:U('admin/rank_plan/rank_plan_delete_action')}','mod_table');"><span>批量删除</span></a>
+
+
+	<div class="clear"></div>
+  </div>
+</div>
+
+<script>
+	$(document).ready(function(){
+		$("tr[overstyle='on']").hover(
+		  function ()
+		  {
+		    $(this).addClass("bg_hover");
+		  },
+		  function (){
+		    $(this).removeClass("bg_hover");
+		  }
+		);
+	});
+</script>
+
+
+<include file="../public/_footer" />

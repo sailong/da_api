@@ -18,7 +18,7 @@ class baomingModel extends Model{
 
 		if(get("k")!="")
 		{
-			$where .=" and baoming_realname like '%".get("k")."%' ";
+			$where .=" and (baoming_realname like '%".get("k")."%' or baoming_mobile like '%".get("k")."%' or uid='".get("k")."')";
 		}
 		if(get("event_id")!="")
 		{
@@ -30,7 +30,7 @@ class baomingModel extends Model{
 		}
 		if(get("fenzhan_id")!="")
 		{
-			$where .=" and fenzhan_id='".get("fenzhan_id")."' ";
+			$where .=" and (fenzhan_id='".get("fenzhan_id")."' or fenzhan_ids like '%".get("fenzhan_id")."%')";
 		}
 		if(get("baoming_status")!="")
 		{

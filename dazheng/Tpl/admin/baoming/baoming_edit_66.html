@@ -80,6 +80,19 @@
 				</td>
 			</tr>
 			<tr>
+				<th>报名方式：</th>
+				<td>
+					<select name="baoming_source">
+						<option value="">请选择</option>
+						<option value="web">网站报名</option>
+						<option value="app">客户端报名</option>
+						<!-- <option value="field">球场报名</option>
+						<option value="jingxiaodian">经销店报名</option> -->
+					</select>
+					<script>set_select_value(document.act_form.baoming_source,"{$data.baoming_source}");</script>
+				</td>
+			</tr>
+			<tr>
 				<th>是否自带球童：</th>
 				<td>
 					<select name="baoming_is_zidai_qiutong">

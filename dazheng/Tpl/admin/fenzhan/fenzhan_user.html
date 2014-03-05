@@ -10,7 +10,10 @@
 		<volist id="vo" name="fenzhan">
 		<li><a <php> if(get("fenzhan_id")==$vo['fenzhan_id'] || $fenzhan_id==$vo['fenzhan_id']){ echo " class=on ";}</php> href="{:U('admin/fenzhan/fenzhan_user',array('event_id'=>$event_id,'fenzhan_id'=>$vo['fenzhan_id']))}">{$vo['fenzhan_name']}</a></li>
 		</volist>
-        <li style="float:right;"><a style="color:red;"   href="{:U('admin/fenzu/daochu',array('event_id'=>get('event_id'),'fenzhan_id'=>get('fenzhan_id')))}">导出Excel</a></li>
+        <li style="float:right;  margin-left:30px;"><a style="color:red;"   href="{:U('admin/fenzu/daochu',array('event_id'=>get('event_id'),'fenzhan_id'=>get('fenzhan_id')))}">导出Excel</a></li>
+		<li style="float:right; line-height:30px;">
+		当前共有 <b style="font-size:16px; color:red;">{$total}</b> 人
+		</li>
 	</ul>
    </div>
    

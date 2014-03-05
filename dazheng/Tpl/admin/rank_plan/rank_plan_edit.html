@@ -1,0 +1,431 @@
+<include file="../public/header_dialog" />
+{$usejs}
+
+<div class="so_main">
+
+  <div class="page_tit">积分方案管理</div>
+  <div class="tit_tab">
+	<ul>
+		<li><a class=on href="#">修改积分方案</a></li>
+	</ul>
+  </div>
+
+<table border="0" cellspacing="0" cellpadding="0" style="width:900px;">
+<tr>
+<td>
+<!--/dialog_start-->
+
+<form method="post" id="act_form" name="act_form" action="{:U('admin/rank_plan/rank_plan_edit_action')}" enctype="multipart/form-data">
+	<table class="add_table" border="0" cellspacing="0" cellpadding="0" >
+		<tbody>
+		<tr>
+					<th>类型：</th>
+					<td>
+						<select name="rank_plan_type">
+							<option value="">请选择</option>
+							<option value="{$data.rank_plan_type}">{$data.rank_plan_type}</option>
+						</select>
+						<script>set_select_value(document.act_form.rank_plan_type,"{$data.rank_plan_type}");</script>
+					</td>
+				</tr>
+				<tr>
+					<th>比赛级别：</th>
+					<td>
+						<select name="event_level">
+							<option value="">请选择</option>
+							<option value="{$data.event_level}">{$data.event_level}</option>
+						</select>
+						<script>set_select_value(document.act_form.event_level,"{$data.event_level}");</script>
+					</td>
+				</tr>
+				<tr>
+					<th>rank_1：</th>
+					<td><input type="text" name="rank_1" id="rank_1" class="mod_input2" style="width:60px;"  value="{$data.rank_1}"></td>
+				</tr>
+				<tr>
+					<th>rank_2：</th>
+					<td><input type="text" name="rank_2" id="rank_2" class="mod_input2" style="width:60px;"  value="{$data.rank_2}"></td>
+				</tr>
+				<tr>
+					<th>rank_3：</th>
+					<td><input type="text" name="rank_3" id="rank_3" class="mod_input2" style="width:60px;"  value="{$data.rank_3}"></td>
+				</tr>
+				<tr>
+					<th>rank_4：</th>
+					<td><input type="text" name="rank_4" id="rank_4" class="mod_input2" style="width:60px;"  value="{$data.rank_4}"></td>
+				</tr>
+				<tr>
+					<th>rank_5：</th>
+					<td><input type="text" name="rank_5" id="rank_5" class="mod_input2" style="width:60px;"  value="{$data.rank_5}"></td>
+				</tr>
+				<tr>
+					<th>rank_6：</th>
+					<td><input type="text" name="rank_6" id="rank_6" class="mod_input2" style="width:60px;"  value="{$data.rank_6}"></td>
+				</tr>
+				<tr>
+					<th>rank_7：</th>
+					<td><input type="text" name="rank_7" id="rank_7" class="mod_input2" style="width:60px;"  value="{$data.rank_7}"></td>
+				</tr>
+				<tr>
+					<th>rank_8：</th>
+					<td><input type="text" name="rank_8" id="rank_8" class="mod_input2" style="width:60px;"  value="{$data.rank_8}"></td>
+				</tr>
+				<tr>
+					<th>rank_9：</th>
+					<td><input type="text" name="rank_9" id="rank_9" class="mod_input2" style="width:60px;"  value="{$data.rank_9}"></td>
+				</tr>
+				<tr>
+					<th>rank_10：</th>
+					<td><input type="text" name="rank_10" id="rank_10" class="mod_input2" style="width:60px;"  value="{$data.rank_10}"></td>
+				</tr>
+				<tr>
+					<th>rank_11：</th>
+					<td><input type="text" name="rank_11" id="rank_11" class="mod_input2" style="width:60px;"  value="{$data.rank_11}"></td>
+				</tr>
+				<tr>
+					<th>rank_12：</th>
+					<td><input type="text" name="rank_12" id="rank_12" class="mod_input2" style="width:60px;"  value="{$data.rank_12}"></td>
+				</tr>
+				<tr>
+					<th>rank_13：</th>
+					<td><input type="text" name="rank_13" id="rank_13" class="mod_input2" style="width:60px;"  value="{$data.rank_13}"></td>
+				</tr>
+				<tr>
+					<th>rank_14：</th>
+					<td><input type="text" name="rank_14" id="rank_14" class="mod_input2" style="width:60px;"  value="{$data.rank_14}"></td>
+				</tr>
+				<tr>
+					<th>rank_15：</th>
+					<td><input type="text" name="rank_15" id="rank_15" class="mod_input2" style="width:60px;"  value="{$data.rank_15}"></td>
+				</tr>
+				<tr>
+					<th>rank_16：</th>
+					<td><input type="text" name="rank_16" id="rank_16" class="mod_input2" style="width:60px;"  value="{$data.rank_16}"></td>
+				</tr>
+				<tr>
+					<th>rank_17：</th>
+					<td><input type="text" name="rank_17" id="rank_17" class="mod_input2" style="width:60px;"  value="{$data.rank_17}"></td>
+				</tr>
+				<tr>
+					<th>rank_18：</th>
+					<td><input type="text" name="rank_18" id="rank_18" class="mod_input2" style="width:60px;"  value="{$data.rank_18}"></td>
+				</tr>
+				<tr>
+					<th>rank_19：</th>
+					<td><input type="text" name="rank_19" id="rank_19" class="mod_input2" style="width:60px;"  value="{$data.rank_19}"></td>
+				</tr>
+				<tr>
+					<th>rank_20：</th>
+					<td><input type="text" name="rank_20" id="rank_20" class="mod_input2" style="width:60px;"  value="{$data.rank_20}"></td>
+				</tr>
+				<tr>
+					<th>rank_21：</th>
+					<td><input type="text" name="rank_21" id="rank_21" class="mod_input2" style="width:60px;"  value="{$data.rank_21}"></td>
+				</tr>
+				<tr>
+					<th>rank_22：</th>
+					<td><input type="text" name="rank_22" id="rank_22" class="mod_input2" style="width:60px;"  value="{$data.rank_22}"></td>
+				</tr>
+				<tr>
+					<th>rank_23：</th>
+					<td><input type="text" name="rank_23" id="rank_23" class="mod_input2" style="width:60px;"  value="{$data.rank_23}"></td>
+				</tr>
+				<tr>
+					<th>rank_24：</th>
+					<td><input type="text" name="rank_24" id="rank_24" class="mod_input2" style="width:60px;"  value="{$data.rank_24}"></td>
+				</tr>
+				<tr>
+					<th>rank_25：</th>
+					<td><input type="text" name="rank_25" id="rank_25" class="mod_input2" style="width:60px;"  value="{$data.rank_25}"></td>
+				</tr>
+				<tr>
+					<th>rank_26：</th>
+					<td><input type="text" name="rank_26" id="rank_26" class="mod_input2" style="width:60px;"  value="{$data.rank_26}"></td>
+				</tr>
+				<tr>
+					<th>rank_27：</th>
+					<td><input type="text" name="rank_27" id="rank_27" class="mod_input2" style="width:60px;"  value="{$data.rank_27}"></td>
+				</tr>
+				<tr>
+					<th>rank_28：</th>
+					<td><input type="text" name="rank_28" id="rank_28" class="mod_input2" style="width:60px;"  value="{$data.rank_28}"></td>
+				</tr>
+				<tr>
+					<th>rank_29：</th>
+					<td><input type="text" name="rank_29" id="rank_29" class="mod_input2" style="width:60px;"  value="{$data.rank_29}"></td>
+				</tr>
+				<tr>
+					<th>rank_30：</th>
+					<td><input type="text" name="rank_30" id="rank_30" class="mod_input2" style="width:60px;"  value="{$data.rank_30}"></td>
+				</tr>
+				<tr>
+					<th>rank_31：</th>
+					<td><input type="text" name="rank_31" id="rank_31" class="mod_input2" style="width:60px;"  value="{$data.rank_31}"></td>
+				</tr>
+				<tr>
+					<th>rank_32：</th>
+					<td><input type="text" name="rank_32" id="rank_32" class="mod_input2" style="width:60px;"  value="{$data.rank_32}"></td>
+				</tr>
+				<tr>
+					<th>rank_33：</th>
+					<td><input type="text" name="rank_33" id="rank_33" class="mod_input2" style="width:60px;"  value="{$data.rank_33}"></td>
+				</tr>
+				<tr>
+					<th>rank_34：</th>
+					<td><input type="text" name="rank_34" id="rank_34" class="mod_input2" style="width:60px;"  value="{$data.rank_34}"></td>
+				</tr>
+				<tr>
+					<th>rank_35：</th>
+					<td><input type="text" name="rank_35" id="rank_35" class="mod_input2" style="width:60px;"  value="{$data.rank_35}"></td>
+				</tr>
+				<tr>
+					<th>rank_36：</th>
+					<td><input type="text" name="rank_36" id="rank_36" class="mod_input2" style="width:60px;"  value="{$data.rank_36}"></td>
+				</tr>
+				<tr>
+					<th>rank_37：</th>
+					<td><input type="text" name="rank_37" id="rank_37" class="mod_input2" style="width:60px;"  value="{$data.rank_37}"></td>
+				</tr>
+				<tr>
+					<th>rank_38：</th>
+					<td><input type="text" name="rank_38" id="rank_38" class="mod_input2" style="width:60px;"  value="{$data.rank_38}"></td>
+				</tr>
+				<tr>
+					<th>rank_39：</th>
+					<td><input type="text" name="rank_39" id="rank_39" class="mod_input2" style="width:60px;"  value="{$data.rank_39}"></td>
+				</tr>
+				<tr>
+					<th>rank_40：</th>
+					<td><input type="text" name="rank_40" id="rank_40" class="mod_input2" style="width:60px;"  value="{$data.rank_40}"></td>
+				</tr>
+				<tr>
+					<th>rank_41：</th>
+					<td><input type="text" name="rank_41" id="rank_41" class="mod_input2" style="width:60px;"  value="{$data.rank_41}"></td>
+				</tr>
+				<tr>
+					<th>rank_42：</th>
+					<td><input type="text" name="rank_42" id="rank_42" class="mod_input2" style="width:60px;"  value="{$data.rank_42}"></td>
+				</tr>
+				<tr>
+					<th>rank_43：</th>
+					<td><input type="text" name="rank_43" id="rank_43" class="mod_input2" style="width:60px;"  value="{$data.rank_43}"></td>
+				</tr>
+				<tr>
+					<th>rank_44：</th>
+					<td><input type="text" name="rank_44" id="rank_44" class="mod_input2" style="width:60px;"  value="{$data.rank_44}"></td>
+				</tr>
+				<tr>
+					<th>rank_45：</th>
+					<td><input type="text" name="rank_45" id="rank_45" class="mod_input2" style="width:60px;"  value="{$data.rank_45}"></td>
+				</tr>
+				<tr>
+					<th>rank_46：</th>
+					<td><input type="text" name="rank_46" id="rank_46" class="mod_input2" style="width:60px;"  value="{$data.rank_46}"></td>
+				</tr>
+				<tr>
+					<th>rank_47：</th>
+					<td><input type="text" name="rank_47" id="rank_47" class="mod_input2" style="width:60px;"  value="{$data.rank_47}"></td>
+				</tr>
+				<tr>
+					<th>rank_48：</th>
+					<td><input type="text" name="rank_48" id="rank_48" class="mod_input2" style="width:60px;"  value="{$data.rank_48}"></td>
+				</tr>
+				<tr>
+					<th>rank_49：</th>
+					<td><input type="text" name="rank_49" id="rank_49" class="mod_input2" style="width:60px;"  value="{$data.rank_49}"></td>
+				</tr>
+				<tr>
+					<th>rank_50：</th>
+					<td><input type="text" name="rank_50" id="rank_50" class="mod_input2" style="width:60px;"  value="{$data.rank_50}"></td>
+				</tr>
+				<tr>
+					<th>rank_51：</th>
+					<td><input type="text" name="rank_51" id="rank_51" class="mod_input2" style="width:60px;"  value="{$data.rank_51}"></td>
+				</tr>
+				<tr>
+					<th>rank_52：</th>
+					<td><input type="text" name="rank_52" id="rank_52" class="mod_input2" style="width:60px;"  value="{$data.rank_52}"></td>
+				</tr>
+				<tr>
+					<th>rank_53：</th>
+					<td><input type="text" name="rank_53" id="rank_53" class="mod_input2" style="width:60px;"  value="{$data.rank_53}"></td>
+				</tr>
+				<tr>
+					<th>rank_54：</th>
+					<td><input type="text" name="rank_54" id="rank_54" class="mod_input2" style="width:60px;"  value="{$data.rank_54}"></td>
+				</tr>
+				<tr>
+					<th>rank_55：</th>
+					<td><input type="text" name="rank_55" id="rank_55" class="mod_input2" style="width:60px;"  value="{$data.rank_55}"></td>
+				</tr>
+				<tr>
+					<th>rank_56：</th>
+					<td><input type="text" name="rank_56" id="rank_56" class="mod_input2" style="width:60px;"  value="{$data.rank_56}"></td>
+				</tr>
+				<tr>
+					<th>rank_57：</th>
+					<td><input type="text" name="rank_57" id="rank_57" class="mod_input2" style="width:60px;"  value="{$data.rank_57}"></td>
+				</tr>
+				<tr>
+					<th>rank_58：</th>
+					<td><input type="text" name="rank_58" id="rank_58" class="mod_input2" style="width:60px;"  value="{$data.rank_58}"></td>
+				</tr>
+				<tr>
+					<th>rank_59：</th>
+					<td><input type="text" name="rank_59" id="rank_59" class="mod_input2" style="width:60px;"  value="{$data.rank_59}"></td>
+				</tr>
+				<tr>
+					<th>rank_60：</th>
+					<td><input type="text" name="rank_60" id="rank_60" class="mod_input2" style="width:60px;"  value="{$data.rank_60}"></td>
+				</tr>
+				<tr>
+					<th>rank_61：</th>
+					<td><input type="text" name="rank_61" id="rank_61" class="mod_input2" style="width:60px;"  value="{$data.rank_61}"></td>
+				</tr>
+				<tr>
+					<th>rank_62：</th>
+					<td><input type="text" name="rank_62" id="rank_62" class="mod_input2" style="width:60px;"  value="{$data.rank_62}"></td>
+				</tr>
+				<tr>
+					<th>rank_63：</th>
+					<td><input type="text" name="rank_63" id="rank_63" class="mod_input2" style="width:60px;"  value="{$data.rank_63}"></td>
+				</tr>
+				<tr>
+					<th>rank_64：</th>
+					<td><input type="text" name="rank_64" id="rank_64" class="mod_input2" style="width:60px;"  value="{$data.rank_64}"></td>
+				</tr>
+				<tr>
+					<th>rank_65：</th>
+					<td><input type="text" name="rank_65" id="rank_65" class="mod_input2" style="width:60px;"  value="{$data.rank_65}"></td>
+				</tr>
+				<tr>
+					<th>rank_66：</th>
+					<td><input type="text" name="rank_66" id="rank_66" class="mod_input2" style="width:60px;"  value="{$data.rank_66}"></td>
+				</tr>
+				<tr>
+					<th>rank_67：</th>
+					<td><input type="text" name="rank_67" id="rank_67" class="mod_input2" style="width:60px;"  value="{$data.rank_67}"></td>
+				</tr>
+				<tr>
+					<th>rank_68：</th>
+					<td><input type="text" name="rank_68" id="rank_68" class="mod_input2" style="width:60px;"  value="{$data.rank_68}"></td>
+				</tr>
+				<tr>
+					<th>rank_69：</th>
+					<td><input type="text" name="rank_69" id="rank_69" class="mod_input2" style="width:60px;"  value="{$data.rank_69}"></td>
+				</tr>
+				<tr>
+					<th>rank_70：</th>
+					<td><input type="text" name="rank_70" id="rank_70" class="mod_input2" style="width:60px;"  value="{$data.rank_70}"></td>
+				</tr>
+				
+		</tbody>
+		<tfoot>
+			<tr>
+				<th></th>
+				<td>
+					<input type="hidden" name="rank_plan_id" value="{$data.rank_plan_id}">
+					<input type="submit" class="btn_b" value="保存" style="margin-right:10px;"/>
+					<input type="button" class="btn_w" onclick="javascript:history.back(-1);" value="返回" />
+				</td>
+		</tfoot>
+	</table><!--/add_table-->
+</form>
+
+<script>
+$(document).ready(function(){
+$.formValidator.initConfig({formID:"act_form",theme:'ArrowSolidBox',mode:'AutoTip',onError:function(msg){msg_error(msg)},inIframe:true});
+
+	$("#rank_plan_type").formValidator({empty:true,onShow:"请输入类型",onFocus:"请输入类型",onCorrect:"输入正确"}).inputValidator({min:1,max:20,onError:"请输入类型"});
+		$("#event_level").formValidator({empty:true,onShow:"请输入比赛级别",onFocus:"请输入比赛级别",onCorrect:"输入正确"}).inputValidator({min:1,max:10,onError:"请输入比赛级别"});
+		$("#rank_1").formValidator({empty:true,onShow:"请输入rank_1",onFocus:"请输入rank_1",onCorrect:"输入正确"}).inputValidator({min:1,max:10,onError:"请输入rank_1"});
+		$("#rank_2").formValidator({empty:true,onShow:"请输入rank_2",onFocus:"请输入rank_2",onCorrect:"输入正确"}).inputValidator({min:1,max:10,onError:"请输入rank_2"});
+		$("#rank_3").formValidator({empty:true,onShow:"请输入rank_3",onFocus:"请输入rank_3",onCorrect:"输入正确"}).inputValidator({min:1,max:10,onError:"请输入rank_3"});
+		$("#rank_4").formValidator({empty:true,onShow:"请输入rank_4",onFocus:"请输入rank_4",onCorrect:"输入正确"}).inputValidator({min:1,max:10,onError:"请输入rank_4"});
+		$("#rank_5").formValidator({empty:true,onShow:"请输入rank_5",onFocus:"请输入rank_5",onCorrect:"输入正确"}).inputValidator({min:1,max:10,onError:"请输入rank_5"});
+		$("#rank_6").formValidator({empty:true,onShow:"请输入rank_6",onFocus:"请输入rank_6",onCorrect:"输入正确"}).inputValidator({min:1,max:10,onError:"请输入rank_6"});
+		$("#rank_7").formValidator({empty:true,onShow:"请输入rank_7",onFocus:"请输入rank_7",onCorrect:"输入正确"}).inputValidator({min:1,max:10,onError:"请输入rank_7"});
+		$("#rank_8").formValidator({empty:true,onShow:"请输入rank_8",onFocus:"请输入rank_8",onCorrect:"输入正确"}).inputValidator({min:1,max:10,onError:"请输入rank_8"});
+		$("#rank_9").formValidator({empty:true,onShow:"请输入rank_9",onFocus:"请输入rank_9",onCorrect:"输入正确"}).inputValidator({min:1,max:10,onError:"请输入rank_9"});
+		$("#rank_10").formValidator({empty:true,onShow:"请输入rank_10",onFocus:"请输入rank_10",onCorrect:"输入正确"}).inputValidator({min:1,max:10,onError:"请输入rank_10"});
+		$("#rank_11").formValidator({empty:true,onShow:"请输入rank_11",onFocus:"请输入rank_11",onCorrect:"输入正确"}).inputValidator({min:1,max:10,onError:"请输入rank_11"});
+		$("#rank_12").formValidator({empty:true,onShow:"请输入rank_12",onFocus:"请输入rank_12",onCorrect:"输入正确"}).inputValidator({min:1,max:10,onError:"请输入rank_12"});
+		$("#rank_13").formValidator({empty:true,onShow:"请输入rank_13",onFocus:"请输入rank_13",onCorrect:"输入正确"}).inputValidator({min:1,max:10,onError:"请输入rank_13"});
+		$("#rank_14").formValidator({empty:true,onShow:"请输入rank_14",onFocus:"请输入rank_14",onCorrect:"输入正确"}).inputValidator({min:1,max:10,onError:"请输入rank_14"});
+		$("#rank_15").formValidator({empty:true,onShow:"请输入rank_15",onFocus:"请输入rank_15",onCorrect:"输入正确"}).inputValidator({min:1,max:10,onError:"请输入rank_15"});
+		$("#rank_16").formValidator({empty:true,onShow:"请输入rank_16",onFocus:"请输入rank_16",onCorrect:"输入正确"}).inputValidator({min:1,max:10,onError:"请输入rank_16"});
+		$("#rank_17").formValidator({empty:true,onShow:"请输入rank_17",onFocus:"请输入rank_17",onCorrect:"输入正确"}).inputValidator({min:1,max:10,onError:"请输入rank_17"});
+		$("#rank_18").formValidator({empty:true,onShow:"请输入rank_18",onFocus:"请输入rank_18",onCorrect:"输入正确"}).inputValidator({min:1,max:10,onError:"请输入rank_18"});
+		$("#rank_19").formValidator({empty:true,onShow:"请输入rank_19",onFocus:"请输入rank_19",onCorrect:"输入正确"}).inputValidator({min:1,max:10,onError:"请输入rank_19"});
+		$("#rank_20").formValidator({empty:true,onShow:"请输入rank_20",onFocus:"请输入rank_20",onCorrect:"输入正确"}).inputValidator({min:1,max:10,onError:"请输入rank_20"});
+		$("#rank_21").formValidator({empty:true,onShow:"请输入rank_21",onFocus:"请输入rank_21",onCorrect:"输入正确"}).inputValidator({min:1,max:10,onError:"请输入rank_21"});
+		$("#rank_22").formValidator({empty:true,onShow:"请输入rank_22",onFocus:"请输入rank_22",onCorrect:"输入正确"}).inputValidator({min:1,max:10,onError:"请输入rank_22"});
+		$("#rank_23").formValidator({empty:true,onShow:"请输入rank_23",onFocus:"请输入rank_23",onCorrect:"输入正确"}).inputValidator({min:1,max:10,onError:"请输入rank_23"});
+		$("#rank_24").formValidator({empty:true,onShow:"请输入rank_24",onFocus:"请输入rank_24",onCorrect:"输入正确"}).inputValidator({min:1,max:10,onError:"请输入rank_24"});
+		$("#rank_25").formValidator({empty:true,onShow:"请输入rank_25",onFocus:"请输入rank_25",onCorrect:"输入正确"}).inputValidator({min:1,max:10,onError:"请输入rank_25"});
+		$("#rank_26").formValidator({empty:true,onShow:"请输入rank_26",onFocus:"请输入rank_26",onCorrect:"输入正确"}).inputValidator({min:1,max:10,onError:"请输入rank_26"});
+		$("#rank_27").formValidator({empty:true,onShow:"请输入rank_27",onFocus:"请输入rank_27",onCorrect:"输入正确"}).inputValidator({min:1,max:10,onError:"请输入rank_27"});
+		$("#rank_28").formValidator({empty:true,onShow:"请输入rank_28",onFocus:"请输入rank_28",onCorrect:"输入正确"}).inputValidator({min:1,max:10,onError:"请输入rank_28"});
+		$("#rank_29").formValidator({empty:true,onShow:"请输入rank_29",onFocus:"请输入rank_29",onCorrect:"输入正确"}).inputValidator({min:1,max:10,onError:"请输入rank_29"});
+		$("#rank_30").formValidator({empty:true,onShow:"请输入rank_30",onFocus:"请输入rank_30",onCorrect:"输入正确"}).inputValidator({min:1,max:10,onError:"请输入rank_30"});
+		$("#rank_31").formValidator({empty:true,onShow:"请输入rank_31",onFocus:"请输入rank_31",onCorrect:"输入正确"}).inputValidator({min:1,max:10,onError:"请输入rank_31"});
+		$("#rank_32").formValidator({empty:true,onShow:"请输入rank_32",onFocus:"请输入rank_32",onCorrect:"输入正确"}).inputValidator({min:1,max:10,onError:"请输入rank_32"});
+		$("#rank_33").formValidator({empty:true,onShow:"请输入rank_33",onFocus:"请输入rank_33",onCorrect:"输入正确"}).inputValidator({min:1,max:10,onError:"请输入rank_33"});
+		$("#rank_34").formValidator({empty:true,onShow:"请输入rank_34",onFocus:"请输入rank_34",onCorrect:"输入正确"}).inputValidator({min:1,max:10,onError:"请输入rank_34"});
+		$("#rank_35").formValidator({empty:true,onShow:"请输入rank_35",onFocus:"请输入rank_35",onCorrect:"输入正确"}).inputValidator({min:1,max:10,onError:"请输入rank_35"});
+		$("#rank_36").formValidator({empty:true,onShow:"请输入rank_36",onFocus:"请输入rank_36",onCorrect:"输入正确"}).inputValidator({min:1,max:10,onError:"请输入rank_36"});
+		$("#rank_37").formValidator({empty:true,onShow:"请输入rank_37",onFocus:"请输入rank_37",onCorrect:"输入正确"}).inputValidator({min:1,max:10,onError:"请输入rank_37"});
+		$("#rank_38").formValidator({empty:true,onShow:"请输入rank_38",onFocus:"请输入rank_38",onCorrect:"输入正确"}).inputValidator({min:1,max:10,onError:"请输入rank_38"});
+		$("#rank_39").formValidator({empty:true,onShow:"请输入rank_39",onFocus:"请输入rank_39",onCorrect:"输入正确"}).inputValidator({min:1,max:10,onError:"请输入rank_39"});
+		$("#rank_40").formValidator({empty:true,onShow:"请输入rank_40",onFocus:"请输入rank_40",onCorrect:"输入正确"}).inputValidator({min:1,max:10,onError:"请输入rank_40"});
+		$("#rank_41").formValidator({empty:true,onShow:"请输入rank_41",onFocus:"请输入rank_41",onCorrect:"输入正确"}).inputValidator({min:1,max:10,onError:"请输入rank_41"});
+		$("#rank_42").formValidator({empty:true,onShow:"请输入rank_42",onFocus:"请输入rank_42",onCorrect:"输入正确"}).inputValidator({min:1,max:10,onError:"请输入rank_42"});
+		$("#rank_43").formValidator({empty:true,onShow:"请输入rank_43",onFocus:"请输入rank_43",onCorrect:"输入正确"}).inputValidator({min:1,max:10,onError:"请输入rank_43"});
+		$("#rank_44").formValidator({empty:true,onShow:"请输入rank_44",onFocus:"请输入rank_44",onCorrect:"输入正确"}).inputValidator({min:1,max:10,onError:"请输入rank_44"});
+		$("#rank_45").formValidator({empty:true,onShow:"请输入rank_45",onFocus:"请输入rank_45",onCorrect:"输入正确"}).inputValidator({min:1,max:10,onError:"请输入rank_45"});
+		$("#rank_46").formValidator({empty:true,onShow:"请输入rank_46",onFocus:"请输入rank_46",onCorrect:"输入正确"}).inputValidator({min:1,max:10,onError:"请输入rank_46"});
+		$("#rank_47").formValidator({empty:true,onShow:"请输入rank_47",onFocus:"请输入rank_47",onCorrect:"输入正确"}).inputValidator({min:1,max:10,onError:"请输入rank_47"});
+		$("#rank_48").formValidator({empty:true,onShow:"请输入rank_48",onFocus:"请输入rank_48",onCorrect:"输入正确"}).inputValidator({min:1,max:10,onError:"请输入rank_48"});
+		$("#rank_49").formValidator({empty:true,onShow:"请输入rank_49",onFocus:"请输入rank_49",onCorrect:"输入正确"}).inputValidator({min:1,max:10,onError:"请输入rank_49"});
+		$("#rank_50").formValidator({empty:true,onShow:"请输入rank_50",onFocus:"请输入rank_50",onCorrect:"输入正确"}).inputValidator({min:1,max:10,onError:"请输入rank_50"});
+		$("#rank_51").formValidator({empty:true,onShow:"请输入rank_51",onFocus:"请输入rank_51",onCorrect:"输入正确"}).inputValidator({min:1,max:10,onError:"请输入rank_51"});
+		$("#rank_52").formValidator({empty:true,onShow:"请输入rank_52",onFocus:"请输入rank_52",onCorrect:"输入正确"}).inputValidator({min:1,max:10,onError:"请输入rank_52"});
+		$("#rank_53").formValidator({empty:true,onShow:"请输入rank_53",onFocus:"请输入rank_53",onCorrect:"输入正确"}).inputValidator({min:1,max:10,onError:"请输入rank_53"});
+		$("#rank_54").formValidator({empty:true,onShow:"请输入rank_54",onFocus:"请输入rank_54",onCorrect:"输入正确"}).inputValidator({min:1,max:10,onError:"请输入rank_54"});
+		$("#rank_55").formValidator({empty:true,onShow:"请输入rank_55",onFocus:"请输入rank_55",onCorrect:"输入正确"}).inputValidator({min:1,max:10,onError:"请输入rank_55"});
+		$("#rank_56").formValidator({empty:true,onShow:"请输入rank_56",onFocus:"请输入rank_56",onCorrect:"输入正确"}).inputValidator({min:1,max:10,onError:"请输入rank_56"});
+		$("#rank_57").formValidator({empty:true,onShow:"请输入rank_57",onFocus:"请输入rank_57",onCorrect:"输入正确"}).inputValidator({min:1,max:10,onError:"请输入rank_57"});
+		$("#rank_58").formValidator({empty:true,onShow:"请输入rank_58",onFocus:"请输入rank_58",onCorrect:"输入正确"}).inputValidator({min:1,max:10,onError:"请输入rank_58"});
+		$("#rank_59").formValidator({empty:true,onShow:"请输入rank_59",onFocus:"请输入rank_59",onCorrect:"输入正确"}).inputValidator({min:1,max:10,onError:"请输入rank_59"});
+		$("#rank_60").formValidator({empty:true,onShow:"请输入rank_60",onFocus:"请输入rank_60",onCorrect:"输入正确"}).inputValidator({min:1,max:10,onError:"请输入rank_60"});
+		$("#rank_61").formValidator({empty:true,onShow:"请输入rank_61",onFocus:"请输入rank_61",onCorrect:"输入正确"}).inputValidator({min:1,max:10,onError:"请输入rank_61"});
+		$("#rank_62").formValidator({empty:true,onShow:"请输入rank_62",onFocus:"请输入rank_62",onCorrect:"输入正确"}).inputValidator({min:1,max:10,onError:"请输入rank_62"});
+		$("#rank_63").formValidator({empty:true,onShow:"请输入rank_63",onFocus:"请输入rank_63",onCorrect:"输入正确"}).inputValidator({min:1,max:10,onError:"请输入rank_63"});
+		$("#rank_64").formValidator({empty:true,onShow:"请输入rank_64",onFocus:"请输入rank_64",onCorrect:"输入正确"}).inputValidator({min:1,max:10,onError:"请输入rank_64"});
+		$("#rank_65").formValidator({empty:true,onShow:"请输入rank_65",onFocus:"请输入rank_65",onCorrect:"输入正确"}).inputValidator({min:1,max:10,onError:"请输入rank_65"});
+		$("#rank_66").formValidator({empty:true,onShow:"请输入rank_66",onFocus:"请输入rank_66",onCorrect:"输入正确"}).inputValidator({min:1,max:10,onError:"请输入rank_66"});
+		$("#rank_67").formValidator({empty:true,onShow:"请输入rank_67",onFocus:"请输入rank_67",onCorrect:"输入正确"}).inputValidator({min:1,max:10,onError:"请输入rank_67"});
+		$("#rank_68").formValidator({empty:true,onShow:"请输入rank_68",onFocus:"请输入rank_68",onCorrect:"输入正确"}).inputValidator({min:1,max:10,onError:"请输入rank_68"});
+		$("#rank_69").formValidator({empty:true,onShow:"请输入rank_69",onFocus:"请输入rank_69",onCorrect:"输入正确"}).inputValidator({min:1,max:10,onError:"请输入rank_69"});
+		$("#rank_70").formValidator({empty:true,onShow:"请输入rank_70",onFocus:"请输入rank_70",onCorrect:"输入正确"}).inputValidator({min:1,max:10,onError:"请输入rank_70"});
+		
+
+	$.formValidator.reloadAutoTip();
+});
+
+function reloadAutoTip()
+{
+	$.formValidator.reloadAutoTip();
+}
+
+</script>
+
+
+<!--/dialog_end-->
+</td>
+</tr>
+</table>
+
+</div>
+
+<include file="../Public/_footer" />

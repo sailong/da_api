@@ -1,0 +1,111 @@
+<include file="../public/header_dialog" />
+{$usejs}
+
+<div class="so_main">
+
+  <div class="page_tit">排名记录管理</div>
+  <div class="tit_tab">
+	<ul>
+		<li><a class=on href="#">修改排名记录</a></li>
+	</ul>
+  </div>
+
+<table border="0" cellspacing="0" cellpadding="0" style="width:900px;">
+<tr>
+<td>
+<!--/dialog_start-->
+
+<form method="post" id="act_form" name="act_form" action="{:U('admin/rank_log/rank_log_edit_action')}" enctype="multipart/form-data">
+	<table class="add_table" border="0" cellspacing="0" cellpadding="0" >
+		<tbody>
+		<tr>
+					<th>所属用户：</th>
+					<td><input type="text" name="uid" id="uid" class="mod_input2" style="width:60px;"  value="{$data.uid}"></td>
+				</tr>
+				<tr>
+					<th>所属赛事：</th>
+					<td><input type="text" name="event_id" id="event_id" class="mod_input2" style="width:60px;"  value="{$data.event_id}"></td>
+				</tr>
+				<tr>
+					<th>赛事级别：</th>
+					<td>
+						<select name="event_level">
+							<option value="">请选择</option>
+							<option value="{$data.event_level}">{$data.event_level}</option>
+						</select>
+						<script>set_select_value(document.act_form.event_level,"{$data.event_level}");</script>
+					</td>
+				</tr>
+				<tr>
+					<th>用户组：</th>
+					<td>
+						<select name="user_group">
+							<option value="">请选择</option>
+							<option value="{$data.user_group}">{$data.user_group}</option>
+						</select>
+						<script>set_select_value(document.act_form.user_group,"{$data.user_group}");</script>
+					</td>
+				</tr>
+				<tr>
+					<th>排名：</th>
+					<td><input type="text" name="rank_num" id="rank_num" class="mod_input2" style="width:60px;"  value="{$data.rank_num}"></td>
+				</tr>
+				<tr>
+					<th>总分：</th>
+					<td><input type="text" name="rank_total_score" id="rank_total_score" class="mod_input2" style="width:60px;"  value="{$data.rank_total_score}"></td>
+				</tr>
+				<tr>
+					<th>比赛积分：</th>
+					<td><input type="text" name="rank_score" id="rank_score" class="mod_input2" style="width:60px;"  value="{$data.rank_score}"></td>
+				</tr>
+				<tr>
+					<th>奖励积发：</th>
+					<td><input type="text" name="rank_reward_score" id="rank_reward_score" class="mod_input2" style="width:60px;"  value="{$data.rank_reward_score}"></td>
+				</tr>
+				
+		</tbody>
+		<tfoot>
+			<tr>
+				<th></th>
+				<td>
+					<input type="hidden" name="rank_log_id" value="{$data.rank_log_id}">
+					<input type="submit" class="btn_b" value="保存" style="margin-right:10px;"/>
+					<input type="button" class="btn_w" onclick="javascript:history.back(-1);" value="返回" />
+				</td>
+		</tfoot>
+	</table><!--/add_table-->
+</form>
+
+<script>
+$(document).ready(function(){
+$.formValidator.initConfig({formID:"act_form",theme:'ArrowSolidBox',mode:'AutoTip',onError:function(msg){msg_error(msg)},inIframe:true});
+
+	$("#uid").formValidator({empty:true,onShow:"请输入所属用户",onFocus:"请输入所属用户",onCorrect:"输入正确"}).inputValidator({min:1,max:10,onError:"请输入所属用户"});
+		$("#event_id").formValidator({empty:true,onShow:"请输入所属赛事",onFocus:"请输入所属赛事",onCorrect:"输入正确"}).inputValidator({min:1,max:10,onError:"请输入所属赛事"});
+		$("#event_level").formValidator({empty:true,onShow:"请输入赛事级别",onFocus:"请输入赛事级别",onCorrect:"输入正确"}).inputValidator({min:1,max:10,onError:"请输入赛事级别"});
+		$("#user_group").formValidator({empty:true,onShow:"请输入用户组",onFocus:"请输入用户组",onCorrect:"输入正确"}).inputValidator({min:1,max:10,onError:"请输入用户组"});
+		$("#rank_num").formValidator({empty:true,onShow:"请输入排名",onFocus:"请输入排名",onCorrect:"输入正确"}).inputValidator({min:1,max:10,onError:"请输入排名"});
+		$("#rank_total_score").formValidator({empty:true,onShow:"请输入总分",onFocus:"请输入总分",onCorrect:"输入正确"}).inputValidator({min:1,max:10,onError:"请输入总分"});
+		$("#rank_score").formValidator({empty:true,onShow:"请输入比赛积分",onFocus:"请输入比赛积分",onCorrect:"输入正确"}).inputValidator({min:1,max:10,onError:"请输入比赛积分"});
+		$("#rank_reward_score").formValidator({empty:true,onShow:"请输入奖励积发",onFocus:"请输入奖励积发",onCorrect:"输入正确"}).inputValidator({min:1,max:10,onError:"请输入奖励积发"});
+		
+
+	$.formValidator.reloadAutoTip();
+});
+
+function reloadAutoTip()
+{
+	$.formValidator.reloadAutoTip();
+}
+
+</script>
+
+
+<!--/dialog_end-->
+</td>
+</tr>
+</table>
+
+</div>
+
+<include file="../Public/_footer" />
