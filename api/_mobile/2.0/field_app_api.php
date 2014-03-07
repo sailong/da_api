@@ -1,7 +1,7 @@
 <?php
-if(!defined("IN_DISCUZ"))
+if(!defined('IN_DISCUZ'))
 {
-	exit('Access Denied');
+    exit('Access Denied');
 }
 
 $language=$_G['gp_language'];
@@ -112,10 +112,24 @@ if($ac=="app_tuijian_list")
 	$keyword=$_G['gp_keyword'];
 	if($keyword!="")
 	{
-		$where =" and field_name like '%".$keyword."%' ";
+		$where .=" and field_name like '%".$keyword."%' ";
+	}
+	
+	$source=$_G['gp_source'];
+	if(!empty($source))
+	{
+		if($source=='sina'){
+			$where .=" and (field_uid>0 or field_uid=0) and field_uid!=3807135 ";
+		}else{
+			$where .=" and (field_uid>0 or field_uid=0) ";
+		}
+	}
+	else
+	{
+		$where .=" and field_uid>0 ";
 	}
 
-	$list=DB::query("select field_id,field_uid,field_name,field_pic,field_addtime,field_content,field_download_num,field_zuobiao from tbl_field where field_uid>0 and field_status=1 ".$where." order by field_addtime asc ");
+	$list=DB::query("select field_id,field_uid,field_name,field_pic,field_addtime,field_content,field_download_num,field_zuobiao from tbl_field where field_status=1 ".$where." order by field_addtime desc ");
 	$i=0;
 	while($row = DB::fetch($list))
 	{
@@ -148,8 +162,8 @@ if($ac=="app_tuijian_list")
 //客户端列表   带搜索 分页
 if($ac=="app_list")
 {
-
 	$app_version_type=$_G['gp_app_version_type'];
+	$page = $_G['gp_page'];
 	if(!$app_version_type)
 	{
 		$app_version_type='android';
@@ -160,8 +174,21 @@ if($ac=="app_list")
 	{
 		$where =" and field_name like '%".$keyword."%' ";
 	}
+	$source=$_G['gp_source'];
+	if(!empty($source))
+	{
+		if($source=='sina'){
+			$where .=" and (field_uid>0 or field_uid=0) and field_uid!=3807135 ";
+		}else{
+			$where .=" and (field_uid>0 or field_uid=0) ";
+		}
+	}
+	else
+	{
+		$where .=" and field_uid>0 ";
+	}
 	
-	$total=DB::result_first(" select count(field_id) from tbl_field where field_uid>0 and field_status=1 ".$where." order by field_addtime asc ");
+	$total=DB::result_first(" select count(field_id) from tbl_field where field_status=1 ".$where." order by field_addtime asc ");
 	$max_page=intval($total/$page_size);
 	if($max_page<$total/$page_size)
 	{
@@ -170,7 +197,7 @@ if($ac=="app_list")
 	if($max_page>=$page)
 	{
 
-		$list=DB::query("select field_id,field_uid,field_name,field_pic,field_addtime,field_content,field_download_num,field_zuobiao from tbl_field where field_uid>0 and field_status=1 ".$where." order by field_addtime asc limit $page_start,$page_size ");
+		$list=DB::query("select field_id,field_uid,field_name,field_pic,field_addtime,field_content,field_download_num,field_zuobiao from tbl_field where field_status=1 ".$where." order by field_addtime asc limit $page_start,$page_size ");
 		$i=0;
 		while($row = DB::fetch($list))
 		{
@@ -254,7 +281,6 @@ if($ac=="app_detail")
 			$field_app_info['field_addtime']=date("Y-m-d",$field_app_info['field_addtime']);
 		}
 		
-		
 		//图片
 		$pic_list=DB::query("select field_pic_name,field_pic_url from tbl_field_pic where field_uid='".$field_uid."' ");
 		while($row=DB::fetch($pic_list))
@@ -315,6 +341,10 @@ if($ac=="app_detail")
 		{
 			$field_app_info['ios_info']="TianJinApp://com.tjbhsl.com";
 		}
+		else if($field_app_info['field_uid']==3807135)
+		{
+			$field_app_info['ios_info']="sinaApp://com.sina.com";
+		}
 		else
 		{
 			$field_app_info['ios_info']="";
@@ -356,9 +386,4 @@ if($ac=="app_download")
 	}
 	
 }
-
-
-
-
-
 ?>

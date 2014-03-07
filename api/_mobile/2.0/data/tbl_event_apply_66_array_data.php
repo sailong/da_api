@@ -66,17 +66,21 @@ $field_set_list[6]['type_more'][]=array('key_value'=>'业余比赛前三名运�
 $field_set_list[6]['type_more'][]=array('key_value'=>'海外运动员','key_name'=>'海外运动员');
 $field_set_list[6]['type_more'][]=array('key_value'=>'中高协推荐运动员','key_name'=>'中高协推荐运动员'); */
 $field_set_list[6]['max_size']="50";
-if(!empty($fenzhan_arr))
+/* if(!empty($fenzhan_arr))
 {
 	$field_set_list[7]['name']="fenzhan_names";
 	$field_set_list[7]['name_cn']="选择比赛";
 	$field_set_list[7]['type']="radio";
 	$field_set_list[7]['type_more']=$fenzhan_arr;
-}
+} */
 
 //array('珠海金湾站','天津滨海湖站');
 /* $field_set_list[6]['type_more'][]=array('key_value'=>'142','key_name'=>'珠海金湾站');
 $field_set_list[6]['type_more'][]=array('key_value'=>'143','key_name'=>'天津滨海湖站'); */
+$field_set_list[7]['name']="fenzhan_names";
+$field_set_list[7]['name_cn']="选择比赛";
+$field_set_list[7]['type']="radio";
+$field_set_list[7]['type_more']=array('珠海金湾站','天津滨海湖站');
 $field_set_list[7]['max_size']="50";
 
 $field_set_list[8]['name']="baoming_is_zidai_qiutong";

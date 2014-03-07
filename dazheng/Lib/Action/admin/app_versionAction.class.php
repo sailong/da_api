@@ -50,6 +50,7 @@ class app_versionAction extends AdminAuthAction
 			$data["field_uid"]=post("field_uid");
 			$data["app_version_language"]=post("app_version_language");
 			$data["app_version_size"]=post("app_version_size");
+			$data["app_version_updtime"]=strtotime(post("app_version_updtime"));
 			$data["app_version_addtime"]=time();
 			
 			$list=M("app_version")->add($data);
@@ -103,6 +104,7 @@ class app_versionAction extends AdminAuthAction
 			$data["field_uid"]=post("field_uid");
 			$data["app_version_language"]=post("app_version_language");
 			$data["app_version_size"]=post("app_version_size");
+			$data["app_version_updtime"]=strtotime(post("app_version_updtime"));
 			if(post("app_version_is_important"))
 			{
 				$data["app_version_is_important"]=post("app_version_is_important");

@@ -1,0 +1,1 @@
+<?php /* 2013-11-11 in jishigou invalid request template */ if(!defined("IN_JISHIGOU")) exit("invalid request"); ?>

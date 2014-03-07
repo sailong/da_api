@@ -1,0 +1,313 @@
+<include file="../public/header_dialog" />
+{$usejs}
+
+<div class="so_main">
+
+  <div class="page_tit">商品管理</div>
+  <div class="tit_tab">
+	<ul>
+		<li><a class=on href="{:U('admin/item/item_add')}">添加商品</a></li>
+	</ul>
+  </div>
+
+<table border="0" cellspacing="0" cellpadding="0" style="width:900px;">
+<tr>
+<td>
+<!--/dialog_start-->
+
+<form method="post" id="act_form" name="act_form" action="{:U('admin/item/item_add_action')}" enctype="multipart/form-data">
+	<table class="add_table" border="0" cellspacing="0" cellpadding="0" >
+		<tbody>
+		<!-- <tr>
+					<th>所属客户端：</th>
+					<td>
+						<select name="field_uid" id="field_uid">
+							<option value="">请选择</option>
+							{$app_list}
+						</select>
+						<script>set_select_value(document.act_form.field_uid,"{$field_uid}");</script>
+					</td>
+				</tr> -->
+				<input type="hidden" name="field_uid" value="0"/>
+				<tr>
+					<th>所属商品：</th>
+					<td>
+						<select name="parent_id" id="parent_id">
+							<option value="0">一级商品</option>
+							<volist id="vo" name="parent_item_list">
+							<option value="{$vo.item_id}">{$vo.item_name}</option>
+							</volist>
+						</select>
+						<script>set_select_value(document.act_form.parent_id,"{$item_id}");</script>
+					</td>
+				</tr>
+				<tr>
+					<th>所属分类：</th>
+					<td>
+						<select name="item_cats_id" id="item_cats_id">
+							<option value="">请选择</option>
+							<volist id="vo" name="parent_cats_list">
+							<option value="{$vo.item_cats_id}">{$vo.item_cats_name}</option>
+								<volist name="vo['sub']" id="sub">
+								<option value="{$sub.item_cats_id}"> |-    {$sub.item_cats_name}</option>
+								</volist>
+							</volist>
+						</select>
+						<script>set_select_value(document.act_form.item_cats_id,"{$item_cats_id}");</script>
+					</td>
+				</tr>
+				<tr>
+					<th>商品类型：</th>
+					<td>
+						<select name="item_type" id="item_type">
+							<option value="">请选择</option>
+							<option value="ticket">门票</option>
+							<option value="other">其他</option>
+						</select>
+						<script>set_select_value(document.act_form.item_type,"{$item_type}");</script>
+					</td>
+				</tr>
+				<!-- <tr>
+					<th>商品类型ID：</th>
+					<td><input type="text" name="item_type_id" id="item_type_id" class="mod_input2" style="width:66px;" ></td>
+				</tr> -->
+				<tr>
+					<th>商品名称：</th>
+					<td><input type="text" name="item_name" id="item_name" class="mod_input2" style="width:150px;" ></td>
+				</tr>
+				
+				<tr>
+					<th>现价：</th>
+					<td><input type="text" name="item_price" id="item_price" class="mod_input2" style="width:66px;" value='0'>(<span style="padding-left:10px;color:red;">单位：元</span>)</td>
+				</tr>
+				<tr>
+					<th>原价：</th>
+					<td><input type="text" name="item_price_old" id="item_price_old" class="mod_input2" style="width:66px;" value='0'>(<span style="padding-left:10px;color:red;">单位：元</span>)</td>
+				</tr>
+				
+				<!-- 门票信息start -->
+				<tr class="ticket_tr" style="background-color:#70DB93;">
+					<th style="background-color:#70DB93;">赛事ID：</th>
+					<td><!-- <input type="text" name="event_id" id="event_id" class="mod_input2" style="width:150px;" > -->
+						<select name="event_id" id="event_id" style="width:150px;"  class="search_select">
+							<option value="">请选择</option>
+							<volist id="vo" name="event_select">
+							<option value="{$vo.event_id}">{$vo.event_name}</option>
+							</volist>
+						</select>
+						<script>set_select_value(document.act_form.event_id,"<php> echo  get("event_id");</php>");</script>
+					</td>
+				</tr>
+				<tr class="ticket_tr" style="background-color:#70DB93;">
+					<th style="background-color:#70DB93;">分站ID：</th>
+					<td>
+						<select name="fenzhan_id" id="fenzhan_id" style="width:150px;"  class="search_select">
+							
+						</select>
+						<script>set_select_value(document.act_form.fenzhan_id,'');</script>
+					</td><!-- <input type="text" name="fenzhan_id" id="fenzhan_id" class="mod_input2" style="width:150px;" > -->
+				</tr>
+				<tr class="ticket_tr" style="background-color:#70DB93;">
+					<th style="background-color:#70DB93;">票面人数：</th>
+					<td>
+						<input type="text" name="ticket_ren_num" id="ticket_ren_num" class="mod_input2" style="width:66px;"  value="1">人
+						<span class="help_info">(同一张票可以进场人数。比如一个旅行团刷一次票，可以进30人)</span>
+					
+					</td>
+				</tr>
+				<tr class="ticket_tr" style="background-color:#70DB93;">
+					<th style="background-color:#70DB93;">开始时间：</th>
+					<td>
+						<input type="text" name="ticket_starttime" id="ticket_starttime" readonly class="mod_input_date" style="width:200px;" onFocus="WdatePicker({startDate:'%y-%M-%d 08:00:00',dateFmt:'yyyy-MM-dd HH:mm:ss',alwaysUseStartDate:true})" >
+						<span class="help_info">(开始入场时间)</span>
+						</td>
+				</tr>
+				<tr class="ticket_tr" style="background-color:#70DB93;">
+					<th style="background-color:#70DB93;">结束时间：</th>
+					<td>
+						<input type="text" name="ticket_endtime" id="ticket_endtime" readonly class="mod_input_date" style="width:200px;" onFocus="WdatePicker({startDate:'%y-%M-%d 08:00:00',dateFmt:'yyyy-MM-dd HH:mm:ss',alwaysUseStartDate:true})" >
+						<span class="help_info">(结束入场时间)</span>
+						</td>
+				</tr>
+				<tr class="ticket_tr" style="background-color:#70DB93;">
+					<th style="background-color:#70DB93;">类型：</th>
+					<td>
+						<select name="ticket_type" id="ticket_type">
+							<option value="">请选择</option>
+							<option value="BASE">普通</option>
+							<option value="VIP">VIP</option>
+						</select>
+						<script>set_select_value(document.act_form.ticket_type,"BASE");</script>
+						
+					</td>
+				</tr>
+				<tr class="ticket_tr" style="background-color:#70DB93;">
+					<th style="background-color:#70DB93;">入场次数：</th>
+					<td>
+					<input type="text" name="ticket_times" id="ticket_times" class="mod_input2" style="width:66px;"  value="1">
+					<span class="help_info">(同一张门票，可以入场的次数)</span>
+					</td>
+				</tr>
+				<tr class="ticket_tr" style="background-color:#70DB93;">
+					<th style="background-color:#70DB93;">是否赠送：</th>
+					<td>
+						<select name="ticket_is_zengsong" id="ticket_is_zengsong">
+							<option value="">请选择</option>
+							<option value="Y" selected>是</option>
+							<option value="N" >否</option>
+						</select>
+						
+						<span class="help_info">(设置门票是否可以赠送，选否时，我的门票详细页，没有“赠送”按钮)</span>
+					</td>
+				</tr>
+				<!-- 门票信息end -->
+				
+				
+				<tr>
+					<th>剩余数量：</th>
+					<td><input type="text" name="item_num" id="item_num" class="mod_input2" style="width:66px;" ></td>
+				</tr>
+				<tr>
+					<th>每人限制数量：</th>
+					<td><input type="text" name="item_num_canbuy" id="item_num_canbuy" class="mod_input2" style="width:66px;" ></td>
+				</tr>
+				<tr>
+					<th>总数量：</th>
+					<td><input type="text" name="item_num_total" id="item_num_total" class="mod_input2" style="width:66px;" ></td>
+				</tr>
+				<tr>
+					<th>商品顶部大图片：</th>
+					<td><input type="file" name="item_pic" id="item_pic"  class="mod_input">（<span style="padding-left:20px;color:red;">标准：长：1280</span>）</td>
+				</tr>
+				<tr>
+					<th>商品列表图片：</th>
+					<td>
+						<input type="file" name="item_pic_small" id="item_pic_small"  class="mod_input"><span style="color:red;padding-left:10px;">120*120</span>
+				</tr>
+				<tr>
+					<th>合作商图片图片：</th>
+					<td><input type="file" name="item_pic_bottom" id="item_pic_bottom"  class="mod_input">（<span style="padding-left:20px;color:red;">标准：长：1280</span>）</td>
+				</tr>
+				<tr>
+					<th>简介：</th>
+					<td><textarea name="item_intro" id="item_intro" class="mod_input2" style="width:400px; height:100px;"></textarea></td>
+				</tr>
+				<tr>
+					<th>详细介绍：</th>
+					<td>{$editor}</td>
+				</tr>
+				<tr>
+					<th>扩展信息表名：</th>
+					<td><input type="text" name="ext_table_name" id="ext_table_name"  class="mod_input" style="width:150px;" ></td>
+				</tr>
+				<tr>
+					<th>排序：</th>
+					<td><input type="text" name="item_sort" id="item_sort" class="mod_input2" style="width:66px;" ><span style="color:red;padding-left:10px;">数值越大越靠前</span></td>
+				</tr>
+				
+		</tbody>
+		<tfoot>
+			<tr>
+				<th></th>
+				<td>
+					<input type="submit" class="btn_b"  value="添加" style="margin-right:10px;"/>
+					<input type="button" class="btn_w" onclick="javascript:history.back(-1);" value="返回" />
+				</td>
+		</tfoot>
+	</table><!--/add_table-->
+</form>
+
+<script>
+$(document).ready(function(){
+$("#item_type").change(function(){
+	if($(this).val() == 'ticket'){
+		$(".ticket_tr").show();
+	}else{
+		$(".ticket_tr").hide();
+	}
+});
+$("#event_id").change(function(){
+	var event_id = $(this).val();
+	
+	fenzhan_list(event_id);
+});
+$.formValidator.initConfig({formID:"act_form",theme:'ArrowSolidBox',mode:'AutoTip',onError:function(msg){msg_error(msg)},inIframe:true});
+
+	$("#field_uid").formValidator({empty:true,onShow:"请输入所属客户端",onFocus:"请输入所属客户端",onCorrect:"输入正确"}).inputValidator({min:1,max:11,onError:"请输入所属客户端"});
+	
+	//$("#event_id").formValidator({empty:true,onShow:"请输入赛事ID",onFocus:"请输入赛事ID",onCorrect:"输入正确"}).inputValidator({min:1,max:11,onError:"请输入赛事ID"});
+	//$("#fenzhan_id").formValidator({empty:true,onShow:"请输入分站ID",onFocus:"请输入分站ID",onCorrect:"输入正确"}).inputValidator({min:1,max:11,onError:"请输入分站ID"});
+	$("#ticket_ren_num").formValidator({empty:true,onShow:"请输入票面人数",onFocus:"请输入票面人数",onCorrect:"输入正确"}).inputValidator({min:1,max:11,onError:"请输入票面人数"});
+	$("#ticket_starttime").formValidator({empty:true,onShow:"请选择时间",onFocus:"请选择时间",onCorrect:"输入正确"}).inputValidator({min:1,max:20,onError:"请选择时间"});
+	$("#ticket_endtime").formValidator({empty:true,onShow:"请选择时间",onFocus:"请选择时间",onCorrect:"输入正确"}).inputValidator({min:1,max:20,onError:"请选择时间"});
+	$("#ticket_type").formValidator({empty:true,onShow:"请选择类型",onFocus:"请选择类型",onCorrect:"输入正确"}).inputValidator({min:1,max:11,onError:"请选择类型"});
+	$("#ticket_times").formValidator({empty:true,onShow:"请输入入场次数",onFocus:"请输入入场次数",onCorrect:"输入正确"}).inputValidator({min:1,max:11,onError:"请输入入场次数"});
+	$("#ticket_is_zengsong").formValidator({empty:true,onShow:"请选择是否赠送",onFocus:"请选择是否赠送",onCorrect:"输入正确"}).inputValidator({min:1,max:11,onError:"请选择是否赠送"});
+	
+		$("#parent_id").formValidator({empty:true,onShow:"请输入上级分类",onFocus:"请输入上级分类",onCorrect:"输入正确"}).inputValidator({min:1,max:11,onError:"请输入上级分类"});
+		$("#item_cats_id").formValidator({empty:true,onShow:"请输入所属分类",onFocus:"请输入所属分类",onCorrect:"输入正确"}).inputValidator({min:1,max:11,onError:"请输入所属分类"});
+		$("#item_type").formValidator({empty:true,onShow:"请输入商品类型",onFocus:"请输入商品类型",onCorrect:"输入正确"}).inputValidator({min:1,max:11,onError:"请输入商品类型"});
+		$("#item_type_id").formValidator({empty:true,onShow:"请输入商品类型ID",onFocus:"请输入商品类型ID",onCorrect:"输入正确"}).inputValidator({min:1,max:11,onError:"请输入商品类型ID"});
+		$("#item_name").formValidator({empty:true,onShow:"请输入商品名称",onFocus:"请输入商品名称",onCorrect:"输入正确"}).inputValidator({min:1,max:50,onError:"请输入商品名称"});
+		$("#item_price").formValidator({empty:true,onShow:"请输入现价",onFocus:"请输入现价",onCorrect:"输入正确"}).inputValidator({min:1,max:11,onError:"请输入现价"});
+		$("#item_price_old").formValidator({empty:true,onShow:"请输入原价",onFocus:"请输入原价",onCorrect:"输入正确"}).inputValidator({min:1,max:11,onError:"请输入原价"});
+		$("#item_num").formValidator({empty:true,onShow:"请输入剩余数量",onFocus:"请输入剩余数量",onCorrect:"输入正确"}).inputValidator({min:1,max:11,onError:"请输入剩余数量"});
+		$("#item_num_canbuy").formValidator({empty:true,onShow:"请输入限制数量",onFocus:"请输入限制数量",onCorrect:"输入正确"}).inputValidator({min:1,max:11,onError:"请输入限制数量"});
+		$("#item_num_total").formValidator({empty:true,onShow:"请输入总数量",onFocus:"请输入总数量",onCorrect:"输入正确"}).inputValidator({min:1,max:11,onError:"请输入总数量"});
+		$("#item_pic").formValidator({empty:true,onShow:"请输入图片",onFocus:"请输入图片",onCorrect:"输入正确"}).inputValidator({min:1,max:300,onError:"请输入图片"});
+		$("#item_intro").formValidator({empty:true,onShow:"请输入简介",onFocus:"请输入简介",onCorrect:"输入正确"}).inputValidator({min:1,max:500,onError:"请输入简介"});
+		$("#item_content").formValidator({empty:true,onShow:"请输入详细介绍",onFocus:"请输入详细介绍",onCorrect:"输入正确"}).inputValidator({min:1,max:100000,onError:"请输入详细介绍"});
+		$("#item_sort").formValidator({empty:true,onShow:"请输入排序",onFocus:"请输入排序",onCorrect:"输入正确"}).inputValidator({min:1,max:11,onError:"请输入排序"});
+		
+
+	$.formValidator.reloadAutoTip();
+	$(".ticket_tr").hide();
+	
+});
+
+function reloadAutoTip()
+{
+	$.formValidator.reloadAutoTip();
+}
+function fenzhan_list(event_id)
+{
+	var event_id = event_id|{};
+		
+		if(event_id == ''){
+			return false;
+		}
+		
+	//var ticket_id = $("#get_k").val();
+		$.ajax({
+		 type: 'GET',
+		 url: '/default.php?g=admin&m=item&a=fenzhan_list&event_id='+event_id,
+		 //data: ,
+		 dataType:'json',
+		 success:function(json){
+			var option_str = "<option value=''>请选择</option>";
+			if(json.status == 1){
+				var fenzhan_list = json.data;
+				for(var i in fenzhan_list){
+					var fenzhan_info = fenzhan_list[i];
+					//if(fenzhan_info['fenzhan_id'] == fenzhan_id){
+					//	option_str += "<option value='"+fenzhan_info['fenzhan_id']+"' selected>"+fenzhan_info['fenzhan_name']+"</option>";
+					//}else{ -->
+						option_str += "<option value='"+fenzhan_info['fenzhan_id']+"'>"+fenzhan_info['fenzhan_name']+"</option>";
+					//}
+					
+				}
+			}
+			$("#fenzhan_id").html('');
+			$("#fenzhan_id").append(option_str);
+		 }
+		});
+}
+</script>
+
+<!--/dialog_end-->
+</td>
+</tr>
+</table>
+
+</div>
+<include file="../public/_footer" />

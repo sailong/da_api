@@ -216,12 +216,23 @@ function blog_post($POST, $olds=array()) {
 		$blogarr['username'] = $_G['username'];
 		$blogarr['dateline'] = empty($POST['dateline'])?$_G['timestamp']:$POST['dateline'];
 		$blogid = DB::insert('home_blog', $blogarr, 1);
+		
+		//jack add 2013-12-30自媒体发布博客
+		$is_zimeiti=DB::result_first("select is_zimeiti from pre_common_member_profile where uid='".$_G['uid']."' ");
+		if($is_zimeiti=='Y')
+		{
+			$arc_type='U';
+		}
+		else
+		{
+			$arc_type='B';
+		}
 
 		//jack 2013-05-15增加同步到 tbl_arc
 		$table_info=DB::fetch_first("show table status where name ='pre_home_blog'");
 		$up=DB::query("ALTER TABLE `tbl_arc` AUTO_INCREMENT=".$table_info['Auto_increment']." ");
 				
-		$res=DB::query("insert into tbl_arc (arc_id,uid,arctype_id,arc_name,arc_replynum,arc_pic,arc_addtime,arc_content,arc_viewtype,arc_type,arc_state,is_tongbu) values ('".$blogid."','".$blogarr['uid']."','0','".$blogarr['subject']."','0','".$blogarr['pic']."','".$blogarr['dateline']."','".$message."','normal','B','0','1')");
+		$res=DB::query("insert into tbl_arc (arc_id,uid,arctype_id,arc_name,arc_replynum,arc_pic,arc_addtime,arc_content,arc_viewtype,arc_type,arc_state,is_tongbu) values ('".$blogid."','".$blogarr['uid']."','0','".$blogarr['subject']."','0','".$blogarr['pic']."','".$blogarr['dateline']."','".$message."','normal','".$arc_type."','0','1')");
 
 		DB::update('common_member_status', array('lastpost' => $_G['timestamp']), array('uid' => $_G['uid']));
 		DB::update('common_member_field_home', array('recentnote'=>$POST['subject']), array('uid'=>$_G['uid']));

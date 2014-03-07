@@ -1,0 +1,85 @@
+<include file="../public/header_dialog" />
+<div class="so_main">
+
+  <div class="page_tit">赛事播音管理</div>
+  <div class="tit_tab">
+	<ul>
+		<li><a class=on href="{:U('admin/event_anchor/anchor_add')}">添加赛事播音</a></li>
+	</ul>
+  </div>
+
+{$usejs}
+
+<table border="0" cellspacing="0" cellpadding="0" style="width:900px;">
+<tr>
+<td>
+<!--/dialog_start-->
+
+<form method="post" id="act_form" name="act_form" action="{:U('admin/event_anchor/anchor_add_action')}" enctype="multipart/form-data">
+	<table class="add_table" border="0" cellspacing="0" cellpadding="0" >
+		<tbody>
+				<tr>
+					<th>用户UID：</th>
+					<td><input type="text" name="uid" id="uid"  class="mod_input" style="width:100px;"></td>
+				</tr>
+				<tr>
+					<th>赛事ID：</th>
+					<td><input type="text" name="event_id" id="event_id"  class="mod_input" style="width:100px;"></td>
+				</tr>
+				<tr>
+					<th>分站ID：</th>
+					<td><input type="text" name="fenzhan_id" id="fenzhan_id"  class="mod_input" style="width:100px;"></td>
+				</tr>
+				<tr>
+					<th>播音名称：</th>
+					<td><input type="text" name="event_anchor_name" id="event_anchor_name"  class="mod_input" style="width:300px;"></td>
+				</tr>
+				<tr>
+					<th>图片：</th>
+					<td><input type="file" name="event_anchor_pic" id="event_anchor_pic"  class="mod_input" style="width:300px;"></td>
+				</tr>
+				<tr>
+					<th>排序：</th>
+					<td><input type="text" name="event_anchor_sort" id="event_anchor_sort"  class="mod_input" style="width:100px;"></td>
+				</tr>
+		</tbody>
+		<tfoot>
+			<tr>
+				<th></th>
+				<td>
+					<input type="submit" class="btn_b"  value="添加" style="margin-right:10px;"/>
+					<input type="button" class="btn_w" onclick="javascript:history.back(-1);" value="取消" />
+				</td>
+		</tfoot>
+	</table><!--/add_table-->
+</form>
+
+<script>
+$(document).ready(function(){
+$.formValidator.initConfig({formID:"act_form",theme:'ArrowSolidBox',mode:'AutoTip',onError:function(msg){msg_error(msg)},inIframe:true});
+
+	//$("#event_id").formValidator({empty:true,onShow:"请输入赛事ID",onFocus:"请输入赛事ID",onCorrect:"输入正确"}).inputValidator({min:1,max:100,onError:"请输入赛事ID"});
+	//$("#zhibo_name").formValidator({empty:true,onShow:"请输入直播名称",onFocus:"请输入直播名称",onCorrect:"输入正确"}).inputValidator({min:1,max:100,onError:"请输入直播名称"});
+	
+	//$("#zhibo_url").formValidator({empty:true,onShow:"请输入直播地址",onFocus:"请输入直播地址",onCorrect:"输入正确"}).inputValidator({min:1,max:300,onError:"请输入直播地址"});
+	//$("#zhibo_content").formValidator({empty:true,onShow:"请输入直播内容",onFocus:"请输入直播内容",onCorrect:"输入正确"}).inputValidator({min:1,max:300,onError:"请输入直播内容"});
+	//$("#zhibo_state").formValidator({empty:true,onShow:"请输入直播状态",onFocus:"请输入直播状态",onCorrect:"输入正确"}).inputValidator({min:1,max:50,onError:"请输入直播状态"});
+
+	$.formValidator.reloadAutoTip();
+});
+
+function reloadAutoTip()
+{
+	$.formValidator.reloadAutoTip();
+}
+
+</script>
+
+<!--/dialog_end-->
+</td>
+</tr>
+</table>
+
+</div>
+
+<include file="../public/_footer" />

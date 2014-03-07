@@ -74,6 +74,17 @@
 					<td><php>if($data['event_logo']){</php><img src="/{$data.event_logo}" style="max-height:100px; max-width:200px;"><br/><php>}</php><input type="file" name="event_logo" id="event_logo"  class="mod_input"> (如需修改，请重新上传)</td>
 				</tr>
 				<tr>
+					<th><font color="red">*</font>是否内测：</th>
+					<td>
+						<select name="event_is_neice" id="event_is_neice">
+							<option value="">请选择</option>
+							<option value="Y">是</option>
+							<option value="N">否</option>
+						</select>
+						<script>set_select_value(document.act_form.event_is_neice,"{$data.event_is_neice}");</script>
+					</td>	
+				</tr>
+				<tr>
 					<th><font color="red">*</font>赛事年度：</th>
 					<td>
 						<select name="event_year" id="event_year">
@@ -342,6 +353,20 @@
 					<th>门票申请BANNER：</th>
 					<td><php>if($data['event_ticket_ad_pic']){</php><img src="/{$data.event_ticket_ad_pic}" style="max-height:100px; max-width:200px;"><br/><php>}</php><input type="file" name="event_ticket_ad_pic" id="event_ticket_ad_pic"  class="mod_input">  (如需修改，请重新上传)</td>
 				</tr>
+				
+				<tr>
+					<th><font color="red">*</font>赛事级别：</th>
+					<td>
+						<select name="event_level" id="event_level" class="mod_select">
+							<option value="">请选择</option>
+							{$level_list}
+						</select>
+						<script>set_select_value(document.act_form.event_level,"{$data.event_level}");</script>
+						(用于青少年积分排名)
+						
+					</td>
+				</tr>
+				
 				<tr>
 					<th>门票申请介绍：</th>
 					<td>{$event_ad_editor}</td>

@@ -160,16 +160,19 @@ class event_userAction extends AdminAuthAction
 			
 			$data["country"]=post("country");
 			
-			/*if(post("event_user_team")!="")
+			if(post("event_user_team")!="")
 			{
 				$data["event_user_team"]=post("event_user_team");
 			}
+			
 			if(post("event_user_parent_id")!="")
 			{
 				$data["event_user_parent_id"]=post("event_user_parent_id");
-			} */
+			}
 
 			$list=M("event_user")->save($data);
+			
+		
 			$event_id=$data["event_id"];
 			$event_user_id=$data["event_user_id"];
 			$uid=$data["uid"];

@@ -71,7 +71,7 @@ $(document).ready(function(){
 $.formValidator.initConfig({formID:"act_form",theme:'ArrowSolidBox',mode:'AutoTip',onError:function(msg){msg_error(msg)},inIframe:true});
 
 	$("#event_id").formValidator({empty:true,onShow:"请输入赛事ID",onFocus:"请输入赛事ID",onCorrect:"输入正确"}).inputValidator({min:1,max:100,onError:"请输入赛事ID"});
-	$("#zhibo_name").formValidator({empty:true,onShow:"请输入直播名称",onFocus:"请输入直播名称",onCorrect:"输入正确"}).inputValidator({min:1,max:11,onError:"请输入直播名称"});
+	$("#zhibo_name").formValidator({empty:true,onShow:"请输入直播名称",onFocus:"请输入直播名称",onCorrect:"输入正确"}).inputValidator({min:1,max:100,onError:"请输入直播名称"});
 	
 	$("#zhibo_url").formValidator({empty:true,onShow:"请输入直播地址",onFocus:"请输入直播地址",onCorrect:"输入正确"}).inputValidator({min:1,max:300,onError:"请输入直播地址"});
 	$("#zhibo_content").formValidator({empty:true,onShow:"请输入直播内容",onFocus:"请输入直播内容",onCorrect:"输入正确"}).inputValidator({min:1,max:300,onError:"请输入直播内容"});

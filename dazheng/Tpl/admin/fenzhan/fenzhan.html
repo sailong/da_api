@@ -47,6 +47,8 @@
 		</th>
 		<th class="line_l">编号</th>
 		<th class="line_l">分站名称</th>
+		<th class="line_l">分站规则</th>
+		
 		<!--
 		<th class="line_l">所在球场</th>
 		-->
@@ -67,6 +69,7 @@
 		<td><input type="checkbox" name="checkbox" onclick="select_one(this)" value="{$vo.fenzhan_id}" ></td>
 		<td>{$vo.fenzhan_id}</th>
 			<td>{$vo.fenzhan_name}</td>
+			<td><php>if($vo['fenzhan_rule']=='11'){echo '1人1球(个人对抗)';}elseif($vo['fenzhan_rule']=='42'){echo '4人2球';}elseif($vo['fenzhan_rule']=='44'){echo '4人4球';}</php></td>
 			<!--
 			<td>{$field_list[$vo['field_id']]}</td>
 			-->

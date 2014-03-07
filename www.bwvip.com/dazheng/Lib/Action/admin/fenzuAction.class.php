@@ -268,8 +268,12 @@ class fenzuAction extends AdminAuthAction
 			foreach($members_list as $rows)
 			{
 				if($i%$data['team_member_num']==0) $z++;
+				
+				$event_user_info=M("event_user")->where(" event_user_id='".$rows['event_user_id']."' ")->find();
+				
 				$bs_data[$z]['users'][$i]['uid']      = $rows['uid'];
 				$bs_data[$z]['users'][$i]['event_user_id']      = $rows['event_user_id'];
+				$bs_data[$z]['users'][$i]['country']      = $event_user_info['country'];
 				$bs_data[$z]['users'][$i]['lun']      = $fenzhan_lun;
 				$bs_data[$z]['users'][$i]['realname'] = $rows['event_apply_realname']; 
 				$bs_data[$z]['users'][$i]['event_apply_chadian']     = $rows['event_apply_chadian'];
@@ -315,7 +319,7 @@ class fenzuAction extends AdminAuthAction
 					$data_b['zong_score']=$last[0]['zong_score'];
 					$data_b['total_sum_ju']=$last[0]['total_sum_ju'];
 					$res=M('baofen')->save($data_b);
-					print_r($data_b);
+					//print_r($data_b);
 					echo "<hr>";
 
 				}

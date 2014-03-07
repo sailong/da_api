@@ -45,6 +45,9 @@ class eventAction extends AdminAuthAction
 		$app_list=select_field(1,"select");
 		$this->assign("app_list",$app_list);
 		
+		$level_list=select_dict(20,"select");
+		$this->assign("level_list",$level_list);
+		
 		$event_years = select_dict(18);
 		$this->assign("event_years",$event_years);
 
@@ -82,6 +85,9 @@ class eventAction extends AdminAuthAction
 			//add2014.01.03start
 			$data["event_ad_url"]=post("event_ad_url");
 			//add2014.01.03END
+			//add2014.03.06start
+				$data["event_is_neice"]=post("event_is_neice");
+			//end
 			$uploadinfo=upload_file("upload/event/");
 				
 			foreach($uploadinfo as $key=>$val){
@@ -180,6 +186,7 @@ class eventAction extends AdminAuthAction
 			$data["event_ticket_status"]=post("event_ticket_status");
 			$data["event_ticket_wapurl"]=post("event_ticket_wapurl");
 			$data["event_is_ticket_bwvip"]=post("event_is_ticket_bwvip");
+			$data["event_level"]=post("event_level");
 			
 			
 			
@@ -208,6 +215,9 @@ class eventAction extends AdminAuthAction
 			$b=$editor->usejs();             //js代码
 			$this->assign('usejs',$b);     //输出到html
 			$this->assign('editor',$a);
+			
+			$level_list=select_field(20,"select");
+			$this->assign("level_list",$level_list);
 			
 			$app_list=select_field(1,"select");
 			$this->assign("app_list",$app_list);
@@ -255,6 +265,9 @@ class eventAction extends AdminAuthAction
 			//add2014.01.03start
 			$data["event_ad_url"]=post("event_ad_url");
 			//add2014.01.03END
+			//add2014.03.06start
+				$data["event_is_neice"]=post("event_is_neice");
+			//end
 			
 			$uploadinfo=upload_file("upload/event/");
 			
@@ -359,6 +372,7 @@ class eventAction extends AdminAuthAction
 			$data["event_viewtype"]=post("event_viewtype");
 			$data["event_ticket_status"]=post("event_ticket_status");
 			$data["event_ticket_wapurl"]=post("event_ticket_wapurl");
+			$data["event_level"]=post("event_level");
 			
 			if(post("event_is_ticket"))
 			{
@@ -463,6 +477,9 @@ class eventAction extends AdminAuthAction
 			$event_years = select_dict(18);
 			$this->assign("event_years",$event_years);
 			
+			$level_list=select_dict(20,"select");
+			$this->assign("level_list",$level_list);
+			
 			
 			$this->assign('event_name',$data['event_name']);
 			$this->assign('event_id',$data['event_id']);
@@ -493,6 +510,21 @@ class eventAction extends AdminAuthAction
 		{
 			$this->error("您该问的信息不存在");
 		}
+	}
+	
+	
+	
+	public function clear_total_score()
+	{
+		$event_id=get('event_id');
+		if($event_id)
+		{
+			M()->query("update tbl_event set event_left_score=0,event_right_score=0 where event_id='".$event_id."' ");
+			M()->query("update tbl_fenzhan set fenzhan_left_score=0,fenzhan_right_score=0 where event_id='".$event_id."' ");
+			
+			echo 'success!';
+		}
+		
 	}
 
 

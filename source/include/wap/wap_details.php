@@ -18,6 +18,8 @@ if(strpos($userAgent,"iPhone") || strpos($userAgent,"iPad") || strpos($userAgent
 	$dz_down_url = DB::result_first("select app_version_file from tbl_app_version where app_version_type='ios' and field_uid=0 order by app_version_addtime desc limit 1 ");//"https://itunes.apple.com/us/app/da-zheng-gao-er-fu-golf/id642016024?ls=1&mt=8";
 	$mlh_down_url = DB::result_first("select app_version_file from tbl_app_version where app_version_type='ios' and field_uid=1186 order by app_version_addtime desc limit 1 ");//"https://itunes.apple.com/us/app/shang-hai-mei-lan-hu-gao-er/id661625407?ls=1&mt=8";
 	$ns_down_url = DB::result_first("select app_version_file from tbl_app_version where app_version_type='ios' and field_uid=1160 order by app_version_addtime desc limit 1 ");//"http://www.baidu.com";
+	$bjhb_down_url = DB::result_first("select app_version_file from tbl_app_version where app_version_type='ios' and field_uid=3803491 order by app_version_addtime desc limit 1 ");//"http://www.baidu.com";
+	$hb_down_url = DB::result_first("select app_version_file from tbl_app_version where app_version_type='ios' and field_uid=1203 order by app_version_addtime desc limit 1 ");//"http://www.baidu.com";
 	
 }
 else if(strpos($userAgent,"Android"))
@@ -25,6 +27,8 @@ else if(strpos($userAgent,"Android"))
 	$dz_down_url = DB::result_first("select app_version_file from tbl_app_version where app_version_type='android' and field_uid=0 order by app_version_addtime desc limit 1 ");
 	$mlh_down_url = DB::result_first("select app_version_file from tbl_app_version where app_version_type='android' and field_uid=1186 order by app_version_addtime desc limit 1 ");
 	$ns_down_url = DB::result_first("select app_version_file from tbl_app_version where app_version_type='android' and field_uid=1160 order by app_version_addtime desc limit 1 ");
+	$bjhb_down_url = DB::result_first("select app_version_file from tbl_app_version where app_version_type='android' and field_uid=3803491 order by app_version_addtime desc limit 1 ");
+	$tjbh_down_url = DB::result_first("select app_version_file from tbl_app_version where app_version_type='android' and field_uid=1203 order by app_version_addtime desc limit 1 ");
 	
 }else{
 	$dz_down_url = "http://www.bwvip.com/app";
@@ -52,7 +56,14 @@ $num =10; $where = '';
 /*获取相对 频道下的 或者是某个UId下的 blogs */
 $get_groupid = getgpc('groupid');
 $get_groupid = empty($get_groupid) ? getgpc('uid') : $get_groupid;
-$field_uid = empty($_G['gp_field_uid']) ? 0 : $_G['gp_field_uid'];
+$field_uid = $_G['gp_field_uid'];
+if($field_uid===0){
+	$field_uid=0;
+}elseif($field_uid==''){
+	$arc_info = DB::fetch_first(" SELECT field_uid FROM tbl_arc where arc_id='".$_G['gp_id']."'");
+	$field_uid = $arc_info['field_uid'];
+	//echo $field_uid;
+}
 
 
 /*大正客户端下载start*/
@@ -70,23 +81,33 @@ switch ($field_uid)
 	case 1160:
 	  $top_pic = "<a href='{$ns_down_url}'><img src='http://www.bwvip.com/images/wap/nanshan-top.png' /></a>";
       break;
+	case 3803491:
+	  $top_pic = "<a href='{$bjhb_down_url}'><img src='http://www.bwvip.com/images/wap/bjhb-top.png' /></a>";
+      break;
+	case 1203:
+	  $top_pic = "<a href='{$tjbh_down_url}'><img src='http://www.bwvip.com/images/wap/tjbh-top.png' /></a>";
+      break;
     default:
       $top_pic = "<img src='http://www.bwvip.com/images/wap/dazheng-top.png' />";
       break;
 }
 
-$where = " and arc_type is null";
-
-if($_G['gp_uid']){
-	$where .= " and uid = '".getgpc('uid')."'";
+if($_G['gp_id']==29208){
+	//echo curPageURL();
 }
+
+
+$where = " and arc_type is null";
 if($_G['gp_id']){
 	$where .= " and blogid>{$_G['gp_id']} ";
 }
+$id = getgpc('id');
 
+$news_blog = DB::fetch_first(" SELECT b.`subject`,b.`dateline`,b.`uid`,bf.`tag`,bf.`message`,bf.`pic`,bf.`ad_pic` FROM ".DB::table('home_blog')." as b LEFT join ".DB::table('home_blogfield')." as bf ON b.blogid=bf.blogid where b.blogid='".$id."'");
+
+$uid = $news_blog['uid'];
 
 $num =3;
-$uid = getgpc('uid');
 
 /*最新博客*/
 if($_G['gp_bl'] == 'test'){
@@ -96,7 +117,7 @@ $new_blogs_query = DB::query(" select `blogid`,`subject` from ".DB::table('home_
 if(!$new_blogs_query){
 	$where = " and arc_type is null";
 	if($_G['gp_uid']){
-		$where .= " and uid = '".getgpc('uid')."'";
+		$where .= " and uid = '".$uid."'";
 	}
 	if($_G['gp_id']){
 		$where .= " and blogid<{$_G['gp_id']} ";
@@ -109,14 +130,46 @@ while($new_blogs_result = DB::fetch($new_blogs_query)){
 }
 
 
-$id = getgpc('id');
+//广告位图片
+$ad_info = DB::fetch_first("SELECT * FROM tbl_arc where arc_id='".$id."'");
+ 
+if($ad_info['arc_ad_pic'])
+{
+	$ad_info['arc_ad_pic'] = "http://www.bwvip.com/".$ad_info['arc_ad_pic'];
+}
+else
+{
+	$ad_info['arc_ad_pic'] = "";
+}
 
-$news_blog = DB::fetch_first(" SELECT b.`subject`,b.`dateline`,bf.`tag`,bf.`message`,bf.`pic`,bf.`ad_pic` FROM ".DB::table('home_blog')." as b LEFT join ".DB::table('home_blogfield')." as bf ON b.blogid=bf.blogid where b.blogid='".$id."'");
+//作者头像和姓名
 
+$member_sql = "select uid,realname,level,intro,is_zimeiti from pre_common_member_profile where uid='{$uid}'";
+$member_info = DB::fetch_first($member_sql);
+$member_info['touxiang'] = "http://www.bwvip.com/uc_server/avatar.php?uid=".$uid."&size=big";//http://www.bwvip.com/uc_server/avatar.php?uid=1889013&size=middle
 
 $aa=str_replace("src=\"/Public/editor/attached","src=\"http://www.bwvip.com/Public/editor/attached",$news_blog['message']);
 $aa=str_replace("src=\"data/attachment/","src=\"http://www.bwvip.com/data/attachment/",$aa);
 $news_blog['message']=$aa;
+
+function curPageURL()
+{
+    $pageURL = 'http';
+    if ($_SERVER["HTTPS"] == "on")
+    {
+        $pageURL .= "s";
+    }
+    $pageURL .= "://";
+    if ($_SERVER["SERVER_PORT"] != "80")
+    {
+        $pageURL .= $_SERVER["SERVER_NAME"] . ":" . $_SERVER["SERVER_PORT"] . $_SERVER["REQUEST_URI"];
+    }
+    else
+    {
+        $pageURL .= $_SERVER["SERVER_NAME"] . $_SERVER["REQUEST_URI"];
+    }
+    return $pageURL;
+}
 
 
 include_once template("wap/news_details");

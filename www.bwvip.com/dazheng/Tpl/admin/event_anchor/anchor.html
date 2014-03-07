@@ -1,0 +1,156 @@
+<include file="../public/_header" />
+<div class="so_main">
+
+  <div class="page_tit">赛事播音</div>
+<!--   <div class="tit_tab">
+	<ul>
+		<li><a <php> if(get("zhibo_state")=='0'){ echo " class=on ";}</php> href="{:U('admin/zhibo/zhibo',array('zhibo_state'=>0))}">待审核</a></li>
+		<li><a <php> if(get("zhibo_state")=='1'){ echo " class=on ";}</php> href="{:U('admin/zhibo/zhibo',array('zhibo_state'=>1))}">审核通过</a></li>
+		<li><a <php> if(get("zhibo_state")=='2'){ echo " class=on ";}</php> href="{:U('admin/zhibo/zhibo',array('zhibo_state'=>2))}">审核未通过</a></li>
+		
+		<li style="width:200px;"></li>
+		<li></li>
+		<li><a href="http://www.bwvip.com/bw_api.php?mod=club&ac=goods_list_cache&tid=51&zhibotype_id=3" target="_blank">更新赛事报道</a></li>
+		<li><a href="http://www.bwvip.com/bw_api.php?mod=club&ac=goods_list_cache&tid=50&zhibotype_id=2" target="_blank">更新行业资讯</a></li>
+		<li><a href="http://www.bwvip.com/bw_api.php?mod=club&ac=goods_list_cache&tid=48&zhibotype_id=1" target="_blank">更新品牌商城</a></li>
+		
+	</ul>
+	</div> -->
+
+  <div class="sezhiboh_box">
+		<form name="sezhiboh_form" action="/default.php" method="get">
+		<input type="hidden" name="g" value="admin">
+		<input type="hidden" name="m" value="event_anchor">
+		<input type="hidden" name="a" value="anchor">
+		<!-- <input type="hidden" name="zhibo_state" value="<php>echo get("zhibo_state")</php>"> -->
+
+		<table border="0" cellspacing="0" cellpadding="0">
+			<th>播音名称：</th>
+			<td><input type="text" name="k" class="sezhiboh_input" style="width:120px;" value="<php> echo  get('k');</php>"></td>
+			
+			<th>开始时间：</th>
+			<td>
+				<input type="text" name="starttime" class="sezhiboh_input_date" style="width:120px;" value="<php> echo  get('starttime');</php>" onFocus="WdatePicker({isShowClear:false,readOnly:true})"> 至 
+				<input type="text" name="endtime" class="sezhiboh_input_date" style="width:120px;" value="<php> echo  get('endtime');</php>" onFocus="WdatePicker({isShowClear:false,readOnly:true})">
+			</td>
+			<!-- <th>栏目：</th>
+			<td>
+				<select name="zhibotype_id" id="zhibotype_id"   class="sezhiboh_select">
+					<option value="">请选择</option>
+					<volist id="vo" name="zhibo_type">
+					<option value="{$vo.zhibotype_id}" >{$vo.zhibotype_name}</option>
+						<volist id="vo2" name="vo['sub']">
+						<option value="{$vo2.zhibotype_id}">&nbsp;&nbsp;|--{$vo2.zhibotype_name}</option>
+						</volist>
+					</volist>
+				</select>
+				<script>set_select_value(document.sezhiboh_form.zhibotype_id,'<php>echo get("zhibotype_id")</php>');</script>
+			</td> -->
+			<td class="btn">
+				
+				<input type="submit" value="搜索" class="btn_b_small" style="margin-right:8px;" >
+				<input type="button" value="查看全部" class="btn_b_small" onclick="javascript:location='{:U('admin/event_anchor/anchor',array('state'=>get('state')))}';">
+			</td>
+		</table>
+	</form>
+  </div><!--/sezhiboh_box-->
+
+  <!--------list -------->
+  <div class="Toolbar_inbox">
+  	<div class="page right">{$pages}</div>
+
+	<a href="{:U('admin/event_anchor/anchor_add')}" class="btn_a"><span>添加播音</span></a>
+	
+	<!-- <php>if(get('zhibo_state')=='0'){</php>
+	<a href="javascript:void(0);" class="btn_a"  onclick="mod_post_batch('{:U('admin/zhibo/zhibo_check_action')}','mod_table');"><span>审核通过</span></a>
+	<a href="javascript:void(0);" class="btn_a"  onclick="mod_post_batch('{:U('admin/zhibo/zhibo_checkno_action')}','mod_table');"><span>驳回审核</span></a>
+	<php>}</php>
+	<php>if(get('zhibo_state')=='1'){</php>
+	<a href="javascript:void(0);" class="btn_a"  onclick="mod_post_batch('{:U('admin/zhibo/zhibo_tj_action')}','mod_table');"><span>推荐</span></a>
+	<a href="javascript:void(0);" class="btn_a"  onclick="mod_post_batch('{:U('admin/zhibo/zhibo_tjno_action')}','mod_table');"><span>取消推荐</span></a>
+	<a href="javascript:void(0);" class="btn_a"  onclick="mod_post_batch('{:U('admin/zhibo/zhibo_pic_action')}','mod_table');"><span>首页图片</span></a>
+	<a href="javascript:void(0);" class="btn_a"  onclick="mod_post_batch('{:U('admin/zhibo/zhibo_picno_action')}','mod_table');"><span>取消首页图片</span></a>
+	<php>}</php> -->
+
+	<a href="javascript:void(0);" class="btn_a"  onclick="mod_delete_batch('{:U('admin/event_anchor/anchor_delete_action')}','mod_table');"><span>批量删除</span></a>
+
+	<div class="clear"></div>
+  </div>
+  <div class="list">
+	<php>if($total>0){</php>
+	  <table width="100%" id="mod_table" border="0" cellspacing="0" cellpadding="0">
+	  <tr>
+		<th style="width:30px;">
+			<input type="checkbox" id="checkbox_handle" onclick="select_all(this,'mod_table','checkbox')" value="0">
+			<label for="checkbox"></label>
+		</th>
+		<th class="line_l">编号</th>
+		<th class="line_l" style="width:200px;">播音名称</th>
+		<!--
+		<th class="line_l">发布人</th>
+		-->
+		<th class="line_l">用户UID</th>
+		<th class="line_l">赛事ID</th>
+		<th class="line_l">分站ID</th>
+		<th class="line_l">图片</th>
+		<th class="line_l">排序</th>
+		<th class="line_l">添加时间</th>
+		<!--
+		<th class="line_l">审核时间</th>
+		-->
+		<th class="line_l">操作</th>
+	</tr>
+	<volist id="vo" name="list">
+	<tr overstyle="on"  id=ids_{$vo["event_anchor_id"]}>
+		<td><input type="checkbox" name="checkbox" onclick="select_one(this)" value="{$vo.event_anchor_id}" ></td>
+		<td width="40">{$vo.event_anchor_id}</td>
+		<td>{$vo.event_anchor_name}</td>
+		<td>{$vo['uid']}</td>
+		<td>{$vo['event_id']}</td><!-- {$event_list[$vo['event_id']]} -->
+		<td>{$vo['fenzhan_id']}</td>
+		<td><php>if($vo['event_anchor_pic']){</php><img src="/{$vo.event_anchor_pic}" class="pic" style="max-width:80px; max-height:40px;"><php>}</php></td>
+
+		<td>{$vo['event_anchor_sort']}</td>
+		<td>{$vo.event_anchor_addtime|format_to_time}</td>
+		
+		<td>
+			<a href="{:U('admin/event_anchor/anchor_edit', array('event_anchor_id'=>$vo['event_anchor_id']))}">修改</a> | 
+			<a href="javascript:void(0);" onclick="mod_delete_one('{:U('admin/event_anchor/anchor_delete_action')}','{$vo['event_anchor_id']}');">删除</a>
+		</td>
+	</tr>
+	</volist>
+    </table>
+	  <php>}else{</php>
+			<div class="no_data">
+				<img src="/skin/images/no_data.gif" align="absmiddle"> <span>没有赛事播音... </span>
+			</div>
+	 <php>}</php>
+  </div>
+
+  <div class="Toolbar_inbox">
+	<div class="page right">{$pages}</div>
+	<a href="{:U('admin/event_anchor/anchor_add')}" class="btn_a"><span>添加播音</span></a>
+
+	<a href="javascript:void(0);" class="btn_a"  onclick="mod_delete_batch('{:U('admin/event_anchor/anchor_delete_action')}','mod_table');"><span>批量删除</span></a>
+
+
+	<div class="clear"></div>
+  </div>
+</div>
+
+<script>
+	$(document).ready(function(){
+		$("tr[overstyle='on']").hover(
+		  function ()
+		  {
+		    $(this).addClass("bg_hover");
+		  },
+		  function (){
+		    $(this).removeClass("bg_hover");
+		  }
+		);
+	});
+</script>
+
+
+<include file="../public/_footer" />

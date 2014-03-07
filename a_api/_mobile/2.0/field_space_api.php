@@ -1,0 +1,97 @@
+<?php
+if(!defined("IN_DISCUZ"))
+{
+	exit('Access Denied');
+}
+
+
+$ac=$_G['gp_ac'];
+
+if($ac=="field_space"){
+	
+	
+	$top_pic="http://www.bwvip.com/images/wap/field_space/top.jpg";
+	$mlh_pic="http://www.bwvip.com/images/wap/field_space/meilanhu.jpg";
+	$ns_pic="http://www.bwvip.com/images/wap/field_space/nanshan1.png";
+	$hb_pic="http://www.bwvip.com/images/wap/field_space/huabin1.png";
+	$tj_bh_pic="http://www.bwvip.com/images/wap/field_space/tj_binhai.png";
+	
+	
+	$mlh_list = array(
+		'name' => '美兰湖高尔夫俱乐部',
+		'pic' => $mlh_pic,
+		'jingdu' => '121.375781',
+		'weidu'  => '31.411205'
+	);
+	$ns_list = array(
+		'name' => '南山庄园高尔夫俱乐部',
+		'pic' => $ns_pic,
+		'jingdu' => '120.48',
+		'weidu'  => '37.591306'
+	);
+	$hb_list = array(
+		'name' => '华彬庄园',
+		'pic' => $hb_pic,
+		'jingdu' => '116.125',
+		'weidu'  => '40.219'
+	);
+	$tj_bh_list = array(
+		'name' => '滨海森林高尔夫俱乐部',
+		'pic' => $tj_bh_pic,
+		'jingdu' => '117.687',
+		'weidu'  => '39.009'
+	);
+
+	//$list['dz_down_url_ios'] = DB::fetch_first("select * from tbl_app_version where app_version_type='ios' and field_uid=0 order by app_version_addtime desc limit 1 ");
+	$ios_mlh = DB::fetch_first("select app_version_file from tbl_app_version where app_version_type='ios' and field_uid=1186 order by app_version_addtime desc limit 1 ");
+	$ios_ns = DB::fetch_first("select app_version_file from tbl_app_version where app_version_type='ios' and field_uid=1160 order by app_version_addtime desc limit 1 ");
+	$ios_hb = DB::fetch_first("select app_version_file from tbl_app_version where app_version_type='ios' and field_uid=3803491 order by app_version_addtime desc limit 1 ");
+	$ios_tj_bh = DB::fetch_first("select app_version_file from tbl_app_version where app_version_type='ios' and field_uid=1203 order by app_version_addtime desc limit 1 ");
+
+	//$list['dz_down_url_android'] = DB::fetch_first("select * from tbl_app_version where app_version_type='android' and field_uid=0 order by app_version_addtime desc limit 1 ");
+	$android_mlh = DB::fetch_first("select app_version_file from tbl_app_version where app_version_type='android' and field_uid=1186 order by app_version_addtime desc limit 1 ");
+	$android_ns = DB::fetch_first("select app_version_file from tbl_app_version where app_version_type='android' and field_uid=1160 order by app_version_addtime desc limit 1 ");
+	$android_hb = DB::fetch_first("select app_version_file from tbl_app_version where app_version_type='android' and field_uid=3803491 order by app_version_addtime desc limit 1 ");
+	$android_tj_bh = DB::fetch_first("select app_version_file from tbl_app_version where app_version_type='android' and field_uid=1203 order by app_version_addtime desc limit 1 ");
+	
+	if(!empty($ios_mlh)){
+		$mlh_list['down_url'] = $ios_mlh['app_version_file'];
+		$ios_list[] = $mlh_list;
+	}
+	if(!empty($ios_ns)){
+		$ns_list['down_url'] = $ios_ns['app_version_file'];
+		$ios_list[] = $ns_list;
+	}
+	if(!empty($ios_hb)){
+		$hb_list['down_url'] = $ios_hb['app_version_file'];
+		$ios_list[] = $hb_list;
+	}
+	if(!empty($ios_tj_bh)){
+		$tj_bh_list['down_url'] = $ios_tj_bh['app_version_file'];
+		$ios_list[] = $tj_bh_list;
+	}
+	
+	if(!empty($android_mlh)){
+		$mlh_list['down_url'] = $android_mlh['app_version_file'];
+		$android_list[] = $mlh_list;
+	}
+	if(!empty($android_ns)){
+		$ns_list['down_url'] = $android_ns['app_version_file'];
+		$android_list[] = $ns_list;
+	}
+	if(!empty($android_hb)){
+		$hb_list['down_url'] = $android_hb['app_version_file'];
+		$android_list[] = $hb_list;
+	}
+	if(!empty($android_tj_bh)){
+		$tj_bh_list['down_url'] = $android_tj_bh['app_version_file'];
+		$android_list[] = $tj_bh_list;
+	}
+	
+	$data['title'] = 'data';
+	$data['data'] = array('top_pic'=>$top_pic,'ios'=>$ios_list,'android'=>$android_list);
+	api_json_result(1,0,"成功",$data);
+}
+
+
+?>

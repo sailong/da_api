@@ -31,7 +31,7 @@ if($ac=="bwm_reg")
 		$field_name = $field_info['fieldname'];
 	}
 	
-	$user_ticket_imei = urldecode($_G['user_ticket_imei']);
+	$user_ticket_imei = urldecode($_G['gp_user_ticket_imei']);
 	$qiancheng = urldecode($_G['gp_qiancheng']);
 	$family_name = urldecode($_G['gp_family_name']);
 	$name = urldecode($_G['gp_name']);

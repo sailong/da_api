@@ -54,6 +54,13 @@ class event_userAction extends AdminAuthAction
 		$team_list[]=$event_info['event_left_flag'];
 		$team_list[]=$event_info['event_right_flag'];
 		
+		
+		
+		$country_list=select_dict(17,"select");
+		$this->assign("country_list",$country_list);
+		
+		
+		
 		$this->assign("event_info",$event_info);
 		$this->assign("team_list",$team_list);
 		$this->assign("page_title","添加赛事用户");
@@ -73,7 +80,10 @@ class event_userAction extends AdminAuthAction
 			$data["event_user_card_type"]=post("event_user_card_type");
 			$data["event_user_card"]=post("event_user_card");
 			$data["event_user_chadian"]=post("event_user_chadian");
+			
 			$data["event_user_state"]=1;
+			
+			$data["country"]=post("country");
 			
 			if(post("event_user_team")!="")
 			{
@@ -108,6 +118,9 @@ class event_userAction extends AdminAuthAction
 			
 			$event=D('event')->event_select_pro();
 			$this->assign('event_list',$event['item']);
+			
+			$country_list=select_dict(17,"select");
+			$this->assign("country_list",$country_list);
 			
 			
 			
@@ -145,6 +158,8 @@ class event_userAction extends AdminAuthAction
 			$data["event_user_chadian"]=post("event_user_chadian");
 			$data["event_user_state"]=post("event_user_state");
 			
+			$data["country"]=post("country");
+			
 			if(post("event_user_team")!="")
 			{
 				$data["event_user_team"]=post("event_user_team");
@@ -170,7 +185,14 @@ class event_userAction extends AdminAuthAction
 				$event_user_realname=$data["event_user_realname"];
 				$upwhere.=" ,realname='$event_user_realname' ";
 			}
+			if($data["country"])
+			{
+				$country=$data["country"];
+				$upwhere.=" ,country='$country' ";
+			}
+
 			$res=M()->execute("update tbl_baofen set uid=$uid $upwhere where event_user_id=".$event_user_id." and event_id=".$event_id."  "); 
+
 			$this->success("修改成功",U('admin/event_user/event_user',array('event_id'=>post('event_id'))));			
 		}
 		else

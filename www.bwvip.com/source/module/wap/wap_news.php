@@ -21,7 +21,7 @@ if($_GET['username']) {
 	$uid = $member['uid'];
 }
 
-$dos = array('index','details');
+$dos = array('index','details','detailsbak');
 
 $do = (!empty($_GET['do']) && in_array($_GET['do'], $dos))?$_GET['do']:'index';
 
@@ -32,6 +32,7 @@ if($is_exist_amp) {
 	header("Location:{$url_this}");exit;
 }
 if($_GET['test'] == 1) {
+	echo $do;
 	echo 55555555555555;die;
 	echo '<pre>'; 
 	$url_this =  "http://".$_SERVER ['HTTP_HOST'].$_SERVER['REQUEST_URI'];

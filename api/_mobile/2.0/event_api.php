@@ -76,15 +76,26 @@ if($ac=="select_event")
 	$year=$_G['gp_year'];
 	if($year)
 	{
-		$where =" and event_year='".$_G['gp_year']."' ";
+		$where .=" and event_year='".$_G['gp_year']."' ";
 	}
 	else
 	{
 		//$where =" and event_year='".date("Y",time())."' ";
-		$where =" and event_year='2014' ";
+		$where .=" and event_year='2014' ";
 	}
+	
+	$login_uid=$_G['gp_login_uid'];
+	$user_uids=array(31000348,3807100,3805829);
+	if(in_array($login_uid,$user_uids))
+	{
+		$big_where =$where." and (event_is_tj='Y' or event_is_neice='Y' ) ";
+	}
+	else 
+	{
+		$big_where =$where." and (event_is_tj='Y' ) ";
+	} 
 
-	$list3=DB::query("select event_id,event_name,event_uid,event_is_zhutui,event_zhutui_pic,event_content,event_url,event_type,event_logo,event_video_url,event_audio_url,event_city,event_year from tbl_event where event_is_zhutui='Y' and field_uid=0  ".$where."  order by event_sort desc limit 1 ");
+	$list3=DB::query("select event_id,event_name,event_uid,event_is_zhutui,event_zhutui_pic,event_content,event_url,event_type,event_logo,event_video_url,event_audio_url,event_city,event_year ,event_go_action,event_go_value from tbl_event where event_is_zhutui='Y' and field_uid=0  ".$where."  order by event_sort desc limit 1 ");
 	while($row3 = DB::fetch($list3))
 	{
 		if($row3['event_zhutui_pic'])
@@ -114,12 +125,23 @@ if($ac=="select_event")
 			$row['event_city']="";
 		}
 		
+		if(!$row['event_go_action'])
+		{
+			$row['event_go_action']="";
+		}
+		
+		if(!$row['event_go_value'])
+		{
+			$row['event_go_value']="";
+		}
+		
+		
 		
 		
 		//$list_data3[]=$row3;
 	}
 
-	$list=DB::query("select event_id,event_name,event_id as event_uid,event_is_zhutui,event_content,event_url,event_type,event_logo,event_starttime,event_endtime,event_video_url,event_audio_url,event_city,event_year from tbl_event where event_is_tj='Y' and (event_viewtype='B' or event_viewtype='A' or event_viewtype='S')  ".$where."  order by event_sort desc  ");
+	$list=DB::query("select event_id,event_name,event_id as event_uid,event_is_zhutui,event_content,event_url,event_type,event_logo,event_starttime,event_endtime,event_video_url,event_audio_url,event_city,event_year,event_go_action,event_go_value from tbl_event where (event_viewtype='B' or event_viewtype='A' or event_viewtype='S')  ".$big_where."  order by event_sort desc  ");
 	while($row = DB::fetch($list))
 	{
 		
@@ -161,6 +183,17 @@ if($ac=="select_event")
 		{
 			$row['event_city']="";
 		}
+		
+		if(!$row['event_go_action'])
+		{
+			$row['event_go_action']="";
+		}
+		
+		if(!$row['event_go_value'])
+		{
+			$row['event_go_value']="";
+		}
+		
 		
 		
 		$list_data[]=$row;
@@ -1308,7 +1341,7 @@ if($ac=="event_baoming_action")
 			
 			for($i=0; $i<count($event_id_arr); $i++ )
 			{
-				$list=DB::query("select fenzhan_id from tbl_fenzhan where event_id='".$event_id_arr[$i]."' ");
+				$list=DB::query("select fenzhan_id from tbl_fenzhan where event_id='".$fenzhan_arr[$i]."' ");
 				while($row=DB::fetch($list))
 				{
 					$fenzhan_id_arr[]=$row['fenzhan_id'];

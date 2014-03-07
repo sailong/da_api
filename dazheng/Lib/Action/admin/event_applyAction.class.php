@@ -42,7 +42,7 @@ class event_applyAction extends AdminAuthAction
 		
 		$this->assign("fenzhan_id",$fenzhan_id);
 		
-		$arr=D("event_apply")->event_apply_list_pro(" and fenzhan_id='{$fenzhan_id}'");
+		$arr=D("event_apply")->event_apply_list_pro(" and fenzhan_id='{$fenzhan_id}'",150,' event_apply_id desc ');
 		
 		
 		$parent_list = array();
@@ -366,7 +366,7 @@ class event_applyAction extends AdminAuthAction
 					if(!$baofen_info[0]['baofen_id'])
 					{
 					
-						if($event_info['event_type']=='T')
+						if($event_info['event_type']=='T' || $event_info['event_type']=='LAIDEBEI')
 						{
 							if($fenzhan_info['fenzhan_rule']==11 && $apply_info['parent_id']>0)//$apply_info['parent_id']==0只显示队名---$apply_info['parent_id']==0只显示队员名称
 							{

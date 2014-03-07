@@ -1,0 +1,87 @@
+<include file="../public/header_dialog" />
+<div class="so_main">
+
+  <div class="page_tit">视频管理</div>
+  <div class="tit_tab">
+	<ul>
+		<li><a class=on href="{:U('admin/video/video_add')}">添加视频</a></li>
+	</ul>
+  </div>
+
+{$usejs}
+
+<table border="0" cellspacing="0" cellpadding="0" style="width:900px;">
+<tr>
+<td>
+<!--/dialog_start-->
+
+<form method="post" id="act_form" name="act_form" action="{:U('admin/video/video_add_action')}" enctype="multipart/form-data">
+	<table class="add_table" border="0" cellspacing="0" cellpadding="0" >
+		<tbody>
+				
+				<!-- <tr>
+					<th>赛事ID：</th>
+					<td><input type="text" name="event_id" id="event_id"  class="mod_input" style="width:100px;"></td>
+				</tr> -->
+				<tr>
+					<th>视频名称：</th>
+					<td><input type="text" name="video_name" id="video_name"  class="mod_input" style="width:300px;"></td>
+				</tr>
+				<tr>
+					<th>视频地址：</th>
+					<td><input type="text" name="video_url" id="video_url"  class="mod_input" style="width:300px;"></td>
+				</tr>
+				<tr>
+					<th>图片：</th>
+					<td><input type="file" name="video_pic" id="video_pic"  class="mod_input" style="width:300px;"></td>
+				</tr>
+				
+				<tr>
+					<th>视频内容：</th>
+					<td>{$editor}</td>
+				</tr>
+				<tr>
+					<th>排序：</th>
+					<td><input type="text" name="video_sort" id="video_sort"  class="mod_input" style="width:100px;"></td>
+				</tr>
+		</tbody>
+		<tfoot>
+			<tr>
+				<th></th>
+				<td>
+					<input type="submit" class="btn_b"  value="添加" style="margin-right:10px;"/>
+					<input type="button" class="btn_w" onclick="javascript:history.back(-1);" value="取消" />
+				</td>
+		</tfoot>
+	</table><!--/add_table-->
+</form>
+
+<script>
+$(document).ready(function(){
+$.formValidator.initConfig({formID:"act_form",theme:'ArrowSolidBox',mode:'AutoTip',onError:function(msg){msg_error(msg)},inIframe:true});
+
+	
+	$("#video_name").formValidator({empty:true,onShow:"请输入视频名称",onFocus:"请输入视频名称",onCorrect:"输入正确"}).inputValidator({min:1,max:11,onError:"请输入视频名称"});
+	
+	$("#video_url").formValidator({empty:true,onShow:"请输入视频地址",onFocus:"请输入视频地址",onCorrect:"输入正确"}).inputValidator({min:1,max:300,onError:"请输入视频地址"});
+	$("#video_content").formValidator({empty:true,onShow:"请输入视频内容",onFocus:"请输入视频内容",onCorrect:"输入正确"}).inputValidator({min:1,max:300,onError:"请输入视频内容"});
+	$("#video_sort").formValidator({empty:true,onShow:"请输入视频状态",onFocus:"请输入视频状态",onCorrect:"输入正确"}).inputValidator({min:1,max:50,onError:"请输入视频状态"});
+	
+	$.formValidator.reloadAutoTip();
+});
+
+function reloadAutoTip()
+{
+	$.formValidator.reloadAutoTip();
+}
+
+</script>
+
+<!--/dialog_end-->
+</td>
+</tr>
+</table>
+
+</div>
+
+<include file="../public/_footer" />

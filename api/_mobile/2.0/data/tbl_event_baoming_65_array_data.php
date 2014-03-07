@@ -48,7 +48,7 @@ $field_set_list=array();
 	$field_set_list[2]['name']="baoming_chadian";
 	$field_set_list[2]['name_cn']="差　　点";
 	$field_set_list[2]['type']="input";
-	$field_set_list[0]['type_more']=null;
+	$field_set_list[2]['type_more']=null;
 	$field_set_list[2]['max_size']="50";
 	
 	$field_set_list[3]['name']="baoming_is_huang";

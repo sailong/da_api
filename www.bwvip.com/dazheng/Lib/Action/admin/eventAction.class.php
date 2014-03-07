@@ -44,11 +44,16 @@ class eventAction extends AdminAuthAction
 		
 		$app_list=select_field(1,"select");
 		$this->assign("app_list",$app_list);
+		
+		$event_years = select_dict(18);
+		$this->assign("event_years",$event_years);
 
 		$this->assign("page_title","添加赛事");
     	$this->display();
 	}
+	
 
+	
 	public function event_add_action()
 	{
 		if(M()->autoCheckToken($_POST))
@@ -71,6 +76,9 @@ class eventAction extends AdminAuthAction
 			$data["event_video_url"]=post("event_video_url");
 			$data["event_city"]=post("event_city");
 			//add2013.12.10end
+			//add2013.12.24start
+			$data["event_year"]=post("event_year");
+			//add2013.12.24END
 			$uploadinfo=upload_file("upload/event/");
 				
 			foreach($uploadinfo as $key=>$val){
@@ -174,6 +182,9 @@ class eventAction extends AdminAuthAction
 			$app_list=select_field(1,"select");
 			$this->assign("app_list",$app_list);
 			
+			$event_years = select_dict(18);
+			$this->assign("event_years",$event_years);
+			
 			$this->assign("page_title","修改赛事");
 			$this->display();
 		}
@@ -208,6 +219,9 @@ class eventAction extends AdminAuthAction
 			$data["event_video_url"]=post("event_video_url");
 			$data["event_city"]=post("event_city");
 			//add2013.12.10end
+			//add2013.12.24start
+			$data["event_year"]=post("event_year");
+			//add2013.12.24END
 			
 			$uploadinfo=upload_file("upload/event/");
 			
@@ -385,6 +399,9 @@ class eventAction extends AdminAuthAction
 			
 			$app_list=select_field(1,"select");
 			$this->assign("app_list",$app_list);
+			
+			$event_years = select_dict(18);
+			$this->assign("event_years",$event_years);
 			
 			
 			$this->assign('event_name',$data['event_name']);

@@ -102,6 +102,7 @@ class fenzhanAction extends AdminAuthAction
 			
 			$data["orderby"]=post("orderby");
 			$data["is_delete"]=post("is_delete");
+			$data["fenzhan_rule"]=post("fenzhan_rule");
 			$data["addtime"]=time();
 			
 			$list=M("fenzhan")->add($data);
@@ -141,6 +142,11 @@ class fenzhanAction extends AdminAuthAction
 			$this->assign('event_id',intval(get("event_id")));
 			$this->assign('event_name',$event_info['event_name']);
 			$this->assign('event_type',$event_info['event_type']);
+			
+			
+			//print_r($event_info);
+			
+			
 			$this->assign("page_title","修改分站");
 			$this->display();
 		}
@@ -424,8 +430,7 @@ class fenzhanAction extends AdminAuthAction
 		
 		$fenzhan=M('fenzhan')->where("event_id='".get("event_id")."'")->select();
 		$fenzhan_info = array();
-		foreach($fenzhan as $key=>$val)
-		{
+		foreach($fenzhan as $key=>$val) {
 			$fenzhan_info[$val['fenzhan_id']] = $val;
 			$default_fenzhan_id = $val['fenzhan_id'];
 		}
@@ -465,7 +470,6 @@ class fenzhanAction extends AdminAuthAction
 		{		
 			//$list=M()->query("select * from tbl_baofen where event_id='".get("event_id")."' order by baofen_id desc ");
 		}
-		
 		$this->assign("fenzhan_id",$fenzhan_id);
 		$this->assign("list",$list);
 		$this->assign("pages",$list["pages"]);

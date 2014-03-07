@@ -47,7 +47,7 @@
 		<th class="line_l">所属赛事</th>
 		-->
 		<th class="line_l">所属分站</th>
-		<php>if($event_type=='T'){</php>
+		<php>if($event_type=='T' || $event_type=='LAIDEBEI'){</php>
 		<th class="line_l">队别</th>
 		<th class="line_l">所属分队</th> 
 		<php>}</php>
@@ -71,7 +71,7 @@
 		<!-- <td>{$vo.uid}</th> -->
 		<td>{$vo.realname}</td>
 		<td>{$fenzhan[$vo['fenzhan_id']]['fenzhan_name']}</td>
-		<php>if($event_type=='T'){</php>
+		<php>if($event_type=='T' || $event_type=='LAIDEBEI'){</php>
 		<td>{$vo['event_user_team']}</td>
 		<td>{$parent_apply_list[$vo['event_apply_parent_id']]['event_apply_realname']}</td>
 		<php>}</php>

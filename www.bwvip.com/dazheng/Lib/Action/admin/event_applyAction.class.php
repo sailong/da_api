@@ -332,13 +332,21 @@ class event_applyAction extends AdminAuthAction
 						$sub_fenzhan_sql=" and (event_id='".$event_id."') ";
 					}
 					
+					
+					$event_user_info=M("event_user")->where(" event_user_id='".$apply_info['event_user_id']."' ")->find();
+					
 					$insert_data=array();
+					
+					
 					$insert_data['uid'] = $apply_info['uid']; 
 					$insert_data['event_user_id'] = $apply_info['event_user_id']; 
 					$insert_data['event_user_team'] = $apply_info['event_user_team']; 
 					$insert_data['event_apply_id'] = $apply_info['event_apply_id']; 
 					$insert_data['event_apply_parent_id'] = $apply_info['parent_id']; 
 					$insert_data['realname'] = $apply_info['event_apply_realname']; 
+					
+					$insert_data['country'] = $event_user_info['country']; 
+					
 					$insert_data['event_id']   = $event_id;
 					
 					$insert_data['event_apply_chadian'] = $apply_info['event_apply_chadian']; 

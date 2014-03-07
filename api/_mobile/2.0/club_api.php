@@ -805,33 +805,19 @@ if($ac=="member_detail")
 			if($max_page2>=$page2)
 			{
 			
-				$query = DB::query("select baofen_id as id,event_id,uid,fuid,fz_id,par,score,pars,total_score,lun,dateline,event_name,start_time from (select baofen_id,field_id,baofen_id as id,uid,field_id as fuid,event_id,fenzhan_id as fz_id,sid,par,score,pars,total_score,lun,FROM_UNIXTIME(dateline, '%Y-%m-%d') as dateline,addtime,(select event_name from tbl_event where event_id=tbl_baofen.event_id) as event_name,start_time from tbl_baofen where start_time>'".strtotime("2013-04-01")."' and uid=$get_uid $strwhere ) as t2 group by event_id order by total_score asc,start_time desc limit $page_start2,$page_size2");
+				$query = DB::query("select baofen_id as id,event_id,uid,fuid,fz_id,par,score,pars,total_score,lun,dateline,event_name,event_logo,start_time from (select baofen_id,field_id,baofen_id as id,uid,field_id as fuid,event_id,fenzhan_id as fz_id,sid,par,score,pars,total_score,lun,FROM_UNIXTIME(dateline, '%Y-%m-%d') as dateline,addtime,(select event_name from tbl_event where event_id=tbl_baofen.event_id) as event_name,(select event_logo from tbl_event where event_id=tbl_baofen.event_id) as event_logo,start_time from tbl_baofen where start_time>'".strtotime("2013-04-01")."' and uid=$get_uid $strwhere ) as t2 group by event_id order by total_score asc,start_time desc limit $page_start2,$page_size2");
 
 				while($row = DB::fetch($query))
 				{
 					$row['ndid']=$row['id'];
 					$row['event_name']=$row['event_name']." ";
 					$row['iframe_url']=$site_url."/nd/score.php?ndid=".$row['ndid']."&size=small";
+					if($row['event_logo'])
+					{
+						$row['event_logo']=$site_url."/".$row['event_logo'];
+					}
 					$score_list[] = array_default_value($row); 
 				}
-				/*
-				$query = DB::query("select id,uid,fuid,fz_id,par,score,pars,total_score,lun,onlymark,dateline,event_name,addtime from (select id,uid,fuid,fz_id,par,score,sais_id,pars,total_score,lun,onlymark,FROM_UNIXTIME(dateline, '%Y-%m-%d') as dateline,addtime,(select realname from ".DB::table("common_member_profile")." where uid=".DB::table('common_score').".sais_id) as event_name from ".DB::table('common_score')."  where addtime>'".strtotime("2013-04-01")."' and uid=$get_uid $strwhere order by total_score asc) as t2 group by sais_id order by total_score asc,addtime desc limit $page_start2,$page_size2");
-
-				//echo "select id,uid,fuid,par,score,pars,total_score,FROM_UNIXTIME(dateline, '%Y-%m-%d') as dateline,(select realname from ".DB::table("common_member_profile")." where uid=".DB::table('common_score').".uid) as event_name from ".DB::table('common_score')."  where uid=$get_uid $strwhere order by addtime desc limit $page_start2,$page_size2";
-				while($row = DB::fetch($query))
-				{
-					
-					$row['ndid']=DB::result_first("select nd_id from ".DB::table("golf_nd_baofen")." where uid='".$row['uid']."' and fenz_id='".$row['fz_id']."'  ");
-					if($row['ndid']==false)
-					{
-						$row['ndid']=DB::result_first("select nd_id from ".DB::table("golf_nd_baofen")." where uid='".$row['uid']."' and onlymark='".$row['onlymark']."'  ");	
-					}
-					
-					$row['event_name']=$row['event_name']." ";
-					$row['iframe_url']=$site_url."/nd/score.php?ndid=".$row['ndid']."&size=small";
-					$score_list[] = $row; 
-				}
-				*/
 			}
 
 		//}
@@ -956,12 +942,16 @@ if($ac=="member_detail")
 			}
 
 		}//end page
+		
+		
+		$set_info['is_toupiao']="N";
 
 		$data['title']		= "detail_data";
 		$data['data']=array(
 						  'user_info'=>$detail_data,
 						  'list_info'=>$list_data,
 						  'score_list'=>$score_list,
+						  'set_info'=>$set_info,
 						 );
 		//print_r($data);
 		api_json_result(1,0,$app_error['event']['10502'],$data);

@@ -1,0 +1,130 @@
+<include file="../public/header_dialog" />
+{$usejs}
+
+<div class="so_main">
+
+  <div class="page_tit">门票领取管理</div>
+  <div class="tit_tab">
+	<ul>
+		<li><a class=on href="#">查看详细门票领取</a></li>
+	</ul>
+  </div>
+
+<table border="0" cellspacing="0" cellpadding="0" style="width:900px;">
+<tr>
+<td>
+<!--/dialog_start-->
+
+	<table class="add_table" border="0" cellspacing="0" cellpadding="0" >
+		<tbody>
+		<tr>
+					<th>所属用户：</th>
+						<td>{$data.uid}</td>
+				</tr>
+				<tr>
+					<th>所属赛事：</th>
+						<td>{$event_info.event_name}</td>
+				</tr>
+				<tr>
+					<th>门票：</th>
+						<td>{$ticket_info.ticket_name}</td>
+				</tr>
+				<tr>
+					<th>门票类型：</th>
+						<td>{$data.ticket_type}</td>
+				</tr>
+				<tr>
+					<th>领取码：</th>
+						<td>{$data.user_ticket_code}</td>
+				</tr>
+				<tr>
+					<th>二维码图片：</th>
+						<td><php>if($data['user_ticket_codepic']){</php><img src="{$data['user_ticket_codepic']}" style="max-width:300px;max-height:200px;"/><php>}</php></td>
+				</tr>
+				<tr>
+					<th>订票张数：</th>
+					<td>{$data.user_ticket_nums}</td>
+				</tr>
+				<tr>
+					<th>姓名：</th>
+						<td>{$data.user_ticket_realname}</td>
+				</tr>
+				
+				<tr>
+					<th>性别：</th>
+					<td>{$data.user_ticket_sex}</php>
+				</tr>
+				<tr>
+					<th>年龄：</th>
+					<td>{$data.user_ticket_age}</td>
+				</tr>
+				<tr>
+					<th>地区：</th>
+					<td>{$data.user_ticket_address}</td>
+				</tr>
+				<!-- <tr>
+					<th>证件类型：</th>
+						<td><php>if($data['user_ticket_cardtype'] == 0){echo '身份证';}</php></td>
+				</tr>
+				<tr>
+					<th>证件号码：</th>
+						<td>{$data.user_ticket_card}</td>
+				</tr> -->
+				<tr>
+					<th>手机号：</th>
+						<td>{$data.user_ticket_mobile}</td>
+				</tr>
+				<tr>
+					<th>手机串号：</th>
+					<td>{$data.user_ticket_imei}</td>
+				</tr>
+				<tr>
+					<th>公司名称：</th>
+					<td>{$data.user_ticket_company}</td>
+				</tr>
+				<tr>
+					<th>公司职位：</th>
+					<td>{$data.user_ticket_company_post}</td>
+				</tr>
+				<tr>
+					<th>状态：</th>
+						<td>
+						<php>
+						switch($data['user_ticket_status']){
+							case 0:
+								echo '待审核';
+								break;
+							case 1:
+								echo '审核通过';
+								break;
+							case 2:
+								echo '审核不通过';
+								break;
+						}
+						</php>
+						</td>
+				</tr>
+				<tr>
+					<th>添加时间：</th>
+					<td>{$data.user_ticket_addtime|format_to_time}</td>
+					
+				</tr>
+				
+		</tbody>
+		<tfoot>
+			<tr>
+				<th></th>
+				<td>
+					<input type="button" class="btn_w" onclick="javascript:history.back(-1);" value="返回" />
+				</td>
+		</tfoot>
+	</table><!--/add_table-->
+
+
+<!--/dialog_end-->
+</td>
+</tr>
+</table>
+
+</div>
+<include file="../public/_footer" />

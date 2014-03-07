@@ -53,7 +53,13 @@ h3{width:95%;font-size:18px;line-height:25px;}
 .bottom{width:100%;margin:20px auto;padding-bottom:10px;}
 .bottom .p1{width:45%;float:left;margin-right:10px;}
 .bottom .p2{width:35%;float:left;}
+<!--
+.pic_box{float:left;width:60px; height:60px; font-size:0; *font-size:200px; text-align:center;}
+.pic_box img{vertical-align:middle;}
+.pic_box:after{display:inline-block; width:0; height:100%; content:"center"; vertical-align:middle; overflow:hidden;}
+-->
 </style>
+<script language="javascript" type="text/javascript" src="http://www.bwvip.com/skin/js/jquery-1.4.4.min.js"></script>
 </head>
 
 <body>
@@ -65,13 +71,79 @@ h3{width:95%;font-size:18px;line-height:25px;}
 <div class="content">
     	<h3>{$news_blog['subject']}</h3>
     	<p><img src="http://www.bwvip.com/images/wap/line-bg.png" style="height:2px;padding:10px 0;"/></p>
-        <p>{$news_blog['message']}</p>
+        <p id="cont_detail">{$news_blog['message']}</p>
+		<script>
+			var content = leftTrim($("#cont_detail").html());
+			$("#cont_detail").html(content);
+			$("#cont_detail").css('text-indent','2em');
+			$(".content img").css('padding-top','10px');
+			$(".content img").css('padding-bottom','10px');
+			function leftTrim(str){ 
+				return str.replace(/&nbsp;/g,"");//^符号表示从开头即左边进行匹配 
+			} 
+		</script>
 </div>
 </div>
+
+<div style="padding:0 20px;">
+<p><img src="http://www.bwvip.com/images/wap/line-bg.png" style="height:2px;padding:10px 0;"/></p>
+</div>
+<!-- 发布者信息-->
+<!--{if $member_info['is_zimeiti']=='Y' && $member_info['level']>0}-->
+<div style="margin:20px;">
+	<div style="background-image:url(http://www.bwvip.com/images/wap/new_img/lankuang.png);background-repeat:no-repeat;background-size:100% 100%;overflow:hidden;padding:10px;" width="100%">
+		<!-- <div class="pic_box">
+			<img src="{$member_info['touxiang']}" style="max-height:60px; max-width:60px;"/>
+		</div> -->
+		<div style="float:left;padding-left:5px;">
+			<div style="width:60px;height:60px;overflow:hidden;display:table-cell;vertical-align:middle;text-align:center;">
+				<img src="{$member_info['touxiang']}" style="vertical-align:middle;"/>
+			</div>
+		</div>
+		
+		<div style="float:left;padding:5px 0 0 10px;">
+			<div style="float:left;line-height:28px;padding-right:10px;">
+				<span style="font-size:16px;color:white;">{$member_info['realname']}</span>
+			</div>
+			<div style="float:left;">
+				{if $member_info['level']}<img src="http://www.bwvip.com/images/wap/new_img/level{$member_info['level']}.png"  style="vertical-align: middle;max-height:60px; max-width:70px;"/>{else}<img src="http://www.bwvip.com/images/wap/new_img/level1.png"  style="vertical-align: middle;max-height:60px; max-width:70px;"/>{/if}
+			</div>
+			<div style="clear:both;"></div>
+			<div>
+				<a href="http://wap.bwvip.com/index.php?mod=news&do=usernews&uid={$uid}" target="_top" style="text-decoration: none;color:#62b9f3;"><span style="font-size:16px;">作者更多新闻</span></a><span style="font-size:16px;color:#fff;padding-left:3px;"><img src="http://www.bwvip.com/images/wap/new_img/tip_1.png" style="max-width:12px;height:10px;margin-left:5px;"></span>
+			</div>
+		</div>
+	</div>
+	<div style="clear:both;"></div>
+	<div style="background-image:url(http://www.bwvip.com/images/wap/new_img/down_bac.png);background-repeat:no-repeat;background-size:100% 100%;overflow:hidden;text-align:center;margin-top:5px;" width="100%">
+		<!-- <div style="margin-left:15%;left:-width/2;text-align:center;"> -->
+		<div style="float:left;position:relative;left:50%;">
+			<div style="float:left;padding-top:5px;position:relative;right:50%;">
+				<div style="height:52px;overflow:hidden;display:table-cell;vertical-align:middle;text-align:center;">
+					<img src="http://www.bwvip.com/images/wap/new_img/tu.png" style="max-height:40px;max-width:40px;"/>
+				</div>
+				
+			</div>
+			<div style="float:left;padding-top:5px;position:relative;right:50%;">
+				<div style="line-height:52px;padding-left:10px;text-align:center;">
+					<a href="{$dz_down_url}" target="_top" style="text-decoration: none;"><span style="font-size:20px;color:#00a3cc;font-weight:bold;">下载大正客户端</span></a>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!--{else}-->
 <div class="bottom">
 <p><a href="{$dz_down_url}" target="_top"><img src="{$banner}"/></a></p>
-<!-- <p><a href="http://www.bwvip.com/app" target="_top">下载</a></p> -->
+
 </div>
+<!--{/if}-->
+</div>
+
+<!-- <div class="bottom">
+<p><a href="{$dz_down_url}" target="_top"><img src="{$banner}"/></a></p>
+
+</div> -->
 <div style="padding:0 20px;">
 <h3>相关推荐</h3>
 <p><img src="http://www.bwvip.com/images/wap/line-bg.png" style="height:2px;padding:10px 0;"/></p>

@@ -117,19 +117,19 @@ if($ac=="news_add")
 {
 	$uid=$_G['gp_uid'];
 	$arc_name=$_G['gp_arc_name'];
-	$arc_content=$_G['gp_arc_content'];
+	$arc_content=urldecode($_G['gp_arc_content']);
 	
 	
 	
 	if($uid && $arc_name && $arc_content)
 	{
-		DB::query(" insert into tbl_arc (uid,arc_name,field_uid,arc_type,arctype_id,arc_content,arc_state,arc_addtime) values ('".$uid."','".$arc_name."','0','U','0','".addslashes($arc_content)."','0','".time()."') ");
+		DB::query(" insert into tbl_arc (uid,arc_name,field_uid,arc_type,arctype_id,arc_content,arc_viewtype,arc_state,arc_addtime) values ('".$uid."','".$arc_name."','0','U','0','".addslashes($arc_content)."','normal','0','".time()."') ");
 		
 		$new_id=DB::result_first("select arc_id from tbl_arc where uid='".$uid."' order by arc_id desc limit 1 ");
 		
 		if($new_id)
 		{
-			$res=DB::query("insert into pre_home_blog (blogid,uid,subject,replynum,dateline) values ('".$new_id."','".$uid."','".$arc_name."','0','".time()."')");
+			$res=DB::query("insert into pre_home_blog (blogid,uid,subject,replynum,dateline,arc_type) values ('".$new_id."','".$uid."','".$arc_name."','0','".time()."','U')");
 			$res2=DB::query("insert into pre_home_blogfield (blogid,uid,message,pic) values ('".$new_id."','".$uid."','".addslashes($arc_content)."','')");
 			
 			$table_info=DB::fetch_first("show table status where name ='tbl_arc'");
@@ -141,7 +141,7 @@ if($ac=="news_add")
 				'new_arc_id'=>$new_id
 			);
 			
-			api_json_result(1,0,$app_error['event']['10502'],$data);
+			api_json_result(1,0,'发布成功',$data);
 			
 		}
 		
@@ -156,6 +156,20 @@ if($ac=="news_add")
 	
 }
 
+
+//删除新闻
+if($ac=='news_delete')
+{
+	$arc_id=$_G['gp_blogid'];
+	$uid=$_G['gp_uid'];
+	if($arc_id)
+	{
+		$res=DB::query("delete from tbl_arc where arc_id='".$arc_id."' and uid='".$uid."' ");
+		$res=DB::query("delete from pre_home_blog where blogid='".$arc_id."' and uid='".$uid."' ");
+		$res=DB::query("delete from pre_home_blogfield where blogid='".$arc_id."' and uid='".$uid."' ");
+	}
+	api_json_result(1,0,'删除成功',$data);
+}
 
 
 
@@ -203,11 +217,13 @@ if($ac=="news_add_pic")
 
 				
 				$filename_s = str_replace(".".$extname,'_s.'.$extname,$file_url);
+				
+				$filename_s_for_creat = str_replace(".".$extname,'_s',$file_url);
 				// echo $filename_s;
 				// echo "<hr>";
 				if($pic_source && $extname)
 				{
-					$aa=resizeImage($pic_source,160,160,$filename_s,".".$extname);
+					$aa=resizeImage($pic_source,160,160,$filename_s_for_creat,".".$extname);
 				}
 				else
 				{
@@ -282,12 +298,13 @@ if($ac=="user_list")
 	if($max_page>=$page)
 	{
 
-		$list=DB::query("select arc_id as blogid,arc_name as subject,arc_replynum as replynum,arc_viewtype as view_type,arc_pic as pic ,arc_addtime as dateline,arc_content as content,FROM_UNIXTIME(arc_addtime, '%Y%m%d') as today,uid, (select realname from pre_common_member_profile where uid=tbl_arc.uid ) as realname from tbl_arc where arc_model='arc' and arc_type='U'  ".$sql." $language_sql  order by today desc,arc_sort desc,arc_addtime desc limit $page_start,$page_size");
+		$list=DB::query("select arc_id as blogid,arc_name as subject,arc_replynum as replynum,arc_viewtype as view_type,arc_pic as pic ,arc_addtime as dateline,arc_content as content,FROM_UNIXTIME(arc_addtime, '%Y%m%d') as today,uid, (select realname from pre_common_member_profile where uid=tbl_arc.uid ) as realname,(arc_share_qq+arc_share_sina+arc_share_other) as arc_share_total,arc_share_qq,arc_share_sina from tbl_arc where arc_model='arc' and arc_type='U'  ".$sql." $language_sql  order by today desc,arc_sort desc,arc_addtime desc limit $page_start,$page_size");
 		
 		$i=0;
 		while($row = DB::fetch($list))
 		{
 		
+			$row['subject']=$row['realname']."：".$row['subject'];
 			$row['replynum']="".$row['replynum'];
 			if($row['pic'])
 			{
@@ -341,7 +358,7 @@ if($ac=="all_list")
 	if($max_page>=$page)
 	{
 
-		$list=DB::query("select field_uid,arc_id as blogid,arc_name as subject,arc_replynum as replynum,arc_viewtype as view_type,arc_pic as pic ,arc_addtime as dateline,arc_content as content,FROM_UNIXTIME(arc_addtime,'%Y%m%d') as today,arc_top from tbl_arc where  arc_model='arc' and arc_state=1 and arc_viewtype='normal' and arc_state=1 and arc_viewstatus=1 and (arctype_id=2 or arc_type='Q')  $language_sql order by arc_top desc,today desc,arc_sort desc limit $page_start,$page_size");
+		$list=DB::query("select field_uid,arc_id as blogid,arc_name as subject,arc_replynum as replynum,arc_viewtype as view_type,arc_pic as pic ,arc_addtime as dateline,arc_content as content,FROM_UNIXTIME(arc_addtime,'%Y%m%d') as today,arc_top,(arc_share_qq+arc_share_sina+arc_share_other) as arc_share_total,arc_share_qq,arc_share_sina from tbl_arc where  arc_model='arc' and arc_state=1 and arc_viewtype='normal' and arc_state=1 and arc_viewstatus=1 and (arctype_id=2 or arc_type='Q')  $language_sql order by arc_top desc,today desc,arc_sort desc limit $page_start,$page_size");
 		$i=0;
 		while($row = DB::fetch($list))
 		{
@@ -403,7 +420,7 @@ if($ac=="all_list")
 	}
 	if($max_page>=$page)
 	{
-		$list=DB::query("select field_uid,arc_id as blogid,arc_name as subject,arc_replynum as replynum,arc_viewtype as view_type,arc_pic as pic ,arc_addtime as dateline,arc_content as content,FROM_UNIXTIME(arc_addtime,'%Y%m%d') as today,arc_top from tbl_arc where  arc_model='arc' and arc_state=1 and arc_viewstatus=1  and arc_viewtype='pic' and (arctype_id=2 or arc_type='Q') $language_sql order by arc_top desc,today desc,arc_sort desc limit $page_start,$page_size");
+		$list=DB::query("select field_uid,arc_id as blogid,arc_name as subject,arc_replynum as replynum,arc_viewtype as view_type,arc_pic as pic ,arc_addtime as dateline,arc_content as content,FROM_UNIXTIME(arc_addtime,'%Y%m%d') as today,arc_top,(arc_share_qq+arc_share_sina+arc_share_other) as arc_share_total,arc_share_qq,arc_share_sina from tbl_arc where  arc_model='arc' and arc_state=1 and arc_viewstatus=1  and arc_viewtype='pic' and (arctype_id=2 or arc_type='Q') $language_sql order by arc_top desc,today desc,arc_sort desc limit $page_start,$page_size");
 		$i=0;
 		while($row = DB::fetch($list))
 		{
@@ -467,11 +484,16 @@ if($ac=="news_detail")
 	$pic_width=$_G['gp_pic_width'];
 	if($blogid)
 	{
-		$detail_data=DB::fetch_first("select uid,field_uid,arc_type,arc_id as blogid,arc_name as subject,arc_replynum as replynum,arc_viewtype as view_type,arc_pic as pic ,arc_addtime as dateline,arc_content as content,is_video,is_span,(arc_share_qq+arc_share_sina+arc_share_other) as arc_share_total,arc_share_qq,arc_share_sina,arc_video_pic,arc_video_url from tbl_arc where arc_id='".$blogid."' ");
-		$detail_data['username']="";
-		$detail_data['uid']="0";
-
-
+		$detail_data=DB::fetch_first("select uid,field_uid,arc_type,arc_id as blogid,arc_name as subject,arc_replynum as replynum,arc_viewtype as view_type,arc_pic as pic ,arc_addtime as dateline,arc_content as content,is_video,is_span,(arc_share_qq+arc_share_sina+arc_share_other) as arc_share_total,arc_share_qq,arc_share_sina,arc_video_pic,arc_video_url, (select realname from pre_common_member_profile where uid=tbl_arc.uid ) as realname from tbl_arc where arc_id='".$blogid."' ");
+		$detail_data['username']=$detail_data['realname'];
+		
+		if($detail_data['arc_type']=='U')
+		{
+			$detail_data['subject']="来自".$detail_data['realname']."：".$detail_data['subject'];
+		}
+		
+		
+		
 		//video about
 		if($detail_data['arc_video_pic'])
 		{
@@ -550,6 +572,7 @@ if($ac=="news_detail")
 			$detail_data['content']=str_replace(".=\"uchome-message-pic\"","",$detail_data['content']);
 			$detail_data['content']=str_replace("src=\"data/attachment/","src=\"".$site_url."/data/attachment/",$detail_data['content']);
 			$detail_data['content']=str_replace("src=\"/Public/editor/attached/image","src=\"".$site_url."/Public/editor/attached/image",$detail_data['content']);
+			$detail_data['content']=str_replace("src=\"./upload/arc_user/","src=\"".$site_url."/upload/arc_user/",$detail_data['content']);
 			
 			
 			$detail_data['content'] = "<div style='font-size:18px; line-height:180%; width:100%; bakcground:red; '>".$detail_data['content'];
@@ -592,6 +615,8 @@ if($ac=="news_detail")
 		{
 			$detail_data['pic']	="".$site_url."/data/attachment/album/".$detail_data['pic'];
 			$detail_data['pic']=str_replace("/data/attachment/album/upload/arc","/upload/arc",$detail_data['pic']);
+			$detail_data['pic']=str_replace("/data/attachment/album/./upload/arc_user","/upload/arc_user",$detail_data['pic']);
+			
 			if(file_exists($detail_data['pic']))
 			{
 				$detail_data['pic_info']=getimagesize($detail_data['pic']);

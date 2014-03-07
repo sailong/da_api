@@ -26,7 +26,13 @@ $group_ids = array(
 				   '1889180'=>'手机报',
 				   '1889013'=>'资讯'
 				   );
-$num =10; $where = '';
+$num =10; 
+
+
+$where = ' where 1 ';
+
+
+
 
 /*获取相对 频道下的 或者是某个UId下的 blogs */
 $get_groupid = getgpc('groupid');
@@ -35,9 +41,9 @@ if($_G['gp_ac']=='group_list')
 {
 
 	if($_G['gp_uid']){
-		$where = " where uid = '".getgpc('uid')."'";
+		$where .= " and uid = '".getgpc('uid')."'";
 	}elseif($_G['gp_groupid']){
-		$where = " where groupid = '".$get_groupid."'";
+		$where .= " and  groupid = '".$get_groupid."'";
 	}
 	$num =100;
 }
@@ -46,6 +52,9 @@ if($_GET['test'] == 1) {
     echo $uid.'<br>';
 }
 /*最新博客*/
+
+$where .=" and arc_type is null ";
+
 
 $new_blogs_query = DB::query(" select `blogid`,`uid`,`subject` from ".DB::table('home_blog').$where."  order by dateline desc limit ".$num);
 

@@ -1,0 +1,51 @@
+@charset "utf-8";
+/* CSS Document */
+/*公共样式*/
+body{ width:100%; height:100%; font-size:10pt; font-family:"微软雅黑"; color:#858383; margin:0px; padding-left:0px;}
+/*重置浏览器默认样式*/
+h1,h2,h3,p,img,ul,li{ padding:0px; margin:0px; list-style:none; border:none;}
+a{text-decoration:none;}
+.wrap{width:100%;height:auto;}
+/*heard-------------------*/
+#heard{background:#002c4f;padding-left:15px;padding-top:8px;padding-bottom:8px;}
+#heard img{margin:0;padding:0;border:none;width:40%;}
+/*content-----------------*/
+#content{ overflow:hidden; background:#455369;width:100%;}
+.con_l{float:left; font-size:14px;padding-left:15px;padding-right:20px;}
+.con_r{float:left; font-size:14px;width:150px;}
+.con_r_top{padding:15px 0px 5px 0px; background:url(../images/line_1.png) no-repeat bottom; color:#fff; font-family:"黑体"; vertical-align:middle; line-height:18px;}
+.con_r_top .name{letter-spacing:4px;padding-left:10px;}
+.con_r_top .dot1 img{padding-bottom:3px;}
+.con_r_top .professional{ background:url(../images/b-dot.png) no-repeat 8px center; padding-left:20px; letter-spacing:4px; height:25px; vertical-align:top;}
+.award{ background:url(../images/s-dot.png) no-repeat 7px center; letter-spacing:4px; vertical-align:top; padding-left:20px;}
+.con_r_btm{ padding:5px 0px 15px 0px;}
+.con_r_1{ float:left;line-height:20px; padding-bottom:15px;}
+.con_r_btm p{ text-align:center;padding:0px 15px 0px 10px;}
+.con_r_btm .span1{ color:#6587b5; font-family:Arial;}
+.con_r_btm .span2{ color:#fff; font-family:"黑体";}
+.con_r_btm .span3{ padding:3px 0px 3px 0px;}
+/*message------------------*/
+#message{height:200%;line-height:200%;font-size:14px;background:url(../images/voice.png) no-repeat 15px 50% #333F4F; color:#899BB5;  letter-spacing:3px; padding-left:50px;background-size:15px;}
+#message a{color:#899BB5;}
+/*news---------------------*/
+#news{ width:100%; overflow:hidden;padding-bottom:30px;}
+.news_con{ overflow:hidden; background:url(../images/new-line.png) no-repeat 0 bottom; padding:5px 10px 5px 15px;}
+.news_con h2 a{ font-size:16px; color:#000; }
+.news_l{ width:65%;height:100%;padding-top:10px; float:left;  letter-spacing:1px; line-height:150%;}
+.news_r{ width:32%;float:right;padding-bottom:10px;padding-right:0px;}
+.news_con .comments{ display:inline-block; width:40px;background:url(../images/comments.png) no-repeat 0 center; padding-left:30px;margin-right:10px;background-size:20%}
+.news_con .forwarding{ display:inline-block; width:38px; padding-left:30px; background:url(../images/forwarding.png) no-repeat 0 center;background-size:20%}
+
+
+
+
+
+
+
+
+
+
+
+
+
+

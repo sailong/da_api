@@ -100,7 +100,18 @@
 				<th>差点：</th>
 				<td><input type="text" name="event_user_chadian" id="event_user_chadian" class="mod_input2" style="width:60px;" ></td>
 			</tr>
-			
+			<tr>
+					<th>国籍：</th>
+					<td>
+						<select name="country">
+							<option value="">请选择</option>
+							{$country_list}
+						</select>
+						<script>set_select_value(document.act_form.country,'china');</script>
+						<br />
+						(用于在报分中显示国旗)
+					</td>
+				</tr>
 		</tbody>
 		<tfoot>
 			<tr>

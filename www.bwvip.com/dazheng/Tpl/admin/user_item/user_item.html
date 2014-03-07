@@ -1,0 +1,266 @@
+<include file="../public/_header" />
+<div class="so_main">
+
+  <div class="page_tit">门票领取</div>
+  <include file="_tab" />
+
+  <div class="search_box">
+		<form name="search_form" action="/default.php" method="get">
+		<input type="hidden" name="g" value="admin">
+		<input type="hidden" name="m" value="user_item">
+		<input type="hidden" name="a" value="user_item">
+		<input type="hidden" name="price" value="<php> echo  get('price');</php>">
+		<input type="hidden" name="get_k" id="get_k" value="<php> echo  get('ticket_id');</php>">
+
+		<table border="0" cellspacing="0" cellpadding="0">
+			<!-- <th>赛事：</th>
+			<td>
+				<select name="event_id" id="event_id" style="width:120px;"  class="search_select">
+					<option value="">请选择</option>
+					<volist id="vo" name="event_select">
+					<option value="{$vo.event_id}">{$vo.event_name}</option>
+					</volist>
+				</select>
+				<script>set_select_value(document.search_form.event_id,"<php> echo  get("event_id");</php>");</script>
+			</td> -->
+			<th>商品列表：</th>
+			<!-- <td><input type="text" name="k" class="search_input" style="width:120px;" value="<php> echo  get('k');</php>"></td> -->
+			<td>
+				<select name="ticket_id" id="ticket_id" style="width:120px;"  class="search_select">
+					<option value="">请选择</option>
+					<volist id="vo" name="item_lists">
+					<option value="{$vo.item_id}">{$vo.item_name}</option>
+					<volist id="vo1" name="vo['sub']">
+					<option value="{$vo1.item_id}">&nbsp;&nbsp;|--{$vo1.item_name}</option>
+					
+					</volist>
+					</volist>
+				</select>
+				<script>set_select_value(document.search_form.ticket_id,"<php> echo  get("ticket_id");</php>");</script>
+			</td>
+			<th>姓名或手机：</th>
+			<td><input type="text" name="k" class="search_input" style="width:100px;" value="<php> echo  get('k');</php>"></td>
+			<th>二维码</th>
+			<td><input type="text" name="code" class="search_input" style="width:120px;" value="<php> echo  get('code');</php>"></td>
+			
+			<th>开始时间：</th>
+			<td>
+				<input type="text" name="starttime" class="search_input_date" style="width:120px;" value="<php> echo  get('starttime');</php>" onFocus="WdatePicker({isShowClear:false,readOnly:true})"> 至 
+				<input type="text" name="endtime" class="search_input_date" style="width:120px;" value="<php> echo  get('endtime');</php>" onFocus="WdatePicker({isShowClear:false,readOnly:true})">
+			</td>
+			
+			<!--
+			<th>类型：</th>
+			<td>
+				<select name="course_type" style="width:120px;"  class="search_select">
+					<option value="">请选择</option>
+					<option value="1">课件课程</option>
+					<option value="2">辅导课程</option>
+				</select>
+				<script>set_select_value(document.search_form.course_type,"<php> echo  get("course_type");</php>");</script>
+			</td>
+			-->
+			<td class="btn">
+				<input type="submit" value="搜索" class="btn_b" style="margin-right:8px;" >
+				<input type="button" value="查看全部" class="btn_b" onclick="javascript:location='{:U('admin/user_item/user_item',array('state'=>get('state')))}';">
+			</td>
+		</table>
+	</form>
+  </div><!--/search_box-->
+
+  <!--------list -------->
+  <div class="Toolbar_inbox">
+  	<div class="page right">{$pages}</div>
+
+	<!-- <a href="{:U('admin/user_item/user_ticket_add')}" class="btn_a"><span>添加门票领取</span></a> -->
+	<a href="javascript:void(0);" class="btn_a"  onclick="mod_delete_batch('{:U('admin/user_item/user_item_delete_action')}','mod_table');"><span>批量删除</span></a>
+	<a href="{:U('admin/user_item/user_item',array('event_id'=>get('event_id'),'k'=>get('k'),'price'=>get('price'),'user_ticket_status'=>'0','starttime'=>get('starttime'),'endtime'=>get('endtime')))}" class="btn_a"><span>待审核</span></a>
+	<a href="{:U('admin/user_item/user_item',array('event_id'=>get('event_id'),'k'=>get('k'),'price'=>get('price'),'user_ticket_status'=>'1','starttime'=>get('starttime'),'endtime'=>get('endtime')))}" class="btn_a"><span>审核通过</span></a>
+	<a href="{:U('admin/user_item/user_item',array('event_id'=>get('event_id'),'k'=>get('k'),'price'=>get('price'),'user_ticket_status'=>'2','starttime'=>get('starttime'),'endtime'=>get('endtime')))}" class="btn_a"><span>审核未通过</span></a>
+	<a href="javascript:void(0);" class="btn_a"  onclick="mod_modify_batch('{:U('admin/user_item/user_item_check_action')}','mod_table');"><span>批量审核</span></a>
+	<div class="clear"></div>
+  </div>
+  <div class="list">
+	<php>if($total>0){</php>
+	  <table width="100%" id="mod_table" border="0" cellspacing="0" cellpadding="0">
+	  <tr>
+		<th style="width:30px;">
+			<input type="checkbox" id="checkbox_handle" onclick="select_all(this,'mod_table','checkbox')" value="0">
+			<label for="checkbox"></label>
+		</th>
+		<th class="line_l">编号</th>
+		<th class="line_l">用户</th>
+		<th class="line_l">所属赛事</th>
+		<th class="line_l">商品名称</th>
+		<th class="line_l">类型</th>
+		<!--
+		<th class="line_l">领取码</th>
+		<th class="line_l">二维码图片</th>
+		-->
+		<th class="line_l">张数</th>
+		<th class="line_l">姓名</th>
+		<!-- <th class="line_l">证件类型</th>
+		<th class="line_l">证件号码</th> 
+		<th class="line_l">手机号</th>-->
+		<!-- <th class="line_l">手机串号</th> -->
+		<th class="line_l">状态</th>
+		<th class="line_l">添加时间</th>
+		<th class="line_l">操作</th>
+	</tr>
+	<volist id="vo" name="list">
+	<tr overstyle="on"  id=ids_{$vo["user_ticket_id"]}>
+		<td><input type="checkbox" name="checkbox" onclick="select_one(this)" value="{$vo.user_ticket_id}" ></td>
+		<td>{$vo.user_ticket_id}</th>
+		<td>{$vo.uid}</th>
+		<td><php>if($event_select[$vo['event_id']]['event_name']){</php>{$event_select[$vo['event_id']]['event_name']}<php>}else{echo '大正';}</php></th>
+		<td>{$item_list[$vo['ticket_id']]}</td>
+		<td>{$vo.ticket_type}</td>
+		<!--
+		<td>{$vo.user_ticket_code}</td>
+		<td><php>if($vo['user_ticket_codepic']){</php><img src="{$vo['user_ticket_codepic']}" style="max-width:60px;max-height:60px;"><php>}</php></td>
+		-->
+		<td>{$vo.user_ticket_nums}张</td>
+		<td>{$vo.user_ticket_realname}<br />{$vo.user_ticket_mobile}</td>
+		<!-- <td><php>if($vo['user_ticket_cardtype'] == 0){echo '身份证';}</php></td>
+		<td>{$vo.user_ticket_card}</td> -->
+		
+		<!-- <td>{$vo.user_ticket_imei}</td> -->
+		<td><php>switch($vo['user_ticket_status']){case 0: echo '待审核';break;case 1: echo '审核通过';break;case 2: echo '审核不通过';break;}</php></td>
+		<td>{$vo.user_ticket_addtime|format_to_time}</td>
+			
+		<td>
+			<a href="{:U('admin/user_item/user_item_detail', array('user_ticket_id'=>$vo['user_ticket_id']))}'">详情</a> | 
+			<a href="{:U('admin/user_item/user_item_edit', array('event_id'=>$vo['event_id'],'user_ticket_id'=>$vo['user_ticket_id']))})">修改</a> | 
+			<a href="javascript:void(0);" onclick="mod_delete_one('{:U('admin/user_item/user_item_delete_action')}','{$vo['user_ticket_id']}');">删除</a>
+			<php>if($vo['out_id'] != 0){</php>
+			 | <a href="{:U('admin/user_item/user_item_detail_ext', array('out_idtype'=>$vo['out_idtype'],'out_id'=>$vo['out_id']))}'">附加信息</a>
+			<php>}</php>
+		</td>
+	</tr>
+	</volist>
+    </table>
+	  <php>}else{</php>
+			<div class="no_data">
+				<img src="/skin/images/no_data.gif" align="absmiddle"> <span>没有门票领取... </span>
+			</div>
+	 <php>}</php>
+  </div>
+
+  <div class="Toolbar_inbox">
+	<div class="page right">{$pages}</div>
+
+	<!-- <a href="{:U('admin/user_item/user_ticket_add')}" class="btn_a"><span>添加门票领取</span></a> -->
+	<a href="javascript:void(0);" class="btn_a"  onclick="mod_delete_batch('{:U('admin/user_item/user_item_delete_action')}','mod_table');"><span>批量删除</span></a>
+	<a href="{:U('admin/user_item/user_item',array('event_id'=>get('event_id'),'k'=>get('k'),'price'=>get('price'),'user_ticket_status'=>'0','starttime'=>get('starttime'),'endtime'=>get('endtime')))}" class="btn_a"><span>待审核</span></a>
+	<a href="{:U('admin/user_item/user_item',array('event_id'=>get('event_id'),'k'=>get('k'),'price'=>get('price'),'user_ticket_status'=>'1','starttime'=>get('starttime'),'endtime'=>get('endtime')))}" class="btn_a"><span>审核通过</span></a>
+	<a href="{:U('admin/user_item/user_item',array('event_id'=>get('event_id'),'k'=>get('k'),'price'=>get('price'),'user_ticket_status'=>'2','starttime'=>get('starttime'),'endtime'=>get('endtime')))}" class="btn_a"><span>审核未通过</span></a>
+	<a href="javascript:void(0);" class="btn_a"  onclick="mod_modify_batch('{:U('admin/user_item/user_item_check_action')}','mod_table');"><span>批量审核</span></a>
+
+	<div class="clear"></div>
+  </div>
+</div>
+
+<script>
+	$(document).ready(function(){
+		var event_id = $("#event_id").val();
+		if(event_id!=''){
+			ticket_list(event_id);
+		}
+		$("tr[overstyle='on']").hover(
+		  function ()
+		  {
+		    $(this).addClass("bg_hover");
+		  },
+		  function (){
+		    $(this).removeClass("bg_hover");
+		  }
+		);
+		$("#event_id").change(function(){
+			var event_id = $(this).val();
+			
+			ticket_list(event_id);
+		});
+	});
+
+function ticket_list(event_id)
+{
+	var event_id = event_id|{};
+		
+		if(event_id == ''){
+			return false;
+		}
+		
+	var ticket_id = $("#get_k").val();
+		$.ajax({
+		 type: 'GET',
+		 url: '/default.php?g=admin&m=user_item&a=get_event_ticket_list&event_id='+event_id,
+		 //data: ,
+		 dataType:'json',
+		 success:function(json){
+			var option_str = "<option value=''>请选择</option>";
+			if(json.status == 1){
+				var ticket_list = json.data;
+				for(var i in ticket_list){
+					var ticket_info = ticket_list[i];
+					if(ticket_info['ticket_id'] == ticket_id){
+						option_str += "<option value='"+ticket_info['ticket_id']+"' selected>"+ticket_info['ticket_name']+"</option>";
+					}else{
+						option_str += "<option value='"+ticket_info['ticket_id']+"'>"+ticket_info['ticket_name']+"</option>";
+					}
+					
+				}
+			}
+			$("#ticket_id").html('');
+			$("#ticket_id").append(option_str);
+		 }
+		});
+}
+	//批量修改
+function mod_modify_batch(action_url,obj)
+{
+	var length = 0;
+	ids    = getInputChecked(obj);
+	length = ids.length;
+	ids    = ids.toString();
+
+	if(ids=='') 
+	{
+		art.dialog({
+				icon: 'error',
+				time: 2,
+				content: '请至少选择一个'
+			});
+		return ;
+	}
+
+	if(ids == '' || !confirm('修改成功后将无法恢复，确认继续？')) return false;
+	
+	$.post(action_url, {ids:ids}, function(res){
+		if(res.split('^')[0]=='succeed')
+		{
+			ids = ids.toString().split(',');
+			for(i = 0; i < ids.length; i++)
+			{
+				//$('#ids_'+ids[i]).remove();
+			}
+			art.dialog({
+				icon: ''+res.split('^')[0]+'',
+				time: 2,
+				content: ''+res.split('^')[1]+''
+			});
+		}
+		else
+		{
+			art.dialog({
+				icon: ''+res.split('^')[0]+'',
+				time: 2,
+				content: ''+res.split('^')[1]+''
+			});
+		}
+	});
+}
+
+</script>
+
+
+<include file="../public/_footer" />

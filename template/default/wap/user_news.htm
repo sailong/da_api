@@ -1,0 +1,127 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0"/>
+<meta name="MobileOptimized" content="236"/>
+<meta http-equiv="Cache-Control" content="no-cache"/>
+<title>{$news_blog['subject']}</title>
+<base href="http://www.bwvip.com/" />
+<link type="text/css" rel="stylesheet" href="/images/wap/news_user_img/css/style.css" />
+<script language="javascript" type="text/javascript" src="/skin/js/jquery-1.4.4.min.js"></script>
+<style>
+.mask11{padding:15px 0px 15px 0px;width:82px; height:72px; overflow:hidden;display:table-cell;vertical-align:middle;text-align:center;}
+.mask11 img{max-width:82px;max-height:72px;vertical-align:middle;}
+.opendiv11{position:relative;top:15px;height:0px;}
+.opendiv11 img{width:82px;}
+</style>
+</head>
+
+<body class="wrap">
+<input type="hidden" id="tx_photo" value="{$member_info['touxiang']}"/>
+<input type="hidden" id="uid" value="{$member_info['uid']}"/>
+<h1 id="heard">
+	<img src="/images/wap/news_user_img/images/logo1.png"/>
+</h1>
+<div id="content">
+	<div class="con_l">
+		<!-- <img src="/images/wap/news_user_img/images/pic4.png" width="100%"/> -->
+		<div class="opendiv11">  
+			<img src="/images/wap/news_user_img/images/pic3.png">   
+		</div>
+		<div class="mask11">
+			<img src="{$member_info['touxiang']}">
+		</div>  
+		
+		
+    </div>
+    <div class="con_r">
+    	<p class="con_r_top">
+        	<span class="name">{$member_info['realname']}</span>
+			<!--{if $member_info['intro']}--><br/><span class="professional">{$member_info['intro']}</span><!--{/if}-->
+			<!-- <br/><span class="professional">资深记者</span><br/><span class="award">2013十佳记者</span> -->
+			<!-- <span class="award">2013十佳记者</span> -->
+		</p>
+        <div class="con_r_btm">
+        	<div class="con_r_1">			        		
+				<p class="span1">{$num_data['fans_count']}</p>
+            	<p class="span2">读者群</p>
+            </div>
+            <div class="con_r_1">
+                <p class="span1">{$blog_num['blognum']}</p>
+                <p class="span2">文章</p>
+            </div>
+        	<div class="con_r_1">
+            	<p class="span3">
+					<!-- <img src="/images/wap/news_user_img/images/blue.png" style="max-width:25px;"/> -->
+					<!--{if $member_info['level']==3}-->
+					<span class="span3"><img src="images/wap/news_user_img/images/yellow.png" style="max-width:15px;"/></span>
+					<!--{/if}-->
+					<!--{if $member_info['level']==2}-->
+					<span class="span3"><img src="images/wap/news_user_img/images/blue.png" style="max-width:15px;"/></span>
+					<!--{/if}-->
+					<!--{if $member_info['level']==1 || $member_info['level']==0}-->
+					<span class="span3"><img src="images/wap/news_user_img/images/gray.png" style="max-width:15px;"/></span>
+					<!--{/if}-->
+				</p>
+            	<!-- <p class="span2" style="padding-left:15px;"> -->
+					<!--{if $member_info['level']==3}-->
+					<!-- 金 -->
+					<!--{/if}-->
+					<!--{if $member_info['level']==2}-->
+					<!-- 兰 -->
+					<!--{/if}-->
+					<!--{if $member_info['level']==1 || $member_info['level']==0}-->
+					<!-- 灰 -->
+					<!--{/if}-->
+				<!-- </p> -->
+            </div>
+        </div>
+    </div>
+</div>
+<div style="clear:both;"></div>
+<!--{if $last_blogs_result}--><div id="message"><a href="http://wap.bwvip.com/index.php?mod=news&do=details&id={$last_blogs_result['blogid']}&uid={$last_blogs_result['uid']}">{$last_blogs_result['subject']}<!-- 2014年中国十佳球员正在投票中！ --></div><!--{/if}-->
+<div id="news">
+<!--{if $new_blogs_list}-->
+<!--{loop $new_blogs_list $key $vo}-->
+	<div class="news_con">
+    	<h2><a href="http://wap.bwvip.com/index.php?mod=news&do=details&id={$key}&uid={$uid}">{$vo['subject']}</a></h2>
+        <div class="news_l">
+        	<p><a href="http://wap.bwvip.com/index.php?mod=news&do=details&id={$key}&uid={$uid}" style="color:#858484;">{$vo['limit_content']}</a></p>
+            <div style="line-height:150%">{$vo['date']}</div>
+			<div style="line-height:150%"><span class="comments">{$vo['viewnum']}</span><span class="forwarding">{$vo['replynum']}</span></div>
+           
+        </div>
+        <div class="news_r"><img src="{$vo['arc_pic']}" width="80%" style="padding-left:20%;"/></div>
+    </div>
+<!--{/loop}-->	
+	<div width="100%" style="text-align:center;font-size:16px;"> 
+		<a href="http://wap.bwvip.com/index.php?mod=news&do=usernews&uid={$uid}&page={$pre_page}">上一页</a>
+		&nbsp;&nbsp;&nbsp;&nbsp;
+		<a href="http://wap.bwvip.com/index.php?mod=news&do=usernews&uid={$uid}&page={$next_page}">下一页</a> 
+	</div>
+<!--{else}-->
+	<div width="100%" style="text-align:center;"> 暂无内容 </div>
+<!--{/if}-->   
+</div>
+<!-- <script>
+var tx_photo = $("#tx_photo").val();
+var img = "<img src='"+tx_photo+"' width='40%'>";
+alert(img);
+$("#tx_img").html(img);
+</script> -->
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+

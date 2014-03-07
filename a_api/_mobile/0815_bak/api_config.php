@@ -1,0 +1,6 @@
+<?php
+//ÅäÖÃ
+$site_url="http://www.bwvip.com";
+
+
+?>

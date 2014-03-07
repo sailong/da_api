@@ -1,0 +1,162 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0"/>
+<meta name="MobileOptimized" content="236"/>
+<meta http-equiv="Cache-Control" content="no-cache"/>
+<title>{$news_blog['subject']}</title>
+<base href="http://www.bwvip.com/" />
+<link type="text/css" rel="stylesheet" href="/images/wap/news_user_img/css/style.css" />
+<script language="javascript" type="text/javascript" src="/skin/js/jquery-1.4.4.min.js"></script>
+</head>
+
+<body>
+<input type="hidden" id="tx_photo" value="{$member_info['touxiang']}"/>
+<input type="hidden" id="uid" value="{$member_info['uid']}"/>
+<h1 id="heard">
+	<img src="/images/wap/news_user_img/images/logo1.png" />
+</h1>
+<div id="content">
+	<div class="con_l">
+    	<img src="/images/wap/news_user_img/images/pic3.png" />
+    </div>
+    <div class="con_r">
+    	<p class="con_r_top">
+        	<span class="name">{$member_info['realname']}</span><!--{if $member_info['intro']}--><span class="professional">{$member_info['intro']}</span><!--{/if}--><!-- <span class="award">2013十佳记者</span> -->
+		</p>
+        <div class="con_r_btm">
+        	<span class="span1">{$num_data['fans_new']}</span>
+            <span class="span1">{$blog_num['blognum']}</span>
+            <!--{if $member_info['level']==3}-->
+			<span class="span3"><img src="images/wap/news_user_img/yellow.png" /></span>
+			<!--{/if}-->
+			<!--{if $member_info['level']==2}-->
+			<span class="span3"><img src="images/wap/news_user_img/blue.png" /></span>
+			<!--{/if}-->
+			<!--{if $member_info['level']==1 || $member_info['level']==0}-->
+			<span class="span3"><img src="images/wap/news_user_img/gray.png" /></span>
+			<!--{/if}-->
+            <span class="span2">读者群</span>
+            <span class="span2">文章数</span>
+            <span class="span2">
+				<!--{if $member_info['level']==3}-->
+				金
+				<!--{/if}-->
+				<!--{if $member_info['level']==2}-->
+				兰
+				<!--{/if}-->
+				<!--{if $member_info['level']==1 || $member_info['level']==0}-->
+				灰
+				<!--{/if}-->
+			</span>
+        </div>
+    </div>
+</div>
+<div id="message">2014年中国十佳球员正在投票中！</div>
+<div id="news">
+<!--{if $new_blogs_list}-->
+<!--{loop $new_blogs_list $key $vo}-->
+	<div class="news_con">
+    	<h2><a href="http://wap.bwvip.com/index.php?mod=news&do=details&id={$key}&uid={$uid}" style="color:#000;">{$vo['subject']}</a></h2>
+        <div class="news_l">
+        	<p><a href="http://wap.bwvip.com/index.php?mod=news&do=detailsbak&id={$key}&uid={$uid}" style="color:#858484;">{$vo['limit_content']}</a></p>
+            <p>&nbsp;{$vo['date']}</p>
+            <p>&nbsp;<span class="comments">{$vo['viewnum']}</span><span class="forwarding">{$vo['replynum']}</span></p>
+        </div>
+        <div class="news_r"><img src="{$member_info['touxiang']}" style="width:145px;height:130px;"/></div>
+    </div>
+<!--{/loop}-->
+<div width="100%" style="text-align:center;"> 
+<a href="http://wap.bwvip.com/index.php?mod=news&do=usernews&uid={$uid}&page={$pre_page}">上一页</a>
+<a href="http://wap.bwvip.com/index.php?mod=news&do=usernews&uid={$uid}&page={$next_page}">下一页</a> 
+</div>
+<!--{else}-->
+<div width="100%" style="text-align:center;"> 暂无内容 </div>
+<!--{/if}-->
+<!-- <div style="display:none;" id="clone_div">
+	<div class="news_con">
+    	<h2><a href="http://wap.bwvip.com/index.php?mod=news&do=details&id={$key}&uid={$uid}" style="color:#000;">{$vo['subject']}</a></h2>
+        <div class="news_l">
+        	<p class="content"><a href="http://wap.bwvip.com/index.php?mod=news&do=detailsbak&id={$key}&uid={$uid}" style="color:#858484;">{$vo['limit_content']}</a></p>
+            <p class="date">&nbsp;{$vo['date']}</p>
+            <p>&nbsp;<span class="comments">{$vo['viewnum']}</span><span class="forwarding">{$vo['replynum']}</span></p>
+        </div>
+        <div class="news_r"><img src="{$member_info['touxiang']}" style="width:145px;height:130px;"/></div>
+    </div>
+</div> -->
+</div>
+<script>
+var tx_photo = $("#tx_photo").val();
+$(".con_l").css({'background-image' : 'url('+tx_photo+')','background-repeat': 'no-repeat',"background-size": "68%",'background-position-x':'57%'});
+
+//$(".next_page").click(function() {
+//  //首先取得下一页的链接地址
+//  var href = "http://wap.bwvip.com/index.php?mod=news&do=usernews&uid="+$("#uid").val()+"&tip=ajax&page="+$(this).attr("href");
+//  //判断该链接是否被加载过
+//  startHref = href;
+//  //判断下一页的链接地址是否存在
+// 
+//  if (href != undefined) {
+//  
+//    //如果存在的话，用ajax获取数据
+//    $.ajax({
+//      type: "get",
+//      url: href,
+//      success: function(data) {
+//	   document.write(data);
+//	    var page = data['next_page'];
+//		var data_list = data['data_list'];
+//		//document.write(data_list);
+//		
+//		//var clone_div = $("#clone_div").clone();
+//		
+//		//for(var i in data_list){
+//		//	$('h2 a',clone_div).html(data_list[i]['subject']);
+//		//	$(".content a",clone_div).html(data_list[i]['limit_content']);
+//		//	$(".date",clone_div).html(data_list[i]['date']);
+//		//	$(".comments",clone_div).html(data_list[i]['viewnum']);
+//		//	$(".forwarding",clone_div).html(data_list[i]['replynum']);
+//		//	$(".news_r img",clone_div).attr('src',data_list[i]['touxiang']);
+//		//	alert(clone_div);
+//			
+//			//$(".next_page").before(clone_div);
+//		//}
+//        //将返回的数据进行处理，挑选出class是post的内容块
+//       // var $res = $(data).find(".post");
+//
+//        //结合masonry插件，将内容append进ID是content的内容块中
+//       // $("#content").append($res).masonry('appended', $res);
+//
+//        //newHref获取返回的内容中的下一页的链接地址
+//       // var newHref = $(data).find(".next_page a").attr("href");
+//
+//        //判断下一页地址是否存在，如果存在，替换当前页的链接地址。不存在，将当前页链接地址属性href移除，并替换内容为“下一页没有了”
+//       // if (newHref != undefined) {
+//       //   $(".next_page a").attr("href", newHref);
+//       // } else {
+//       //   $(".next_page a").html("下一页没有了").removeAttr("href")
+//       // }
+//      }
+//    })
+//  }
+//
+//  //返回false，使得点击进入新页面失效
+//  return false;
+//});
+</script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+

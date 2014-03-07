@@ -20,7 +20,7 @@ class arcAction extends AdminAuthAction
 		$arc_type=D("arctype")->arctype_admin_tree_pro(" and arctype_parent_id=0 "," and arctype_type='A' ");
 		$this->assign("arc_type",$arc_type['item']);
 
-		$list=D("arc")->arc_admin_list_pro(" and is_zimeiti='Y' ");
+		$list=D("arc")->arc_admin_list_pro(" and arc_type='U' ");
 
 		$this->assign("list",$list["item"]);
 		$this->assign("pages",$list["pages"]);

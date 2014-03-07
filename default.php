@@ -18,7 +18,7 @@ define('RUNTIME_PATH', './_runtime/');
 /* HTML静态文件目录*/
 //define('HTML_PATH', PIN_DATA_PATH . 'html/');
 /* DEBUG开关*/
-define('APP_DEBUG', true);
+define('APP_DEBUG', false);
 require("./core/ThinkPHP/ThinkPHP.php");
 
 ?>
